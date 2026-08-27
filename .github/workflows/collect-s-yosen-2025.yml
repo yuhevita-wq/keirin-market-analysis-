@@ -1,0 +1,153 @@
+name: Collect 2025 S-class preliminary race cards
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/collect-s-yosen-2025.yml"
+      - "src/keirin_market_analysis/s_yosen_2025.py"
+      - "pyproject.toml"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/collect-s-yosen-2025.yml"
+      - "src/keirin_market_analysis/s_yosen_2025.py"
+      - "pyproject.toml"
+  workflow_dispatch:
+    inputs:
+      start_date:
+        description: Start date (2025 only)
+        required: false
+        default: "2025-01-01"
+      end_date:
+        description: End date (2025 only)
+        required: false
+        default: "2025-12-31"
+      allow_failures:
+        description: Keep output even when failures are recorded
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  smoke:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: python -m pip install -e '.[scrape]'
+      - name: Collect one known 2025 day
+        run: |
+          python -m keirin_market_analysis.s_yosen_2025 \
+            --start-date 2025-01-01 \
+            --end-date 2025-01-01 \
+            --out-dir /tmp/s-yosen-smoke \
+            --sleep 0.20
+      - name: Validate smoke output
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          p = Path('/tmp/s-yosen-smoke')
+          summary = json.loads((p/'summary.json').read_text(encoding='utf-8'))
+          races = list(csv.DictReader((p/'races.csv').open(encoding='utf-8-sig')))
+          entries = list(csv.DictReader((p/'entries.csv').open(encoding='utf-8-sig')))
+          failures = list(csv.DictReader((p/'failures.csv').open(encoding='utf-8-sig')))
+          assert summary['target'] == 'Ｓ級予選'
+          assert summary['failures'] == 0, summary
+          assert len(failures) == 0, failures
+          assert summary['parsed_races'] == 10, summary
+          assert summary['entry_rows'] == 70, summary
+          assert len(races) == 10
+          assert len(entries) == 70
+          assert all(r['race_date'] == '2025-01-01' for r in races)
+          assert all(r['race_type'] == 'Ｓ級予選' for r in races)
+          assert all(e['race_type'] == 'Ｓ級予選' for e in entries)
+          assert all(e['source_url'] for e in entries)
+          assert all(e['captured_at_utc'] for e in entries)
+          print(summary)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: s-yosen-smoke
+          path: /tmp/s-yosen-smoke
+
+  collect-full:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: python -m pip install -e '.[scrape]'
+      - name: Resolve collection window
+        id: window
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "start=${{ inputs.start_date }}" >> "$GITHUB_OUTPUT"
+            echo "end=${{ inputs.end_date }}" >> "$GITHUB_OUTPUT"
+            echo "allow=${{ inputs.allow_failures }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "start=2025-01-01" >> "$GITHUB_OUTPUT"
+            echo "end=2025-12-31" >> "$GITHUB_OUTPUT"
+            echo "allow=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Collect
+        shell: bash
+        run: |
+          EXTRA=""
+          if [ "${{ steps.window.outputs.allow }}" = "true" ]; then EXTRA="--allow-failures"; fi
+          python -m keirin_market_analysis.s_yosen_2025 \
+            --start-date "${{ steps.window.outputs.start }}" \
+            --end-date "${{ steps.window.outputs.end }}" \
+            --out-dir data/2025/s_class_yosen \
+            --sleep 0.35 \
+            $EXTRA
+      - name: Validate output
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          p = Path('data/2025/s_class_yosen')
+          summary = json.loads((p/'summary.json').read_text(encoding='utf-8'))
+          races = list(csv.DictReader((p/'races.csv').open(encoding='utf-8-sig')))
+          entries = list(csv.DictReader((p/'entries.csv').open(encoding='utf-8-sig')))
+          failures = list(csv.DictReader((p/'failures.csv').open(encoding='utf-8-sig')))
+          assert len(races) == summary['parsed_races']
+          assert len(entries) == summary['entry_rows']
+          assert len(failures) == summary['failures']
+          assert all(r['race_type'] == 'Ｓ級予選' for r in races)
+          assert all(e['race_type'] == 'Ｓ級予選' for e in entries)
+          assert all(e['source_url'] and e['captured_at_utc'] for e in entries)
+          print(summary)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: s-yosen-2025-${{ steps.window.outputs.start }}-${{ steps.window.outputs.end }}
+          path: data/2025/s_class_yosen
+      - name: Commit full-year dataset
+        if: steps.window.outputs.start == '2025-01-01' && steps.window.outputs.end == '2025-12-31'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/2025/s_class_yosen
+          if git diff --cached --quiet; then
+            echo "No dataset changes to commit"
+          else
+            git commit -m "data: collect 2025 S-class preliminary race cards"
+            git push
+          fi
