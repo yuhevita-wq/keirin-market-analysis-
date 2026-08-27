@@ -45,15 +45,37 @@ jobs:
       - name: Install
         run: python -m pip install -e '.[scrape]'
       - name: Collect one known 2025 day
+        shell: bash
         run: |
           python -m keirin_market_analysis.s_yosen_2025 \
             --start-date 2025-01-01 \
             --end-date 2025-01-01 \
             --out-dir /tmp/s-yosen-smoke \
             --sleep 0.20 \
-            --allow-failures
+            --allow-failures || true
           echo '--- failures.csv ---'
           cat /tmp/s-yosen-smoke/failures.csv
+      - name: Save one raw race page for parser diagnostics
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import requests
+          from bs4 import BeautifulSoup
+          url = 'https://keirin.kdreams.jp/maebashi/racedetail/2220250101010008/?pageType=result'
+          r = requests.get(url, timeout=30, headers={'User-Agent': 'Mozilla/5.0'})
+          r.raise_for_status()
+          if not r.encoding or r.encoding.lower() == 'iso-8859-1':
+              r.encoding = r.apparent_encoding
+          p = Path('/tmp/s-yosen-smoke/sample-race.html')
+          p.write_text(r.text, encoding='utf-8')
+          soup = BeautifulSoup(r.text, 'lxml')
+          print('table_count=', len(soup.find_all('table')))
+          matches = soup.find_all(string=lambda s: s and '選手名' in s)
+          print('player_header_matches=', len(matches))
+          for m in matches[:3]:
+              parent = m.parent
+              print(parent.parent.prettify()[:5000] if parent and parent.parent else str(m))
+          PY
       - name: Validate smoke output
         run: |
           python - <<'PY'
