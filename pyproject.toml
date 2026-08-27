@@ -8,6 +8,9 @@ version = "0.1.0"
 description = "Market-only keirin trio/trifecta analysis"
 requires-python = ">=3.11"
 
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
 [project.scripts]
 keirin-market-analysis = "keirin_market_analysis.cli:main"
 
