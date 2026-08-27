@@ -7,38 +7,26 @@ import re
 import time
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta, timezone
-from io import StringIO
 from pathlib import Path
 from typing import Iterable
 from urllib.parse import urljoin, urlsplit, urlunsplit
 
-import pandas as pd
 import requests
 from bs4 import BeautifulSoup, Tag
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
 TARGET_RACE_TYPE = "Ｓ級予選"
-KDreamsDaily = "https://keirin.kdreams.jp/kaisai/{year:04d}/{month:02d}/{day:02d}/"
+KDREAMS_DAILY = "https://keirin.kdreams.jp/kaisai/{year:04d}/{month:02d}/{day:02d}/"
 USER_AGENT = (
     "Mozilla/5.0 (compatible; keirin-market-analysis/0.1; "
     "+https://github.com/yuhevita-wq/keirin-market-analysis-)"
 )
 
-PREFECTURES = (
-    "北海道", "青森", "岩手", "宮城", "秋田", "山形", "福島",
-    "茨城", "栃木", "群馬", "埼玉", "千葉", "東京", "神奈川",
-    "新潟", "富山", "石川", "福井", "山梨", "長野", "岐阜",
-    "静岡", "愛知", "三重", "滋賀", "京都", "大阪", "兵庫",
-    "奈良", "和歌山", "鳥取", "島根", "岡山", "広島", "山口",
-    "徳島", "香川", "愛媛", "高知", "福岡", "佐賀", "長崎",
-    "熊本", "大分", "宮崎", "鹿児島", "沖縄",
-)
-
 
 @dataclass(frozen=True)
 class RaceRef:
-    race_date: str
+    discovered_on: str
     race_no: int
     url: str
 
@@ -93,8 +81,8 @@ def canonical_race_url(base_url: str, href: str) -> str:
     return urlunsplit((parts.scheme, parts.netloc, parts.path, "pageType=result", ""))
 
 
-def discover_s_yosen_from_daily_html(html: str, daily_url: str, race_date: str) -> list[RaceRef]:
-    """Return only rows whose published race label is exactly 'Ｓ級予選'."""
+def discover_s_yosen_from_daily_html(html: str, daily_url: str, discovered_on: str) -> list[RaceRef]:
+    """Return race-card links whose published label is exactly 'Ｓ級予選'."""
     soup = BeautifulSoup(html, "lxml")
     found: dict[str, RaceRef] = {}
 
@@ -115,8 +103,7 @@ def discover_s_yosen_from_daily_html(html: str, daily_url: str, race_date: str) 
                     later_cells = expand_row_cells(later)
                     if target_index >= len(later_cells):
                         continue
-                    links = later_cells[target_index].find_all("a", href=True)
-                    for link in links:
+                    for link in later_cells[target_index].find_all("a", href=True):
                         candidate = str(link.get("href", ""))
                         if "/racedetail/" in candidate:
                             href = candidate
@@ -129,56 +116,19 @@ def discover_s_yosen_from_daily_html(html: str, daily_url: str, race_date: str) 
 
                 url = canonical_race_url(daily_url, href)
                 match = re.search(r"/racedetail/(\d{16})/", url)
-                if match:
-                    race_no = int(match.group(1)[-4:])
-                else:
-                    race_no = target_index + 1
-                found[url] = RaceRef(race_date=race_date, race_no=race_no, url=url)
+                race_no = int(match.group(1)[-4:]) if match else target_index + 1
+                found[url] = RaceRef(discovered_on=discovered_on, race_no=race_no, url=url)
 
-    return sorted(found.values(), key=lambda item: (item.race_date, item.url, item.race_no))
+    return sorted(found.values(), key=lambda item: (item.discovered_on, item.url, item.race_no))
 
 
-def flatten_columns(df: pd.DataFrame) -> pd.DataFrame:
-    columns: list[str] = []
-    if isinstance(df.columns, pd.MultiIndex):
-        for tup in df.columns:
-            parts: list[str] = []
-            for part in tup:
-                text = normalize_text(part)
-                if not text or text.startswith("Unnamed:"):
-                    continue
-                if not parts or parts[-1] != text:
-                    parts.append(text)
-            columns.append("__".join(parts) or "column")
-    else:
-        columns = [normalize_text(col) or "column" for col in df.columns]
-
-    seen: dict[str, int] = {}
-    unique: list[str] = []
-    for col in columns:
-        count = seen.get(col, 0)
-        seen[col] = count + 1
-        unique.append(col if count == 0 else f"{col}__{count + 1}")
-
-    result = df.copy()
-    result.columns = unique
-    return result
-
-
-def find_column(columns: Iterable[str], needle: str) -> str | None:
-    for col in columns:
-        if needle in col:
-            return col
-    return None
-
-
-def split_player_profile(raw: str) -> tuple[str, str]:
-    raw = normalize_text(raw)
-    prefecture_pattern = "|".join(map(re.escape, PREFECTURES))
-    match = re.search(rf"^(.*?)(?:\s*)({prefecture_pattern})(?:\s*)[/／]", raw)
-    if match:
-        return match.group(1).strip(), raw[match.start(2) :].strip()
-    return raw, ""
+def page_race_date(soup: BeautifulSoup) -> str:
+    text = normalize_text(soup.get_text(" ", strip=True))
+    match = re.search(r"(20\d{2})年\s*(\d{1,2})月\s*(\d{1,2})日\s*レース詳細", text)
+    if not match:
+        raise CollectorError("race date not found on race page")
+    year, month, day = map(int, match.groups())
+    return date(year, month, day).isoformat()
 
 
 def extract_race_meta(soup: BeautifulSoup, ref: RaceRef) -> dict[str, object]:
@@ -191,16 +141,50 @@ def extract_race_meta(soup: BeautifulSoup, ref: RaceRef) -> dict[str, object]:
     deadline_match = re.search(r"投票締切\s*(\d{1,2}:\d{2})", text)
     race_id_match = re.search(r"/racedetail/(\d{16})/", ref.url)
 
+    captured_at = datetime.now(timezone.utc).isoformat()
     return {
         "race_id": race_id_match.group(1) if race_id_match else "",
-        "race_date": ref.race_date,
+        "race_date": page_race_date(soup),
         "track": track,
         "race_no": ref.race_no,
         "race_type": TARGET_RACE_TYPE,
         "start_time": start_match.group(1) if start_match else "",
         "deadline": deadline_match.group(1) if deadline_match else "",
         "source_url": ref.url,
+        "captured_at_utc": captured_at,
     }
+
+
+def parse_profile(profile: str) -> tuple[str, str, str]:
+    parts = [normalize_text(part) for part in profile.split("/")]
+    if len(parts) != 3:
+        return re.sub(r"\s+", "", profile), "", ""
+    prefecture = re.sub(r"\s+", "", parts[0])
+    return prefecture, parts[1], parts[2]
+
+
+def pick_base_racecard_table(soup: BeautifulSoup) -> tuple[Tag, list[Tag]]:
+    for table in soup.select("table.racecard_table"):
+        header_text = normalize_text(" ".join(th.get_text(" ", strip=True) for th in table.find_all("th")))
+        entrant_rows = [
+            tr
+            for tr in table.find_all("tr", recursive=False)
+            if tr.select_one("td.num") is not None and tr.select_one("td.rider") is not None
+        ]
+        if (
+            "直近4ヶ月の成績" in header_text
+            and "競走得点" in header_text
+            and "ギヤ" in header_text
+            and len(entrant_rows) >= 5
+        ):
+            return table, entrant_rows
+    raise CollectorError("base race-card table not found")
+
+
+def cell_text(cells: list[Tag], index: int) -> str:
+    if index < 0 or index >= len(cells):
+        return ""
+    return normalize_text(cells[index].get_text(" ", strip=True))
 
 
 def extract_entries(html: str, ref: RaceRef) -> tuple[dict[str, object], list[dict[str, object]]]:
@@ -210,41 +194,42 @@ def extract_entries(html: str, ref: RaceRef) -> tuple[dict[str, object], list[di
         raise CollectorError(f"target label missing from race page: {ref.url}")
 
     meta = extract_race_meta(soup, ref)
-    try:
-        tables = pd.read_html(StringIO(html))
-    except ValueError as exc:
-        raise CollectorError(f"no tables found: {ref.url}") from exc
-
-    candidate: pd.DataFrame | None = None
-    for table in tables:
-        flat = flatten_columns(table)
-        cols = list(flat.columns)
-        if find_column(cols, "選手名") and find_column(cols, "車番"):
-            if candidate is None or len(flat) > len(candidate):
-                candidate = flat
-
-    if candidate is None:
-        raise CollectorError(f"entrant table not found: {ref.url}")
-
-    car_col = find_column(candidate.columns, "車番")
-    player_col = find_column(candidate.columns, "選手名")
-    class_col = find_column(candidate.columns, "級班")
-    style_col = find_column(candidate.columns, "脚質")
-    gear_col = find_column(candidate.columns, "ギヤ") or find_column(candidate.columns, "ギア")
-    score_col = find_column(candidate.columns, "競走得点")
-    if car_col is None or player_col is None:
-        raise CollectorError(f"required entrant columns missing: {ref.url}")
+    _, entrant_rows = pick_base_racecard_table(soup)
 
     entries: list[dict[str, object]] = []
-    for _, row in candidate.iterrows():
-        car_raw = normalize_text(row.get(car_col, ""))
-        car_match = re.search(r"(?:^|\D)([1-9])(?:\D|$)", car_raw)
+    for tr in entrant_rows:
+        num_cell = tr.select_one("td.num")
+        rider_cell = tr.select_one("td.rider")
+        if num_cell is None or rider_cell is None:
+            continue
+
+        car_match = re.search(r"([1-9])", normalize_text(num_cell.get_text(" ", strip=True)))
         if not car_match:
             continue
         car_no = int(car_match.group(1))
-        player_raw = normalize_text(row.get(player_col, ""))
-        player_name, profile = split_player_profile(player_raw)
-        raw_row = {str(k): normalize_text(v) for k, v in row.to_dict().items()}
+
+        home = rider_cell.select_one("span.home")
+        profile = normalize_text(home.get_text(" ", strip=True)) if home else ""
+        full_rider_text = normalize_text(rider_cell.get_text(" ", strip=True))
+        player_name = full_rider_text
+        if profile and full_rider_text.endswith(profile):
+            player_name = normalize_text(full_rider_text[: -len(profile)])
+        prefecture, age, term = parse_profile(profile)
+
+        cells = tr.find_all("td", recursive=False)
+        try:
+            rider_index = cells.index(rider_cell)
+        except ValueError as exc:
+            raise CollectorError(f"rider cell index not found: {ref.url}") from exc
+
+        after = cells[rider_index + 1 :]
+        stats = [cell_text(after, i) for i in range(17)]
+        while len(stats) < 17:
+            stats.append("")
+
+        prediction_cell = tr.select_one("td.tip")
+        evaluation_cell = tr.select_one("td.evaluation")
+        raw_cells = [normalize_text(td.get_text(" ", strip=True)) for td in cells]
 
         entry = dict(meta)
         entry.update(
@@ -252,11 +237,33 @@ def extract_entries(html: str, ref: RaceRef) -> tuple[dict[str, object], list[di
                 "car_no": car_no,
                 "player_name": player_name,
                 "player_profile": profile,
-                "class": normalize_text(row.get(class_col, "")) if class_col else "",
-                "style": normalize_text(row.get(style_col, "")) if style_col else "",
-                "gear": normalize_text(row.get(gear_col, "")) if gear_col else "",
-                "score": normalize_text(row.get(score_col, "")) if score_col else "",
-                "raw_row_json": json.dumps(raw_row, ensure_ascii=False, sort_keys=True),
+                "prefecture": prefecture,
+                "age": age,
+                "term": term,
+                "class": stats[0],
+                "style": stats[1],
+                "gear": stats[2],
+                "score": stats[3],
+                "s_count": stats[4],
+                "b_count": stats[5],
+                "nige_count": stats[6],
+                "makuri_count": stats[7],
+                "sashi_count": stats[8],
+                "mark_count": stats[9],
+                "first_count": stats[10],
+                "second_count": stats[11],
+                "third_count": stats[12],
+                "outside_count": stats[13],
+                "win_rate": stats[14],
+                "top2_rate": stats[15],
+                "top3_rate": stats[16],
+                "prediction_mark": normalize_text(prediction_cell.get_text(" ", strip=True)) if prediction_cell else "",
+                "evaluation": normalize_text(evaluation_cell.get_text(" ", strip=True)) if evaluation_cell else "",
+                "raw_row_json": json.dumps(
+                    {"row_class": tr.get("class", []), "cells": raw_cells},
+                    ensure_ascii=False,
+                    sort_keys=True,
+                ),
             }
         )
         entries.append(entry)
@@ -296,19 +303,23 @@ def collect(start: date, end: date, out_dir: Path, sleep_seconds: float) -> dict
     entries: list[dict[str, object]] = []
     failures: list[dict[str, object]] = []
     discovered: dict[str, RaceRef] = {}
+    skipped_outside_window = 0
 
     for day in daterange(start, end):
-        daily_url = KDreamsDaily.format(year=day.year, month=day.month, day=day.day)
+        daily_url = KDREAMS_DAILY.format(year=day.year, month=day.month, day=day.day)
         try:
             html = fetch_html(session, daily_url)
             refs = discover_s_yosen_from_daily_html(html, daily_url, day.isoformat())
             for ref in refs:
-                discovered[ref.url] = ref
-        except Exception as exc:  # keep a complete failure ledger instead of silently skipping
+                # Daily pages show all days of an active meeting. Keep the earliest
+                # discovery so day-1 S-class preliminary races are not overwritten by
+                # the same card appearing again on day 2/final-day pages.
+                discovered.setdefault(ref.url, ref)
+        except Exception as exc:
             failures.append(
                 {
                     "stage": "daily_discovery",
-                    "race_date": day.isoformat(),
+                    "discovered_on": day.isoformat(),
                     "url": daily_url,
                     "error": f"{type(exc).__name__}: {exc}",
                 }
@@ -316,17 +327,21 @@ def collect(start: date, end: date, out_dir: Path, sleep_seconds: float) -> dict
         if sleep_seconds:
             time.sleep(sleep_seconds)
 
-    for ref in sorted(discovered.values(), key=lambda item: (item.race_date, item.url)):
+    for ref in sorted(discovered.values(), key=lambda item: (item.discovered_on, item.url)):
         try:
             html = fetch_html(session, ref.url)
             race_meta, race_entries = extract_entries(html, ref)
+            actual_date = date.fromisoformat(str(race_meta["race_date"]))
+            if actual_date < start or actual_date > end:
+                skipped_outside_window += 1
+                continue
             races.append(race_meta)
             entries.extend(race_entries)
         except Exception as exc:
             failures.append(
                 {
                     "stage": "race_parse",
-                    "race_date": ref.race_date,
+                    "discovered_on": ref.discovered_on,
                     "url": ref.url,
                     "error": f"{type(exc).__name__}: {exc}",
                 }
@@ -334,32 +349,82 @@ def collect(start: date, end: date, out_dir: Path, sleep_seconds: float) -> dict
         if sleep_seconds:
             time.sleep(sleep_seconds)
 
+    races.sort(key=lambda row: (str(row["race_date"]), str(row["track"]), int(row["race_no"])))
+    entries.sort(
+        key=lambda row: (
+            str(row["race_date"]),
+            str(row["track"]),
+            int(row["race_no"]),
+            int(row["car_no"]),
+        )
+    )
+
     race_fields = [
-        "race_id", "race_date", "track", "race_no", "race_type", "start_time",
-        "deadline", "entry_count", "source_url",
+        "race_id",
+        "race_date",
+        "track",
+        "race_no",
+        "race_type",
+        "start_time",
+        "deadline",
+        "entry_count",
+        "source_url",
+        "captured_at_utc",
     ]
     entry_fields = [
-        "race_id", "race_date", "track", "race_no", "race_type", "start_time",
-        "deadline", "source_url", "car_no", "player_name", "player_profile",
-        "class", "style", "gear", "score", "raw_row_json",
+        "race_id",
+        "race_date",
+        "track",
+        "race_no",
+        "race_type",
+        "start_time",
+        "deadline",
+        "source_url",
+        "captured_at_utc",
+        "car_no",
+        "player_name",
+        "player_profile",
+        "prefecture",
+        "age",
+        "term",
+        "class",
+        "style",
+        "gear",
+        "score",
+        "s_count",
+        "b_count",
+        "nige_count",
+        "makuri_count",
+        "sashi_count",
+        "mark_count",
+        "first_count",
+        "second_count",
+        "third_count",
+        "outside_count",
+        "win_rate",
+        "top2_rate",
+        "top3_rate",
+        "prediction_mark",
+        "evaluation",
+        "raw_row_json",
     ]
-    failure_fields = ["stage", "race_date", "url", "error"]
+    failure_fields = ["stage", "discovered_on", "url", "error"]
 
     write_csv(out_dir / "races.csv", races, race_fields)
     write_csv(out_dir / "entries.csv", entries, entry_fields)
     write_csv(out_dir / "failures.csv", failures, failure_fields)
 
-    captured_at = datetime.now(timezone.utc).isoformat()
     summary = {
         "target": TARGET_RACE_TYPE,
         "start_date": start.isoformat(),
         "end_date": end.isoformat(),
-        "captured_at_utc": captured_at,
+        "captured_at_utc": datetime.now(timezone.utc).isoformat(),
         "source": "楽天Kドリームス 公開レース情報",
-        "daily_source_template": KDreamsDaily,
-        "discovered_races": len(discovered),
+        "daily_source_template": KDREAMS_DAILY,
+        "candidate_races": len(discovered),
         "parsed_races": len(races),
         "entry_rows": len(entries),
+        "skipped_outside_window": skipped_outside_window,
         "failures": len(failures),
         "definition_note": "レース種別表記が完全一致する『Ｓ級予選』のみ。Ｓ級予選１/２、一次予選、特別選抜予選等は含めない。",
     }
