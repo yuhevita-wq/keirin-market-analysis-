@@ -1,0 +1,104 @@
+name: Enrich 2025 S-class preliminary line formation
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/enrich-s-yosen-lines-2025.yml"
+      - "src/keirin_market_analysis/line_formation_2025.py"
+  workflow_run:
+    workflows: ["Collect 2025 S-class preliminary race cards"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+jobs:
+  smoke:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: python -m pip install -e '.[scrape]'
+      - name: Verify known 2025 line formation
+        run: |
+          python - <<'PY'
+          from keirin_market_analysis.line_formation_2025 import fetch_html, make_session, parse_line_formation_html
+
+          url = 'https://keirin.kdreams.jp/maebashi/racedetail/2220250101010008/?pageType=result'
+          parsed = parse_line_formation_html(fetch_html(make_session(), url))
+          assert parsed['status'] == 'published', parsed
+          assert parsed['formation'] == '6-1-5/7-2/4-3', parsed
+          assert set(parsed['riders']) == {1, 2, 3, 4, 5, 6, 7}, parsed
+          assert parsed['riders'][6]['line_id'] == 1
+          assert parsed['riders'][6]['line_position'] == 1
+          assert parsed['riders'][1]['line_position'] == 2
+          assert parsed['riders'][5]['line_position'] == 3
+          assert parsed['riders'][7]['line_id'] == 2
+          assert parsed['riders'][4]['line_id'] == 3
+          print(parsed)
+          PY
+
+  enrich:
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: python -m pip install -e '.[scrape]'
+      - name: Confirm base dataset exists
+        run: |
+          test -f data/2025/s_class_yosen/races.csv
+          test -f data/2025/s_class_yosen/entries.csv
+      - name: Enrich line formation
+        run: |
+          python -m keirin_market_analysis.line_formation_2025 \
+            --data-dir data/2025/s_class_yosen \
+            --sleep 0.25
+      - name: Validate enriched output
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+
+          p = Path('data/2025/s_class_yosen')
+          summary = json.loads((p/'line_summary.json').read_text(encoding='utf-8'))
+          races = list(csv.DictReader((p/'races.csv').open(encoding='utf-8-sig')))
+          entries = list(csv.DictReader((p/'entries.csv').open(encoding='utf-8-sig')))
+          assert summary['line_parse_failures'] == 0, summary
+          assert summary['published_line_races'] > 0, summary
+          assert all('predicted_line_formation' in r for r in races)
+          published_races = [r for r in races if r['line_status'] == 'published']
+          assert all(r['predicted_line_formation'] for r in published_races)
+          published_entries = [e for e in entries if e['line_status'] == 'published']
+          assert all(e['predicted_line_formation'] for e in published_entries)
+          assert all(e['line_id'] and e['line_position'] and e['line_size'] for e in published_entries)
+          print(summary)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: s-yosen-2025-with-lines
+          path: data/2025/s_class_yosen
+      - name: Commit enriched dataset
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/2025/s_class_yosen
+          if git diff --cached --quiet; then
+            echo "No line data changes to commit"
+          else
+            git commit -m "data: add 2025 S-class preliminary line formation"
+            git push origin HEAD:main
+          fi
