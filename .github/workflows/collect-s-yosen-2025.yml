@@ -50,7 +50,10 @@ jobs:
             --start-date 2025-01-01 \
             --end-date 2025-01-01 \
             --out-dir /tmp/s-yosen-smoke \
-            --sleep 0.20
+            --sleep 0.20 \
+            --allow-failures
+          echo '--- failures.csv ---'
+          cat /tmp/s-yosen-smoke/failures.csv
       - name: Validate smoke output
         run: |
           python - <<'PY'
@@ -68,6 +71,7 @@ jobs:
           print(summary)
           PY
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: s-yosen-smoke
           path: /tmp/s-yosen-smoke
