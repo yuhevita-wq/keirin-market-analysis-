@@ -10,9 +10,16 @@ requires-python = ">=3.11"
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
+scrape = [
+  "beautifulsoup4>=4.12",
+  "lxml>=5.2",
+  "pandas>=2.2",
+  "requests>=2.32",
+]
 
 [project.scripts]
 keirin-market-analysis = "keirin_market_analysis.cli:main"
+keirin-collect-s-yosen-2025 = "keirin_market_analysis.s_yosen_2025:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
