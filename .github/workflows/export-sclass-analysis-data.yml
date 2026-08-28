@@ -1,0 +1,40 @@
+name: Export S-class qualifying analysis data
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/export-sclass-analysis-data.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate source files
+        run: |
+          python - <<'PY'
+          import csv
+          from pathlib import Path
+          base=Path('data/2025/s_class_yosen')
+          expected={'races.csv':1464,'entries.csv':10250,'results.csv':10250}
+          for name,n in expected.items():
+              with (base/name).open('r',encoding='utf-8-sig',newline='') as f:
+                  rows=list(csv.DictReader(f))
+              assert len(rows)==n,(name,len(rows),n)
+          assert (base/'payouts.csv').exists()
+          print('source data validated')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sclass-yosen-analysis-data
+          path: |
+            data/2025/s_class_yosen/races.csv
+            data/2025/s_class_yosen/entries.csv
+            data/2025/s_class_yosen/results.csv
+            data/2025/s_class_yosen/payouts.csv
