@@ -1,0 +1,46 @@
+name: Finalize early V2 before 2023 OOS
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/finalize-early-v2.yml'
+      - 'src/keirin_market_analysis/finalize_early_v2.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e .
+      - name: Finalize early V2 using 2024 and 2025 only
+        run: python -m keirin_market_analysis.finalize_early_v2
+      - name: Validate no 2023 dependency and print result
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          code=Path('src/keirin_market_analysis/finalize_early_v2.py').read_text(encoding='utf-8')
+          assert "data/2023" not in code
+          p=Path('data/audits/early_v2_finalization.json')
+          s=json.loads(p.read_text(encoding='utf-8'))
+          assert s['selected_formation'] in {'f4','f6x'}
+          assert '2023' not in s['financial']['f4']
+          assert '2023' not in s['financial']['f6x']
+          print(json.dumps(s,ensure_ascii=False,indent=2))
+          PY
+      - name: Commit finalization audit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/audits/early_v2_finalization.json
+          git diff --cached --quiet || git commit -m 'analysis: finalize early V2 before 2023 OOS'
+          git push
