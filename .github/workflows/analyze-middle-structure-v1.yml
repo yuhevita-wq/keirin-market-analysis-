@@ -1,0 +1,42 @@
+name: Analyze middle S-class qualifying structure v1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/analyze-middle-structure-v1.yml"
+      - "src/keirin_market_analysis/analyze_middle_structure_v1.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: python -m pip install -e .
+      - name: Analyze middle structure
+        run: python -m keirin_market_analysis.analyze_middle_structure_v1
+      - name: Validate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/2025/s_class_yosen/simulations/middle_structure_v1/summary.json')
+          s=json.loads(p.read_text(encoding='utf-8'))
+          assert s['mainline_top2']['all']['races'] > 0
+          assert s['mainline_top2']['H1']['races'] + s['mainline_top2']['H2']['races'] == s['mainline_top2']['all']['races']
+          assert s['collapse']['races'] == s['mainline_top2']['all']['races'] - s['mainline_top2']['all']['mainline_top2']
+          print(json.dumps(s, ensure_ascii=False, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: middle-structure-v1
+          path: data/2025/s_class_yosen/simulations/middle_structure_v1
