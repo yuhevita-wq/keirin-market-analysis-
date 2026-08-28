@@ -1,0 +1,32 @@
+name: Extract V2 middle late compact
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/extract-v2-middle-late-compact.yml"
+      - "src/keirin_market_analysis/extract_v2_middle_late_compact.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e .
+      - run: python -m keirin_market_analysis.extract_v2_middle_late_compact
+      - name: Commit compact audit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/v2_middle_late_structure_compact.json
+          git diff --cached --quiet && exit 0
+          git commit -m "analysis: save compact V2 middle late audit"
+          git push
