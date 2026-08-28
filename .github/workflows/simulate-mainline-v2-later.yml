@@ -1,0 +1,46 @@
+name: Simulate 2025 later S-class preliminary mainline v2
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/simulate-mainline-v2-later.yml"
+      - "src/keirin_market_analysis/simulate_mainline_v2_later.py"
+  workflow_dispatch:
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: python -m pip install -e .
+      - name: Run fixed later-only simulation
+        run: python -m keirin_market_analysis.simulate_mainline_v2_later
+      - name: Validate simulation output
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          p=Path('data/2025/s_class_yosen/simulations/mainline_v2_later')
+          s=json.loads((p/'summary.json').read_text(encoding='utf-8'))
+          rows=list(csv.DictReader((p/'race_simulation.csv').open(encoding='utf-8-sig')))
+          bets=list(csv.DictReader((p/'bets.csv').open(encoding='utf-8-sig')))
+          assert len(rows) == 458
+          assert s['overall']['races'] == 458
+          assert all(r['segment'] == '後半' for r in rows)
+          assert all(int(r['third_candidate_count']) == 2 for r in rows)
+          assert all(int(r['bet_count']) == 4 for r in rows)
+          assert len(bets) == 1832
+          assert s['overall']['stake_yen'] == 183200
+          assert s['overall']['mainline_top2_races'] == 239
+          print(json.dumps(s, ensure_ascii=False, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: s-yosen-2025-mainline-v2-later-simulation
+          path: data/2025/s_class_yosen/simulations/mainline_v2_later
