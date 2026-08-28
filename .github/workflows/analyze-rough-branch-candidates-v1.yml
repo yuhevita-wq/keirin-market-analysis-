@@ -1,0 +1,36 @@
+name: Analyze rough branch candidate expansion v1
+on:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/analyze_rough_branch_candidates_v1.py'
+      - '.github/workflows/analyze-rough-branch-candidates-v1.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install -e .
+      - name: Analyze
+        run: python -m keirin_market_analysis.analyze_rough_branch_candidates_v1
+      - name: Validate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/2025/s_class_yosen/simulations/rough_branch_candidates_v1/summary.json')
+          s=json.loads(p.read_text(encoding='utf-8'))
+          assert s['all']['races'] == 61, s['all']
+          assert s['H1']['races'] + s['H2']['races'] == 61
+          print(json.dumps(s,ensure_ascii=False,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rough-branch-candidates-v1
+          path: data/2025/s_class_yosen/simulations/rough_branch_candidates_v1
