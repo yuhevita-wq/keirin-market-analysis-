@@ -1,0 +1,53 @@
+name: Analyze later S-class preliminary third slots by mainline size v1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/analyze-third-slots-by-mainline-size-v1.yml"
+      - "src/keirin_market_analysis/analyze_third_slots_by_mainline_size_v1.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: pip install -e .
+      - name: Analyze split third-slot rules
+        run: python -m keirin_market_analysis.analyze_third_slots_by_mainline_size_v1
+      - name: Validate output
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/2025/s_class_yosen/simulations/mainline_v1/third_slots_by_mainline_size_v1.json')
+          s=json.loads(p.read_text(encoding='utf-8'))
+          assert s['case_counts']['main3plus'] == 197, s
+          assert s['case_counts']['main2'] == 42, s
+          assert s['case_counts']['main3_hit'] + s['case_counts']['main3_miss_external_third'] == 197, s
+          print(json.dumps(s, ensure_ascii=False, indent=2))
+          PY
+      - name: Commit analysis output
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/2025/s_class_yosen/simulations/mainline_v1/third_slots_by_mainline_size_v1.json
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "analysis: split third slots by mainline size"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
