@@ -1,0 +1,26 @@
+name: Simulate branching v3 confidence
+
+on:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/simulate_branching_v3_confidence.py'
+      - '.github/workflows/simulate-branching-v3-confidence.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e .
+      - run: python -m keirin_market_analysis.simulate_branching_v3_confidence
+      - uses: actions/upload-artifact@v4
+        with:
+          name: branching-v3-confidence
+          path: data/2025/s_class_yosen/simulations/branching_v3_confidence
