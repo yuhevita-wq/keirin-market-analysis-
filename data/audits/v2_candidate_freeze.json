@@ -1,0 +1,42 @@
+{
+  "status": "FROZEN_BEFORE_2023_OOS",
+  "principle": "2024 and 2025 are development data for V2. 2023 is fresh OOS and must not influence any threshold, formation, or skip rule before evaluation.",
+  "middle_v2_candidate": {
+    "eligible": "中盤, main line size >=3, strongest rival line size >=2",
+    "condition": "A+B top2_rate sum > 70.0",
+    "bets": [
+      "A-B-M3",
+      "B-A-M3",
+      "A-B-R1L",
+      "B-A-R1L",
+      "A-B-R1B",
+      "B-A-R1B"
+    ],
+    "stake_per_race_yen": 600,
+    "selection_reason": "Highest worst-year ROI among the small candidate set frozen after structure-only 2024+2025 audit, with fewer points preferred near ties.",
+    "dev_2024": {"races":112,"hits":46,"stake_yen":67200,"payout_yen":64510,"profit_yen":-2690,"roi":0.9599702380952381},
+    "dev_2025": {"races":116,"hits":56,"stake_yen":69600,"payout_yen":72470,"profit_yen":2870,"roi":1.041235632183908},
+    "dev_combined": {"races":228,"hits":102,"stake_yen":136800,"payout_yen":136980,"profit_yen":180,"roi":1.0013157894736842}
+  },
+  "late_v2_candidate": {
+    "eligible": "後半, main line size >=3",
+    "condition": "pair_top3 > 106.1 AND pair_win > 54.7",
+    "rough_branch": "removed; all non-mainline-A races are SKIP in V2 candidate",
+    "bets": ["A-B-M3","B-A-M3","A-B-X","B-A-X"],
+    "X": "highest score rider outside the main line first 3 riders, unchanged from 2025 mainline 4-point rule",
+    "stake_per_race_yen": 400,
+    "selection_reason": "Mainline routing reproduced structurally across years; current 4-point ticket set beat wider 6-point and rival-third alternatives on worst-year ROI. Former rough branch changed meaning across years and is removed.",
+    "dev_2024": {"races":42,"hits":23,"stake_yen":16800,"payout_yen":13530,"profit_yen":-3270,"roi":0.8053571428571429},
+    "dev_2025": {"races":58,"hits":31,"stake_yen":23200,"payout_yen":32010,"profit_yen":8810,"roi":1.3797413793103448},
+    "dev_combined": {"races":100,"hits":54,"stake_yen":40000,"payout_yen":45540,"profit_yen":5540,"roi":1.1385}
+  },
+  "forbidden_after_2023_is_read": [
+    "change pair_top2 threshold 70.0",
+    "add or remove middle combinations",
+    "change late 106.1 or 54.7 thresholds",
+    "restore or redesign late rough branch before raw V2 OOS is recorded",
+    "exclude losing 2023 races",
+    "add result-driven score gaps or payout filters"
+  ],
+  "next_validation": "Acquire 2023 exact-label Ｓ級予選 with the same collection and predicted-line rules, then apply this manifest unchanged."
+}
