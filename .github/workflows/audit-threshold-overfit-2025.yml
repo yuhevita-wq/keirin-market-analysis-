@@ -1,0 +1,58 @@
+name: Audit 2025 threshold search overfit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/keirin_market_analysis/audit_threshold_overfit_2025.py"
+      - ".github/workflows/audit-threshold-overfit-2025.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e .
+      - name: Run 2025-only overfit audit
+        run: python -m keirin_market_analysis.audit_threshold_overfit_2025
+      - name: Validate audit isolation and output
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/audits/threshold_overfit_2025.json')
+          d=json.loads(p.read_text(encoding='utf-8'))
+          assert d['dataset_races']==1464, d['dataset_races']
+          assert d['scope'].startswith('2025 only.'), d['scope']
+          assert set(d['methodological_readout']) == {'early_v0','middle_v0','late_mainline_routing','late_rough_ticket_path','combined_2025_headline'}
+          src=Path('src/keirin_market_analysis/audit_threshold_overfit_2025.py').read_text(encoding='utf-8')
+          assert "data/2024" not in src
+          print(json.dumps(d['methodological_readout'],ensure_ascii=False,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: threshold-overfit-2025
+          path: data/audits/threshold_overfit_2025.json
+      - name: Commit audit report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/audits/threshold_overfit_2025.json
+          if git diff --cached --quiet; then
+            echo "No audit changes"
+          else
+            git commit -m "audit: save 2025 threshold overfit report"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
