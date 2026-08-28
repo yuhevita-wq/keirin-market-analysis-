@@ -1,0 +1,48 @@
+name: Simulate branching S-class preliminary v1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/simulate-branching-v1.yml"
+      - "src/keirin_market_analysis/simulate_branching_v1.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: python -m pip install -e .
+      - name: Run branching simulation
+        run: python -m keirin_market_analysis.simulate_branching_v1
+      - name: Validate
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          p=Path('data/2025/s_class_yosen/simulations/branching_v1')
+          s=json.loads((p/'summary.json').read_text(encoding='utf-8'))
+          rows=list(csv.DictReader((p/'race_simulation.csv').open(encoding='utf-8-sig')))
+          bets=list(csv.DictReader((p/'bets.csv').open(encoding='utf-8-sig')))
+          assert len(rows) == 353, len(rows)
+          assert s['overall']['races'] == 353
+          assert sum(s['by_branch'][b]['races'] for b in ('A_mainline','B_rough','C_middle')) == 353
+          assert all(int(r['bet_count']) == 4 for r in rows if r['branch'] == 'A_mainline')
+          assert all(int(r['bet_count']) == 6 for r in rows if r['branch'] == 'B_rough')
+          assert all(int(r['bet_count']) == 0 for r in rows if r['branch'] == 'C_middle')
+          assert s['overall']['stake_yen'] == len(bets)*100
+          print(json.dumps(s, ensure_ascii=False, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: branching-v1-simulation
+          path: data/2025/s_class_yosen/simulations/branching_v1
