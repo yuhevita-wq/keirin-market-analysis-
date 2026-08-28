@@ -1,0 +1,113 @@
+name: Extract 2025 S-class preliminary results and payouts
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "src/keirin_market_analysis/results_payouts_2025.py"
+      - ".github/workflows/extract-results-payouts-2025.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: python -m pip install -e '.[scrape]'
+      - name: Verify known result and all ticket payouts
+        run: |
+          python - <<'PY'
+          from keirin_market_analysis.results_payouts_2025 import fetch_html, make_session, parse_result_page
+
+          url = 'https://keirin.kdreams.jp/maebashi/racedetail/2220250101010008/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT'
+          results, payouts = parse_result_page(fetch_html(make_session(), url))
+          assert {r['car_no'] for r in results} == {1,2,3,4,5,6,7}, results
+          top = {int(r['finish_position']): int(r['car_no']) for r in results if str(r['finish_position']).isdigit() and int(r['finish_position']) <= 3}
+          assert top == {1:7, 2:4, 3:3}, top
+
+          by = {(p['ticket_type'], p['combination']): p for p in payouts}
+          assert by[('2枠複','')]['status'] == 'not_offered'
+          assert by[('2枠単','')]['status'] == 'not_offered'
+          assert by[('2車複','4=7')]['payout_yen'] == 1690
+          assert by[('2車単','7-4')]['payout_yen'] == 2730
+          assert by[('3連複','3=4=7')]['payout_yen'] == 720
+          assert by[('3連単','7-4-3')]['payout_yen'] == 6890
+          assert by[('ワイド','3=4')]['payout_yen'] == 210
+          assert by[('ワイド','3=7')]['payout_yen'] == 270
+          assert by[('ワイド','4=7')]['payout_yen'] == 400
+          assert {p['ticket_type'] for p in payouts} == {'2枠複','2枠単','2車複','2車単','3連複','3連単','ワイド'}
+          print(results)
+          print(payouts)
+          PY
+
+  extract-full:
+    needs: smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: python -m pip install -e '.[scrape]'
+      - name: Extract all 2025 S-class preliminary results and payouts
+        run: |
+          python -m keirin_market_analysis.results_payouts_2025 \
+            --data-dir data/2025/s_class_yosen \
+            --sleep 0.25
+      - name: Validate output
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          p=Path('data/2025/s_class_yosen')
+          s=json.loads((p/'result_summary.json').read_text(encoding='utf-8'))
+          results=list(csv.DictReader((p/'results.csv').open(encoding='utf-8-sig')))
+          payouts=list(csv.DictReader((p/'payouts.csv').open(encoding='utf-8-sig')))
+          failures=list(csv.DictReader((p/'result_failures.csv').open(encoding='utf-8-sig')))
+          assert s['race_count'] == 1464, s
+          assert s['complete_result_races'] == 1464, s
+          assert s['complete_payout_races'] == 1464, s
+          assert s['parse_failures'] == 0, s
+          assert not failures, failures[:10]
+          assert results, s
+          assert payouts, s
+          print(s)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: s-yosen-2025-results-payouts
+          path: |
+            data/2025/s_class_yosen/results.csv
+            data/2025/s_class_yosen/payouts.csv
+            data/2025/s_class_yosen/result_failures.csv
+            data/2025/s_class_yosen/result_summary.json
+      - name: Commit result dataset
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/2025/s_class_yosen/results.csv \
+                  data/2025/s_class_yosen/payouts.csv \
+                  data/2025/s_class_yosen/result_failures.csv \
+                  data/2025/s_class_yosen/result_summary.json
+          if git diff --cached --quiet; then
+            echo "No result data changes to commit"
+          else
+            git commit -m "data: add 2025 S-class preliminary results and payouts"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
