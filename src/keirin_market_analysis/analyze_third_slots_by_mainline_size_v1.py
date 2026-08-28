@@ -50,30 +50,31 @@ def top_by(rows: list[dict[str, str]], metric: str, n: int) -> list[int]:
     return [int(e['car_no']) for e in ranked[:n]]
 
 
-def one_external_rules(external: list[dict[str, str]], by_line, main_line_id: int) -> dict[str, list[int]]:
+def one_alt_rules(pool: list[dict[str, str]], by_line, main_line_id: int) -> dict[str, list[int]]:
     rules: dict[str, list[int]] = {}
     for metric in ('score','top3_rate','top2_rate','win_rate','third_count','mark_count','b_count'):
-        rules[f'best_{metric}'] = top_by(external, metric, 1)
+        rules[f'best_{metric}'] = top_by(pool, metric, 1)
     rival = strongest_rival(by_line, main_line_id)
     if rival:
-        members = [e for e in rival[2] if int(e['car_no']) in {int(x['car_no']) for x in external}]
+        pool_cars = {int(x['car_no']) for x in pool}
+        members = [e for e in rival[2] if int(e['car_no']) in pool_cars]
         rules['strongest_rival_leader'] = [int(members[0]['car_no'])] if members else []
         rules['strongest_rival_best_score'] = top_by(members, 'score', 1) if members else []
         rules['strongest_rival_best_top3'] = top_by(members, 'top3_rate', 1) if members else []
     return rules
 
 
-def two_external_rules(external: list[dict[str, str]], by_line, main_line_id: int) -> dict[str, list[int]]:
+def two_alt_rules(pool: list[dict[str, str]], by_line, main_line_id: int) -> dict[str, list[int]]:
     rules: dict[str, list[int]] = {}
     for metric in ('score','top3_rate','top2_rate','win_rate','third_count','mark_count','b_count'):
-        rules[f'top2_{metric}'] = top_by(external, metric, 2)
+        rules[f'top2_{metric}'] = top_by(pool, metric, 2)
     rival = strongest_rival(by_line, main_line_id)
     if rival:
-        members = [e for e in rival[2] if int(e['car_no']) in {int(x['car_no']) for x in external}]
-        rival_cars = [int(e['car_no']) for e in members[:2]]
-        rules['strongest_rival_first2'] = rival_cars
+        pool_cars = {int(x['car_no']) for x in pool}
+        members = [e for e in rival[2] if int(e['car_no']) in pool_cars]
+        rules['strongest_rival_first2'] = [int(e['car_no']) for e in members[:2]]
         best_rival = top_by(members, 'score', 1) if members else []
-        remaining = [e for e in external if int(e['car_no']) not in set(best_rival)]
+        remaining = [e for e in pool if int(e['car_no']) not in set(best_rival)]
         rules['best_rival_plus_best_score_elsewhere'] = best_rival + top_by(remaining, 'score', 1)
     return rules
 
@@ -87,14 +88,11 @@ def main() -> None:
 
     target = [r for r in sim if r['segment'] == '後半' and r['mainline_top2'] == '1']
     cases = Counter()
-    one_rule_hits = Counter()
-    two_rule_hits = Counter()
+    one_rule_hits = Counter(); two_rule_hits = Counter()
     one_rule_h1 = Counter(); one_rule_h2 = Counter()
     two_rule_h1 = Counter(); two_rule_h2 = Counter()
     one_den_h1 = one_den_h2 = two_den_h1 = two_den_h2 = 0
-    external_actual_position = Counter()
-    external_actual_score_rank = Counter()
-    external_actual_top3_rank = Counter()
+    alt_actual_position = Counter(); alt_actual_score_rank = Counter(); alt_actual_top3_rank = Counter()
 
     for r in target:
         rid = r['race_id']
@@ -104,7 +102,6 @@ def main() -> None:
         main_members = by_line[main_line_id]
         a, b = int(r['a_car']), int(r['b_car'])
         actual = int(r['actual_third'].split('-')[0])
-        external = [e for e in es if int(e['line_id']) != main_line_id]
         half = 'H1' if r['race_date'] <= '2025-06-30' else 'H2'
 
         if len(main_members) >= 3:
@@ -113,8 +110,9 @@ def main() -> None:
             if actual == main3:
                 cases['main3_hit'] += 1
             else:
-                cases['main3_miss_external_third'] += 1
-                one_rules = one_external_rules(external, by_line, main_line_id)
+                cases['main3_miss_alt_third'] += 1
+                pool = [e for e in es if int(e['car_no']) not in {a, b, main3}]
+                one_rules = one_alt_rules(pool, by_line, main_line_id)
                 for name, cars in one_rules.items():
                     if actual in cars:
                         one_rule_hits[name] += 1
@@ -122,16 +120,21 @@ def main() -> None:
                 if half == 'H1': one_den_h1 += 1
                 else: one_den_h2 += 1
 
-                actual_e = next(e for e in external if int(e['car_no']) == actual)
-                pos = int(actual_e['line_position']) if actual_e.get('line_position','').isdigit() else 0
-                external_actual_position[pos] += 1
-                score_ranked = sorted(external, key=lambda e: (-val(e.get('score')), int(e['car_no'])))
-                top3_ranked = sorted(external, key=lambda e: (-val(e.get('top3_rate')), int(e['car_no'])))
-                external_actual_score_rank[next(i for i,e in enumerate(score_ranked,1) if int(e['car_no'])==actual)] += 1
-                external_actual_top3_rank[next(i for i,e in enumerate(top3_ranked,1) if int(e['car_no'])==actual)] += 1
+                actual_e = next(e for e in pool if int(e['car_no']) == actual)
+                if int(actual_e.get('line_id') or -1) == main_line_id:
+                    pos_label = f"本線{actual_e.get('line_position','?')}番手"
+                else:
+                    pos_label = f"他線{actual_e.get('line_position','?')}番手"
+                alt_actual_position[pos_label] += 1
+                score_ranked = sorted(pool, key=lambda e: (-val(e.get('score')), int(e['car_no'])))
+                top3_ranked = sorted(pool, key=lambda e: (-val(e.get('top3_rate')), int(e['car_no'])))
+                alt_actual_score_rank[next(i for i,e in enumerate(score_ranked,1) if int(e['car_no'])==actual)] += 1
+                alt_actual_top3_rank[next(i for i,e in enumerate(top3_ranked,1) if int(e['car_no'])==actual)] += 1
+
         elif len(main_members) == 2:
             cases['main2'] += 1
-            two_rules = two_external_rules(external, by_line, main_line_id)
+            pool = [e for e in es if int(e['car_no']) not in {a, b}]
+            two_rules = two_alt_rules(pool, by_line, main_line_id)
             for name, cars in two_rules.items():
                 if actual in cars:
                     two_rule_hits[name] += 1
@@ -139,7 +142,7 @@ def main() -> None:
             if half == 'H1': two_den_h1 += 1
             else: two_den_h2 += 1
 
-    one_den = cases['main3_miss_external_third']
+    one_den = cases['main3_miss_alt_third']
     two_den = cases['main2']
     main3base = cases['main3_hit']
 
@@ -147,12 +150,12 @@ def main() -> None:
     for name in sorted(set(one_rule_hits)|set(one_rule_h1)|set(one_rule_h2)):
         incremental = one_rule_hits[name]
         one_summary[name] = {
-            'external_capture': incremental,
-            'external_capture_rate': incremental / one_den if one_den else 0,
-            'combined_main3_plus_external_capture': main3base + incremental,
+            'alternate_capture': incremental,
+            'alternate_capture_rate_when_main3_misses': incremental / one_den if one_den else 0,
+            'combined_main3_plus_alt_capture': main3base + incremental,
             'combined_capture_rate_among_main3plus': (main3base + incremental) / cases['main3plus'] if cases['main3plus'] else 0,
-            'H1_external_capture_rate': one_rule_h1[name] / one_den_h1 if one_den_h1 else 0,
-            'H2_external_capture_rate': one_rule_h2[name] / one_den_h2 if one_den_h2 else 0,
+            'H1_alternate_capture_rate': one_rule_h1[name] / one_den_h1 if one_den_h1 else 0,
+            'H2_alternate_capture_rate': one_rule_h2[name] / one_den_h2 if one_den_h2 else 0,
         }
 
     two_summary = {}
@@ -167,12 +170,12 @@ def main() -> None:
     out = {
         'scope': '2025 exact S級予選, 後半, mainline A/B occupied first-second; split by mainline size; capture analysis only',
         'case_counts': dict(cases),
-        'main3plus_external_third_position_counts': dict(sorted(external_actual_position.items())),
-        'main3plus_external_third_score_rank_counts': dict(sorted(external_actual_score_rank.items())),
-        'main3plus_external_third_top3_rate_rank_counts': dict(sorted(external_actual_top3_rank.items())),
-        'main3plus_one_external_slot_rules': one_summary,
-        'main2_two_external_slot_rules': two_summary,
-        'half_denominators': {'main3plus_external_H1': one_den_h1, 'main3plus_external_H2': one_den_h2, 'main2_H1': two_den_h1, 'main2_H2': two_den_h2},
+        'main3plus_alt_third_position_counts': dict(alt_actual_position),
+        'main3plus_alt_third_score_rank_counts': dict(sorted(alt_actual_score_rank.items())),
+        'main3plus_alt_third_top3_rate_rank_counts': dict(sorted(alt_actual_top3_rank.items())),
+        'main3plus_main3_plus_one_alt_slot_rules': one_summary,
+        'main2_two_alt_slot_rules': two_summary,
+        'half_denominators': {'main3plus_alt_H1': one_den_h1, 'main3plus_alt_H2': one_den_h2, 'main2_H1': two_den_h1, 'main2_H2': two_den_h2},
         'warning': 'Exploratory descriptive comparison. No payout/ROI used to choose rules. Small mainline-2 sample should be treated cautiously.'
     }
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
