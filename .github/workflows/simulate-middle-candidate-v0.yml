@@ -1,0 +1,40 @@
+name: Simulate middle S-class candidate v0
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/simulate-middle-candidate-v0.yml"
+      - "src/keirin_market_analysis/simulate_middle_candidate_v0.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e .
+      - run: python -m keirin_market_analysis.simulate_middle_candidate_v0
+      - name: Validate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path('data/2025/s_class_yosen/simulations/middle_candidate_v0/summary.json').read_text(encoding='utf-8'))
+          assert s['all']['races']==79, s
+          assert s['all']['stake_yen']==15800, s
+          assert s['all']['payout_yen']==30160, s
+          assert s['H1']['races']==37 and s['H2']['races']==42, s
+          print(json.dumps(s,ensure_ascii=False,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: middle-candidate-v0
+          path: data/2025/s_class_yosen/simulations/middle_candidate_v0
