@@ -1,0 +1,43 @@
+name: Analyze mainline branching rules v1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/analyze-mainline-branch-v1.yml"
+      - "src/keirin_market_analysis/analyze_mainline_branch_v1.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: python -m pip install -e .
+      - name: Build branching analysis
+        run: python -m keirin_market_analysis.analyze_mainline_branch_v1
+      - name: Validate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/2025/s_class_yosen/simulations/mainline_branch_v1/summary.json')
+          s=json.loads(p.read_text(encoding='utf-8'))
+          assert s['all']['races'] == 353, s['all']
+          assert s['all']['mainline_top2'] == 197, s['all']
+          assert s['H1']['races'] + s['H2']['races'] == 353
+          assert s['leaf_validation']
+          print(json.dumps(s, ensure_ascii=False, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mainline-branch-v1
+          path: data/2025/s_class_yosen/simulations/mainline_branch_v1
