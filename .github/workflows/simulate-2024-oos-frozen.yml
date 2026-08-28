@@ -1,0 +1,108 @@
+name: Simulate frozen 2025 strategies on 2024 OOS
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/keirin_market_analysis/simulate_2024_oos_frozen.py"
+      - ".github/workflows/simulate-2024-oos-frozen.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validate-and-simulate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: python -m pip install -e .
+
+      - name: Reproduce frozen 2025 results first
+        run: |
+          python -m keirin_market_analysis.simulate_2024_oos_frozen \
+            --data-dir data/2025/s_class_yosen \
+            --out-dir /tmp/frozen-2025-check \
+            --year 2025
+
+      - name: Assert exact 2025 reproduction
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path('/tmp/frozen-2025-check/summary.json').read_text(encoding='utf-8'))
+          e=s['early_v0']; m=s['middle_v0']; l=s['late_v1']
+          assert e['eligible_base'] == 297, e
+          assert e['purchased_races'] == 74, e
+          assert e['hits'] == 11, e
+          assert e['stake_yen'] == 29600, e
+          assert e['payout_yen'] == 106100, e
+          assert m['eligible_base'] == 286, m
+          assert m['purchased_races'] == 79, m
+          assert m['hits'] == 9, m
+          assert m['stake_yen'] == 15800, m
+          assert m['payout_yen'] == 30160, m
+          assert l['eligible_base'] == 353, l
+          assert l['purchased_races'] == 111, l
+          assert l['stake_yen'] == 118600, l
+          assert l['payout_yen'] == 176980, l
+          assert s['late_decision_counts']['mainline_4pt'] == 58, s['late_decision_counts']
+          assert s['late_decision_counts']['rough_18pt'] == 53, s['late_decision_counts']
+          assert s['late_decision_counts']['skip_rough_score_gap_ge_10'] == 8, s['late_decision_counts']
+          c=s['combined']
+          assert c['purchased_races'] == 264, c
+          assert c['stake_yen'] == 164000, c
+          assert c['payout_yen'] == 313240, c
+          print(json.dumps(s, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Apply frozen strategies to untouched 2024 OOS dataset
+        run: |
+          python -m keirin_market_analysis.simulate_2024_oos_frozen \
+            --data-dir data/2024/s_class_yosen \
+            --out-dir data/2024/s_class_yosen/oos_frozen_2025_strategies \
+            --year 2024
+
+      - name: Validate OOS output integrity
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          p=Path('data/2024/s_class_yosen/oos_frozen_2025_strategies')
+          s=json.loads((p/'summary.json').read_text(encoding='utf-8'))
+          d=list(csv.DictReader((p/'race_decisions.csv').open(encoding='utf-8-sig')))
+          b=list(csv.DictReader((p/'bets.csv').open(encoding='utf-8-sig')))
+          assert s['dataset_races'] == 1461, s
+          assert len(d) == s['early_v0']['eligible_base'] + s['middle_v0']['eligible_base'] + s['late_v1']['eligible_base'], (len(d), s)
+          assert sum(int(r['purchased']) for r in d) == s['combined']['purchased_races'], s
+          assert sum(int(r['bet_count']) for r in d) == len(b), (len(b), s)
+          assert all(r['strategy'] in {'early_v0','middle_v0','late_v1'} for r in d)
+          assert all(r['race_date'].startswith('2024-') for r in d)
+          print(json.dumps(s, ensure_ascii=False, indent=2))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frozen-2024-oos-results
+          path: data/2024/s_class_yosen/oos_frozen_2025_strategies
+
+      - name: Commit OOS simulation results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/2024/s_class_yosen/oos_frozen_2025_strategies
+          if git diff --cached --quiet; then
+            echo "No OOS simulation changes to commit"
+          else
+            git commit -m "analysis: apply frozen 2025 strategies to 2024 OOS"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
