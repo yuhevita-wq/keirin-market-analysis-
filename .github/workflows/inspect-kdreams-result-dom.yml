@@ -21,15 +21,16 @@ jobs:
           python - <<'PY'
           import requests
           from bs4 import BeautifulSoup
-          url='https://keirin.kdreams.jp/maebashi/racedetail/2220250812010008/?pageType=result'
+          url='https://keirin.kdreams.jp/maebashi/racedetail/2220250812010008/?pageType=showResult'
           r=requests.get(url,headers={'User-Agent':'Mozilla/5.0'},timeout=30)
           r.raise_for_status(); r.encoding=r.apparent_encoding
           s=BeautifulSoup(r.text,'lxml')
+          print('TITLE', s.title.get_text(' ', strip=True) if s.title else '')
           for i,t in enumerate(s.find_all('table')):
               text=' '.join(t.stripped_strings)
-              if any(k in text for k in ['着順','2枠','2車','3連','ワイド','払戻']):
+              if any(k in text for k in ['着順','2枠','2車','3連','ワイド','払戻','天候']):
                   print('\nTABLE',i,'class=',t.get('class'),'id=',t.get('id'))
-                  print(text[:4000])
+                  print(text[:5000])
                   for j,tr in enumerate(t.find_all('tr',recursive=False)):
                       print(' ROW',j,'class=',tr.get('class'),'::',' | '.join(' '.join(c.stripped_strings) for c in tr.find_all(['th','td'],recursive=False)))
           PY
