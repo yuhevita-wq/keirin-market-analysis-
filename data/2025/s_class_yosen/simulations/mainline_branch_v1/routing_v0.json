@@ -1,0 +1,23 @@
+{
+  "scope": "2025 exact S級予選, 後半, main line size >=3 only",
+  "status": "provisional routing for research, not yet a betting filter",
+  "branch_A_mainline_lean": {
+    "rule": "main_pair_top3_sum > 106.1 AND main_pair_win_sum > 54.7",
+    "H1": {"races": 27, "mainline_rate": 0.8518518518518519},
+    "H2": {"races": 31, "mainline_rate": 0.6774193548387096},
+    "all": {"races": 58, "mainline_rate": 0.7586206896551724}
+  },
+  "branch_B_other_lean": {
+    "rule": "not branch_A AND main_pair_top3_sum <= 106.1 AND main_second_top3 <= 35.7",
+    "H1": {"races": 27, "mainline_rate": 0.37037037037037035, "other_rate": 0.6296296296296297},
+    "H2": {"races": 34, "mainline_rate": 0.38235294117647056, "other_rate": 0.6176470588235294},
+    "all": {"races": 61, "mainline_rate": 0.3770491803278688, "other_rate": 0.6229508196721312}
+  },
+  "branch_C_middle": {
+    "rule": "all remaining races",
+    "H1": {"races": 119, "mainline_rate": 0.5966386554621849},
+    "H2": {"races": 115, "mainline_rate": 0.5130434782608696},
+    "all": {"races": 234, "mainline_rate": 0.5555555555555556}
+  },
+  "note": "Thresholds originated from H1 single-feature exploration; this 3-way routing is exploratory. H2 is used as a temporal check and shows directional separation, but further validation is required before strategy adoption."
+}
