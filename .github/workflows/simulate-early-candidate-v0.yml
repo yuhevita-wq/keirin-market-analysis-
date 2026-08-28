@@ -1,0 +1,42 @@
+name: Simulate early S-class candidate v0
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/simulate-early-candidate-v0.yml"
+      - "src/keirin_market_analysis/simulate_early_candidate_v0.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e .
+      - run: python -m keirin_market_analysis.simulate_early_candidate_v0
+      - name: Validate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/2025/s_class_yosen/simulations/early_candidate_v0/summary.json')
+          s=json.loads(p.read_text(encoding='utf-8'))
+          assert s['all']['races'] == 74, s
+          assert s['H1']['races'] == 40, s
+          assert s['H2']['races'] == 34, s
+          assert s['all']['stake_yen'] == 29600, s
+          assert s['all']['payout_yen'] == 106100, s
+          print(json.dumps(s, ensure_ascii=False, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: early-candidate-v0
+          path: data/2025/s_class_yosen/simulations/early_candidate_v0
