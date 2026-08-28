@@ -36,7 +36,7 @@ jobs:
           s=json.loads(p.read_text(encoding='utf-8'))
           assert s['case_counts']['main3plus'] == 197, s
           assert s['case_counts']['main2'] == 42, s
-          assert s['case_counts']['main3_hit'] + s['case_counts']['main3_miss_external_third'] == 197, s
+          assert s['case_counts']['main3_hit'] + s['case_counts']['main3_miss_alt_third'] == 197, s
           print(json.dumps(s, ensure_ascii=False, indent=2))
           PY
       - name: Commit analysis output
