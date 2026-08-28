@@ -1,0 +1,22 @@
+name: Analyze rough branch formation v2
+on:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/analyze_rough_branch_formation_v2.py'
+      - '.github/workflows/analyze-rough-branch-formation-v2.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: python -m pip install -e .
+      - run: python -m keirin_market_analysis.analyze_rough_branch_formation_v2
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rough-branch-formation-v2
+          path: data/2025/s_class_yosen/simulations/rough_branch_formation_v2
