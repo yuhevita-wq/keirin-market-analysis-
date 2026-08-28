@@ -1,0 +1,43 @@
+name: Audit zero competition scores
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/keirin_market_analysis/audit_zero_scores.py"
+      - ".github/workflows/audit-zero-scores.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e .
+      - run: python -m keirin_market_analysis.audit_zero_scores
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zero-score-audit
+          path: data/audits/zero_score_audit_2024_2025.json
+      - name: Commit audit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/audits/zero_score_audit_2024_2025.json
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "audit: inspect zero competition scores"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
