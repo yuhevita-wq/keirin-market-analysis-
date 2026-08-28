@@ -45,7 +45,10 @@ jobs:
           assert e['hits'] == 11, e
           assert e['stake_yen'] == 29600, e
           assert e['payout_yen'] == 106100, e
-          assert m['eligible_base'] == 286, m
+          # Historical 286 is the structural count: middle x main-line size >=3.
+          # The frozen actionable target also requires a strongest rival 2+ line;
+          # one structural race lacks that rival, so actionable base is 285.
+          assert m['eligible_base'] == 285, m
           assert m['purchased_races'] == 79, m
           assert m['hits'] == 9, m
           assert m['stake_yen'] == 15800, m
