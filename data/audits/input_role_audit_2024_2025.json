@@ -1,0 +1,148 @@
+{
+  "purpose": "Audit stored pre-race inputs and line-to-role transformation only. No strategy thresholds, bets, results, or payouts are modified.",
+  "collector_identity": "2024 collector imports the frozen 2025 extract_entries parser directly.",
+  "entry_schema_same_except_capture_timestamp": true,
+  "years": {
+    "2024": {
+      "year": 2024,
+      "race_rows": 1461,
+      "entry_rows": 10227,
+      "required_columns_present": {
+        "score": true,
+        "win_rate": true,
+        "top2_rate": true,
+        "top3_rate": true,
+        "raw_row_json": true,
+        "line_id": true,
+        "line_position": true,
+        "line_size": true,
+        "predicted_line_formation": true
+      },
+      "missing_numeric": {
+        "score": 0,
+        "win_rate": 0,
+        "top2_rate": 0,
+        "top3_rate": 0
+      },
+      "nonnumeric": {
+        "score": 0,
+        "win_rate": 0,
+        "top2_rate": 0,
+        "top3_rate": 0
+      },
+      "numeric_distribution": {
+        "score": {
+          "count": 10227,
+          "min": 0.0,
+          "median": 99.1,
+          "max": 116.7
+        },
+        "win_rate": {
+          "count": 10227,
+          "min": 0.0,
+          "median": 10.3,
+          "max": 100.0
+        },
+        "top2_rate": {
+          "count": 10227,
+          "min": 0.0,
+          "median": 24.0,
+          "max": 100.0
+        },
+        "top3_rate": {
+          "count": 10227,
+          "min": 0.0,
+          "median": 38.4,
+          "max": 100.0
+        }
+      },
+      "rate_order_violations": 0,
+      "raw_snapshot_bad_json": 0,
+      "raw_snapshot_missing_values": 0,
+      "line_invariant_failures": 0,
+      "formation_mismatches": 0,
+      "main_not_found": 0,
+      "role_decisions_checked": 919,
+      "role_mismatches": 0,
+      "decision_segment_mismatches": 0,
+      "rival_pair_score_tie_races": 0,
+      "rival_tiebreak_mode_disagreements": 0,
+      "live_source_samples_requested": 24,
+      "live_source_samples_checked": 24,
+      "live_source_mismatches": [],
+      "live_source_fetch_failures": [],
+      "status": "PASS"
+    },
+    "2025": {
+      "year": 2025,
+      "race_rows": 1464,
+      "entry_rows": 10250,
+      "required_columns_present": {
+        "score": true,
+        "win_rate": true,
+        "top2_rate": true,
+        "top3_rate": true,
+        "raw_row_json": true,
+        "line_id": true,
+        "line_position": true,
+        "line_size": true,
+        "predicted_line_formation": true
+      },
+      "missing_numeric": {
+        "score": 0,
+        "win_rate": 0,
+        "top2_rate": 0,
+        "top3_rate": 0
+      },
+      "nonnumeric": {
+        "score": 0,
+        "win_rate": 0,
+        "top2_rate": 0,
+        "top3_rate": 0
+      },
+      "numeric_distribution": {
+        "score": {
+          "count": 10250,
+          "min": 0.0,
+          "median": 99.0,
+          "max": 115.65
+        },
+        "win_rate": {
+          "count": 10250,
+          "min": 0.0,
+          "median": 10.3,
+          "max": 100.0
+        },
+        "top2_rate": {
+          "count": 10250,
+          "min": 0.0,
+          "median": 23.5,
+          "max": 100.0
+        },
+        "top3_rate": {
+          "count": 10250,
+          "min": 0.0,
+          "median": 38.0,
+          "max": 100.0
+        }
+      },
+      "rate_order_violations": 0,
+      "raw_snapshot_bad_json": 0,
+      "raw_snapshot_missing_values": 0,
+      "line_invariant_failures": 0,
+      "formation_mismatches": 0,
+      "main_not_found": 0,
+      "role_decisions_checked": 935,
+      "role_mismatches": 0,
+      "decision_segment_mismatches": 0,
+      "rival_pair_score_tie_races": 0,
+      "rival_tiebreak_mode_disagreements": 0,
+      "live_source_samples_requested": 24,
+      "live_source_samples_checked": 24,
+      "live_source_mismatches": [],
+      "live_source_fetch_failures": [],
+      "status": "PASS"
+    }
+  },
+  "status": "PASS"
+}
