@@ -1,0 +1,41 @@
+name: Analyze mainline collapse patterns v1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/analyze-mainline-collapse-patterns-v1.yml"
+      - "src/keirin_market_analysis/analyze_mainline_collapse_patterns_v1.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: python -m pip install -e .
+      - name: Analyze collapse patterns
+        run: python -m keirin_market_analysis.analyze_mainline_collapse_patterns_v1
+      - name: Validate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/2025/s_class_yosen/simulations/mainline_collapse_patterns_v1/summary.json')
+          s=json.loads(p.read_text(encoding='utf-8'))
+          assert s['scope_races_before_label_filter'] == 353, s
+          assert s['collapse_races'] == 156, s
+          print(json.dumps(s, ensure_ascii=False, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mainline-collapse-patterns-v1
+          path: data/2025/s_class_yosen/simulations/mainline_collapse_patterns_v1
