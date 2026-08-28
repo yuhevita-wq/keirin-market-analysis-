@@ -1,0 +1,51 @@
+name: Analyze V2 middle late structure
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/analyze-v2-middle-late-structure.yml"
+      - "src/keirin_market_analysis/analyze_v2_middle_late_structure.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e .
+      - name: Run structure-only V2 audit
+        run: python -m keirin_market_analysis.analyze_v2_middle_late_structure
+      - name: Validate no payout selection
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/audits/v2_middle_late_structure.json')
+          d=json.loads(p.read_text(encoding='utf-8'))
+          assert d['payout_files_read'] is False
+          assert d['middle']['basic']['2024']['races'] > 0
+          assert d['middle']['basic']['2025']['races'] > 0
+          assert d['late']['mainline_branch']['basic']['2024']['races'] > 0
+          assert d['late']['rough_branch']['basic']['2025']['races'] > 0
+          print('validated')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v2-middle-late-structure
+          path: data/audits/v2_middle_late_structure.json
+      - name: Commit V2 structure audit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/v2_middle_late_structure.json
+          git diff --cached --quiet && exit 0
+          git commit -m "analysis: save V2 middle late structure audit"
+          git push
