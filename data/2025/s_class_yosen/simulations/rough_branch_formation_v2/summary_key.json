@@ -1,0 +1,39 @@
+{
+  "scope": "2025 exact S級予選, 後半, main line size >=3, branch B rough-lean only",
+  "candidate_pool_decision": {
+    "roles": ["A", "B", "M3", "R1L", "R1B"],
+    "meaning": {
+      "A": "main-line leader",
+      "B": "main-line second rider",
+      "M3": "main-line third rider",
+      "R1L": "strongest rival line leader",
+      "R1B": "strongest rival line second rider"
+    },
+    "top3_set_capture_all": 0.6833333333333333,
+    "top3_set_capture_H1": 0.6923076923076923,
+    "top3_set_capture_H2": 0.6764705882352942,
+    "collapse_set_capture_all": 0.5135135135135135,
+    "collapse_set_capture_H1": 0.5625,
+    "collapse_set_capture_H2": 0.47619047619047616,
+    "note": "Adding R2L instead of M3 is materially weaker, especially in H2. Adding R2L on top of this five-rider set produced no additional top3-set captures in H2."
+  },
+  "proposed_rough_formation": {
+    "first": ["A", "B", "R1L"],
+    "second": ["A", "B", "R1L", "R1B"],
+    "third": ["A", "B", "M3", "R1L", "R1B"],
+    "points": 27,
+    "structural_exact_order_hit_all": 0.5833333333333334,
+    "structural_exact_order_hit_H1": 0.6153846153846154,
+    "structural_exact_order_hit_H2": 0.5588235294117647
+  },
+  "wider_reference": {
+    "first": ["A", "B", "R1L"],
+    "second": ["A", "B", "M3", "R1L", "R1B"],
+    "third": ["A", "B", "M3", "R1L", "R1B"],
+    "points": 36,
+    "structural_exact_order_hit_all": 0.65,
+    "structural_exact_order_hit_H1": 0.6538461538461539,
+    "structural_exact_order_hit_H2": 0.6470588235294118
+  },
+  "decision": "Use the 27-point formation as the first fixed rough-branch strategy to simulate. It preserves the same direction in H1/H2 and avoids paying 9 extra points for only 4 additional structural hits across 60 normal races. Keep 36 points as a comparison arm, not the default."
+}
