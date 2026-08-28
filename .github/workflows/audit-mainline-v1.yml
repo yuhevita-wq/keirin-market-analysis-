@@ -1,0 +1,25 @@
+name: Audit mainline v1 exceptional hits
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/audit-mainline-v1.yml"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit payout hits outside strict finish structure
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          p=Path('data/2025/s_class_yosen/simulations/mainline_v1/race_simulation.csv')
+          rows=list(csv.DictReader(p.open(encoding='utf-8-sig')))
+          exceptions=[r for r in rows if r['hit']=='1' and not (r['mainline_top2']=='1' and r['third_captured_given_top2']=='1')]
+          print('EXCEPTION_COUNT',len(exceptions))
+          for r in exceptions:
+              print(json.dumps({k:r[k] for k in ['race_id','race_date','track','race_no','segment','main_line_formation','finish_a','finish_b','actual_third','third_candidates','hit_combinations','payout_yen']},ensure_ascii=False))
+          PY
