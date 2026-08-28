@@ -1,0 +1,26 @@
+name: Analyze rough pruning robustness
+
+on:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/analyze_rough_pruning_robustness.py'
+      - '.github/workflows/analyze-rough-pruning-robustness.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e .
+      - run: python -m keirin_market_analysis.analyze_rough_pruning_robustness
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rough-pruning-robustness
+          path: data/2025/s_class_yosen/simulations/rough_pruning_robustness
