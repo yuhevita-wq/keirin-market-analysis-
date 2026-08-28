@@ -1,0 +1,60 @@
+name: Audit frozen strategy equivalence and OOS integrity
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/keirin_market_analysis/audit_frozen_strategy_equivalence.py"
+      - ".github/workflows/audit-frozen-strategy-equivalence.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e .
+
+      - name: Re-run original 2025 early V0
+        run: python -m keirin_market_analysis.simulate_early_candidate_v0
+      - name: Re-run original 2025 middle V0
+        run: python -m keirin_market_analysis.simulate_middle_candidate_v0
+      - name: Re-run original 2025 late V1
+        run: python -m keirin_market_analysis.simulate_branching_v3_confidence
+      - name: Re-run generic frozen implementation on 2025
+        run: |
+          python -m keirin_market_analysis.simulate_2024_oos_frozen \
+            --data-dir data/2025/s_class_yosen \
+            --out-dir /tmp/frozen-2025-audit \
+            --year 2025
+
+      - name: Per-race and per-bet equivalence audit plus 2024 integrity audit
+        run: python -m keirin_market_analysis.audit_frozen_strategy_equivalence
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frozen-strategy-equivalence-audit
+          path: data/audits/frozen_strategy_equivalence.json
+
+      - name: Commit audit report only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/audits/frozen_strategy_equivalence.json
+          if git diff --cached --quiet; then
+            echo "No audit report changes to commit"
+          else
+            git commit -m "audit: verify frozen strategy equivalence and OOS integrity"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
