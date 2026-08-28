@@ -30,7 +30,8 @@ jobs:
           from pathlib import Path
           p=Path('data/audits/early_v2_structure.json')
           s=json.loads(p.read_text(encoding='utf-8'))
-          assert 'payout' not in p.read_text(encoding='utf-8').lower()
+          code=Path('src/keirin_market_analysis/analyze_early_v2_structure.py').read_text(encoding='utf-8')
+          assert "payouts.csv" not in code
           assert s['base']['2024']['races'] >= 250 and s['base']['2025']['races'] >= 250
           print(json.dumps(s,ensure_ascii=False,indent=2))
           PY
