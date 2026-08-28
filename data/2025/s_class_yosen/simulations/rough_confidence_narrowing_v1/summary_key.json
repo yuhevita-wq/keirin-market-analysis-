@@ -1,0 +1,17 @@
+{
+  "scope": "2025 exact S級予選, 後半, main line >=3, B rough branch",
+  "finding": "A-confidence zone for possible 18->9 point narrowing",
+  "recommended_provisional_rule": "If A score - strongest rival leader R1L score >= 10.0, remove R1L from first place only; otherwise retain A and R1L in first place.",
+  "score_gap_ge_10": {
+    "all": {"races": 8, "A_wins": 7, "R1L_wins": 0, "other_wins": 1, "A_share_when_A_or_R1L_wins": 1.0},
+    "H1": {"races": 3, "A_wins": 3, "R1L_wins": 0, "other_wins": 0},
+    "H2": {"races": 5, "A_wins": 4, "R1L_wins": 0, "other_wins": 1}
+  },
+  "nearby_zone_score_gap_ge_8": {
+    "all": {"races": 26, "A_wins": 14, "R1L_wins": 4, "other_wins": 8, "A_share_when_A_or_R1L_wins": 0.7777777778},
+    "H1": {"races": 11, "A_wins": 6, "R1L_wins": 2, "other_wins": 3, "A_share_when_A_or_R1L_wins": 0.75},
+    "H2": {"races": 15, "A_wins": 8, "R1L_wins": 2, "other_wins": 5, "A_share_when_A_or_R1L_wins": 0.8}
+  },
+  "interpretation": "The >=10 score-gap zone is the only tested simple confidence zone with zero R1L winners in both halves. The >=8 zone still loses 4 R1L winners and is too aggressive for automatic first-place deletion.",
+  "warning": "Only 8 races satisfy the >=10 rule. Treat as provisional, not a universal law. Do not lower the threshold merely to save more points."
+}
