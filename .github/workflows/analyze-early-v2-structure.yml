@@ -1,0 +1,43 @@
+name: Analyze early V2 structure
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/analyze-early-v2-structure.yml'
+      - 'src/keirin_market_analysis/analyze_early_v2_structure.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e .
+      - name: Run early V2 structure audit
+        run: python -m keirin_market_analysis.analyze_early_v2_structure
+      - name: Validate structure-only output
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/audits/early_v2_structure.json')
+          s=json.loads(p.read_text(encoding='utf-8'))
+          assert 'payout' not in p.read_text(encoding='utf-8').lower()
+          assert s['base']['2024']['races'] >= 250 and s['base']['2025']['races'] >= 250
+          print(json.dumps(s,ensure_ascii=False,indent=2))
+          PY
+      - name: Commit audit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/audits/early_v2_structure.json
+          git diff --cached --quiet || git commit -m 'analysis: record early V2 structure audit'
+          git push
