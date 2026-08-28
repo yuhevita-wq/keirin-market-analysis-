@@ -42,12 +42,12 @@ def formation(first: list[int], second: list[int], third: list[int]) -> list[str
     return sorted(combos, key=lambda s: tuple(map(int, s.split("-"))))
 
 
-def rough_bets(entries: list[dict[str, str]], main_line_id: int, main_members: list[dict[str, str]], narrow_to_a: bool) -> list[str]:
+def rough_bets(entries: list[dict[str, str]], main_line_id: int, main_members: list[dict[str, str]]) -> list[str]:
     roles = rough_roles(entries, main_line_id, main_members)
     if roles is None:
         return []
     a, b, m3, r1l, r1b = roles
-    first = [a] if narrow_to_a else [a, r1l]
+    first = [a, r1l]
     second = [a, b, r1l, r1b]
     third = [a, b, m3, r1l, r1b]
     return formation(first, second, third)
@@ -104,9 +104,12 @@ def main() -> None:
             rival = strongest_rival(es, main_id)
             if rival and len(rival) >= 2:
                 score_gap = f(members[0], "score") - f(rival[0], "score")
-                narrow = score_gap >= 10.0
-                combos = rough_bets(es, main_id, members, narrow_to_a=narrow)
-                strategy = "rough_9pt_A_confidence" if narrow else "rough_18pt"
+                if score_gap >= 10.0:
+                    combos = []
+                    strategy = "skip_rough_score_gap_ge_10"
+                else:
+                    combos = rough_bets(es, main_id, members)
+                    strategy = "rough_18pt"
             else:
                 combos = []
                 strategy = "skip_no_rival"
@@ -159,13 +162,13 @@ def main() -> None:
             "hit_combinations": "/".join(hit_combos),
         })
 
-    strategies = ("mainline_4pt", "rough_9pt_A_confidence", "rough_18pt", "skip_middle", "skip_no_rival")
+    strategies = ("mainline_4pt", "rough_18pt", "skip_rough_score_gap_ge_10", "skip_middle", "skip_no_rival")
     summary = {
         "strategy": "branching_v3_confidence",
         "scope": "2025 exact S級予選, 後半, main line size >=3",
         "rules": {
             "A_mainline": "existing mainline branch; 4 points",
-            "B_rough_confidence": "if A score - R1L score >=10.0, first=A only; 9 points",
+            "B_rough_skip": "if A score - R1L score >=10.0, skip",
             "B_rough_normal": "if A score - R1L score <10.0, first=A/R1L; 18 points",
             "C_middle": "skip",
             "second": "A/B/R1L/R1B",
@@ -184,14 +187,14 @@ def main() -> None:
             "race_rows": len(race_rows),
             "bet_races": sum(1 for r in race_rows if int(r["bet_count"]) > 0),
             "skip_races": sum(1 for r in race_rows if int(r["bet_count"]) == 0),
-            "nine_point_races": sum(1 for r in race_rows if r["strategy"] == "rough_9pt_A_confidence"),
+            "rough_score_gap_skip_races": sum(1 for r in race_rows if r["strategy"] == "skip_rough_score_gap_ge_10"),
             "eighteen_point_races": sum(1 for r in race_rows if r["strategy"] == "rough_18pt"),
             "four_point_races": sum(1 for r in race_rows if r["strategy"] == "mainline_4pt"),
-            "all_9pt_are_9": all(int(r["bet_count"]) == 9 for r in race_rows if r["strategy"] == "rough_9pt_A_confidence"),
+            "all_score_gap_skips_are_zero": all(int(r["bet_count"]) == 0 for r in race_rows if r["strategy"] == "skip_rough_score_gap_ge_10"),
             "all_18pt_are_18": all(int(r["bet_count"]) == 18 for r in race_rows if r["strategy"] == "rough_18pt"),
             "all_4pt_are_4": all(int(r["bet_count"]) == 4 for r in race_rows if r["strategy"] == "mainline_4pt"),
         },
-        "warning": "The >=10 score-gap confidence rule was discovered within 2025 exploratory analysis. H2 is not a fresh untouched sample for the threshold itself. Treat ROI as exploratory and validate on another year before operational adoption.",
+        "warning": "The >=10 score-gap skip rule was discovered within 2025 exploratory analysis. H2 is not a fresh untouched sample for the threshold itself. Validate on another year before operational adoption.",
     }
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -207,10 +210,12 @@ def main() -> None:
     (OUT_DIR / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     assert len(race_rows) == 353
-    assert summary["validation"]["all_9pt_are_9"]
+    assert summary["validation"]["all_score_gap_skips_are_zero"]
     assert summary["validation"]["all_18pt_are_18"]
     assert summary["validation"]["all_4pt_are_4"]
-    assert summary["validation"]["nine_point_races"] == 8
+    assert summary["validation"]["rough_score_gap_skip_races"] == 8
+    assert summary["validation"]["eighteen_point_races"] == 53
+    assert summary["validation"]["four_point_races"] == 58
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 
 
