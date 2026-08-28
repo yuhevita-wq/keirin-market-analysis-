@@ -1,0 +1,38 @@
+name: Extract compact frozen structure comparison
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/keirin_market_analysis/extract_structure_compact.py"
+      - ".github/workflows/extract-structure-compact.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e .
+      - run: python -m keirin_market_analysis.extract_structure_compact
+      - name: Commit compact comparison
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/audits/frozen_structure_compact.json
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "analysis: save compact frozen structure comparison"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
