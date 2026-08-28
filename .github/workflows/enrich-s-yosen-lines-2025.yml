@@ -8,6 +8,11 @@ on:
   workflow_run:
     workflows: ["Collect 2025 S-class preliminary race cards"]
     types: [completed]
+  push:
+    branches: [main]
+    paths:
+      - "data/2025/s_class_yosen/races.csv"
+      - "data/2025/s_class_yosen/entries.csv"
 
 permissions:
   contents: write
@@ -45,7 +50,7 @@ jobs:
           PY
 
   enrich:
-    if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success'
+    if: (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') || github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 180
     steps:
@@ -100,5 +105,6 @@ jobs:
             echo "No line data changes to commit"
           else
             git commit -m "data: add 2025 S-class preliminary line formation"
+            git pull --rebase origin main
             git push origin HEAD:main
           fi
