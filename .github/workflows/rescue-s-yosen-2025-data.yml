@@ -1,0 +1,56 @@
+name: Rescue completed 2025 S-class preliminary dataset
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/rescue-s-yosen-2025-data.yml"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  rescue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Download already-completed dataset artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p data/2025/s_class_yosen
+          gh run download 33124800129 \
+            --repo "${{ github.repository }}" \
+            --name "s-yosen-2025-2025-01-01-2025-12-31" \
+            --dir data/2025/s_class_yosen
+      - name: Validate rescued dataset
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          p = Path('data/2025/s_class_yosen')
+          summary = json.loads((p/'summary.json').read_text(encoding='utf-8'))
+          races = list(csv.DictReader((p/'races.csv').open(encoding='utf-8-sig')))
+          entries = list(csv.DictReader((p/'entries.csv').open(encoding='utf-8-sig')))
+          failures = list(csv.DictReader((p/'failures.csv').open(encoding='utf-8-sig')))
+          assert summary['parsed_races'] == 1464, summary
+          assert summary['entry_rows'] == 10250, summary
+          assert summary['failures'] == 0, summary
+          assert len(races) == 1464
+          assert len(entries) == 10250
+          assert len(failures) == 0
+          print(summary)
+          PY
+      - name: Commit rescued dataset
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/2025/s_class_yosen
+          git commit -m "data: restore 2025 S-class preliminary race cards"
+          git pull --rebase origin main
+          git push origin HEAD:main
