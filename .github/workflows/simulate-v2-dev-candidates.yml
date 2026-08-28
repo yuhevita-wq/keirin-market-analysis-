@@ -1,0 +1,47 @@
+name: Simulate V2 development candidates
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/simulate-v2-dev-candidates.yml"
+      - "src/keirin_market_analysis/simulate_v2_dev_candidates.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e .
+      - run: python -m keirin_market_analysis.simulate_v2_dev_candidates
+      - name: Validate candidate freeze metadata
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('data/audits/v2_dev_candidate_financials.json').read_text(encoding='utf-8'))
+          assert '2023 remains untouched OOS' in d['scope']
+          assert d['middle']['ranked']
+          assert d['late_mainline']['ranked']
+          print('validated')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v2-dev-candidate-financials
+          path: data/audits/v2_dev_candidate_financials.json
+      - name: Commit candidate results
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/v2_dev_candidate_financials.json
+          git diff --cached --quiet && exit 0
+          git commit -m "analysis: save V2 development candidate results"
+          git push
