@@ -16,21 +16,34 @@ jobs:
         with:
           python-version: "3.11"
       - run: python -m pip install requests beautifulsoup4 lxml
-      - name: Inspect result tables
+      - name: Inspect result DOM
         run: |
           python - <<'PY'
-          import requests
-          from bs4 import BeautifulSoup
-          url='https://keirin.kdreams.jp/maebashi/racedetail/2220250812010008/?pageType=showResult'
+          import re, requests
+          from bs4 import BeautifulSoup, Tag
+          url='https://keirin.kdreams.jp/maebashi/racedetail/2220250101010008/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT'
           r=requests.get(url,headers={'User-Agent':'Mozilla/5.0'},timeout=30)
           r.raise_for_status(); r.encoding=r.apparent_encoding
           s=BeautifulSoup(r.text,'lxml')
+          print('URL', r.url)
           print('TITLE', s.title.get_text(' ', strip=True) if s.title else '')
+          text=' '.join(s.stripped_strings)
+          for kw in ['着順','2枠','2車','3連','ワイド','未発売','6,890円','7-4-3']:
+              print('HAS',kw, kw in text)
           for i,t in enumerate(s.find_all('table')):
-              text=' '.join(t.stripped_strings)
-              if any(k in text for k in ['着順','2枠','2車','3連','ワイド','払戻','天候']):
+              tt=' '.join(t.stripped_strings)
+              if any(k in tt for k in ['着順','2枠','2車','3連','ワイド','払戻','未発売']):
                   print('\nTABLE',i,'class=',t.get('class'),'id=',t.get('id'))
-                  print(text[:5000])
+                  print(tt[:7000])
                   for j,tr in enumerate(t.find_all('tr',recursive=False)):
                       print(' ROW',j,'class=',tr.get('class'),'::',' | '.join(' '.join(c.stripped_strings) for c in tr.find_all(['th','td'],recursive=False)))
+          for needle in ['7-4-3','6,890円','4=7','3=4=7']:
+              node=s.find(string=lambda x: x and needle in x)
+              print('\nNEEDLE',needle,'FOUND',bool(node))
+              if node:
+                  p=node.parent
+                  for level in range(5):
+                      if not isinstance(p, Tag): break
+                      print(' LEVEL',level,p.name,'class=',p.get('class'),'id=',p.get('id'),'::',' '.join(p.stripped_strings)[:2500])
+                      p=p.parent
           PY
