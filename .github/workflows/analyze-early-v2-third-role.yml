@@ -1,0 +1,43 @@
+name: Analyze early V2 third role
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/analyze-early-v2-third-role.yml'
+      - 'src/keirin_market_analysis/analyze_early_v2_third_role.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e .
+      - run: python -m keirin_market_analysis.analyze_early_v2_third_role
+      - name: Validate
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          p=Path('data/audits/early_v2_third_role.json')
+          s=json.loads(p.read_text(encoding='utf-8'))
+          code=Path('src/keirin_market_analysis/analyze_early_v2_third_role.py').read_text(encoding='utf-8')
+          assert 'payouts.csv' not in code
+          assert s['2024']['rival_pair_top2_races']>0 and s['2025']['rival_pair_top2_races']>0
+          print(json.dumps(s,ensure_ascii=False,indent=2))
+          PY
+      - name: Commit audit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/audits/early_v2_third_role.json
+          git diff --cached --quiet || git commit -m 'analysis: record early V2 third-role audit'
+          git push
