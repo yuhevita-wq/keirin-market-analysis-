@@ -1,0 +1,60 @@
+name: Simulate 2025 S-class preliminary mainline v1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/simulate-mainline-v1.yml"
+      - "src/keirin_market_analysis/simulate_mainline_v1.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run fixed-rule simulation
+        run: python -m keirin_market_analysis.simulate_mainline_v1
+      - name: Validate simulation output
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          p = Path('data/2025/s_class_yosen/simulations/mainline_v1')
+          s = json.loads((p/'summary.json').read_text(encoding='utf-8'))
+          rows = list(csv.DictReader((p/'race_simulation.csv').open(encoding='utf-8-sig')))
+          bets = list(csv.DictReader((p/'bets.csv').open(encoding='utf-8-sig')))
+          assert len(rows) == 1464, len(rows)
+          assert s['overall']['races'] == 1464, s
+          assert sum(s['by_segment'][x]['races'] for x in ('前半','中盤','後半')) == 1464
+          assert all(int(r['bet_count']) > 0 for r in rows)
+          assert sum(int(r['bet_count']) for r in rows) == len(bets)
+          assert s['overall']['stake_yen'] == len(bets) * 100
+          print(json.dumps(s, ensure_ascii=False, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: s-yosen-2025-mainline-v1-simulation
+          path: data/2025/s_class_yosen/simulations/mainline_v1
+      - name: Commit simulation output
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/2025/s_class_yosen/simulations/mainline_v1
+          if git diff --cached --quiet; then
+            echo "No simulation changes to commit"
+          else
+            git commit -m "analysis: simulate 2025 S級予選 mainline v1"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
