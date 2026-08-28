@@ -1,0 +1,68 @@
+name: Audit input data and role transformations
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/keirin_market_analysis/audit_input_roles.py"
+      - ".github/workflows/audit-input-roles.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: python -m pip install -e ".[scrape]"
+
+      - name: Rebuild frozen 2024 decisions for audit
+        run: |
+          python -m keirin_market_analysis.simulate_2024_oos_frozen \
+            --data-dir data/2024/s_class_yosen \
+            --out-dir /tmp/frozen-2024-input-role-audit \
+            --year 2024
+
+      - name: Rebuild frozen 2025 decisions for audit
+        run: |
+          python -m keirin_market_analysis.simulate_2024_oos_frozen \
+            --data-dir data/2025/s_class_yosen \
+            --out-dir /tmp/frozen-2025-input-role-audit \
+            --year 2025
+
+      - name: Audit stored inputs, source samples, and role mapping
+        run: |
+          python -m keirin_market_analysis.audit_input_roles \
+            --decisions-2024 /tmp/frozen-2024-input-role-audit/race_decisions.csv \
+            --decisions-2025 /tmp/frozen-2025-input-role-audit/race_decisions.csv \
+            --live-samples 24 \
+            --sleep 0.08 \
+            --out data/audits/input_role_audit_2024_2025.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: input-role-audit-2024-2025
+          path: data/audits/input_role_audit_2024_2025.json
+
+      - name: Commit audit report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/audits/input_role_audit_2024_2025.json
+          if git diff --cached --quiet; then
+            echo "No audit changes to commit"
+          else
+            git commit -m "audit: verify 2024/2025 inputs and role mapping"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
