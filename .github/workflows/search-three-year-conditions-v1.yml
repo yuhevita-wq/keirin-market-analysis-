@@ -1,0 +1,50 @@
+name: Search three-year robust conditions v1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/search-three-year-conditions-v1.yml'
+      - 'src/keirin_market_analysis/search_three_year_conditions_v1.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e .
+      - name: Run three-year condition discovery
+        run: python -m keirin_market_analysis.search_three_year_conditions_v1
+      - name: Validate output
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/audits/three_year_condition_search_v1.json')
+          x=json.loads(p.read_text(encoding='utf-8'))
+          assert x['scope'].startswith('2023+2024+2025')
+          assert set(x['segments'])=={'前半','中盤','後半'}
+          for s in x['segments'].values():
+              for c in s['top_candidates']:
+                  for y in ('2023','2024','2025'):
+                      assert c[y]['races']>=10
+                      assert c[y]['hits']>=3
+                      assert c[y]['roi']>1.0
+                      assert c[y]['top1_payout_share']<=0.70
+          print(json.dumps({k:v['qualified_count'] for k,v in x['segments'].items()},ensure_ascii=False))
+          PY
+      - name: Commit search output
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/audits/three_year_condition_search_v1.json
+          git diff --cached --quiet || git commit -m 'analysis: add three-year condition discovery result'
+          git push
