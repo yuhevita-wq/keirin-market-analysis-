@@ -2,6 +2,10 @@ name: research-high-payout-structures-v1
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/research_high_payout_structures_v1.py'
+      - '.github/workflows/research-high-payout-structures-v1.yml'
 
 permissions:
   contents: write
