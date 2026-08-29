@@ -1,0 +1,48 @@
+{
+  "strategy": "s_class_yosen_dynamic_weak_middle6",
+  "status": "FROZEN_BEFORE_2026_H1_EVALUATION",
+  "development_years": [2023, 2024, 2025],
+  "evaluation_data_used_for_this_formation_search": false,
+  "important_caveat": "The broader weakest-line research and this formation family were developed after other 2026 H1 strategy results had already been observed. Therefore 2026 H1 is a fixed-spec backtest, not pristine family-level OOS.",
+  "scope": {
+    "race_label": "Ｓ級予選",
+    "segment": "中盤",
+    "segment_definition": "Within each race_date x track, sort exact S-class-yosen races by race_no and assign floor((position-1)*3/total); 中盤 is the middle third.",
+    "main_line_min_size": 3,
+    "weakest_line_definition": "Unique minimum lead+second competition score among non-main 2+ rider predicted lines; require strongest rival and weakest line to be distinct."
+  },
+  "pre_race_condition": {
+    "name": "HIDDEN_ATTACK",
+    "logic": [
+      "weak_pair_score < rival_pair_score",
+      "W1L nige_count + W1L makuri_count >= R1L nige_count + R1L makuri_count"
+    ]
+  },
+  "formation": {
+    "points": 6,
+    "stake_per_point_yen": 100,
+    "orders": [
+      "W1L-A-B",
+      "W1L-B-A",
+      "W1B-A-B",
+      "W1B-B-A",
+      "A-W1B-B",
+      "B-W1B-A"
+    ],
+    "description": "W1L first only; W1B first or second; retain A/B order both ways."
+  },
+  "development_result_2023_2025": {
+    "races": 239,
+    "hits": 10,
+    "stake_yen": 143400,
+    "payout_yen": 232490,
+    "profit_yen": 89090,
+    "roi": 1.6212691771269176,
+    "by_year_roi": {
+      "2023": 2.645138888888889,
+      "2024": 1.0502136752136753,
+      "2025": 1.293445692883895
+    }
+  },
+  "no_post_evaluation_changes_allowed": true
+}
