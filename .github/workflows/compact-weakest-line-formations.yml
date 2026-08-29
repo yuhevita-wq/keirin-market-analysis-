@@ -1,0 +1,25 @@
+name: Compact weakest-line formations
+on:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/compact_weakest_line_formations.py'
+      - '.github/workflows/compact-weakest-line-formations.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  compact:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -e .
+      - run: python -m keirin_market_analysis.compact_weakest_line_formations
+      - run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/weakest_line_formations_2023_2025_compact.json
+          git commit -m 'Add compact weakest-line formation summary' || exit 0
+          git push
