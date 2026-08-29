@@ -1,0 +1,55 @@
+name: Evaluate weakest-line middle V1 on 2026 H1
+
+on:
+  push:
+    paths:
+      - 'data/strategy_specs/weakest_line_mid_v1_pre2026.json'
+      - 'src/keirin_market_analysis/evaluate_weakest_line_mid_v1_2026_h1.py'
+      - '.github/workflows/evaluate-weakest-line-mid-v1-2026-h1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -e .
+      - name: Verify frozen spec
+        run: |
+          python - <<'PY'
+          import json
+          p='data/strategy_specs/weakest_line_mid_v1_pre2026.json'
+          d=json.load(open(p,encoding='utf-8'))
+          assert d['status']=='FROZEN_PRE_2026_EVALUATION'
+          assert d['conditions']==[
+              {'feature':'weak_lead_score','operator':'<=','threshold':98},
+              {'feature':'rival_minus_weak_score','operator':'<=','threshold':6},
+          ]
+          assert d['formation']['id']=='WEAK1_MAINPAIR_12'
+          assert d['formation']['points']==12
+          PY
+      - run: python -m keirin_market_analysis.evaluate_weakest_line_mid_v1_2026_h1
+      - name: Validate result
+        run: |
+          python - <<'PY'
+          import json
+          p='data/2026_h1/s_class_yosen/oos_weakest_line_mid_v1/summary.json'
+          d=json.load(open(p,encoding='utf-8'))
+          assert d['status']=='WEAKEST_LINE_MID_V1_2026_H1_OOS_EVALUATION'
+          assert d['spec_frozen_before_evaluation'] is True
+          assert d['strategy']['formation']['points']==12
+          assert d['result']['stake_yen']==d['result']['races']*1200
+          PY
+      - name: Commit result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/2026_h1/s_class_yosen/oos_weakest_line_mid_v1/summary.json
+          git commit -m 'Add weakest-line middle V1 2026 H1 OOS result' || exit 0
+          git push
