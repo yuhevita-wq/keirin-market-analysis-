@@ -1,0 +1,191 @@
+{
+  "status": "MARKET_CORRECTION_2023_DEVELOPMENT_SIMULATION",
+  "year": 2023,
+  "years_read": [
+    2023
+  ],
+  "evaluation_year_2024_used": false,
+  "evaluation_year_2025_used": false,
+  "evaluation_year_2026_used": false,
+  "odds_phase": "final",
+  "important_limit": "Alpha is fitted and evaluated on the same 2023 outcomes. This is an in-sample development simulation, not OOS evidence and not T-10 executable data.",
+  "eligible_complete_races": 1475,
+  "formula": "P*=(1-alpha)*P_trio + alpha*P_trifecta_set; buy when P* * trio_final_odds >= threshold",
+  "alpha_selection": "Choose alpha on grid 0.00..1.00 step 0.05 by lowest 2023 mean logloss only; ROI is not used to choose alpha.",
+  "alpha_grid": [
+    {
+      "alpha": 0.0,
+      "mean_logloss": 2.5488182051405324
+    },
+    {
+      "alpha": 0.05,
+      "mean_logloss": 2.547963360771757
+    },
+    {
+      "alpha": 0.1,
+      "mean_logloss": 2.547154640285522
+    },
+    {
+      "alpha": 0.15,
+      "mean_logloss": 2.546392347544565
+    },
+    {
+      "alpha": 0.2,
+      "mean_logloss": 2.5456768552431535
+    },
+    {
+      "alpha": 0.25,
+      "mean_logloss": 2.545008609830136
+    },
+    {
+      "alpha": 0.3,
+      "mean_logloss": 2.5443881375196202
+    },
+    {
+      "alpha": 0.35,
+      "mean_logloss": 2.543816051624219
+    },
+    {
+      "alpha": 0.4,
+      "mean_logloss": 2.543293061524858
+    },
+    {
+      "alpha": 0.45,
+      "mean_logloss": 2.5428199837019188
+    },
+    {
+      "alpha": 0.5,
+      "mean_logloss": 2.5423977554114154
+    },
+    {
+      "alpha": 0.55,
+      "mean_logloss": 2.542027451822486
+    },
+    {
+      "alpha": 0.6,
+      "mean_logloss": 2.541710307782914
+    },
+    {
+      "alpha": 0.65,
+      "mean_logloss": 2.54144774592068
+    },
+    {
+      "alpha": 0.7,
+      "mean_logloss": 2.5412414136532164
+    },
+    {
+      "alpha": 0.75,
+      "mean_logloss": 2.541093233102505
+    },
+    {
+      "alpha": 0.8,
+      "mean_logloss": 2.5410054703651848
+    },
+    {
+      "alpha": 0.85,
+      "mean_logloss": 2.5409808349971836
+    },
+    {
+      "alpha": 0.9,
+      "mean_logloss": 2.5410226289411133
+    },
+    {
+      "alpha": 0.95,
+      "mean_logloss": 2.541134981045653
+    },
+    {
+      "alpha": 1.0,
+      "mean_logloss": 2.541323240259522
+    }
+  ],
+  "selected_alpha": 0.85,
+  "selected_alpha_mean_logloss": 2.5409808349971836,
+  "simulations": {
+    "1.00": {
+      "threshold_pstar_times_trio_odds": 1.0,
+      "bets": 332,
+      "wins": 3,
+      "hit_rate_per_bet_pct": 0.9036144578313252,
+      "purchased_races": 247,
+      "race_purchase_rate_pct": 16.745762711864405,
+      "hit_races": 3,
+      "race_hit_rate_pct": 1.214574898785425,
+      "avg_bets_per_purchased_race": 1.3441295546558705,
+      "stake_yen": 33200,
+      "payout_yen": 12500,
+      "profit_yen": -20700,
+      "roi_pct": 37.65060240963856,
+      "median_bet_odds": 106.0,
+      "max_consecutive_losing_bets": 142
+    },
+    "1.05": {
+      "threshold_pstar_times_trio_odds": 1.05,
+      "bets": 155,
+      "wins": 3,
+      "hit_rate_per_bet_pct": 1.935483870967742,
+      "purchased_races": 132,
+      "race_purchase_rate_pct": 8.949152542372882,
+      "hit_races": 3,
+      "race_hit_rate_pct": 2.272727272727273,
+      "avg_bets_per_purchased_race": 1.1742424242424243,
+      "stake_yen": 15500,
+      "payout_yen": 12500,
+      "profit_yen": -3000,
+      "roi_pct": 80.64516129032258,
+      "median_bet_odds": 140.1,
+      "max_consecutive_losing_bets": 64
+    },
+    "1.10": {
+      "threshold_pstar_times_trio_odds": 1.1,
+      "bets": 68,
+      "wins": 0,
+      "hit_rate_per_bet_pct": 0.0,
+      "purchased_races": 60,
+      "race_purchase_rate_pct": 4.067796610169491,
+      "hit_races": 0,
+      "race_hit_rate_pct": 0.0,
+      "avg_bets_per_purchased_race": 1.1333333333333333,
+      "stake_yen": 6800,
+      "payout_yen": 0,
+      "profit_yen": -6800,
+      "roi_pct": 0.0,
+      "median_bet_odds": 194.1,
+      "max_consecutive_losing_bets": 68
+    },
+    "1.15": {
+      "threshold_pstar_times_trio_odds": 1.15,
+      "bets": 29,
+      "wins": 0,
+      "hit_rate_per_bet_pct": 0.0,
+      "purchased_races": 26,
+      "race_purchase_rate_pct": 1.7627118644067796,
+      "hit_races": 0,
+      "race_hit_rate_pct": 0.0,
+      "avg_bets_per_purchased_race": 1.1153846153846154,
+      "stake_yen": 2900,
+      "payout_yen": 0,
+      "profit_yen": -2900,
+      "roi_pct": 0.0,
+      "median_bet_odds": 232.0,
+      "max_consecutive_losing_bets": 29
+    },
+    "1.20": {
+      "threshold_pstar_times_trio_odds": 1.2,
+      "bets": 15,
+      "wins": 0,
+      "hit_rate_per_bet_pct": 0.0,
+      "purchased_races": 15,
+      "race_purchase_rate_pct": 1.0169491525423728,
+      "hit_races": 0,
+      "race_hit_rate_pct": 0.0,
+      "avg_bets_per_purchased_race": 1.0,
+      "stake_yen": 1500,
+      "payout_yen": 0,
+      "profit_yen": -1500,
+      "roi_pct": 0.0,
+      "median_bet_odds": 321.6,
+      "max_consecutive_losing_bets": 15
+    }
+  },
+  "primary_reference_threshold": "1.10 is shown as the primary safety-margin reference because it was the previously stated example, but thresholds were predeclared before this run and no threshold is frozen from 2023 ROI."
+}
