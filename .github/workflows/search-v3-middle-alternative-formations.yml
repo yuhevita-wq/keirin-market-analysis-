@@ -1,0 +1,46 @@
+name: Search V3 middle alternative formations
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/search-v3-middle-alternative-formations.yml"
+      - "src/keirin_market_analysis/search_v3_middle_alternative_formations.py"
+
+permissions:
+  contents: write
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: python -m pip install -e .
+      - name: Run search
+        run: python -m keirin_market_analysis.search_v3_middle_alternative_formations
+      - name: Validate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('data/audits/v3_middle_alternative_formation_search.json').read_text(encoding='utf-8'))
+          assert d['status']=='V3_MIDDLE_ALTERNATIVE_FORMATION_SEARCH_COMPLETE'
+          assert set(d['results'])=={'MAIN4_RIVAL','MAIN6','RIVAL4'}
+          print(json.dumps({f:{'qualified':d['results'][f]['qualified_count'],'top':d['results'][f]['top_candidates'][:3]} for f in d['results']},ensure_ascii=False,indent=2))
+          PY
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/audits/v3_middle_alternative_formation_search.json
+          if git diff --cached --quiet; then echo "No changes"; else git commit -m "analysis: record V3 middle alternative formation search" && git pull --rebase origin main && git push origin HEAD:main; fi
