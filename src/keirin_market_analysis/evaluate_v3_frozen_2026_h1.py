@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+# Evaluation trigger recorded after the user's explicit GO. Strategy logic is unchanged.
 import csv
 import json
 from collections import defaultdict
