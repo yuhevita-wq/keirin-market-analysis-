@@ -1,0 +1,51 @@
+name: Evaluate frozen V3 on 2026 H1
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/evaluate_v3_frozen_2026_h1.py'
+      - 'data/strategy_specs/v3_proposed_pre2026.json'
+
+permissions:
+  contents: write
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install
+        run: pip install -e .
+      - name: Evaluate frozen V3 on 2026 H1
+        run: python -m keirin_market_analysis.evaluate_v3_frozen_2026_h1
+      - name: Validate frozen accounting
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/2026_h1/s_class_yosen/v3_frozen_evaluation.json')
+          x=json.loads(p.read_text(encoding='utf-8'))
+          assert x['status']=='FROZEN_V3_2026_H1_EVALUATION_COMPLETE_AFTER_USER_GO'
+          assert x['strategy_spec_asserted_unchanged'] is True
+          assert x['no_threshold_or_formation_changes_after_go'] is True
+          assert x['dataset_races']==738
+          for k in ('early','middle','late'):
+              s=x['sections'][k]
+              assert s['profit_yen']==s['payout_yen']-s['stake_yen']
+          c=x['combined']
+          assert c['profit_yen']==c['payout_yen']-c['stake_yen']
+          assert c['stake_yen']==sum(x['sections'][k]['stake_yen'] for k in ('early','middle','late'))
+          assert c['payout_yen']==sum(x['sections'][k]['payout_yen'] for k in ('early','middle','late'))
+          print('validation passed')
+          PY
+      - name: Commit evaluation
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/2026_h1/s_class_yosen/v3_frozen_evaluation.json
+          git commit -m 'results: record frozen V3 2026 H1 evaluation' || exit 0
+          git push
