@@ -1,0 +1,41 @@
+name: search-high-payout-strategy-v1
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/search_high_payout_strategy_v1.py'
+      - '.github/workflows/search-high-payout-strategy-v1.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  search:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install
+        run: pip install -e .
+      - name: Search high payout strategy
+        run: python -m keirin_market_analysis.search_high_payout_strategy_v1
+      - name: Validate clean scope
+        run: |
+          python - <<'PY'
+          import json
+          p='data/audits/high_payout_strategy_search_2023_2025_v1.json'
+          d=json.load(open(p,encoding='utf-8'))
+          assert d['years_read']==[2023,2024,2025]
+          assert d['evaluation_year_2026_used'] is False
+          print('PASS clean 2023-2025 only')
+          PY
+      - name: Commit results
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/high_payout_strategy_search_2023_2025_v1.json
+          git commit -m 'Add clean 2023-2025 high payout strategy search' || exit 0
+          git push
