@@ -1,0 +1,52 @@
+{
+  "status": "FROZEN_FOR_2026_H1_FORWARD_OOS",
+  "development_window": "2023-01-01..2025-12-31",
+  "evaluation_window": "2026-01-01..2026-06-30",
+  "target": "Ｓ級予選",
+  "base_eligibility": "segment-specific exact S級予選; main predicted line size >=3; strongest rival predicted line size >=2",
+  "selection_note": "These three candidates were selected from the completed 2023-2025 analysis before reading their 2026 H1 strategy outcomes. No threshold, formation, or role-definition changes are permitted during this evaluation.",
+  "strategies": {
+    "early": {
+      "segment": "前半",
+      "conditions": [
+        "pair_score_gap <= 6",
+        "pair_win_gap <= 0"
+      ],
+      "formation": "MIX2",
+      "bets": [
+        "A-B-R1B",
+        "R1L-R1B-B"
+      ],
+      "stake_per_race_yen": 200
+    },
+    "middle": {
+      "segment": "中盤",
+      "conditions": [
+        "rival_top3 >= 80",
+        "pair_top3_gap >= 10"
+      ],
+      "formation": "MIX2",
+      "bets": [
+        "A-B-R1B",
+        "R1L-R1B-B"
+      ],
+      "stake_per_race_yen": 200
+    },
+    "late": {
+      "segment": "後半",
+      "conditions": [
+        "r1l_score >= 100",
+        "main_top2 <= 70"
+      ],
+      "formation": "MAIN4_X",
+      "bets": [
+        "A-B-M3",
+        "B-A-M3",
+        "A-B-X",
+        "B-A-X"
+      ],
+      "x_definition": "highest competition score among riders excluding A/B/M3; tie -> lower car number",
+      "stake_per_race_yen": 400
+    }
+  }
+}
