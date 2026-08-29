@@ -1,0 +1,31 @@
+name: Analyze 2023 structural layers
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/analyze_structural_layers_2023.py'
+      - '.github/workflows/analyze-structural-layers-2023.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run structural layer audit
+        run: python src/keirin_market_analysis/analyze_structural_layers_2023.py
+      - name: Validate
+        run: python -m json.tool data/audits/structural_layers_2023.json >/dev/null
+      - name: Commit result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/structural_layers_2023.json
+          git diff --cached --quiet || git commit -m 'Add 2023 structural layer audit'
+          git push
