@@ -1,0 +1,43 @@
+name: Propose clean V3 from 2023-2025
+
+on:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/propose_v3_clean_2023_2025.py'
+      - '.github/workflows/propose-v3-clean-2023-2025.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install
+        run: pip install -e .
+      - name: Run clean 2023-2025 proposal
+        run: python -m keirin_market_analysis.propose_v3_clean_2023_2025
+      - name: Validate hard boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/audits/v3_clean_2023_2025_proposal.json')
+          d=json.loads(p.read_text(encoding='utf-8'))
+          assert d['years_read']==[2023,2024,2025]
+          assert d['forbidden_evaluation_year']==2026
+          assert d['status']=='CLEAN_2023_2025_DEVELOPMENT_ONLY_AWAITING_USER_GO_FOR_2026'
+          print('clean boundary OK')
+          PY
+      - name: Commit proposal
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/v3_clean_2023_2025_proposal.json
+          git diff --cached --quiet || git commit -m 'analysis: save clean 2023-2025 V3 proposal'
+          git push
