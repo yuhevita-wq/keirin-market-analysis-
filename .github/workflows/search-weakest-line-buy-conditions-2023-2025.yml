@@ -1,0 +1,39 @@
+name: Search weakest-line buy conditions 2023-2025
+
+on:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/search_weakest_line_buy_conditions_2023_2025.py'
+      - '.github/workflows/search-weakest-line-buy-conditions-2023-2025.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  search:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -e .
+      - run: python -m keirin_market_analysis.search_weakest_line_buy_conditions_2023_2025
+      - name: Validate scope
+        run: |
+          python - <<'PY'
+          import json
+          p='data/audits/weakest_line_buy_condition_search_2023_2025.json'
+          d=json.load(open(p,encoding='utf-8'))
+          assert d['years_read']==[2023,2024,2025]
+          assert d['evaluation_year_2026_used'] is False
+          assert '2026' not in open('src/keirin_market_analysis/search_weakest_line_buy_conditions_2023_2025.py',encoding='utf-8').read()
+          PY
+      - name: Commit result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/weakest_line_buy_condition_search_2023_2025.json
+          git commit -m 'Add weakest-line buy condition search results' || exit 0
+          git push
