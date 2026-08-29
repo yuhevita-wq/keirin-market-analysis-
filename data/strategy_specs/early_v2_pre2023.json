@@ -1,15 +1,54 @@
 {
   "strategy": "early_v2",
   "status": "FROZEN_BEFORE_2023_OUTCOME_EVALUATION",
-  "decision": "SKIP_ALL_EARLY",
-  "scope": "exact-label Ｓ級予選, early segment",
+  "decision": "BET_SPARSE_EARLY",
+  "scope": "exact-label Ｓ級予選, early segment; main line size >=3; strongest rival size >=2",
   "development_years": [2024, 2025],
   "oos_year": 2023,
-  "reason": "The strongest cross-year structural entrance candidate (R1L+R1B top3-rate sum >= 90.0) did not produce a positive-return formation in either development year. F4 ROI was 77.61% in 2024 and 76.14% in 2025; F6X ROI was 63.38% in 2024 and 72.88% in 2025. Therefore no early financial strategy is admitted into V2.",
-  "rejected_candidates": {
-    "F4": ["R1L-R1B-A", "R1L-R1B-B", "R1B-R1L-A", "R1B-R1L-B"],
-    "F6X": "F4 plus R1L-R1B-X and R1B-R1L-X, where X is highest competition score excluding A,B,R1L,R1B"
+  "entrance_rule": {
+    "leader_score_gap": "A score - R1L score <= -2.0",
+    "pair_score_gap": "(A+B score) - (R1L+R1B score) <= 6.0"
   },
-  "audit_source": "data/audits/early_v2_finalization.json",
-  "freeze_rule": "Do not add an early bet, alter the entrance threshold, or introduce a new formation after inspecting 2023 outcomes. Any later early strategy must be a separately versioned strategy and needs a fresh OOS year."
+  "formation_100_yen_each": [
+    "R1L-R1B-A",
+    "R1L-R1B-B",
+    "R1B-R1L-A",
+    "R1B-R1L-B"
+  ],
+  "stake_per_race_yen": 400,
+  "development_performance": {
+    "2024": {
+      "races": 25,
+      "hits": 3,
+      "stake_yen": 10000,
+      "payout_yen": 13550,
+      "profit_yen": 3550,
+      "roi": 1.355,
+      "top1_payout_share": 0.444280442804428
+    },
+    "2025": {
+      "races": 28,
+      "hits": 5,
+      "stake_yen": 11200,
+      "payout_yen": 15370,
+      "profit_yen": 4170,
+      "roi": 1.3723214285714285,
+      "top1_payout_share": 0.3324658425504229
+    },
+    "combined": {
+      "races": 53,
+      "hits": 8,
+      "stake_yen": 21200,
+      "payout_yen": 28920,
+      "profit_yen": 7720,
+      "roi": 1.3641509433962264
+    }
+  },
+  "selection_rationale": "A broader coarse-grid search found many dual-year profitable conditions, but many were dominated by one large payout. Before reading any 2023 strategy outcome, a development-only robustness screen required at least 3 hits per year and no single payout above 70% of that year's total payout. Two candidates survived. This two-condition rule had the higher worst-year ROI (135.5%) while retaining low payout concentration and a coherent pre-race interpretation: the rival leader is clearly stronger than A, while the main pair is not overwhelmingly stronger than the rival pair.",
+  "audit_sources": [
+    "data/audits/early_sparse_high_return_search.json",
+    "data/audits/early_sparse_robustness_screen.json"
+  ],
+  "supersedes": "The earlier SKIP_ALL_EARLY pre-2023 draft was deliberately reopened before any 2023 strategy outcome was evaluated. This file is the new frozen early V2 specification.",
+  "freeze_rule": "Do not alter the entrance thresholds, formation, stake, or add/remove early bets after inspecting 2023 outcomes. Any later early strategy must be separately versioned and requires a fresh OOS year."
 }
