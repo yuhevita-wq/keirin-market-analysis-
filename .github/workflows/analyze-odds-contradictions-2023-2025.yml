@@ -1,0 +1,50 @@
+name: Analyze odds contradictions 2023-2025
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/keirin_market_analysis/analyze_odds_contradictions_2023_2025.py'
+      - '.github/workflows/analyze-odds-contradictions-2023-2025.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run contradiction analysis
+        run: PYTHONPATH=src python -m keirin_market_analysis.analyze_odds_contradictions_2023_2025
+      - name: Validate outputs
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/audits/odds_contradiction_analysis_2023_2025.json')
+          c=Path('data/audits/odds_contradiction_analysis_2023_2025_compact.json')
+          assert p.exists() and c.exists()
+          x=json.load(open(p,encoding='utf-8'))
+          assert x['years_read']==[2023,2024,2025]
+          assert x['evaluation_year_2026_used'] is False
+          assert x['combined']['eligible_complete_races'] > 4000
+          for m in ('D_cross_market_set','C_trio_combination_residual','H_trifecta_order_residual'):
+              assert len(x['combined'][m]['deciles'])==10
+          print('VALIDATION PASS', x['combined']['eligible_complete_races'])
+          PY
+      - name: Commit results
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/odds_contradiction_analysis_2023_2025.json data/audits/odds_contradiction_analysis_2023_2025_compact.json
+          git commit -m 'analysis: add 2023-2025 odds contradiction results' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
