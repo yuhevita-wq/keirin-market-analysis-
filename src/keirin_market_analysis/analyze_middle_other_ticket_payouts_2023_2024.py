@@ -9,6 +9,7 @@ from pathlib import Path
 YEARS = (2023, 2024)
 TICKET_TYPES = ('2枠複','2枠単','2車複','2車単','3連複','3連単','ワイド')
 OUT = Path('data/audits/middle_other_ticket_payouts_2023_2024.json')
+COMPACT = Path('data/audits/middle_other_ticket_payouts_2023_2024_compact.json')
 
 
 def read_csv(path: Path):
@@ -110,6 +111,25 @@ def load_year(year):
     return out
 
 
+def compact_year(y):
+    z = {
+        'decision_races': y['decision_races'],
+        'middle_races': y['middle_races'],
+        'no_middle_races': y['no_middle_races'],
+        'middle_rate_pct': y['middle_rate_pct'],
+        'tickets': {},
+    }
+    for tt in TICKET_TYPES:
+        m = y['groups']['middle'][tt]['per_race_max_payout']
+        n = y['groups']['no_middle'][tt]['per_race_max_payout']
+        z['tickets'][tt] = {
+            'middle': {k:m.get(k) for k in ('n','median_yen','mean_yen','max_yen','ge1000_pct','ge5000_pct','ge10000_pct','ge20000_pct')},
+            'no_middle': {k:n.get(k) for k in ('n','median_yen','mean_yen','max_yen','ge1000_pct','ge5000_pct','ge10000_pct','ge20000_pct')},
+            'comparison': y['middle_vs_no_middle'][tt],
+        }
+    return z
+
+
 def main():
     yearly = {str(y): load_year(y) for y in YEARS}
     out = {
@@ -121,7 +141,16 @@ def main():
         'years': yearly,
     }
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
-    print(json.dumps(out, ensure_ascii=False, indent=2))
+    compact = {
+        'status': out['status'] + '_COMPACT',
+        'years_read': list(YEARS),
+        'evaluation_year_2025_used': False,
+        'evaluation_year_2026_used': False,
+        'metric_note': 'Per-race maximum published winning payout. For normal single-row ticket types this equals the winning payout; for ワイド it is the highest of the three paid combinations.',
+        'years': {str(y): compact_year(yearly[str(y)]) for y in YEARS},
+    }
+    COMPACT.write_text(json.dumps(compact, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+    print(json.dumps(compact, ensure_ascii=False, indent=2))
 
 if __name__ == '__main__':
     main()
