@@ -1,0 +1,41 @@
+name: Simulate middle cross-ticket 2023
+
+on:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/simulate_middle_cross_ticket_2023.py'
+      - '.github/workflows/simulate-middle-cross-ticket-2023.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  simulate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -e .
+      - run: python -m keirin_market_analysis.simulate_middle_cross_ticket_2023
+      - name: Validate scope
+        run: |
+          python - <<'PY'
+          import json
+          p='data/audits/middle_cross_ticket_simulation_2023.json'
+          d=json.load(open(p,encoding='utf-8'))
+          assert d['years_read']==[2023]
+          assert d['evaluation_year_2024_used'] is False
+          assert d['evaluation_year_2025_used'] is False
+          assert d['evaluation_year_2026_used'] is False
+          assert d['status']=='MIDDLE_CROSS_TICKET_SIMULATION_2023'
+          PY
+      - name: Commit result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/middle_cross_ticket_simulation_2023.json data/audits/middle_cross_ticket_simulation_2023_decisions.csv
+          git commit -m 'Add 2023 middle cross-ticket simulation result' || exit 0
+          git push
