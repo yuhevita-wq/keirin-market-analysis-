@@ -1,0 +1,48 @@
+name: Probe KDreams odds HTML
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/probe-kdreams-odds.yml'
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install scrape deps
+        run: python -m pip install -e '.[scrape]'
+      - name: Probe one archived S-class preliminary odds page
+        run: |
+          python - <<'PY'
+          from bs4 import BeautifulSoup
+          from keirin_market_analysis.s_yosen_2025 import make_session, fetch_html, normalize_text
+          url='https://keirin.kdreams.jp/yahiko/racedetail/2120250903010011/?pageType=odds'
+          html=fetch_html(make_session(),url)
+          print('HTML_LEN',len(html))
+          soup=BeautifulSoup(html,'lxml')
+          text=normalize_text(soup.get_text(' ',strip=True))
+          print('HAS_3RENTAN','3連単' in text,'HAS_3RENPUKU','3連複' in text,'HAS_VOTES','発売票数' in text)
+          for i,t in enumerate(soup.find_all('table')):
+              tx=normalize_text(t.get_text(' ',strip=True))
+              cls=' '.join(t.get('class',[]))
+              if any(k in tx for k in ('3連単','3連複','1着の選択')) or len(t.find_all('td'))>=20:
+                  print('TABLE',i,'CLASS',cls,'ROWS',len(t.find_all('tr')),'TDS',len(t.find_all('td')),'TEXT',tx[:700])
+          for tag in soup.find_all(['div','section','ul','dl']):
+              tx=normalize_text(tag.get_text(' ',strip=True))
+              if '発売票数' in tx and len(tx)<1200:
+                  print('VOTE_CONTAINER',tag.name,'CLASS',' '.join(tag.get('class',[])),'TEXT',tx[:1000])
+          # print attrs around odds-looking numeric cells
+          shown=0
+          for tag in soup.find_all(['td','dd','span','li']):
+              tx=normalize_text(tag.get_text(' ',strip=True))
+              if tx in {'5.3','7.7','10.3','18.3'} or ('2911.2' in tx):
+                  print('ODDS_TAG',tag.name,'CLASS',' '.join(tag.get('class',[])),'ATTRS',dict(tag.attrs),'TEXT',tx[:200])
+                  shown+=1
+                  if shown>=20: break
+          PY
