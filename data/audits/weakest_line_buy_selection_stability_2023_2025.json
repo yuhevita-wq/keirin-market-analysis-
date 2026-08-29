@@ -1,0 +1,931 @@
+{
+  "status": "WEAKEST_LINE_BUY_SELECTION_STABILITY_2023_2025_ONLY",
+  "years_read": [
+    2023,
+    2024,
+    2025
+  ],
+  "evaluation_year_2026_used": false,
+  "segment": "中盤",
+  "selection_rule": "For each held-out year, search the same 1-2 coarse weakest-line atoms and formations using only the other two years; require training strict guardrails and family support>=2; rank by worst training ROI, recovery multiple, combined ROI, simplicity, fewer points.",
+  "folds": {
+    "2023": {
+      "training_years": [
+        2024,
+        2025
+      ],
+      "qualified_before_family": 474,
+      "qualified_robust": 371,
+      "selected": {
+        "rule": "rival_minus_weak_score_le_6__AND__lead_score_gap_main_weak_ge_6",
+        "atoms": [
+          "rival_minus_weak_score_le_6",
+          "lead_score_gap_main_weak_ge_6"
+        ],
+        "complexity": 2,
+        "formation": "WSECOND_MAINPAIR_6",
+        "points": 6,
+        "family": "WSECOND_MAINPAIR_6|lead_score_gap_main_weak:ge&rival_minus_weak_score:le",
+        "train": {
+          "2024": {
+            "races": 52,
+            "points": 6,
+            "hits": 7,
+            "hit_rate": 0.1346153846153846,
+            "stake_yen": 31200,
+            "payout_yen": 72580,
+            "profit_yen": 41380,
+            "roi": 2.3262820512820515,
+            "median_hit_payout_yen": 11850,
+            "mean_hit_payout_yen": 10368.57142857143,
+            "high5000_hits": 6,
+            "high10000_hits": 4,
+            "high20000_hits": 0,
+            "top1_payout_share": 0.2394599063102783,
+            "max_losing_streak": 13,
+            "half_hits": {
+              "H1": 3,
+              "H2": 4
+            }
+          },
+          "2025": {
+            "races": 60,
+            "points": 6,
+            "hits": 8,
+            "hit_rate": 0.13333333333333333,
+            "stake_yen": 36000,
+            "payout_yen": 93680,
+            "profit_yen": 57680,
+            "roi": 2.602222222222222,
+            "median_hit_payout_yen": 14020,
+            "mean_hit_payout_yen": 11710.0,
+            "high5000_hits": 4,
+            "high10000_hits": 4,
+            "high20000_hits": 2,
+            "top1_payout_share": 0.3205593509820666,
+            "max_losing_streak": 23,
+            "half_hits": {
+              "H1": 6,
+              "H2": 2
+            }
+          }
+        },
+        "worst_train_roi": 2.3262820512820515,
+        "worst_train_median_recovery_multiple": 19.75,
+        "combined_train_roi": 2.474107142857143,
+        "family_qualified_count_train": 16,
+        "heldout_year": 2023,
+        "heldout": {
+          "races": 46,
+          "points": 6,
+          "hits": 4,
+          "hit_rate": 0.08695652173913043,
+          "stake_yen": 27600,
+          "payout_yen": 15170,
+          "profit_yen": -12430,
+          "roi": 0.5496376811594202,
+          "median_hit_payout_yen": 5970,
+          "mean_hit_payout_yen": 3792.5,
+          "high5000_hits": 2,
+          "high10000_hits": 0,
+          "high20000_hits": 0,
+          "top1_payout_share": 0.47857613711272246,
+          "max_losing_streak": 14,
+          "half_hits": {
+            "H1": 2,
+            "H2": 2
+          }
+        },
+        "heldout_roi_gt_1": false,
+        "heldout_min_2_hits": true
+      }
+    },
+    "2024": {
+      "training_years": [
+        2023,
+        2025
+      ],
+      "qualified_before_family": 1981,
+      "qualified_robust": 1873,
+      "selected": {
+        "rule": "main_minus_weak_score_ge_12__AND__main_minus_weak_top3_ge_40",
+        "atoms": [
+          "main_minus_weak_score_ge_12",
+          "main_minus_weak_top3_ge_40"
+        ],
+        "complexity": 2,
+        "formation": "WHEAD_AB_4",
+        "points": 4,
+        "family": "WHEAD_AB_4|main_minus_weak_score:ge&main_minus_weak_top3:ge",
+        "train": {
+          "2023": {
+            "races": 66,
+            "points": 4,
+            "hits": 4,
+            "hit_rate": 0.06060606060606061,
+            "stake_yen": 26400,
+            "payout_yen": 210320,
+            "profit_yen": 183920,
+            "roi": 7.966666666666667,
+            "median_hit_payout_yen": 54040,
+            "mean_hit_payout_yen": 52580.0,
+            "high5000_hits": 4,
+            "high10000_hits": 3,
+            "high20000_hits": 3,
+            "top1_payout_share": 0.4559718524153671,
+            "max_losing_streak": 26,
+            "half_hits": {
+              "H1": 3,
+              "H2": 1
+            }
+          },
+          "2025": {
+            "races": 78,
+            "points": 4,
+            "hits": 2,
+            "hit_rate": 0.02564102564102564,
+            "stake_yen": 31200,
+            "payout_yen": 69070,
+            "profit_yen": 37870,
+            "roi": 2.213782051282051,
+            "median_hit_payout_yen": 39040,
+            "mean_hit_payout_yen": 34535.0,
+            "high5000_hits": 2,
+            "high10000_hits": 2,
+            "high20000_hits": 2,
+            "top1_payout_share": 0.565223686115535,
+            "max_losing_streak": 63,
+            "half_hits": {
+              "H1": 1,
+              "H2": 1
+            }
+          }
+        },
+        "worst_train_roi": 2.213782051282051,
+        "worst_train_median_recovery_multiple": 97.6,
+        "combined_train_roi": 4.850520833333333,
+        "family_qualified_count_train": 12,
+        "heldout_year": 2024,
+        "heldout": {
+          "races": 62,
+          "points": 4,
+          "hits": 0,
+          "hit_rate": 0.0,
+          "stake_yen": 24800,
+          "payout_yen": 0,
+          "profit_yen": -24800,
+          "roi": 0.0,
+          "median_hit_payout_yen": 0,
+          "mean_hit_payout_yen": 0.0,
+          "high5000_hits": 0,
+          "high10000_hits": 0,
+          "high20000_hits": 0,
+          "top1_payout_share": 0.0,
+          "max_losing_streak": 62,
+          "half_hits": {
+            "H1": 0,
+            "H2": 0
+          }
+        },
+        "heldout_roi_gt_1": false,
+        "heldout_min_2_hits": false
+      }
+    },
+    "2025": {
+      "training_years": [
+        2023,
+        2024
+      ],
+      "qualified_before_family": 215,
+      "qualified_robust": 161,
+      "selected": {
+        "rule": "weak_lead_score_le_94__AND__rival_minus_weak_score_le_8",
+        "atoms": [
+          "weak_lead_score_le_94",
+          "rival_minus_weak_score_le_8"
+        ],
+        "complexity": 2,
+        "formation": "WSECOND_MAINPAIR_6",
+        "points": 6,
+        "family": "WSECOND_MAINPAIR_6|rival_minus_weak_score:le&weak_lead_score:le",
+        "train": {
+          "2023": {
+            "races": 20,
+            "points": 6,
+            "hits": 4,
+            "hit_rate": 0.2,
+            "stake_yen": 12000,
+            "payout_yen": 22940,
+            "profit_yen": 10940,
+            "roi": 1.9116666666666666,
+            "median_hit_payout_yen": 7260,
+            "mean_hit_payout_yen": 5735.0,
+            "high5000_hits": 2,
+            "high10000_hits": 1,
+            "high20000_hits": 0,
+            "top1_payout_share": 0.5427201394943331,
+            "max_losing_streak": 8,
+            "half_hits": {
+              "H1": 2,
+              "H2": 2
+            }
+          },
+          "2024": {
+            "races": 31,
+            "points": 6,
+            "hits": 3,
+            "hit_rate": 0.0967741935483871,
+            "stake_yen": 18600,
+            "payout_yen": 40990,
+            "profit_yen": 22390,
+            "roi": 2.203763440860215,
+            "median_hit_payout_yen": 12090,
+            "mean_hit_payout_yen": 13663.333333333334,
+            "high5000_hits": 3,
+            "high10000_hits": 3,
+            "high20000_hits": 0,
+            "top1_payout_share": 0.41595511100268356,
+            "max_losing_streak": 9,
+            "half_hits": {
+              "H1": 1,
+              "H2": 2
+            }
+          }
+        },
+        "worst_train_roi": 1.9116666666666666,
+        "worst_train_median_recovery_multiple": 12.1,
+        "combined_train_roi": 2.08921568627451,
+        "family_qualified_count_train": 2,
+        "heldout_year": 2025,
+        "heldout": {
+          "races": 29,
+          "points": 6,
+          "hits": 2,
+          "hit_rate": 0.06896551724137931,
+          "stake_yen": 17400,
+          "payout_yen": 14670,
+          "profit_yen": -2730,
+          "roi": 0.843103448275862,
+          "median_hit_payout_yen": 14020,
+          "mean_hit_payout_yen": 7335.0,
+          "high5000_hits": 1,
+          "high10000_hits": 1,
+          "high20000_hits": 0,
+          "top1_payout_share": 0.9556918882072256,
+          "max_losing_streak": 18,
+          "half_hits": {
+            "H1": 2,
+            "H2": 0
+          }
+        },
+        "heldout_roi_gt_1": false,
+        "heldout_min_2_hits": true
+      }
+    }
+  },
+  "heldout_positive_count": 0,
+  "heldout_positive_and_2hits_count": 0,
+  "recommended_family_neighborhood": [
+    {
+      "weak_lead_score_le": 96,
+      "rival_minus_weak_score_le": 4,
+      "periods": {
+        "2023": {
+          "races": 18,
+          "points": 12,
+          "hits": 4,
+          "hit_rate": 0.2222222222222222,
+          "stake_yen": 21600,
+          "payout_yen": 105560,
+          "profit_yen": 83960,
+          "roi": 4.887037037037037,
+          "median_hit_payout_yen": 7260,
+          "mean_hit_payout_yen": 26390.0,
+          "high5000_hits": 2,
+          "high10000_hits": 1,
+          "high20000_hits": 1,
+          "top1_payout_share": 0.9084880636604774,
+          "max_losing_streak": 7,
+          "half_hits": {
+            "H1": 2,
+            "H2": 2
+          }
+        },
+        "2024": {
+          "races": 25,
+          "points": 12,
+          "hits": 4,
+          "hit_rate": 0.16,
+          "stake_yen": 30000,
+          "payout_yen": 51930,
+          "profit_yen": 21930,
+          "roi": 1.731,
+          "median_hit_payout_yen": 17050,
+          "mean_hit_payout_yen": 12982.5,
+          "high5000_hits": 4,
+          "high10000_hits": 3,
+          "high20000_hits": 0,
+          "top1_payout_share": 0.33468130175235894,
+          "max_losing_streak": 8,
+          "half_hits": {
+            "H1": 2,
+            "H2": 2
+          }
+        },
+        "2025": {
+          "races": 31,
+          "points": 12,
+          "hits": 6,
+          "hit_rate": 0.1935483870967742,
+          "stake_yen": 37200,
+          "payout_yen": 25200,
+          "profit_yen": -12000,
+          "roi": 0.6774193548387096,
+          "median_hit_payout_yen": 2930,
+          "mean_hit_payout_yen": 4200.0,
+          "high5000_hits": 1,
+          "high10000_hits": 1,
+          "high20000_hits": 0,
+          "top1_payout_share": 0.5563492063492064,
+          "max_losing_streak": 13,
+          "half_hits": {
+            "H1": 5,
+            "H2": 1
+          }
+        }
+      },
+      "all3_roi_gt_1": false,
+      "all3_min2_hits": true
+    },
+    {
+      "weak_lead_score_le": 96,
+      "rival_minus_weak_score_le": 6,
+      "periods": {
+        "2023": {
+          "races": 33,
+          "points": 12,
+          "hits": 7,
+          "hit_rate": 0.21212121212121213,
+          "stake_yen": 39600,
+          "payout_yen": 119800,
+          "profit_yen": 80200,
+          "roi": 3.025252525252525,
+          "median_hit_payout_yen": 2720,
+          "mean_hit_payout_yen": 17114.285714285714,
+          "high5000_hits": 3,
+          "high10000_hits": 2,
+          "high20000_hits": 1,
+          "top1_payout_share": 0.8005008347245409,
+          "max_losing_streak": 6,
+          "half_hits": {
+            "H1": 5,
+            "H2": 2
+          }
+        },
+        "2024": {
+          "races": 38,
+          "points": 12,
+          "hits": 6,
+          "hit_rate": 0.15789473684210525,
+          "stake_yen": 45600,
+          "payout_yen": 85910,
+          "profit_yen": 40310,
+          "roi": 1.8839912280701754,
+          "median_hit_payout_yen": 17050,
+          "mean_hit_payout_yen": 14318.333333333334,
+          "high5000_hits": 5,
+          "high10000_hits": 4,
+          "high20000_hits": 1,
+          "top1_payout_share": 0.36421836805959723,
+          "max_losing_streak": 10,
+          "half_hits": {
+            "H1": 2,
+            "H2": 4
+          }
+        },
+        "2025": {
+          "races": 50,
+          "points": 12,
+          "hits": 7,
+          "hit_rate": 0.14,
+          "stake_yen": 60000,
+          "payout_yen": 48820,
+          "profit_yen": -11180,
+          "roi": 0.8136666666666666,
+          "median_hit_payout_yen": 2930,
+          "mean_hit_payout_yen": 6974.285714285715,
+          "high5000_hits": 2,
+          "high10000_hits": 2,
+          "high20000_hits": 1,
+          "top1_payout_share": 0.48381810733306024,
+          "max_losing_streak": 20,
+          "half_hits": {
+            "H1": 6,
+            "H2": 1
+          }
+        }
+      },
+      "all3_roi_gt_1": false,
+      "all3_min2_hits": true
+    },
+    {
+      "weak_lead_score_le": 96,
+      "rival_minus_weak_score_le": 8,
+      "periods": {
+        "2023": {
+          "races": 45,
+          "points": 12,
+          "hits": 9,
+          "hit_rate": 0.2,
+          "stake_yen": 54000,
+          "payout_yen": 134830,
+          "profit_yen": 80830,
+          "roi": 2.4968518518518517,
+          "median_hit_payout_yen": 2720,
+          "mean_hit_payout_yen": 14981.111111111111,
+          "high5000_hits": 4,
+          "high10000_hits": 3,
+          "high20000_hits": 1,
+          "top1_payout_share": 0.7112660387154194,
+          "max_losing_streak": 7,
+          "half_hits": {
+            "H1": 6,
+            "H2": 3
+          }
+        },
+        "2024": {
+          "races": 55,
+          "points": 12,
+          "hits": 8,
+          "hit_rate": 0.14545454545454545,
+          "stake_yen": 66000,
+          "payout_yen": 99430,
+          "profit_yen": 33430,
+          "roi": 1.5065151515151516,
+          "median_hit_payout_yen": 12090,
+          "mean_hit_payout_yen": 12428.75,
+          "high5000_hits": 6,
+          "high10000_hits": 5,
+          "high20000_hits": 1,
+          "top1_payout_share": 0.31469375440008046,
+          "max_losing_streak": 12,
+          "half_hits": {
+            "H1": 2,
+            "H2": 6
+          }
+        },
+        "2025": {
+          "races": 67,
+          "points": 12,
+          "hits": 7,
+          "hit_rate": 0.1044776119402985,
+          "stake_yen": 80400,
+          "payout_yen": 48820,
+          "profit_yen": -31580,
+          "roi": 0.6072139303482587,
+          "median_hit_payout_yen": 2930,
+          "mean_hit_payout_yen": 6974.285714285715,
+          "high5000_hits": 2,
+          "high10000_hits": 2,
+          "high20000_hits": 1,
+          "top1_payout_share": 0.48381810733306024,
+          "max_losing_streak": 34,
+          "half_hits": {
+            "H1": 6,
+            "H2": 1
+          }
+        }
+      },
+      "all3_roi_gt_1": false,
+      "all3_min2_hits": true
+    },
+    {
+      "weak_lead_score_le": 98,
+      "rival_minus_weak_score_le": 4,
+      "periods": {
+        "2023": {
+          "races": 32,
+          "points": 12,
+          "hits": 9,
+          "hit_rate": 0.28125,
+          "stake_yen": 38400,
+          "payout_yen": 130210,
+          "profit_yen": 91810,
+          "roi": 3.390885416666667,
+          "median_hit_payout_yen": 5970,
+          "mean_hit_payout_yen": 14467.777777777777,
+          "high5000_hits": 5,
+          "high10000_hits": 1,
+          "high20000_hits": 1,
+          "top1_payout_share": 0.7365025727670685,
+          "max_losing_streak": 6,
+          "half_hits": {
+            "H1": 4,
+            "H2": 5
+          }
+        },
+        "2024": {
+          "races": 42,
+          "points": 12,
+          "hits": 7,
+          "hit_rate": 0.16666666666666666,
+          "stake_yen": 50400,
+          "payout_yen": 72410,
+          "profit_yen": 22010,
+          "roi": 1.4367063492063492,
+          "median_hit_payout_yen": 11850,
+          "mean_hit_payout_yen": 10344.285714285714,
+          "high5000_hits": 6,
+          "high10000_hits": 4,
+          "high20000_hits": 0,
+          "top1_payout_share": 0.2400220963955255,
+          "max_losing_streak": 10,
+          "half_hits": {
+            "H1": 4,
+            "H2": 3
+          }
+        },
+        "2025": {
+          "races": 46,
+          "points": 12,
+          "hits": 12,
+          "hit_rate": 0.2608695652173913,
+          "stake_yen": 55200,
+          "payout_yen": 43970,
+          "profit_yen": -11230,
+          "roi": 0.7965579710144928,
+          "median_hit_payout_yen": 2790,
+          "mean_hit_payout_yen": 3664.1666666666665,
+          "high5000_hits": 2,
+          "high10000_hits": 1,
+          "high20000_hits": 0,
+          "top1_payout_share": 0.31885376392995224,
+          "max_losing_streak": 8,
+          "half_hits": {
+            "H1": 10,
+            "H2": 2
+          }
+        }
+      },
+      "all3_roi_gt_1": false,
+      "all3_min2_hits": true
+    },
+    {
+      "weak_lead_score_le": 98,
+      "rival_minus_weak_score_le": 6,
+      "periods": {
+        "2023": {
+          "races": 50,
+          "points": 12,
+          "hits": 12,
+          "hit_rate": 0.24,
+          "stake_yen": 60000,
+          "payout_yen": 144450,
+          "profit_yen": 84450,
+          "roi": 2.4075,
+          "median_hit_payout_yen": 5970,
+          "mean_hit_payout_yen": 12037.5,
+          "high5000_hits": 6,
+          "high10000_hits": 2,
+          "high20000_hits": 1,
+          "top1_payout_share": 0.6638975424022153,
+          "max_losing_streak": 7,
+          "half_hits": {
+            "H1": 7,
+            "H2": 5
+          }
+        },
+        "2024": {
+          "races": 62,
+          "points": 12,
+          "hits": 10,
+          "hit_rate": 0.16129032258064516,
+          "stake_yen": 74400,
+          "payout_yen": 107360,
+          "profit_yen": 32960,
+          "roi": 1.4430107526881721,
+          "median_hit_payout_yen": 11850,
+          "mean_hit_payout_yen": 10736.0,
+          "high5000_hits": 7,
+          "high10000_hits": 5,
+          "high20000_hits": 1,
+          "top1_payout_share": 0.2914493293591654,
+          "max_losing_streak": 14,
+          "half_hits": {
+            "H1": 4,
+            "H2": 6
+          }
+        },
+        "2025": {
+          "races": 73,
+          "points": 12,
+          "hits": 17,
+          "hit_rate": 0.2328767123287671,
+          "stake_yen": 87600,
+          "payout_yen": 119610,
+          "profit_yen": 32010,
+          "roi": 1.3654109589041097,
+          "median_hit_payout_yen": 2930,
+          "mean_hit_payout_yen": 7035.882352941177,
+          "high5000_hits": 5,
+          "high10000_hits": 4,
+          "high20000_hits": 2,
+          "top1_payout_share": 0.25106596438424883,
+          "max_losing_streak": 10,
+          "half_hits": {
+            "H1": 13,
+            "H2": 4
+          }
+        }
+      },
+      "all3_roi_gt_1": true,
+      "all3_min2_hits": true
+    },
+    {
+      "weak_lead_score_le": 98,
+      "rival_minus_weak_score_le": 8,
+      "periods": {
+        "2023": {
+          "races": 67,
+          "points": 12,
+          "hits": 14,
+          "hit_rate": 0.208955223880597,
+          "stake_yen": 80400,
+          "payout_yen": 159480,
+          "profit_yen": 79080,
+          "roi": 1.983582089552239,
+          "median_hit_payout_yen": 5970,
+          "mean_hit_payout_yen": 11391.42857142857,
+          "high5000_hits": 7,
+          "high10000_hits": 3,
+          "high20000_hits": 1,
+          "top1_payout_share": 0.6013293202909455,
+          "max_losing_streak": 8,
+          "half_hits": {
+            "H1": 8,
+            "H2": 6
+          }
+        },
+        "2024": {
+          "races": 87,
+          "points": 12,
+          "hits": 12,
+          "hit_rate": 0.13793103448275862,
+          "stake_yen": 104400,
+          "payout_yen": 120880,
+          "profit_yen": 16480,
+          "roi": 1.1578544061302682,
+          "median_hit_payout_yen": 11850,
+          "mean_hit_payout_yen": 10073.333333333334,
+          "high5000_hits": 8,
+          "high10000_hits": 6,
+          "high20000_hits": 1,
+          "top1_payout_share": 0.25885175380542685,
+          "max_losing_streak": 15,
+          "half_hits": {
+            "H1": 4,
+            "H2": 8
+          }
+        },
+        "2025": {
+          "races": 97,
+          "points": 12,
+          "hits": 17,
+          "hit_rate": 0.17525773195876287,
+          "stake_yen": 116400,
+          "payout_yen": 119610,
+          "profit_yen": 3210,
+          "roi": 1.0275773195876288,
+          "median_hit_payout_yen": 2930,
+          "mean_hit_payout_yen": 7035.882352941177,
+          "high5000_hits": 5,
+          "high10000_hits": 4,
+          "high20000_hits": 2,
+          "top1_payout_share": 0.25106596438424883,
+          "max_losing_streak": 14,
+          "half_hits": {
+            "H1": 13,
+            "H2": 4
+          }
+        }
+      },
+      "all3_roi_gt_1": true,
+      "all3_min2_hits": true
+    },
+    {
+      "weak_lead_score_le": 100,
+      "rival_minus_weak_score_le": 4,
+      "periods": {
+        "2023": {
+          "races": 44,
+          "points": 12,
+          "hits": 10,
+          "hit_rate": 0.22727272727272727,
+          "stake_yen": 52800,
+          "payout_yen": 135630,
+          "profit_yen": 82830,
+          "roi": 2.56875,
+          "median_hit_payout_yen": 5970,
+          "mean_hit_payout_yen": 13563.0,
+          "high5000_hits": 6,
+          "high10000_hits": 1,
+          "high20000_hits": 1,
+          "top1_payout_share": 0.7070707070707071,
+          "max_losing_streak": 10,
+          "half_hits": {
+            "H1": 5,
+            "H2": 5
+          }
+        },
+        "2024": {
+          "races": 52,
+          "points": 12,
+          "hits": 7,
+          "hit_rate": 0.1346153846153846,
+          "stake_yen": 62400,
+          "payout_yen": 72410,
+          "profit_yen": 10010,
+          "roi": 1.1604166666666667,
+          "median_hit_payout_yen": 11850,
+          "mean_hit_payout_yen": 10344.285714285714,
+          "high5000_hits": 6,
+          "high10000_hits": 4,
+          "high20000_hits": 0,
+          "top1_payout_share": 0.2400220963955255,
+          "max_losing_streak": 12,
+          "half_hits": {
+            "H1": 4,
+            "H2": 3
+          }
+        },
+        "2025": {
+          "races": 56,
+          "points": 12,
+          "hits": 12,
+          "hit_rate": 0.21428571428571427,
+          "stake_yen": 67200,
+          "payout_yen": 43970,
+          "profit_yen": -23230,
+          "roi": 0.6543154761904761,
+          "median_hit_payout_yen": 2790,
+          "mean_hit_payout_yen": 3664.1666666666665,
+          "high5000_hits": 2,
+          "high10000_hits": 1,
+          "high20000_hits": 0,
+          "top1_payout_share": 0.31885376392995224,
+          "max_losing_streak": 11,
+          "half_hits": {
+            "H1": 10,
+            "H2": 2
+          }
+        }
+      },
+      "all3_roi_gt_1": false,
+      "all3_min2_hits": true
+    },
+    {
+      "weak_lead_score_le": 100,
+      "rival_minus_weak_score_le": 6,
+      "periods": {
+        "2023": {
+          "races": 65,
+          "points": 12,
+          "hits": 13,
+          "hit_rate": 0.2,
+          "stake_yen": 78000,
+          "payout_yen": 149870,
+          "profit_yen": 71870,
+          "roi": 1.9214102564102564,
+          "median_hit_payout_yen": 5420,
+          "mean_hit_payout_yen": 11528.461538461539,
+          "high5000_hits": 7,
+          "high10000_hits": 2,
+          "high20000_hits": 1,
+          "top1_payout_share": 0.6398879028491359,
+          "max_losing_streak": 11,
+          "half_hits": {
+            "H1": 8,
+            "H2": 5
+          }
+        },
+        "2024": {
+          "races": 75,
+          "points": 12,
+          "hits": 10,
+          "hit_rate": 0.13333333333333333,
+          "stake_yen": 90000,
+          "payout_yen": 107360,
+          "profit_yen": 17360,
+          "roi": 1.1928888888888889,
+          "median_hit_payout_yen": 11850,
+          "mean_hit_payout_yen": 10736.0,
+          "high5000_hits": 7,
+          "high10000_hits": 5,
+          "high20000_hits": 1,
+          "top1_payout_share": 0.2914493293591654,
+          "max_losing_streak": 17,
+          "half_hits": {
+            "H1": 4,
+            "H2": 6
+          }
+        },
+        "2025": {
+          "races": 87,
+          "points": 12,
+          "hits": 18,
+          "hit_rate": 0.20689655172413793,
+          "stake_yen": 104400,
+          "payout_yen": 129590,
+          "profit_yen": 25190,
+          "roi": 1.2412835249042145,
+          "median_hit_payout_yen": 3490,
+          "mean_hit_payout_yen": 7199.444444444444,
+          "high5000_hits": 6,
+          "high10000_hits": 4,
+          "high20000_hits": 2,
+          "top1_payout_share": 0.23173084342927694,
+          "max_losing_streak": 13,
+          "half_hits": {
+            "H1": 13,
+            "H2": 5
+          }
+        }
+      },
+      "all3_roi_gt_1": true,
+      "all3_min2_hits": true
+    },
+    {
+      "weak_lead_score_le": 100,
+      "rival_minus_weak_score_le": 8,
+      "periods": {
+        "2023": {
+          "races": 87,
+          "points": 12,
+          "hits": 15,
+          "hit_rate": 0.1724137931034483,
+          "stake_yen": 104400,
+          "payout_yen": 164900,
+          "profit_yen": 60500,
+          "roi": 1.5795019157088122,
+          "median_hit_payout_yen": 5420,
+          "mean_hit_payout_yen": 10993.333333333334,
+          "high5000_hits": 8,
+          "high10000_hits": 3,
+          "high20000_hits": 1,
+          "top1_payout_share": 0.5815645845967253,
+          "max_losing_streak": 14,
+          "half_hits": {
+            "H1": 9,
+            "H2": 6
+          }
+        },
+        "2024": {
+          "races": 105,
+          "points": 12,
+          "hits": 12,
+          "hit_rate": 0.11428571428571428,
+          "stake_yen": 126000,
+          "payout_yen": 120880,
+          "profit_yen": -5120,
+          "roi": 0.9593650793650793,
+          "median_hit_payout_yen": 11850,
+          "mean_hit_payout_yen": 10073.333333333334,
+          "high5000_hits": 8,
+          "high10000_hits": 6,
+          "high20000_hits": 1,
+          "top1_payout_share": 0.25885175380542685,
+          "max_losing_streak": 19,
+          "half_hits": {
+            "H1": 4,
+            "H2": 8
+          }
+        },
+        "2025": {
+          "races": 115,
+          "points": 12,
+          "hits": 19,
+          "hit_rate": 0.16521739130434782,
+          "stake_yen": 138000,
+          "payout_yen": 133270,
+          "profit_yen": -4730,
+          "roi": 0.9657246376811595,
+          "median_hit_payout_yen": 3490,
+          "mean_hit_payout_yen": 7014.210526315789,
+          "high5000_hits": 6,
+          "high10000_hits": 4,
+          "high20000_hits": 2,
+          "top1_payout_share": 0.2253320327155399,
+          "max_losing_streak": 15,
+          "half_hits": {
+            "H1": 14,
+            "H2": 5
+          }
+        }
+      },
+      "all3_roi_gt_1": false,
+      "all3_min2_hits": true
+    }
+  ],
+  "neighborhood_all3_positive_count": 3,
+  "neighborhood_all3_positive_and_2hits_count": 3
+}
