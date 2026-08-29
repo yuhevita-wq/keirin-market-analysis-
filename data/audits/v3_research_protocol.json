@@ -1,0 +1,44 @@
+{
+  "status": "V3_RESEARCH_PROTOCOL_FROZEN_BEFORE_DETAILED_2026_H1_OUTCOME_INSPECTION",
+  "development_periods": ["2023", "2024", "2025", "2026_H1"],
+  "future_forward_oos": "2026-07-01 onward",
+  "target": "Ｓ級予選",
+  "principles": [
+    "2026 H1 is development data from this point forward; it must never again be described as OOS for V3.",
+    "Do not search new thresholds before failure decomposition is complete.",
+    "Separate entrance stability, ordering/formation stability, and payout sufficiency.",
+    "Do not accept a strategy merely because pooled 4-period ROI exceeds 100%.",
+    "Prefer simple rules, broad threshold plateaus, adequate race counts, and low single-hit payout dependence.",
+    "Reserve 2026-07-01 onward as untouched forward OOS until V3 is frozen."
+  ],
+  "phase1_failure_decomposition": {
+    "periods": ["2023", "2024", "2025", "2026_H1"],
+    "metrics": [
+      "structural eligible race count",
+      "candidate entrance count and entrance rate",
+      "exact frozen formation hit count and hit rate",
+      "top role-triplet frequencies among candidate races",
+      "average and median payout on formation hits",
+      "stake per race and break-even hit-rate/payout relationship",
+      "ROI and profit",
+      "largest-hit payout share"
+    ],
+    "diagnosis_labels": [
+      "entrance_shift",
+      "ordering_shift",
+      "price_shift",
+      "mixed_failure"
+    ]
+  },
+  "phase2_predeclared_formation_families": {
+    "early": ["MIX2", "RIVAL4", "MAIN4_RIVAL"],
+    "middle": ["MIX2", "MAIN4_RIVAL", "MAIN6", "RIVAL4"],
+    "late": ["MAIN2_M3", "MAIN2_X", "MAIN4_X", "MAIN6"]
+  },
+  "phase2_condition_complexity": {
+    "max_atoms": 2,
+    "thresholds": "coarse fixed grids only; no fine tuning around observed optima",
+    "required_period_profitability": "evaluate each period separately; pooled profitability alone is insufficient",
+    "minimum_sample_policy": "favor candidates with meaningful counts in every period; sparse candidates require explicit penalty"
+  }
+}
