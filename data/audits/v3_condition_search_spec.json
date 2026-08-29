@@ -1,0 +1,34 @@
+{
+  "status": "FROZEN_BEFORE_V3_FOUR_PERIOD_CONDITION_SEARCH",
+  "development_periods": ["2023", "2024", "2025", "2026_H1"],
+  "future_oos": "2026-07-01 onward",
+  "formations_fixed_for_search": {
+    "early": "MIX2",
+    "middle": "MIX2",
+    "late": "MAIN4_X"
+  },
+  "condition_space": {
+    "source": "reuse the same coarse ATOMS from search_three_year_conditions_v1.py",
+    "max_atoms": 2,
+    "same_feature_double_conditions": false,
+    "fine_threshold_tuning": false
+  },
+  "qualification": {
+    "roi_each_period": "> 1.0",
+    "min_races": {"2023": 20, "2024": 20, "2025": 20, "2026_H1": 8},
+    "min_hits": {"2023": 3, "2024": 3, "2025": 3, "2026_H1": 2},
+    "max_top1_payout_share_each_period": 0.70
+  },
+  "ranking": [
+    "highest worst-period ROI",
+    "highest median-period ROI",
+    "highest combined ROI",
+    "lower condition complexity"
+  ],
+  "post_search_required_audits": [
+    "threshold-neighborhood plateau audit",
+    "leave-one-period-out selection stability audit",
+    "single-hit dependence review",
+    "freeze before any 2026 H2 outcome evaluation"
+  ]
+}
