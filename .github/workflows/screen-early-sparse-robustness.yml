@@ -1,0 +1,42 @@
+name: Screen sparse early candidates for robustness
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/screen-early-sparse-robustness.yml'
+      - 'src/keirin_market_analysis/screen_early_sparse_robustness.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e .
+      - name: Run robustness screen
+        run: python -m keirin_market_analysis.screen_early_sparse_robustness
+      - name: Validate 2023 isolation
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          code=Path('src/keirin_market_analysis/screen_early_sparse_robustness.py').read_text(encoding='utf-8')
+          assert 'data/2023' not in code
+          s=json.loads(Path('data/audits/early_sparse_robustness_screen.json').read_text(encoding='utf-8'))
+          print(json.dumps(s,ensure_ascii=False,indent=2))
+          PY
+      - name: Commit screen
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/audits/early_sparse_robustness_screen.json
+          git diff --cached --quiet || git commit -m 'analysis: record sparse early robustness screen'
+          git push
