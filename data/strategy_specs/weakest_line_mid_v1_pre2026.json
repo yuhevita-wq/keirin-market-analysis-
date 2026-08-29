@@ -1,0 +1,39 @@
+{
+  "status": "FROZEN_PRE_2026_EVALUATION",
+  "research_years": [2023, 2024, 2025],
+  "evaluation_window": "2026-01-01/2026-06-30",
+  "evaluation_outcomes_inspected_before_freeze": false,
+  "target_race_type": "Ｓ級予選",
+  "segment": "中盤",
+  "structural_requirements": {
+    "main_line_size_min": 3,
+    "non_main_lines_size2plus_min": 2,
+    "weakest_line_definition": "unique minimum lead+second competition-score sum among non-main lines of size>=2",
+    "strongest_rival_definition": "highest lead+second competition-score sum among non-main lines of size>=2",
+    "weakest_and_strongest_rival_must_be_distinct": true
+  },
+  "conditions": [
+    {"feature": "weak_lead_score", "operator": "<=", "threshold": 98},
+    {"feature": "rival_minus_weak_score", "operator": "<=", "threshold": 6}
+  ],
+  "feature_definitions": {
+    "weak_lead_score": "competition score of weakest-line lead W1L",
+    "rival_minus_weak_score": "(R1L+R1B competition-score sum) - (W1L+W1B competition-score sum)"
+  },
+  "formation": {
+    "id": "WEAK1_MAINPAIR_12",
+    "bets": "all 6 permutations of A,B,W1L plus all 6 permutations of A,B,W1B",
+    "points": 12,
+    "stake_yen_per_point": 100,
+    "stake_yen_per_race": 1200
+  },
+  "selection_basis": "2023-2025 weakest-line buy-condition research only",
+  "development_results": {
+    "2023": {"races": 50, "hits": 12, "roi_pct": 240.75},
+    "2024": {"races": 62, "hits": 10, "roi_pct": 144.30107526881722},
+    "2025": {"races": 73, "hits": 17, "roi_pct": 136.54109589041096},
+    "combined": {"races": 185, "hits": 39, "stake_yen": 222000, "payout_yen": 371420, "profit_yen": 149420, "roi_pct": 167.3063063063063}
+  },
+  "known_warning_before_2026_evaluation": "LOYO selector stability was 0/3. This candidate is frozen as a fixed 3-year candidate; no 2026-driven threshold or formation change is allowed.",
+  "evaluation_rule": "Apply unchanged to 2026 H1. Report races, hits, stake, payout, profit, ROI, monthly path, hit payouts, high-payout counts, concentration and max losing streak. Do not retune after seeing outcomes."
+}
