@@ -1,0 +1,845 @@
+{
+  "status": "COMPACT_WEAKEST_LINE_2023_2025_ONLY",
+  "years_read": [
+    2023,
+    2024,
+    2025
+  ],
+  "evaluation_year_2026_used": false,
+  "definition": {
+    "candidate_line": "predicted line with at least 2 riders",
+    "weakest_line": "unique minimum of lead+second competition-score sum among non-main candidate lines",
+    "requires": "main line size>=3 and at least two non-main 2+ lines, so strongest rival and weakest line are distinct",
+    "tie_policy": "exclude races tied for minimum non-main pair score; never break the tie post hoc",
+    "roles": {
+      "W1L": "weakest line lead",
+      "W1B": "weakest line second"
+    }
+  },
+  "structural_counts": {
+    "2023": {
+      "前半": 189,
+      "中盤": 185,
+      "後半": 266,
+      "total": 640
+    },
+    "2024": {
+      "前半": 144,
+      "中盤": 191,
+      "後半": 257,
+      "total": 592
+    },
+    "2025": {
+      "前半": 184,
+      "中盤": 204,
+      "後半": 262,
+      "total": 650
+    }
+  },
+  "exclusions": {
+    "2023": {
+      "fewer_than_3_lines": 293,
+      "main_under_3": 558,
+      "no_strong_rival": 4
+    },
+    "2024": {
+      "fewer_than_3_lines": 327,
+      "main_under_3": 542
+    },
+    "2025": {
+      "fewer_than_3_lines": 285,
+      "main_under_3": 528,
+      "no_strong_rival": 1
+    }
+  },
+  "segments": {
+    "前半": {
+      "eligible_races": 517,
+      "overall": {
+        "races": 517,
+        "median_payout_yen": 4160,
+        "mean_payout_yen": 15032.862669245647,
+        "ge_5000_rate": 0.4410058027079304,
+        "ge_10000_rate": 0.2901353965183752,
+        "ge_20000_rate": 0.172147001934236
+      },
+      "weak0": {
+        "races": 324,
+        "share": 0.6266924564796905,
+        "median_payout_yen": 2370,
+        "mean_payout_yen": 6241.265432098766,
+        "ge_5000_rate": 0.2623456790123457,
+        "ge_10000_rate": 0.12654320987654322,
+        "ge_20000_rate": 0.05864197530864197
+      },
+      "weak1": {
+        "races": 149,
+        "share": 0.28820116054158607,
+        "median_payout_yen": 11460,
+        "mean_payout_yen": 30526.510067114094,
+        "ge_5000_rate": 0.7046979865771812,
+        "ge_10000_rate": 0.5369127516778524,
+        "ge_20000_rate": 0.3624161073825503
+      },
+      "weak2": {
+        "races": 44,
+        "share": 0.0851063829787234,
+        "median_payout_yen": 15730,
+        "mean_payout_yen": 27303.863636363636,
+        "ge_5000_rate": 0.8636363636363636,
+        "ge_10000_rate": 0.6590909090909091,
+        "ge_20000_rate": 0.36363636363636365
+      },
+      "weakest_included": {
+        "races": 193,
+        "share": 0.3733075435203095,
+        "median_payout_yen": 12000,
+        "mean_payout_yen": 29791.81347150259,
+        "ge_5000_rate": 0.7409326424870466,
+        "ge_10000_rate": 0.5647668393782384,
+        "ge_20000_rate": 0.3626943005181347,
+        "ge_5000_enrichment_vs_all": 1.6800972638851013,
+        "ge_10000_enrichment_vs_all": 1.9465630397236617,
+        "ge_20000_enrichment_vs_all": 2.1068871164929845
+      },
+      "weakest_head": {
+        "races": 64,
+        "share": 0.12379110251450677,
+        "median_payout_yen": 19100,
+        "mean_payout_yen": 41632.03125,
+        "ge_5000_rate": 0.875,
+        "ge_10000_rate": 0.671875,
+        "ge_20000_rate": 0.484375,
+        "ge_5000_enrichment_vs_all": 1.9841008771929824,
+        "ge_10000_enrichment_vs_all": 2.315729166666667,
+        "ge_20000_enrichment_vs_all": 2.8137289325842696
+      },
+      "both_weakest_in_top3": {
+        "races": 44,
+        "share": 0.0851063829787234,
+        "median_payout_yen": 15730,
+        "mean_payout_yen": 27303.863636363636,
+        "ge_5000_rate": 0.8636363636363636,
+        "ge_10000_rate": 0.6590909090909091,
+        "ge_20000_rate": 0.36363636363636365,
+        "ge_5000_enrichment_vs_all": 1.9583333333333333,
+        "ge_10000_enrichment_vs_all": 2.2716666666666665,
+        "ge_20000_enrichment_vs_all": 2.1123595505617976
+      },
+      "weakest_pair_top2": {
+        "races": 28,
+        "share": 0.05415860735009671,
+        "median_payout_yen": 13010,
+        "mean_payout_yen": 18990.714285714286,
+        "ge_5000_rate": 0.8214285714285714,
+        "ge_10000_rate": 0.5714285714285714,
+        "ge_20000_rate": 0.25,
+        "ge_5000_enrichment_vs_all": 1.8626253132832078,
+        "ge_10000_enrichment_vs_all": 1.9695238095238095,
+        "ge_20000_enrichment_vs_all": 1.4522471910112358
+      },
+      "weak_mix_counts": {
+        "W1_M1_R1_O0": 53,
+        "W2_M1_R0_O0": 28,
+        "W1_M0_R2_O0": 29,
+        "W2_M0_R1_O0": 16,
+        "W1_M2_R0_O0": 66,
+        "W1_M1_R0_O1": 1
+      },
+      "top_high20000_orders": [
+        [
+          "W1L-B-A",
+          3
+        ],
+        [
+          "A-R1L-W1B",
+          3
+        ],
+        [
+          "B-W1B-M3",
+          3
+        ],
+        [
+          "W1B-B-R1B",
+          2
+        ],
+        [
+          "W1L-B-W1B",
+          2
+        ],
+        [
+          "A-W1L-M3",
+          2
+        ],
+        [
+          "R1L-A-W1B",
+          2
+        ],
+        [
+          "R1L-W1B-R1B",
+          2
+        ],
+        [
+          "R1B-W1B-W1L",
+          2
+        ],
+        [
+          "W1L-W1B-M3",
+          2
+        ],
+        [
+          "W1B-A-W1L",
+          2
+        ],
+        [
+          "R1L-W1L-A",
+          2
+        ]
+      ],
+      "by_year": {
+        "2023": {
+          "eligible_races": 189,
+          "weakest_included": {
+            "races": 73,
+            "share": 0.3862433862433862,
+            "median_payout_yen": 9710,
+            "mean_payout_yen": 25980.27397260274,
+            "ge_5000_rate": 0.6575342465753424,
+            "ge_10000_rate": 0.4794520547945205,
+            "ge_20000_rate": 0.3150684931506849,
+            "ge_5000_enrichment_vs_all": 1.613947696139477,
+            "ge_10000_enrichment_vs_all": 1.8493150684931507,
+            "ge_20000_enrichment_vs_all": 1.7514101531023367
+          },
+          "weakest_head": {
+            "races": 24,
+            "share": 0.12698412698412698,
+            "median_payout_yen": 15010,
+            "mean_payout_yen": 26062.916666666668,
+            "ge_5000_rate": 0.8333333333333334,
+            "ge_10000_rate": 0.5833333333333334,
+            "ge_20000_rate": 0.375,
+            "ge_5000_enrichment_vs_all": 2.045454545454546,
+            "ge_10000_enrichment_vs_all": 2.2500000000000004,
+            "ge_20000_enrichment_vs_all": 2.0845588235294117
+          },
+          "both_weakest_in_top3": {
+            "races": 14,
+            "share": 0.07407407407407407,
+            "median_payout_yen": 10500,
+            "mean_payout_yen": 15019.285714285714,
+            "ge_5000_rate": 0.7857142857142857,
+            "ge_10000_rate": 0.5,
+            "ge_20000_rate": 0.14285714285714285,
+            "ge_5000_enrichment_vs_all": 1.9285714285714286,
+            "ge_10000_enrichment_vs_all": 1.9285714285714286,
+            "ge_20000_enrichment_vs_all": 0.7941176470588235
+          }
+        },
+        "2024": {
+          "eligible_races": 144,
+          "weakest_included": {
+            "races": 63,
+            "share": 0.4375,
+            "median_payout_yen": 12670,
+            "mean_payout_yen": 29307.93650793651,
+            "ge_5000_rate": 0.7777777777777778,
+            "ge_10000_rate": 0.6349206349206349,
+            "ge_20000_rate": 0.4126984126984127,
+            "ge_5000_enrichment_vs_all": 1.4933333333333332,
+            "ge_10000_enrichment_vs_all": 1.6326530612244896,
+            "ge_20000_enrichment_vs_all": 2.049261083743842
+          },
+          "weakest_head": {
+            "races": 20,
+            "share": 0.1388888888888889,
+            "median_payout_yen": 42530,
+            "mean_payout_yen": 48162.5,
+            "ge_5000_rate": 0.9,
+            "ge_10000_rate": 0.8,
+            "ge_20000_rate": 0.65,
+            "ge_5000_enrichment_vs_all": 1.728,
+            "ge_10000_enrichment_vs_all": 2.0571428571428574,
+            "ge_20000_enrichment_vs_all": 3.227586206896552
+          },
+          "both_weakest_in_top3": {
+            "races": 14,
+            "share": 0.09722222222222222,
+            "median_payout_yen": 34020,
+            "mean_payout_yen": 36605.71428571428,
+            "ge_5000_rate": 0.9285714285714286,
+            "ge_10000_rate": 0.8571428571428571,
+            "ge_20000_rate": 0.5714285714285714,
+            "ge_5000_enrichment_vs_all": 1.7828571428571427,
+            "ge_10000_enrichment_vs_all": 2.204081632653061,
+            "ge_20000_enrichment_vs_all": 2.83743842364532
+          }
+        },
+        "2025": {
+          "eligible_races": 184,
+          "weakest_included": {
+            "races": 57,
+            "share": 0.30978260869565216,
+            "median_payout_yen": 12940,
+            "mean_payout_yen": 35208.070175438595,
+            "ge_5000_rate": 0.8070175438596491,
+            "ge_10000_rate": 0.5964912280701754,
+            "ge_20000_rate": 0.3684210526315789,
+            "ge_5000_enrichment_vs_all": 1.9538319482917819,
+            "ge_10000_enrichment_vs_all": 2.438986354775828,
+            "ge_20000_enrichment_vs_all": 2.6072874493927127
+          },
+          "weakest_head": {
+            "races": 20,
+            "share": 0.10869565217391304,
+            "median_payout_yen": 18430,
+            "mean_payout_yen": 53784.5,
+            "ge_5000_rate": 0.9,
+            "ge_10000_rate": 0.65,
+            "ge_20000_rate": 0.45,
+            "ge_5000_enrichment_vs_all": 2.1789473684210527,
+            "ge_10000_enrichment_vs_all": 2.657777777777778,
+            "ge_20000_enrichment_vs_all": 3.184615384615385
+          },
+          "both_weakest_in_top3": {
+            "races": 16,
+            "share": 0.08695652173913043,
+            "median_payout_yen": 15730,
+            "mean_payout_yen": 29913.75,
+            "ge_5000_rate": 0.875,
+            "ge_10000_rate": 0.625,
+            "ge_20000_rate": 0.375,
+            "ge_5000_enrichment_vs_all": 2.1184210526315788,
+            "ge_10000_enrichment_vs_all": 2.5555555555555554,
+            "ge_20000_enrichment_vs_all": 2.653846153846154
+          }
+        }
+      }
+    },
+    "中盤": {
+      "eligible_races": 580,
+      "overall": {
+        "races": 580,
+        "median_payout_yen": 3490,
+        "mean_payout_yen": 16835.05172413793,
+        "ge_5000_rate": 0.43103448275862066,
+        "ge_10000_rate": 0.28793103448275864,
+        "ge_20000_rate": 0.18448275862068966
+      },
+      "weak0": {
+        "races": 397,
+        "share": 0.6844827586206896,
+        "median_payout_yen": 2230,
+        "mean_payout_yen": 8157.002518891688,
+        "ge_5000_rate": 0.28463476070528965,
+        "ge_10000_rate": 0.15113350125944586,
+        "ge_20000_rate": 0.09319899244332494
+      },
+      "weak1": {
+        "races": 148,
+        "share": 0.25517241379310346,
+        "median_payout_yen": 12180,
+        "mean_payout_yen": 34497.56756756757,
+        "ge_5000_rate": 0.722972972972973,
+        "ge_10000_rate": 0.5608108108108109,
+        "ge_20000_rate": 0.35135135135135137
+      },
+      "weak2": {
+        "races": 35,
+        "share": 0.0603448275862069,
+        "median_payout_yen": 20240,
+        "mean_payout_yen": 40581.71428571428,
+        "ge_5000_rate": 0.8571428571428571,
+        "ge_10000_rate": 0.6857142857142857,
+        "ge_20000_rate": 0.5142857142857142
+      },
+      "weakest_included": {
+        "races": 183,
+        "share": 0.31551724137931036,
+        "median_payout_yen": 13280,
+        "mean_payout_yen": 35661.20218579235,
+        "ge_5000_rate": 0.7486338797814208,
+        "ge_10000_rate": 0.5846994535519126,
+        "ge_20000_rate": 0.3825136612021858,
+        "ge_5000_enrichment_vs_all": 1.7368306010928964,
+        "ge_10000_enrichment_vs_all": 2.030692712934786,
+        "ge_20000_enrichment_vs_all": 2.0734385373576423
+      },
+      "weakest_head": {
+        "races": 54,
+        "share": 0.09310344827586207,
+        "median_payout_yen": 23350,
+        "mean_payout_yen": 40242.59259259259,
+        "ge_5000_rate": 0.9259259259259259,
+        "ge_10000_rate": 0.7222222222222222,
+        "ge_20000_rate": 0.5370370370370371,
+        "ge_5000_enrichment_vs_all": 2.1481481481481484,
+        "ge_10000_enrichment_vs_all": 2.508316699933466,
+        "ge_20000_enrichment_vs_all": 2.9110418830045
+      },
+      "both_weakest_in_top3": {
+        "races": 35,
+        "share": 0.0603448275862069,
+        "median_payout_yen": 20240,
+        "mean_payout_yen": 40581.71428571428,
+        "ge_5000_rate": 0.8571428571428571,
+        "ge_10000_rate": 0.6857142857142857,
+        "ge_20000_rate": 0.5142857142857142,
+        "ge_5000_enrichment_vs_all": 1.9885714285714287,
+        "ge_10000_enrichment_vs_all": 2.3815226689478184,
+        "ge_20000_enrichment_vs_all": 2.7877169559412547
+      },
+      "weakest_pair_top2": {
+        "races": 17,
+        "share": 0.029310344827586206,
+        "median_payout_yen": 8560,
+        "mean_payout_yen": 20892.941176470587,
+        "ge_5000_rate": 0.7647058823529411,
+        "ge_10000_rate": 0.47058823529411764,
+        "ge_20000_rate": 0.35294117647058826,
+        "ge_5000_enrichment_vs_all": 1.7741176470588236,
+        "ge_10000_enrichment_vs_all": 1.6343783022190912,
+        "ge_20000_enrichment_vs_all": 1.9131390874106653
+      },
+      "weak_mix_counts": {
+        "W2_M1_R0_O0": 28,
+        "W1_M2_R0_O0": 77,
+        "W1_M1_R1_O0": 56,
+        "W2_M0_R1_O0": 7,
+        "W1_M0_R2_O0": 13,
+        "W1_M0_R1_O1": 2
+      },
+      "top_high20000_orders": [
+        [
+          "W1L-A-W1B",
+          2
+        ],
+        [
+          "W1L-A-B",
+          2
+        ],
+        [
+          "W1L-W1B-R1B",
+          2
+        ],
+        [
+          "W1B-B-A",
+          2
+        ],
+        [
+          "W1L-B-A",
+          2
+        ],
+        [
+          "B-M3-W1B",
+          2
+        ],
+        [
+          "R1B-W1L-B",
+          2
+        ],
+        [
+          "W1L-R1L-B",
+          2
+        ],
+        [
+          "W1B-B-W1L",
+          2
+        ],
+        [
+          "A-W1L-R1B",
+          2
+        ],
+        [
+          "B-W1L-R1L",
+          2
+        ],
+        [
+          "R1B-W1L-W1B",
+          2
+        ]
+      ],
+      "by_year": {
+        "2023": {
+          "eligible_races": 185,
+          "weakest_included": {
+            "races": 63,
+            "share": 0.34054054054054056,
+            "median_payout_yen": 13270,
+            "mean_payout_yen": 41911.42857142857,
+            "ge_5000_rate": 0.7142857142857143,
+            "ge_10000_rate": 0.5555555555555556,
+            "ge_20000_rate": 0.3968253968253968,
+            "ge_5000_enrichment_vs_all": 1.4521193092621663,
+            "ge_10000_enrichment_vs_all": 1.657706093189964,
+            "ge_20000_enrichment_vs_all": 1.7479213907785334
+          },
+          "weakest_head": {
+            "races": 22,
+            "share": 0.11891891891891893,
+            "median_payout_yen": 29130,
+            "mean_payout_yen": 50301.818181818184,
+            "ge_5000_rate": 0.9090909090909091,
+            "ge_10000_rate": 0.6818181818181818,
+            "ge_20000_rate": 0.5909090909090909,
+            "ge_5000_enrichment_vs_all": 1.848151848151848,
+            "ge_10000_enrichment_vs_all": 2.034457478005865,
+            "ge_20000_enrichment_vs_all": 2.6028138528138527
+          },
+          "both_weakest_in_top3": {
+            "races": 11,
+            "share": 0.05945945945945946,
+            "median_payout_yen": 23320,
+            "mean_payout_yen": 29332.727272727272,
+            "ge_5000_rate": 0.7272727272727273,
+            "ge_10000_rate": 0.7272727272727273,
+            "ge_20000_rate": 0.5454545454545454,
+            "ge_5000_enrichment_vs_all": 1.4785214785214784,
+            "ge_10000_enrichment_vs_all": 2.1700879765395893,
+            "ge_20000_enrichment_vs_all": 2.402597402597402
+          }
+        },
+        "2024": {
+          "eligible_races": 191,
+          "weakest_included": {
+            "races": 53,
+            "share": 0.2774869109947644,
+            "median_payout_yen": 17270,
+            "mean_payout_yen": 40747.16981132075,
+            "ge_5000_rate": 0.8490566037735849,
+            "ge_10000_rate": 0.660377358490566,
+            "ge_20000_rate": 0.41509433962264153,
+            "ge_5000_enrichment_vs_all": 2.0527824217817052,
+            "ge_10000_enrichment_vs_all": 2.3357791754018167,
+            "ge_20000_enrichment_vs_all": 2.2652291105121294
+          },
+          "weakest_head": {
+            "races": 14,
+            "share": 0.07329842931937172,
+            "median_payout_yen": 17380,
+            "mean_payout_yen": 26145.714285714286,
+            "ge_5000_rate": 1.0,
+            "ge_10000_rate": 0.7142857142857143,
+            "ge_20000_rate": 0.42857142857142855,
+            "ge_5000_enrichment_vs_all": 2.4177215189873418,
+            "ge_10000_enrichment_vs_all": 2.5264550264550265,
+            "ge_20000_enrichment_vs_all": 2.3387755102040817
+          },
+          "both_weakest_in_top3": {
+            "races": 13,
+            "share": 0.06806282722513089,
+            "median_payout_yen": 16810,
+            "mean_payout_yen": 56525.38461538462,
+            "ge_5000_rate": 1.0,
+            "ge_10000_rate": 0.6153846153846154,
+            "ge_20000_rate": 0.46153846153846156,
+            "ge_5000_enrichment_vs_all": 2.4177215189873418,
+            "ge_10000_enrichment_vs_all": 2.1766381766381766,
+            "ge_20000_enrichment_vs_all": 2.5186813186813186
+          }
+        },
+        "2025": {
+          "eligible_races": 204,
+          "weakest_included": {
+            "races": 67,
+            "share": 0.3284313725490196,
+            "median_payout_yen": 12180,
+            "mean_payout_yen": 25760.89552238806,
+            "ge_5000_rate": 0.7014925373134329,
+            "ge_10000_rate": 0.5522388059701493,
+            "ge_20000_rate": 0.34328358208955223,
+            "ge_5000_enrichment_vs_all": 1.7888059701492538,
+            "ge_10000_enrichment_vs_all": 2.208955223880597,
+            "ge_20000_enrichment_vs_all": 2.334328358208955
+          },
+          "weakest_head": {
+            "races": 18,
+            "share": 0.08823529411764706,
+            "median_payout_yen": 23350,
+            "mean_payout_yen": 38912.22222222222,
+            "ge_5000_rate": 0.8888888888888888,
+            "ge_10000_rate": 0.7777777777777778,
+            "ge_20000_rate": 0.5555555555555556,
+            "ge_5000_enrichment_vs_all": 2.2666666666666666,
+            "ge_10000_enrichment_vs_all": 3.111111111111111,
+            "ge_20000_enrichment_vs_all": 3.7777777777777777
+          },
+          "both_weakest_in_top3": {
+            "races": 11,
+            "share": 0.05392156862745098,
+            "median_payout_yen": 20240,
+            "mean_payout_yen": 32988.181818181816,
+            "ge_5000_rate": 0.8181818181818182,
+            "ge_10000_rate": 0.7272727272727273,
+            "ge_20000_rate": 0.5454545454545454,
+            "ge_5000_enrichment_vs_all": 2.0863636363636364,
+            "ge_10000_enrichment_vs_all": 2.909090909090909,
+            "ge_20000_enrichment_vs_all": 3.7090909090909085
+          }
+        }
+      }
+    },
+    "後半": {
+      "eligible_races": 785,
+      "overall": {
+        "races": 785,
+        "median_payout_yen": 1970,
+        "mean_payout_yen": 9590.445859872612,
+        "ge_5000_rate": 0.33121019108280253,
+        "ge_10000_rate": 0.20764331210191084,
+        "ge_20000_rate": 0.11082802547770701
+      },
+      "weak0": {
+        "races": 567,
+        "share": 0.7222929936305732,
+        "median_payout_yen": 1090,
+        "mean_payout_yen": 4128.271604938272,
+        "ge_5000_rate": 0.20987654320987653,
+        "ge_10000_rate": 0.10582010582010581,
+        "ge_20000_rate": 0.037037037037037035
+      },
+      "weak1": {
+        "races": 183,
+        "share": 0.23312101910828026,
+        "median_payout_yen": 6740,
+        "mean_payout_yen": 21467.43169398907,
+        "ge_5000_rate": 0.5901639344262295,
+        "ge_10000_rate": 0.4098360655737705,
+        "ge_20000_rate": 0.25136612021857924
+      },
+      "weak2": {
+        "races": 35,
+        "share": 0.044585987261146494,
+        "median_payout_yen": 21120,
+        "mean_payout_yen": 35978.0,
+        "ge_5000_rate": 0.9428571428571428,
+        "ge_10000_rate": 0.8,
+        "ge_20000_rate": 0.5714285714285714
+      },
+      "weakest_included": {
+        "races": 218,
+        "share": 0.27770700636942675,
+        "median_payout_yen": 8890,
+        "mean_payout_yen": 23797.110091743118,
+        "ge_5000_rate": 0.6467889908256881,
+        "ge_10000_rate": 0.4724770642201835,
+        "ge_20000_rate": 0.30275229357798167,
+        "ge_5000_enrichment_vs_all": 1.9528052223006354,
+        "ge_10000_enrichment_vs_all": 2.2754263522260367,
+        "ge_20000_enrichment_vs_all": 2.731730465042708
+      },
+      "weakest_head": {
+        "races": 52,
+        "share": 0.06624203821656051,
+        "median_payout_yen": 23190,
+        "mean_payout_yen": 45215.0,
+        "ge_5000_rate": 0.9807692307692307,
+        "ge_10000_rate": 0.8269230769230769,
+        "ge_20000_rate": 0.5576923076923077,
+        "ge_5000_enrichment_vs_all": 2.9611686390532546,
+        "ge_10000_enrichment_vs_all": 3.9824209532798487,
+        "ge_20000_enrichment_vs_all": 5.032051282051282
+      },
+      "both_weakest_in_top3": {
+        "races": 35,
+        "share": 0.044585987261146494,
+        "median_payout_yen": 21120,
+        "mean_payout_yen": 35978.0,
+        "ge_5000_rate": 0.9428571428571428,
+        "ge_10000_rate": 0.8,
+        "ge_20000_rate": 0.5714285714285714,
+        "ge_5000_enrichment_vs_all": 2.846703296703297,
+        "ge_10000_enrichment_vs_all": 3.852760736196319,
+        "ge_20000_enrichment_vs_all": 5.1559934318555
+      },
+      "weakest_pair_top2": {
+        "races": 19,
+        "share": 0.024203821656050957,
+        "median_payout_yen": 21120,
+        "mean_payout_yen": 41435.78947368421,
+        "ge_5000_rate": 1.0,
+        "ge_10000_rate": 0.8421052631578947,
+        "ge_20000_rate": 0.631578947368421,
+        "ge_5000_enrichment_vs_all": 3.0192307692307696,
+        "ge_10000_enrichment_vs_all": 4.055537617048756,
+        "ge_20000_enrichment_vs_all": 5.698729582577132
+      },
+      "weak_mix_counts": {
+        "W1_M2_R0_O0": 127,
+        "W2_M1_R0_O0": 25,
+        "W1_M1_R1_O0": 45,
+        "W2_M0_R1_O0": 10,
+        "W1_M0_R2_O0": 11
+      },
+      "top_high20000_orders": [
+        [
+          "W1B-B-M3",
+          2
+        ],
+        [
+          "A-W1L-M3",
+          2
+        ],
+        [
+          "A-R1L-W1B",
+          2
+        ],
+        [
+          "A-R1B-W1L",
+          2
+        ],
+        [
+          "R1L-W1B-A",
+          2
+        ],
+        [
+          "W1L-W1B-R1L",
+          2
+        ],
+        [
+          "W1B-W1L-B",
+          2
+        ],
+        [
+          "W1L-B-R1L",
+          2
+        ],
+        [
+          "W1L-W1B-A",
+          2
+        ],
+        [
+          "A-M3-W1L",
+          2
+        ],
+        [
+          "W1L-W1B-B",
+          2
+        ],
+        [
+          "M3-A-W1L",
+          2
+        ]
+      ],
+      "by_year": {
+        "2023": {
+          "eligible_races": 266,
+          "weakest_included": {
+            "races": 79,
+            "share": 0.29699248120300753,
+            "median_payout_yen": 10050,
+            "mean_payout_yen": 28011.645569620254,
+            "ge_5000_rate": 0.6835443037974683,
+            "ge_10000_rate": 0.5063291139240507,
+            "ge_20000_rate": 0.31645569620253167,
+            "ge_5000_enrichment_vs_all": 1.9763346175013758,
+            "ge_10000_enrichment_vs_all": 2.2827719373525,
+            "ge_20000_enrichment_vs_all": 2.8059071729957807
+          },
+          "weakest_head": {
+            "races": 22,
+            "share": 0.08270676691729323,
+            "median_payout_yen": 27700,
+            "mean_payout_yen": 58834.545454545456,
+            "ge_5000_rate": 1.0,
+            "ge_10000_rate": 0.8181818181818182,
+            "ge_20000_rate": 0.6363636363636364,
+            "ge_5000_enrichment_vs_all": 2.891304347826087,
+            "ge_10000_enrichment_vs_all": 3.688751926040062,
+            "ge_20000_enrichment_vs_all": 5.642424242424243
+          },
+          "both_weakest_in_top3": {
+            "races": 18,
+            "share": 0.06766917293233082,
+            "median_payout_yen": 25480,
+            "mean_payout_yen": 44144.444444444445,
+            "ge_5000_rate": 0.9444444444444444,
+            "ge_10000_rate": 0.7777777777777778,
+            "ge_20000_rate": 0.5555555555555556,
+            "ge_5000_enrichment_vs_all": 2.7306763285024154,
+            "ge_10000_enrichment_vs_all": 3.506591337099812,
+            "ge_20000_enrichment_vs_all": 4.9259259259259265
+          }
+        },
+        "2024": {
+          "eligible_races": 257,
+          "weakest_included": {
+            "races": 61,
+            "share": 0.23735408560311283,
+            "median_payout_yen": 12570,
+            "mean_payout_yen": 22760.655737704918,
+            "ge_5000_rate": 0.6885245901639344,
+            "ge_10000_rate": 0.5245901639344263,
+            "ge_20000_rate": 0.32786885245901637,
+            "ge_5000_enrichment_vs_all": 2.1319375864112184,
+            "ge_10000_enrichment_vs_all": 2.6435229829636775,
+            "ge_20000_enrichment_vs_all": 2.8087431693989067
+          },
+          "weakest_head": {
+            "races": 15,
+            "share": 0.058365758754863814,
+            "median_payout_yen": 20660,
+            "mean_payout_yen": 41709.333333333336,
+            "ge_5000_rate": 1.0,
+            "ge_10000_rate": 0.8666666666666667,
+            "ge_20000_rate": 0.5333333333333333,
+            "ge_5000_enrichment_vs_all": 3.0963855421686746,
+            "ge_10000_enrichment_vs_all": 4.367320261437909,
+            "ge_20000_enrichment_vs_all": 4.568888888888889
+          },
+          "both_weakest_in_top3": {
+            "races": 9,
+            "share": 0.03501945525291829,
+            "median_payout_yen": 21120,
+            "mean_payout_yen": 23853.333333333332,
+            "ge_5000_rate": 1.0,
+            "ge_10000_rate": 0.7777777777777778,
+            "ge_20000_rate": 0.6666666666666666,
+            "ge_5000_enrichment_vs_all": 3.0963855421686746,
+            "ge_10000_enrichment_vs_all": 3.9193899782135078,
+            "ge_20000_enrichment_vs_all": 5.71111111111111
+          }
+        },
+        "2025": {
+          "eligible_races": 262,
+          "weakest_included": {
+            "races": 78,
+            "share": 0.29770992366412213,
+            "median_payout_yen": 6740,
+            "mean_payout_yen": 20339.102564102563,
+            "ge_5000_rate": 0.5769230769230769,
+            "ge_10000_rate": 0.3974358974358974,
+            "ge_20000_rate": 0.2692307692307692,
+            "ge_5000_enrichment_vs_all": 1.7782805429864252,
+            "ge_10000_enrichment_vs_all": 1.9646831156265117,
+            "ge_20000_enrichment_vs_all": 2.6125356125356123
+          },
+          "weakest_head": {
+            "races": 15,
+            "share": 0.05725190839694656,
+            "median_payout_yen": 17900,
+            "mean_payout_yen": 28745.333333333332,
+            "ge_5000_rate": 0.9333333333333333,
+            "ge_10000_rate": 0.8,
+            "ge_20000_rate": 0.4666666666666667,
+            "ge_5000_enrichment_vs_all": 2.8768627450980393,
+            "ge_10000_enrichment_vs_all": 3.9547169811320755,
+            "ge_20000_enrichment_vs_all": 4.528395061728395
+          },
+          "both_weakest_in_top3": {
+            "races": 8,
+            "share": 0.030534351145038167,
+            "median_payout_yen": 20400,
+            "mean_payout_yen": 31243.75,
+            "ge_5000_rate": 0.875,
+            "ge_10000_rate": 0.875,
+            "ge_20000_rate": 0.5,
+            "ge_5000_enrichment_vs_all": 2.697058823529412,
+            "ge_10000_enrichment_vs_all": 4.3254716981132075,
+            "ge_20000_enrichment_vs_all": 4.851851851851851
+          }
+        }
+      }
+    }
+  }
+}
