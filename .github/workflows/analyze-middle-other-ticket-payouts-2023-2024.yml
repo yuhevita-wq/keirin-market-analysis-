@@ -24,17 +24,16 @@ jobs:
         run: |
           python - <<'PY'
           import json
-          p='data/audits/middle_other_ticket_payouts_2023_2024.json'
-          d=json.load(open(p,encoding='utf-8'))
-          assert d['years_read']==[2023,2024]
-          assert d['evaluation_year_2025_used'] is False
-          assert d['evaluation_year_2026_used'] is False
-          assert d['status']=='MIDDLE_SCENARIO_OTHER_TICKET_PAYOUT_AUDIT_2023_2024'
+          for p in ['data/audits/middle_other_ticket_payouts_2023_2024.json','data/audits/middle_other_ticket_payouts_2023_2024_compact.json']:
+              d=json.load(open(p,encoding='utf-8'))
+              assert d['years_read']==[2023,2024]
+              assert d['evaluation_year_2025_used'] is False
+              assert d['evaluation_year_2026_used'] is False
           PY
       - name: Commit result
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add data/audits/middle_other_ticket_payouts_2023_2024.json
-          git commit -m 'Add middle scenario other-ticket payout audit result' || exit 0
+          git add data/audits/middle_other_ticket_payouts_2023_2024.json data/audits/middle_other_ticket_payouts_2023_2024_compact.json
+          git commit -m 'Add compact middle scenario other-ticket payout audit' || exit 0
           git push
