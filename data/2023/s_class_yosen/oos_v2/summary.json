@@ -1,0 +1,557 @@
+{
+  "scope": "2023 exact-label Ｓ級予選 complete out-of-sample evaluation of frozen V2 strategies",
+  "dataset_races": 1495,
+  "oos_integrity": {
+    "strategy_specs_asserted_before_evaluation": true,
+    "development_years": [
+      2024,
+      2025
+    ],
+    "oos_year": 2023,
+    "no_threshold_or_formation_changes_after_2023_outcomes": true
+  },
+  "frozen_rule_manifest": {
+    "segmentation": "within each race_date x track, exact Ｓ級予選 sorted by race_no; floor((position-1)*3/total)",
+    "main_line": "existing choose_main_line implementation",
+    "early_v2": {
+      "strategy": "early_v2",
+      "status": "FROZEN_BEFORE_2023_OUTCOME_EVALUATION",
+      "decision": "BET_SPARSE_EARLY",
+      "scope": "exact-label Ｓ級予選, early segment; main line size >=3; strongest rival size >=2",
+      "development_years": [
+        2024,
+        2025
+      ],
+      "oos_year": 2023,
+      "entrance_rule": {
+        "leader_score_gap": "A score - R1L score <= -2.0",
+        "pair_score_gap": "(A+B score) - (R1L+R1B score) <= 6.0"
+      },
+      "formation_100_yen_each": [
+        "R1L-R1B-A",
+        "R1L-R1B-B",
+        "R1B-R1L-A",
+        "R1B-R1L-B"
+      ],
+      "stake_per_race_yen": 400,
+      "development_performance": {
+        "2024": {
+          "races": 25,
+          "hits": 3,
+          "stake_yen": 10000,
+          "payout_yen": 13550,
+          "profit_yen": 3550,
+          "roi": 1.355,
+          "top1_payout_share": 0.444280442804428
+        },
+        "2025": {
+          "races": 28,
+          "hits": 5,
+          "stake_yen": 11200,
+          "payout_yen": 15370,
+          "profit_yen": 4170,
+          "roi": 1.3723214285714285,
+          "top1_payout_share": 0.3324658425504229
+        },
+        "combined": {
+          "races": 53,
+          "hits": 8,
+          "stake_yen": 21200,
+          "payout_yen": 28920,
+          "profit_yen": 7720,
+          "roi": 1.3641509433962264
+        }
+      },
+      "selection_rationale": "A broader coarse-grid search found many dual-year profitable conditions, but many were dominated by one large payout. Before reading any 2023 strategy outcome, a development-only robustness screen required at least 3 hits per year and no single payout above 70% of that year's total payout. Two candidates survived. This two-condition rule had the higher worst-year ROI (135.5%) while retaining low payout concentration and a coherent pre-race interpretation: the rival leader is clearly stronger than A, while the main pair is not overwhelmingly stronger than the rival pair.",
+      "audit_sources": [
+        "data/audits/early_sparse_high_return_search.json",
+        "data/audits/early_sparse_robustness_screen.json"
+      ],
+      "supersedes": "The earlier SKIP_ALL_EARLY pre-2023 draft was deliberately reopened before any 2023 strategy outcome was evaluated. This file is the new frozen early V2 specification.",
+      "freeze_rule": "Do not alter the entrance thresholds, formation, stake, or add/remove early bets after inspecting 2023 outcomes. Any later early strategy must be separately versioned and requires a fresh OOS year."
+    },
+    "middle_v2": {
+      "strategy": "middle_v2",
+      "status": "FROZEN_BEFORE_2023_OUTCOME_EVALUATION",
+      "scope": "exact-label Ｓ級予選, middle segment; main line size >=3; strongest rival size >=2",
+      "development_years": [
+        2024,
+        2025
+      ],
+      "oos_year": 2023,
+      "entrance_rule": "A+B top2-rate sum > 70.0",
+      "formation_100_yen_each": [
+        "A-B-M3",
+        "B-A-M3",
+        "A-B-R1L",
+        "B-A-R1L",
+        "A-B-R1B",
+        "B-A-R1B"
+      ],
+      "stake_per_race_yen": 600,
+      "freeze_rule": "Do not alter threshold, formation, or stake after inspecting 2023 outcomes."
+    },
+    "late_v2": {
+      "strategy": "late_v2",
+      "status": "FROZEN_BEFORE_2023_OUTCOME_EVALUATION",
+      "scope": "exact-label Ｓ級予選, late segment; main line size >=3",
+      "development_years": [
+        2024,
+        2025
+      ],
+      "oos_year": 2023,
+      "entrance_rule": "A+B top3-rate sum > 106.1 AND A+B win-rate sum > 54.7",
+      "formation_100_yen_each": [
+        "A-B-M3",
+        "B-A-M3",
+        "A-B-X",
+        "B-A-X"
+      ],
+      "x_rule": "highest competition-score rider excluding A,B,M3; tie -> lower car number",
+      "stake_per_race_yen": 400,
+      "rejected_v1_branch": "The former 18-point rough branch is not part of V2.",
+      "freeze_rule": "Do not alter thresholds, formation, or stake after inspecting 2023 outcomes."
+    },
+    "stake": "100 yen per trifecta combination"
+  },
+  "early_v2": {
+    "eligible_base": 302,
+    "purchased_races": 28,
+    "purchase_rate": 0.09271523178807947,
+    "hits": 1,
+    "hit_rate": 0.03571428571428571,
+    "stake_yen": 11200,
+    "payout_yen": 2360,
+    "profit_yen": -8840,
+    "roi": 0.21071428571428572,
+    "max_losing_streak": 23,
+    "monthly": {
+      "2023-01": {
+        "purchased_races": 3,
+        "hits": 0,
+        "stake_yen": 1200,
+        "payout_yen": 0,
+        "profit_yen": -1200,
+        "roi": 0.0
+      },
+      "2023-02": {
+        "purchased_races": 2,
+        "hits": 1,
+        "stake_yen": 800,
+        "payout_yen": 2360,
+        "profit_yen": 1560,
+        "roi": 2.95
+      },
+      "2023-03": {
+        "purchased_races": 4,
+        "hits": 0,
+        "stake_yen": 1600,
+        "payout_yen": 0,
+        "profit_yen": -1600,
+        "roi": 0.0
+      },
+      "2023-04": {
+        "purchased_races": 3,
+        "hits": 0,
+        "stake_yen": 1200,
+        "payout_yen": 0,
+        "profit_yen": -1200,
+        "roi": 0.0
+      },
+      "2023-05": {
+        "purchased_races": 0,
+        "hits": 0,
+        "stake_yen": 0,
+        "payout_yen": 0,
+        "profit_yen": 0,
+        "roi": 0.0
+      },
+      "2023-06": {
+        "purchased_races": 3,
+        "hits": 0,
+        "stake_yen": 1200,
+        "payout_yen": 0,
+        "profit_yen": -1200,
+        "roi": 0.0
+      },
+      "2023-07": {
+        "purchased_races": 1,
+        "hits": 0,
+        "stake_yen": 400,
+        "payout_yen": 0,
+        "profit_yen": -400,
+        "roi": 0.0
+      },
+      "2023-08": {
+        "purchased_races": 3,
+        "hits": 0,
+        "stake_yen": 1200,
+        "payout_yen": 0,
+        "profit_yen": -1200,
+        "roi": 0.0
+      },
+      "2023-09": {
+        "purchased_races": 1,
+        "hits": 0,
+        "stake_yen": 400,
+        "payout_yen": 0,
+        "profit_yen": -400,
+        "roi": 0.0
+      },
+      "2023-10": {
+        "purchased_races": 3,
+        "hits": 0,
+        "stake_yen": 1200,
+        "payout_yen": 0,
+        "profit_yen": -1200,
+        "roi": 0.0
+      },
+      "2023-11": {
+        "purchased_races": 3,
+        "hits": 0,
+        "stake_yen": 1200,
+        "payout_yen": 0,
+        "profit_yen": -1200,
+        "roi": 0.0
+      },
+      "2023-12": {
+        "purchased_races": 2,
+        "hits": 0,
+        "stake_yen": 800,
+        "payout_yen": 0,
+        "profit_yen": -800,
+        "roi": 0.0
+      }
+    }
+  },
+  "middle_v2": {
+    "eligible_base": 275,
+    "purchased_races": 106,
+    "purchase_rate": 0.38545454545454544,
+    "hits": 34,
+    "hit_rate": 0.32075471698113206,
+    "stake_yen": 63600,
+    "payout_yen": 39710,
+    "profit_yen": -23890,
+    "roi": 0.6243710691823899,
+    "max_losing_streak": 11,
+    "monthly": {
+      "2023-01": {
+        "purchased_races": 11,
+        "hits": 2,
+        "stake_yen": 6600,
+        "payout_yen": 830,
+        "profit_yen": -5770,
+        "roi": 0.12575757575757576
+      },
+      "2023-02": {
+        "purchased_races": 9,
+        "hits": 5,
+        "stake_yen": 5400,
+        "payout_yen": 5650,
+        "profit_yen": 250,
+        "roi": 1.0462962962962963
+      },
+      "2023-03": {
+        "purchased_races": 9,
+        "hits": 3,
+        "stake_yen": 5400,
+        "payout_yen": 4640,
+        "profit_yen": -760,
+        "roi": 0.8592592592592593
+      },
+      "2023-04": {
+        "purchased_races": 6,
+        "hits": 0,
+        "stake_yen": 3600,
+        "payout_yen": 0,
+        "profit_yen": -3600,
+        "roi": 0.0
+      },
+      "2023-05": {
+        "purchased_races": 7,
+        "hits": 2,
+        "stake_yen": 4200,
+        "payout_yen": 1760,
+        "profit_yen": -2440,
+        "roi": 0.41904761904761906
+      },
+      "2023-06": {
+        "purchased_races": 7,
+        "hits": 1,
+        "stake_yen": 4200,
+        "payout_yen": 1420,
+        "profit_yen": -2780,
+        "roi": 0.3380952380952381
+      },
+      "2023-07": {
+        "purchased_races": 10,
+        "hits": 4,
+        "stake_yen": 6000,
+        "payout_yen": 4940,
+        "profit_yen": -1060,
+        "roi": 0.8233333333333334
+      },
+      "2023-08": {
+        "purchased_races": 7,
+        "hits": 2,
+        "stake_yen": 4200,
+        "payout_yen": 1030,
+        "profit_yen": -3170,
+        "roi": 0.24523809523809523
+      },
+      "2023-09": {
+        "purchased_races": 9,
+        "hits": 5,
+        "stake_yen": 5400,
+        "payout_yen": 6860,
+        "profit_yen": 1460,
+        "roi": 1.2703703703703704
+      },
+      "2023-10": {
+        "purchased_races": 10,
+        "hits": 3,
+        "stake_yen": 6000,
+        "payout_yen": 2930,
+        "profit_yen": -3070,
+        "roi": 0.48833333333333334
+      },
+      "2023-11": {
+        "purchased_races": 10,
+        "hits": 5,
+        "stake_yen": 6000,
+        "payout_yen": 5250,
+        "profit_yen": -750,
+        "roi": 0.875
+      },
+      "2023-12": {
+        "purchased_races": 11,
+        "hits": 2,
+        "stake_yen": 6600,
+        "payout_yen": 4400,
+        "profit_yen": -2200,
+        "roi": 0.6666666666666666
+      }
+    }
+  },
+  "late_v2": {
+    "eligible_base": 356,
+    "purchased_races": 53,
+    "purchase_rate": 0.14887640449438203,
+    "hits": 24,
+    "hit_rate": 0.4528301886792453,
+    "stake_yen": 21200,
+    "payout_yen": 15020,
+    "profit_yen": -6180,
+    "roi": 0.7084905660377359,
+    "max_losing_streak": 6,
+    "monthly": {
+      "2023-01": {
+        "purchased_races": 4,
+        "hits": 3,
+        "stake_yen": 1600,
+        "payout_yen": 3150,
+        "profit_yen": 1550,
+        "roi": 1.96875
+      },
+      "2023-02": {
+        "purchased_races": 6,
+        "hits": 1,
+        "stake_yen": 2400,
+        "payout_yen": 1540,
+        "profit_yen": -860,
+        "roi": 0.6416666666666667
+      },
+      "2023-03": {
+        "purchased_races": 3,
+        "hits": 0,
+        "stake_yen": 1200,
+        "payout_yen": 0,
+        "profit_yen": -1200,
+        "roi": 0.0
+      },
+      "2023-04": {
+        "purchased_races": 3,
+        "hits": 0,
+        "stake_yen": 1200,
+        "payout_yen": 0,
+        "profit_yen": -1200,
+        "roi": 0.0
+      },
+      "2023-05": {
+        "purchased_races": 5,
+        "hits": 4,
+        "stake_yen": 2000,
+        "payout_yen": 1760,
+        "profit_yen": -240,
+        "roi": 0.88
+      },
+      "2023-06": {
+        "purchased_races": 4,
+        "hits": 2,
+        "stake_yen": 1600,
+        "payout_yen": 730,
+        "profit_yen": -870,
+        "roi": 0.45625
+      },
+      "2023-07": {
+        "purchased_races": 2,
+        "hits": 1,
+        "stake_yen": 800,
+        "payout_yen": 600,
+        "profit_yen": -200,
+        "roi": 0.75
+      },
+      "2023-08": {
+        "purchased_races": 5,
+        "hits": 4,
+        "stake_yen": 2000,
+        "payout_yen": 1250,
+        "profit_yen": -750,
+        "roi": 0.625
+      },
+      "2023-09": {
+        "purchased_races": 8,
+        "hits": 2,
+        "stake_yen": 3200,
+        "payout_yen": 900,
+        "profit_yen": -2300,
+        "roi": 0.28125
+      },
+      "2023-10": {
+        "purchased_races": 3,
+        "hits": 1,
+        "stake_yen": 1200,
+        "payout_yen": 1220,
+        "profit_yen": 20,
+        "roi": 1.0166666666666666
+      },
+      "2023-11": {
+        "purchased_races": 4,
+        "hits": 3,
+        "stake_yen": 1600,
+        "payout_yen": 1390,
+        "profit_yen": -210,
+        "roi": 0.86875
+      },
+      "2023-12": {
+        "purchased_races": 6,
+        "hits": 3,
+        "stake_yen": 2400,
+        "payout_yen": 2480,
+        "profit_yen": 80,
+        "roi": 1.0333333333333334
+      }
+    }
+  },
+  "combined": {
+    "eligible_base": 933,
+    "purchased_races": 187,
+    "purchase_rate": 0.20042872454448016,
+    "hits": 59,
+    "hit_rate": 0.3155080213903743,
+    "stake_yen": 96000,
+    "payout_yen": 57090,
+    "profit_yen": -38910,
+    "roi": 0.5946875,
+    "max_losing_streak": 13,
+    "monthly": {
+      "2023-01": {
+        "purchased_races": 18,
+        "hits": 5,
+        "stake_yen": 9400,
+        "payout_yen": 3980,
+        "profit_yen": -5420,
+        "roi": 0.42340425531914894
+      },
+      "2023-02": {
+        "purchased_races": 17,
+        "hits": 7,
+        "stake_yen": 8600,
+        "payout_yen": 9550,
+        "profit_yen": 950,
+        "roi": 1.1104651162790697
+      },
+      "2023-03": {
+        "purchased_races": 16,
+        "hits": 3,
+        "stake_yen": 8200,
+        "payout_yen": 4640,
+        "profit_yen": -3560,
+        "roi": 0.5658536585365853
+      },
+      "2023-04": {
+        "purchased_races": 12,
+        "hits": 0,
+        "stake_yen": 6000,
+        "payout_yen": 0,
+        "profit_yen": -6000,
+        "roi": 0.0
+      },
+      "2023-05": {
+        "purchased_races": 12,
+        "hits": 6,
+        "stake_yen": 6200,
+        "payout_yen": 3520,
+        "profit_yen": -2680,
+        "roi": 0.567741935483871
+      },
+      "2023-06": {
+        "purchased_races": 14,
+        "hits": 3,
+        "stake_yen": 7000,
+        "payout_yen": 2150,
+        "profit_yen": -4850,
+        "roi": 0.30714285714285716
+      },
+      "2023-07": {
+        "purchased_races": 13,
+        "hits": 5,
+        "stake_yen": 7200,
+        "payout_yen": 5540,
+        "profit_yen": -1660,
+        "roi": 0.7694444444444445
+      },
+      "2023-08": {
+        "purchased_races": 15,
+        "hits": 6,
+        "stake_yen": 7400,
+        "payout_yen": 2280,
+        "profit_yen": -5120,
+        "roi": 0.3081081081081081
+      },
+      "2023-09": {
+        "purchased_races": 18,
+        "hits": 7,
+        "stake_yen": 9000,
+        "payout_yen": 7760,
+        "profit_yen": -1240,
+        "roi": 0.8622222222222222
+      },
+      "2023-10": {
+        "purchased_races": 16,
+        "hits": 4,
+        "stake_yen": 8400,
+        "payout_yen": 4150,
+        "profit_yen": -4250,
+        "roi": 0.49404761904761907
+      },
+      "2023-11": {
+        "purchased_races": 17,
+        "hits": 8,
+        "stake_yen": 8800,
+        "payout_yen": 6640,
+        "profit_yen": -2160,
+        "roi": 0.7545454545454545
+      },
+      "2023-12": {
+        "purchased_races": 19,
+        "hits": 5,
+        "stake_yen": 9800,
+        "payout_yen": 6880,
+        "profit_yen": -2920,
+        "roi": 0.7020408163265306
+      }
+    }
+  }
+}
