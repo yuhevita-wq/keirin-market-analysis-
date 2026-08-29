@@ -1,0 +1,63 @@
+{
+  "strategy": "s_class_yosen_high_payout_v1",
+  "status": "PROPOSED_FROM_2023_2025_ONLY_NOT_YET_EVALUATED",
+  "development_years": [2023, 2024, 2025],
+  "evaluation_data_used_for_design": false,
+  "scope": {
+    "race_label": "Ｓ級予選",
+    "label_match": "exact",
+    "main_line_min_size": 3,
+    "strongest_rival_min_size": 2
+  },
+  "roles": {
+    "A": "main line lead",
+    "B": "main line second",
+    "M3": "main line third",
+    "R1L": "strongest rival lead",
+    "R1B": "strongest rival second",
+    "O1": "highest score among riders not assigned A/B/M3/R1L/R1B; tie lower car number",
+    "O2": "second-highest score among remaining riders; tie lower car number"
+  },
+  "segments": {
+    "early": {
+      "segment": "前半",
+      "conditions": ["B score >= 104", "A+B top2 rate sum >= 70"],
+      "formation": "O1O2_KEY_18",
+      "formation_definition": "For each third role in A, B, R1L, buy all 6 permutations of {O1,O2,third}; 18 points total.",
+      "points": 18,
+      "stake_yen_per_race": 1800,
+      "development": {"races": 151, "hits": 11, "stake_yen": 255600, "payout_yen": 621400, "profit_yen": 365800, "roi": 2.4311424100156493, "high_10000_hits": 8, "high_20000_hits": 6},
+      "stability": {"local_guardrail_variants": 3, "leave_one_year_out_profitable": "3/3"}
+    },
+    "middle": {
+      "segment": "中盤",
+      "conditions": ["B score >= 104"],
+      "formation": "O1_MAINPAIR_6",
+      "formation_definition": "Buy all 6 permutations of {O1,A,B}.",
+      "points": 6,
+      "stake_yen_per_race": 600,
+      "development": {"races": 372, "hits": 34, "stake_yen": 223200, "payout_yen": 359750, "profit_yen": 136550, "roi": 1.611783154121864, "high_10000_hits": 9, "high_20000_hits": 6},
+      "selection_note": "Chosen over the higher-ROI two-condition middle rule because the two-condition family passed targeted leave-one-year-out only 2/3; this one-condition rule has a larger sample and lower selection complexity."
+    },
+    "late": {
+      "segment": "後半",
+      "conditions": ["R1L+R1B score sum <= 200", "A+B top3 rate sum >= 110"],
+      "formation": "O1_MAINPAIR_6",
+      "formation_definition": "Buy all 6 permutations of {O1,A,B}.",
+      "points": 6,
+      "stake_yen_per_race": 600,
+      "development": {"races": 255, "hits": 36, "stake_yen": 153000, "payout_yen": 264560, "profit_yen": 111560, "roi": 1.7291503267973856, "high_10000_hits": 7, "high_20000_hits": 2},
+      "stability": {"local_guardrail_variants": 3, "leave_one_year_out_profitable": "3/3"}
+    }
+  },
+  "combined_development": {
+    "races": 778,
+    "hits": 81,
+    "stake_yen": 631800,
+    "payout_yen": 1245710,
+    "profit_yen": 613910,
+    "roi": 1.971684077239633
+  },
+  "interpretation": "Development ROI is not expected future ROI. The strategy intentionally accepts long losing streaks in exchange for larger recovery multiples and wider semantic formations.",
+  "evaluation_caveat": "This strategy family was conceived after prior 2026 H1 strategy failures were observed, so 2026 H1 is not a pristine untouched OOS for the family-level hypothesis. A genuinely fresh forward period should be preferred for final validation."
+}
