@@ -1,0 +1,44 @@
+name: Audit V3 candidate stability matrix
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/audit-v3-candidate-stability-matrix.yml"
+      - "src/keirin_market_analysis/audit_v3_candidate_stability_matrix.py"
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: python -m pip install -e .
+      - name: Run audit
+        run: python -m keirin_market_analysis.audit_v3_candidate_stability_matrix
+      - name: Validate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('data/audits/v3_candidate_stability_matrix.json').read_text(encoding='utf-8'))
+          assert d['status']=='V3_CANDIDATE_STABILITY_MATRIX_COMPLETE'
+          print(json.dumps({k:{'all4_count':v['all4_count'],'top':v['variants'][:3]} for k,v in d['families'].items()},ensure_ascii=False,indent=2))
+          PY
+      - name: Commit audit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/audits/v3_candidate_stability_matrix.json
+          if git diff --cached --quiet; then echo "No changes"; else git commit -m "analysis: record V3 candidate stability matrix" && git pull --rebase origin main && git push origin HEAD:main; fi
