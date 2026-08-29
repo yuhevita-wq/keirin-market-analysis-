@@ -1,0 +1,49 @@
+name: Simulate market correction 2023
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/keirin_market_analysis/simulate_market_correction_2023.py'
+      - '.github/workflows/simulate-market-correction-2023.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  simulate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run 2023 development simulation
+        run: python -m keirin_market_analysis.simulate_market_correction_2023
+      - name: Validate
+        run: |
+          python - <<'PY'
+          import json
+          p='data/audits/market_correction_sim_2023.json'
+          x=json.load(open(p,encoding='utf-8'))
+          assert x['years_read']==[2023], x
+          assert x['evaluation_year_2024_used'] is False
+          assert x['evaluation_year_2025_used'] is False
+          assert x['evaluation_year_2026_used'] is False
+          assert 0 <= x['selected_alpha'] <= 1
+          assert x['eligible_complete_races'] > 1000
+          assert '1.10' in x['simulations']
+          print('VALID',x['selected_alpha'],x['simulations']['1.10'])
+          PY
+      - name: Commit result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/market_correction_sim_2023.json
+          git commit -m 'analysis: add 2023 market-correction simulation result' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
