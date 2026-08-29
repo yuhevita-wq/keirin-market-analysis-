@@ -1,0 +1,710 @@
+{
+  "status": "ODDS_CONTRADICTION_EXPLORATORY_ANALYSIS_2023_2025",
+  "years_read": [
+    2023,
+    2024,
+    2025
+  ],
+  "evaluation_year_2026_used": false,
+  "odds_phase": "final",
+  "important_limit": "Archived final odds only, not T-10 snapshots. Exploratory research, not a frozen betting strategy.",
+  "eligible_complete_races_by_year": {
+    "2023": 1475,
+    "2024": 1419,
+    "2025": 1442
+  },
+  "definitions": {
+    "market_probability": "Within each ticket pool, normalize inverse final odds: q_j=(1/odds_j)/sum(1/odds).",
+    "D": "log(sum normalized trifecta probability over the six orders of a 3-rider set / normalized trio probability of that set). Positive means trifecta market rates the set more strongly than trio market.",
+    "I": "For each rider, log(trifecta-derived top3 inclusion marginal / trio-derived top3 inclusion marginal).",
+    "C": "log(actual normalized trio probability / maximum-entropy trio probability fitted only to all riders' trio top3 inclusion marginals). Negative means the combination is underbought relative to its members' individual popularity.",
+    "H": "log(actual normalized trifecta probability / maximum-entropy order probability fitted only to each rider's 1st/2nd/3rd-place marginals). Negative means the exact order is underbought relative to position popularity.",
+    "deciles": "Rank metric within each race, 0=lowest contradiction value, 9=highest.",
+    "roi_pct_final_odds": "Exploratory gross ROI if 100 yen were staked on every cell in the bucket at archived final odds. Not a T-10 executable backtest."
+  },
+  "D_cross_market_set": [
+    {
+      "section": "deciles",
+      "bucket": "0",
+      "bets": 17388,
+      "wins": 71,
+      "expected_market": 137.44997788070543,
+      "expected_reference": 90.98094406418764,
+      "gross_odds_return": 6890.200000000001,
+      "hit_rate_pct": 0.40832758224062576,
+      "roi_pct_final_odds": 39.626178974005065,
+      "observed_to_market_expected": 0.5165515563896401,
+      "observed_to_reference_expected": 0.7803831970561774
+    },
+    {
+      "section": "deciles",
+      "bucket": "1",
+      "bets": 13135,
+      "wins": 92,
+      "expected_market": 145.7251991593692,
+      "expected_reference": 111.80733688468658,
+      "gross_odds_return": 5674.9,
+      "hit_rate_pct": 0.7004187285877427,
+      "roi_pct_final_odds": 43.20441568328892,
+      "observed_to_market_expected": 0.6313252651614921,
+      "observed_to_reference_expected": 0.8228440329894
+    },
+    {
+      "section": "deciles",
+      "bucket": "2",
+      "bets": 17388,
+      "wins": 175,
+      "expected_market": 254.64631057054635,
+      "expected_reference": 210.73521211248595,
+      "gross_odds_return": 7701.0999999999985,
+      "hit_rate_pct": 1.0064412238325282,
+      "roi_pct_final_odds": 44.2897400506096,
+      "observed_to_market_expected": 0.6872277065703593,
+      "observed_to_reference_expected": 0.8304260035413006
+    },
+    {
+      "section": "deciles",
+      "bucket": "3",
+      "bets": 13135,
+      "wins": 194,
+      "expected_market": 245.71301862350072,
+      "expected_reference": 215.36982620638247,
+      "gross_odds_return": 6766.299999999998,
+      "hit_rate_pct": 1.476969927674153,
+      "roi_pct_final_odds": 51.5135135135135,
+      "observed_to_market_expected": 0.7895389551876405,
+      "observed_to_reference_expected": 0.9007761366445808
+    },
+    {
+      "section": "deciles",
+      "bucket": "4",
+      "bets": 17345,
+      "wins": 400,
+      "expected_market": 416.6105753506179,
+      "expected_reference": 383.5832523096504,
+      "gross_odds_return": 9943.499999999998,
+      "hit_rate_pct": 2.306140098010954,
+      "roi_pct_final_odds": 57.327760161429794,
+      "observed_to_market_expected": 0.9601292517919437,
+      "observed_to_reference_expected": 1.0427983953718007
+    },
+    {
+      "section": "deciles",
+      "bucket": "5",
+      "bets": 13178,
+      "wins": 395,
+      "expected_market": 392.7653592723905,
+      "expected_reference": 375.68176124165166,
+      "gross_odds_return": 8661.099999999999,
+      "hit_rate_pct": 2.9974199423281225,
+      "roi_pct_final_odds": 65.72393382910911,
+      "observed_to_market_expected": 1.0056895056421198,
+      "observed_to_reference_expected": 1.0514218169508691
+    },
+    {
+      "section": "deciles",
+      "bucket": "6",
+      "bets": 17345,
+      "wins": 676,
+      "expected_market": 655.7323587991302,
+      "expected_reference": 653.5801458244454,
+      "gross_odds_return": 10808.700000000003,
+      "hit_rate_pct": 3.8973767656385125,
+      "roi_pct_final_odds": 62.31594119342751,
+      "observed_to_market_expected": 1.0309084048223376,
+      "observed_to_reference_expected": 1.0343031444862414
+    },
+    {
+      "section": "deciles",
+      "bucket": "7",
+      "bets": 13178,
+      "wins": 642,
+      "expected_market": 624.4568585789542,
+      "expected_reference": 647.377777442694,
+      "gross_odds_return": 9592.899999999998,
+      "hit_rate_pct": 4.87175595689786,
+      "roi_pct_final_odds": 72.79480953103656,
+      "observed_to_market_expected": 1.0280934402113349,
+      "observed_to_reference_expected": 0.9916929841738814
+    },
+    {
+      "section": "deciles",
+      "bucket": "8",
+      "bets": 17345,
+      "wins": 984,
+      "expected_market": 883.7547705815027,
+      "expected_reference": 963.0423906004809,
+      "gross_odds_return": 13603.000000000005,
+      "hit_rate_pct": 5.6731046411069475,
+      "roi_pct_final_odds": 78.42605938310756,
+      "observed_to_market_expected": 1.1134310475659859,
+      "observed_to_reference_expected": 1.0217618763245215
+    },
+    {
+      "section": "deciles",
+      "bucket": "9",
+      "bets": 13135,
+      "wins": 707,
+      "expected_market": 579.1455711832828,
+      "expected_reference": 683.8413533133339,
+      "gross_odds_return": 11055.599999999997,
+      "hit_rate_pct": 5.382565664255805,
+      "roi_pct_final_odds": 84.16901408450703,
+      "observed_to_market_expected": 1.220763889388796,
+      "observed_to_reference_expected": 1.0338655253509579
+    },
+    {
+      "section": "extremes",
+      "bucket": "bottom1",
+      "bets": 4336,
+      "wins": 13,
+      "expected_market": 29.39380111058555,
+      "expected_reference": 16.92745435051853,
+      "gross_odds_return": 2211.7999999999997,
+      "hit_rate_pct": 0.29981549815498154,
+      "roi_pct_final_odds": 51.01014760147601,
+      "observed_to_market_expected": 0.44227012189037124,
+      "observed_to_reference_expected": 0.7679831669197074
+    },
+    {
+      "section": "extremes",
+      "bucket": "bottom3",
+      "bets": 13008,
+      "wins": 50,
+      "expected_market": 100.17057451418732,
+      "expected_reference": 64.45944836344792,
+      "gross_odds_return": 4988.8,
+      "hit_rate_pct": 0.3843788437884379,
+      "roi_pct_final_odds": 38.35178351783518,
+      "observed_to_market_expected": 0.499148579735044,
+      "observed_to_reference_expected": 0.7756814752444077
+    },
+    {
+      "section": "extremes",
+      "bucket": "top3",
+      "bets": 13008,
+      "wins": 710,
+      "expected_market": 582.0366310757915,
+      "expected_reference": 686.8012020503243,
+      "gross_odds_return": 11062.499999999998,
+      "hit_rate_pct": 5.458179581795818,
+      "roi_pct_final_odds": 85.04381918819188,
+      "observed_to_market_expected": 1.2198544938446414,
+      "observed_to_reference_expected": 1.0337780392352545
+    },
+    {
+      "section": "extremes",
+      "bucket": "top1",
+      "bets": 4336,
+      "wins": 192,
+      "expected_market": 162.04109253038376,
+      "expected_reference": 200.15547471769278,
+      "gross_odds_return": 3618.800000000001,
+      "hit_rate_pct": 4.428044280442804,
+      "roi_pct_final_odds": 83.45940959409597,
+      "observed_to_market_expected": 1.184884630199582,
+      "observed_to_reference_expected": 0.9592543010417497
+    }
+  ],
+  "I_individual_cross_market": {
+    "trio_stronger_bottom2": {
+      "cars": 8672,
+      "top3": 2027,
+      "expected_trio": 2288.24827232536,
+      "expected_trifecta": 2112.7380816407385,
+      "top3_rate_pct": 23.37407749077491,
+      "observed_to_trio_expected": 0.8858304514047005,
+      "observed_to_trifecta_expected": 0.9594184994411825
+    },
+    "middle": {
+      "cars": 13006,
+      "top3": 6197,
+      "expected_trio": 6140.10344132681,
+      "expected_trifecta": 6120.930193251243,
+      "top3_rate_pct": 47.647239735506695,
+      "observed_to_trio_expected": 1.0092663843886147,
+      "observed_to_trifecta_expected": 1.0124278180516795
+    },
+    "trifecta_stronger_top2": {
+      "cars": 8672,
+      "top3": 4784,
+      "expected_trio": 4579.648286347829,
+      "expected_trifecta": 4774.331725108015,
+      "top3_rate_pct": 55.1660516605166,
+      "observed_to_trio_expected": 1.0446217047412472,
+      "observed_to_trifecta_expected": 1.002025053022843
+    }
+  },
+  "C_trio_combination_residual": [
+    {
+      "section": "deciles",
+      "bucket": "0",
+      "bets": 17388,
+      "wins": 112,
+      "expected_market": 132.79367132565847,
+      "expected_reference": 365.2054438761234,
+      "gross_odds_return": 9950.900000000001,
+      "hit_rate_pct": 0.644122383252818,
+      "roi_pct_final_odds": 57.22854842420061,
+      "observed_to_market_expected": 0.8434136874289377,
+      "observed_to_reference_expected": 0.3066766990417319
+    },
+    {
+      "section": "deciles",
+      "bucket": "1",
+      "bets": 13135,
+      "wins": 108,
+      "expected_market": 143.7131091938284,
+      "expected_reference": 297.3154207360003,
+      "gross_odds_return": 6751.2,
+      "hit_rate_pct": 0.822230681385611,
+      "roi_pct_final_odds": 51.398553483060525,
+      "observed_to_market_expected": 0.7514972058278866,
+      "observed_to_reference_expected": 0.3632505832783495
+    },
+    {
+      "section": "deciles",
+      "bucket": "2",
+      "bets": 17388,
+      "wins": 272,
+      "expected_market": 279.3664475164243,
+      "expected_reference": 462.06715047844807,
+      "gross_odds_return": 12029.000000000002,
+      "hit_rate_pct": 1.5642972164711295,
+      "roi_pct_final_odds": 69.17989417989419,
+      "observed_to_market_expected": 0.9736315954120038,
+      "observed_to_reference_expected": 0.5886590287112106
+    },
+    {
+      "section": "deciles",
+      "bucket": "3",
+      "bets": 13135,
+      "wins": 324,
+      "expected_market": 309.26180895875655,
+      "expected_reference": 411.2949808678382,
+      "gross_odds_return": 7674.100000000001,
+      "hit_rate_pct": 2.466692044156833,
+      "roi_pct_final_odds": 58.42481918538257,
+      "observed_to_market_expected": 1.0476560332194427,
+      "observed_to_reference_expected": 0.7877557837354481
+    },
+    {
+      "section": "deciles",
+      "bucket": "4",
+      "bets": 17345,
+      "wins": 556,
+      "expected_market": 551.7974629217459,
+      "expected_reference": 628.1339503318613,
+      "gross_odds_return": 10290.199999999999,
+      "hit_rate_pct": 3.2055347362352262,
+      "roi_pct_final_odds": 59.32660709138079,
+      "observed_to_market_expected": 1.007616086264699,
+      "observed_to_reference_expected": 0.8851615164349087
+    },
+    {
+      "section": "deciles",
+      "bucket": "5",
+      "bets": 13178,
+      "wins": 667,
+      "expected_market": 666.7783510769236,
+      "expected_reference": 656.6001994237437,
+      "gross_odds_return": 7696.599999999998,
+      "hit_rate_pct": 5.061466079830019,
+      "roi_pct_final_odds": 58.40491728638638,
+      "observed_to_market_expected": 1.000332417695803,
+      "observed_to_reference_expected": 1.0158388629570683
+    },
+    {
+      "section": "deciles",
+      "bucket": "6",
+      "bets": 17345,
+      "wins": 968,
+      "expected_market": 941.3174664594356,
+      "expected_reference": 808.6871866116128,
+      "gross_odds_return": 12104.3,
+      "hit_rate_pct": 5.580859037186509,
+      "roi_pct_final_odds": 69.78552897088498,
+      "observed_to_market_expected": 1.0283459454342487,
+      "observed_to_reference_expected": 1.1970017777280553
+    },
+    {
+      "section": "deciles",
+      "bucket": "7",
+      "bets": 13178,
+      "wins": 622,
+      "expected_market": 598.857697082543,
+      "expected_reference": 407.6444312161965,
+      "gross_odds_return": 7950.499999999997,
+      "hit_rate_pct": 4.719987858552132,
+      "roi_pct_final_odds": 60.331613294885386,
+      "observed_to_market_expected": 1.0386440769321317,
+      "observed_to_reference_expected": 1.5258395610711013
+    },
+    {
+      "section": "deciles",
+      "bucket": "8",
+      "bets": 17345,
+      "wins": 446,
+      "expected_market": 451.4014902528654,
+      "expected_reference": 226.87381038833837,
+      "gross_odds_return": 9715.100000000002,
+      "hit_rate_pct": 2.571346209282214,
+      "roi_pct_final_odds": 56.01095416546556,
+      "observed_to_market_expected": 0.9880339556481313,
+      "observed_to_reference_expected": 1.965850528258792
+    },
+    {
+      "section": "deciles",
+      "bucket": "9",
+      "bets": 13135,
+      "wins": 261,
+      "expected_market": 260.7124952118165,
+      "expected_reference": 72.17742606983856,
+      "gross_odds_return": 6535.4000000000015,
+      "hit_rate_pct": 1.9870574800152265,
+      "roi_pct_final_odds": 49.755614769699285,
+      "observed_to_market_expected": 1.0011027656651053,
+      "observed_to_reference_expected": 3.616089049053336
+    },
+    {
+      "section": "extremes",
+      "bucket": "bottom1",
+      "bets": 4336,
+      "wins": 30,
+      "expected_market": 28.606684755721936,
+      "expected_reference": 93.21089957466798,
+      "gross_odds_return": 3365.4,
+      "hit_rate_pct": 0.6918819188191881,
+      "roi_pct_final_odds": 77.61531365313652,
+      "observed_to_market_expected": 1.0487059320636367,
+      "observed_to_reference_expected": 0.3218507721403123
+    },
+    {
+      "section": "extremes",
+      "bucket": "bottom3",
+      "bets": 13008,
+      "wins": 75,
+      "expected_market": 96.68576417161145,
+      "expected_reference": 278.0512356176238,
+      "gross_odds_return": 7177.6,
+      "hit_rate_pct": 0.5765682656826568,
+      "roi_pct_final_odds": 55.17835178351784,
+      "observed_to_market_expected": 0.7757088196239468,
+      "observed_to_reference_expected": 0.26973446038966736
+    },
+    {
+      "section": "extremes",
+      "bucket": "top3",
+      "bets": 13008,
+      "wins": 261,
+      "expected_market": 264.48336912268485,
+      "expected_reference": 75.45422686747543,
+      "gross_odds_return": 6340.800000000001,
+      "hit_rate_pct": 2.0064575645756455,
+      "roi_pct_final_odds": 48.74538745387454,
+      "observed_to_market_expected": 0.9868295343701969,
+      "observed_to_reference_expected": 3.4590507495147915
+    },
+    {
+      "section": "extremes",
+      "bucket": "top1",
+      "bets": 4336,
+      "wins": 90,
+      "expected_market": 97.11177467908303,
+      "expected_reference": 18.14595630642858,
+      "gross_odds_return": 1979.7999999999997,
+      "hit_rate_pct": 2.0756457564575648,
+      "roi_pct_final_odds": 45.65959409594095,
+      "observed_to_market_expected": 0.9267671227038667,
+      "observed_to_reference_expected": 4.959782690985299
+    }
+  ],
+  "H_trifecta_order_residual": [
+    {
+      "section": "deciles",
+      "bucket": "0",
+      "bets": 91569,
+      "wins": 118,
+      "expected_market": 142.2156963047634,
+      "expected_reference": 475.20773329493886,
+      "gross_odds_return": 62648.6,
+      "hit_rate_pct": 0.12886457207133417,
+      "roi_pct_final_odds": 68.41682228701853,
+      "observed_to_market_expected": 0.8297255722542046,
+      "observed_to_reference_expected": 0.2483124573369748
+    },
+    {
+      "section": "deciles",
+      "bucket": "1",
+      "bets": 91526,
+      "wins": 191,
+      "expected_market": 192.59873638111304,
+      "expected_reference": 423.0533644136988,
+      "gross_odds_return": 68720.09999999998,
+      "hit_rate_pct": 0.20868387124969956,
+      "roi_pct_final_odds": 75.08259947992919,
+      "observed_to_market_expected": 0.9916991335916687,
+      "observed_to_reference_expected": 0.45147968570041536
+    },
+    {
+      "section": "deciles",
+      "bucket": "2",
+      "bets": 91569,
+      "wins": 279,
+      "expected_market": 269.1051604500507,
+      "expected_reference": 456.91517670987787,
+      "gross_odds_return": 63295.90000000001,
+      "hit_rate_pct": 0.3046882678635783,
+      "roi_pct_final_odds": 69.12372090991494,
+      "observed_to_market_expected": 1.0367694158424954,
+      "observed_to_reference_expected": 0.6106166181850278
+    },
+    {
+      "section": "deciles",
+      "bucket": "3",
+      "bets": 91526,
+      "wins": 427,
+      "expected_market": 423.24776283369386,
+      "expected_reference": 557.0726530127646,
+      "gross_odds_return": 57284.3,
+      "hit_rate_pct": 0.4665340996001136,
+      "roi_pct_final_odds": 62.58800777921029,
+      "observed_to_market_expected": 1.0088653443580764,
+      "observed_to_reference_expected": 0.7665068419544476
+    },
+    {
+      "section": "deciles",
+      "bucket": "4",
+      "bets": 91526,
+      "wins": 599,
+      "expected_market": 616.3172557910499,
+      "expected_reference": 659.2459595380576,
+      "gross_odds_return": 61522.100000000006,
+      "hit_rate_pct": 0.6544588422961781,
+      "roi_pct_final_odds": 67.21816751524157,
+      "observed_to_market_expected": 0.9719020429359503,
+      "observed_to_reference_expected": 0.9086138357521785
+    },
+    {
+      "section": "deciles",
+      "bucket": "5",
+      "bets": 91569,
+      "wins": 670,
+      "expected_market": 695.1979324127808,
+      "expected_reference": 636.8592512380509,
+      "gross_odds_return": 44225.59999999999,
+      "hit_rate_pct": 0.7316886719304568,
+      "roi_pct_final_odds": 48.297567954220305,
+      "observed_to_market_expected": 0.9637543047268166,
+      "observed_to_reference_expected": 1.0520377912349137
+    },
+    {
+      "section": "deciles",
+      "bucket": "6",
+      "bets": 91526,
+      "wins": 623,
+      "expected_market": 640.6617398012418,
+      "expected_reference": 501.0599176593504,
+      "gross_odds_return": 58732.89999999999,
+      "hit_rate_pct": 0.6806808994165592,
+      "roi_pct_final_odds": 64.17072744356793,
+      "observed_to_market_expected": 0.9724320359653112,
+      "observed_to_reference_expected": 1.2433642725011413
+    },
+    {
+      "section": "deciles",
+      "bucket": "7",
+      "bets": 91569,
+      "wins": 572,
+      "expected_market": 545.577656023552,
+      "expected_reference": 343.15717902900485,
+      "gross_odds_return": 42507.799999999974,
+      "hit_rate_pct": 0.6246655527525691,
+      "roi_pct_final_odds": 46.42160556520217,
+      "observed_to_market_expected": 1.0484300331670977,
+      "observed_to_reference_expected": 1.666874642164058
+    },
+    {
+      "section": "deciles",
+      "bucket": "8",
+      "bets": 91526,
+      "wins": 462,
+      "expected_market": 452.0486249236294,
+      "expected_reference": 199.7559370798179,
+      "gross_odds_return": 49262.6,
+      "hit_rate_pct": 0.5047745995673361,
+      "roi_pct_final_odds": 53.823612962436904,
+      "observed_to_market_expected": 1.022013948340296,
+      "observed_to_reference_expected": 2.312822370908532
+    },
+    {
+      "section": "deciles",
+      "bucket": "9",
+      "bets": 91526,
+      "wins": 395,
+      "expected_market": 359.02943507812654,
+      "expected_reference": 83.67282802444439,
+      "gross_odds_return": 59533.59999999999,
+      "hit_rate_pct": 0.43157135677293884,
+      "roi_pct_final_odds": 65.04556082424665,
+      "observed_to_market_expected": 1.1001883450420886,
+      "observed_to_reference_expected": 4.720767892350952
+    },
+    {
+      "section": "extremes",
+      "bucket": "bottom1",
+      "bets": 4336,
+      "wins": 8,
+      "expected_market": 4.738696452350868,
+      "expected_reference": 26.337036164556174,
+      "gross_odds_return": 5929.400000000001,
+      "hit_rate_pct": 0.18450184501845018,
+      "roi_pct_final_odds": 136.74815498154982,
+      "observed_to_market_expected": 1.6882279927491872,
+      "observed_to_reference_expected": 0.30375475623055226
+    },
+    {
+      "section": "extremes",
+      "bucket": "bottom3",
+      "bets": 13008,
+      "wins": 16,
+      "expected_market": 15.456302255219331,
+      "expected_reference": 76.55550451604911,
+      "gross_odds_return": 12428.900000000001,
+      "hit_rate_pct": 0.12300123001230012,
+      "roi_pct_final_odds": 95.54812423124233,
+      "observed_to_market_expected": 1.0351764436152295,
+      "observed_to_reference_expected": 0.2089986879603903
+    },
+    {
+      "section": "extremes",
+      "bucket": "top3",
+      "bets": 13008,
+      "wins": 68,
+      "expected_market": 60.68113782479607,
+      "expected_reference": 7.263248474689749,
+      "gross_odds_return": 9341.7,
+      "hit_rate_pct": 0.5227552275522755,
+      "roi_pct_final_odds": 71.81503690036901,
+      "observed_to_market_expected": 1.1206118150970668,
+      "observed_to_reference_expected": 9.362202083125709
+    },
+    {
+      "section": "extremes",
+      "bucket": "top1",
+      "bets": 4336,
+      "wins": 22,
+      "expected_market": 21.95064037579474,
+      "expected_reference": 2.3175047577580963,
+      "gross_odds_return": 1516.7,
+      "hit_rate_pct": 0.507380073800738,
+      "roi_pct_final_odds": 34.97924354243543,
+      "observed_to_market_expected": 1.0022486644289288,
+      "observed_to_reference_expected": 9.492968644984497
+    }
+  ],
+  "stable_findings": [
+    {
+      "metric": "D_cross_market_set",
+      "section": "deciles",
+      "bucket": "8",
+      "all_years_observed_above_market_expected": true,
+      "all_years_roi_above_100": false,
+      "yearly_calibration_ratios": [
+        1.0684850093051,
+        1.0838936039522449,
+        1.201105105335336
+      ],
+      "yearly_roi_pct_final_odds": [
+        73.18467017127355,
+        80.35236081747715,
+        81.88669438669442
+      ]
+    },
+    {
+      "metric": "D_cross_market_set",
+      "section": "deciles",
+      "bucket": "9",
+      "all_years_observed_above_market_expected": true,
+      "all_years_roi_above_100": false,
+      "yearly_calibration_ratios": [
+        1.1601266435811162,
+        1.3211664807361794,
+        1.1657357440876799
+      ],
+      "yearly_roi_pct_final_odds": [
+        74.42531305903397,
+        98.36815227483748,
+        80.12858783008035
+      ]
+    },
+    {
+      "metric": "D_cross_market_set",
+      "section": "extremes",
+      "bucket": "top3",
+      "all_years_observed_above_market_expected": true,
+      "all_years_roi_above_100": false,
+      "yearly_calibration_ratios": [
+        1.1574503757489107,
+        1.3279311774205997,
+        1.1573843415916343
+      ],
+      "yearly_roi_pct_final_odds": [
+        75.12768361581918,
+        99.96946206248532,
+        80.49930651872398
+      ]
+    },
+    {
+      "metric": "D_cross_market_set",
+      "section": "extremes",
+      "bucket": "top1",
+      "all_years_observed_above_market_expected": true,
+      "all_years_roi_above_100": false,
+      "yearly_calibration_ratios": [
+        1.055691544866215,
+        1.4246627404734882,
+        1.0309615361074849
+      ],
+      "yearly_roi_pct_final_odds": [
+        64.1220338983051,
+        88.99929527836503,
+        97.78779472954234
+      ]
+    },
+    {
+      "metric": "C_trio_combination_residual",
+      "section": "deciles",
+      "bucket": "3",
+      "all_years_observed_above_market_expected": true,
+      "all_years_roi_above_100": false,
+      "yearly_calibration_ratios": [
+        1.0771093682069428,
+        1.0668157771305453,
+        1.0053412483550863
+      ],
+      "yearly_roi_pct_final_odds": [
+        52.7258497316637,
+        69.77715877437328,
+        53.04707233065442
+      ]
+    },
+    {
+      "metric": "H_trifecta_order_residual",
+      "section": "deciles",
+      "bucket": "7",
+      "all_years_observed_above_market_expected": true,
+      "all_years_roi_above_100": false,
+      "yearly_calibration_ratios": [
+        1.1327687720762896,
+        1.001069902011535,
+        1.008193625867006
+      ],
+      "yearly_roi_pct_final_odds": [
+        62.68791321650934,
+        38.7417924874179,
+        37.33162325703763
+      ]
+    }
+  ]
+}
