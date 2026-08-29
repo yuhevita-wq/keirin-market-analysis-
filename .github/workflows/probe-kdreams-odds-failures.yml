@@ -1,0 +1,52 @@
+name: Probe KDreams odds failures
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/probe-kdreams-odds-failures.yml'
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install
+        run: python -m pip install -e '.[scrape]'
+      - name: Inspect representative failures
+        run: |
+          python - <<'PY'
+          import csv
+          from bs4 import BeautifulSoup
+          from keirin_market_analysis.s_yosen_2025 import make_session,fetch_html,normalize_text
+          samples=[
+            ('missing-first','https://keirin.kdreams.jp/beppu/racedetail/8620230123010009/?pageType=odds','8620230123010009',2023),
+            ('four-status','https://keirin.kdreams.jp/beppu/racedetail/8620240311010008/?pageType=odds','8620240311010008',2024),
+          ]
+          s=make_session()
+          for label,url,rid,year in samples:
+            print('\n===',label,rid,'===')
+            html=fetch_html(s,url)
+            soup=BeautifulSoup(html,'lxml')
+            h=soup.select_one('div.odds_header')
+            print('HEADER', normalize_text(h.get_text(' ',strip=True)) if h else 'NONE')
+            sts=h.select('div.status') if h else []
+            print('STATUSES',len(sts))
+            for i,x in enumerate(sts): print('STATUS',i,normalize_text(x.get_text(' ',strip=True)))
+            print('FIXED TABLES')
+            for i,t in enumerate(soup.select('table.odds_table')):
+                rows=t.find_all('tr',recursive=False)
+                title=normalize_text(rows[0].get_text(' ',strip=True)) if rows else ''
+                print(i,'title=',title[:150],'rows=',len(rows),'tds=',len(t.find_all('td')))
+            # Inspect entries/results for the race to confirm absence/scratch signals.
+            for fn in ('entries.csv','results.csv'):
+              p=f'data/{year}/s_class_yosen/{fn}'
+              rows=[r for r in csv.DictReader(open(p,encoding='utf-8-sig')) if r.get('race_id')==rid]
+              print(fn,'rows',len(rows))
+              for r in rows:
+                print({k:v for k,v in r.items() if k in ('car_no','name','finish','rank','result','status','scratch','is_cancelled','race_id') or ('finish' in k.lower()) or ('status' in k.lower())})
+          PY
