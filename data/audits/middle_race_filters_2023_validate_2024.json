@@ -1,0 +1,2973 @@
+{
+  "status": "MIDDLE_RACE_FILTER_SEARCH_2023_VALIDATE_2024",
+  "years_read": [
+    2023,
+    2024
+  ],
+  "evaluation_year_2025_used": false,
+  "evaluation_year_2026_used": false,
+  "principle": "Race-selection features are pre-race market-only. 2023 discovers simple one-feature thresholds; the exact thresholds are applied unchanged to 2024. Within selected races all selected middle 3連複 tickets are bought at 100 yen each, so this tests buy-race vs skip-race, not ticket pruning or dutching.",
+  "baseline": {
+    "2023": {
+      "races": 1345,
+      "tickets": 2802,
+      "stake_yen": 280200,
+      "payout_yen": 211760,
+      "profit_yen": -68440,
+      "roi_pct": 75.57458957887224
+    },
+    "2024": {
+      "races": 1281,
+      "tickets": 2636,
+      "stake_yen": 263600,
+      "payout_yen": 232050,
+      "profit_yen": -31550,
+      "roi_pct": 88.03110773899849
+    }
+  },
+  "candidate_count": 120,
+  "top20_by_2023_roi_with_frozen_2024": [
+    {
+      "feature": "middle_odds_median",
+      "op": "<=",
+      "threshold": 8.8,
+      "train_2023": {
+        "races": 338,
+        "tickets": 544,
+        "stake_yen": 54400,
+        "payout_yen": 54070,
+        "profit_yen": -330,
+        "roi_pct": 99.39338235294117
+      },
+      "validation_2024": {
+        "races": 302,
+        "tickets": 498,
+        "stake_yen": 49800,
+        "payout_yen": 37950,
+        "profit_yen": -11850,
+        "roi_pct": 76.20481927710843
+      }
+    },
+    {
+      "feature": "middle_trio_share",
+      "op": ">=",
+      "threshold": 0.20123727890265564,
+      "train_2023": {
+        "races": 337,
+        "tickets": 892,
+        "stake_yen": 89200,
+        "payout_yen": 83760,
+        "profit_yen": -5440,
+        "roi_pct": 93.90134529147981
+      },
+      "validation_2024": {
+        "races": 268,
+        "tickets": 709,
+        "stake_yen": 70900,
+        "payout_yen": 48720,
+        "profit_yen": -22180,
+        "roi_pct": 68.71650211565586
+      }
+    },
+    {
+      "feature": "middle_consensus_sum",
+      "op": ">=",
+      "threshold": 0.21449800829012527,
+      "train_2023": {
+        "races": 337,
+        "tickets": 897,
+        "stake_yen": 89700,
+        "payout_yen": 83290,
+        "profit_yen": -6410,
+        "roi_pct": 92.85395763656634
+      },
+      "validation_2024": {
+        "races": 265,
+        "tickets": 704,
+        "stake_yen": 70400,
+        "payout_yen": 49430,
+        "profit_yen": -20970,
+        "roi_pct": 70.21306818181819
+      }
+    },
+    {
+      "feature": "middle_delta_mean",
+      "op": ">=",
+      "threshold": 0.01182715142270628,
+      "train_2023": {
+        "races": 337,
+        "tickets": 584,
+        "stake_yen": 58400,
+        "payout_yen": 54160,
+        "profit_yen": -4240,
+        "roi_pct": 92.73972602739725
+      },
+      "validation_2024": {
+        "races": 310,
+        "tickets": 539,
+        "stake_yen": 53900,
+        "payout_yen": 45040,
+        "profit_yen": -8860,
+        "roi_pct": 83.56215213358071
+      }
+    },
+    {
+      "feature": "main_abs_delta",
+      "op": ">=",
+      "threshold": 0.025189258648036866,
+      "train_2023": {
+        "races": 337,
+        "tickets": 655,
+        "stake_yen": 65500,
+        "payout_yen": 60630,
+        "profit_yen": -4870,
+        "roi_pct": 92.56488549618321
+      },
+      "validation_2024": {
+        "races": 292,
+        "tickets": 554,
+        "stake_yen": 55400,
+        "payout_yen": 33870,
+        "profit_yen": -21530,
+        "roi_pct": 61.13718411552347
+      }
+    },
+    {
+      "feature": "middle_tri_share",
+      "op": ">=",
+      "threshold": 0.22679329202103865,
+      "train_2023": {
+        "races": 337,
+        "tickets": 899,
+        "stake_yen": 89900,
+        "payout_yen": 82470,
+        "profit_yen": -7430,
+        "roi_pct": 91.73526140155728
+      },
+      "validation_2024": {
+        "races": 265,
+        "tickets": 705,
+        "stake_yen": 70500,
+        "payout_yen": 50080,
+        "profit_yen": -20420,
+        "roi_pct": 71.0354609929078
+      }
+    },
+    {
+      "feature": "middle_odds_min",
+      "op": "<=",
+      "threshold": 5.2,
+      "train_2023": {
+        "races": 347,
+        "tickets": 726,
+        "stake_yen": 72600,
+        "payout_yen": 63890,
+        "profit_yen": -8710,
+        "roi_pct": 88.00275482093664
+      },
+      "validation_2024": {
+        "races": 293,
+        "tickets": 607,
+        "stake_yen": 60700,
+        "payout_yen": 43040,
+        "profit_yen": -17660,
+        "roi_pct": 70.90609555189457
+      }
+    },
+    {
+      "feature": "middle_delta_sum",
+      "op": ">=",
+      "threshold": 0.0251466280060078,
+      "train_2023": {
+        "races": 337,
+        "tickets": 861,
+        "stake_yen": 86100,
+        "payout_yen": 75190,
+        "profit_yen": -10910,
+        "roi_pct": 87.32868757259001
+      },
+      "validation_2024": {
+        "races": 291,
+        "tickets": 737,
+        "stake_yen": 73700,
+        "payout_yen": 63140,
+        "profit_yen": -10560,
+        "roi_pct": 85.67164179104478
+      }
+    },
+    {
+      "feature": "middle_cross_market_shift",
+      "op": ">=",
+      "threshold": 0.0251466280060078,
+      "train_2023": {
+        "races": 337,
+        "tickets": 861,
+        "stake_yen": 86100,
+        "payout_yen": 75190,
+        "profit_yen": -10910,
+        "roi_pct": 87.32868757259001
+      },
+      "validation_2024": {
+        "races": 291,
+        "tickets": 737,
+        "stake_yen": 73700,
+        "payout_yen": 63140,
+        "profit_yen": -10560,
+        "roi_pct": 85.67164179104478
+      }
+    },
+    {
+      "feature": "main_odds",
+      "op": "<=",
+      "threshold": 3.3,
+      "train_2023": {
+        "races": 714,
+        "tickets": 1475,
+        "stake_yen": 147500,
+        "payout_yen": 128010,
+        "profit_yen": -19490,
+        "roi_pct": 86.7864406779661
+      },
+      "validation_2024": {
+        "races": 704,
+        "tickets": 1476,
+        "stake_yen": 147600,
+        "payout_yen": 137550,
+        "profit_yen": -10050,
+        "roi_pct": 93.1910569105691
+      }
+    },
+    {
+      "feature": "middle_delta_max",
+      "op": ">=",
+      "threshold": 0.011051904329873324,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1479,
+        "stake_yen": 147900,
+        "payout_yen": 128220,
+        "profit_yen": -19680,
+        "roi_pct": 86.69371196754564
+      },
+      "validation_2024": {
+        "races": 627,
+        "tickets": 1357,
+        "stake_yen": 135700,
+        "payout_yen": 120300,
+        "profit_yen": -15400,
+        "roi_pct": 88.65143699336772
+      }
+    },
+    {
+      "feature": "middle_delta_max",
+      "op": ">=",
+      "threshold": 0.016971156145507316,
+      "train_2023": {
+        "races": 337,
+        "tickets": 731,
+        "stake_yen": 73100,
+        "payout_yen": 63220,
+        "profit_yen": -9880,
+        "roi_pct": 86.484268125855
+      },
+      "validation_2024": {
+        "races": 302,
+        "tickets": 644,
+        "stake_yen": 64400,
+        "payout_yen": 58060,
+        "profit_yen": -6340,
+        "roi_pct": 90.15527950310559
+      }
+    },
+    {
+      "feature": "middle_ratio_max",
+      "op": "<=",
+      "threshold": 1.1796535673513946,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1229,
+        "stake_yen": 122900,
+        "payout_yen": 106000,
+        "profit_yen": -16900,
+        "roi_pct": 86.24898291293735
+      },
+      "validation_2024": {
+        "races": 632,
+        "tickets": 1158,
+        "stake_yen": 115800,
+        "payout_yen": 81960,
+        "profit_yen": -33840,
+        "roi_pct": 70.77720207253886
+      }
+    },
+    {
+      "feature": "main_consensus",
+      "op": ">=",
+      "threshold": 0.23334047120286375,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1380,
+        "stake_yen": 138000,
+        "payout_yen": 118710,
+        "profit_yen": -19290,
+        "roi_pct": 86.02173913043478
+      },
+      "validation_2024": {
+        "races": 656,
+        "tickets": 1363,
+        "stake_yen": 136300,
+        "payout_yen": 127900,
+        "profit_yen": -8400,
+        "roi_pct": 93.8371239911959
+      }
+    },
+    {
+      "feature": "consensus_top1_share",
+      "op": ">=",
+      "threshold": 0.23399958343981195,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1381,
+        "stake_yen": 138100,
+        "payout_yen": 118710,
+        "profit_yen": -19390,
+        "roi_pct": 85.95944967414917
+      },
+      "validation_2024": {
+        "races": 657,
+        "tickets": 1365,
+        "stake_yen": 136500,
+        "payout_yen": 127900,
+        "profit_yen": -8600,
+        "roi_pct": 93.6996336996337
+      }
+    },
+    {
+      "feature": "middle_odds_min",
+      "op": "<=",
+      "threshold": 7.9,
+      "train_2023": {
+        "races": 683,
+        "tickets": 1489,
+        "stake_yen": 148900,
+        "payout_yen": 127140,
+        "profit_yen": -21760,
+        "roi_pct": 85.38616521155137
+      },
+      "validation_2024": {
+        "races": 621,
+        "tickets": 1356,
+        "stake_yen": 135600,
+        "payout_yen": 96120,
+        "profit_yen": -39480,
+        "roi_pct": 70.88495575221239
+      }
+    },
+    {
+      "feature": "middle_tri_share",
+      "op": ">=",
+      "threshold": 0.15273657749665787,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1628,
+        "stake_yen": 162800,
+        "payout_yen": 138510,
+        "profit_yen": -24290,
+        "roi_pct": 85.07985257985258
+      },
+      "validation_2024": {
+        "races": 603,
+        "tickets": 1432,
+        "stake_yen": 143200,
+        "payout_yen": 110120,
+        "profit_yen": -33080,
+        "roi_pct": 76.89944134078212
+      }
+    },
+    {
+      "feature": "main_abs_delta",
+      "op": ">=",
+      "threshold": 0.015413332182169642,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1348,
+        "stake_yen": 134800,
+        "payout_yen": 114110,
+        "profit_yen": -20690,
+        "roi_pct": 84.6513353115727
+      },
+      "validation_2024": {
+        "races": 593,
+        "tickets": 1187,
+        "stake_yen": 118700,
+        "payout_yen": 110760,
+        "profit_yen": -7940,
+        "roi_pct": 93.31086773378264
+      }
+    },
+    {
+      "feature": "main_to_mid_consensus_ratio",
+      "op": "<=",
+      "threshold": 2.2728265619274786,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1457,
+        "stake_yen": 145700,
+        "payout_yen": 123250,
+        "profit_yen": -22450,
+        "roi_pct": 84.59162663006177
+      },
+      "validation_2024": {
+        "races": 577,
+        "tickets": 1248,
+        "stake_yen": 124800,
+        "payout_yen": 83160,
+        "profit_yen": -41640,
+        "roi_pct": 66.63461538461539
+      }
+    },
+    {
+      "feature": "middle_trio_share",
+      "op": ">=",
+      "threshold": 0.13298817562603102,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1619,
+        "stake_yen": 161900,
+        "payout_yen": 136770,
+        "profit_yen": -25130,
+        "roi_pct": 84.4780728844966
+      },
+      "validation_2024": {
+        "races": 607,
+        "tickets": 1440,
+        "stake_yen": 144000,
+        "payout_yen": 114410,
+        "profit_yen": -29590,
+        "roi_pct": 79.45138888888889
+      }
+    }
+  ],
+  "all_candidates": [
+    {
+      "feature": "middle_odds_median",
+      "op": "<=",
+      "threshold": 8.8,
+      "train_2023": {
+        "races": 338,
+        "tickets": 544,
+        "stake_yen": 54400,
+        "payout_yen": 54070,
+        "profit_yen": -330,
+        "roi_pct": 99.39338235294117
+      },
+      "validation_2024": {
+        "races": 302,
+        "tickets": 498,
+        "stake_yen": 49800,
+        "payout_yen": 37950,
+        "profit_yen": -11850,
+        "roi_pct": 76.20481927710843
+      }
+    },
+    {
+      "feature": "middle_trio_share",
+      "op": ">=",
+      "threshold": 0.20123727890265564,
+      "train_2023": {
+        "races": 337,
+        "tickets": 892,
+        "stake_yen": 89200,
+        "payout_yen": 83760,
+        "profit_yen": -5440,
+        "roi_pct": 93.90134529147981
+      },
+      "validation_2024": {
+        "races": 268,
+        "tickets": 709,
+        "stake_yen": 70900,
+        "payout_yen": 48720,
+        "profit_yen": -22180,
+        "roi_pct": 68.71650211565586
+      }
+    },
+    {
+      "feature": "middle_consensus_sum",
+      "op": ">=",
+      "threshold": 0.21449800829012527,
+      "train_2023": {
+        "races": 337,
+        "tickets": 897,
+        "stake_yen": 89700,
+        "payout_yen": 83290,
+        "profit_yen": -6410,
+        "roi_pct": 92.85395763656634
+      },
+      "validation_2024": {
+        "races": 265,
+        "tickets": 704,
+        "stake_yen": 70400,
+        "payout_yen": 49430,
+        "profit_yen": -20970,
+        "roi_pct": 70.21306818181819
+      }
+    },
+    {
+      "feature": "middle_delta_mean",
+      "op": ">=",
+      "threshold": 0.01182715142270628,
+      "train_2023": {
+        "races": 337,
+        "tickets": 584,
+        "stake_yen": 58400,
+        "payout_yen": 54160,
+        "profit_yen": -4240,
+        "roi_pct": 92.73972602739725
+      },
+      "validation_2024": {
+        "races": 310,
+        "tickets": 539,
+        "stake_yen": 53900,
+        "payout_yen": 45040,
+        "profit_yen": -8860,
+        "roi_pct": 83.56215213358071
+      }
+    },
+    {
+      "feature": "main_abs_delta",
+      "op": ">=",
+      "threshold": 0.025189258648036866,
+      "train_2023": {
+        "races": 337,
+        "tickets": 655,
+        "stake_yen": 65500,
+        "payout_yen": 60630,
+        "profit_yen": -4870,
+        "roi_pct": 92.56488549618321
+      },
+      "validation_2024": {
+        "races": 292,
+        "tickets": 554,
+        "stake_yen": 55400,
+        "payout_yen": 33870,
+        "profit_yen": -21530,
+        "roi_pct": 61.13718411552347
+      }
+    },
+    {
+      "feature": "middle_tri_share",
+      "op": ">=",
+      "threshold": 0.22679329202103865,
+      "train_2023": {
+        "races": 337,
+        "tickets": 899,
+        "stake_yen": 89900,
+        "payout_yen": 82470,
+        "profit_yen": -7430,
+        "roi_pct": 91.73526140155728
+      },
+      "validation_2024": {
+        "races": 265,
+        "tickets": 705,
+        "stake_yen": 70500,
+        "payout_yen": 50080,
+        "profit_yen": -20420,
+        "roi_pct": 71.0354609929078
+      }
+    },
+    {
+      "feature": "middle_odds_min",
+      "op": "<=",
+      "threshold": 5.2,
+      "train_2023": {
+        "races": 347,
+        "tickets": 726,
+        "stake_yen": 72600,
+        "payout_yen": 63890,
+        "profit_yen": -8710,
+        "roi_pct": 88.00275482093664
+      },
+      "validation_2024": {
+        "races": 293,
+        "tickets": 607,
+        "stake_yen": 60700,
+        "payout_yen": 43040,
+        "profit_yen": -17660,
+        "roi_pct": 70.90609555189457
+      }
+    },
+    {
+      "feature": "middle_delta_sum",
+      "op": ">=",
+      "threshold": 0.0251466280060078,
+      "train_2023": {
+        "races": 337,
+        "tickets": 861,
+        "stake_yen": 86100,
+        "payout_yen": 75190,
+        "profit_yen": -10910,
+        "roi_pct": 87.32868757259001
+      },
+      "validation_2024": {
+        "races": 291,
+        "tickets": 737,
+        "stake_yen": 73700,
+        "payout_yen": 63140,
+        "profit_yen": -10560,
+        "roi_pct": 85.67164179104478
+      }
+    },
+    {
+      "feature": "middle_cross_market_shift",
+      "op": ">=",
+      "threshold": 0.0251466280060078,
+      "train_2023": {
+        "races": 337,
+        "tickets": 861,
+        "stake_yen": 86100,
+        "payout_yen": 75190,
+        "profit_yen": -10910,
+        "roi_pct": 87.32868757259001
+      },
+      "validation_2024": {
+        "races": 291,
+        "tickets": 737,
+        "stake_yen": 73700,
+        "payout_yen": 63140,
+        "profit_yen": -10560,
+        "roi_pct": 85.67164179104478
+      }
+    },
+    {
+      "feature": "main_odds",
+      "op": "<=",
+      "threshold": 3.3,
+      "train_2023": {
+        "races": 714,
+        "tickets": 1475,
+        "stake_yen": 147500,
+        "payout_yen": 128010,
+        "profit_yen": -19490,
+        "roi_pct": 86.7864406779661
+      },
+      "validation_2024": {
+        "races": 704,
+        "tickets": 1476,
+        "stake_yen": 147600,
+        "payout_yen": 137550,
+        "profit_yen": -10050,
+        "roi_pct": 93.1910569105691
+      }
+    },
+    {
+      "feature": "middle_delta_max",
+      "op": ">=",
+      "threshold": 0.011051904329873324,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1479,
+        "stake_yen": 147900,
+        "payout_yen": 128220,
+        "profit_yen": -19680,
+        "roi_pct": 86.69371196754564
+      },
+      "validation_2024": {
+        "races": 627,
+        "tickets": 1357,
+        "stake_yen": 135700,
+        "payout_yen": 120300,
+        "profit_yen": -15400,
+        "roi_pct": 88.65143699336772
+      }
+    },
+    {
+      "feature": "middle_delta_max",
+      "op": ">=",
+      "threshold": 0.016971156145507316,
+      "train_2023": {
+        "races": 337,
+        "tickets": 731,
+        "stake_yen": 73100,
+        "payout_yen": 63220,
+        "profit_yen": -9880,
+        "roi_pct": 86.484268125855
+      },
+      "validation_2024": {
+        "races": 302,
+        "tickets": 644,
+        "stake_yen": 64400,
+        "payout_yen": 58060,
+        "profit_yen": -6340,
+        "roi_pct": 90.15527950310559
+      }
+    },
+    {
+      "feature": "middle_ratio_max",
+      "op": "<=",
+      "threshold": 1.1796535673513946,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1229,
+        "stake_yen": 122900,
+        "payout_yen": 106000,
+        "profit_yen": -16900,
+        "roi_pct": 86.24898291293735
+      },
+      "validation_2024": {
+        "races": 632,
+        "tickets": 1158,
+        "stake_yen": 115800,
+        "payout_yen": 81960,
+        "profit_yen": -33840,
+        "roi_pct": 70.77720207253886
+      }
+    },
+    {
+      "feature": "main_consensus",
+      "op": ">=",
+      "threshold": 0.23334047120286375,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1380,
+        "stake_yen": 138000,
+        "payout_yen": 118710,
+        "profit_yen": -19290,
+        "roi_pct": 86.02173913043478
+      },
+      "validation_2024": {
+        "races": 656,
+        "tickets": 1363,
+        "stake_yen": 136300,
+        "payout_yen": 127900,
+        "profit_yen": -8400,
+        "roi_pct": 93.8371239911959
+      }
+    },
+    {
+      "feature": "consensus_top1_share",
+      "op": ">=",
+      "threshold": 0.23399958343981195,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1381,
+        "stake_yen": 138100,
+        "payout_yen": 118710,
+        "profit_yen": -19390,
+        "roi_pct": 85.95944967414917
+      },
+      "validation_2024": {
+        "races": 657,
+        "tickets": 1365,
+        "stake_yen": 136500,
+        "payout_yen": 127900,
+        "profit_yen": -8600,
+        "roi_pct": 93.6996336996337
+      }
+    },
+    {
+      "feature": "middle_odds_min",
+      "op": "<=",
+      "threshold": 7.9,
+      "train_2023": {
+        "races": 683,
+        "tickets": 1489,
+        "stake_yen": 148900,
+        "payout_yen": 127140,
+        "profit_yen": -21760,
+        "roi_pct": 85.38616521155137
+      },
+      "validation_2024": {
+        "races": 621,
+        "tickets": 1356,
+        "stake_yen": 135600,
+        "payout_yen": 96120,
+        "profit_yen": -39480,
+        "roi_pct": 70.88495575221239
+      }
+    },
+    {
+      "feature": "middle_tri_share",
+      "op": ">=",
+      "threshold": 0.15273657749665787,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1628,
+        "stake_yen": 162800,
+        "payout_yen": 138510,
+        "profit_yen": -24290,
+        "roi_pct": 85.07985257985258
+      },
+      "validation_2024": {
+        "races": 603,
+        "tickets": 1432,
+        "stake_yen": 143200,
+        "payout_yen": 110120,
+        "profit_yen": -33080,
+        "roi_pct": 76.89944134078212
+      }
+    },
+    {
+      "feature": "main_abs_delta",
+      "op": ">=",
+      "threshold": 0.015413332182169642,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1348,
+        "stake_yen": 134800,
+        "payout_yen": 114110,
+        "profit_yen": -20690,
+        "roi_pct": 84.6513353115727
+      },
+      "validation_2024": {
+        "races": 593,
+        "tickets": 1187,
+        "stake_yen": 118700,
+        "payout_yen": 110760,
+        "profit_yen": -7940,
+        "roi_pct": 93.31086773378264
+      }
+    },
+    {
+      "feature": "main_to_mid_consensus_ratio",
+      "op": "<=",
+      "threshold": 2.2728265619274786,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1457,
+        "stake_yen": 145700,
+        "payout_yen": 123250,
+        "profit_yen": -22450,
+        "roi_pct": 84.59162663006177
+      },
+      "validation_2024": {
+        "races": 577,
+        "tickets": 1248,
+        "stake_yen": 124800,
+        "payout_yen": 83160,
+        "profit_yen": -41640,
+        "roi_pct": 66.63461538461539
+      }
+    },
+    {
+      "feature": "middle_trio_share",
+      "op": ">=",
+      "threshold": 0.13298817562603102,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1619,
+        "stake_yen": 161900,
+        "payout_yen": 136770,
+        "profit_yen": -25130,
+        "roi_pct": 84.4780728844966
+      },
+      "validation_2024": {
+        "races": 607,
+        "tickets": 1440,
+        "stake_yen": 144000,
+        "payout_yen": 114410,
+        "profit_yen": -29590,
+        "roi_pct": 79.45138888888889
+      }
+    },
+    {
+      "feature": "middle_consensus_sum",
+      "op": ">=",
+      "threshold": 0.14155551938457672,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1623,
+        "stake_yen": 162300,
+        "payout_yen": 137000,
+        "profit_yen": -25300,
+        "roi_pct": 84.41158348736907
+      },
+      "validation_2024": {
+        "races": 611,
+        "tickets": 1447,
+        "stake_yen": 144700,
+        "payout_yen": 114670,
+        "profit_yen": -30030,
+        "roi_pct": 79.24671734623358
+      }
+    },
+    {
+      "feature": "middle_ratio_max",
+      "op": "<=",
+      "threshold": 1.117756599860424,
+      "train_2023": {
+        "races": 337,
+        "tickets": 528,
+        "stake_yen": 52800,
+        "payout_yen": 44130,
+        "profit_yen": -8670,
+        "roi_pct": 83.57954545454545
+      },
+      "validation_2024": {
+        "races": 310,
+        "tickets": 505,
+        "stake_yen": 50500,
+        "payout_yen": 31330,
+        "profit_yen": -19170,
+        "roi_pct": 62.039603960396036
+      }
+    },
+    {
+      "feature": "middle_delta_mean",
+      "op": ">=",
+      "threshold": 0.004758329336007838,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2129,
+        "stake_yen": 212900,
+        "payout_yen": 177530,
+        "profit_yen": -35370,
+        "roi_pct": 83.38656646312823
+      },
+      "validation_2024": {
+        "races": 963,
+        "tickets": 1999,
+        "stake_yen": 199900,
+        "payout_yen": 182460,
+        "profit_yen": -17440,
+        "roi_pct": 91.27563781890946
+      }
+    },
+    {
+      "feature": "trifecta_set_entropy",
+      "op": "<=",
+      "threshold": 2.805330975885975,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2079,
+        "stake_yen": 207900,
+        "payout_yen": 173000,
+        "profit_yen": -34900,
+        "roi_pct": 83.21308321308321
+      },
+      "validation_2024": {
+        "races": 958,
+        "tickets": 1955,
+        "stake_yen": 195500,
+        "payout_yen": 166400,
+        "profit_yen": -29100,
+        "roi_pct": 85.1150895140665
+      }
+    },
+    {
+      "feature": "main_to_mid_consensus_ratio",
+      "op": "<=",
+      "threshold": 1.4535313951891073,
+      "train_2023": {
+        "races": 337,
+        "tickets": 728,
+        "stake_yen": 72800,
+        "payout_yen": 60300,
+        "profit_yen": -12500,
+        "roi_pct": 82.82967032967034
+      },
+      "validation_2024": {
+        "races": 274,
+        "tickets": 607,
+        "stake_yen": 60700,
+        "payout_yen": 49630,
+        "profit_yen": -11070,
+        "roi_pct": 81.76276771004942
+      }
+    },
+    {
+      "feature": "middle_odds_max",
+      "op": ">=",
+      "threshold": 50.5,
+      "train_2023": {
+        "races": 337,
+        "tickets": 890,
+        "stake_yen": 89000,
+        "payout_yen": 73330,
+        "profit_yen": -15670,
+        "roi_pct": 82.3932584269663
+      },
+      "validation_2024": {
+        "races": 274,
+        "tickets": 686,
+        "stake_yen": 68600,
+        "payout_yen": 57170,
+        "profit_yen": -11430,
+        "roi_pct": 83.33819241982508
+      }
+    },
+    {
+      "feature": "middle_ratio_mean",
+      "op": "<=",
+      "threshold": 1.0960127544461782,
+      "train_2023": {
+        "races": 337,
+        "tickets": 633,
+        "stake_yen": 63300,
+        "payout_yen": 52080,
+        "profit_yen": -11220,
+        "roi_pct": 82.27488151658768
+      },
+      "validation_2024": {
+        "races": 306,
+        "tickets": 564,
+        "stake_yen": 56400,
+        "payout_yen": 43210,
+        "profit_yen": -13190,
+        "roi_pct": 76.61347517730496
+      }
+    },
+    {
+      "feature": "middle_delta_max",
+      "op": ">=",
+      "threshold": 0.006384667109788529,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2209,
+        "stake_yen": 220900,
+        "payout_yen": 181240,
+        "profit_yen": -39660,
+        "roi_pct": 82.04617473970123
+      },
+      "validation_2024": {
+        "races": 973,
+        "tickets": 2091,
+        "stake_yen": 209100,
+        "payout_yen": 193080,
+        "profit_yen": -16020,
+        "roi_pct": 92.33859397417504
+      }
+    },
+    {
+      "feature": "middle_delta_mean",
+      "op": ">=",
+      "threshold": 0.00777282288044899,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1341,
+        "stake_yen": 134100,
+        "payout_yen": 109620,
+        "profit_yen": -24480,
+        "roi_pct": 81.74496644295301
+      },
+      "validation_2024": {
+        "races": 612,
+        "tickets": 1197,
+        "stake_yen": 119700,
+        "payout_yen": 103200,
+        "profit_yen": -16500,
+        "roi_pct": 86.2155388471178
+      }
+    },
+    {
+      "feature": "main_to_mid_consensus_ratio",
+      "op": "<=",
+      "threshold": 4.365247401561255,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2190,
+        "stake_yen": 219000,
+        "payout_yen": 176720,
+        "profit_yen": -42280,
+        "roi_pct": 80.69406392694064
+      },
+      "validation_2024": {
+        "races": 941,
+        "tickets": 2016,
+        "stake_yen": 201600,
+        "payout_yen": 165960,
+        "profit_yen": -35640,
+        "roi_pct": 82.32142857142857
+      }
+    },
+    {
+      "feature": "middle_odds_median",
+      "op": "<=",
+      "threshold": 27.4,
+      "train_2023": {
+        "races": 1010,
+        "tickets": 2099,
+        "stake_yen": 209900,
+        "payout_yen": 168820,
+        "profit_yen": -41080,
+        "roi_pct": 80.42877560743212
+      },
+      "validation_2024": {
+        "races": 970,
+        "tickets": 1981,
+        "stake_yen": 198100,
+        "payout_yen": 178270,
+        "profit_yen": -19830,
+        "roi_pct": 89.98990408884401
+      }
+    },
+    {
+      "feature": "middle_delta_sum",
+      "op": ">=",
+      "threshold": 0.015963591191193643,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1633,
+        "stake_yen": 163300,
+        "payout_yen": 131030,
+        "profit_yen": -32270,
+        "roi_pct": 80.23882424984691
+      },
+      "validation_2024": {
+        "races": 620,
+        "tickets": 1486,
+        "stake_yen": 148600,
+        "payout_yen": 142530,
+        "profit_yen": -6070,
+        "roi_pct": 95.91520861372813
+      }
+    },
+    {
+      "feature": "middle_cross_market_shift",
+      "op": ">=",
+      "threshold": 0.015963591191193643,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1633,
+        "stake_yen": 163300,
+        "payout_yen": 131030,
+        "profit_yen": -32270,
+        "roi_pct": 80.23882424984691
+      },
+      "validation_2024": {
+        "races": 620,
+        "tickets": 1486,
+        "stake_yen": 148600,
+        "payout_yen": 142530,
+        "profit_yen": -6070,
+        "roi_pct": 95.91520861372813
+      }
+    },
+    {
+      "feature": "middle_odds_min",
+      "op": "<=",
+      "threshold": 13.9,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2198,
+        "stake_yen": 219800,
+        "payout_yen": 175190,
+        "profit_yen": -44610,
+        "roi_pct": 79.70427661510465
+      },
+      "validation_2024": {
+        "races": 923,
+        "tickets": 1997,
+        "stake_yen": 199700,
+        "payout_yen": 162430,
+        "profit_yen": -37270,
+        "roi_pct": 81.3370055082624
+      }
+    },
+    {
+      "feature": "trio_entropy",
+      "op": "<=",
+      "threshold": 2.864344665434285,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2090,
+        "stake_yen": 209000,
+        "payout_yen": 166040,
+        "profit_yen": -42960,
+        "roi_pct": 79.44497607655502
+      },
+      "validation_2024": {
+        "races": 972,
+        "tickets": 2004,
+        "stake_yen": 200400,
+        "payout_yen": 168330,
+        "profit_yen": -32070,
+        "roi_pct": 83.99700598802396
+      }
+    },
+    {
+      "feature": "middle_count",
+      "op": "<=",
+      "threshold": 1,
+      "train_2023": {
+        "races": 397,
+        "tickets": 397,
+        "stake_yen": 39700,
+        "payout_yen": 31300,
+        "profit_yen": -8400,
+        "roi_pct": 78.84130982367758
+      },
+      "validation_2024": {
+        "races": 358,
+        "tickets": 358,
+        "stake_yen": 35800,
+        "payout_yen": 26110,
+        "profit_yen": -9690,
+        "roi_pct": 72.93296089385476
+      }
+    },
+    {
+      "feature": "trifecta_set_entropy",
+      "op": ">=",
+      "threshold": 2.641677960503392,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1465,
+        "stake_yen": 146500,
+        "payout_yen": 115410,
+        "profit_yen": -31090,
+        "roi_pct": 78.77815699658703
+      },
+      "validation_2024": {
+        "races": 616,
+        "tickets": 1318,
+        "stake_yen": 131800,
+        "payout_yen": 120210,
+        "profit_yen": -11590,
+        "roi_pct": 91.20637329286798
+      }
+    },
+    {
+      "feature": "main_abs_delta",
+      "op": ">=",
+      "threshold": 0.007020744804595552,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2066,
+        "stake_yen": 206600,
+        "payout_yen": 162130,
+        "profit_yen": -44470,
+        "roi_pct": 78.4753146176186
+      },
+      "validation_2024": {
+        "races": 959,
+        "tickets": 1961,
+        "stake_yen": 196100,
+        "payout_yen": 165340,
+        "profit_yen": -30760,
+        "roi_pct": 84.31412544620092
+      }
+    },
+    {
+      "feature": "middle_delta_sum",
+      "op": ">=",
+      "threshold": 0.008959697103019887,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2303,
+        "stake_yen": 230300,
+        "payout_yen": 180360,
+        "profit_yen": -49940,
+        "roi_pct": 78.31524099001302
+      },
+      "validation_2024": {
+        "races": 959,
+        "tickets": 2157,
+        "stake_yen": 215700,
+        "payout_yen": 203570,
+        "profit_yen": -12130,
+        "roi_pct": 94.37644877144182
+      }
+    },
+    {
+      "feature": "middle_cross_market_shift",
+      "op": ">=",
+      "threshold": 0.008959697103019887,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2303,
+        "stake_yen": 230300,
+        "payout_yen": 180360,
+        "profit_yen": -49940,
+        "roi_pct": 78.31524099001302
+      },
+      "validation_2024": {
+        "races": 959,
+        "tickets": 2157,
+        "stake_yen": 215700,
+        "payout_yen": 203570,
+        "profit_yen": -12130,
+        "roi_pct": 94.37644877144182
+      }
+    },
+    {
+      "feature": "middle_ratio_max",
+      "op": "<=",
+      "threshold": 1.2638149316998202,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 1974,
+        "stake_yen": 197400,
+        "payout_yen": 154530,
+        "profit_yen": -42870,
+        "roi_pct": 78.28267477203647
+      },
+      "validation_2024": {
+        "races": 985,
+        "tickets": 1933,
+        "stake_yen": 193300,
+        "payout_yen": 153830,
+        "profit_yen": -39470,
+        "roi_pct": 79.58096223486808
+      }
+    },
+    {
+      "feature": "middle_count",
+      "op": "<=",
+      "threshold": 3.0,
+      "train_2023": {
+        "races": 1249,
+        "tickets": 2413,
+        "stake_yen": 241300,
+        "payout_yen": 187100,
+        "profit_yen": -54200,
+        "roi_pct": 77.53833402403647
+      },
+      "validation_2024": {
+        "races": 1218,
+        "tickets": 2384,
+        "stake_yen": 238400,
+        "payout_yen": 204330,
+        "profit_yen": -34070,
+        "roi_pct": 85.70889261744966
+      }
+    },
+    {
+      "feature": "middle_odds_median",
+      "op": "<=",
+      "threshold": 15.4,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1281,
+        "stake_yen": 128100,
+        "payout_yen": 99210,
+        "profit_yen": -28890,
+        "roi_pct": 77.44730679156909
+      },
+      "validation_2024": {
+        "races": 624,
+        "tickets": 1204,
+        "stake_yen": 120400,
+        "payout_yen": 95570,
+        "profit_yen": -24830,
+        "roi_pct": 79.37707641196013
+      }
+    },
+    {
+      "feature": "middle_ratio_mean",
+      "op": "<=",
+      "threshold": 1.1366123498458232,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1351,
+        "stake_yen": 135100,
+        "payout_yen": 104570,
+        "profit_yen": -30530,
+        "roi_pct": 77.4019245003701
+      },
+      "validation_2024": {
+        "races": 619,
+        "tickets": 1231,
+        "stake_yen": 123100,
+        "payout_yen": 88130,
+        "profit_yen": -34970,
+        "roi_pct": 71.59220146222583
+      }
+    },
+    {
+      "feature": "trio_entropy",
+      "op": ">=",
+      "threshold": 2.5405731110579204,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2115,
+        "stake_yen": 211500,
+        "payout_yen": 163070,
+        "profit_yen": -48430,
+        "roi_pct": 77.10165484633569
+      },
+      "validation_2024": {
+        "races": 928,
+        "tickets": 1914,
+        "stake_yen": 191400,
+        "payout_yen": 168820,
+        "profit_yen": -22580,
+        "roi_pct": 88.20271682340648
+      }
+    },
+    {
+      "feature": "middle_ratio_mean",
+      "op": ">=",
+      "threshold": 1.1968893419318531,
+      "train_2023": {
+        "races": 337,
+        "tickets": 710,
+        "stake_yen": 71000,
+        "payout_yen": 54660,
+        "profit_yen": -16340,
+        "roi_pct": 76.98591549295774
+      },
+      "validation_2024": {
+        "races": 297,
+        "tickets": 597,
+        "stake_yen": 59700,
+        "payout_yen": 68310,
+        "profit_yen": 8610,
+        "roi_pct": 114.42211055276383
+      }
+    },
+    {
+      "feature": "middle_count",
+      "op": ">=",
+      "threshold": 3,
+      "train_2023": {
+        "races": 408,
+        "tickets": 1325,
+        "stake_yen": 132500,
+        "payout_yen": 101760,
+        "profit_yen": -30740,
+        "roi_pct": 76.8
+      },
+      "validation_2024": {
+        "races": 369,
+        "tickets": 1170,
+        "stake_yen": 117000,
+        "payout_yen": 116700,
+        "profit_yen": -300,
+        "roi_pct": 99.74358974358974
+      }
+    },
+    {
+      "feature": "main_consensus",
+      "op": "<=",
+      "threshold": 0.29538524479731243,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2089,
+        "stake_yen": 208900,
+        "payout_yen": 160290,
+        "profit_yen": -48610,
+        "roi_pct": 76.73049305887984
+      },
+      "validation_2024": {
+        "races": 930,
+        "tickets": 1920,
+        "stake_yen": 192000,
+        "payout_yen": 168610,
+        "profit_yen": -23390,
+        "roi_pct": 87.81770833333333
+      }
+    },
+    {
+      "feature": "consensus_top1_share",
+      "op": "<=",
+      "threshold": 0.29630283440329425,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2089,
+        "stake_yen": 208900,
+        "payout_yen": 160290,
+        "profit_yen": -48610,
+        "roi_pct": 76.73049305887984
+      },
+      "validation_2024": {
+        "races": 930,
+        "tickets": 1920,
+        "stake_yen": 192000,
+        "payout_yen": 168610,
+        "profit_yen": -23390,
+        "roi_pct": 87.81770833333333
+      }
+    },
+    {
+      "feature": "trio_entropy",
+      "op": ">=",
+      "threshold": 2.7141248766215376,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1415,
+        "stake_yen": 141500,
+        "payout_yen": 108540,
+        "profit_yen": -32960,
+        "roi_pct": 76.70671378091873
+      },
+      "validation_2024": {
+        "races": 614,
+        "tickets": 1276,
+        "stake_yen": 127600,
+        "payout_yen": 115660,
+        "profit_yen": -11940,
+        "roi_pct": 90.64263322884013
+      }
+    },
+    {
+      "feature": "middle_odds_max",
+      "op": "<=",
+      "threshold": 24.3,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1146,
+        "stake_yen": 114600,
+        "payout_yen": 87860,
+        "profit_yen": -26740,
+        "roi_pct": 76.66666666666667
+      },
+      "validation_2024": {
+        "races": 636,
+        "tickets": 1074,
+        "stake_yen": 107400,
+        "payout_yen": 93070,
+        "profit_yen": -14330,
+        "roi_pct": 86.65735567970205
+      }
+    },
+    {
+      "feature": "middle_odds_max",
+      "op": ">=",
+      "threshold": 11.4,
+      "train_2023": {
+        "races": 1010,
+        "tickets": 2337,
+        "stake_yen": 233700,
+        "payout_yen": 178350,
+        "profit_yen": -55350,
+        "roi_pct": 76.3157894736842
+      },
+      "validation_2024": {
+        "races": 980,
+        "tickets": 2211,
+        "stake_yen": 221100,
+        "payout_yen": 196180,
+        "profit_yen": -24920,
+        "roi_pct": 88.72908186341022
+      }
+    },
+    {
+      "feature": "middle_trio_share",
+      "op": ">=",
+      "threshold": 0.07408424377605469,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2305,
+        "stake_yen": 230500,
+        "payout_yen": 175700,
+        "profit_yen": -54800,
+        "roi_pct": 76.22559652928416
+      },
+      "validation_2024": {
+        "races": 944,
+        "tickets": 2128,
+        "stake_yen": 212800,
+        "payout_yen": 182380,
+        "profit_yen": -30420,
+        "roi_pct": 85.70488721804512
+      }
+    },
+    {
+      "feature": "main_odds",
+      "op": ">=",
+      "threshold": 2.6,
+      "train_2023": {
+        "races": 1011,
+        "tickets": 2086,
+        "stake_yen": 208600,
+        "payout_yen": 158890,
+        "profit_yen": -49710,
+        "roi_pct": 76.16970278044104
+      },
+      "validation_2024": {
+        "races": 930,
+        "tickets": 1909,
+        "stake_yen": 190900,
+        "payout_yen": 161100,
+        "profit_yen": -29800,
+        "roi_pct": 84.38973284442116
+      }
+    },
+    {
+      "feature": "middle_consensus_sum",
+      "op": ">=",
+      "threshold": 0.08045545525450176,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2307,
+        "stake_yen": 230700,
+        "payout_yen": 175700,
+        "profit_yen": -55000,
+        "roi_pct": 76.15951452102297
+      },
+      "validation_2024": {
+        "races": 943,
+        "tickets": 2130,
+        "stake_yen": 213000,
+        "payout_yen": 185270,
+        "profit_yen": -27730,
+        "roi_pct": 86.98122065727699
+      }
+    },
+    {
+      "feature": "main_consensus",
+      "op": ">=",
+      "threshold": 0.1875712183812174,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2077,
+        "stake_yen": 207700,
+        "payout_yen": 157850,
+        "profit_yen": -49850,
+        "roi_pct": 75.99903707270101
+      },
+      "validation_2024": {
+        "races": 973,
+        "tickets": 2000,
+        "stake_yen": 200000,
+        "payout_yen": 177580,
+        "profit_yen": -22420,
+        "roi_pct": 88.79
+      }
+    },
+    {
+      "feature": "consensus_top1_share",
+      "op": ">=",
+      "threshold": 0.18797748863048197,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2077,
+        "stake_yen": 207700,
+        "payout_yen": 157850,
+        "profit_yen": -49850,
+        "roi_pct": 75.99903707270101
+      },
+      "validation_2024": {
+        "races": 973,
+        "tickets": 2000,
+        "stake_yen": 200000,
+        "payout_yen": 177580,
+        "profit_yen": -22420,
+        "roi_pct": 88.79
+      }
+    },
+    {
+      "feature": "middle_tri_share",
+      "op": ">=",
+      "threshold": 0.08684468640259992,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2311,
+        "stake_yen": 231100,
+        "payout_yen": 174760,
+        "profit_yen": -56340,
+        "roi_pct": 75.62094331458243
+      },
+      "validation_2024": {
+        "races": 949,
+        "tickets": 2142,
+        "stake_yen": 214200,
+        "payout_yen": 188070,
+        "profit_yen": -26130,
+        "roi_pct": 87.80112044817928
+      }
+    },
+    {
+      "feature": "middle_count",
+      "op": ">=",
+      "threshold": 1.0,
+      "train_2023": {
+        "races": 1345,
+        "tickets": 2802,
+        "stake_yen": 280200,
+        "payout_yen": 211760,
+        "profit_yen": -68440,
+        "roi_pct": 75.57458957887224
+      },
+      "validation_2024": {
+        "races": 1281,
+        "tickets": 2636,
+        "stake_yen": 263600,
+        "payout_yen": 232050,
+        "profit_yen": -31550,
+        "roi_pct": 88.03110773899849
+      }
+    },
+    {
+      "feature": "trifecta_set_entropy",
+      "op": ">=",
+      "threshold": 2.444598954527444,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2149,
+        "stake_yen": 214900,
+        "payout_yen": 162400,
+        "profit_yen": -52500,
+        "roi_pct": 75.57003257328991
+      },
+      "validation_2024": {
+        "races": 929,
+        "tickets": 1941,
+        "stake_yen": 194100,
+        "payout_yen": 169090,
+        "profit_yen": -25010,
+        "roi_pct": 87.11488923235446
+      }
+    },
+    {
+      "feature": "trifecta_set_entropy",
+      "op": "<=",
+      "threshold": 2.444598954527444,
+      "train_2023": {
+        "races": 337,
+        "tickets": 655,
+        "stake_yen": 65500,
+        "payout_yen": 49360,
+        "profit_yen": -16140,
+        "roi_pct": 75.3587786259542
+      },
+      "validation_2024": {
+        "races": 352,
+        "tickets": 695,
+        "stake_yen": 69500,
+        "payout_yen": 62960,
+        "profit_yen": -6540,
+        "roi_pct": 90.58992805755396
+      }
+    },
+    {
+      "feature": "middle_odds_max",
+      "op": ">=",
+      "threshold": 24.3,
+      "train_2023": {
+        "races": 674,
+        "tickets": 1660,
+        "stake_yen": 166000,
+        "payout_yen": 124870,
+        "profit_yen": -41130,
+        "roi_pct": 75.22289156626506
+      },
+      "validation_2024": {
+        "races": 646,
+        "tickets": 1564,
+        "stake_yen": 156400,
+        "payout_yen": 139450,
+        "profit_yen": -16950,
+        "roi_pct": 89.16240409207161
+      }
+    },
+    {
+      "feature": "main_odds",
+      "op": "<=",
+      "threshold": 4.1,
+      "train_2023": {
+        "races": 1027,
+        "tickets": 2135,
+        "stake_yen": 213500,
+        "payout_yen": 160480,
+        "profit_yen": -53020,
+        "roi_pct": 75.16627634660422
+      },
+      "validation_2024": {
+        "races": 1004,
+        "tickets": 2069,
+        "stake_yen": 206900,
+        "payout_yen": 192060,
+        "profit_yen": -14840,
+        "roi_pct": 92.8274528757854
+      }
+    },
+    {
+      "feature": "middle_tri_share",
+      "op": "<=",
+      "threshold": 0.08684468640259992,
+      "train_2023": {
+        "races": 337,
+        "tickets": 493,
+        "stake_yen": 49300,
+        "payout_yen": 37000,
+        "profit_yen": -12300,
+        "roi_pct": 75.05070993914808
+      },
+      "validation_2024": {
+        "races": 332,
+        "tickets": 494,
+        "stake_yen": 49400,
+        "payout_yen": 43980,
+        "profit_yen": -5420,
+        "roi_pct": 89.02834008097166
+      }
+    },
+    {
+      "feature": "middle_count",
+      "op": ">=",
+      "threshold": 2,
+      "train_2023": {
+        "races": 948,
+        "tickets": 2405,
+        "stake_yen": 240500,
+        "payout_yen": 180460,
+        "profit_yen": -60040,
+        "roi_pct": 75.03534303534303
+      },
+      "validation_2024": {
+        "races": 923,
+        "tickets": 2278,
+        "stake_yen": 227800,
+        "payout_yen": 205940,
+        "profit_yen": -21860,
+        "roi_pct": 90.40386303775242
+      }
+    },
+    {
+      "feature": "middle_ratio_mean",
+      "op": "<=",
+      "threshold": 1.1968893419318531,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2094,
+        "stake_yen": 209400,
+        "payout_yen": 157100,
+        "profit_yen": -52300,
+        "roi_pct": 75.02387774594078
+      },
+      "validation_2024": {
+        "races": 984,
+        "tickets": 2039,
+        "stake_yen": 203900,
+        "payout_yen": 163740,
+        "profit_yen": -40160,
+        "roi_pct": 80.30407062285434
+      }
+    },
+    {
+      "feature": "middle_count",
+      "op": "<=",
+      "threshold": 2,
+      "train_2023": {
+        "races": 937,
+        "tickets": 1477,
+        "stake_yen": 147700,
+        "payout_yen": 110000,
+        "profit_yen": -37700,
+        "roi_pct": 74.47528774542992
+      },
+      "validation_2024": {
+        "races": 912,
+        "tickets": 1466,
+        "stake_yen": 146600,
+        "payout_yen": 115350,
+        "profit_yen": -31250,
+        "roi_pct": 78.68349249658935
+      }
+    },
+    {
+      "feature": "trio_entropy",
+      "op": "<=",
+      "threshold": 2.7141248766215376,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1390,
+        "stake_yen": 139000,
+        "payout_yen": 103220,
+        "profit_yen": -35780,
+        "roi_pct": 74.2589928057554
+      },
+      "validation_2024": {
+        "races": 667,
+        "tickets": 1360,
+        "stake_yen": 136000,
+        "payout_yen": 116390,
+        "profit_yen": -19610,
+        "roi_pct": 85.58088235294117
+      }
+    },
+    {
+      "feature": "main_consensus",
+      "op": "<=",
+      "threshold": 0.1875712183812174,
+      "train_2023": {
+        "races": 337,
+        "tickets": 726,
+        "stake_yen": 72600,
+        "payout_yen": 53910,
+        "profit_yen": -18690,
+        "roi_pct": 74.25619834710744
+      },
+      "validation_2024": {
+        "races": 308,
+        "tickets": 636,
+        "stake_yen": 63600,
+        "payout_yen": 54470,
+        "profit_yen": -9130,
+        "roi_pct": 85.64465408805032
+      }
+    },
+    {
+      "feature": "consensus_top1_share",
+      "op": "<=",
+      "threshold": 0.18797748863048197,
+      "train_2023": {
+        "races": 337,
+        "tickets": 727,
+        "stake_yen": 72700,
+        "payout_yen": 53910,
+        "profit_yen": -18790,
+        "roi_pct": 74.15405777166437
+      },
+      "validation_2024": {
+        "races": 308,
+        "tickets": 636,
+        "stake_yen": 63600,
+        "payout_yen": 54470,
+        "profit_yen": -9130,
+        "roi_pct": 85.64465408805032
+      }
+    },
+    {
+      "feature": "middle_odds_median",
+      "op": ">=",
+      "threshold": 15.4,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1523,
+        "stake_yen": 152300,
+        "payout_yen": 112550,
+        "profit_yen": -39750,
+        "roi_pct": 73.90019697964544
+      },
+      "validation_2024": {
+        "races": 661,
+        "tickets": 1441,
+        "stake_yen": 144100,
+        "payout_yen": 136480,
+        "profit_yen": -7620,
+        "roi_pct": 94.7120055517002
+      }
+    },
+    {
+      "feature": "middle_ratio_mean",
+      "op": ">=",
+      "threshold": 1.1366123498458232,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1454,
+        "stake_yen": 145400,
+        "payout_yen": 107190,
+        "profit_yen": -38210,
+        "roi_pct": 73.72077028885832
+      },
+      "validation_2024": {
+        "races": 662,
+        "tickets": 1405,
+        "stake_yen": 140500,
+        "payout_yen": 143920,
+        "profit_yen": 3420,
+        "roi_pct": 102.43416370106762
+      }
+    },
+    {
+      "feature": "middle_ratio_max",
+      "op": ">=",
+      "threshold": 1.117756599860424,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2276,
+        "stake_yen": 227600,
+        "payout_yen": 167630,
+        "profit_yen": -59970,
+        "roi_pct": 73.65114235500879
+      },
+      "validation_2024": {
+        "races": 971,
+        "tickets": 2131,
+        "stake_yen": 213100,
+        "payout_yen": 200720,
+        "profit_yen": -12380,
+        "roi_pct": 94.19052088221493
+      }
+    },
+    {
+      "feature": "middle_ratio_mean",
+      "op": ">=",
+      "threshold": 1.0960127544461782,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2170,
+        "stake_yen": 217000,
+        "payout_yen": 159680,
+        "profit_yen": -57320,
+        "roi_pct": 73.5852534562212
+      },
+      "validation_2024": {
+        "races": 975,
+        "tickets": 2072,
+        "stake_yen": 207200,
+        "payout_yen": 188840,
+        "profit_yen": -18360,
+        "roi_pct": 91.13899613899613
+      }
+    },
+    {
+      "feature": "middle_odds_max",
+      "op": "<=",
+      "threshold": 11.4,
+      "train_2023": {
+        "races": 339,
+        "tickets": 472,
+        "stake_yen": 47200,
+        "payout_yen": 34550,
+        "profit_yen": -12650,
+        "roi_pct": 73.19915254237289
+      },
+      "validation_2024": {
+        "races": 302,
+        "tickets": 427,
+        "stake_yen": 42700,
+        "payout_yen": 36750,
+        "profit_yen": -5950,
+        "roi_pct": 86.06557377049181
+      }
+    },
+    {
+      "feature": "main_to_mid_consensus_ratio",
+      "op": ">=",
+      "threshold": 1.4535313951891073,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2075,
+        "stake_yen": 207500,
+        "payout_yen": 151460,
+        "profit_yen": -56040,
+        "roi_pct": 72.99277108433735
+      },
+      "validation_2024": {
+        "races": 1007,
+        "tickets": 2029,
+        "stake_yen": 202900,
+        "payout_yen": 182420,
+        "profit_yen": -20480,
+        "roi_pct": 89.90635781172992
+      }
+    },
+    {
+      "feature": "middle_odds_max",
+      "op": "<=",
+      "threshold": 50.5,
+      "train_2023": {
+        "races": 1010,
+        "tickets": 1918,
+        "stake_yen": 191800,
+        "payout_yen": 139930,
+        "profit_yen": -51870,
+        "roi_pct": 72.95620437956204
+      },
+      "validation_2024": {
+        "races": 1007,
+        "tickets": 1950,
+        "stake_yen": 195000,
+        "payout_yen": 174880,
+        "profit_yen": -20120,
+        "roi_pct": 89.68205128205128
+      }
+    },
+    {
+      "feature": "middle_odds_median",
+      "op": ">=",
+      "threshold": 8.8,
+      "train_2023": {
+        "races": 1013,
+        "tickets": 2268,
+        "stake_yen": 226800,
+        "payout_yen": 165010,
+        "profit_yen": -61790,
+        "roi_pct": 72.7557319223986
+      },
+      "validation_2024": {
+        "races": 981,
+        "tickets": 2143,
+        "stake_yen": 214300,
+        "payout_yen": 194100,
+        "profit_yen": -20200,
+        "roi_pct": 90.57396173588427
+      }
+    },
+    {
+      "feature": "consensus_top1_share",
+      "op": ">=",
+      "threshold": 0.29630283440329425,
+      "train_2023": {
+        "races": 337,
+        "tickets": 714,
+        "stake_yen": 71400,
+        "payout_yen": 51810,
+        "profit_yen": -19590,
+        "roi_pct": 72.56302521008404
+      },
+      "validation_2024": {
+        "races": 351,
+        "tickets": 716,
+        "stake_yen": 71600,
+        "payout_yen": 63440,
+        "profit_yen": -8160,
+        "roi_pct": 88.60335195530726
+      }
+    },
+    {
+      "feature": "middle_consensus_sum",
+      "op": "<=",
+      "threshold": 0.08045545525450176,
+      "train_2023": {
+        "races": 337,
+        "tickets": 497,
+        "stake_yen": 49700,
+        "payout_yen": 36060,
+        "profit_yen": -13640,
+        "roi_pct": 72.5553319919517
+      },
+      "validation_2024": {
+        "races": 338,
+        "tickets": 506,
+        "stake_yen": 50600,
+        "payout_yen": 46780,
+        "profit_yen": -3820,
+        "roi_pct": 92.4505928853755
+      }
+    },
+    {
+      "feature": "main_consensus",
+      "op": ">=",
+      "threshold": 0.29538524479731243,
+      "train_2023": {
+        "races": 337,
+        "tickets": 717,
+        "stake_yen": 71700,
+        "payout_yen": 52020,
+        "profit_yen": -19680,
+        "roi_pct": 72.55230125523012
+      },
+      "validation_2024": {
+        "races": 351,
+        "tickets": 716,
+        "stake_yen": 71600,
+        "payout_yen": 63440,
+        "profit_yen": -8160,
+        "roi_pct": 88.60335195530726
+      }
+    },
+    {
+      "feature": "middle_trio_share",
+      "op": "<=",
+      "threshold": 0.07408424377605469,
+      "train_2023": {
+        "races": 337,
+        "tickets": 498,
+        "stake_yen": 49800,
+        "payout_yen": 36060,
+        "profit_yen": -13740,
+        "roi_pct": 72.40963855421687
+      },
+      "validation_2024": {
+        "races": 337,
+        "tickets": 508,
+        "stake_yen": 50800,
+        "payout_yen": 49670,
+        "profit_yen": -1130,
+        "roi_pct": 97.7755905511811
+      }
+    },
+    {
+      "feature": "middle_odds_min",
+      "op": ">=",
+      "threshold": 5.2,
+      "train_2023": {
+        "races": 1012,
+        "tickets": 2104,
+        "stake_yen": 210400,
+        "payout_yen": 152030,
+        "profit_yen": -58370,
+        "roi_pct": 72.25760456273764
+      },
+      "validation_2024": {
+        "races": 1008,
+        "tickets": 2068,
+        "stake_yen": 206800,
+        "payout_yen": 191970,
+        "profit_yen": -14830,
+        "roi_pct": 92.82882011605416
+      }
+    },
+    {
+      "feature": "trifecta_set_entropy",
+      "op": "<=",
+      "threshold": 2.641677960503392,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1339,
+        "stake_yen": 133900,
+        "payout_yen": 96350,
+        "profit_yen": -37550,
+        "roi_pct": 71.95668409260642
+      },
+      "validation_2024": {
+        "races": 665,
+        "tickets": 1318,
+        "stake_yen": 131800,
+        "payout_yen": 111840,
+        "profit_yen": -19960,
+        "roi_pct": 84.85584218512898
+      }
+    },
+    {
+      "feature": "middle_delta_max",
+      "op": "<=",
+      "threshold": 0.016971156145507316,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2074,
+        "stake_yen": 207400,
+        "payout_yen": 148540,
+        "profit_yen": -58860,
+        "roi_pct": 71.62005785920925
+      },
+      "validation_2024": {
+        "races": 979,
+        "tickets": 1992,
+        "stake_yen": 199200,
+        "payout_yen": 173990,
+        "profit_yen": -25210,
+        "roi_pct": 87.34437751004016
+      }
+    },
+    {
+      "feature": "trio_entropy",
+      "op": "<=",
+      "threshold": 2.5405731110579204,
+      "train_2023": {
+        "races": 337,
+        "tickets": 690,
+        "stake_yen": 69000,
+        "payout_yen": 49310,
+        "profit_yen": -19690,
+        "roi_pct": 71.46376811594203
+      },
+      "validation_2024": {
+        "races": 353,
+        "tickets": 722,
+        "stake_yen": 72200,
+        "payout_yen": 63230,
+        "profit_yen": -8970,
+        "roi_pct": 87.57617728531856
+      }
+    },
+    {
+      "feature": "main_odds",
+      "op": ">=",
+      "threshold": 4.1,
+      "train_2023": {
+        "races": 352,
+        "tickets": 737,
+        "stake_yen": 73700,
+        "payout_yen": 52420,
+        "profit_yen": -21280,
+        "roi_pct": 71.12618724559023
+      },
+      "validation_2024": {
+        "races": 310,
+        "tickets": 625,
+        "stake_yen": 62500,
+        "payout_yen": 51850,
+        "profit_yen": -10650,
+        "roi_pct": 82.96
+      }
+    },
+    {
+      "feature": "middle_delta_mean",
+      "op": "<=",
+      "threshold": 0.01182715142270628,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2219,
+        "stake_yen": 221900,
+        "payout_yen": 157600,
+        "profit_yen": -64300,
+        "roi_pct": 71.02298332582244
+      },
+      "validation_2024": {
+        "races": 971,
+        "tickets": 2097,
+        "stake_yen": 209700,
+        "payout_yen": 187010,
+        "profit_yen": -22690,
+        "roi_pct": 89.1797806390081
+      }
+    },
+    {
+      "feature": "main_abs_delta",
+      "op": "<=",
+      "threshold": 0.025189258648036866,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 2148,
+        "stake_yen": 214800,
+        "payout_yen": 151130,
+        "profit_yen": -63670,
+        "roi_pct": 70.3584729981378
+      },
+      "validation_2024": {
+        "races": 989,
+        "tickets": 2082,
+        "stake_yen": 208200,
+        "payout_yen": 198180,
+        "profit_yen": -10020,
+        "roi_pct": 95.18731988472622
+      }
+    },
+    {
+      "feature": "middle_delta_sum",
+      "op": "<=",
+      "threshold": 0.0251466280060078,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 1945,
+        "stake_yen": 194500,
+        "payout_yen": 136570,
+        "profit_yen": -57930,
+        "roi_pct": 70.2159383033419
+      },
+      "validation_2024": {
+        "races": 990,
+        "tickets": 1899,
+        "stake_yen": 189900,
+        "payout_yen": 168910,
+        "profit_yen": -20990,
+        "roi_pct": 88.94681411269089
+      }
+    },
+    {
+      "feature": "middle_cross_market_shift",
+      "op": "<=",
+      "threshold": 0.0251466280060078,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 1945,
+        "stake_yen": 194500,
+        "payout_yen": 136570,
+        "profit_yen": -57930,
+        "roi_pct": 70.2159383033419
+      },
+      "validation_2024": {
+        "races": 990,
+        "tickets": 1899,
+        "stake_yen": 189900,
+        "payout_yen": 168910,
+        "profit_yen": -20990,
+        "roi_pct": 88.94681411269089
+      }
+    },
+    {
+      "feature": "middle_delta_mean",
+      "op": "<=",
+      "threshold": 0.00777282288044899,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1462,
+        "stake_yen": 146200,
+        "payout_yen": 102140,
+        "profit_yen": -44060,
+        "roi_pct": 69.86320109439124
+      },
+      "validation_2024": {
+        "races": 669,
+        "tickets": 1439,
+        "stake_yen": 143900,
+        "payout_yen": 128850,
+        "profit_yen": -15050,
+        "roi_pct": 89.54134815844337
+      }
+    },
+    {
+      "feature": "middle_odds_min",
+      "op": ">=",
+      "threshold": 7.9,
+      "train_2023": {
+        "races": 676,
+        "tickets": 1342,
+        "stake_yen": 134200,
+        "payout_yen": 93560,
+        "profit_yen": -40640,
+        "roi_pct": 69.71684053651266
+      },
+      "validation_2024": {
+        "races": 671,
+        "tickets": 1306,
+        "stake_yen": 130600,
+        "payout_yen": 139570,
+        "profit_yen": 8970,
+        "roi_pct": 106.86830015313936
+      }
+    },
+    {
+      "feature": "middle_ratio_max",
+      "op": ">=",
+      "threshold": 1.2638149316998202,
+      "train_2023": {
+        "races": 337,
+        "tickets": 830,
+        "stake_yen": 83000,
+        "payout_yen": 57750,
+        "profit_yen": -25250,
+        "roi_pct": 69.57831325301204
+      },
+      "validation_2024": {
+        "races": 296,
+        "tickets": 703,
+        "stake_yen": 70300,
+        "payout_yen": 78220,
+        "profit_yen": 7920,
+        "roi_pct": 111.26600284495021
+      }
+    },
+    {
+      "feature": "middle_delta_sum",
+      "op": "<=",
+      "threshold": 0.015963591191193643,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1172,
+        "stake_yen": 117200,
+        "payout_yen": 80730,
+        "profit_yen": -36470,
+        "roi_pct": 68.88225255972696
+      },
+      "validation_2024": {
+        "races": 661,
+        "tickets": 1150,
+        "stake_yen": 115000,
+        "payout_yen": 89520,
+        "profit_yen": -25480,
+        "roi_pct": 77.84347826086956
+      }
+    },
+    {
+      "feature": "middle_cross_market_shift",
+      "op": "<=",
+      "threshold": 0.015963591191193643,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1172,
+        "stake_yen": 117200,
+        "payout_yen": 80730,
+        "profit_yen": -36470,
+        "roi_pct": 68.88225255972696
+      },
+      "validation_2024": {
+        "races": 661,
+        "tickets": 1150,
+        "stake_yen": 115000,
+        "payout_yen": 89520,
+        "profit_yen": -25480,
+        "roi_pct": 77.84347826086956
+      }
+    },
+    {
+      "feature": "main_odds",
+      "op": "<=",
+      "threshold": 2.6,
+      "train_2023": {
+        "races": 382,
+        "tickets": 818,
+        "stake_yen": 81800,
+        "payout_yen": 56210,
+        "profit_yen": -25590,
+        "roi_pct": 68.71638141809291
+      },
+      "validation_2024": {
+        "races": 404,
+        "tickets": 834,
+        "stake_yen": 83400,
+        "payout_yen": 73350,
+        "profit_yen": -10050,
+        "roi_pct": 87.94964028776978
+      }
+    },
+    {
+      "feature": "main_odds",
+      "op": ">=",
+      "threshold": 3.3,
+      "train_2023": {
+        "races": 678,
+        "tickets": 1409,
+        "stake_yen": 140900,
+        "payout_yen": 96100,
+        "profit_yen": -44800,
+        "roi_pct": 68.20440028388929
+      },
+      "validation_2024": {
+        "races": 618,
+        "tickets": 1247,
+        "stake_yen": 124700,
+        "payout_yen": 100520,
+        "profit_yen": -24180,
+        "roi_pct": 80.60946271050521
+      }
+    },
+    {
+      "feature": "middle_tri_share",
+      "op": "<=",
+      "threshold": 0.22679329202103865,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 1905,
+        "stake_yen": 190500,
+        "payout_yen": 129290,
+        "profit_yen": -61210,
+        "roi_pct": 67.86876640419948
+      },
+      "validation_2024": {
+        "races": 1016,
+        "tickets": 1931,
+        "stake_yen": 193100,
+        "payout_yen": 181970,
+        "profit_yen": -11130,
+        "roi_pct": 94.2361470740549
+      }
+    },
+    {
+      "feature": "middle_ratio_max",
+      "op": ">=",
+      "threshold": 1.1796535673513946,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1575,
+        "stake_yen": 157500,
+        "payout_yen": 106120,
+        "profit_yen": -51380,
+        "roi_pct": 67.37777777777778
+      },
+      "validation_2024": {
+        "races": 649,
+        "tickets": 1478,
+        "stake_yen": 147800,
+        "payout_yen": 150090,
+        "profit_yen": 2290,
+        "roi_pct": 101.54939106901217
+      }
+    },
+    {
+      "feature": "middle_consensus_sum",
+      "op": "<=",
+      "threshold": 0.21449800829012527,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 1907,
+        "stake_yen": 190700,
+        "payout_yen": 128470,
+        "profit_yen": -62230,
+        "roi_pct": 67.3675930781332
+      },
+      "validation_2024": {
+        "races": 1016,
+        "tickets": 1932,
+        "stake_yen": 193200,
+        "payout_yen": 182620,
+        "profit_yen": -10580,
+        "roi_pct": 94.52380952380952
+      }
+    },
+    {
+      "feature": "main_abs_delta",
+      "op": "<=",
+      "threshold": 0.007020744804595552,
+      "train_2023": {
+        "races": 337,
+        "tickets": 737,
+        "stake_yen": 73700,
+        "payout_yen": 49630,
+        "profit_yen": -24070,
+        "roi_pct": 67.34056987788331
+      },
+      "validation_2024": {
+        "races": 322,
+        "tickets": 675,
+        "stake_yen": 67500,
+        "payout_yen": 66710,
+        "profit_yen": -790,
+        "roi_pct": 98.82962962962964
+      }
+    },
+    {
+      "feature": "main_abs_delta",
+      "op": "<=",
+      "threshold": 0.015413332182169642,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1457,
+        "stake_yen": 145700,
+        "payout_yen": 97650,
+        "profit_yen": -48050,
+        "roi_pct": 67.02127659574468
+      },
+      "validation_2024": {
+        "races": 688,
+        "tickets": 1449,
+        "stake_yen": 144900,
+        "payout_yen": 121290,
+        "profit_yen": -23610,
+        "roi_pct": 83.70600414078675
+      }
+    },
+    {
+      "feature": "middle_trio_share",
+      "op": "<=",
+      "threshold": 0.20123727890265564,
+      "train_2023": {
+        "races": 1009,
+        "tickets": 1912,
+        "stake_yen": 191200,
+        "payout_yen": 128000,
+        "profit_yen": -63200,
+        "roi_pct": 66.94560669456067
+      },
+      "validation_2024": {
+        "races": 1013,
+        "tickets": 1927,
+        "stake_yen": 192700,
+        "payout_yen": 183330,
+        "profit_yen": -9370,
+        "roi_pct": 95.137519460301
+      }
+    },
+    {
+      "feature": "main_to_mid_consensus_ratio",
+      "op": ">=",
+      "threshold": 2.2728265619274786,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1348,
+        "stake_yen": 134800,
+        "payout_yen": 88510,
+        "profit_yen": -46290,
+        "roi_pct": 65.66023738872404
+      },
+      "validation_2024": {
+        "races": 704,
+        "tickets": 1388,
+        "stake_yen": 138800,
+        "payout_yen": 148890,
+        "profit_yen": 10090,
+        "roi_pct": 107.26945244956772
+      }
+    },
+    {
+      "feature": "consensus_top1_share",
+      "op": "<=",
+      "threshold": 0.23399958343981195,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1422,
+        "stake_yen": 142200,
+        "payout_yen": 93050,
+        "profit_yen": -49150,
+        "roi_pct": 65.43600562587905
+      },
+      "validation_2024": {
+        "races": 624,
+        "tickets": 1271,
+        "stake_yen": 127100,
+        "payout_yen": 104150,
+        "profit_yen": -22950,
+        "roi_pct": 81.94335169158143
+      }
+    },
+    {
+      "feature": "main_consensus",
+      "op": "<=",
+      "threshold": 0.23334047120286375,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1425,
+        "stake_yen": 142500,
+        "payout_yen": 93050,
+        "profit_yen": -49450,
+        "roi_pct": 65.29824561403508
+      },
+      "validation_2024": {
+        "races": 625,
+        "tickets": 1273,
+        "stake_yen": 127300,
+        "payout_yen": 104150,
+        "profit_yen": -23150,
+        "roi_pct": 81.81461115475255
+      }
+    },
+    {
+      "feature": "trio_entropy",
+      "op": ">=",
+      "threshold": 2.864344665434285,
+      "train_2023": {
+        "races": 337,
+        "tickets": 713,
+        "stake_yen": 71300,
+        "payout_yen": 45720,
+        "profit_yen": -25580,
+        "roi_pct": 64.1234221598878
+      },
+      "validation_2024": {
+        "races": 309,
+        "tickets": 632,
+        "stake_yen": 63200,
+        "payout_yen": 63720,
+        "profit_yen": 520,
+        "roi_pct": 100.82278481012658
+      }
+    },
+    {
+      "feature": "middle_delta_sum",
+      "op": "<=",
+      "threshold": 0.008959697103019887,
+      "train_2023": {
+        "races": 337,
+        "tickets": 500,
+        "stake_yen": 50000,
+        "payout_yen": 31770,
+        "profit_yen": -18230,
+        "roi_pct": 63.54
+      },
+      "validation_2024": {
+        "races": 322,
+        "tickets": 479,
+        "stake_yen": 47900,
+        "payout_yen": 28480,
+        "profit_yen": -19420,
+        "roi_pct": 59.45720250521921
+      }
+    },
+    {
+      "feature": "middle_cross_market_shift",
+      "op": "<=",
+      "threshold": 0.008959697103019887,
+      "train_2023": {
+        "races": 337,
+        "tickets": 500,
+        "stake_yen": 50000,
+        "payout_yen": 31770,
+        "profit_yen": -18230,
+        "roi_pct": 63.54
+      },
+      "validation_2024": {
+        "races": 322,
+        "tickets": 479,
+        "stake_yen": 47900,
+        "payout_yen": 28480,
+        "profit_yen": -19420,
+        "roi_pct": 59.45720250521921
+      }
+    },
+    {
+      "feature": "middle_trio_share",
+      "op": "<=",
+      "threshold": 0.13298817562603102,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1185,
+        "stake_yen": 118500,
+        "payout_yen": 74990,
+        "profit_yen": -43510,
+        "roi_pct": 63.28270042194093
+      },
+      "validation_2024": {
+        "races": 674,
+        "tickets": 1196,
+        "stake_yen": 119600,
+        "payout_yen": 117640,
+        "profit_yen": -1960,
+        "roi_pct": 98.36120401337793
+      }
+    },
+    {
+      "feature": "middle_consensus_sum",
+      "op": "<=",
+      "threshold": 0.14155551938457672,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1182,
+        "stake_yen": 118200,
+        "payout_yen": 74760,
+        "profit_yen": -43440,
+        "roi_pct": 63.24873096446701
+      },
+      "validation_2024": {
+        "races": 670,
+        "tickets": 1189,
+        "stake_yen": 118900,
+        "payout_yen": 117380,
+        "profit_yen": -1520,
+        "roi_pct": 98.72161480235492
+      }
+    },
+    {
+      "feature": "middle_delta_max",
+      "op": "<=",
+      "threshold": 0.011051904329873324,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1325,
+        "stake_yen": 132500,
+        "payout_yen": 83540,
+        "profit_yen": -48960,
+        "roi_pct": 63.049056603773586
+      },
+      "validation_2024": {
+        "races": 654,
+        "tickets": 1279,
+        "stake_yen": 127900,
+        "payout_yen": 111750,
+        "profit_yen": -16150,
+        "roi_pct": 87.37294761532448
+      }
+    },
+    {
+      "feature": "middle_tri_share",
+      "op": "<=",
+      "threshold": 0.15273657749665787,
+      "train_2023": {
+        "races": 673,
+        "tickets": 1176,
+        "stake_yen": 117600,
+        "payout_yen": 73250,
+        "profit_yen": -44350,
+        "roi_pct": 62.28741496598639
+      },
+      "validation_2024": {
+        "races": 678,
+        "tickets": 1204,
+        "stake_yen": 120400,
+        "payout_yen": 121930,
+        "profit_yen": 1530,
+        "roi_pct": 101.27076411960132
+      }
+    },
+    {
+      "feature": "middle_odds_min",
+      "op": ">=",
+      "threshold": 13.9,
+      "train_2023": {
+        "races": 339,
+        "tickets": 610,
+        "stake_yen": 61000,
+        "payout_yen": 37960,
+        "profit_yen": -23040,
+        "roi_pct": 62.22950819672131
+      },
+      "validation_2024": {
+        "races": 364,
+        "tickets": 652,
+        "stake_yen": 65200,
+        "payout_yen": 72950,
+        "profit_yen": 7750,
+        "roi_pct": 111.88650306748467
+      }
+    },
+    {
+      "feature": "middle_odds_median",
+      "op": ">=",
+      "threshold": 27.4,
+      "train_2023": {
+        "races": 337,
+        "tickets": 709,
+        "stake_yen": 70900,
+        "payout_yen": 42940,
+        "profit_yen": -27960,
+        "roi_pct": 60.56417489421721
+      },
+      "validation_2024": {
+        "races": 311,
+        "tickets": 655,
+        "stake_yen": 65500,
+        "payout_yen": 53780,
+        "profit_yen": -11720,
+        "roi_pct": 82.10687022900764
+      }
+    },
+    {
+      "feature": "main_to_mid_consensus_ratio",
+      "op": ">=",
+      "threshold": 4.365247401561255,
+      "train_2023": {
+        "races": 337,
+        "tickets": 613,
+        "stake_yen": 61300,
+        "payout_yen": 35040,
+        "profit_yen": -26260,
+        "roi_pct": 57.16150081566069
+      },
+      "validation_2024": {
+        "races": 340,
+        "tickets": 620,
+        "stake_yen": 62000,
+        "payout_yen": 66090,
+        "profit_yen": 4090,
+        "roi_pct": 106.59677419354838
+      }
+    },
+    {
+      "feature": "trifecta_set_entropy",
+      "op": ">=",
+      "threshold": 2.805330975885975,
+      "train_2023": {
+        "races": 337,
+        "tickets": 724,
+        "stake_yen": 72400,
+        "payout_yen": 38760,
+        "profit_yen": -33640,
+        "roi_pct": 53.53591160220994
+      },
+      "validation_2024": {
+        "races": 323,
+        "tickets": 681,
+        "stake_yen": 68100,
+        "payout_yen": 65650,
+        "profit_yen": -2450,
+        "roi_pct": 96.40234948604993
+      }
+    },
+    {
+      "feature": "middle_delta_max",
+      "op": "<=",
+      "threshold": 0.006384667109788529,
+      "train_2023": {
+        "races": 337,
+        "tickets": 596,
+        "stake_yen": 59600,
+        "payout_yen": 31040,
+        "profit_yen": -28560,
+        "roi_pct": 52.080536912751676
+      },
+      "validation_2024": {
+        "races": 308,
+        "tickets": 545,
+        "stake_yen": 54500,
+        "payout_yen": 38970,
+        "profit_yen": -15530,
+        "roi_pct": 71.5045871559633
+      }
+    },
+    {
+      "feature": "middle_delta_mean",
+      "op": "<=",
+      "threshold": 0.004758329336007838,
+      "train_2023": {
+        "races": 337,
+        "tickets": 674,
+        "stake_yen": 67400,
+        "payout_yen": 34230,
+        "profit_yen": -33170,
+        "roi_pct": 50.78635014836795
+      },
+      "validation_2024": {
+        "races": 318,
+        "tickets": 637,
+        "stake_yen": 63700,
+        "payout_yen": 49590,
+        "profit_yen": -14110,
+        "roi_pct": 77.84929356357928
+      }
+    }
+  ]
+}
