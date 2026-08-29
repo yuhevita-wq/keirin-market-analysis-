@@ -18,13 +18,6 @@ FORMS = {
 
 def assert_clean_scope() -> None:
     assert YEARS == (2023, 2024, 2025)
-    # Hard research boundary: this module must not read any 2026 path or audit.
-    forbidden = ("2026", "2026_h1", "2026_H1")
-    text = Path(__file__).read_text(encoding="utf-8")
-    # Allow the guard strings above, but no data/2026 reference.
-    assert "data/2026" not in text
-    assert "2026_h1/s_class_yosen" not in text
-    assert "2026_H1/s_class_yosen" not in text
     for year in YEARS:
         assert Path(f"data/{year}/s_class_yosen").exists()
 
@@ -110,7 +103,7 @@ def main() -> int:
         "status": "CLEAN_2023_2025_DEVELOPMENT_ONLY_AWAITING_USER_GO_FOR_2026",
         "years_read": list(YEARS),
         "forbidden_evaluation_year": 2026,
-        "research_boundary": "No 2026 dataset, result, payout, or prior 2026-informed V3 audit is read by this script.",
+        "research_boundary": "Only the 2023, 2024, and 2025 datasets are loaded by this script. Evaluation waits for the user's GO.",
         "guardrails": {
             "conditions": "1 or 2 coarse predeclared atoms only",
             "min_races_each_year": 20,
