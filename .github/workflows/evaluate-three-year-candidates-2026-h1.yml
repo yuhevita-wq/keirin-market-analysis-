@@ -1,0 +1,65 @@
+name: Evaluate frozen 2023-2025 candidates on 2026 H1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/evaluate-three-year-candidates-2026-h1.yml"
+      - "src/keirin_market_analysis/evaluate_three_year_candidates_2026_h1.py"
+      - "data/audits/three_year_candidates_frozen_for_2026_h1.json"
+
+permissions:
+  contents: write
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: python -m pip install -e .
+      - name: Evaluate frozen candidates on 2026 H1
+        run: python -m keirin_market_analysis.evaluate_three_year_candidates_2026_h1
+      - name: Validate evaluation output
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          p=Path('data/audits/three_year_candidates_2026_h1_oos.json')
+          d=json.loads(p.read_text(encoding='utf-8'))
+          rows=list(csv.DictReader(Path('data/audits/three_year_candidates_2026_h1_oos_details.csv').open(encoding='utf-8-sig')))
+          assert d['status']=='FORWARD_OOS_EVALUATED_WITHOUT_RETUNING', d
+          assert d['evaluation_window']=='2026-01-01..2026-06-30', d
+          assert d['dataset_races']==738, d
+          assert set(d['strategies'])=={'early','middle','late'}
+          assert d['combined']['races']==len(rows)
+          assert d['combined']['stake_yen']==sum(int(r['stake_yen']) for r in rows)
+          assert d['combined']['payout_yen']==sum(int(r['payout_yen']) for r in rows)
+          for s in ('early','middle','late'):
+              sr=[r for r in rows if r['strategy']==s]
+              assert d['strategies'][s]['races']==len(sr)
+              assert d['strategies'][s]['stake_yen']==sum(int(r['stake_yen']) for r in sr)
+              assert d['strategies'][s]['payout_yen']==sum(int(r['payout_yen']) for r in sr)
+          print(json.dumps(d,ensure_ascii=False,indent=2))
+          PY
+      - name: Commit OOS evaluation
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/audits/three_year_candidates_2026_h1_oos.json data/audits/three_year_candidates_2026_h1_oos_details.csv
+          if git diff --cached --quiet; then
+            echo "No evaluation changes"
+          else
+            git commit -m "analysis: record frozen candidates 2026 H1 forward OOS"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
