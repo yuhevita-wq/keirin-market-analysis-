@@ -1,0 +1,90 @@
+name: Simulate frozen V2 on 2023 OOS
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/simulate-2023-v2-oos.yml'
+      - 'src/keirin_market_analysis/simulate_2023_v2_oos.py'
+      - 'data/strategy_specs/early_v2_pre2023.json'
+      - 'data/strategy_specs/middle_v2_pre2023.json'
+      - 'data/strategy_specs/late_v2_pre2023.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e .
+
+      - name: Validate complete untouched 2023 dataset
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/2023/s_class_yosen')
+          base=json.loads((p/'summary.json').read_text(encoding='utf-8'))
+          line=json.loads((p/'line_summary.json').read_text(encoding='utf-8'))
+          res=json.loads((p/'result_summary.json').read_text(encoding='utf-8'))
+          assert base['target']=='Ｓ級予選'
+          assert base['parsed_races']==1495 and base['failures']==0, base
+          assert line['race_count']==1495 and line['complete_line_races']==1495 and line['line_parse_failures']==0, line
+          assert res['race_count']==1495 and res['complete_result_races']==1495 and res['complete_payout_races']==1495 and res['parse_failures']==0, res
+          print({'races':1495,'dataset_status':'PASS'})
+          PY
+
+      - name: Apply frozen V2 to 2023 OOS
+        run: |
+          python -m keirin_market_analysis.simulate_2023_v2_oos \
+            --data-dir data/2023/s_class_yosen \
+            --out-dir data/2023/s_class_yosen/oos_v2
+
+      - name: Validate OOS output accounting
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          p=Path('data/2023/s_class_yosen/oos_v2')
+          s=json.loads((p/'summary.json').read_text(encoding='utf-8'))
+          decisions=list(csv.DictReader((p/'race_decisions.csv').open(encoding='utf-8-sig')))
+          bets=list(csv.DictReader((p/'bets.csv').open(encoding='utf-8-sig')))
+          assert s['dataset_races']==1495
+          assert s['oos_integrity']['oos_year']==2023
+          assert set(r['strategy'] for r in decisions)=={'early_v2','middle_v2','late_v2'}
+          stake=sum(int(r['stake_yen']) for r in decisions if int(r['purchased']))
+          payout=sum(int(r['payout_yen']) for r in decisions if int(r['purchased']))
+          assert stake==s['combined']['stake_yen']
+          assert payout==s['combined']['payout_yen']
+          assert len(bets)*100==stake
+          assert all(int(r['stake_yen'])==100 for r in bets)
+          print(json.dumps(s,ensure_ascii=False,indent=2))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 2023-v2-oos-results
+          path: data/2023/s_class_yosen/oos_v2
+
+      - name: Commit 2023 OOS V2 results
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/2023/s_class_yosen/oos_v2
+          if git diff --cached --quiet; then
+            echo 'No OOS result changes to commit'
+          else
+            git commit -m 'analysis: save 2023 frozen V2 OOS results'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
