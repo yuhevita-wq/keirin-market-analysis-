@@ -1,0 +1,51 @@
+{
+  "status": "HIGH_PAYOUT_CANDIDATE_STABILITY_SUMMARY_2023_2025_ONLY",
+  "years_read": [2023, 2024, 2025],
+  "evaluation_year_2026_used": false,
+  "families": {
+    "early_o1o2": {
+      "segment": "前半",
+      "formation": "O1O2_KEY_18",
+      "selected_rule": "b_score_ge_104 AND main_top2_ge_70",
+      "all3_guardrail_variants": 3,
+      "leave_one_year_out_profitable": "3/3",
+      "development": {
+        "2023": {"races": 50, "hits": 4, "stake_yen": 84600, "payout_yen": 292100, "profit_yen": 207500, "roi": 3.4527186761229314, "median_hit_payout_yen": 81570, "median_recovery_multiple": 45.31666666666667, "max_losing_streak": 19},
+        "2024": {"races": 46, "hits": 5, "stake_yen": 75600, "payout_yen": 135040, "profit_yen": 59440, "roi": 1.7862433862433862, "median_hit_payout_yen": 17610, "median_recovery_multiple": 9.783333333333333, "max_losing_streak": 24},
+        "2025": {"races": 55, "hits": 2, "stake_yen": 95400, "payout_yen": 194260, "profit_yen": 98860, "roi": 2.0362683438155136, "median_hit_payout_yen": 135010, "median_recovery_multiple": 75.00555555555556, "max_losing_streak": 49},
+        "combined": {"races": 151, "hits": 11, "stake_yen": 255600, "payout_yen": 621400, "profit_yen": 365800, "roi": 2.4311424100156493, "high_10000_hits": 8, "high_20000_hits": 6}
+      },
+      "loyo": {
+        "heldout_2023": {"selected_rule": "b_score_ge_104 AND main_top2_ge_70", "heldout_roi": 3.4527186761229314},
+        "heldout_2024": {"selected_rule": "b_score_ge_102 AND main_top2_ge_70", "heldout_roi": 1.1096031746031747},
+        "heldout_2025": {"selected_rule": "b_score_ge_104 AND main_top2_ge_70", "heldout_roi": 2.0362683438155136}
+      }
+    },
+    "middle_o1_mainpair": {
+      "segment": "中盤",
+      "formation": "O1_MAINPAIR_6",
+      "aggressive_rule": "b_score_ge_104 AND main_top2_le_70",
+      "all3_guardrail_variants": 3,
+      "leave_one_year_out_profitable": "2/3",
+      "note": "Because LOYO is only 2/3, the final V1 proposal uses the simpler one-condition b_score_ge_104 rule instead."
+    },
+    "late_o1_mainpair": {
+      "segment": "後半",
+      "formation": "O1_MAINPAIR_6",
+      "selected_rule": "rival_score_le_200 AND main_top3_ge_110",
+      "all3_guardrail_variants": 3,
+      "leave_one_year_out_profitable": "3/3",
+      "development": {
+        "2023": {"races": 75, "hits": 8, "stake_yen": 45000, "payout_yen": 68660, "profit_yen": 23660, "roi": 1.5257777777777777, "median_hit_payout_yen": 5220, "median_recovery_multiple": 8.7, "max_losing_streak": 22},
+        "2024": {"races": 81, "hits": 8, "stake_yen": 48600, "payout_yen": 117290, "profit_yen": 68690, "roi": 2.413374485596708, "median_hit_payout_yen": 1820, "median_recovery_multiple": 3.033333333333333, "max_losing_streak": 27},
+        "2025": {"races": 99, "hits": 20, "stake_yen": 59400, "payout_yen": 78610, "profit_yen": 19210, "roi": 1.3234006734006734, "median_hit_payout_yen": 2090, "median_recovery_multiple": 3.4833333333333334, "max_losing_streak": 10},
+        "combined": {"races": 255, "hits": 36, "stake_yen": 153000, "payout_yen": 264560, "profit_yen": 111560, "roi": 1.7291503267973856, "high_10000_hits": 7, "high_20000_hits": 2}
+      },
+      "loyo": {
+        "heldout_2023": {"selected_rule": "rival_score_le_204 AND main_top3_ge_110", "heldout_roi": 1.2168316831683168},
+        "heldout_2024": {"selected_rule": "rival_score_le_200 AND main_top3_ge_110", "heldout_roi": 2.413374485596708},
+        "heldout_2025": {"selected_rule": "rival_score_le_200 AND main_top3_ge_110", "heldout_roi": 1.3234006734006734}
+      }
+    }
+  }
+}
