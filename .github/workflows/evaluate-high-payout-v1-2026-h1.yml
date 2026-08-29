@@ -1,0 +1,45 @@
+name: evaluate-high-payout-v1-2026-h1
+
+on:
+  push:
+    paths:
+      - '.github/workflows/evaluate-high-payout-v1-2026-h1.yml'
+      - 'src/keirin_market_analysis/evaluate_high_payout_v1_2026_h1.py'
+      - 'data/strategy_specs/high_payout_v1_proposed_pre_evaluation.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install
+        run: pip install -e .
+      - name: Evaluate frozen high payout V1 on 2026 H1
+        run: python -m keirin_market_analysis.evaluate_high_payout_v1_2026_h1
+      - name: Validate frozen accounting
+        run: |
+          python - <<'PY'
+          import json
+          p='data/2026_h1/s_class_yosen/high_payout_v1_evaluation.json'
+          d=json.load(open(p,encoding='utf-8'))
+          assert d['strategy_spec_asserted_unchanged'] is True
+          assert d['no_threshold_formation_or_stake_changes'] is True
+          assert d['dataset_races'] == 738
+          assert d['combined']['stake_yen'] == sum(d['sections'][s]['stake_yen'] for s in ('early','middle','late'))
+          assert d['combined']['payout_yen'] == sum(d['sections'][s]['payout_yen'] for s in ('early','middle','late'))
+          print('PASS frozen high payout V1 accounting')
+          PY
+      - name: Commit evaluation
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/2026_h1/s_class_yosen/high_payout_v1_evaluation.json
+          git commit -m 'Evaluate frozen high payout V1 on 2026 H1' || exit 0
+          git push
