@@ -1,0 +1,39 @@
+name: Analyze cross-market implied EV 2023-2025
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/keirin_market_analysis/analyze_cross_market_implied_ev_2023_2025.py'
+      - '.github/workflows/analyze-cross-market-implied-ev-2023-2025.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  analyze:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Run xEV audit
+        run: PYTHONPATH=src python -m keirin_market_analysis.analyze_cross_market_implied_ev_2023_2025
+      - name: Validate
+        run: |
+          python - <<'PY'
+          import json
+          p='data/audits/cross_market_implied_ev_2023_2025.json'
+          x=json.load(open(p,encoding='utf-8'))
+          assert x['years_read']==[2023,2024,2025] and x['evaluation_year_2026_used'] is False
+          assert sum(y['eligible_complete_races'] for y in x['years'])>4000
+          print('VALIDATION PASS')
+          PY
+      - name: Commit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/cross_market_implied_ev_2023_2025.json
+          git commit -m 'analysis: add cross-market implied EV results' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
