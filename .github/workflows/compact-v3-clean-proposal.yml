@@ -1,0 +1,25 @@
+name: Compact clean V3 proposal
+on:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/compact_v3_clean_proposal.py'
+      - '.github/workflows/compact-v3-clean-proposal.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  compact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -e .
+      - run: python -m keirin_market_analysis.compact_v3_clean_proposal
+      - run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/v3_clean_2023_2025_proposal_compact.json
+          git diff --cached --quiet || git commit -m 'analysis: save compact clean V3 proposal'
+          git push
