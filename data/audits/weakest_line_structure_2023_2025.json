@@ -1,0 +1,6273 @@
+{
+  "status": "WEAKEST_LINE_STRUCTURE_RESEARCH_2023_2025_ONLY",
+  "years_read": [
+    2023,
+    2024,
+    2025
+  ],
+  "evaluation_year_2026_used": false,
+  "definition": {
+    "candidate_line": "predicted line with at least 2 riders",
+    "weakest_line": "unique minimum of lead+second competition-score sum among non-main candidate lines",
+    "requires": "main line size>=3 and at least two non-main 2+ lines, so strongest rival and weakest line are distinct",
+    "tie_policy": "exclude races tied for minimum non-main pair score; never break the tie post hoc",
+    "roles": {
+      "W1L": "weakest line lead",
+      "W1B": "weakest line second"
+    }
+  },
+  "thresholds_yen_per_100": [
+    5000,
+    10000,
+    20000
+  ],
+  "structural_counts": {
+    "2023": {
+      "前半": 189,
+      "中盤": 185,
+      "後半": 266,
+      "total": 640
+    },
+    "2024": {
+      "前半": 144,
+      "中盤": 191,
+      "後半": 257,
+      "total": 592
+    },
+    "2025": {
+      "前半": 184,
+      "中盤": 204,
+      "後半": 262,
+      "total": 650
+    }
+  },
+  "exclusions": {
+    "2023": {
+      "fewer_than_3_lines": 293,
+      "main_under_3": 558,
+      "no_strong_rival": 4
+    },
+    "2024": {
+      "fewer_than_3_lines": 327,
+      "main_under_3": 542
+    },
+    "2025": {
+      "fewer_than_3_lines": 285,
+      "main_under_3": 528,
+      "no_strong_rival": 1
+    }
+  },
+  "segments": {
+    "前半": {
+      "combined_2023_2025": {
+        "eligible_races": 517,
+        "overall": {
+          "races": 517,
+          "median_payout_yen": 4160,
+          "mean_payout_yen": 15032.862669245647,
+          "max_payout_yen": 337740,
+          "ge_5000_count": 228,
+          "ge_10000_count": 150,
+          "ge_20000_count": 89,
+          "ge_5000_rate": 0.4410058027079304,
+          "ge_10000_rate": 0.2901353965183752,
+          "ge_20000_rate": 0.172147001934236
+        },
+        "weakest_top3_count": {
+          "0": {
+            "races": 324,
+            "median_payout_yen": 2370,
+            "mean_payout_yen": 6241.265432098766,
+            "max_payout_yen": 218840,
+            "ge_5000_count": 85,
+            "ge_10000_count": 41,
+            "ge_20000_count": 19,
+            "ge_5000_rate": 0.2623456790123457,
+            "ge_10000_rate": 0.12654320987654322,
+            "ge_20000_rate": 0.05864197530864197,
+            "share": 0.6266924564796905
+          },
+          "1": {
+            "races": 149,
+            "median_payout_yen": 11460,
+            "mean_payout_yen": 30526.510067114094,
+            "max_payout_yen": 337740,
+            "ge_5000_count": 105,
+            "ge_10000_count": 80,
+            "ge_20000_count": 54,
+            "ge_5000_rate": 0.7046979865771812,
+            "ge_10000_rate": 0.5369127516778524,
+            "ge_20000_rate": 0.3624161073825503,
+            "share": 0.28820116054158607
+          },
+          "2": {
+            "races": 44,
+            "median_payout_yen": 15730,
+            "mean_payout_yen": 27303.863636363636,
+            "max_payout_yen": 144980,
+            "ge_5000_count": 38,
+            "ge_10000_count": 29,
+            "ge_20000_count": 16,
+            "ge_5000_rate": 0.8636363636363636,
+            "ge_10000_rate": 0.6590909090909091,
+            "ge_20000_rate": 0.36363636363636365,
+            "share": 0.0851063829787234
+          }
+        },
+        "weakest_included": {
+          "races": 193,
+          "median_payout_yen": 12000,
+          "mean_payout_yen": 29791.81347150259,
+          "max_payout_yen": 337740,
+          "ge_5000_count": 143,
+          "ge_10000_count": 109,
+          "ge_20000_count": 70,
+          "ge_5000_rate": 0.7409326424870466,
+          "ge_10000_rate": 0.5647668393782384,
+          "ge_20000_rate": 0.3626943005181347,
+          "share": 0.3733075435203095,
+          "ge_5000_enrichment_vs_all": 1.6800972638851013,
+          "ge_10000_enrichment_vs_all": 1.9465630397236617,
+          "ge_20000_enrichment_vs_all": 2.1068871164929845
+        },
+        "both_weakest_in_top3": {
+          "races": 44,
+          "median_payout_yen": 15730,
+          "mean_payout_yen": 27303.863636363636,
+          "max_payout_yen": 144980,
+          "ge_5000_count": 38,
+          "ge_10000_count": 29,
+          "ge_20000_count": 16,
+          "ge_5000_rate": 0.8636363636363636,
+          "ge_10000_rate": 0.6590909090909091,
+          "ge_20000_rate": 0.36363636363636365,
+          "share": 0.0851063829787234,
+          "ge_5000_enrichment_vs_all": 1.9583333333333333,
+          "ge_10000_enrichment_vs_all": 2.2716666666666665,
+          "ge_20000_enrichment_vs_all": 2.1123595505617976
+        },
+        "weakest_head": {
+          "races": 64,
+          "median_payout_yen": 19100,
+          "mean_payout_yen": 41632.03125,
+          "max_payout_yen": 309040,
+          "ge_5000_count": 56,
+          "ge_10000_count": 43,
+          "ge_20000_count": 31,
+          "ge_5000_rate": 0.875,
+          "ge_10000_rate": 0.671875,
+          "ge_20000_rate": 0.484375,
+          "share": 0.12379110251450677,
+          "ge_5000_enrichment_vs_all": 1.9841008771929824,
+          "ge_10000_enrichment_vs_all": 2.315729166666667,
+          "ge_20000_enrichment_vs_all": 2.8137289325842696
+        },
+        "weakest_pair_top2": {
+          "races": 28,
+          "median_payout_yen": 13010,
+          "mean_payout_yen": 18990.714285714286,
+          "max_payout_yen": 74820,
+          "ge_5000_count": 23,
+          "ge_10000_count": 16,
+          "ge_20000_count": 7,
+          "ge_5000_rate": 0.8214285714285714,
+          "ge_10000_rate": 0.5714285714285714,
+          "ge_20000_rate": 0.25,
+          "share": 0.05415860735009671,
+          "ge_5000_enrichment_vs_all": 1.8626253132832078,
+          "ge_10000_enrichment_vs_all": 1.9695238095238095,
+          "ge_20000_enrichment_vs_all": 1.4522471910112358
+        },
+        "weak_mix_counts": {
+          "W1_M1_R1_O0": 53,
+          "W2_M1_R0_O0": 28,
+          "W1_M0_R2_O0": 29,
+          "W2_M0_R1_O0": 16,
+          "W1_M2_R0_O0": 66,
+          "W1_M1_R0_O1": 1
+        },
+        "top_weak_role_orders": [
+          [
+            "A-B-W1L",
+            10
+          ],
+          [
+            "A-B-W1B",
+            7
+          ],
+          [
+            "R1L-R1B-W1L",
+            7
+          ],
+          [
+            "W1L-W1B-B",
+            6
+          ],
+          [
+            "B-A-W1B",
+            6
+          ],
+          [
+            "B-A-W1L",
+            6
+          ],
+          [
+            "B-W1B-A",
+            6
+          ],
+          [
+            "R1L-W1B-R1B",
+            6
+          ],
+          [
+            "B-W1L-A",
+            5
+          ],
+          [
+            "W1L-B-A",
+            5
+          ],
+          [
+            "W1B-W1L-R1L",
+            5
+          ],
+          [
+            "R1B-R1L-W1L",
+            4
+          ],
+          [
+            "W1B-W1L-B",
+            4
+          ],
+          [
+            "W1L-A-W1B",
+            4
+          ],
+          [
+            "B-W1B-R1B",
+            4
+          ],
+          [
+            "W1L-B-W1B",
+            3
+          ],
+          [
+            "A-W1L-B",
+            3
+          ],
+          [
+            "R1L-A-W1B",
+            3
+          ],
+          [
+            "W1L-W1B-R1B",
+            3
+          ],
+          [
+            "A-R1L-W1B",
+            3
+          ],
+          [
+            "R1B-W1B-W1L",
+            3
+          ],
+          [
+            "B-W1B-M3",
+            3
+          ],
+          [
+            "B-M3-W1B",
+            3
+          ],
+          [
+            "W1L-W1B-A",
+            3
+          ],
+          [
+            "R1L-R1B-W1B",
+            3
+          ]
+        ],
+        "top_high_payout_weak_orders": {
+          "5000": [
+            [
+              "R1L-W1B-R1B",
+              6
+            ],
+            [
+              "B-W1B-A",
+              5
+            ],
+            [
+              "W1L-W1B-B",
+              4
+            ],
+            [
+              "W1L-A-W1B",
+              4
+            ],
+            [
+              "R1L-R1B-W1L",
+              4
+            ],
+            [
+              "B-W1B-R1B",
+              4
+            ],
+            [
+              "W1L-B-A",
+              4
+            ],
+            [
+              "W1L-B-W1B",
+              3
+            ],
+            [
+              "W1B-W1L-B",
+              3
+            ],
+            [
+              "B-A-W1B",
+              3
+            ],
+            [
+              "W1B-W1L-R1L",
+              3
+            ],
+            [
+              "R1L-A-W1B",
+              3
+            ],
+            [
+              "W1L-W1B-R1B",
+              3
+            ],
+            [
+              "A-R1L-W1B",
+              3
+            ],
+            [
+              "R1B-W1B-W1L",
+              3
+            ],
+            [
+              "B-W1B-M3",
+              3
+            ],
+            [
+              "B-M3-W1B",
+              3
+            ],
+            [
+              "W1L-W1B-A",
+              3
+            ],
+            [
+              "R1L-W1L-A",
+              3
+            ],
+            [
+              "W1B-B-R1B",
+              2
+            ]
+          ],
+          "10000": [
+            [
+              "B-W1B-R1B",
+              4
+            ],
+            [
+              "R1L-W1B-R1B",
+              4
+            ],
+            [
+              "W1L-B-W1B",
+              3
+            ],
+            [
+              "W1L-B-A",
+              3
+            ],
+            [
+              "R1L-A-W1B",
+              3
+            ],
+            [
+              "B-W1B-A",
+              3
+            ],
+            [
+              "W1L-W1B-R1B",
+              3
+            ],
+            [
+              "A-R1L-W1B",
+              3
+            ],
+            [
+              "R1B-W1B-W1L",
+              3
+            ],
+            [
+              "B-W1B-M3",
+              3
+            ],
+            [
+              "W1L-W1B-A",
+              3
+            ],
+            [
+              "W1B-B-R1B",
+              2
+            ],
+            [
+              "R1B-R1L-W1L",
+              2
+            ],
+            [
+              "W1L-A-W1B",
+              2
+            ],
+            [
+              "W1B-A-R1L",
+              2
+            ],
+            [
+              "A-W1L-M3",
+              2
+            ],
+            [
+              "R1L-R1B-W1L",
+              2
+            ],
+            [
+              "W1B-W1L-R1L",
+              2
+            ],
+            [
+              "B-R1B-W1L",
+              2
+            ],
+            [
+              "R1B-W1B-B",
+              2
+            ]
+          ],
+          "20000": [
+            [
+              "W1L-B-A",
+              3
+            ],
+            [
+              "A-R1L-W1B",
+              3
+            ],
+            [
+              "B-W1B-M3",
+              3
+            ],
+            [
+              "W1B-B-R1B",
+              2
+            ],
+            [
+              "W1L-B-W1B",
+              2
+            ],
+            [
+              "A-W1L-M3",
+              2
+            ],
+            [
+              "R1L-A-W1B",
+              2
+            ],
+            [
+              "R1L-W1B-R1B",
+              2
+            ],
+            [
+              "R1B-W1B-W1L",
+              2
+            ],
+            [
+              "W1L-W1B-M3",
+              2
+            ],
+            [
+              "W1B-A-W1L",
+              2
+            ],
+            [
+              "R1L-W1L-A",
+              2
+            ],
+            [
+              "B-W1L-R1L",
+              2
+            ],
+            [
+              "B-W1L-R1B",
+              1
+            ],
+            [
+              "M3-W1B-A",
+              1
+            ],
+            [
+              "R1B-W1L-B",
+              1
+            ],
+            [
+              "R1B-W1B-R1L",
+              1
+            ],
+            [
+              "A-R1B-W1L",
+              1
+            ],
+            [
+              "W1B-R1B-R1L",
+              1
+            ],
+            [
+              "W1B-R1B-A",
+              1
+            ]
+          ]
+        }
+      },
+      "by_year": {
+        "2023": {
+          "eligible_races": 189,
+          "overall": {
+            "races": 189,
+            "median_payout_yen": 3500,
+            "mean_payout_yen": 15158.148148148148,
+            "max_payout_yen": 337740,
+            "ge_5000_count": 77,
+            "ge_10000_count": 49,
+            "ge_20000_count": 34,
+            "ge_5000_rate": 0.4074074074074074,
+            "ge_10000_rate": 0.25925925925925924,
+            "ge_20000_rate": 0.17989417989417988
+          },
+          "weakest_top3_count": {
+            "0": {
+              "races": 116,
+              "median_payout_yen": 2160,
+              "mean_payout_yen": 8347.672413793103,
+              "max_payout_yen": 218840,
+              "ge_5000_count": 29,
+              "ge_10000_count": 14,
+              "ge_20000_count": 11,
+              "ge_5000_rate": 0.25,
+              "ge_10000_rate": 0.1206896551724138,
+              "ge_20000_rate": 0.09482758620689655,
+              "share": 0.6137566137566137
+            },
+            "1": {
+              "races": 59,
+              "median_payout_yen": 9230,
+              "mean_payout_yen": 28581.186440677968,
+              "max_payout_yen": 337740,
+              "ge_5000_count": 37,
+              "ge_10000_count": 28,
+              "ge_20000_count": 21,
+              "ge_5000_rate": 0.6271186440677966,
+              "ge_10000_rate": 0.4745762711864407,
+              "ge_20000_rate": 0.3559322033898305,
+              "share": 0.31216931216931215
+            },
+            "2": {
+              "races": 14,
+              "median_payout_yen": 10500,
+              "mean_payout_yen": 15019.285714285714,
+              "max_payout_yen": 47980,
+              "ge_5000_count": 11,
+              "ge_10000_count": 7,
+              "ge_20000_count": 2,
+              "ge_5000_rate": 0.7857142857142857,
+              "ge_10000_rate": 0.5,
+              "ge_20000_rate": 0.14285714285714285,
+              "share": 0.07407407407407407
+            }
+          },
+          "weakest_included": {
+            "races": 73,
+            "median_payout_yen": 9710,
+            "mean_payout_yen": 25980.27397260274,
+            "max_payout_yen": 337740,
+            "ge_5000_count": 48,
+            "ge_10000_count": 35,
+            "ge_20000_count": 23,
+            "ge_5000_rate": 0.6575342465753424,
+            "ge_10000_rate": 0.4794520547945205,
+            "ge_20000_rate": 0.3150684931506849,
+            "share": 0.3862433862433862,
+            "ge_5000_enrichment_vs_all": 1.613947696139477,
+            "ge_10000_enrichment_vs_all": 1.8493150684931507,
+            "ge_20000_enrichment_vs_all": 1.7514101531023367
+          },
+          "both_weakest_in_top3": {
+            "races": 14,
+            "median_payout_yen": 10500,
+            "mean_payout_yen": 15019.285714285714,
+            "max_payout_yen": 47980,
+            "ge_5000_count": 11,
+            "ge_10000_count": 7,
+            "ge_20000_count": 2,
+            "ge_5000_rate": 0.7857142857142857,
+            "ge_10000_rate": 0.5,
+            "ge_20000_rate": 0.14285714285714285,
+            "share": 0.07407407407407407,
+            "ge_5000_enrichment_vs_all": 1.9285714285714286,
+            "ge_10000_enrichment_vs_all": 1.9285714285714286,
+            "ge_20000_enrichment_vs_all": 0.7941176470588235
+          },
+          "weakest_head": {
+            "races": 24,
+            "median_payout_yen": 15010,
+            "mean_payout_yen": 26062.916666666668,
+            "max_payout_yen": 178040,
+            "ge_5000_count": 20,
+            "ge_10000_count": 14,
+            "ge_20000_count": 9,
+            "ge_5000_rate": 0.8333333333333334,
+            "ge_10000_rate": 0.5833333333333334,
+            "ge_20000_rate": 0.375,
+            "share": 0.12698412698412698,
+            "ge_5000_enrichment_vs_all": 2.045454545454546,
+            "ge_10000_enrichment_vs_all": 2.2500000000000004,
+            "ge_20000_enrichment_vs_all": 2.0845588235294117
+          },
+          "weakest_pair_top2": {
+            "races": 7,
+            "median_payout_yen": 7900,
+            "mean_payout_yen": 9310.0,
+            "max_payout_yen": 19100,
+            "ge_5000_count": 5,
+            "ge_10000_count": 2,
+            "ge_20000_count": 0,
+            "ge_5000_rate": 0.7142857142857143,
+            "ge_10000_rate": 0.2857142857142857,
+            "ge_20000_rate": 0.0,
+            "share": 0.037037037037037035,
+            "ge_5000_enrichment_vs_all": 1.7532467532467533,
+            "ge_10000_enrichment_vs_all": 1.1020408163265305,
+            "ge_20000_enrichment_vs_all": 0.0
+          },
+          "weak_mix_counts": {
+            "W1_M1_R1_O0": 18,
+            "W2_M1_R0_O0": 10,
+            "W1_M0_R2_O0": 13,
+            "W2_M0_R1_O0": 4,
+            "W1_M2_R0_O0": 28
+          },
+          "top_weak_role_orders": [
+            [
+              "A-B-W1B",
+              4
+            ],
+            [
+              "A-B-W1L",
+              4
+            ],
+            [
+              "R1L-R1B-W1L",
+              4
+            ],
+            [
+              "W1L-B-W1B",
+              3
+            ],
+            [
+              "R1B-R1L-W1L",
+              3
+            ],
+            [
+              "W1L-W1B-B",
+              3
+            ],
+            [
+              "B-A-W1B",
+              3
+            ],
+            [
+              "B-A-W1L",
+              3
+            ],
+            [
+              "W1B-B-R1B",
+              2
+            ],
+            [
+              "W1B-W1L-B",
+              2
+            ],
+            [
+              "A-W1L-B",
+              2
+            ],
+            [
+              "B-W1L-A",
+              2
+            ],
+            [
+              "W1L-A-W1B",
+              2
+            ],
+            [
+              "A-W1L-M3",
+              2
+            ],
+            [
+              "W1L-B-A",
+              2
+            ],
+            [
+              "B-W1B-A",
+              2
+            ],
+            [
+              "R1L-W1B-W1L",
+              1
+            ],
+            [
+              "B-W1L-R1B",
+              1
+            ],
+            [
+              "M3-W1B-A",
+              1
+            ],
+            [
+              "A-W1B-R1L",
+              1
+            ],
+            [
+              "R1B-W1L-B",
+              1
+            ],
+            [
+              "R1B-W1B-R1L",
+              1
+            ],
+            [
+              "A-R1B-W1L",
+              1
+            ],
+            [
+              "W1B-A-R1L",
+              1
+            ],
+            [
+              "A-W1L-R1B",
+              1
+            ]
+          ],
+          "top_high_payout_weak_orders": {
+            "5000": [
+              [
+                "W1L-B-W1B",
+                3
+              ],
+              [
+                "R1L-R1B-W1L",
+                3
+              ],
+              [
+                "W1B-B-R1B",
+                2
+              ],
+              [
+                "W1L-W1B-B",
+                2
+              ],
+              [
+                "W1L-A-W1B",
+                2
+              ],
+              [
+                "A-W1L-M3",
+                2
+              ],
+              [
+                "R1B-R1L-W1L",
+                1
+              ],
+              [
+                "R1L-W1B-W1L",
+                1
+              ],
+              [
+                "W1B-W1L-B",
+                1
+              ],
+              [
+                "B-W1L-R1B",
+                1
+              ],
+              [
+                "M3-W1B-A",
+                1
+              ],
+              [
+                "B-W1L-A",
+                1
+              ],
+              [
+                "R1B-W1L-B",
+                1
+              ],
+              [
+                "R1B-W1B-R1L",
+                1
+              ],
+              [
+                "A-R1B-W1L",
+                1
+              ],
+              [
+                "W1B-A-R1L",
+                1
+              ],
+              [
+                "A-W1L-R1B",
+                1
+              ],
+              [
+                "W1B-R1B-R1L",
+                1
+              ],
+              [
+                "B-A-W1B",
+                1
+              ],
+              [
+                "W1B-R1B-A",
+                1
+              ]
+            ],
+            "10000": [
+              [
+                "W1L-B-W1B",
+                3
+              ],
+              [
+                "W1B-B-R1B",
+                2
+              ],
+              [
+                "A-W1L-M3",
+                2
+              ],
+              [
+                "R1B-R1L-W1L",
+                1
+              ],
+              [
+                "R1L-W1B-W1L",
+                1
+              ],
+              [
+                "B-W1L-R1B",
+                1
+              ],
+              [
+                "M3-W1B-A",
+                1
+              ],
+              [
+                "R1B-W1L-B",
+                1
+              ],
+              [
+                "R1B-W1B-R1L",
+                1
+              ],
+              [
+                "A-R1B-W1L",
+                1
+              ],
+              [
+                "W1L-A-W1B",
+                1
+              ],
+              [
+                "W1B-A-R1L",
+                1
+              ],
+              [
+                "W1B-R1B-R1L",
+                1
+              ],
+              [
+                "W1B-R1B-A",
+                1
+              ],
+              [
+                "B-W1B-R1B",
+                1
+              ],
+              [
+                "W1L-A-R1B",
+                1
+              ],
+              [
+                "R1L-M3-W1L",
+                1
+              ],
+              [
+                "W1B-B-M3",
+                1
+              ],
+              [
+                "R1B-W1L-R1L",
+                1
+              ],
+              [
+                "B-R1B-W1B",
+                1
+              ]
+            ],
+            "20000": [
+              [
+                "W1B-B-R1B",
+                2
+              ],
+              [
+                "W1L-B-W1B",
+                2
+              ],
+              [
+                "A-W1L-M3",
+                2
+              ],
+              [
+                "B-W1L-R1B",
+                1
+              ],
+              [
+                "M3-W1B-A",
+                1
+              ],
+              [
+                "R1B-W1L-B",
+                1
+              ],
+              [
+                "R1B-W1B-R1L",
+                1
+              ],
+              [
+                "A-R1B-W1L",
+                1
+              ],
+              [
+                "W1B-R1B-R1L",
+                1
+              ],
+              [
+                "W1B-R1B-A",
+                1
+              ],
+              [
+                "B-W1B-R1B",
+                1
+              ],
+              [
+                "W1L-A-R1B",
+                1
+              ],
+              [
+                "R1L-M3-W1L",
+                1
+              ],
+              [
+                "W1B-B-M3",
+                1
+              ],
+              [
+                "B-R1B-W1B",
+                1
+              ],
+              [
+                "R1L-W1L-R1B",
+                1
+              ],
+              [
+                "W1L-B-A",
+                1
+              ],
+              [
+                "R1L-A-W1B",
+                1
+              ],
+              [
+                "R1L-W1B-R1B",
+                1
+              ],
+              [
+                "B-R1B-W1L",
+                1
+              ]
+            ]
+          }
+        },
+        "2024": {
+          "eligible_races": 144,
+          "overall": {
+            "races": 144,
+            "median_payout_yen": 5550,
+            "mean_payout_yen": 16221.319444444445,
+            "max_payout_yen": 168080,
+            "ge_5000_count": 75,
+            "ge_10000_count": 56,
+            "ge_20000_count": 29,
+            "ge_5000_rate": 0.5208333333333334,
+            "ge_10000_rate": 0.3888888888888889,
+            "ge_20000_rate": 0.2013888888888889
+          },
+          "weakest_top3_count": {
+            "0": {
+              "races": 81,
+              "median_payout_yen": 2710,
+              "mean_payout_yen": 6042.83950617284,
+              "max_payout_yen": 58410,
+              "ge_5000_count": 26,
+              "ge_10000_count": 16,
+              "ge_20000_count": 3,
+              "ge_5000_rate": 0.32098765432098764,
+              "ge_10000_rate": 0.19753086419753085,
+              "ge_20000_rate": 0.037037037037037035,
+              "share": 0.5625
+            },
+            "1": {
+              "races": 49,
+              "median_payout_yen": 11420,
+              "mean_payout_yen": 27222.85714285714,
+              "max_payout_yen": 168080,
+              "ge_5000_count": 36,
+              "ge_10000_count": 28,
+              "ge_20000_count": 18,
+              "ge_5000_rate": 0.7346938775510204,
+              "ge_10000_rate": 0.5714285714285714,
+              "ge_20000_rate": 0.3673469387755102,
+              "share": 0.3402777777777778
+            },
+            "2": {
+              "races": 14,
+              "median_payout_yen": 34020,
+              "mean_payout_yen": 36605.71428571428,
+              "max_payout_yen": 112510,
+              "ge_5000_count": 13,
+              "ge_10000_count": 12,
+              "ge_20000_count": 8,
+              "ge_5000_rate": 0.9285714285714286,
+              "ge_10000_rate": 0.8571428571428571,
+              "ge_20000_rate": 0.5714285714285714,
+              "share": 0.09722222222222222
+            }
+          },
+          "weakest_included": {
+            "races": 63,
+            "median_payout_yen": 12670,
+            "mean_payout_yen": 29307.93650793651,
+            "max_payout_yen": 168080,
+            "ge_5000_count": 49,
+            "ge_10000_count": 40,
+            "ge_20000_count": 26,
+            "ge_5000_rate": 0.7777777777777778,
+            "ge_10000_rate": 0.6349206349206349,
+            "ge_20000_rate": 0.4126984126984127,
+            "share": 0.4375,
+            "ge_5000_enrichment_vs_all": 1.4933333333333332,
+            "ge_10000_enrichment_vs_all": 1.6326530612244896,
+            "ge_20000_enrichment_vs_all": 2.049261083743842
+          },
+          "both_weakest_in_top3": {
+            "races": 14,
+            "median_payout_yen": 34020,
+            "mean_payout_yen": 36605.71428571428,
+            "max_payout_yen": 112510,
+            "ge_5000_count": 13,
+            "ge_10000_count": 12,
+            "ge_20000_count": 8,
+            "ge_5000_rate": 0.9285714285714286,
+            "ge_10000_rate": 0.8571428571428571,
+            "ge_20000_rate": 0.5714285714285714,
+            "share": 0.09722222222222222,
+            "ge_5000_enrichment_vs_all": 1.7828571428571427,
+            "ge_10000_enrichment_vs_all": 2.204081632653061,
+            "ge_20000_enrichment_vs_all": 2.83743842364532
+          },
+          "weakest_head": {
+            "races": 20,
+            "median_payout_yen": 42530,
+            "mean_payout_yen": 48162.5,
+            "max_payout_yen": 168080,
+            "ge_5000_count": 18,
+            "ge_10000_count": 16,
+            "ge_20000_count": 13,
+            "ge_5000_rate": 0.9,
+            "ge_10000_rate": 0.8,
+            "ge_20000_rate": 0.65,
+            "share": 0.1388888888888889,
+            "ge_5000_enrichment_vs_all": 1.728,
+            "ge_10000_enrichment_vs_all": 2.0571428571428574,
+            "ge_20000_enrichment_vs_all": 3.227586206896552
+          },
+          "weakest_pair_top2": {
+            "races": 9,
+            "median_payout_yen": 17610,
+            "mean_payout_yen": 27704.444444444445,
+            "max_payout_yen": 74820,
+            "ge_5000_count": 8,
+            "ge_10000_count": 7,
+            "ge_20000_count": 4,
+            "ge_5000_rate": 0.8888888888888888,
+            "ge_10000_rate": 0.7777777777777778,
+            "ge_20000_rate": 0.4444444444444444,
+            "share": 0.0625,
+            "ge_5000_enrichment_vs_all": 1.7066666666666666,
+            "ge_10000_enrichment_vs_all": 2.0,
+            "ge_20000_enrichment_vs_all": 2.206896551724138
+          },
+          "weak_mix_counts": {
+            "W1_M2_R0_O0": 27,
+            "W1_M0_R2_O0": 10,
+            "W1_M1_R1_O0": 12,
+            "W2_M0_R1_O0": 3,
+            "W2_M1_R0_O0": 11
+          },
+          "top_weak_role_orders": [
+            [
+              "R1L-W1B-R1B",
+              4
+            ],
+            [
+              "A-B-W1B",
+              3
+            ],
+            [
+              "B-W1B-A",
+              3
+            ],
+            [
+              "A-B-W1L",
+              3
+            ],
+            [
+              "B-A-W1B",
+              3
+            ],
+            [
+              "B-M3-W1B",
+              3
+            ],
+            [
+              "R1L-R1B-W1L",
+              2
+            ],
+            [
+              "B-W1L-A",
+              2
+            ],
+            [
+              "R1B-W1B-W1L",
+              2
+            ],
+            [
+              "B-W1B-M3",
+              2
+            ],
+            [
+              "W1L-B-A",
+              2
+            ],
+            [
+              "W1L-W1B-A",
+              2
+            ],
+            [
+              "W1L-W1B-M3",
+              2
+            ],
+            [
+              "W1L-W1B-B",
+              2
+            ],
+            [
+              "W1L-B-M3",
+              1
+            ],
+            [
+              "W1L-M3-R1L",
+              1
+            ],
+            [
+              "A-R1L-W1B",
+              1
+            ],
+            [
+              "A-R1L-W1L",
+              1
+            ],
+            [
+              "W1B-B-M3",
+              1
+            ],
+            [
+              "R1B-M3-W1B",
+              1
+            ],
+            [
+              "R1B-W1L-A",
+              1
+            ],
+            [
+              "R1B-R1L-W1L",
+              1
+            ],
+            [
+              "W1L-A-M3",
+              1
+            ],
+            [
+              "W1L-W1B-R1B",
+              1
+            ],
+            [
+              "R1B-W1B-B",
+              1
+            ]
+          ],
+          "top_high_payout_weak_orders": {
+            "5000": [
+              [
+                "R1L-W1B-R1B",
+                4
+              ],
+              [
+                "B-W1B-A",
+                3
+              ],
+              [
+                "B-M3-W1B",
+                3
+              ],
+              [
+                "R1B-W1B-W1L",
+                2
+              ],
+              [
+                "B-W1B-M3",
+                2
+              ],
+              [
+                "W1L-B-A",
+                2
+              ],
+              [
+                "W1L-W1B-A",
+                2
+              ],
+              [
+                "B-A-W1B",
+                2
+              ],
+              [
+                "W1L-W1B-M3",
+                2
+              ],
+              [
+                "R1L-R1B-W1L",
+                1
+              ],
+              [
+                "W1L-B-M3",
+                1
+              ],
+              [
+                "W1L-M3-R1L",
+                1
+              ],
+              [
+                "A-R1L-W1B",
+                1
+              ],
+              [
+                "A-R1L-W1L",
+                1
+              ],
+              [
+                "R1B-M3-W1B",
+                1
+              ],
+              [
+                "R1B-W1L-A",
+                1
+              ],
+              [
+                "R1B-R1L-W1L",
+                1
+              ],
+              [
+                "W1L-A-M3",
+                1
+              ],
+              [
+                "W1L-W1B-R1B",
+                1
+              ],
+              [
+                "R1B-W1B-B",
+                1
+              ]
+            ],
+            "10000": [
+              [
+                "B-W1B-A",
+                2
+              ],
+              [
+                "R1L-W1B-R1B",
+                2
+              ],
+              [
+                "R1B-W1B-W1L",
+                2
+              ],
+              [
+                "B-W1B-M3",
+                2
+              ],
+              [
+                "W1L-W1B-A",
+                2
+              ],
+              [
+                "W1L-W1B-M3",
+                2
+              ],
+              [
+                "R1L-R1B-W1L",
+                1
+              ],
+              [
+                "W1L-B-M3",
+                1
+              ],
+              [
+                "W1L-M3-R1L",
+                1
+              ],
+              [
+                "A-R1L-W1B",
+                1
+              ],
+              [
+                "A-R1L-W1L",
+                1
+              ],
+              [
+                "R1B-M3-W1B",
+                1
+              ],
+              [
+                "R1B-W1L-A",
+                1
+              ],
+              [
+                "R1B-R1L-W1L",
+                1
+              ],
+              [
+                "W1L-A-M3",
+                1
+              ],
+              [
+                "W1L-W1B-R1B",
+                1
+              ],
+              [
+                "R1B-W1B-B",
+                1
+              ],
+              [
+                "B-R1B-W1L",
+                1
+              ],
+              [
+                "B-M3-W1B",
+                1
+              ],
+              [
+                "R1L-A-W1B",
+                1
+              ]
+            ],
+            "20000": [
+              [
+                "B-W1B-M3",
+                2
+              ],
+              [
+                "W1L-W1B-M3",
+                2
+              ],
+              [
+                "W1L-B-M3",
+                1
+              ],
+              [
+                "W1L-M3-R1L",
+                1
+              ],
+              [
+                "A-R1L-W1B",
+                1
+              ],
+              [
+                "R1L-W1B-R1B",
+                1
+              ],
+              [
+                "R1B-M3-W1B",
+                1
+              ],
+              [
+                "R1B-W1L-A",
+                1
+              ],
+              [
+                "W1L-A-M3",
+                1
+              ],
+              [
+                "R1B-W1B-W1L",
+                1
+              ],
+              [
+                "R1B-W1B-B",
+                1
+              ],
+              [
+                "B-W1B-A",
+                1
+              ],
+              [
+                "W1L-R1B-R1L",
+                1
+              ],
+              [
+                "B-W1L-A",
+                1
+              ],
+              [
+                "A-W1B-B",
+                1
+              ],
+              [
+                "W1L-R1B-A",
+                1
+              ],
+              [
+                "W1L-W1B-B",
+                1
+              ],
+              [
+                "W1B-A-W1L",
+                1
+              ],
+              [
+                "W1L-B-A",
+                1
+              ],
+              [
+                "W1B-M3-W1L",
+                1
+              ]
+            ]
+          }
+        },
+        "2025": {
+          "eligible_races": 184,
+          "overall": {
+            "races": 184,
+            "median_payout_yen": 3950,
+            "mean_payout_yen": 13974.076086956522,
+            "max_payout_yen": 309040,
+            "ge_5000_count": 76,
+            "ge_10000_count": 45,
+            "ge_20000_count": 26,
+            "ge_5000_rate": 0.41304347826086957,
+            "ge_10000_rate": 0.24456521739130435,
+            "ge_20000_rate": 0.14130434782608695
+          },
+          "weakest_top3_count": {
+            "0": {
+              "races": 127,
+              "median_payout_yen": 2550,
+              "mean_payout_yen": 4443.858267716535,
+              "max_payout_yen": 50780,
+              "ge_5000_count": 30,
+              "ge_10000_count": 11,
+              "ge_20000_count": 5,
+              "ge_5000_rate": 0.23622047244094488,
+              "ge_10000_rate": 0.08661417322834646,
+              "ge_20000_rate": 0.03937007874015748,
+              "share": 0.6902173913043478
+            },
+            "1": {
+              "races": 41,
+              "median_payout_yen": 12470,
+              "mean_payout_yen": 37274.14634146341,
+              "max_payout_yen": 309040,
+              "ge_5000_count": 32,
+              "ge_10000_count": 24,
+              "ge_20000_count": 15,
+              "ge_5000_rate": 0.7804878048780488,
+              "ge_10000_rate": 0.5853658536585366,
+              "ge_20000_rate": 0.36585365853658536,
+              "share": 0.22282608695652173
+            },
+            "2": {
+              "races": 16,
+              "median_payout_yen": 15730,
+              "mean_payout_yen": 29913.75,
+              "max_payout_yen": 144980,
+              "ge_5000_count": 14,
+              "ge_10000_count": 10,
+              "ge_20000_count": 6,
+              "ge_5000_rate": 0.875,
+              "ge_10000_rate": 0.625,
+              "ge_20000_rate": 0.375,
+              "share": 0.08695652173913043
+            }
+          },
+          "weakest_included": {
+            "races": 57,
+            "median_payout_yen": 12940,
+            "mean_payout_yen": 35208.070175438595,
+            "max_payout_yen": 309040,
+            "ge_5000_count": 46,
+            "ge_10000_count": 34,
+            "ge_20000_count": 21,
+            "ge_5000_rate": 0.8070175438596491,
+            "ge_10000_rate": 0.5964912280701754,
+            "ge_20000_rate": 0.3684210526315789,
+            "share": 0.30978260869565216,
+            "ge_5000_enrichment_vs_all": 1.9538319482917819,
+            "ge_10000_enrichment_vs_all": 2.438986354775828,
+            "ge_20000_enrichment_vs_all": 2.6072874493927127
+          },
+          "both_weakest_in_top3": {
+            "races": 16,
+            "median_payout_yen": 15730,
+            "mean_payout_yen": 29913.75,
+            "max_payout_yen": 144980,
+            "ge_5000_count": 14,
+            "ge_10000_count": 10,
+            "ge_20000_count": 6,
+            "ge_5000_rate": 0.875,
+            "ge_10000_rate": 0.625,
+            "ge_20000_rate": 0.375,
+            "share": 0.08695652173913043,
+            "ge_5000_enrichment_vs_all": 2.1184210526315788,
+            "ge_10000_enrichment_vs_all": 2.5555555555555554,
+            "ge_20000_enrichment_vs_all": 2.653846153846154
+          },
+          "weakest_head": {
+            "races": 20,
+            "median_payout_yen": 18430,
+            "mean_payout_yen": 53784.5,
+            "max_payout_yen": 309040,
+            "ge_5000_count": 18,
+            "ge_10000_count": 13,
+            "ge_20000_count": 9,
+            "ge_5000_rate": 0.9,
+            "ge_10000_rate": 0.65,
+            "ge_20000_rate": 0.45,
+            "share": 0.10869565217391304,
+            "ge_5000_enrichment_vs_all": 2.1789473684210527,
+            "ge_10000_enrichment_vs_all": 2.657777777777778,
+            "ge_20000_enrichment_vs_all": 3.184615384615385
+          },
+          "weakest_pair_top2": {
+            "races": 12,
+            "median_payout_yen": 13010,
+            "mean_payout_yen": 18102.5,
+            "max_payout_yen": 59250,
+            "ge_5000_count": 10,
+            "ge_10000_count": 7,
+            "ge_20000_count": 3,
+            "ge_5000_rate": 0.8333333333333334,
+            "ge_10000_rate": 0.5833333333333334,
+            "ge_20000_rate": 0.25,
+            "share": 0.06521739130434782,
+            "ge_5000_enrichment_vs_all": 2.017543859649123,
+            "ge_10000_enrichment_vs_all": 2.3851851851851853,
+            "ge_20000_enrichment_vs_all": 1.7692307692307694
+          },
+          "weak_mix_counts": {
+            "W2_M1_R0_O0": 7,
+            "W2_M0_R1_O0": 9,
+            "W1_M1_R1_O0": 23,
+            "W1_M2_R0_O0": 11,
+            "W1_M0_R2_O0": 6,
+            "W1_M1_R0_O1": 1
+          },
+          "top_weak_role_orders": [
+            [
+              "W1B-W1L-R1L",
+              4
+            ],
+            [
+              "B-W1B-R1B",
+              3
+            ],
+            [
+              "A-B-W1L",
+              3
+            ],
+            [
+              "A-R1L-W1B",
+              2
+            ],
+            [
+              "B-W1L-R1L",
+              2
+            ],
+            [
+              "R1L-R1B-W1B",
+              2
+            ],
+            [
+              "R1L-W1L-A",
+              2
+            ],
+            [
+              "W1L-W1B-R1L",
+              2
+            ],
+            [
+              "B-A-W1L",
+              2
+            ],
+            [
+              "A-W1L-R1L",
+              2
+            ],
+            [
+              "W1B-W1L-B",
+              1
+            ],
+            [
+              "B-W1L-R1B",
+              1
+            ],
+            [
+              "W1L-W1B-R1B",
+              1
+            ],
+            [
+              "R1L-A-W1L",
+              1
+            ],
+            [
+              "W1B-W1L-A",
+              1
+            ],
+            [
+              "W1B-A-R1L",
+              1
+            ],
+            [
+              "A-W1B-B",
+              1
+            ],
+            [
+              "R1L-W1B-R1B",
+              1
+            ],
+            [
+              "B-W1L-A",
+              1
+            ],
+            [
+              "W1B-A-W1L",
+              1
+            ],
+            [
+              "W1L-B-R1B",
+              1
+            ],
+            [
+              "R1L-R1B-W1L",
+              1
+            ],
+            [
+              "W1L-R1L-W1B",
+              1
+            ],
+            [
+              "R1B-B-W1B",
+              1
+            ],
+            [
+              "R1B-W1B-R1L",
+              1
+            ]
+          ],
+          "top_high_payout_weak_orders": {
+            "5000": [
+              [
+                "B-W1B-R1B",
+                3
+              ],
+              [
+                "W1B-W1L-R1L",
+                2
+              ],
+              [
+                "A-R1L-W1B",
+                2
+              ],
+              [
+                "B-W1L-R1L",
+                2
+              ],
+              [
+                "R1L-W1L-A",
+                2
+              ],
+              [
+                "W1L-W1B-R1L",
+                2
+              ],
+              [
+                "A-W1L-R1L",
+                2
+              ],
+              [
+                "W1B-W1L-B",
+                1
+              ],
+              [
+                "B-W1L-R1B",
+                1
+              ],
+              [
+                "W1L-W1B-R1B",
+                1
+              ],
+              [
+                "R1L-A-W1L",
+                1
+              ],
+              [
+                "W1B-W1L-A",
+                1
+              ],
+              [
+                "W1B-A-R1L",
+                1
+              ],
+              [
+                "A-W1B-B",
+                1
+              ],
+              [
+                "R1L-W1B-R1B",
+                1
+              ],
+              [
+                "W1B-A-W1L",
+                1
+              ],
+              [
+                "R1L-R1B-W1B",
+                1
+              ],
+              [
+                "W1L-B-R1B",
+                1
+              ],
+              [
+                "W1L-R1L-W1B",
+                1
+              ],
+              [
+                "R1B-B-W1B",
+                1
+              ]
+            ],
+            "10000": [
+              [
+                "B-W1B-R1B",
+                3
+              ],
+              [
+                "A-R1L-W1B",
+                2
+              ],
+              [
+                "B-W1L-R1L",
+                2
+              ],
+              [
+                "A-W1L-R1L",
+                2
+              ],
+              [
+                "W1B-W1L-R1L",
+                1
+              ],
+              [
+                "W1L-W1B-R1B",
+                1
+              ],
+              [
+                "R1L-A-W1L",
+                1
+              ],
+              [
+                "W1B-W1L-A",
+                1
+              ],
+              [
+                "W1B-A-R1L",
+                1
+              ],
+              [
+                "A-W1B-B",
+                1
+              ],
+              [
+                "R1L-W1B-R1B",
+                1
+              ],
+              [
+                "W1B-A-W1L",
+                1
+              ],
+              [
+                "R1L-W1L-A",
+                1
+              ],
+              [
+                "W1L-B-R1B",
+                1
+              ],
+              [
+                "W1L-R1L-W1B",
+                1
+              ],
+              [
+                "W1L-W1B-R1L",
+                1
+              ],
+              [
+                "R1B-W1L-M3",
+                1
+              ],
+              [
+                "R1B-W1B-B",
+                1
+              ],
+              [
+                "R1L-A-W1B",
+                1
+              ],
+              [
+                "M3-R1B-W1L",
+                1
+              ]
+            ],
+            "20000": [
+              [
+                "A-R1L-W1B",
+                2
+              ],
+              [
+                "B-W1L-R1L",
+                2
+              ],
+              [
+                "R1L-A-W1L",
+                1
+              ],
+              [
+                "W1B-W1L-A",
+                1
+              ],
+              [
+                "W1B-A-R1L",
+                1
+              ],
+              [
+                "W1B-A-W1L",
+                1
+              ],
+              [
+                "R1L-W1L-A",
+                1
+              ],
+              [
+                "W1L-B-R1B",
+                1
+              ],
+              [
+                "W1L-R1L-W1B",
+                1
+              ],
+              [
+                "R1B-W1L-M3",
+                1
+              ],
+              [
+                "R1L-A-W1B",
+                1
+              ],
+              [
+                "M3-R1B-W1L",
+                1
+              ],
+              [
+                "R1B-W1B-W1L",
+                1
+              ],
+              [
+                "B-R1L-W1L",
+                1
+              ],
+              [
+                "B-W1B-M3",
+                1
+              ],
+              [
+                "W1L-W1B-A",
+                1
+              ],
+              [
+                "W1B-W1L-M3",
+                1
+              ],
+              [
+                "W1L-B-A",
+                1
+              ],
+              [
+                "W1B-OTHER-M3",
+                1
+              ]
+            ]
+          }
+        }
+      }
+    },
+    "中盤": {
+      "combined_2023_2025": {
+        "eligible_races": 580,
+        "overall": {
+          "races": 580,
+          "median_payout_yen": 3490,
+          "mean_payout_yen": 16835.05172413793,
+          "max_payout_yen": 610980,
+          "ge_5000_count": 250,
+          "ge_10000_count": 167,
+          "ge_20000_count": 107,
+          "ge_5000_rate": 0.43103448275862066,
+          "ge_10000_rate": 0.28793103448275864,
+          "ge_20000_rate": 0.18448275862068966
+        },
+        "weakest_top3_count": {
+          "0": {
+            "races": 397,
+            "median_payout_yen": 2230,
+            "mean_payout_yen": 8157.002518891688,
+            "max_payout_yen": 191920,
+            "ge_5000_count": 113,
+            "ge_10000_count": 60,
+            "ge_20000_count": 37,
+            "ge_5000_rate": 0.28463476070528965,
+            "ge_10000_rate": 0.15113350125944586,
+            "ge_20000_rate": 0.09319899244332494,
+            "share": 0.6844827586206896
+          },
+          "1": {
+            "races": 148,
+            "median_payout_yen": 12180,
+            "mean_payout_yen": 34497.56756756757,
+            "max_payout_yen": 610980,
+            "ge_5000_count": 107,
+            "ge_10000_count": 83,
+            "ge_20000_count": 52,
+            "ge_5000_rate": 0.722972972972973,
+            "ge_10000_rate": 0.5608108108108109,
+            "ge_20000_rate": 0.35135135135135137,
+            "share": 0.25517241379310346
+          },
+          "2": {
+            "races": 35,
+            "median_payout_yen": 20240,
+            "mean_payout_yen": 40581.71428571428,
+            "max_payout_yen": 370610,
+            "ge_5000_count": 30,
+            "ge_10000_count": 24,
+            "ge_20000_count": 18,
+            "ge_5000_rate": 0.8571428571428571,
+            "ge_10000_rate": 0.6857142857142857,
+            "ge_20000_rate": 0.5142857142857142,
+            "share": 0.0603448275862069
+          }
+        },
+        "weakest_included": {
+          "races": 183,
+          "median_payout_yen": 13280,
+          "mean_payout_yen": 35661.20218579235,
+          "max_payout_yen": 610980,
+          "ge_5000_count": 137,
+          "ge_10000_count": 107,
+          "ge_20000_count": 70,
+          "ge_5000_rate": 0.7486338797814208,
+          "ge_10000_rate": 0.5846994535519126,
+          "ge_20000_rate": 0.3825136612021858,
+          "share": 0.31551724137931036,
+          "ge_5000_enrichment_vs_all": 1.7368306010928964,
+          "ge_10000_enrichment_vs_all": 2.030692712934786,
+          "ge_20000_enrichment_vs_all": 2.0734385373576423
+        },
+        "both_weakest_in_top3": {
+          "races": 35,
+          "median_payout_yen": 20240,
+          "mean_payout_yen": 40581.71428571428,
+          "max_payout_yen": 370610,
+          "ge_5000_count": 30,
+          "ge_10000_count": 24,
+          "ge_20000_count": 18,
+          "ge_5000_rate": 0.8571428571428571,
+          "ge_10000_rate": 0.6857142857142857,
+          "ge_20000_rate": 0.5142857142857142,
+          "share": 0.0603448275862069,
+          "ge_5000_enrichment_vs_all": 1.9885714285714287,
+          "ge_10000_enrichment_vs_all": 2.3815226689478184,
+          "ge_20000_enrichment_vs_all": 2.7877169559412547
+        },
+        "weakest_head": {
+          "races": 54,
+          "median_payout_yen": 23350,
+          "mean_payout_yen": 40242.59259259259,
+          "max_payout_yen": 224470,
+          "ge_5000_count": 50,
+          "ge_10000_count": 39,
+          "ge_20000_count": 29,
+          "ge_5000_rate": 0.9259259259259259,
+          "ge_10000_rate": 0.7222222222222222,
+          "ge_20000_rate": 0.5370370370370371,
+          "share": 0.09310344827586207,
+          "ge_5000_enrichment_vs_all": 2.1481481481481484,
+          "ge_10000_enrichment_vs_all": 2.508316699933466,
+          "ge_20000_enrichment_vs_all": 2.9110418830045
+        },
+        "weakest_pair_top2": {
+          "races": 17,
+          "median_payout_yen": 8560,
+          "mean_payout_yen": 20892.941176470587,
+          "max_payout_yen": 92500,
+          "ge_5000_count": 13,
+          "ge_10000_count": 8,
+          "ge_20000_count": 6,
+          "ge_5000_rate": 0.7647058823529411,
+          "ge_10000_rate": 0.47058823529411764,
+          "ge_20000_rate": 0.35294117647058826,
+          "share": 0.029310344827586206,
+          "ge_5000_enrichment_vs_all": 1.7741176470588236,
+          "ge_10000_enrichment_vs_all": 1.6343783022190912,
+          "ge_20000_enrichment_vs_all": 1.9131390874106653
+        },
+        "weak_mix_counts": {
+          "W2_M1_R0_O0": 28,
+          "W1_M2_R0_O0": 77,
+          "W1_M1_R1_O0": 56,
+          "W2_M0_R1_O0": 7,
+          "W1_M0_R2_O0": 13,
+          "W1_M0_R1_O1": 2
+        },
+        "top_weak_role_orders": [
+          [
+            "A-B-W1L",
+            11
+          ],
+          [
+            "B-A-W1L",
+            10
+          ],
+          [
+            "B-A-W1B",
+            10
+          ],
+          [
+            "A-B-W1B",
+            10
+          ],
+          [
+            "W1B-B-A",
+            7
+          ],
+          [
+            "W1L-B-A",
+            4
+          ],
+          [
+            "B-R1B-W1B",
+            4
+          ],
+          [
+            "A-R1B-W1L",
+            4
+          ],
+          [
+            "W1L-W1B-B",
+            4
+          ],
+          [
+            "B-M3-W1B",
+            4
+          ],
+          [
+            "W1L-W1B-A",
+            4
+          ],
+          [
+            "R1B-R1L-W1L",
+            4
+          ],
+          [
+            "B-W1B-A",
+            4
+          ],
+          [
+            "B-W1L-W1B",
+            3
+          ],
+          [
+            "A-R1B-W1B",
+            3
+          ],
+          [
+            "W1L-R1B-A",
+            3
+          ],
+          [
+            "A-W1L-R1L",
+            3
+          ],
+          [
+            "A-W1L-M3",
+            3
+          ],
+          [
+            "R1L-R1B-W1B",
+            3
+          ],
+          [
+            "W1B-W1L-B",
+            3
+          ],
+          [
+            "B-W1B-R1B",
+            3
+          ],
+          [
+            "W1L-A-W1B",
+            2
+          ],
+          [
+            "W1L-A-B",
+            2
+          ],
+          [
+            "W1L-W1B-R1B",
+            2
+          ],
+          [
+            "R1B-W1B-B",
+            2
+          ]
+        ],
+        "top_high_payout_weak_orders": {
+          "5000": [
+            [
+              "W1B-B-A",
+              7
+            ],
+            [
+              "W1L-B-A",
+              4
+            ],
+            [
+              "B-R1B-W1B",
+              4
+            ],
+            [
+              "B-W1B-A",
+              4
+            ],
+            [
+              "B-A-W1L",
+              3
+            ],
+            [
+              "W1L-R1B-A",
+              3
+            ],
+            [
+              "A-R1B-W1L",
+              3
+            ],
+            [
+              "W1L-W1B-B",
+              3
+            ],
+            [
+              "B-M3-W1B",
+              3
+            ],
+            [
+              "A-W1L-R1L",
+              3
+            ],
+            [
+              "A-W1L-M3",
+              3
+            ],
+            [
+              "W1B-W1L-B",
+              3
+            ],
+            [
+              "W1L-W1B-A",
+              3
+            ],
+            [
+              "R1B-R1L-W1L",
+              3
+            ],
+            [
+              "B-W1B-R1B",
+              3
+            ],
+            [
+              "W1L-A-W1B",
+              2
+            ],
+            [
+              "W1L-A-B",
+              2
+            ],
+            [
+              "B-A-W1B",
+              2
+            ],
+            [
+              "W1L-W1B-R1B",
+              2
+            ],
+            [
+              "R1B-W1B-B",
+              2
+            ]
+          ],
+          "10000": [
+            [
+              "W1B-B-A",
+              5
+            ],
+            [
+              "B-W1B-A",
+              4
+            ],
+            [
+              "B-R1B-W1B",
+              3
+            ],
+            [
+              "A-W1L-R1L",
+              3
+            ],
+            [
+              "A-W1L-M3",
+              3
+            ],
+            [
+              "W1L-A-W1B",
+              2
+            ],
+            [
+              "W1L-A-B",
+              2
+            ],
+            [
+              "W1L-W1B-R1B",
+              2
+            ],
+            [
+              "R1B-W1B-B",
+              2
+            ],
+            [
+              "A-W1B-W1L",
+              2
+            ],
+            [
+              "W1L-R1B-A",
+              2
+            ],
+            [
+              "A-R1B-W1L",
+              2
+            ],
+            [
+              "W1B-R1B-A",
+              2
+            ],
+            [
+              "W1L-B-A",
+              2
+            ],
+            [
+              "B-M3-W1B",
+              2
+            ],
+            [
+              "R1B-W1L-B",
+              2
+            ],
+            [
+              "W1B-R1B-B",
+              2
+            ],
+            [
+              "W1L-R1L-B",
+              2
+            ],
+            [
+              "W1B-B-W1L",
+              2
+            ],
+            [
+              "W1B-W1L-B",
+              2
+            ]
+          ],
+          "20000": [
+            [
+              "W1L-A-W1B",
+              2
+            ],
+            [
+              "W1L-A-B",
+              2
+            ],
+            [
+              "W1L-W1B-R1B",
+              2
+            ],
+            [
+              "W1B-B-A",
+              2
+            ],
+            [
+              "W1L-B-A",
+              2
+            ],
+            [
+              "B-M3-W1B",
+              2
+            ],
+            [
+              "R1B-W1L-B",
+              2
+            ],
+            [
+              "W1L-R1L-B",
+              2
+            ],
+            [
+              "W1B-B-W1L",
+              2
+            ],
+            [
+              "A-W1L-R1B",
+              2
+            ],
+            [
+              "B-W1L-R1L",
+              2
+            ],
+            [
+              "R1B-W1L-W1B",
+              2
+            ],
+            [
+              "W1L-W1B-A",
+              2
+            ],
+            [
+              "B-W1B-R1B",
+              2
+            ],
+            [
+              "A-W1L-M3",
+              2
+            ],
+            [
+              "B-R1B-W1B",
+              1
+            ],
+            [
+              "R1B-W1B-B",
+              1
+            ],
+            [
+              "W1L-R1L-A",
+              1
+            ],
+            [
+              "W1B-A-W1L",
+              1
+            ],
+            [
+              "B-W1B-R1L",
+              1
+            ]
+          ]
+        }
+      },
+      "by_year": {
+        "2023": {
+          "eligible_races": 185,
+          "overall": {
+            "races": 185,
+            "median_payout_yen": 4930,
+            "mean_payout_yen": 20659.297297297297,
+            "max_payout_yen": 610980,
+            "ge_5000_count": 91,
+            "ge_10000_count": 62,
+            "ge_20000_count": 42,
+            "ge_5000_rate": 0.4918918918918919,
+            "ge_10000_rate": 0.33513513513513515,
+            "ge_20000_rate": 0.22702702702702704
+          },
+          "weakest_top3_count": {
+            "0": {
+              "races": 122,
+              "median_payout_yen": 3060,
+              "mean_payout_yen": 9684.83606557377,
+              "max_payout_yen": 139580,
+              "ge_5000_count": 46,
+              "ge_10000_count": 27,
+              "ge_20000_count": 17,
+              "ge_5000_rate": 0.3770491803278688,
+              "ge_10000_rate": 0.22131147540983606,
+              "ge_20000_rate": 0.13934426229508196,
+              "share": 0.6594594594594595
+            },
+            "1": {
+              "races": 52,
+              "median_payout_yen": 10310,
+              "mean_payout_yen": 44572.307692307695,
+              "max_payout_yen": 610980,
+              "ge_5000_count": 37,
+              "ge_10000_count": 27,
+              "ge_20000_count": 19,
+              "ge_5000_rate": 0.7115384615384616,
+              "ge_10000_rate": 0.5192307692307693,
+              "ge_20000_rate": 0.36538461538461536,
+              "share": 0.2810810810810811
+            },
+            "2": {
+              "races": 11,
+              "median_payout_yen": 23320,
+              "mean_payout_yen": 29332.727272727272,
+              "max_payout_yen": 92500,
+              "ge_5000_count": 8,
+              "ge_10000_count": 8,
+              "ge_20000_count": 6,
+              "ge_5000_rate": 0.7272727272727273,
+              "ge_10000_rate": 0.7272727272727273,
+              "ge_20000_rate": 0.5454545454545454,
+              "share": 0.05945945945945946
+            }
+          },
+          "weakest_included": {
+            "races": 63,
+            "median_payout_yen": 13270,
+            "mean_payout_yen": 41911.42857142857,
+            "max_payout_yen": 610980,
+            "ge_5000_count": 45,
+            "ge_10000_count": 35,
+            "ge_20000_count": 25,
+            "ge_5000_rate": 0.7142857142857143,
+            "ge_10000_rate": 0.5555555555555556,
+            "ge_20000_rate": 0.3968253968253968,
+            "share": 0.34054054054054056,
+            "ge_5000_enrichment_vs_all": 1.4521193092621663,
+            "ge_10000_enrichment_vs_all": 1.657706093189964,
+            "ge_20000_enrichment_vs_all": 1.7479213907785334
+          },
+          "both_weakest_in_top3": {
+            "races": 11,
+            "median_payout_yen": 23320,
+            "mean_payout_yen": 29332.727272727272,
+            "max_payout_yen": 92500,
+            "ge_5000_count": 8,
+            "ge_10000_count": 8,
+            "ge_20000_count": 6,
+            "ge_5000_rate": 0.7272727272727273,
+            "ge_10000_rate": 0.7272727272727273,
+            "ge_20000_rate": 0.5454545454545454,
+            "share": 0.05945945945945946,
+            "ge_5000_enrichment_vs_all": 1.4785214785214784,
+            "ge_10000_enrichment_vs_all": 2.1700879765395893,
+            "ge_20000_enrichment_vs_all": 2.402597402597402
+          },
+          "weakest_head": {
+            "races": 22,
+            "median_payout_yen": 29130,
+            "mean_payout_yen": 50301.818181818184,
+            "max_payout_yen": 224470,
+            "ge_5000_count": 20,
+            "ge_10000_count": 15,
+            "ge_20000_count": 13,
+            "ge_5000_rate": 0.9090909090909091,
+            "ge_10000_rate": 0.6818181818181818,
+            "ge_20000_rate": 0.5909090909090909,
+            "share": 0.11891891891891893,
+            "ge_5000_enrichment_vs_all": 1.848151848151848,
+            "ge_10000_enrichment_vs_all": 2.034457478005865,
+            "ge_20000_enrichment_vs_all": 2.6028138528138527
+          },
+          "weakest_pair_top2": {
+            "races": 6,
+            "median_payout_yen": 28470,
+            "mean_payout_yen": 34711.666666666664,
+            "max_payout_yen": 92500,
+            "ge_5000_count": 4,
+            "ge_10000_count": 4,
+            "ge_20000_count": 3,
+            "ge_5000_rate": 0.6666666666666666,
+            "ge_10000_rate": 0.6666666666666666,
+            "ge_20000_rate": 0.5,
+            "share": 0.032432432432432434,
+            "ge_5000_enrichment_vs_all": 1.3553113553113552,
+            "ge_10000_enrichment_vs_all": 1.9892473118279568,
+            "ge_20000_enrichment_vs_all": 2.202380952380952
+          },
+          "weak_mix_counts": {
+            "W2_M1_R0_O0": 8,
+            "W1_M2_R0_O0": 27,
+            "W1_M1_R1_O0": 21,
+            "W2_M0_R1_O0": 3,
+            "W1_M0_R2_O0": 2,
+            "W1_M0_R1_O1": 2
+          },
+          "top_weak_role_orders": [
+            [
+              "B-A-W1B",
+              5
+            ],
+            [
+              "A-B-W1L",
+              4
+            ],
+            [
+              "B-A-W1L",
+              4
+            ],
+            [
+              "W1L-B-A",
+              3
+            ],
+            [
+              "W1B-B-A",
+              3
+            ],
+            [
+              "A-R1B-W1B",
+              3
+            ],
+            [
+              "W1L-A-W1B",
+              2
+            ],
+            [
+              "W1L-W1B-R1B",
+              2
+            ],
+            [
+              "A-B-W1B",
+              2
+            ],
+            [
+              "A-R1B-W1L",
+              2
+            ],
+            [
+              "W1L-W1B-B",
+              2
+            ],
+            [
+              "A-W1L-R1L",
+              2
+            ],
+            [
+              "B-W1L-W1B",
+              1
+            ],
+            [
+              "B-R1B-W1B",
+              1
+            ],
+            [
+              "W1L-A-B",
+              1
+            ],
+            [
+              "W1L-W1B-R1L",
+              1
+            ],
+            [
+              "R1B-W1B-B",
+              1
+            ],
+            [
+              "W1L-R1L-A",
+              1
+            ],
+            [
+              "W1B-A-W1L",
+              1
+            ],
+            [
+              "B-W1L-A",
+              1
+            ],
+            [
+              "W1L-A-R1B",
+              1
+            ],
+            [
+              "A-W1B-W1L",
+              1
+            ],
+            [
+              "W1L-R1B-A",
+              1
+            ],
+            [
+              "B-W1B-R1L",
+              1
+            ],
+            [
+              "W1B-R1B-A",
+              1
+            ]
+          ],
+          "top_high_payout_weak_orders": {
+            "5000": [
+              [
+                "W1L-B-A",
+                3
+              ],
+              [
+                "W1B-B-A",
+                3
+              ],
+              [
+                "W1L-A-W1B",
+                2
+              ],
+              [
+                "B-A-W1L",
+                2
+              ],
+              [
+                "B-A-W1B",
+                2
+              ],
+              [
+                "W1L-W1B-R1B",
+                2
+              ],
+              [
+                "A-R1B-W1B",
+                2
+              ],
+              [
+                "A-W1L-R1L",
+                2
+              ],
+              [
+                "B-R1B-W1B",
+                1
+              ],
+              [
+                "W1L-A-B",
+                1
+              ],
+              [
+                "R1B-W1B-B",
+                1
+              ],
+              [
+                "W1L-R1L-A",
+                1
+              ],
+              [
+                "W1B-A-W1L",
+                1
+              ],
+              [
+                "B-W1L-A",
+                1
+              ],
+              [
+                "W1L-A-R1B",
+                1
+              ],
+              [
+                "A-W1B-W1L",
+                1
+              ],
+              [
+                "W1L-R1B-A",
+                1
+              ],
+              [
+                "B-W1B-R1L",
+                1
+              ],
+              [
+                "A-R1B-W1L",
+                1
+              ],
+              [
+                "W1B-R1B-A",
+                1
+              ]
+            ],
+            "10000": [
+              [
+                "W1L-A-W1B",
+                2
+              ],
+              [
+                "W1L-W1B-R1B",
+                2
+              ],
+              [
+                "A-W1L-R1L",
+                2
+              ],
+              [
+                "B-R1B-W1B",
+                1
+              ],
+              [
+                "W1L-A-B",
+                1
+              ],
+              [
+                "R1B-W1B-B",
+                1
+              ],
+              [
+                "W1L-R1L-A",
+                1
+              ],
+              [
+                "W1B-A-W1L",
+                1
+              ],
+              [
+                "W1B-B-A",
+                1
+              ],
+              [
+                "B-A-W1L",
+                1
+              ],
+              [
+                "A-W1B-W1L",
+                1
+              ],
+              [
+                "W1L-R1B-A",
+                1
+              ],
+              [
+                "B-W1B-R1L",
+                1
+              ],
+              [
+                "A-R1B-W1L",
+                1
+              ],
+              [
+                "W1B-R1B-A",
+                1
+              ],
+              [
+                "A-R1B-W1B",
+                1
+              ],
+              [
+                "R1B-W1L-R1L",
+                1
+              ],
+              [
+                "W1L-W1B-M3",
+                1
+              ],
+              [
+                "W1L-B-A",
+                1
+              ],
+              [
+                "R1B-A-W1B",
+                1
+              ]
+            ],
+            "20000": [
+              [
+                "W1L-A-W1B",
+                2
+              ],
+              [
+                "W1L-W1B-R1B",
+                2
+              ],
+              [
+                "B-R1B-W1B",
+                1
+              ],
+              [
+                "W1L-A-B",
+                1
+              ],
+              [
+                "R1B-W1B-B",
+                1
+              ],
+              [
+                "W1L-R1L-A",
+                1
+              ],
+              [
+                "W1B-A-W1L",
+                1
+              ],
+              [
+                "W1B-B-A",
+                1
+              ],
+              [
+                "B-W1B-R1L",
+                1
+              ],
+              [
+                "W1B-R1B-A",
+                1
+              ],
+              [
+                "W1L-W1B-M3",
+                1
+              ],
+              [
+                "W1L-B-A",
+                1
+              ],
+              [
+                "R1B-A-W1B",
+                1
+              ],
+              [
+                "B-M3-W1B",
+                1
+              ],
+              [
+                "R1L-OTHER-W1L",
+                1
+              ],
+              [
+                "M3-B-W1B",
+                1
+              ],
+              [
+                "A-W1L-R1L",
+                1
+              ],
+              [
+                "R1B-W1L-B",
+                1
+              ],
+              [
+                "A-R1L-W1L",
+                1
+              ],
+              [
+                "W1B-R1B-B",
+                1
+              ]
+            ]
+          }
+        },
+        "2024": {
+          "eligible_races": 191,
+          "overall": {
+            "races": 191,
+            "median_payout_yen": 2920,
+            "mean_payout_yen": 17580.052356020944,
+            "max_payout_yen": 440140,
+            "ge_5000_count": 79,
+            "ge_10000_count": 54,
+            "ge_20000_count": 35,
+            "ge_5000_rate": 0.41361256544502617,
+            "ge_10000_rate": 0.28272251308900526,
+            "ge_20000_rate": 0.18324607329842932
+          },
+          "weakest_top3_count": {
+            "0": {
+              "races": 138,
+              "median_payout_yen": 2080,
+              "mean_payout_yen": 8682.536231884058,
+              "max_payout_yen": 149690,
+              "ge_5000_count": 34,
+              "ge_10000_count": 19,
+              "ge_20000_count": 13,
+              "ge_5000_rate": 0.2463768115942029,
+              "ge_10000_rate": 0.13768115942028986,
+              "ge_20000_rate": 0.09420289855072464,
+              "share": 0.7225130890052356
+            },
+            "1": {
+              "races": 40,
+              "median_payout_yen": 17380,
+              "mean_payout_yen": 35619.25,
+              "max_payout_yen": 440140,
+              "ge_5000_count": 32,
+              "ge_10000_count": 27,
+              "ge_20000_count": 16,
+              "ge_5000_rate": 0.8,
+              "ge_10000_rate": 0.675,
+              "ge_20000_rate": 0.4,
+              "share": 0.2094240837696335
+            },
+            "2": {
+              "races": 13,
+              "median_payout_yen": 16810,
+              "mean_payout_yen": 56525.38461538462,
+              "max_payout_yen": 370610,
+              "ge_5000_count": 13,
+              "ge_10000_count": 8,
+              "ge_20000_count": 6,
+              "ge_5000_rate": 1.0,
+              "ge_10000_rate": 0.6153846153846154,
+              "ge_20000_rate": 0.46153846153846156,
+              "share": 0.06806282722513089
+            }
+          },
+          "weakest_included": {
+            "races": 53,
+            "median_payout_yen": 17270,
+            "mean_payout_yen": 40747.16981132075,
+            "max_payout_yen": 440140,
+            "ge_5000_count": 45,
+            "ge_10000_count": 35,
+            "ge_20000_count": 22,
+            "ge_5000_rate": 0.8490566037735849,
+            "ge_10000_rate": 0.660377358490566,
+            "ge_20000_rate": 0.41509433962264153,
+            "share": 0.2774869109947644,
+            "ge_5000_enrichment_vs_all": 2.0527824217817052,
+            "ge_10000_enrichment_vs_all": 2.3357791754018167,
+            "ge_20000_enrichment_vs_all": 2.2652291105121294
+          },
+          "both_weakest_in_top3": {
+            "races": 13,
+            "median_payout_yen": 16810,
+            "mean_payout_yen": 56525.38461538462,
+            "max_payout_yen": 370610,
+            "ge_5000_count": 13,
+            "ge_10000_count": 8,
+            "ge_20000_count": 6,
+            "ge_5000_rate": 1.0,
+            "ge_10000_rate": 0.6153846153846154,
+            "ge_20000_rate": 0.46153846153846156,
+            "share": 0.06806282722513089,
+            "ge_5000_enrichment_vs_all": 2.4177215189873418,
+            "ge_10000_enrichment_vs_all": 2.1766381766381766,
+            "ge_20000_enrichment_vs_all": 2.5186813186813186
+          },
+          "weakest_head": {
+            "races": 14,
+            "median_payout_yen": 17380,
+            "mean_payout_yen": 26145.714285714286,
+            "max_payout_yen": 71060,
+            "ge_5000_count": 14,
+            "ge_10000_count": 10,
+            "ge_20000_count": 6,
+            "ge_5000_rate": 1.0,
+            "ge_10000_rate": 0.7142857142857143,
+            "ge_20000_rate": 0.42857142857142855,
+            "share": 0.07329842931937172,
+            "ge_5000_enrichment_vs_all": 2.4177215189873418,
+            "ge_10000_enrichment_vs_all": 2.5264550264550265,
+            "ge_20000_enrichment_vs_all": 2.3387755102040817
+          },
+          "weakest_pair_top2": {
+            "races": 6,
+            "median_payout_yen": 8560,
+            "mean_payout_yen": 16373.333333333334,
+            "max_payout_yen": 36940,
+            "ge_5000_count": 6,
+            "ge_10000_count": 2,
+            "ge_20000_count": 2,
+            "ge_5000_rate": 1.0,
+            "ge_10000_rate": 0.3333333333333333,
+            "ge_20000_rate": 0.3333333333333333,
+            "share": 0.031413612565445025,
+            "ge_5000_enrichment_vs_all": 2.4177215189873418,
+            "ge_10000_enrichment_vs_all": 1.1790123456790123,
+            "ge_20000_enrichment_vs_all": 1.819047619047619
+          },
+          "weak_mix_counts": {
+            "W2_M1_R0_O0": 12,
+            "W1_M1_R1_O0": 17,
+            "W1_M2_R0_O0": 17,
+            "W1_M0_R2_O0": 6,
+            "W2_M0_R1_O0": 1
+          },
+          "top_weak_role_orders": [
+            [
+              "R1B-R1L-W1L",
+              3
+            ],
+            [
+              "B-A-W1L",
+              3
+            ],
+            [
+              "B-R1L-W1B",
+              2
+            ],
+            [
+              "W1B-W1L-B",
+              2
+            ],
+            [
+              "A-W1B-B",
+              2
+            ],
+            [
+              "W1L-W1B-A",
+              2
+            ],
+            [
+              "B-W1L-R1L",
+              2
+            ],
+            [
+              "B-W1L-W1B",
+              2
+            ],
+            [
+              "A-B-W1B",
+              2
+            ],
+            [
+              "B-W1B-A",
+              2
+            ],
+            [
+              "B-R1L-W1L",
+              2
+            ],
+            [
+              "B-M3-W1B",
+              2
+            ],
+            [
+              "W1B-B-A",
+              2
+            ],
+            [
+              "W1B-B-W1L",
+              1
+            ],
+            [
+              "A-W1L-R1B",
+              1
+            ],
+            [
+              "R1L-W1B-M3",
+              1
+            ],
+            [
+              "W1B-R1B-B",
+              1
+            ],
+            [
+              "R1L-R1B-W1B",
+              1
+            ],
+            [
+              "W1B-W1L-A",
+              1
+            ],
+            [
+              "A-W1B-R1B",
+              1
+            ],
+            [
+              "R1B-R1L-W1B",
+              1
+            ],
+            [
+              "M3-W1L-W1B",
+              1
+            ],
+            [
+              "A-B-W1L",
+              1
+            ],
+            [
+              "W1L-W1B-B",
+              1
+            ],
+            [
+              "W1L-R1L-B",
+              1
+            ]
+          ],
+          "top_high_payout_weak_orders": {
+            "5000": [
+              [
+                "B-R1L-W1B",
+                2
+              ],
+              [
+                "W1B-W1L-B",
+                2
+              ],
+              [
+                "A-W1B-B",
+                2
+              ],
+              [
+                "W1L-W1B-A",
+                2
+              ],
+              [
+                "B-W1L-R1L",
+                2
+              ],
+              [
+                "B-W1L-W1B",
+                2
+              ],
+              [
+                "B-W1B-A",
+                2
+              ],
+              [
+                "B-R1L-W1L",
+                2
+              ],
+              [
+                "R1B-R1L-W1L",
+                2
+              ],
+              [
+                "W1B-B-A",
+                2
+              ],
+              [
+                "W1B-B-W1L",
+                1
+              ],
+              [
+                "A-W1L-R1B",
+                1
+              ],
+              [
+                "R1L-W1B-M3",
+                1
+              ],
+              [
+                "W1B-R1B-B",
+                1
+              ],
+              [
+                "R1L-R1B-W1B",
+                1
+              ],
+              [
+                "W1B-W1L-A",
+                1
+              ],
+              [
+                "A-W1B-R1B",
+                1
+              ],
+              [
+                "A-B-W1B",
+                1
+              ],
+              [
+                "B-M3-W1B",
+                1
+              ],
+              [
+                "R1B-R1L-W1B",
+                1
+              ]
+            ],
+            "10000": [
+              [
+                "B-W1L-R1L",
+                2
+              ],
+              [
+                "B-W1L-W1B",
+                2
+              ],
+              [
+                "B-W1B-A",
+                2
+              ],
+              [
+                "W1B-B-A",
+                2
+              ],
+              [
+                "W1B-B-W1L",
+                1
+              ],
+              [
+                "B-R1L-W1B",
+                1
+              ],
+              [
+                "W1B-W1L-B",
+                1
+              ],
+              [
+                "A-W1L-R1B",
+                1
+              ],
+              [
+                "R1L-W1B-M3",
+                1
+              ],
+              [
+                "W1B-R1B-B",
+                1
+              ],
+              [
+                "R1L-R1B-W1B",
+                1
+              ],
+              [
+                "A-W1B-R1B",
+                1
+              ],
+              [
+                "B-M3-W1B",
+                1
+              ],
+              [
+                "R1B-R1L-W1B",
+                1
+              ],
+              [
+                "M3-W1L-W1B",
+                1
+              ],
+              [
+                "R1B-R1L-W1L",
+                1
+              ],
+              [
+                "A-W1B-B",
+                1
+              ],
+              [
+                "B-R1L-W1L",
+                1
+              ],
+              [
+                "W1L-R1L-B",
+                1
+              ],
+              [
+                "R1L-A-W1L",
+                1
+              ]
+            ],
+            "20000": [
+              [
+                "B-W1L-R1L",
+                2
+              ],
+              [
+                "W1B-B-W1L",
+                1
+              ],
+              [
+                "B-R1L-W1B",
+                1
+              ],
+              [
+                "W1B-W1L-B",
+                1
+              ],
+              [
+                "A-W1L-R1B",
+                1
+              ],
+              [
+                "R1L-W1B-M3",
+                1
+              ],
+              [
+                "A-W1B-R1B",
+                1
+              ],
+              [
+                "B-M3-W1B",
+                1
+              ],
+              [
+                "M3-W1L-W1B",
+                1
+              ],
+              [
+                "R1B-R1L-W1L",
+                1
+              ],
+              [
+                "B-R1L-W1L",
+                1
+              ],
+              [
+                "W1L-R1L-B",
+                1
+              ],
+              [
+                "B-W1L-W1B",
+                1
+              ],
+              [
+                "R1L-A-W1L",
+                1
+              ],
+              [
+                "R1B-W1L-W1B",
+                1
+              ],
+              [
+                "A-W1B-R1L",
+                1
+              ],
+              [
+                "W1L-B-R1B",
+                1
+              ],
+              [
+                "W1L-B-A",
+                1
+              ],
+              [
+                "R1L-M3-W1L",
+                1
+              ],
+              [
+                "R1B-W1L-B",
+                1
+              ]
+            ]
+          }
+        },
+        "2025": {
+          "eligible_races": 204,
+          "overall": {
+            "races": 204,
+            "median_payout_yen": 2930,
+            "mean_payout_yen": 12669.460784313726,
+            "max_payout_yen": 191920,
+            "ge_5000_count": 80,
+            "ge_10000_count": 51,
+            "ge_20000_count": 30,
+            "ge_5000_rate": 0.39215686274509803,
+            "ge_10000_rate": 0.25,
+            "ge_20000_rate": 0.14705882352941177
+          },
+          "weakest_top3_count": {
+            "0": {
+              "races": 137,
+              "median_payout_yen": 1720,
+              "mean_payout_yen": 6267.080291970803,
+              "max_payout_yen": 191920,
+              "ge_5000_count": 33,
+              "ge_10000_count": 14,
+              "ge_20000_count": 7,
+              "ge_5000_rate": 0.24087591240875914,
+              "ge_10000_rate": 0.10218978102189781,
+              "ge_20000_rate": 0.051094890510948905,
+              "share": 0.6715686274509803
+            },
+            "1": {
+              "races": 56,
+              "median_payout_yen": 10620,
+              "mean_payout_yen": 24341.25,
+              "max_payout_yen": 135940,
+              "ge_5000_count": 38,
+              "ge_10000_count": 29,
+              "ge_20000_count": 17,
+              "ge_5000_rate": 0.6785714285714286,
+              "ge_10000_rate": 0.5178571428571429,
+              "ge_20000_rate": 0.30357142857142855,
+              "share": 0.27450980392156865
+            },
+            "2": {
+              "races": 11,
+              "median_payout_yen": 20240,
+              "mean_payout_yen": 32988.181818181816,
+              "max_payout_yen": 108310,
+              "ge_5000_count": 9,
+              "ge_10000_count": 8,
+              "ge_20000_count": 6,
+              "ge_5000_rate": 0.8181818181818182,
+              "ge_10000_rate": 0.7272727272727273,
+              "ge_20000_rate": 0.5454545454545454,
+              "share": 0.05392156862745098
+            }
+          },
+          "weakest_included": {
+            "races": 67,
+            "median_payout_yen": 12180,
+            "mean_payout_yen": 25760.89552238806,
+            "max_payout_yen": 135940,
+            "ge_5000_count": 47,
+            "ge_10000_count": 37,
+            "ge_20000_count": 23,
+            "ge_5000_rate": 0.7014925373134329,
+            "ge_10000_rate": 0.5522388059701493,
+            "ge_20000_rate": 0.34328358208955223,
+            "share": 0.3284313725490196,
+            "ge_5000_enrichment_vs_all": 1.7888059701492538,
+            "ge_10000_enrichment_vs_all": 2.208955223880597,
+            "ge_20000_enrichment_vs_all": 2.334328358208955
+          },
+          "both_weakest_in_top3": {
+            "races": 11,
+            "median_payout_yen": 20240,
+            "mean_payout_yen": 32988.181818181816,
+            "max_payout_yen": 108310,
+            "ge_5000_count": 9,
+            "ge_10000_count": 8,
+            "ge_20000_count": 6,
+            "ge_5000_rate": 0.8181818181818182,
+            "ge_10000_rate": 0.7272727272727273,
+            "ge_20000_rate": 0.5454545454545454,
+            "share": 0.05392156862745098,
+            "ge_5000_enrichment_vs_all": 2.0863636363636364,
+            "ge_10000_enrichment_vs_all": 2.909090909090909,
+            "ge_20000_enrichment_vs_all": 3.7090909090909085
+          },
+          "weakest_head": {
+            "races": 18,
+            "median_payout_yen": 23350,
+            "mean_payout_yen": 38912.22222222222,
+            "max_payout_yen": 135940,
+            "ge_5000_count": 16,
+            "ge_10000_count": 14,
+            "ge_20000_count": 10,
+            "ge_5000_rate": 0.8888888888888888,
+            "ge_10000_rate": 0.7777777777777778,
+            "ge_20000_rate": 0.5555555555555556,
+            "share": 0.08823529411764706,
+            "ge_5000_enrichment_vs_all": 2.2666666666666666,
+            "ge_10000_enrichment_vs_all": 3.111111111111111,
+            "ge_20000_enrichment_vs_all": 3.7777777777777777
+          },
+          "weakest_pair_top2": {
+            "races": 5,
+            "median_payout_yen": 5490,
+            "mean_payout_yen": 9734.0,
+            "max_payout_yen": 23350,
+            "ge_5000_count": 3,
+            "ge_10000_count": 2,
+            "ge_20000_count": 1,
+            "ge_5000_rate": 0.6,
+            "ge_10000_rate": 0.4,
+            "ge_20000_rate": 0.2,
+            "share": 0.024509803921568627,
+            "ge_5000_enrichment_vs_all": 1.53,
+            "ge_10000_enrichment_vs_all": 1.6,
+            "ge_20000_enrichment_vs_all": 1.36
+          },
+          "weak_mix_counts": {
+            "W1_M2_R0_O0": 33,
+            "W1_M1_R1_O0": 18,
+            "W2_M1_R0_O0": 8,
+            "W1_M0_R2_O0": 5,
+            "W2_M0_R1_O0": 3
+          },
+          "top_weak_role_orders": [
+            [
+              "A-B-W1L",
+              6
+            ],
+            [
+              "A-B-W1B",
+              6
+            ],
+            [
+              "B-A-W1B",
+              4
+            ],
+            [
+              "B-R1B-W1B",
+              3
+            ],
+            [
+              "B-W1B-R1B",
+              3
+            ],
+            [
+              "B-A-W1L",
+              3
+            ],
+            [
+              "W1B-B-A",
+              2
+            ],
+            [
+              "W1L-R1B-A",
+              2
+            ],
+            [
+              "A-R1B-W1L",
+              2
+            ],
+            [
+              "W1L-W1B-A",
+              2
+            ],
+            [
+              "B-W1B-A",
+              2
+            ],
+            [
+              "A-W1L-M3",
+              2
+            ],
+            [
+              "A-M3-W1L",
+              1
+            ],
+            [
+              "W1B-W1L-A",
+              1
+            ],
+            [
+              "B-M3-W1B",
+              1
+            ],
+            [
+              "A-M3-W1B",
+              1
+            ],
+            [
+              "R1L-B-W1L",
+              1
+            ],
+            [
+              "A-W1L-R1B",
+              1
+            ],
+            [
+              "R1B-W1B-R1L",
+              1
+            ],
+            [
+              "W1B-B-W1L",
+              1
+            ],
+            [
+              "W1L-R1B-R1L",
+              1
+            ],
+            [
+              "R1B-W1L-W1B",
+              1
+            ],
+            [
+              "R1B-R1L-W1L",
+              1
+            ],
+            [
+              "W1B-B-M3",
+              1
+            ],
+            [
+              "W1L-R1B-W1B",
+              1
+            ]
+          ],
+          "top_high_payout_weak_orders": {
+            "5000": [
+              [
+                "B-R1B-W1B",
+                3
+              ],
+              [
+                "B-W1B-R1B",
+                3
+              ],
+              [
+                "W1B-B-A",
+                2
+              ],
+              [
+                "W1L-R1B-A",
+                2
+              ],
+              [
+                "A-R1B-W1L",
+                2
+              ],
+              [
+                "B-W1B-A",
+                2
+              ],
+              [
+                "A-W1L-M3",
+                2
+              ],
+              [
+                "A-M3-W1L",
+                1
+              ],
+              [
+                "B-M3-W1B",
+                1
+              ],
+              [
+                "A-M3-W1B",
+                1
+              ],
+              [
+                "R1L-B-W1L",
+                1
+              ],
+              [
+                "A-W1L-R1B",
+                1
+              ],
+              [
+                "W1L-W1B-A",
+                1
+              ],
+              [
+                "R1B-W1B-R1L",
+                1
+              ],
+              [
+                "W1B-B-W1L",
+                1
+              ],
+              [
+                "W1L-R1B-R1L",
+                1
+              ],
+              [
+                "R1B-W1L-W1B",
+                1
+              ],
+              [
+                "R1B-R1L-W1L",
+                1
+              ],
+              [
+                "W1B-B-M3",
+                1
+              ],
+              [
+                "A-B-W1B",
+                1
+              ]
+            ],
+            "10000": [
+              [
+                "W1B-B-A",
+                2
+              ],
+              [
+                "B-R1B-W1B",
+                2
+              ],
+              [
+                "B-W1B-R1B",
+                2
+              ],
+              [
+                "B-W1B-A",
+                2
+              ],
+              [
+                "A-W1L-M3",
+                2
+              ],
+              [
+                "A-M3-W1L",
+                1
+              ],
+              [
+                "A-M3-W1B",
+                1
+              ],
+              [
+                "R1L-B-W1L",
+                1
+              ],
+              [
+                "A-W1L-R1B",
+                1
+              ],
+              [
+                "W1L-W1B-A",
+                1
+              ],
+              [
+                "R1B-W1B-R1L",
+                1
+              ],
+              [
+                "W1B-B-W1L",
+                1
+              ],
+              [
+                "W1L-R1B-R1L",
+                1
+              ],
+              [
+                "R1B-W1L-W1B",
+                1
+              ],
+              [
+                "R1B-R1L-W1L",
+                1
+              ],
+              [
+                "W1B-B-M3",
+                1
+              ],
+              [
+                "W1L-R1B-W1B",
+                1
+              ],
+              [
+                "W1L-R1B-A",
+                1
+              ],
+              [
+                "W1B-R1B-W1L",
+                1
+              ],
+              [
+                "R1B-W1B-B",
+                1
+              ]
+            ],
+            "20000": [
+              [
+                "B-W1B-R1B",
+                2
+              ],
+              [
+                "A-W1L-M3",
+                2
+              ],
+              [
+                "W1B-B-A",
+                1
+              ],
+              [
+                "A-M3-W1L",
+                1
+              ],
+              [
+                "A-M3-W1B",
+                1
+              ],
+              [
+                "R1L-B-W1L",
+                1
+              ],
+              [
+                "A-W1L-R1B",
+                1
+              ],
+              [
+                "W1L-W1B-A",
+                1
+              ],
+              [
+                "R1B-W1B-R1L",
+                1
+              ],
+              [
+                "W1B-B-W1L",
+                1
+              ],
+              [
+                "R1B-W1L-W1B",
+                1
+              ],
+              [
+                "W1B-B-M3",
+                1
+              ],
+              [
+                "B-W1B-A",
+                1
+              ],
+              [
+                "W1L-R1B-W1B",
+                1
+              ],
+              [
+                "W1L-R1B-A",
+                1
+              ],
+              [
+                "W1B-R1B-W1L",
+                1
+              ],
+              [
+                "W1L-A-M3",
+                1
+              ],
+              [
+                "A-W1B-W1L",
+                1
+              ],
+              [
+                "W1B-A-R1L",
+                1
+              ],
+              [
+                "M3-A-W1L",
+                1
+              ]
+            ]
+          }
+        }
+      }
+    },
+    "後半": {
+      "combined_2023_2025": {
+        "eligible_races": 785,
+        "overall": {
+          "races": 785,
+          "median_payout_yen": 1970,
+          "mean_payout_yen": 9590.445859872612,
+          "max_payout_yen": 261520,
+          "ge_5000_count": 260,
+          "ge_10000_count": 163,
+          "ge_20000_count": 87,
+          "ge_5000_rate": 0.33121019108280253,
+          "ge_10000_rate": 0.20764331210191084,
+          "ge_20000_rate": 0.11082802547770701
+        },
+        "weakest_top3_count": {
+          "0": {
+            "races": 567,
+            "median_payout_yen": 1090,
+            "mean_payout_yen": 4128.271604938272,
+            "max_payout_yen": 92280,
+            "ge_5000_count": 119,
+            "ge_10000_count": 60,
+            "ge_20000_count": 21,
+            "ge_5000_rate": 0.20987654320987653,
+            "ge_10000_rate": 0.10582010582010581,
+            "ge_20000_rate": 0.037037037037037035,
+            "share": 0.7222929936305732
+          },
+          "1": {
+            "races": 183,
+            "median_payout_yen": 6740,
+            "mean_payout_yen": 21467.43169398907,
+            "max_payout_yen": 261520,
+            "ge_5000_count": 108,
+            "ge_10000_count": 75,
+            "ge_20000_count": 46,
+            "ge_5000_rate": 0.5901639344262295,
+            "ge_10000_rate": 0.4098360655737705,
+            "ge_20000_rate": 0.25136612021857924,
+            "share": 0.23312101910828026
+          },
+          "2": {
+            "races": 35,
+            "median_payout_yen": 21120,
+            "mean_payout_yen": 35978.0,
+            "max_payout_yen": 215410,
+            "ge_5000_count": 33,
+            "ge_10000_count": 28,
+            "ge_20000_count": 20,
+            "ge_5000_rate": 0.9428571428571428,
+            "ge_10000_rate": 0.8,
+            "ge_20000_rate": 0.5714285714285714,
+            "share": 0.044585987261146494
+          }
+        },
+        "weakest_included": {
+          "races": 218,
+          "median_payout_yen": 8890,
+          "mean_payout_yen": 23797.110091743118,
+          "max_payout_yen": 261520,
+          "ge_5000_count": 141,
+          "ge_10000_count": 103,
+          "ge_20000_count": 66,
+          "ge_5000_rate": 0.6467889908256881,
+          "ge_10000_rate": 0.4724770642201835,
+          "ge_20000_rate": 0.30275229357798167,
+          "share": 0.27770700636942675,
+          "ge_5000_enrichment_vs_all": 1.9528052223006354,
+          "ge_10000_enrichment_vs_all": 2.2754263522260367,
+          "ge_20000_enrichment_vs_all": 2.731730465042708
+        },
+        "both_weakest_in_top3": {
+          "races": 35,
+          "median_payout_yen": 21120,
+          "mean_payout_yen": 35978.0,
+          "max_payout_yen": 215410,
+          "ge_5000_count": 33,
+          "ge_10000_count": 28,
+          "ge_20000_count": 20,
+          "ge_5000_rate": 0.9428571428571428,
+          "ge_10000_rate": 0.8,
+          "ge_20000_rate": 0.5714285714285714,
+          "share": 0.044585987261146494,
+          "ge_5000_enrichment_vs_all": 2.846703296703297,
+          "ge_10000_enrichment_vs_all": 3.852760736196319,
+          "ge_20000_enrichment_vs_all": 5.1559934318555
+        },
+        "weakest_head": {
+          "races": 52,
+          "median_payout_yen": 23190,
+          "mean_payout_yen": 45215.0,
+          "max_payout_yen": 261520,
+          "ge_5000_count": 51,
+          "ge_10000_count": 43,
+          "ge_20000_count": 29,
+          "ge_5000_rate": 0.9807692307692307,
+          "ge_10000_rate": 0.8269230769230769,
+          "ge_20000_rate": 0.5576923076923077,
+          "share": 0.06624203821656051,
+          "ge_5000_enrichment_vs_all": 2.9611686390532546,
+          "ge_10000_enrichment_vs_all": 3.9824209532798487,
+          "ge_20000_enrichment_vs_all": 5.032051282051282
+        },
+        "weakest_pair_top2": {
+          "races": 19,
+          "median_payout_yen": 21120,
+          "mean_payout_yen": 41435.78947368421,
+          "max_payout_yen": 215410,
+          "ge_5000_count": 19,
+          "ge_10000_count": 16,
+          "ge_20000_count": 12,
+          "ge_5000_rate": 1.0,
+          "ge_10000_rate": 0.8421052631578947,
+          "ge_20000_rate": 0.631578947368421,
+          "share": 0.024203821656050957,
+          "ge_5000_enrichment_vs_all": 3.0192307692307696,
+          "ge_10000_enrichment_vs_all": 4.055537617048756,
+          "ge_20000_enrichment_vs_all": 5.698729582577132
+        },
+        "weak_mix_counts": {
+          "W1_M2_R0_O0": 127,
+          "W2_M1_R0_O0": 25,
+          "W1_M1_R1_O0": 45,
+          "W2_M0_R1_O0": 10,
+          "W1_M0_R2_O0": 11
+        },
+        "top_weak_role_orders": [
+          [
+            "A-B-W1B",
+            23
+          ],
+          [
+            "B-A-W1L",
+            22
+          ],
+          [
+            "A-B-W1L",
+            19
+          ],
+          [
+            "B-A-W1B",
+            17
+          ],
+          [
+            "A-W1B-B",
+            8
+          ],
+          [
+            "A-W1L-B",
+            8
+          ],
+          [
+            "W1L-W1B-A",
+            5
+          ],
+          [
+            "B-W1B-A",
+            5
+          ],
+          [
+            "W1L-W1B-R1L",
+            4
+          ],
+          [
+            "A-W1B-W1L",
+            3
+          ],
+          [
+            "A-W1B-R1B",
+            3
+          ],
+          [
+            "A-R1L-W1B",
+            3
+          ],
+          [
+            "A-R1B-W1B",
+            3
+          ],
+          [
+            "W1L-B-A",
+            3
+          ],
+          [
+            "R1L-R1B-W1L",
+            3
+          ],
+          [
+            "W1L-B-R1L",
+            3
+          ],
+          [
+            "W1L-W1B-B",
+            3
+          ],
+          [
+            "W1B-B-M3",
+            2
+          ],
+          [
+            "A-W1L-M3",
+            2
+          ],
+          [
+            "A-R1B-W1L",
+            2
+          ],
+          [
+            "W1B-A-W1L",
+            2
+          ],
+          [
+            "B-R1B-W1B",
+            2
+          ],
+          [
+            "W1L-A-W1B",
+            2
+          ],
+          [
+            "R1L-W1B-A",
+            2
+          ],
+          [
+            "A-W1L-W1B",
+            2
+          ]
+        ],
+        "top_high_payout_weak_orders": {
+          "5000": [
+            [
+              "A-W1B-B",
+              7
+            ],
+            [
+              "A-W1L-B",
+              6
+            ],
+            [
+              "W1L-W1B-A",
+              5
+            ],
+            [
+              "B-A-W1L",
+              5
+            ],
+            [
+              "B-A-W1B",
+              4
+            ],
+            [
+              "W1L-W1B-R1L",
+              4
+            ],
+            [
+              "A-W1B-R1B",
+              3
+            ],
+            [
+              "A-R1L-W1B",
+              3
+            ],
+            [
+              "W1L-B-A",
+              3
+            ],
+            [
+              "A-B-W1L",
+              3
+            ],
+            [
+              "A-B-W1B",
+              3
+            ],
+            [
+              "W1L-B-R1L",
+              3
+            ],
+            [
+              "W1L-W1B-B",
+              3
+            ],
+            [
+              "B-W1B-A",
+              3
+            ],
+            [
+              "W1B-B-M3",
+              2
+            ],
+            [
+              "A-W1B-W1L",
+              2
+            ],
+            [
+              "A-W1L-M3",
+              2
+            ],
+            [
+              "A-R1B-W1B",
+              2
+            ],
+            [
+              "A-R1B-W1L",
+              2
+            ],
+            [
+              "W1B-A-W1L",
+              2
+            ]
+          ],
+          "10000": [
+            [
+              "A-W1B-B",
+              4
+            ],
+            [
+              "W1L-W1B-A",
+              3
+            ],
+            [
+              "A-R1L-W1B",
+              3
+            ],
+            [
+              "W1L-B-A",
+              3
+            ],
+            [
+              "W1L-W1B-R1L",
+              3
+            ],
+            [
+              "W1L-B-R1L",
+              3
+            ],
+            [
+              "A-W1L-B",
+              3
+            ],
+            [
+              "W1L-W1B-B",
+              3
+            ],
+            [
+              "W1B-B-M3",
+              2
+            ],
+            [
+              "A-W1B-W1L",
+              2
+            ],
+            [
+              "A-W1L-M3",
+              2
+            ],
+            [
+              "A-W1B-R1B",
+              2
+            ],
+            [
+              "A-R1B-W1B",
+              2
+            ],
+            [
+              "A-R1B-W1L",
+              2
+            ],
+            [
+              "B-R1B-W1B",
+              2
+            ],
+            [
+              "W1L-A-W1B",
+              2
+            ],
+            [
+              "R1L-W1B-A",
+              2
+            ],
+            [
+              "R1B-R1L-W1L",
+              2
+            ],
+            [
+              "W1B-W1L-B",
+              2
+            ],
+            [
+              "A-M3-W1L",
+              2
+            ]
+          ],
+          "20000": [
+            [
+              "W1B-B-M3",
+              2
+            ],
+            [
+              "A-W1L-M3",
+              2
+            ],
+            [
+              "A-R1L-W1B",
+              2
+            ],
+            [
+              "A-R1B-W1L",
+              2
+            ],
+            [
+              "R1L-W1B-A",
+              2
+            ],
+            [
+              "W1L-W1B-R1L",
+              2
+            ],
+            [
+              "W1B-W1L-B",
+              2
+            ],
+            [
+              "W1L-B-R1L",
+              2
+            ],
+            [
+              "W1L-W1B-A",
+              2
+            ],
+            [
+              "A-M3-W1L",
+              2
+            ],
+            [
+              "W1L-W1B-B",
+              2
+            ],
+            [
+              "M3-A-W1L",
+              2
+            ],
+            [
+              "W1L-B-R1B",
+              2
+            ],
+            [
+              "W1B-W1L-R1B",
+              2
+            ],
+            [
+              "A-W1B-W1L",
+              1
+            ],
+            [
+              "B-W1L-R1B",
+              1
+            ],
+            [
+              "W1L-A-W1B",
+              1
+            ],
+            [
+              "A-W1L-W1B",
+              1
+            ],
+            [
+              "B-M3-W1B",
+              1
+            ],
+            [
+              "W1B-R1B-A",
+              1
+            ]
+          ]
+        }
+      },
+      "by_year": {
+        "2023": {
+          "eligible_races": 266,
+          "overall": {
+            "races": 266,
+            "median_payout_yen": 2130,
+            "mean_payout_yen": 11038.421052631578,
+            "max_payout_yen": 261520,
+            "ge_5000_count": 92,
+            "ge_10000_count": 59,
+            "ge_20000_count": 30,
+            "ge_5000_rate": 0.3458646616541353,
+            "ge_10000_rate": 0.22180451127819548,
+            "ge_20000_rate": 0.11278195488721804
+          },
+          "weakest_top3_count": {
+            "0": {
+              "races": 187,
+              "median_payout_yen": 1050,
+              "mean_payout_yen": 3867.914438502674,
+              "max_payout_yen": 69720,
+              "ge_5000_count": 38,
+              "ge_10000_count": 19,
+              "ge_20000_count": 5,
+              "ge_5000_rate": 0.20320855614973263,
+              "ge_10000_rate": 0.10160427807486631,
+              "ge_20000_rate": 0.026737967914438502,
+              "share": 0.7030075187969925
+            },
+            "1": {
+              "races": 61,
+              "median_payout_yen": 6340,
+              "mean_payout_yen": 23251.147540983606,
+              "max_payout_yen": 261520,
+              "ge_5000_count": 37,
+              "ge_10000_count": 26,
+              "ge_20000_count": 15,
+              "ge_5000_rate": 0.6065573770491803,
+              "ge_10000_rate": 0.4262295081967213,
+              "ge_20000_rate": 0.2459016393442623,
+              "share": 0.22932330827067668
+            },
+            "2": {
+              "races": 18,
+              "median_payout_yen": 25480,
+              "mean_payout_yen": 44144.444444444445,
+              "max_payout_yen": 215410,
+              "ge_5000_count": 17,
+              "ge_10000_count": 14,
+              "ge_20000_count": 10,
+              "ge_5000_rate": 0.9444444444444444,
+              "ge_10000_rate": 0.7777777777777778,
+              "ge_20000_rate": 0.5555555555555556,
+              "share": 0.06766917293233082
+            }
+          },
+          "weakest_included": {
+            "races": 79,
+            "median_payout_yen": 10050,
+            "mean_payout_yen": 28011.645569620254,
+            "max_payout_yen": 261520,
+            "ge_5000_count": 54,
+            "ge_10000_count": 40,
+            "ge_20000_count": 25,
+            "ge_5000_rate": 0.6835443037974683,
+            "ge_10000_rate": 0.5063291139240507,
+            "ge_20000_rate": 0.31645569620253167,
+            "share": 0.29699248120300753,
+            "ge_5000_enrichment_vs_all": 1.9763346175013758,
+            "ge_10000_enrichment_vs_all": 2.2827719373525,
+            "ge_20000_enrichment_vs_all": 2.8059071729957807
+          },
+          "both_weakest_in_top3": {
+            "races": 18,
+            "median_payout_yen": 25480,
+            "mean_payout_yen": 44144.444444444445,
+            "max_payout_yen": 215410,
+            "ge_5000_count": 17,
+            "ge_10000_count": 14,
+            "ge_20000_count": 10,
+            "ge_5000_rate": 0.9444444444444444,
+            "ge_10000_rate": 0.7777777777777778,
+            "ge_20000_rate": 0.5555555555555556,
+            "share": 0.06766917293233082,
+            "ge_5000_enrichment_vs_all": 2.7306763285024154,
+            "ge_10000_enrichment_vs_all": 3.506591337099812,
+            "ge_20000_enrichment_vs_all": 4.9259259259259265
+          },
+          "weakest_head": {
+            "races": 22,
+            "median_payout_yen": 27700,
+            "mean_payout_yen": 58834.545454545456,
+            "max_payout_yen": 261520,
+            "ge_5000_count": 22,
+            "ge_10000_count": 18,
+            "ge_20000_count": 14,
+            "ge_5000_rate": 1.0,
+            "ge_10000_rate": 0.8181818181818182,
+            "ge_20000_rate": 0.6363636363636364,
+            "share": 0.08270676691729323,
+            "ge_5000_enrichment_vs_all": 2.891304347826087,
+            "ge_10000_enrichment_vs_all": 3.688751926040062,
+            "ge_20000_enrichment_vs_all": 5.642424242424243
+          },
+          "weakest_pair_top2": {
+            "races": 9,
+            "median_payout_yen": 25480,
+            "mean_payout_yen": 54547.77777777778,
+            "max_payout_yen": 215410,
+            "ge_5000_count": 9,
+            "ge_10000_count": 6,
+            "ge_20000_count": 5,
+            "ge_5000_rate": 1.0,
+            "ge_10000_rate": 0.6666666666666666,
+            "ge_20000_rate": 0.5555555555555556,
+            "share": 0.03383458646616541,
+            "ge_5000_enrichment_vs_all": 2.891304347826087,
+            "ge_10000_enrichment_vs_all": 3.005649717514124,
+            "ge_20000_enrichment_vs_all": 4.9259259259259265
+          },
+          "weak_mix_counts": {
+            "W1_M2_R0_O0": 38,
+            "W2_M1_R0_O0": 13,
+            "W1_M1_R1_O0": 19,
+            "W2_M0_R1_O0": 5,
+            "W1_M0_R2_O0": 4
+          },
+          "top_weak_role_orders": [
+            [
+              "B-A-W1L",
+              13
+            ],
+            [
+              "B-A-W1B",
+              7
+            ],
+            [
+              "A-B-W1L",
+              5
+            ],
+            [
+              "A-B-W1B",
+              4
+            ],
+            [
+              "W1L-W1B-A",
+              4
+            ],
+            [
+              "A-W1B-W1L",
+              2
+            ],
+            [
+              "A-W1B-R1B",
+              2
+            ],
+            [
+              "A-R1L-W1B",
+              2
+            ],
+            [
+              "W1L-A-W1B",
+              2
+            ],
+            [
+              "R1L-W1B-A",
+              2
+            ],
+            [
+              "W1L-W1B-R1L",
+              2
+            ],
+            [
+              "W1L-B-A",
+              2
+            ],
+            [
+              "A-W1B-B",
+              2
+            ],
+            [
+              "W1L-B-R1L",
+              2
+            ],
+            [
+              "W1B-B-M3",
+              1
+            ],
+            [
+              "A-W1L-M3",
+              1
+            ],
+            [
+              "B-W1L-R1B",
+              1
+            ],
+            [
+              "A-R1B-W1B",
+              1
+            ],
+            [
+              "A-R1B-W1L",
+              1
+            ],
+            [
+              "W1B-A-W1L",
+              1
+            ],
+            [
+              "B-R1B-W1B",
+              1
+            ],
+            [
+              "A-W1L-W1B",
+              1
+            ],
+            [
+              "B-M3-W1B",
+              1
+            ],
+            [
+              "R1B-W1B-A",
+              1
+            ],
+            [
+              "W1B-R1B-A",
+              1
+            ]
+          ],
+          "top_high_payout_weak_orders": {
+            "5000": [
+              [
+                "W1L-W1B-A",
+                4
+              ],
+              [
+                "B-A-W1B",
+                3
+              ],
+              [
+                "A-W1B-R1B",
+                2
+              ],
+              [
+                "A-R1L-W1B",
+                2
+              ],
+              [
+                "W1L-A-W1B",
+                2
+              ],
+              [
+                "R1L-W1B-A",
+                2
+              ],
+              [
+                "W1L-W1B-R1L",
+                2
+              ],
+              [
+                "W1L-B-A",
+                2
+              ],
+              [
+                "B-A-W1L",
+                2
+              ],
+              [
+                "A-W1B-B",
+                2
+              ],
+              [
+                "W1L-B-R1L",
+                2
+              ],
+              [
+                "W1B-B-M3",
+                1
+              ],
+              [
+                "A-W1B-W1L",
+                1
+              ],
+              [
+                "A-W1L-M3",
+                1
+              ],
+              [
+                "B-W1L-R1B",
+                1
+              ],
+              [
+                "A-R1B-W1B",
+                1
+              ],
+              [
+                "A-R1B-W1L",
+                1
+              ],
+              [
+                "W1B-A-W1L",
+                1
+              ],
+              [
+                "B-R1B-W1B",
+                1
+              ],
+              [
+                "A-W1L-W1B",
+                1
+              ]
+            ],
+            "10000": [
+              [
+                "A-W1B-R1B",
+                2
+              ],
+              [
+                "W1L-W1B-A",
+                2
+              ],
+              [
+                "A-R1L-W1B",
+                2
+              ],
+              [
+                "W1L-A-W1B",
+                2
+              ],
+              [
+                "R1L-W1B-A",
+                2
+              ],
+              [
+                "W1L-B-A",
+                2
+              ],
+              [
+                "W1L-B-R1L",
+                2
+              ],
+              [
+                "W1B-B-M3",
+                1
+              ],
+              [
+                "A-W1B-W1L",
+                1
+              ],
+              [
+                "A-W1L-M3",
+                1
+              ],
+              [
+                "B-W1L-R1B",
+                1
+              ],
+              [
+                "A-R1B-W1B",
+                1
+              ],
+              [
+                "A-R1B-W1L",
+                1
+              ],
+              [
+                "W1B-A-W1L",
+                1
+              ],
+              [
+                "B-R1B-W1B",
+                1
+              ],
+              [
+                "A-W1L-W1B",
+                1
+              ],
+              [
+                "B-M3-W1B",
+                1
+              ],
+              [
+                "R1B-W1B-A",
+                1
+              ],
+              [
+                "W1B-R1B-A",
+                1
+              ],
+              [
+                "A-W1L-R1B",
+                1
+              ]
+            ],
+            "20000": [
+              [
+                "R1L-W1B-A",
+                2
+              ],
+              [
+                "W1L-B-R1L",
+                2
+              ],
+              [
+                "W1B-B-M3",
+                1
+              ],
+              [
+                "A-W1B-W1L",
+                1
+              ],
+              [
+                "A-W1L-M3",
+                1
+              ],
+              [
+                "B-W1L-R1B",
+                1
+              ],
+              [
+                "A-R1L-W1B",
+                1
+              ],
+              [
+                "A-R1B-W1L",
+                1
+              ],
+              [
+                "W1L-A-W1B",
+                1
+              ],
+              [
+                "A-W1L-W1B",
+                1
+              ],
+              [
+                "B-M3-W1B",
+                1
+              ],
+              [
+                "W1B-R1B-A",
+                1
+              ],
+              [
+                "W1L-B-A",
+                1
+              ],
+              [
+                "B-W1L-W1B",
+                1
+              ],
+              [
+                "W1B-R1L-W1L",
+                1
+              ],
+              [
+                "W1L-R1B-R1L",
+                1
+              ],
+              [
+                "W1L-W1B-R1L",
+                1
+              ],
+              [
+                "W1B-W1L-R1L",
+                1
+              ],
+              [
+                "W1B-W1L-B",
+                1
+              ],
+              [
+                "W1L-A-B",
+                1
+              ]
+            ]
+          }
+        },
+        "2024": {
+          "eligible_races": 257,
+          "overall": {
+            "races": 257,
+            "median_payout_yen": 1810,
+            "mean_payout_yen": 8865.525291828793,
+            "max_payout_yen": 205160,
+            "ge_5000_count": 83,
+            "ge_10000_count": 51,
+            "ge_20000_count": 30,
+            "ge_5000_rate": 0.3229571984435798,
+            "ge_10000_rate": 0.19844357976653695,
+            "ge_20000_rate": 0.11673151750972763
+          },
+          "weakest_top3_count": {
+            "0": {
+              "races": 196,
+              "median_payout_yen": 1060,
+              "mean_payout_yen": 4541.0204081632655,
+              "max_payout_yen": 92280,
+              "ge_5000_count": 41,
+              "ge_10000_count": 19,
+              "ge_20000_count": 10,
+              "ge_5000_rate": 0.20918367346938777,
+              "ge_10000_rate": 0.09693877551020408,
+              "ge_20000_rate": 0.05102040816326531,
+              "share": 0.7626459143968871
+            },
+            "1": {
+              "races": 52,
+              "median_payout_yen": 9370,
+              "mean_payout_yen": 22571.53846153846,
+              "max_payout_yen": 205160,
+              "ge_5000_count": 33,
+              "ge_10000_count": 25,
+              "ge_20000_count": 14,
+              "ge_5000_rate": 0.6346153846153846,
+              "ge_10000_rate": 0.4807692307692308,
+              "ge_20000_rate": 0.2692307692307692,
+              "share": 0.20233463035019456
+            },
+            "2": {
+              "races": 9,
+              "median_payout_yen": 21120,
+              "mean_payout_yen": 23853.333333333332,
+              "max_payout_yen": 56250,
+              "ge_5000_count": 9,
+              "ge_10000_count": 7,
+              "ge_20000_count": 6,
+              "ge_5000_rate": 1.0,
+              "ge_10000_rate": 0.7777777777777778,
+              "ge_20000_rate": 0.6666666666666666,
+              "share": 0.03501945525291829
+            }
+          },
+          "weakest_included": {
+            "races": 61,
+            "median_payout_yen": 12570,
+            "mean_payout_yen": 22760.655737704918,
+            "max_payout_yen": 205160,
+            "ge_5000_count": 42,
+            "ge_10000_count": 32,
+            "ge_20000_count": 20,
+            "ge_5000_rate": 0.6885245901639344,
+            "ge_10000_rate": 0.5245901639344263,
+            "ge_20000_rate": 0.32786885245901637,
+            "share": 0.23735408560311283,
+            "ge_5000_enrichment_vs_all": 2.1319375864112184,
+            "ge_10000_enrichment_vs_all": 2.6435229829636775,
+            "ge_20000_enrichment_vs_all": 2.8087431693989067
+          },
+          "both_weakest_in_top3": {
+            "races": 9,
+            "median_payout_yen": 21120,
+            "mean_payout_yen": 23853.333333333332,
+            "max_payout_yen": 56250,
+            "ge_5000_count": 9,
+            "ge_10000_count": 7,
+            "ge_20000_count": 6,
+            "ge_5000_rate": 1.0,
+            "ge_10000_rate": 0.7777777777777778,
+            "ge_20000_rate": 0.6666666666666666,
+            "share": 0.03501945525291829,
+            "ge_5000_enrichment_vs_all": 3.0963855421686746,
+            "ge_10000_enrichment_vs_all": 3.9193899782135078,
+            "ge_20000_enrichment_vs_all": 5.71111111111111
+          },
+          "weakest_head": {
+            "races": 15,
+            "median_payout_yen": 20660,
+            "mean_payout_yen": 41709.333333333336,
+            "max_payout_yen": 181790,
+            "ge_5000_count": 15,
+            "ge_10000_count": 13,
+            "ge_20000_count": 8,
+            "ge_5000_rate": 1.0,
+            "ge_10000_rate": 0.8666666666666667,
+            "ge_20000_rate": 0.5333333333333333,
+            "share": 0.058365758754863814,
+            "ge_5000_enrichment_vs_all": 3.0963855421686746,
+            "ge_10000_enrichment_vs_all": 4.367320261437909,
+            "ge_20000_enrichment_vs_all": 4.568888888888889
+          },
+          "weakest_pair_top2": {
+            "races": 5,
+            "median_payout_yen": 21120,
+            "mean_payout_yen": 28938.0,
+            "max_payout_yen": 56250,
+            "ge_5000_count": 5,
+            "ge_10000_count": 5,
+            "ge_20000_count": 4,
+            "ge_5000_rate": 1.0,
+            "ge_10000_rate": 1.0,
+            "ge_20000_rate": 0.8,
+            "share": 0.019455252918287938,
+            "ge_5000_enrichment_vs_all": 3.0963855421686746,
+            "ge_10000_enrichment_vs_all": 5.03921568627451,
+            "ge_20000_enrichment_vs_all": 6.8533333333333335
+          },
+          "weak_mix_counts": {
+            "W1_M1_R1_O0": 13,
+            "W1_M2_R0_O0": 37,
+            "W2_M1_R0_O0": 6,
+            "W2_M0_R1_O0": 3,
+            "W1_M0_R2_O0": 2
+          },
+          "top_weak_role_orders": [
+            [
+              "A-B-W1L",
+              8
+            ],
+            [
+              "A-B-W1B",
+              8
+            ],
+            [
+              "B-A-W1L",
+              5
+            ],
+            [
+              "A-W1L-B",
+              2
+            ],
+            [
+              "W1L-W1B-B",
+              2
+            ],
+            [
+              "W1L-W1B-R1L",
+              2
+            ],
+            [
+              "A-W1B-B",
+              2
+            ],
+            [
+              "B-A-W1B",
+              2
+            ],
+            [
+              "W1L-A-M3",
+              2
+            ],
+            [
+              "R1L-A-W1B",
+              1
+            ],
+            [
+              "A-M3-W1L",
+              1
+            ],
+            [
+              "B-M3-W1L",
+              1
+            ],
+            [
+              "M3-A-W1L",
+              1
+            ],
+            [
+              "W1B-B-R1L",
+              1
+            ],
+            [
+              "W1B-A-B",
+              1
+            ],
+            [
+              "W1L-B-R1B",
+              1
+            ],
+            [
+              "B-W1B-W1L",
+              1
+            ],
+            [
+              "W1B-R1B-B",
+              1
+            ],
+            [
+              "R1L-W1B-B",
+              1
+            ],
+            [
+              "R1L-W1L-A",
+              1
+            ],
+            [
+              "W1B-A-W1L",
+              1
+            ],
+            [
+              "A-W1L-M3",
+              1
+            ],
+            [
+              "W1L-B-R1L",
+              1
+            ],
+            [
+              "W1L-W1B-A",
+              1
+            ],
+            [
+              "B-W1B-A",
+              1
+            ]
+          ],
+          "top_high_payout_weak_orders": {
+            "5000": [
+              [
+                "A-W1L-B",
+                2
+              ],
+              [
+                "W1L-W1B-B",
+                2
+              ],
+              [
+                "A-B-W1B",
+                2
+              ],
+              [
+                "W1L-W1B-R1L",
+                2
+              ],
+              [
+                "A-W1B-B",
+                2
+              ],
+              [
+                "W1L-A-M3",
+                2
+              ],
+              [
+                "R1L-A-W1B",
+                1
+              ],
+              [
+                "A-M3-W1L",
+                1
+              ],
+              [
+                "B-M3-W1L",
+                1
+              ],
+              [
+                "M3-A-W1L",
+                1
+              ],
+              [
+                "W1B-B-R1L",
+                1
+              ],
+              [
+                "W1B-A-B",
+                1
+              ],
+              [
+                "W1L-B-R1B",
+                1
+              ],
+              [
+                "B-W1B-W1L",
+                1
+              ],
+              [
+                "W1B-R1B-B",
+                1
+              ],
+              [
+                "R1L-W1B-B",
+                1
+              ],
+              [
+                "R1L-W1L-A",
+                1
+              ],
+              [
+                "W1B-A-W1L",
+                1
+              ],
+              [
+                "A-W1L-M3",
+                1
+              ],
+              [
+                "W1L-B-R1L",
+                1
+              ]
+            ],
+            "10000": [
+              [
+                "W1L-W1B-B",
+                2
+              ],
+              [
+                "W1L-W1B-R1L",
+                2
+              ],
+              [
+                "R1L-A-W1B",
+                1
+              ],
+              [
+                "A-M3-W1L",
+                1
+              ],
+              [
+                "A-W1L-B",
+                1
+              ],
+              [
+                "B-M3-W1L",
+                1
+              ],
+              [
+                "M3-A-W1L",
+                1
+              ],
+              [
+                "W1B-B-R1L",
+                1
+              ],
+              [
+                "W1B-A-B",
+                1
+              ],
+              [
+                "W1L-B-R1B",
+                1
+              ],
+              [
+                "B-W1B-W1L",
+                1
+              ],
+              [
+                "W1B-R1B-B",
+                1
+              ],
+              [
+                "R1L-W1B-B",
+                1
+              ],
+              [
+                "R1L-W1L-A",
+                1
+              ],
+              [
+                "A-W1L-M3",
+                1
+              ],
+              [
+                "W1L-B-R1L",
+                1
+              ],
+              [
+                "W1L-W1B-A",
+                1
+              ],
+              [
+                "B-W1B-A",
+                1
+              ],
+              [
+                "A-W1L-R1L",
+                1
+              ],
+              [
+                "A-W1B-B",
+                1
+              ]
+            ],
+            "20000": [
+              [
+                "W1L-W1B-B",
+                2
+              ],
+              [
+                "R1L-A-W1B",
+                1
+              ],
+              [
+                "A-M3-W1L",
+                1
+              ],
+              [
+                "W1L-W1B-R1L",
+                1
+              ],
+              [
+                "M3-A-W1L",
+                1
+              ],
+              [
+                "W1B-A-B",
+                1
+              ],
+              [
+                "W1L-B-R1B",
+                1
+              ],
+              [
+                "B-W1B-W1L",
+                1
+              ],
+              [
+                "R1L-W1B-B",
+                1
+              ],
+              [
+                "A-W1L-M3",
+                1
+              ],
+              [
+                "W1L-W1B-A",
+                1
+              ],
+              [
+                "B-W1B-R1B",
+                1
+              ],
+              [
+                "R1L-W1B-R1B",
+                1
+              ],
+              [
+                "R1B-B-W1B",
+                1
+              ],
+              [
+                "R1B-A-W1B",
+                1
+              ],
+              [
+                "W1L-A-R1B",
+                1
+              ],
+              [
+                "A-R1B-W1B",
+                1
+              ],
+              [
+                "W1B-M3-A",
+                1
+              ],
+              [
+                "R1L-W1L-W1B",
+                1
+              ]
+            ]
+          }
+        },
+        "2025": {
+          "eligible_races": 262,
+          "overall": {
+            "races": 262,
+            "median_payout_yen": 1990,
+            "mean_payout_yen": 8831.45038167939,
+            "max_payout_yen": 207280,
+            "ge_5000_count": 85,
+            "ge_10000_count": 53,
+            "ge_20000_count": 27,
+            "ge_5000_rate": 0.3244274809160305,
+            "ge_10000_rate": 0.20229007633587787,
+            "ge_20000_rate": 0.10305343511450382
+          },
+          "weakest_top3_count": {
+            "0": {
+              "races": 184,
+              "median_payout_yen": 1130,
+              "mean_payout_yen": 3953.2065217391305,
+              "max_payout_yen": 62980,
+              "ge_5000_count": 40,
+              "ge_10000_count": 22,
+              "ge_20000_count": 6,
+              "ge_5000_rate": 0.21739130434782608,
+              "ge_10000_rate": 0.11956521739130435,
+              "ge_20000_rate": 0.03260869565217391,
+              "share": 0.7022900763358778
+            },
+            "1": {
+              "races": 70,
+              "median_payout_yen": 5620,
+              "mean_payout_yen": 19092.85714285714,
+              "max_payout_yen": 207280,
+              "ge_5000_count": 38,
+              "ge_10000_count": 24,
+              "ge_20000_count": 17,
+              "ge_5000_rate": 0.5428571428571428,
+              "ge_10000_rate": 0.34285714285714286,
+              "ge_20000_rate": 0.24285714285714285,
+              "share": 0.26717557251908397
+            },
+            "2": {
+              "races": 8,
+              "median_payout_yen": 20400,
+              "mean_payout_yen": 31243.75,
+              "max_payout_yen": 79870,
+              "ge_5000_count": 7,
+              "ge_10000_count": 7,
+              "ge_20000_count": 4,
+              "ge_5000_rate": 0.875,
+              "ge_10000_rate": 0.875,
+              "ge_20000_rate": 0.5,
+              "share": 0.030534351145038167
+            }
+          },
+          "weakest_included": {
+            "races": 78,
+            "median_payout_yen": 6740,
+            "mean_payout_yen": 20339.102564102563,
+            "max_payout_yen": 207280,
+            "ge_5000_count": 45,
+            "ge_10000_count": 31,
+            "ge_20000_count": 21,
+            "ge_5000_rate": 0.5769230769230769,
+            "ge_10000_rate": 0.3974358974358974,
+            "ge_20000_rate": 0.2692307692307692,
+            "share": 0.29770992366412213,
+            "ge_5000_enrichment_vs_all": 1.7782805429864252,
+            "ge_10000_enrichment_vs_all": 1.9646831156265117,
+            "ge_20000_enrichment_vs_all": 2.6125356125356123
+          },
+          "both_weakest_in_top3": {
+            "races": 8,
+            "median_payout_yen": 20400,
+            "mean_payout_yen": 31243.75,
+            "max_payout_yen": 79870,
+            "ge_5000_count": 7,
+            "ge_10000_count": 7,
+            "ge_20000_count": 4,
+            "ge_5000_rate": 0.875,
+            "ge_10000_rate": 0.875,
+            "ge_20000_rate": 0.5,
+            "share": 0.030534351145038167,
+            "ge_5000_enrichment_vs_all": 2.697058823529412,
+            "ge_10000_enrichment_vs_all": 4.3254716981132075,
+            "ge_20000_enrichment_vs_all": 4.851851851851851
+          },
+          "weakest_head": {
+            "races": 15,
+            "median_payout_yen": 17900,
+            "mean_payout_yen": 28745.333333333332,
+            "max_payout_yen": 79870,
+            "ge_5000_count": 14,
+            "ge_10000_count": 12,
+            "ge_20000_count": 7,
+            "ge_5000_rate": 0.9333333333333333,
+            "ge_10000_rate": 0.8,
+            "ge_20000_rate": 0.4666666666666667,
+            "share": 0.05725190839694656,
+            "ge_5000_enrichment_vs_all": 2.8768627450980393,
+            "ge_10000_enrichment_vs_all": 3.9547169811320755,
+            "ge_20000_enrichment_vs_all": 4.528395061728395
+          },
+          "weakest_pair_top2": {
+            "races": 5,
+            "median_payout_yen": 20400,
+            "mean_payout_yen": 30332.0,
+            "max_payout_yen": 64490,
+            "ge_5000_count": 5,
+            "ge_10000_count": 5,
+            "ge_20000_count": 3,
+            "ge_5000_rate": 1.0,
+            "ge_10000_rate": 1.0,
+            "ge_20000_rate": 0.6,
+            "share": 0.019083969465648856,
+            "ge_5000_enrichment_vs_all": 3.0823529411764707,
+            "ge_10000_enrichment_vs_all": 4.943396226415095,
+            "ge_20000_enrichment_vs_all": 5.822222222222222
+          },
+          "weak_mix_counts": {
+            "W1_M2_R0_O0": 52,
+            "W1_M1_R1_O0": 13,
+            "W2_M1_R0_O0": 6,
+            "W2_M0_R1_O0": 2,
+            "W1_M0_R2_O0": 5
+          },
+          "top_weak_role_orders": [
+            [
+              "A-B-W1B",
+              11
+            ],
+            [
+              "B-A-W1B",
+              8
+            ],
+            [
+              "A-B-W1L",
+              6
+            ],
+            [
+              "A-W1L-B",
+              5
+            ],
+            [
+              "B-A-W1L",
+              4
+            ],
+            [
+              "B-W1B-A",
+              4
+            ],
+            [
+              "A-W1B-B",
+              4
+            ],
+            [
+              "W1B-W1L-R1B",
+              2
+            ],
+            [
+              "R1L-R1B-W1L",
+              2
+            ],
+            [
+              "A-M3-W1B",
+              1
+            ],
+            [
+              "A-R1B-W1B",
+              1
+            ],
+            [
+              "B-R1B-W1L",
+              1
+            ],
+            [
+              "W1B-R1L-A",
+              1
+            ],
+            [
+              "A-W1L-R1L",
+              1
+            ],
+            [
+              "W1L-B-M3",
+              1
+            ],
+            [
+              "W1L-B-W1B",
+              1
+            ],
+            [
+              "W1B-W1L-B",
+              1
+            ],
+            [
+              "A-R1B-W1L",
+              1
+            ],
+            [
+              "W1B-B-A",
+              1
+            ],
+            [
+              "B-W1B-R1L",
+              1
+            ],
+            [
+              "R1L-W1L-R1B",
+              1
+            ],
+            [
+              "A-W1B-W1L",
+              1
+            ],
+            [
+              "W1L-B-A",
+              1
+            ],
+            [
+              "A-R1L-W1B",
+              1
+            ],
+            [
+              "B-R1B-W1B",
+              1
+            ]
+          ],
+          "top_high_payout_weak_orders": {
+            "5000": [
+              [
+                "A-W1L-B",
+                4
+              ],
+              [
+                "A-W1B-B",
+                3
+              ],
+              [
+                "W1B-W1L-R1B",
+                2
+              ],
+              [
+                "B-A-W1L",
+                2
+              ],
+              [
+                "R1L-R1B-W1L",
+                2
+              ],
+              [
+                "B-W1B-A",
+                2
+              ],
+              [
+                "A-M3-W1B",
+                1
+              ],
+              [
+                "B-R1B-W1L",
+                1
+              ],
+              [
+                "W1B-R1L-A",
+                1
+              ],
+              [
+                "A-W1L-R1L",
+                1
+              ],
+              [
+                "W1L-B-M3",
+                1
+              ],
+              [
+                "W1L-B-W1B",
+                1
+              ],
+              [
+                "W1B-W1L-B",
+                1
+              ],
+              [
+                "A-R1B-W1L",
+                1
+              ],
+              [
+                "W1B-B-A",
+                1
+              ],
+              [
+                "A-B-W1L",
+                1
+              ],
+              [
+                "B-W1B-R1L",
+                1
+              ],
+              [
+                "R1L-W1L-R1B",
+                1
+              ],
+              [
+                "A-W1B-W1L",
+                1
+              ],
+              [
+                "W1L-B-A",
+                1
+              ]
+            ],
+            "10000": [
+              [
+                "W1B-W1L-R1B",
+                2
+              ],
+              [
+                "A-W1L-B",
+                2
+              ],
+              [
+                "A-W1B-B",
+                2
+              ],
+              [
+                "A-M3-W1B",
+                1
+              ],
+              [
+                "B-R1B-W1L",
+                1
+              ],
+              [
+                "W1B-R1L-A",
+                1
+              ],
+              [
+                "A-W1L-R1L",
+                1
+              ],
+              [
+                "W1L-B-M3",
+                1
+              ],
+              [
+                "W1L-B-W1B",
+                1
+              ],
+              [
+                "W1B-W1L-B",
+                1
+              ],
+              [
+                "A-R1B-W1L",
+                1
+              ],
+              [
+                "W1B-B-A",
+                1
+              ],
+              [
+                "B-W1B-R1L",
+                1
+              ],
+              [
+                "R1L-W1L-R1B",
+                1
+              ],
+              [
+                "A-W1B-W1L",
+                1
+              ],
+              [
+                "W1L-B-A",
+                1
+              ],
+              [
+                "A-R1L-W1B",
+                1
+              ],
+              [
+                "B-R1B-W1B",
+                1
+              ],
+              [
+                "W1L-W1B-B",
+                1
+              ],
+              [
+                "M3-A-W1L",
+                1
+              ]
+            ],
+            "20000": [
+              [
+                "W1B-W1L-R1B",
+                2
+              ],
+              [
+                "A-M3-W1B",
+                1
+              ],
+              [
+                "B-R1B-W1L",
+                1
+              ],
+              [
+                "W1B-R1L-A",
+                1
+              ],
+              [
+                "A-W1L-R1L",
+                1
+              ],
+              [
+                "W1L-B-W1B",
+                1
+              ],
+              [
+                "W1B-W1L-B",
+                1
+              ],
+              [
+                "A-R1B-W1L",
+                1
+              ],
+              [
+                "B-W1B-R1L",
+                1
+              ],
+              [
+                "R1L-W1L-R1B",
+                1
+              ],
+              [
+                "A-R1L-W1B",
+                1
+              ],
+              [
+                "A-W1L-B",
+                1
+              ],
+              [
+                "B-R1B-W1B",
+                1
+              ],
+              [
+                "M3-A-W1L",
+                1
+              ],
+              [
+                "W1B-B-M3",
+                1
+              ],
+              [
+                "W1L-B-R1B",
+                1
+              ],
+              [
+                "A-W1B-M3",
+                1
+              ],
+              [
+                "R1B-W1L-A",
+                1
+              ],
+              [
+                "R1L-R1B-W1L",
+                1
+              ],
+              [
+                "A-M3-W1L",
+                1
+              ]
+            ]
+          }
+        }
+      }
+    }
+  },
+  "combined": {
+    "eligible_races": 1882,
+    "overall": {
+      "races": 1882,
+      "median_payout_yen": 2930,
+      "mean_payout_yen": 13318.18278427205,
+      "max_payout_yen": 610980,
+      "ge_5000_count": 738,
+      "ge_10000_count": 480,
+      "ge_20000_count": 283,
+      "ge_5000_rate": 0.39213602550478216,
+      "ge_10000_rate": 0.255047821466525,
+      "ge_20000_rate": 0.1503719447396387
+    },
+    "weakest_top3_count": {
+      "0": {
+        "races": 1288,
+        "median_payout_yen": 1730,
+        "mean_payout_yen": 5901.576086956522,
+        "max_payout_yen": 218840,
+        "ge_5000_count": 317,
+        "ge_10000_count": 161,
+        "ge_20000_count": 77,
+        "ge_5000_rate": 0.24611801242236025,
+        "ge_10000_rate": 0.125,
+        "ge_20000_rate": 0.059782608695652176,
+        "share": 0.6843783209351754
+      },
+      "1": {
+        "races": 480,
+        "median_payout_yen": 9960,
+        "mean_payout_yen": 28297.145833333332,
+        "max_payout_yen": 610980,
+        "ge_5000_count": 320,
+        "ge_10000_count": 238,
+        "ge_20000_count": 152,
+        "ge_5000_rate": 0.6666666666666666,
+        "ge_10000_rate": 0.49583333333333335,
+        "ge_20000_rate": 0.31666666666666665,
+        "share": 0.255047821466525
+      },
+      "2": {
+        "races": 114,
+        "median_payout_yen": 18140,
+        "mean_payout_yen": 34043.508771929824,
+        "max_payout_yen": 370610,
+        "ge_5000_count": 101,
+        "ge_10000_count": 81,
+        "ge_20000_count": 54,
+        "ge_5000_rate": 0.8859649122807017,
+        "ge_10000_rate": 0.7105263157894737,
+        "ge_20000_rate": 0.47368421052631576,
+        "share": 0.06057385759829968
+      }
+    },
+    "weakest_included": {
+      "races": 594,
+      "median_payout_yen": 11830,
+      "mean_payout_yen": 29399.983164983165,
+      "max_payout_yen": 610980,
+      "ge_5000_count": 421,
+      "ge_10000_count": 319,
+      "ge_20000_count": 206,
+      "ge_5000_rate": 0.7087542087542088,
+      "ge_10000_rate": 0.5370370370370371,
+      "ge_20000_rate": 0.3468013468013468,
+      "share": 0.31562167906482463,
+      "ge_5000_enrichment_vs_all": 1.8074192694788902,
+      "ge_10000_enrichment_vs_all": 2.105632716049383,
+      "ge_20000_enrichment_vs_all": 2.3062902285517124
+    },
+    "both_weakest_in_top3": {
+      "races": 114,
+      "median_payout_yen": 18140,
+      "mean_payout_yen": 34043.508771929824,
+      "max_payout_yen": 370610,
+      "ge_5000_count": 101,
+      "ge_10000_count": 81,
+      "ge_20000_count": 54,
+      "ge_5000_rate": 0.8859649122807017,
+      "ge_10000_rate": 0.7105263157894737,
+      "ge_20000_rate": 0.47368421052631576,
+      "share": 0.06057385759829968,
+      "ge_5000_enrichment_vs_all": 2.259330575761898,
+      "ge_10000_enrichment_vs_all": 2.7858552631578943,
+      "ge_20000_enrichment_vs_all": 3.150083689789845
+    },
+    "weakest_head": {
+      "races": 170,
+      "median_payout_yen": 20900,
+      "mean_payout_yen": 42286.64705882353,
+      "max_payout_yen": 309040,
+      "ge_5000_count": 157,
+      "ge_10000_count": 125,
+      "ge_20000_count": 89,
+      "ge_5000_rate": 0.9235294117647059,
+      "ge_10000_rate": 0.7352941176470589,
+      "ge_20000_rate": 0.5235294117647059,
+      "share": 0.09032943676939426,
+      "ge_5000_enrichment_vs_all": 2.355125139486689,
+      "ge_10000_enrichment_vs_all": 2.8829656862745097,
+      "ge_20000_enrichment_vs_all": 3.4815630845977967
+    },
+    "weakest_pair_top2": {
+      "races": 64,
+      "median_payout_yen": 16650,
+      "mean_payout_yen": 26159.375,
+      "max_payout_yen": 215410,
+      "ge_5000_count": 55,
+      "ge_10000_count": 40,
+      "ge_20000_count": 25,
+      "ge_5000_rate": 0.859375,
+      "ge_10000_rate": 0.625,
+      "ge_20000_rate": 0.390625,
+      "share": 0.03400637619553666,
+      "ge_5000_enrichment_vs_all": 2.1915226964769645,
+      "ge_10000_enrichment_vs_all": 2.450520833333333,
+      "ge_20000_enrichment_vs_all": 2.597725265017668
+    },
+    "weak_mix_counts": {
+      "W2_M1_R0_O0": 81,
+      "W1_M2_R0_O0": 270,
+      "W1_M1_R1_O0": 154,
+      "W1_M0_R2_O0": 53,
+      "W2_M0_R1_O0": 33,
+      "W1_M0_R1_O1": 2,
+      "W1_M1_R0_O1": 1
+    },
+    "top_weak_role_orders": [
+      [
+        "A-B-W1L",
+        40
+      ],
+      [
+        "A-B-W1B",
+        40
+      ],
+      [
+        "B-A-W1L",
+        38
+      ],
+      [
+        "B-A-W1B",
+        33
+      ],
+      [
+        "B-W1B-A",
+        15
+      ],
+      [
+        "W1L-W1B-B",
+        13
+      ],
+      [
+        "W1L-B-A",
+        12
+      ],
+      [
+        "A-W1L-B",
+        12
+      ],
+      [
+        "W1L-W1B-A",
+        12
+      ],
+      [
+        "R1L-R1B-W1L",
+        12
+      ],
+      [
+        "A-W1B-B",
+        12
+      ],
+      [
+        "R1B-R1L-W1L",
+        10
+      ],
+      [
+        "W1B-W1L-B",
+        9
+      ],
+      [
+        "W1L-A-W1B",
+        8
+      ],
+      [
+        "B-W1L-A",
+        8
+      ],
+      [
+        "W1B-B-A",
+        8
+      ],
+      [
+        "B-M3-W1B",
+        8
+      ],
+      [
+        "B-W1B-R1B",
+        8
+      ],
+      [
+        "A-W1L-M3",
+        7
+      ],
+      [
+        "B-R1B-W1B",
+        7
+      ],
+      [
+        "W1L-W1B-R1L",
+        7
+      ],
+      [
+        "A-R1B-W1L",
+        7
+      ],
+      [
+        "A-W1L-R1L",
+        7
+      ],
+      [
+        "R1L-W1B-R1B",
+        7
+      ],
+      [
+        "A-R1L-W1B",
+        6
+      ]
+    ],
+    "top_high_payout_weak_orders": {
+      "5000": [
+        [
+          "B-W1B-A",
+          12
+        ],
+        [
+          "W1L-B-A",
+          11
+        ],
+        [
+          "W1L-W1B-A",
+          11
+        ],
+        [
+          "A-W1B-B",
+          11
+        ],
+        [
+          "W1L-W1B-B",
+          10
+        ],
+        [
+          "B-A-W1L",
+          9
+        ],
+        [
+          "B-A-W1B",
+          9
+        ],
+        [
+          "W1L-A-W1B",
+          8
+        ],
+        [
+          "W1B-W1L-B",
+          8
+        ],
+        [
+          "W1B-B-A",
+          8
+        ],
+        [
+          "R1L-R1B-W1L",
+          8
+        ],
+        [
+          "B-W1B-R1B",
+          8
+        ],
+        [
+          "R1B-R1L-W1L",
+          7
+        ],
+        [
+          "A-W1L-M3",
+          7
+        ],
+        [
+          "B-R1B-W1B",
+          7
+        ],
+        [
+          "B-M3-W1B",
+          7
+        ],
+        [
+          "A-W1L-R1L",
+          7
+        ],
+        [
+          "R1L-W1B-R1B",
+          7
+        ],
+        [
+          "A-R1L-W1B",
+          6
+        ],
+        [
+          "A-R1B-W1L",
+          6
+        ]
+      ],
+      "10000": [
+        [
+          "B-W1B-A",
+          9
+        ],
+        [
+          "W1L-W1B-A",
+          8
+        ],
+        [
+          "W1L-B-A",
+          8
+        ],
+        [
+          "A-W1L-M3",
+          7
+        ],
+        [
+          "B-W1B-R1B",
+          7
+        ],
+        [
+          "A-W1L-R1L",
+          7
+        ],
+        [
+          "A-W1B-B",
+          7
+        ],
+        [
+          "W1L-A-W1B",
+          6
+        ],
+        [
+          "R1B-R1L-W1L",
+          6
+        ],
+        [
+          "B-R1B-W1B",
+          6
+        ],
+        [
+          "A-R1L-W1B",
+          6
+        ],
+        [
+          "W1B-B-A",
+          6
+        ],
+        [
+          "W1L-W1B-B",
+          6
+        ],
+        [
+          "W1L-B-W1B",
+          5
+        ],
+        [
+          "W1L-W1B-R1B",
+          5
+        ],
+        [
+          "A-R1B-W1L",
+          5
+        ],
+        [
+          "W1B-W1L-B",
+          5
+        ],
+        [
+          "R1L-W1B-R1B",
+          5
+        ],
+        [
+          "W1B-B-M3",
+          4
+        ],
+        [
+          "A-W1B-W1L",
+          4
+        ]
+      ],
+      "20000": [
+        [
+          "A-W1L-M3",
+          6
+        ],
+        [
+          "W1L-B-A",
+          6
+        ],
+        [
+          "A-R1L-W1B",
+          5
+        ],
+        [
+          "W1L-W1B-A",
+          5
+        ],
+        [
+          "W1L-A-W1B",
+          4
+        ],
+        [
+          "W1B-B-M3",
+          4
+        ],
+        [
+          "W1L-W1B-M3",
+          4
+        ],
+        [
+          "B-W1B-R1B",
+          4
+        ],
+        [
+          "W1B-W1L-B",
+          4
+        ],
+        [
+          "B-W1L-R1L",
+          4
+        ],
+        [
+          "W1L-B-R1B",
+          4
+        ],
+        [
+          "W1L-B-W1B",
+          3
+        ],
+        [
+          "B-R1B-W1B",
+          3
+        ],
+        [
+          "W1L-A-B",
+          3
+        ],
+        [
+          "R1B-W1L-B",
+          3
+        ],
+        [
+          "A-R1B-W1L",
+          3
+        ],
+        [
+          "W1B-A-W1L",
+          3
+        ],
+        [
+          "B-M3-W1B",
+          3
+        ],
+        [
+          "W1B-R1B-A",
+          3
+        ],
+        [
+          "R1L-A-W1B",
+          3
+        ]
+      ]
+    }
+  }
+}
