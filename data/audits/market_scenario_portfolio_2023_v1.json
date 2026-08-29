@@ -1,0 +1,73 @@
+{
+  "status": "MARKET_SCENARIO_PORTFOLIO_2023_V1_HOBBY_SIMULATION",
+  "year": 2023,
+  "years_read": [
+    2023
+  ],
+  "evaluation_year_2024_used": false,
+  "evaluation_year_2025_used": false,
+  "evaluation_year_2026_used": false,
+  "odds_phase": "final",
+  "important_limit": "Exploratory 2023 in-sample hobby simulation using final odds. v1 rules were defined from prior 2023 exploratory findings, so this is not OOS evidence and not T-10 executable performance.",
+  "strategy_v1_machine_definition": {
+    "main": "Single highest-consensus set by sqrt(P_trio * P_trifecta_set).",
+    "middle_scenario": "For each outsider relative to main1, inspect the three one-car-replacement sets. Require P_trifecta_set>P_trio in at least two of the three; buy only the strongest-delta representative.",
+    "deep_hole_scenario": "Among sets sharing <=1 main car, require positive cross-market delta plus broad six-order support. A common outsider core pair must recur in at least two qualifying alternative sets; buy one representative per distinct supported core, deduplicated by representative ticket.",
+    "selection_order": "main -> all qualifying middle scenario representatives by scenario score -> all qualifying deep-hole representatives by scenario score, each only if the full 100-yen-unit dutched portfolio remains strictly profitable on every ticket.",
+    "popularity_or_odds_band_used_for_scenario_selection": false,
+    "no_trigami": "Every selected ticket must pay strictly more than total race stake after integer 100-yen dutching."
+  },
+  "eligible_complete_races": 1475,
+  "purchased_races": 1475,
+  "purchase_rate_pct": 100.0,
+  "hit_races": 648,
+  "race_hit_rate_pct": 43.93220338983051,
+  "total_tickets": 6237,
+  "avg_tickets_per_race": 4.228474576271187,
+  "total_stake_yen": 1063700,
+  "total_payout_yen": 798670,
+  "profit_yen": -265030,
+  "roi_pct": 75.08414026511234,
+  "median_race_stake_yen": 500,
+  "max_race_stake_yen": 28600,
+  "minimum_theoretical_hit_roi_pct_across_purchased_races": 100.04115226337449,
+  "median_minimum_hit_roi_pct": 114.99999999999999,
+  "max_consecutive_losing_purchased_races": 12,
+  "candidate_additions_rejected_by_no_trigami": 15,
+  "trigami_violations": 0,
+  "components": {
+    "main": {
+      "tickets": 1475,
+      "wins": 388,
+      "ticket_hit_rate_pct": 26.305084745762713,
+      "stake_yen": 457900,
+      "payout_yen": 327210,
+      "profit_yen": -130690,
+      "roi_pct": 71.45883380650797,
+      "median_odds": 3.2,
+      "median_winning_odds": 2.8
+    },
+    "middle": {
+      "tickets": 2802,
+      "wins": 205,
+      "ticket_hit_rate_pct": 7.316202712348323,
+      "stake_yen": 400600,
+      "payout_yen": 355830,
+      "profit_yen": -44770,
+      "roi_pct": 88.82426360459311,
+      "median_odds": 14.3,
+      "median_winning_odds": 6.9
+    },
+    "hole": {
+      "tickets": 1960,
+      "wins": 55,
+      "ticket_hit_rate_pct": 2.806122448979592,
+      "stake_yen": 205200,
+      "payout_yen": 115630,
+      "profit_yen": -89570,
+      "roi_pct": 56.34990253411306,
+      "median_odds": 50.349999999999994,
+      "median_winning_odds": 14.3
+    }
+  }
+}
