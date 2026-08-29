@@ -1,0 +1,54 @@
+{
+  "status": "MARKET_SCENARIO_PORTFOLIO_2023_V0_HOBBY_SIMULATION",
+  "year": 2023,
+  "years_read": [
+    2023
+  ],
+  "evaluation_year_2024_used": false,
+  "evaluation_year_2025_used": false,
+  "evaluation_year_2026_used": false,
+  "odds_phase": "final",
+  "important_limit": "This is a 2023 in-sample hobby simulation using final odds. It is not OOS evidence and not executable T-10 performance.",
+  "strategy_frozen_before_result_evaluation": {
+    "main_definition": "Top market-consensus set by sqrt(normalized trio probability * normalized six-order trifecta-set probability).",
+    "hole_definition": "Non-main set with trifecta-set probability above trio probability, effective six-order count >=3, at least three order shares >=10%, and overlap <=1 car with main1.",
+    "hole_score": "(P_trifecta_set - P_trio) * (effective_order_count/6) * (3-overlap_with_main1). Popularity rank and odds band are not used.",
+    "portfolio_order": "main1 -> up to 3 holes by score if all-green feasible -> optional main2 if still all-green.",
+    "no_trigami_rule": "Every selected ticket must return strictly more than total race stake after 100-yen-unit dutching; otherwise it is excluded or the race is skipped."
+  },
+  "parameters": {
+    "max_holes": 3,
+    "min_effective_orders": 3.0,
+    "min_support_orders_10pct": 3,
+    "max_overlap_with_main1": 1
+  },
+  "eligible_complete_races": 1475,
+  "purchased_races": 1370,
+  "purchase_rate_pct": 92.88135593220339,
+  "hit_races": 665,
+  "race_hit_rate_pct": 48.54014598540146,
+  "main_hits": 571,
+  "hole_hits": 94,
+  "total_tickets": 6315,
+  "main_tickets": 2740,
+  "hole_tickets": 3575,
+  "avg_tickets_per_purchased_race": 4.609489051094891,
+  "avg_holes_per_purchased_race": 2.6094890510948905,
+  "total_stake_yen": 1060300,
+  "total_payout_yen": 782440,
+  "profit_yen": -277860,
+  "roi_pct": 73.79420918607941,
+  "median_race_stake_yen": 700.0,
+  "max_race_stake_yen": 7400,
+  "median_main_odds": 4.2,
+  "median_hole_odds": 49.1,
+  "minimum_theoretical_hit_roi_pct_across_purchased_races": 100.13513513513514,
+  "median_minimum_hit_roi_pct": 109.99999999999999,
+  "max_consecutive_losing_purchased_races": 9,
+  "candidate_additions_rejected_by_no_trigami": 0,
+  "reject_reasons": {
+    "no_alternative_scenario": 105
+  },
+  "trigami_violations": 0,
+  "note": "A trio race has only one winning three-car set, so a purchased race can be a main hit or a hole hit, never both."
+}
