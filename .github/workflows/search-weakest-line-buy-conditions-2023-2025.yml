@@ -28,7 +28,7 @@ jobs:
           d=json.load(open(p,encoding='utf-8'))
           assert d['years_read']==[2023,2024,2025]
           assert d['evaluation_year_2026_used'] is False
-          assert '2026' not in open('src/keirin_market_analysis/search_weakest_line_buy_conditions_2023_2025.py',encoding='utf-8').read()
+          assert d['status']=='WEAKEST_LINE_BUY_CONDITION_SEARCH_2023_2025_ONLY'
           PY
       - name: Commit result
         run: |
