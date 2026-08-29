@@ -1,0 +1,92 @@
+{
+  "strategy": "s_class_yosen_v3_clean",
+  "status": "PROPOSED_AWAITING_USER_GO_BEFORE_2026_EVALUATION",
+  "development_years": [2023, 2024, 2025],
+  "evaluation_year": 2026,
+  "evaluation_locked": true,
+  "source_audit": "data/audits/v3_clean_2023_2025_proposal_compact.json",
+  "scope": {
+    "race_label": "Ｓ級予選",
+    "label_match": "exact",
+    "main_line_min_size": 3,
+    "strongest_rival_min_size": 2
+  },
+  "roles": {
+    "A": "main line lead",
+    "B": "main line second",
+    "M3": "main line third",
+    "R1L": "strongest rival lead",
+    "R1B": "strongest rival second",
+    "X": "highest competition score excluding A/B/M3; tie lower car number"
+  },
+  "segments": {
+    "early": {
+      "segment": "前半",
+      "conditions": [
+        "A+B top2 rate sum >= 70",
+        "A score - R1L score <= 2"
+      ],
+      "formation": "MIX2",
+      "bets_yen_100_each": [
+        "A-B-R1B",
+        "R1L-R1B-B"
+      ],
+      "stake_yen_per_race": 200,
+      "development": {
+        "2023": {"races": 39, "hits": 4, "stake_yen": 7800, "payout_yen": 11720, "profit_yen": 3920, "roi": 1.5025641025641026},
+        "2024": {"races": 40, "hits": 4, "stake_yen": 8000, "payout_yen": 10530, "profit_yen": 2530, "roi": 1.31625},
+        "2025": {"races": 34, "hits": 5, "stake_yen": 6800, "payout_yen": 15540, "profit_yen": 8740, "roi": 2.2852941176470587},
+        "combined": {"races": 113, "hits": 13, "stake_yen": 22600, "payout_yen": 37790, "profit_yen": 15190, "roi": 1.6721238938053098}
+      }
+    },
+    "middle": {
+      "segment": "中盤",
+      "conditions": [
+        "A+B top2 rate sum >= 80",
+        "R1L+R1B top3 rate sum >= 80"
+      ],
+      "formation": "MIX2",
+      "bets_yen_100_each": [
+        "A-B-R1B",
+        "R1L-R1B-B"
+      ],
+      "stake_yen_per_race": 200,
+      "development": {
+        "2023": {"races": 25, "hits": 4, "stake_yen": 5000, "payout_yen": 16250, "profit_yen": 11250, "roi": 3.25},
+        "2024": {"races": 31, "hits": 4, "stake_yen": 6200, "payout_yen": 12290, "profit_yen": 6090, "roi": 1.982258064516129},
+        "2025": {"races": 26, "hits": 4, "stake_yen": 5200, "payout_yen": 17390, "profit_yen": 12190, "roi": 3.3442307692307693},
+        "combined": {"races": 82, "hits": 12, "stake_yen": 16400, "payout_yen": 45930, "profit_yen": 29530, "roi": 2.800609756097561}
+      }
+    },
+    "late": {
+      "segment": "後半",
+      "conditions": [
+        "R1L score >= 100",
+        "A+B top2 rate sum <= 70"
+      ],
+      "formation": "MAIN4_X",
+      "bets_yen_100_each": [
+        "A-B-M3",
+        "B-A-M3",
+        "A-B-X",
+        "B-A-X"
+      ],
+      "stake_yen_per_race": 400,
+      "development": {
+        "2023": {"races": 46, "hits": 22, "stake_yen": 18400, "payout_yen": 25740, "profit_yen": 7340, "roi": 1.3989130434782608},
+        "2024": {"races": 40, "hits": 15, "stake_yen": 16000, "payout_yen": 20750, "profit_yen": 4750, "roi": 1.296875},
+        "2025": {"races": 33, "hits": 15, "stake_yen": 13200, "payout_yen": 19090, "profit_yen": 5890, "roi": 1.4462121212121213},
+        "combined": {"races": 119, "hits": 52, "stake_yen": 47600, "payout_yen": 65580, "profit_yen": 17980, "roi": 1.3777310924369748}
+      }
+    }
+  },
+  "combined_development": {
+    "races": 314,
+    "hits": 77,
+    "stake_yen": 86600,
+    "payout_yen": 149300,
+    "profit_yen": 62700,
+    "roi": 1.7240184757505774
+  },
+  "freeze_rule": "Do not inspect or use 2026 outcomes until the user explicitly says GO. Once GO is given, evaluate these exact conditions, formations, and stakes unchanged. No threshold or formation change is allowed after any 2026 outcome is observed."
+}
