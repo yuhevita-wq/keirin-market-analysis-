@@ -1,0 +1,139 @@
+name: Collect 2026 H1 S-class preliminary OOS dataset
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/collect-s-yosen-2026-h1-oos.yml"
+      - "src/keirin_market_analysis/s_yosen_2026_h1.py"
+
+permissions:
+  contents: write
+
+jobs:
+  collect-enrich-results:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: python -m pip install -e '.[scrape]'
+
+      - name: Collect exact-label 2026 H1 S-class preliminary races
+        run: |
+          python -m keirin_market_analysis.s_yosen_2026_h1 \
+            --start-date 2026-01-01 \
+            --end-date 2026-06-30 \
+            --out-dir data/2026_h1/s_class_yosen \
+            --sleep 0.35
+
+      - name: Validate base collection
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          p = Path('data/2026_h1/s_class_yosen')
+          s = json.loads((p/'summary.json').read_text(encoding='utf-8'))
+          races = list(csv.DictReader((p/'races.csv').open(encoding='utf-8-sig')))
+          entries = list(csv.DictReader((p/'entries.csv').open(encoding='utf-8-sig')))
+          failures = list(csv.DictReader((p/'failures.csv').open(encoding='utf-8-sig')))
+          assert s['target'] == 'Ｓ級予選', s
+          assert s['start_date'] == '2026-01-01', s
+          assert s['end_date'] == '2026-06-30', s
+          assert s['parsed_races'] == len(races) and len(races) > 0, s
+          assert s['entry_rows'] == len(entries) and len(entries) > 0, s
+          assert s['failures'] == 0 and not failures, failures[:10]
+          assert all(r['race_type'] == 'Ｓ級予選' for r in races)
+          assert all(e['race_type'] == 'Ｓ級予選' for e in entries)
+          assert all('2026-01-01' <= r['race_date'] <= '2026-06-30' for r in races)
+          assert all('2026-01-01' <= e['race_date'] <= '2026-06-30' for e in entries)
+          assert 'forward out-of-sample' in s['oos_note']
+          print(s)
+          PY
+
+      - name: Enrich KDreams predicted line formation
+        run: |
+          python -m keirin_market_analysis.line_formation_2025 \
+            --data-dir data/2026_h1/s_class_yosen \
+            --sleep 0.25
+
+      - name: Validate line formation
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          p = Path('data/2026_h1/s_class_yosen')
+          s = json.loads((p/'line_summary.json').read_text(encoding='utf-8'))
+          races = list(csv.DictReader((p/'races.csv').open(encoding='utf-8-sig')))
+          entries = list(csv.DictReader((p/'entries.csv').open(encoding='utf-8-sig')))
+          failures = list(csv.DictReader((p/'line_failures.csv').open(encoding='utf-8-sig')))
+          assert s['race_count'] == len(races), s
+          assert s['line_parse_failures'] == 0 and not failures, failures[:10]
+          assert all('predicted_line_formation' in r for r in races)
+          published_races = [r for r in races if r['line_status'] == 'published']
+          assert len(published_races) == len(races), s
+          assert all(r['predicted_line_formation'] for r in published_races)
+          published_entries = [e for e in entries if e['line_status'] == 'published']
+          assert published_entries
+          assert all(e['predicted_line_formation'] for e in published_entries)
+          assert all(e['line_id'] and e['line_position'] and e['line_size'] for e in published_entries)
+          print(s)
+          PY
+
+      - name: Extract results and payouts
+        run: |
+          python -m keirin_market_analysis.results_payouts_2025 \
+            --data-dir data/2026_h1/s_class_yosen \
+            --sleep 0.25
+
+      - name: Validate complete results and payouts
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          p = Path('data/2026_h1/s_class_yosen')
+          base = json.loads((p/'summary.json').read_text(encoding='utf-8'))
+          s = json.loads((p/'result_summary.json').read_text(encoding='utf-8'))
+          races = list(csv.DictReader((p/'races.csv').open(encoding='utf-8-sig')))
+          results = list(csv.DictReader((p/'results.csv').open(encoding='utf-8-sig')))
+          payouts = list(csv.DictReader((p/'payouts.csv').open(encoding='utf-8-sig')))
+          failures = list(csv.DictReader((p/'result_failures.csv').open(encoding='utf-8-sig')))
+          n = len(races)
+          assert n == base['parsed_races'] and n > 0, base
+          assert s['race_count'] == n, s
+          assert s['complete_result_races'] == n, s
+          assert s['complete_payout_races'] == n, s
+          assert s['parse_failures'] == 0 and not failures, failures[:10]
+          assert results and payouts, s
+          assert all(r['race_type'] == 'Ｓ級予選' for r in results)
+          assert all(p['race_type'] == 'Ｓ級予選' for p in payouts)
+          assert all('2026-01-01' <= r['race_date'] <= '2026-06-30' for r in results)
+          assert all('2026-01-01' <= p['race_date'] <= '2026-06-30' for p in payouts)
+          print(s)
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: s-yosen-2026-h1-oos-full
+          path: data/2026_h1/s_class_yosen
+
+      - name: Commit full 2026 H1 OOS dataset
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/2026_h1/s_class_yosen
+          if git diff --cached --quiet; then
+            echo "No 2026 H1 dataset changes to commit"
+          else
+            git commit -m "data: add 2026 H1 S-class preliminary OOS dataset"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
