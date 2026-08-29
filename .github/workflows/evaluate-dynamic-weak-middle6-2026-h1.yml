@@ -1,0 +1,47 @@
+name: evaluate-dynamic-weak-middle6-2026-h1
+
+on:
+  push:
+    paths:
+      - '.github/workflows/evaluate-dynamic-weak-middle6-2026-h1.yml'
+      - 'src/keirin_market_analysis/evaluate_dynamic_weak_middle6_2026_h1.py'
+      - 'data/strategy_specs/dynamic_weak_middle6_proposed_pre2026_eval.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install
+        run: pip install -e .
+      - name: Evaluate frozen dynamic weakest middle-six on 2026 H1
+        run: python -m keirin_market_analysis.evaluate_dynamic_weak_middle6_2026_h1
+      - name: Validate frozen accounting
+        run: |
+          python - <<'PY'
+          import json
+          p='data/2026_h1/s_class_yosen/dynamic_weak_middle6_evaluation.json'
+          d=json.load(open(p,encoding='utf-8'))
+          assert d['strategy_spec_asserted_unchanged'] is True
+          assert d['no_condition_formation_or_stake_changes'] is True
+          assert d['dataset_races'] == 738
+          assert d['segment'] == '中盤'
+          assert d['points_per_purchase'] == 6
+          assert d['summary']['stake_yen'] == d['summary']['races'] * 600
+          assert d['summary']['payout_yen'] >= 0
+          print('PASS frozen dynamic weakest middle-six accounting')
+          PY
+      - name: Commit evaluation
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/2026_h1/s_class_yosen/dynamic_weak_middle6_evaluation.json
+          git commit -m 'Evaluate frozen dynamic weakest middle-six on 2026 H1' || exit 0
+          git push
