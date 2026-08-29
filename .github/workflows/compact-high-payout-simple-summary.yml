@@ -1,0 +1,28 @@
+name: compact-high-payout-simple-summary
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/compact_high_payout_simple_summary.py'
+      - '.github/workflows/compact-high-payout-simple-summary.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  compact:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -e .
+      - run: python -m keirin_market_analysis.compact_high_payout_simple_summary
+      - run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/high_payout_strategy_simple_2023_2025_v1_compact.json
+          git commit -m 'Add compact high payout simple summary' || exit 0
+          git push
