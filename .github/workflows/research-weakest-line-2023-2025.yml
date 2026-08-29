@@ -1,0 +1,43 @@
+name: Research weakest line 2023-2025
+
+on:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/research_weakest_line_2023_2025.py'
+      - '.github/workflows/research-weakest-line-2023-2025.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  research:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install
+        run: pip install -e .
+      - name: Analyze weakest line
+        run: python -m keirin_market_analysis.research_weakest_line_2023_2025
+      - name: Validate clean scope
+        run: |
+          python - <<'PY'
+          import json
+          p='data/audits/weakest_line_structure_2023_2025.json'
+          d=json.load(open(p,encoding='utf-8'))
+          assert d['years_read']==[2023,2024,2025]
+          assert d['evaluation_year_2026_used'] is False
+          assert d['status']=='WEAKEST_LINE_STRUCTURE_RESEARCH_2023_2025_ONLY'
+          print('PASS clean 2023-2025 weakest-line scope')
+          PY
+      - name: Commit result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/weakest_line_structure_2023_2025.json
+          git commit -m 'Add 2023-2025 weakest-line structure audit' || exit 0
+          git push
