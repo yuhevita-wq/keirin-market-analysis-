@@ -1,0 +1,44 @@
+{
+  "status": "V3_RESEARCH_IN_PROGRESS_NOT_FROZEN",
+  "development_periods": ["2023", "2024", "2025", "2026_H1"],
+  "future_oos_reserved": "2026-07-01 onward",
+  "do_not_evaluate_future_oos_yet": true,
+  "findings": {
+    "early": {
+      "formation": "MIX2 remains preferred",
+      "four_period_qualified_conditions": 6,
+      "candidate_cluster": "adequate main A/B top2/top3 strength with leader_score_gap <= 2, plus a separate A-score/relative-win cluster",
+      "stability_warning": "neighboring leader-score-gap cutoffs 0 and 4 often fail; leave-one-period-out best-selection stability is only 1/4",
+      "status": "PROMISING_BUT_NOT_READY_TO_FREEZE"
+    },
+    "middle": {
+      "MIX2_four_period_qualified_conditions": 0,
+      "alternative_predeclared_formations": {
+        "MAIN4_RIVAL_qualified": 3,
+        "MAIN6_qualified": 1,
+        "RIVAL4_qualified": 0
+      },
+      "shared_candidate": "rival_top2 >= 60 and rival_top3 <= 90 works for both MAIN4_RIVAL and MAIN6",
+      "stability_warning": "nearby rival-top2/top3 cutoffs fail; this looks narrow rather than a broad plateau",
+      "status": "REQUIRES_MORE_CAUTION_OR_SKIP"
+    },
+    "late": {
+      "formation": "MAIN4_X remains preferred",
+      "four_period_qualified_conditions": 53,
+      "simple_candidate": "pair_win_gap <= -10",
+      "simple_candidate_period_rois": {
+        "2023": 1.1155172413793104,
+        "2024": 1.111764705882353,
+        "2025": 1.0919642857142857,
+        "2026_H1": 1.061764705882353
+      },
+      "simple_candidate_combined_roi": 1.0997685185185184,
+      "simple_candidate_counts": {"2023": 29, "2024": 34, "2025": 28, "2026_H1": 17},
+      "supporting_band": "pair_win_gap <= -10 remains all-four profitable with pair_top3_gap caps 0,10,25,40",
+      "stability_warning": "mechanical best-condition leave-one-period-out selection is only 1/4; prefer simple consensus condition over ranked optimum",
+      "status": "STRONGEST_CURRENT_V3_CANDIDATE"
+    }
+  },
+  "selection_method_warning": "For all three segments, choosing the highest-ranked condition on the other three periods produced a profitable heldout period only 1/4 times. Do not use max-training-ROI selection.",
+  "next_required_step": "decide conservative V3 candidates from simple/plateau evidence, then freeze all selected/skip decisions before reading any 2026 H2 outcomes"
+}
