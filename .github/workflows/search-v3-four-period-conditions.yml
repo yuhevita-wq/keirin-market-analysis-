@@ -1,0 +1,53 @@
+name: Search V3 four-period conditions
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/search-v3-four-period-conditions.yml"
+      - "src/keirin_market_analysis/search_v3_four_period_conditions.py"
+      - "data/audits/v3_condition_search_spec.json"
+
+permissions:
+  contents: write
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: python -m pip install -e .
+      - name: Run search
+        run: python -m keirin_market_analysis.search_v3_four_period_conditions
+      - name: Validate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('data/audits/v3_four_period_condition_search.json').read_text(encoding='utf-8'))
+          assert d['status']=='V3_FOUR_PERIOD_CONDITION_SEARCH_COMPLETE'
+          assert set(d['strategies'])=={'early','middle','late'}
+          print(json.dumps({s:{'qualified':d['strategies'][s]['qualified_count'],'top':d['strategies'][s]['top_candidates'][:3]} for s in d['strategies']},ensure_ascii=False,indent=2))
+          PY
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/audits/v3_four_period_condition_search.json
+          if git diff --cached --quiet; then
+            echo "No search changes"
+          else
+            git commit -m "analysis: record V3 four-period condition search"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
