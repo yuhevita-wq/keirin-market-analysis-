@@ -1,0 +1,159 @@
+name: Collect historical final odds 2023-2025
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/collect-historical-final-odds-2023-2025.yml'
+      - 'src/keirin_market_analysis/historical_final_odds.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install
+        run: python -m pip install -e '.[scrape]'
+      - name: Smoke test 5 races from each year
+        run: |
+          for y in 2023 2024 2025; do
+            rm -rf /tmp/odds-smoke-$y
+            mkdir -p /tmp/odds-smoke-$y
+            cp data/$y/s_class_yosen/races.csv /tmp/odds-smoke-$y/races.csv
+            cp data/$y/s_class_yosen/entries.csv /tmp/odds-smoke-$y/entries.csv
+            python -m keirin_market_analysis.historical_final_odds --data-dir /tmp/odds-smoke-$y --workers 2 --sleep 0.10 --limit 5
+            python - "$y" <<'PY'
+          import csv,json,sys
+          from pathlib import Path
+          y=sys.argv[1]; p=Path(f'/tmp/odds-smoke-{y}')
+          s=json.load(open(p/'odds_summary.json',encoding='utf-8'))
+          r3=list(csv.DictReader(open(p/'trifecta_final_odds.csv',encoding='utf-8-sig')))
+          rt=list(csv.DictReader(open(p/'trio_final_odds.csv',encoding='utf-8-sig')))
+          assert s['race_count_attempted']==5, s
+          assert s['complete_races']==5 and s['failed_races']==0, s
+          assert r3 and rt
+          for rid in {r['race_id'] for r in r3}:
+              n=len({int(e['car_no']) for e in csv.DictReader(open(p/'entries.csv',encoding='utf-8-sig')) if e['race_id']==rid})
+              got=sum(r['race_id']==rid for r in r3)
+              assert got==n*(n-1)*(n-2),(y,rid,n,got)
+          for rid in {r['race_id'] for r in rt}:
+              n=len({int(e['car_no']) for e in csv.DictReader(open(p/'entries.csv',encoding='utf-8-sig')) if e['race_id']==rid})
+              got=sum(r['race_id']==rid for r in rt)
+              assert got==n*(n-1)*(n-2)//6,(y,rid,n,got)
+          assert all(r['total_votes'] for r in r3), 'trifecta votes missing'
+          assert all(r['total_votes'] for r in rt), 'trio votes missing'
+          print('SMOKE PASS',y,s)
+          PY
+          done
+
+  collect:
+    needs: smoke
+    strategy:
+      max-parallel: 3
+      matrix:
+        year: [2023, 2024, 2025]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install
+        run: python -m pip install -e '.[scrape]'
+      - name: Collect final odds
+        run: |
+          python -m keirin_market_analysis.historical_final_odds \
+            --data-dir data/${{ matrix.year }}/s_class_yosen \
+            --workers 3 --sleep 0.15
+      - name: Validate collection accounting
+        run: |
+          python - <<'PY'
+          import csv,json,math
+          from pathlib import Path
+          y='${{ matrix.year }}'; p=Path(f'data/{y}/s_class_yosen')
+          races=list(csv.DictReader(open(p/'races.csv',encoding='utf-8-sig')))
+          entries=list(csv.DictReader(open(p/'entries.csv',encoding='utf-8-sig')))
+          s=json.load(open(p/'odds_summary.json',encoding='utf-8'))
+          assert s['race_count_attempted']==len(races), (s,len(races))
+          assert s['complete_races']+s['failed_races']==len(races), s
+          assert s['coverage_rate']>=0.95, s
+          assert s['trifecta_rows']>0 and s['trio_rows']>0, s
+          print('FULL VALIDATION',y,s)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: odds-${{ matrix.year }}
+          retention-days: 2
+          path: |
+            data/${{ matrix.year }}/s_class_yosen/trifecta_final_odds.csv
+            data/${{ matrix.year }}/s_class_yosen/trio_final_odds.csv
+            data/${{ matrix.year }}/s_class_yosen/odds_failures.csv
+            data/${{ matrix.year }}/s_class_yosen/odds_summary.json
+
+  commit:
+    needs: collect
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: odds-*
+          path: /tmp/odds
+      - name: Install collected files and build combined summary
+        run: |
+          for y in 2023 2024 2025; do
+            cp /tmp/odds/odds-$y/trifecta_final_odds.csv data/$y/s_class_yosen/
+            cp /tmp/odds/odds-$y/trio_final_odds.csv data/$y/s_class_yosen/
+            cp /tmp/odds/odds-$y/odds_failures.csv data/$y/s_class_yosen/
+            cp /tmp/odds/odds-$y/odds_summary.json data/$y/s_class_yosen/
+          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          years={}
+          for y in (2023,2024,2025):
+              p=Path(f'data/{y}/s_class_yosen/odds_summary.json')
+              years[str(y)]=json.load(open(p,encoding='utf-8'))
+          out={
+              'status':'HISTORICAL_FINAL_ODDS_2023_2025_COLLECTED',
+              'years_read':[2023,2024,2025],
+              'evaluation_year_2026_used':False,
+              'odds_phase':'final',
+              'important_limit':'These are archived final odds, not T-10-minute snapshots.',
+              'years':years,
+              'combined':{
+                  'race_count_attempted':sum(v['race_count_attempted'] for v in years.values()),
+                  'complete_races':sum(v['complete_races'] for v in years.values()),
+                  'failed_races':sum(v['failed_races'] for v in years.values()),
+                  'trifecta_rows':sum(v['trifecta_rows'] for v in years.values()),
+                  'trio_rows':sum(v['trio_rows'] for v in years.values()),
+              }
+          }
+          out['combined']['coverage_rate']=out['combined']['complete_races']/out['combined']['race_count_attempted']
+          Path('data/audits/historical_final_odds_2023_2025_summary.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps(out,ensure_ascii=False,indent=2))
+          PY
+      - name: Commit historical final odds
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/2023/s_class_yosen/trifecta_final_odds.csv data/2023/s_class_yosen/trio_final_odds.csv data/2023/s_class_yosen/odds_failures.csv data/2023/s_class_yosen/odds_summary.json
+          git add data/2024/s_class_yosen/trifecta_final_odds.csv data/2024/s_class_yosen/trio_final_odds.csv data/2024/s_class_yosen/odds_failures.csv data/2024/s_class_yosen/odds_summary.json
+          git add data/2025/s_class_yosen/trifecta_final_odds.csv data/2025/s_class_yosen/trio_final_odds.csv data/2025/s_class_yosen/odds_failures.csv data/2025/s_class_yosen/odds_summary.json
+          git add data/audits/historical_final_odds_2023_2025_summary.json
+          git commit -m 'data: add 2023-2025 archived final odds' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
