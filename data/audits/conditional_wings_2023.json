@@ -1,0 +1,293 @@
+{
+  "status": "CONDITIONAL_WING_LAWS_2023",
+  "scope": "2023 development only; core and entry fixed from pair-flow model; four predefined wing laws",
+  "entry_threshold": 0.3179241680895883,
+  "core_rule": "pair with maximum pair residual delta = sum(M-Q)",
+  "wing_laws": {
+    "COND_RATIO": "choose two largest q_cond/m_cond inside selected pair",
+    "COND_DELTA": "choose two largest q_cond-m_cond inside selected pair",
+    "ANCHOR_DISCOUNT": "choose highest m_cond plus highest q_cond/m_cond among remaining thirds",
+    "QVALUE": "choose two largest q_cond^2/m_cond inside selected pair"
+  },
+  "outcome_used_for_entry_or_ticket_selection": false,
+  "accounting": {
+    "market_races": 1486,
+    "excluded_non7_or_incomplete": 50,
+    "no_unique_paid_trio": 5,
+    "solver_failures": 0,
+    "non_must_enter": 0,
+    "date_parse_failures": 0,
+    "must_enter_evaluated": 1431
+  },
+  "must_enter_races": 358,
+  "quarter_counts": {
+    "Q1": 86,
+    "Q2": 99,
+    "Q3": 90,
+    "Q4": 83
+  },
+  "ranked_by_temporal_robustness": [
+    {
+      "rule": "QVALUE",
+      "full_year": {
+        "races": 358,
+        "tickets": 716,
+        "stake_yen": 71600,
+        "payout_yen": 50130,
+        "profit_yen": -21470,
+        "roi_pct": 70.01396648044692,
+        "hit_races": 109,
+        "hit_rate_pct": 30.446927374301676,
+        "max_losing_streak_races": 14
+      },
+      "quarters": {
+        "Q1": {
+          "races": 86,
+          "tickets": 172,
+          "stake_yen": 17200,
+          "payout_yen": 12030,
+          "profit_yen": -5170,
+          "roi_pct": 69.94186046511628,
+          "hit_races": 28,
+          "hit_rate_pct": 32.55813953488372,
+          "max_losing_streak_races": 8
+        },
+        "Q2": {
+          "races": 99,
+          "tickets": 198,
+          "stake_yen": 19800,
+          "payout_yen": 17140,
+          "profit_yen": -2660,
+          "roi_pct": 86.56565656565657,
+          "hit_races": 29,
+          "hit_rate_pct": 29.292929292929294,
+          "max_losing_streak_races": 13
+        },
+        "Q3": {
+          "races": 90,
+          "tickets": 180,
+          "stake_yen": 18000,
+          "payout_yen": 13740,
+          "profit_yen": -4260,
+          "roi_pct": 76.33333333333333,
+          "hit_races": 32,
+          "hit_rate_pct": 35.55555555555556,
+          "max_losing_streak_races": 10
+        },
+        "Q4": {
+          "races": 83,
+          "tickets": 166,
+          "stake_yen": 16600,
+          "payout_yen": 7220,
+          "profit_yen": -9380,
+          "roi_pct": 43.493975903614455,
+          "hit_races": 20,
+          "hit_rate_pct": 24.096385542168676,
+          "max_losing_streak_races": 19
+        }
+      },
+      "robustness": {
+        "worst_quarter_roi_pct": 43.493975903614455,
+        "profitable_quarters": 0,
+        "quarters_ge_90": 0
+      }
+    },
+    {
+      "rule": "ANCHOR_DISCOUNT",
+      "full_year": {
+        "races": 358,
+        "tickets": 716,
+        "stake_yen": 71600,
+        "payout_yen": 41300,
+        "profit_yen": -30300,
+        "roi_pct": 57.68156424581006,
+        "hit_races": 86,
+        "hit_rate_pct": 24.022346368715084,
+        "max_losing_streak_races": 17
+      },
+      "quarters": {
+        "Q1": {
+          "races": 86,
+          "tickets": 172,
+          "stake_yen": 17200,
+          "payout_yen": 10000,
+          "profit_yen": -7200,
+          "roi_pct": 58.13953488372093,
+          "hit_races": 20,
+          "hit_rate_pct": 23.25581395348837,
+          "max_losing_streak_races": 11
+        },
+        "Q2": {
+          "races": 99,
+          "tickets": 198,
+          "stake_yen": 19800,
+          "payout_yen": 17220,
+          "profit_yen": -2580,
+          "roi_pct": 86.96969696969697,
+          "hit_races": 24,
+          "hit_rate_pct": 24.242424242424242,
+          "max_losing_streak_races": 17
+        },
+        "Q3": {
+          "races": 90,
+          "tickets": 180,
+          "stake_yen": 18000,
+          "payout_yen": 7650,
+          "profit_yen": -10350,
+          "roi_pct": 42.5,
+          "hit_races": 22,
+          "hit_rate_pct": 24.444444444444443,
+          "max_losing_streak_races": 11
+        },
+        "Q4": {
+          "races": 83,
+          "tickets": 166,
+          "stake_yen": 16600,
+          "payout_yen": 6430,
+          "profit_yen": -10170,
+          "roi_pct": 38.734939759036145,
+          "hit_races": 20,
+          "hit_rate_pct": 24.096385542168676,
+          "max_losing_streak_races": 19
+        }
+      },
+      "robustness": {
+        "worst_quarter_roi_pct": 38.734939759036145,
+        "profitable_quarters": 0,
+        "quarters_ge_90": 0
+      }
+    },
+    {
+      "rule": "COND_DELTA",
+      "full_year": {
+        "races": 358,
+        "tickets": 716,
+        "stake_yen": 71600,
+        "payout_yen": 42680,
+        "profit_yen": -28920,
+        "roi_pct": 59.608938547486034,
+        "hit_races": 41,
+        "hit_rate_pct": 11.452513966480447,
+        "max_losing_streak_races": 44
+      },
+      "quarters": {
+        "Q1": {
+          "races": 86,
+          "tickets": 172,
+          "stake_yen": 17200,
+          "payout_yen": 13090,
+          "profit_yen": -4110,
+          "roi_pct": 76.1046511627907,
+          "hit_races": 11,
+          "hit_rate_pct": 12.790697674418604,
+          "max_losing_streak_races": 30
+        },
+        "Q2": {
+          "races": 99,
+          "tickets": 198,
+          "stake_yen": 19800,
+          "payout_yen": 21680,
+          "profit_yen": 1880,
+          "roi_pct": 109.4949494949495,
+          "hit_races": 19,
+          "hit_rate_pct": 19.19191919191919,
+          "max_losing_streak_races": 17
+        },
+        "Q3": {
+          "races": 90,
+          "tickets": 180,
+          "stake_yen": 18000,
+          "payout_yen": 5660,
+          "profit_yen": -12340,
+          "roi_pct": 31.444444444444443,
+          "hit_races": 8,
+          "hit_rate_pct": 8.88888888888889,
+          "max_losing_streak_races": 21
+        },
+        "Q4": {
+          "races": 83,
+          "tickets": 166,
+          "stake_yen": 16600,
+          "payout_yen": 2250,
+          "profit_yen": -14350,
+          "roi_pct": 13.55421686746988,
+          "hit_races": 3,
+          "hit_rate_pct": 3.6144578313253013,
+          "max_losing_streak_races": 32
+        }
+      },
+      "robustness": {
+        "worst_quarter_roi_pct": 13.55421686746988,
+        "profitable_quarters": 1,
+        "quarters_ge_90": 1
+      }
+    },
+    {
+      "rule": "COND_RATIO",
+      "full_year": {
+        "races": 358,
+        "tickets": 716,
+        "stake_yen": 71600,
+        "payout_yen": 40900,
+        "profit_yen": -30700,
+        "roi_pct": 57.12290502793296,
+        "hit_races": 37,
+        "hit_rate_pct": 10.335195530726256,
+        "max_losing_streak_races": 44
+      },
+      "quarters": {
+        "Q1": {
+          "races": 86,
+          "tickets": 172,
+          "stake_yen": 17200,
+          "payout_yen": 14680,
+          "profit_yen": -2520,
+          "roi_pct": 85.34883720930233,
+          "hit_races": 12,
+          "hit_rate_pct": 13.953488372093023,
+          "max_losing_streak_races": 18
+        },
+        "Q2": {
+          "races": 99,
+          "tickets": 198,
+          "stake_yen": 19800,
+          "payout_yen": 19290,
+          "profit_yen": -510,
+          "roi_pct": 97.42424242424242,
+          "hit_races": 17,
+          "hit_rate_pct": 17.171717171717173,
+          "max_losing_streak_races": 17
+        },
+        "Q3": {
+          "races": 90,
+          "tickets": 180,
+          "stake_yen": 18000,
+          "payout_yen": 4790,
+          "profit_yen": -13210,
+          "roi_pct": 26.61111111111111,
+          "hit_races": 6,
+          "hit_rate_pct": 6.666666666666667,
+          "max_losing_streak_races": 32
+        },
+        "Q4": {
+          "races": 83,
+          "tickets": 166,
+          "stake_yen": 16600,
+          "payout_yen": 2140,
+          "profit_yen": -14460,
+          "roi_pct": 12.891566265060241,
+          "hit_races": 2,
+          "hit_rate_pct": 2.4096385542168677,
+          "max_losing_streak_races": 37
+        }
+      },
+      "robustness": {
+        "worst_quarter_roi_pct": 12.891566265060241,
+        "profitable_quarters": 0,
+        "quarters_ge_90": 1
+      }
+    }
+  ],
+  "selected_for_2024_oos": "QVALUE",
+  "warning": "The selected wing law is chosen on 2023 realized outcomes and is development-only. Freeze it before 2024 scoring."
+}
