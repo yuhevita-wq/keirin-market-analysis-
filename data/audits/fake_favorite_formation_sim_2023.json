@@ -1,5 +1,5 @@
 {
-  "status": "FAKE_FAVORITE_FORMATION_SIM_2023",
+  "status": "FAKE_FAVORITE_FORMATION_SIM_2023_AUDITED_GATE",
   "year": 2023,
   "years_read": [
     2023
@@ -8,61 +8,69 @@
   "evaluation_year_2025_used": false,
   "evaluation_year_2026_used": false,
   "staking": "Flat 100 yen per trio ticket; no dutching.",
+  "gate_source": "data/audits/fake_favorite_true_middle_2023_2024.json exact 2023 race list",
   "fake_gate": {
     "fav_consensus_max": 0.1884985310418076,
     "second_to_fav_odds_ratio_max": 1.2058823529411764
   },
   "definitions": {
-    "A_2of3_representatives": "For each outsider where at least 2 of the 3 one-car replacements of the trio favorite have positive delta=P_trifecta_set-P_trio, buy the strongest-delta representative.",
-    "B_core_pair_all": "Choose the pair with greatest candidate support, breaking ties by summed positive delta, then buy that pair with every other entrant.",
-    "C_four_car_box": "Core pair plus two strongest relevant additional cars, including favorite members/candidate cars, translated to a 4-car trio BOX (4 tickets).",
-    "D_four_car_without_favorite": "Same four cars as C, but remove the exact trio-market favorite ticket if present."
+    "A_2of3_representatives": "For each actual outsider where at least 2 of the 3 one-car replacements of the audited trio favorite have positive delta=P_trifecta_set-P_trio, buy the strongest-delta representative.",
+    "B_core_pair_all": "Choose the pair with greatest candidate support, breaking ties by summed positive delta, then buy that pair with every other actual entrant.",
+    "C_four_car_box": "Core pair plus two strongest relevant additional cars, using only actual entrants, translated to a 4-car trio BOX (4 tickets).",
+    "D_four_car_without_favorite": "Same four cars as C, but remove the exact audited trio-market favorite ticket if present."
   },
-  "fake_favorite_races": 225,
+  "fake_favorite_races": 208,
+  "candidate_count_distribution": {
+    "0": 11,
+    "1": 56,
+    "2": 83,
+    "3": 47,
+    "4": 11
+  },
   "methods": {
     "A_2of3_representatives": {
-      "bet_races": 213,
-      "tickets": 440,
-      "hit_races": 23,
-      "stake_yen": 44000,
-      "payout_yen": 19630,
-      "profit_yen": -24370,
-      "roi_pct": 44.61363636363637,
-      "race_hit_rate_pct": 10.7981220657277,
-      "avg_tickets_per_bet_race": 2.0657276995305165
+      "bet_races": 197,
+      "tickets": 407,
+      "hit_races": 24,
+      "stake_yen": 40700,
+      "payout_yen": 20430,
+      "profit_yen": -20270,
+      "roi_pct": 50.1965601965602,
+      "race_hit_rate_pct": 12.182741116751268,
+      "avg_tickets_per_bet_race": 2.065989847715736
     },
     "B_core_pair_all": {
-      "bet_races": 213,
-      "tickets": 1066,
-      "hit_races": 70,
-      "stake_yen": 106600,
-      "payout_yen": 85270,
-      "profit_yen": -21330,
-      "roi_pct": 79.9906191369606,
-      "race_hit_rate_pct": 32.863849765258216,
-      "avg_tickets_per_bet_race": 5.004694835680751
+      "bet_races": 197,
+      "tickets": 985,
+      "hit_races": 69,
+      "stake_yen": 98500,
+      "payout_yen": 84920,
+      "profit_yen": -13580,
+      "roi_pct": 86.21319796954315,
+      "race_hit_rate_pct": 35.025380710659896,
+      "avg_tickets_per_bet_race": 5.0
     },
     "C_four_car_box": {
-      "bet_races": 174,
-      "tickets": 696,
+      "bet_races": 167,
+      "tickets": 668,
       "hit_races": 62,
-      "stake_yen": 69600,
-      "payout_yen": 43940,
-      "profit_yen": -25660,
-      "roi_pct": 63.132183908045974,
-      "race_hit_rate_pct": 35.632183908045974,
+      "stake_yen": 66800,
+      "payout_yen": 45210,
+      "profit_yen": -21590,
+      "roi_pct": 67.67964071856288,
+      "race_hit_rate_pct": 37.125748502994014,
       "avg_tickets_per_bet_race": 4.0
     },
     "D_four_car_without_favorite": {
-      "bet_races": 174,
-      "tickets": 523,
-      "hit_races": 34,
-      "stake_yen": 52300,
-      "payout_yen": 30610,
-      "profit_yen": -21690,
-      "roi_pct": 58.52772466539197,
-      "race_hit_rate_pct": 19.54022988505747,
-      "avg_tickets_per_bet_race": 3.0057471264367814
+      "bet_races": 167,
+      "tickets": 502,
+      "hit_races": 35,
+      "stake_yen": 50200,
+      "payout_yen": 32300,
+      "profit_yen": -17900,
+      "roi_pct": 64.34262948207171,
+      "race_hit_rate_pct": 20.95808383233533,
+      "avg_tickets_per_bet_race": 3.0059880239520957
     }
   }
 }
