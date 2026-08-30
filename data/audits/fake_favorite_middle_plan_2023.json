@@ -1,0 +1,1050 @@
+{
+  "status": "FAKE_FAVORITE_MIDDLE_PLAN_2023_EXPLORATORY_SIMULATION",
+  "year": 2023,
+  "years_read": [
+    2023
+  ],
+  "evaluation_year_2024_used": false,
+  "evaluation_year_2025_used": false,
+  "evaluation_year_2026_used": false,
+  "odds_phase": "final",
+  "staking": "Flat 100 yen per selected middle ticket. No dutching.",
+  "discipline": "No threshold search in this script. Fake-favorite and middle thresholds are reused exactly from previously completed 2023 discovery audits. Results are still in-sample for 2023 and are not proof of forward edge.",
+  "baseline_all_selected_middle": {
+    "races": 1345,
+    "hit_races": 205,
+    "race_hit_rate_pct": 15.241635687732343,
+    "tickets": 2802,
+    "hits": 205,
+    "ticket_hit_rate_pct": 7.316202712348322,
+    "avg_tickets_per_race": 2.083271375464684,
+    "avg_odds": 25.119985724482508,
+    "median_odds": 14.3,
+    "stake_yen": 280200,
+    "payout_yen": 211760,
+    "profit_yen": -68440,
+    "roi_pct": 75.57458957887224,
+    "max_losing_race_streak": 31
+  },
+  "fake_gate_definitions": {
+    "F1_low_fav_consensus": "fav_consensus <= 0.1884985310418076",
+    "F2_close_1st_2nd": "second_to_fav_odds_ratio <= 1.2058823529411764",
+    "F3_high_trifecta_set_entropy": "trifecta_set_entropy >= 2.7941491509245173",
+    "F4_high_trio_entropy": "trio_entropy >= 2.856512307140793",
+    "F12_consensus_AND_close": "F1 AND F2",
+    "F_any_consensus_OR_close": "F1 OR F2"
+  },
+  "middle_gate_definitions": {
+    "M0_all_selected_middle": "all frozen-v1 selected middle tickets",
+    "M1_delta_ge_1.187pt": "delta >= 0.01186999093633212",
+    "M2_scenario_score_ge_1.617pt": "scenario_score >= 0.016168991112891856",
+    "M3_delta_rank_top2": "delta rank within all 35 trio sets <= 2",
+    "M4_support_all3": "all 3 one-car-replacement family sets have positive delta"
+  },
+  "variants": [
+    {
+      "fake_gate": "F1_low_fav_consensus",
+      "middle_gate": "M0_all_selected_middle",
+      "stats": {
+        "races": 349,
+        "hit_races": 42,
+        "race_hit_rate_pct": 12.034383954154729,
+        "tickets": 750,
+        "hits": 42,
+        "ticket_hit_rate_pct": 5.6,
+        "avg_tickets_per_race": 2.1489971346704873,
+        "avg_odds": 27.005733333333357,
+        "median_odds": 15.9,
+        "stake_yen": 75000,
+        "payout_yen": 61590,
+        "profit_yen": -13410,
+        "roi_pct": 82.12,
+        "max_losing_race_streak": 41
+      }
+    },
+    {
+      "fake_gate": "F1_low_fav_consensus",
+      "middle_gate": "M1_delta_ge_1.187pt",
+      "stats": {
+        "races": 141,
+        "hit_races": 17,
+        "race_hit_rate_pct": 12.056737588652481,
+        "tickets": 156,
+        "hits": 17,
+        "ticket_hit_rate_pct": 10.897435897435898,
+        "avg_tickets_per_race": 1.1063829787234043,
+        "avg_odds": 8.78461538461539,
+        "median_odds": 7.9,
+        "stake_yen": 15600,
+        "payout_yen": 12340,
+        "profit_yen": -3260,
+        "roi_pct": 79.1025641025641,
+        "max_losing_race_streak": 18
+      }
+    },
+    {
+      "fake_gate": "F1_low_fav_consensus",
+      "middle_gate": "M2_scenario_score_ge_1.617pt",
+      "stats": {
+        "races": 148,
+        "hit_races": 18,
+        "race_hit_rate_pct": 12.162162162162161,
+        "tickets": 169,
+        "hits": 18,
+        "ticket_hit_rate_pct": 10.650887573964496,
+        "avg_tickets_per_race": 1.1418918918918919,
+        "avg_odds": 9.392307692307698,
+        "median_odds": 8.0,
+        "stake_yen": 16900,
+        "payout_yen": 14590,
+        "profit_yen": -2310,
+        "roi_pct": 86.33136094674556,
+        "max_losing_race_streak": 25
+      }
+    },
+    {
+      "fake_gate": "F1_low_fav_consensus",
+      "middle_gate": "M3_delta_rank_top2",
+      "stats": {
+        "races": 260,
+        "hit_races": 26,
+        "race_hit_rate_pct": 10.0,
+        "tickets": 293,
+        "hits": 26,
+        "ticket_hit_rate_pct": 8.873720136518772,
+        "avg_tickets_per_race": 1.126923076923077,
+        "avg_odds": 11.585665529010235,
+        "median_odds": 9.0,
+        "stake_yen": 29300,
+        "payout_yen": 21290,
+        "profit_yen": -8010,
+        "roi_pct": 72.66211604095564,
+        "max_losing_race_streak": 32
+      }
+    },
+    {
+      "fake_gate": "F1_low_fav_consensus",
+      "middle_gate": "M4_support_all3",
+      "stats": {
+        "races": 188,
+        "hit_races": 14,
+        "race_hit_rate_pct": 7.446808510638298,
+        "tickets": 228,
+        "hits": 14,
+        "ticket_hit_rate_pct": 6.140350877192983,
+        "avg_tickets_per_race": 1.2127659574468086,
+        "avg_odds": 26.332017543859628,
+        "median_odds": 15.9,
+        "stake_yen": 22800,
+        "payout_yen": 19620,
+        "profit_yen": -3180,
+        "roi_pct": 86.05263157894737,
+        "max_losing_race_streak": 29
+      }
+    },
+    {
+      "fake_gate": "F2_close_1st_2nd",
+      "middle_gate": "M0_all_selected_middle",
+      "stats": {
+        "races": 340,
+        "hit_races": 45,
+        "race_hit_rate_pct": 13.235294117647058,
+        "tickets": 708,
+        "hits": 45,
+        "ticket_hit_rate_pct": 6.3559322033898304,
+        "avg_tickets_per_race": 2.0823529411764707,
+        "avg_odds": 25.92104519774013,
+        "median_odds": 15.4,
+        "stake_yen": 70800,
+        "payout_yen": 56410,
+        "profit_yen": -14390,
+        "roi_pct": 79.67514124293785,
+        "max_losing_race_streak": 42
+      }
+    },
+    {
+      "fake_gate": "F2_close_1st_2nd",
+      "middle_gate": "M1_delta_ge_1.187pt",
+      "stats": {
+        "races": 154,
+        "hit_races": 19,
+        "race_hit_rate_pct": 12.337662337662337,
+        "tickets": 170,
+        "hits": 19,
+        "ticket_hit_rate_pct": 11.176470588235293,
+        "avg_tickets_per_race": 1.103896103896104,
+        "avg_odds": 8.000588235294122,
+        "median_odds": 6.65,
+        "stake_yen": 17000,
+        "payout_yen": 11880,
+        "profit_yen": -5120,
+        "roi_pct": 69.88235294117646,
+        "max_losing_race_streak": 20
+      }
+    },
+    {
+      "fake_gate": "F2_close_1st_2nd",
+      "middle_gate": "M2_scenario_score_ge_1.617pt",
+      "stats": {
+        "races": 156,
+        "hit_races": 22,
+        "race_hit_rate_pct": 14.102564102564102,
+        "tickets": 176,
+        "hits": 22,
+        "ticket_hit_rate_pct": 12.5,
+        "avg_tickets_per_race": 1.1282051282051282,
+        "avg_odds": 8.384090909090913,
+        "median_odds": 7.0,
+        "stake_yen": 17600,
+        "payout_yen": 14470,
+        "profit_yen": -3130,
+        "roi_pct": 82.2159090909091,
+        "max_losing_race_streak": 17
+      }
+    },
+    {
+      "fake_gate": "F2_close_1st_2nd",
+      "middle_gate": "M3_delta_rank_top2",
+      "stats": {
+        "races": 260,
+        "hit_races": 31,
+        "race_hit_rate_pct": 11.923076923076923,
+        "tickets": 295,
+        "hits": 31,
+        "ticket_hit_rate_pct": 10.508474576271187,
+        "avg_tickets_per_race": 1.1346153846153846,
+        "avg_odds": 10.353898305084744,
+        "median_odds": 8.0,
+        "stake_yen": 29500,
+        "payout_yen": 21370,
+        "profit_yen": -8130,
+        "roi_pct": 72.44067796610169,
+        "max_losing_race_streak": 29
+      }
+    },
+    {
+      "fake_gate": "F2_close_1st_2nd",
+      "middle_gate": "M4_support_all3",
+      "stats": {
+        "races": 147,
+        "hit_races": 10,
+        "race_hit_rate_pct": 6.802721088435374,
+        "tickets": 184,
+        "hits": 10,
+        "ticket_hit_rate_pct": 5.434782608695652,
+        "avg_tickets_per_race": 1.251700680272109,
+        "avg_odds": 26.380434782608685,
+        "median_odds": 15.75,
+        "stake_yen": 18400,
+        "payout_yen": 15870,
+        "profit_yen": -2530,
+        "roi_pct": 86.25,
+        "max_losing_race_streak": 36
+      }
+    },
+    {
+      "fake_gate": "F3_high_trifecta_set_entropy",
+      "middle_gate": "M0_all_selected_middle",
+      "stats": {
+        "races": 361,
+        "hit_races": 36,
+        "race_hit_rate_pct": 9.97229916897507,
+        "tickets": 781,
+        "hits": 36,
+        "ticket_hit_rate_pct": 4.609475032010243,
+        "avg_tickets_per_race": 2.1634349030470914,
+        "avg_odds": 27.674903969270208,
+        "median_odds": 17.2,
+        "stake_yen": 78100,
+        "payout_yen": 40450,
+        "profit_yen": -37650,
+        "roi_pct": 51.79257362355954,
+        "max_losing_race_streak": 46
+      }
+    },
+    {
+      "fake_gate": "F3_high_trifecta_set_entropy",
+      "middle_gate": "M1_delta_ge_1.187pt",
+      "stats": {
+        "races": 129,
+        "hit_races": 15,
+        "race_hit_rate_pct": 11.627906976744185,
+        "tickets": 147,
+        "hits": 15,
+        "ticket_hit_rate_pct": 10.204081632653061,
+        "avg_tickets_per_race": 1.1395348837209303,
+        "avg_odds": 10.568027210884358,
+        "median_odds": 9.2,
+        "stake_yen": 14700,
+        "payout_yen": 14730,
+        "profit_yen": 30,
+        "roi_pct": 100.20408163265306,
+        "max_losing_race_streak": 19
+      }
+    },
+    {
+      "fake_gate": "F3_high_trifecta_set_entropy",
+      "middle_gate": "M2_scenario_score_ge_1.617pt",
+      "stats": {
+        "races": 138,
+        "hit_races": 15,
+        "race_hit_rate_pct": 10.869565217391305,
+        "tickets": 158,
+        "hits": 15,
+        "ticket_hit_rate_pct": 9.49367088607595,
+        "avg_tickets_per_race": 1.144927536231884,
+        "avg_odds": 11.289873417721523,
+        "median_odds": 9.25,
+        "stake_yen": 15800,
+        "payout_yen": 13140,
+        "profit_yen": -2660,
+        "roi_pct": 83.16455696202532,
+        "max_losing_race_streak": 23
+      }
+    },
+    {
+      "fake_gate": "F3_high_trifecta_set_entropy",
+      "middle_gate": "M3_delta_rank_top2",
+      "stats": {
+        "races": 261,
+        "hit_races": 24,
+        "race_hit_rate_pct": 9.195402298850574,
+        "tickets": 296,
+        "hits": 24,
+        "ticket_hit_rate_pct": 8.108108108108109,
+        "avg_tickets_per_race": 1.1340996168582376,
+        "avg_odds": 13.061148648648645,
+        "median_odds": 11.1,
+        "stake_yen": 29600,
+        "payout_yen": 23940,
+        "profit_yen": -5660,
+        "roi_pct": 80.87837837837837,
+        "max_losing_race_streak": 38
+      }
+    },
+    {
+      "fake_gate": "F3_high_trifecta_set_entropy",
+      "middle_gate": "M4_support_all3",
+      "stats": {
+        "races": 201,
+        "hit_races": 13,
+        "race_hit_rate_pct": 6.467661691542289,
+        "tickets": 250,
+        "hits": 13,
+        "ticket_hit_rate_pct": 5.2,
+        "avg_tickets_per_race": 1.243781094527363,
+        "avg_odds": 26.967999999999986,
+        "median_odds": 16.6,
+        "stake_yen": 25000,
+        "payout_yen": 13100,
+        "profit_yen": -11900,
+        "roi_pct": 52.4,
+        "max_losing_race_streak": 38
+      }
+    },
+    {
+      "fake_gate": "F4_high_trio_entropy",
+      "middle_gate": "M0_all_selected_middle",
+      "stats": {
+        "races": 358,
+        "hit_races": 34,
+        "race_hit_rate_pct": 9.497206703910615,
+        "tickets": 756,
+        "hits": 34,
+        "ticket_hit_rate_pct": 4.497354497354498,
+        "avg_tickets_per_race": 2.111731843575419,
+        "avg_odds": 26.545105820105857,
+        "median_odds": 16.3,
+        "stake_yen": 75600,
+        "payout_yen": 46510,
+        "profit_yen": -29090,
+        "roi_pct": 61.52116402116402,
+        "max_losing_race_streak": 54
+      }
+    },
+    {
+      "fake_gate": "F4_high_trio_entropy",
+      "middle_gate": "M1_delta_ge_1.187pt",
+      "stats": {
+        "races": 133,
+        "hit_races": 13,
+        "race_hit_rate_pct": 9.774436090225564,
+        "tickets": 152,
+        "hits": 13,
+        "ticket_hit_rate_pct": 8.552631578947368,
+        "avg_tickets_per_race": 1.1428571428571428,
+        "avg_odds": 9.892105263157898,
+        "median_odds": 8.75,
+        "stake_yen": 15200,
+        "payout_yen": 11650,
+        "profit_yen": -3550,
+        "roi_pct": 76.64473684210526,
+        "max_losing_race_streak": 20
+      }
+    },
+    {
+      "fake_gate": "F4_high_trio_entropy",
+      "middle_gate": "M2_scenario_score_ge_1.617pt",
+      "stats": {
+        "races": 140,
+        "hit_races": 12,
+        "race_hit_rate_pct": 8.571428571428571,
+        "tickets": 160,
+        "hits": 12,
+        "ticket_hit_rate_pct": 7.5,
+        "avg_tickets_per_race": 1.1428571428571428,
+        "avg_odds": 10.583125000000006,
+        "median_odds": 8.9,
+        "stake_yen": 16000,
+        "payout_yen": 10480,
+        "profit_yen": -5520,
+        "roi_pct": 65.5,
+        "max_losing_race_streak": 23
+      }
+    },
+    {
+      "fake_gate": "F4_high_trio_entropy",
+      "middle_gate": "M3_delta_rank_top2",
+      "stats": {
+        "races": 247,
+        "hit_races": 19,
+        "race_hit_rate_pct": 7.6923076923076925,
+        "tickets": 279,
+        "hits": 19,
+        "ticket_hit_rate_pct": 6.810035842293907,
+        "avg_tickets_per_race": 1.1295546558704452,
+        "avg_odds": 12.596057347670245,
+        "median_odds": 10.4,
+        "stake_yen": 27900,
+        "payout_yen": 18020,
+        "profit_yen": -9880,
+        "roi_pct": 64.58781362007169,
+        "max_losing_race_streak": 40
+      }
+    },
+    {
+      "fake_gate": "F4_high_trio_entropy",
+      "middle_gate": "M4_support_all3",
+      "stats": {
+        "races": 186,
+        "hit_races": 8,
+        "race_hit_rate_pct": 4.301075268817204,
+        "tickets": 225,
+        "hits": 8,
+        "ticket_hit_rate_pct": 3.5555555555555554,
+        "avg_tickets_per_race": 1.2096774193548387,
+        "avg_odds": 25.936444444444422,
+        "median_odds": 16.2,
+        "stake_yen": 22500,
+        "payout_yen": 8100,
+        "profit_yen": -14400,
+        "roi_pct": 36.0,
+        "max_losing_race_streak": 41
+      }
+    },
+    {
+      "fake_gate": "F12_consensus_AND_close",
+      "middle_gate": "M0_all_selected_middle",
+      "stats": {
+        "races": 199,
+        "hit_races": 23,
+        "race_hit_rate_pct": 11.557788944723619,
+        "tickets": 427,
+        "hits": 23,
+        "ticket_hit_rate_pct": 5.386416861826698,
+        "avg_tickets_per_race": 2.1457286432160805,
+        "avg_odds": 28.248946135831392,
+        "median_odds": 16.7,
+        "stake_yen": 42700,
+        "payout_yen": 36720,
+        "profit_yen": -5980,
+        "roi_pct": 85.99531615925059,
+        "max_losing_race_streak": 25
+      }
+    },
+    {
+      "fake_gate": "F12_consensus_AND_close",
+      "middle_gate": "M1_delta_ge_1.187pt",
+      "stats": {
+        "races": 89,
+        "hit_races": 10,
+        "race_hit_rate_pct": 11.235955056179776,
+        "tickets": 96,
+        "hits": 10,
+        "ticket_hit_rate_pct": 10.416666666666666,
+        "avg_tickets_per_race": 1.0786516853932584,
+        "avg_odds": 8.670833333333334,
+        "median_odds": 7.6,
+        "stake_yen": 9600,
+        "payout_yen": 6890,
+        "profit_yen": -2710,
+        "roi_pct": 71.77083333333333,
+        "max_losing_race_streak": 18
+      }
+    },
+    {
+      "fake_gate": "F12_consensus_AND_close",
+      "middle_gate": "M2_scenario_score_ge_1.617pt",
+      "stats": {
+        "races": 88,
+        "hit_races": 10,
+        "race_hit_rate_pct": 11.363636363636363,
+        "tickets": 100,
+        "hits": 10,
+        "ticket_hit_rate_pct": 10.0,
+        "avg_tickets_per_race": 1.1363636363636365,
+        "avg_odds": 9.364,
+        "median_odds": 7.9,
+        "stake_yen": 10000,
+        "payout_yen": 7130,
+        "profit_yen": -2870,
+        "roi_pct": 71.3,
+        "max_losing_race_streak": 19
+      }
+    },
+    {
+      "fake_gate": "F12_consensus_AND_close",
+      "middle_gate": "M3_delta_rank_top2",
+      "stats": {
+        "races": 154,
+        "hit_races": 15,
+        "race_hit_rate_pct": 9.74025974025974,
+        "tickets": 172,
+        "hits": 15,
+        "ticket_hit_rate_pct": 8.720930232558139,
+        "avg_tickets_per_race": 1.1168831168831168,
+        "avg_odds": 11.52558139534884,
+        "median_odds": 8.6,
+        "stake_yen": 17200,
+        "payout_yen": 11720,
+        "profit_yen": -5480,
+        "roi_pct": 68.13953488372093,
+        "max_losing_race_streak": 30
+      }
+    },
+    {
+      "fake_gate": "F12_consensus_AND_close",
+      "middle_gate": "M4_support_all3",
+      "stats": {
+        "races": 100,
+        "hit_races": 8,
+        "race_hit_rate_pct": 8.0,
+        "tickets": 124,
+        "hits": 8,
+        "ticket_hit_rate_pct": 6.451612903225806,
+        "avg_tickets_per_race": 1.24,
+        "avg_odds": 29.038709677419345,
+        "median_odds": 16.2,
+        "stake_yen": 12400,
+        "payout_yen": 14680,
+        "profit_yen": 2280,
+        "roi_pct": 118.38709677419355,
+        "max_losing_race_streak": 23
+      }
+    },
+    {
+      "fake_gate": "F_any_consensus_OR_close",
+      "middle_gate": "M0_all_selected_middle",
+      "stats": {
+        "races": 490,
+        "hit_races": 64,
+        "race_hit_rate_pct": 13.061224489795919,
+        "tickets": 1031,
+        "hits": 64,
+        "ticket_hit_rate_pct": 6.20756547041707,
+        "avg_tickets_per_race": 2.1040816326530614,
+        "avg_odds": 25.74597478176531,
+        "median_odds": 15.0,
+        "stake_yen": 103100,
+        "payout_yen": 81280,
+        "profit_yen": -21820,
+        "roi_pct": 78.8360814742968,
+        "max_losing_race_streak": 33
+      }
+    },
+    {
+      "fake_gate": "F_any_consensus_OR_close",
+      "middle_gate": "M1_delta_ge_1.187pt",
+      "stats": {
+        "races": 206,
+        "hit_races": 26,
+        "race_hit_rate_pct": 12.62135922330097,
+        "tickets": 230,
+        "hits": 26,
+        "ticket_hit_rate_pct": 11.304347826086957,
+        "avg_tickets_per_race": 1.116504854368932,
+        "avg_odds": 8.252608695652178,
+        "median_odds": 7.25,
+        "stake_yen": 23000,
+        "payout_yen": 17330,
+        "profit_yen": -5670,
+        "roi_pct": 75.34782608695652,
+        "max_losing_race_streak": 20
+      }
+    },
+    {
+      "fake_gate": "F_any_consensus_OR_close",
+      "middle_gate": "M2_scenario_score_ge_1.617pt",
+      "stats": {
+        "races": 216,
+        "hit_races": 30,
+        "race_hit_rate_pct": 13.88888888888889,
+        "tickets": 245,
+        "hits": 30,
+        "ticket_hit_rate_pct": 12.244897959183673,
+        "avg_tickets_per_race": 1.1342592592592593,
+        "avg_odds": 8.6795918367347,
+        "median_odds": 7.6,
+        "stake_yen": 24500,
+        "payout_yen": 21930,
+        "profit_yen": -2570,
+        "roi_pct": 89.51020408163265,
+        "max_losing_race_streak": 18
+      }
+    },
+    {
+      "fake_gate": "F_any_consensus_OR_close",
+      "middle_gate": "M3_delta_rank_top2",
+      "stats": {
+        "races": 366,
+        "hit_races": 42,
+        "race_hit_rate_pct": 11.475409836065573,
+        "tickets": 416,
+        "hits": 42,
+        "ticket_hit_rate_pct": 10.096153846153847,
+        "avg_tickets_per_race": 1.1366120218579234,
+        "avg_odds": 10.73701923076922,
+        "median_odds": 8.45,
+        "stake_yen": 41600,
+        "payout_yen": 30940,
+        "profit_yen": -10660,
+        "roi_pct": 74.375,
+        "max_losing_race_streak": 24
+      }
+    },
+    {
+      "fake_gate": "F_any_consensus_OR_close",
+      "middle_gate": "M4_support_all3",
+      "stats": {
+        "races": 235,
+        "hit_races": 16,
+        "race_hit_rate_pct": 6.808510638297872,
+        "tickets": 288,
+        "hits": 16,
+        "ticket_hit_rate_pct": 5.555555555555555,
+        "avg_tickets_per_race": 1.225531914893617,
+        "avg_odds": 25.19756944444444,
+        "median_odds": 15.55,
+        "stake_yen": 28800,
+        "payout_yen": 20810,
+        "profit_yen": -7990,
+        "roi_pct": 72.25694444444444,
+        "max_losing_race_streak": 32
+      }
+    }
+  ],
+  "top10_by_roi": [
+    {
+      "fake_gate": "F12_consensus_AND_close",
+      "middle_gate": "M4_support_all3",
+      "stats": {
+        "races": 100,
+        "hit_races": 8,
+        "race_hit_rate_pct": 8.0,
+        "tickets": 124,
+        "hits": 8,
+        "ticket_hit_rate_pct": 6.451612903225806,
+        "avg_tickets_per_race": 1.24,
+        "avg_odds": 29.038709677419345,
+        "median_odds": 16.2,
+        "stake_yen": 12400,
+        "payout_yen": 14680,
+        "profit_yen": 2280,
+        "roi_pct": 118.38709677419355,
+        "max_losing_race_streak": 23
+      }
+    },
+    {
+      "fake_gate": "F3_high_trifecta_set_entropy",
+      "middle_gate": "M1_delta_ge_1.187pt",
+      "stats": {
+        "races": 129,
+        "hit_races": 15,
+        "race_hit_rate_pct": 11.627906976744185,
+        "tickets": 147,
+        "hits": 15,
+        "ticket_hit_rate_pct": 10.204081632653061,
+        "avg_tickets_per_race": 1.1395348837209303,
+        "avg_odds": 10.568027210884358,
+        "median_odds": 9.2,
+        "stake_yen": 14700,
+        "payout_yen": 14730,
+        "profit_yen": 30,
+        "roi_pct": 100.20408163265306,
+        "max_losing_race_streak": 19
+      }
+    },
+    {
+      "fake_gate": "F_any_consensus_OR_close",
+      "middle_gate": "M2_scenario_score_ge_1.617pt",
+      "stats": {
+        "races": 216,
+        "hit_races": 30,
+        "race_hit_rate_pct": 13.88888888888889,
+        "tickets": 245,
+        "hits": 30,
+        "ticket_hit_rate_pct": 12.244897959183673,
+        "avg_tickets_per_race": 1.1342592592592593,
+        "avg_odds": 8.6795918367347,
+        "median_odds": 7.6,
+        "stake_yen": 24500,
+        "payout_yen": 21930,
+        "profit_yen": -2570,
+        "roi_pct": 89.51020408163265,
+        "max_losing_race_streak": 18
+      }
+    },
+    {
+      "fake_gate": "F1_low_fav_consensus",
+      "middle_gate": "M2_scenario_score_ge_1.617pt",
+      "stats": {
+        "races": 148,
+        "hit_races": 18,
+        "race_hit_rate_pct": 12.162162162162161,
+        "tickets": 169,
+        "hits": 18,
+        "ticket_hit_rate_pct": 10.650887573964496,
+        "avg_tickets_per_race": 1.1418918918918919,
+        "avg_odds": 9.392307692307698,
+        "median_odds": 8.0,
+        "stake_yen": 16900,
+        "payout_yen": 14590,
+        "profit_yen": -2310,
+        "roi_pct": 86.33136094674556,
+        "max_losing_race_streak": 25
+      }
+    },
+    {
+      "fake_gate": "F2_close_1st_2nd",
+      "middle_gate": "M4_support_all3",
+      "stats": {
+        "races": 147,
+        "hit_races": 10,
+        "race_hit_rate_pct": 6.802721088435374,
+        "tickets": 184,
+        "hits": 10,
+        "ticket_hit_rate_pct": 5.434782608695652,
+        "avg_tickets_per_race": 1.251700680272109,
+        "avg_odds": 26.380434782608685,
+        "median_odds": 15.75,
+        "stake_yen": 18400,
+        "payout_yen": 15870,
+        "profit_yen": -2530,
+        "roi_pct": 86.25,
+        "max_losing_race_streak": 36
+      }
+    },
+    {
+      "fake_gate": "F1_low_fav_consensus",
+      "middle_gate": "M4_support_all3",
+      "stats": {
+        "races": 188,
+        "hit_races": 14,
+        "race_hit_rate_pct": 7.446808510638298,
+        "tickets": 228,
+        "hits": 14,
+        "ticket_hit_rate_pct": 6.140350877192983,
+        "avg_tickets_per_race": 1.2127659574468086,
+        "avg_odds": 26.332017543859628,
+        "median_odds": 15.9,
+        "stake_yen": 22800,
+        "payout_yen": 19620,
+        "profit_yen": -3180,
+        "roi_pct": 86.05263157894737,
+        "max_losing_race_streak": 29
+      }
+    },
+    {
+      "fake_gate": "F12_consensus_AND_close",
+      "middle_gate": "M0_all_selected_middle",
+      "stats": {
+        "races": 199,
+        "hit_races": 23,
+        "race_hit_rate_pct": 11.557788944723619,
+        "tickets": 427,
+        "hits": 23,
+        "ticket_hit_rate_pct": 5.386416861826698,
+        "avg_tickets_per_race": 2.1457286432160805,
+        "avg_odds": 28.248946135831392,
+        "median_odds": 16.7,
+        "stake_yen": 42700,
+        "payout_yen": 36720,
+        "profit_yen": -5980,
+        "roi_pct": 85.99531615925059,
+        "max_losing_race_streak": 25
+      }
+    },
+    {
+      "fake_gate": "F3_high_trifecta_set_entropy",
+      "middle_gate": "M2_scenario_score_ge_1.617pt",
+      "stats": {
+        "races": 138,
+        "hit_races": 15,
+        "race_hit_rate_pct": 10.869565217391305,
+        "tickets": 158,
+        "hits": 15,
+        "ticket_hit_rate_pct": 9.49367088607595,
+        "avg_tickets_per_race": 1.144927536231884,
+        "avg_odds": 11.289873417721523,
+        "median_odds": 9.25,
+        "stake_yen": 15800,
+        "payout_yen": 13140,
+        "profit_yen": -2660,
+        "roi_pct": 83.16455696202532,
+        "max_losing_race_streak": 23
+      }
+    },
+    {
+      "fake_gate": "F2_close_1st_2nd",
+      "middle_gate": "M2_scenario_score_ge_1.617pt",
+      "stats": {
+        "races": 156,
+        "hit_races": 22,
+        "race_hit_rate_pct": 14.102564102564102,
+        "tickets": 176,
+        "hits": 22,
+        "ticket_hit_rate_pct": 12.5,
+        "avg_tickets_per_race": 1.1282051282051282,
+        "avg_odds": 8.384090909090913,
+        "median_odds": 7.0,
+        "stake_yen": 17600,
+        "payout_yen": 14470,
+        "profit_yen": -3130,
+        "roi_pct": 82.2159090909091,
+        "max_losing_race_streak": 17
+      }
+    },
+    {
+      "fake_gate": "F1_low_fav_consensus",
+      "middle_gate": "M0_all_selected_middle",
+      "stats": {
+        "races": 349,
+        "hit_races": 42,
+        "race_hit_rate_pct": 12.034383954154729,
+        "tickets": 750,
+        "hits": 42,
+        "ticket_hit_rate_pct": 5.6,
+        "avg_tickets_per_race": 2.1489971346704873,
+        "avg_odds": 27.005733333333357,
+        "median_odds": 15.9,
+        "stake_yen": 75000,
+        "payout_yen": 61590,
+        "profit_yen": -13410,
+        "roi_pct": 82.12,
+        "max_losing_race_streak": 41
+      }
+    }
+  ],
+  "top10_by_profit": [
+    {
+      "fake_gate": "F12_consensus_AND_close",
+      "middle_gate": "M4_support_all3",
+      "stats": {
+        "races": 100,
+        "hit_races": 8,
+        "race_hit_rate_pct": 8.0,
+        "tickets": 124,
+        "hits": 8,
+        "ticket_hit_rate_pct": 6.451612903225806,
+        "avg_tickets_per_race": 1.24,
+        "avg_odds": 29.038709677419345,
+        "median_odds": 16.2,
+        "stake_yen": 12400,
+        "payout_yen": 14680,
+        "profit_yen": 2280,
+        "roi_pct": 118.38709677419355,
+        "max_losing_race_streak": 23
+      }
+    },
+    {
+      "fake_gate": "F3_high_trifecta_set_entropy",
+      "middle_gate": "M1_delta_ge_1.187pt",
+      "stats": {
+        "races": 129,
+        "hit_races": 15,
+        "race_hit_rate_pct": 11.627906976744185,
+        "tickets": 147,
+        "hits": 15,
+        "ticket_hit_rate_pct": 10.204081632653061,
+        "avg_tickets_per_race": 1.1395348837209303,
+        "avg_odds": 10.568027210884358,
+        "median_odds": 9.2,
+        "stake_yen": 14700,
+        "payout_yen": 14730,
+        "profit_yen": 30,
+        "roi_pct": 100.20408163265306,
+        "max_losing_race_streak": 19
+      }
+    },
+    {
+      "fake_gate": "F1_low_fav_consensus",
+      "middle_gate": "M2_scenario_score_ge_1.617pt",
+      "stats": {
+        "races": 148,
+        "hit_races": 18,
+        "race_hit_rate_pct": 12.162162162162161,
+        "tickets": 169,
+        "hits": 18,
+        "ticket_hit_rate_pct": 10.650887573964496,
+        "avg_tickets_per_race": 1.1418918918918919,
+        "avg_odds": 9.392307692307698,
+        "median_odds": 8.0,
+        "stake_yen": 16900,
+        "payout_yen": 14590,
+        "profit_yen": -2310,
+        "roi_pct": 86.33136094674556,
+        "max_losing_race_streak": 25
+      }
+    },
+    {
+      "fake_gate": "F2_close_1st_2nd",
+      "middle_gate": "M4_support_all3",
+      "stats": {
+        "races": 147,
+        "hit_races": 10,
+        "race_hit_rate_pct": 6.802721088435374,
+        "tickets": 184,
+        "hits": 10,
+        "ticket_hit_rate_pct": 5.434782608695652,
+        "avg_tickets_per_race": 1.251700680272109,
+        "avg_odds": 26.380434782608685,
+        "median_odds": 15.75,
+        "stake_yen": 18400,
+        "payout_yen": 15870,
+        "profit_yen": -2530,
+        "roi_pct": 86.25,
+        "max_losing_race_streak": 36
+      }
+    },
+    {
+      "fake_gate": "F_any_consensus_OR_close",
+      "middle_gate": "M2_scenario_score_ge_1.617pt",
+      "stats": {
+        "races": 216,
+        "hit_races": 30,
+        "race_hit_rate_pct": 13.88888888888889,
+        "tickets": 245,
+        "hits": 30,
+        "ticket_hit_rate_pct": 12.244897959183673,
+        "avg_tickets_per_race": 1.1342592592592593,
+        "avg_odds": 8.6795918367347,
+        "median_odds": 7.6,
+        "stake_yen": 24500,
+        "payout_yen": 21930,
+        "profit_yen": -2570,
+        "roi_pct": 89.51020408163265,
+        "max_losing_race_streak": 18
+      }
+    },
+    {
+      "fake_gate": "F3_high_trifecta_set_entropy",
+      "middle_gate": "M2_scenario_score_ge_1.617pt",
+      "stats": {
+        "races": 138,
+        "hit_races": 15,
+        "race_hit_rate_pct": 10.869565217391305,
+        "tickets": 158,
+        "hits": 15,
+        "ticket_hit_rate_pct": 9.49367088607595,
+        "avg_tickets_per_race": 1.144927536231884,
+        "avg_odds": 11.289873417721523,
+        "median_odds": 9.25,
+        "stake_yen": 15800,
+        "payout_yen": 13140,
+        "profit_yen": -2660,
+        "roi_pct": 83.16455696202532,
+        "max_losing_race_streak": 23
+      }
+    },
+    {
+      "fake_gate": "F12_consensus_AND_close",
+      "middle_gate": "M1_delta_ge_1.187pt",
+      "stats": {
+        "races": 89,
+        "hit_races": 10,
+        "race_hit_rate_pct": 11.235955056179776,
+        "tickets": 96,
+        "hits": 10,
+        "ticket_hit_rate_pct": 10.416666666666666,
+        "avg_tickets_per_race": 1.0786516853932584,
+        "avg_odds": 8.670833333333334,
+        "median_odds": 7.6,
+        "stake_yen": 9600,
+        "payout_yen": 6890,
+        "profit_yen": -2710,
+        "roi_pct": 71.77083333333333,
+        "max_losing_race_streak": 18
+      }
+    },
+    {
+      "fake_gate": "F12_consensus_AND_close",
+      "middle_gate": "M2_scenario_score_ge_1.617pt",
+      "stats": {
+        "races": 88,
+        "hit_races": 10,
+        "race_hit_rate_pct": 11.363636363636363,
+        "tickets": 100,
+        "hits": 10,
+        "ticket_hit_rate_pct": 10.0,
+        "avg_tickets_per_race": 1.1363636363636365,
+        "avg_odds": 9.364,
+        "median_odds": 7.9,
+        "stake_yen": 10000,
+        "payout_yen": 7130,
+        "profit_yen": -2870,
+        "roi_pct": 71.3,
+        "max_losing_race_streak": 19
+      }
+    },
+    {
+      "fake_gate": "F2_close_1st_2nd",
+      "middle_gate": "M2_scenario_score_ge_1.617pt",
+      "stats": {
+        "races": 156,
+        "hit_races": 22,
+        "race_hit_rate_pct": 14.102564102564102,
+        "tickets": 176,
+        "hits": 22,
+        "ticket_hit_rate_pct": 12.5,
+        "avg_tickets_per_race": 1.1282051282051282,
+        "avg_odds": 8.384090909090913,
+        "median_odds": 7.0,
+        "stake_yen": 17600,
+        "payout_yen": 14470,
+        "profit_yen": -3130,
+        "roi_pct": 82.2159090909091,
+        "max_losing_race_streak": 17
+      }
+    },
+    {
+      "fake_gate": "F1_low_fav_consensus",
+      "middle_gate": "M4_support_all3",
+      "stats": {
+        "races": 188,
+        "hit_races": 14,
+        "race_hit_rate_pct": 7.446808510638298,
+        "tickets": 228,
+        "hits": 14,
+        "ticket_hit_rate_pct": 6.140350877192983,
+        "avg_tickets_per_race": 1.2127659574468086,
+        "avg_odds": 26.332017543859628,
+        "median_odds": 15.9,
+        "stake_yen": 22800,
+        "payout_yen": 19620,
+        "profit_yen": -3180,
+        "roi_pct": 86.05263157894737,
+        "max_losing_race_streak": 29
+      }
+    }
+  ]
+}
