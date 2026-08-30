@@ -1,0 +1,42 @@
+name: Simulate support plus entry scheme 2023
+on:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/simulate_support_plus_entry_scheme_2023.py'
+      - '.github/workflows/simulate-support-plus-entry-scheme-2023.yml'
+permissions:
+  contents: write
+jobs:
+  simulate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run simulation
+        run: python src/keirin_market_analysis/simulate_support_plus_entry_scheme_2023.py
+      - name: Validate
+        run: |
+          python - <<'PY'
+          import json
+          p='data/audits/support_plus_entry_scheme_2023.json'
+          x=json.load(open(p,encoding='utf-8'))
+          assert x['status']=='SUPPORT_PLUS_ENTRY_SCHEME_2023'
+          assert x['evaluation']['eligible_races'] > 300
+          assert x['evaluation']['must_enter_races'] > 0
+          assert x['design']['evaluation_window']=='Jul-Dec.'
+          assert 'roi_pct' not in x['evaluation']['must_enter_metrics']
+          print('PASS')
+          PY
+      - name: Commit result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/support_plus_entry_scheme_2023.json
+          git commit -m 'analysis: save 2023 support plus entry simulation' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
