@@ -1,0 +1,432 @@
+{
+  "status": "MUST_ENTER_FORMATION_DEVELOPMENT_2023_FORWARD",
+  "frozen_inputs": {
+    "beta": 0.02219612332210088,
+    "must_enter_tv_threshold": 0.004982810992042711,
+    "must_enter_definition": "TV(P1,M) >= frozen 2023 75th percentile threshold from prior incremental-information test.",
+    "market_and_support_only_for_ticket_selection": true
+  },
+  "formation_family": {
+    "pair_core": "Rank all 21 rider pairs by the sum of support-augmented probability P1 over the five trios containing that pair.",
+    "prob": "For chosen pair core(s), choose third riders by P1.",
+    "uplift": "For chosen pair core(s), choose third riders by P1/M, i.e. combinations upgraded most by the support model versus raw market.",
+    "mixed": "For chosen pair core(s), choose third riders by P1*(P1/M), balancing probability and model uplift.",
+    "candidate_grid": [
+      {
+        "mode": "prob",
+        "pairs_n": 1,
+        "thirds_per_pair": 4,
+        "name": "PROB_P1_K4"
+      },
+      {
+        "mode": "prob",
+        "pairs_n": 1,
+        "thirds_per_pair": 5,
+        "name": "PROB_P1_K5"
+      },
+      {
+        "mode": "prob",
+        "pairs_n": 2,
+        "thirds_per_pair": 3,
+        "name": "PROB_P2_K3"
+      },
+      {
+        "mode": "prob",
+        "pairs_n": 2,
+        "thirds_per_pair": 4,
+        "name": "PROB_P2_K4"
+      },
+      {
+        "mode": "uplift",
+        "pairs_n": 1,
+        "thirds_per_pair": 4,
+        "name": "UPLIFT_P1_K4"
+      },
+      {
+        "mode": "uplift",
+        "pairs_n": 1,
+        "thirds_per_pair": 5,
+        "name": "UPLIFT_P1_K5"
+      },
+      {
+        "mode": "uplift",
+        "pairs_n": 2,
+        "thirds_per_pair": 3,
+        "name": "UPLIFT_P2_K3"
+      },
+      {
+        "mode": "uplift",
+        "pairs_n": 2,
+        "thirds_per_pair": 4,
+        "name": "UPLIFT_P2_K4"
+      },
+      {
+        "mode": "mixed",
+        "pairs_n": 1,
+        "thirds_per_pair": 4,
+        "name": "MIXED_P1_K4"
+      },
+      {
+        "mode": "mixed",
+        "pairs_n": 1,
+        "thirds_per_pair": 5,
+        "name": "MIXED_P1_K5"
+      },
+      {
+        "mode": "mixed",
+        "pairs_n": 2,
+        "thirds_per_pair": 3,
+        "name": "MIXED_P2_K3"
+      },
+      {
+        "mode": "mixed",
+        "pairs_n": 2,
+        "thirds_per_pair": 4,
+        "name": "MIXED_P2_K4"
+      }
+    ],
+    "development_selection_rule": "Choose the highest 2023 ROI candidate; tie-break by higher hit rate then shorter losing streak. 2024+ is not consulted.",
+    "stake_per_ticket_yen": 100
+  },
+  "accounting": {
+    "2023": {
+      "market_races": 1486,
+      "excluded_non7_or_incomplete": 50,
+      "no_unique_paid_trio": 5,
+      "solver_failures": 0,
+      "non_must_enter": 1073,
+      "must_enter_evaluated": 358
+    },
+    "2024": {
+      "market_races": 1430,
+      "excluded_non7_or_incomplete": 51,
+      "no_unique_paid_trio": 5,
+      "solver_failures": 0,
+      "non_must_enter": 985,
+      "must_enter_evaluated": 389
+    },
+    "2025": {
+      "market_races": 1456,
+      "excluded_non7_or_incomplete": 25,
+      "no_unique_paid_trio": 6,
+      "solver_failures": 0,
+      "non_must_enter": 1040,
+      "must_enter_evaluated": 385
+    },
+    "2026_h1": {
+      "market_races": 731,
+      "excluded_non7_or_incomplete": 24,
+      "no_unique_paid_trio": 2,
+      "solver_failures": 0,
+      "non_must_enter": 522,
+      "must_enter_evaluated": 183
+    }
+  },
+  "development_2023_ranked": [
+    {
+      "mode": "uplift",
+      "pairs_n": 2,
+      "thirds_per_pair": 3,
+      "name": "UPLIFT_P2_K3",
+      "metrics": {
+        "races": 358,
+        "tickets": 1821,
+        "avg_tickets_per_race": 5.08659217877095,
+        "min_tickets_per_race": 5,
+        "max_tickets_per_race": 6,
+        "hit_races": 215,
+        "hit_rate_pct": 60.055865921787706,
+        "stake_yen": 182100,
+        "payout_yen": 147570,
+        "profit_yen": -34530,
+        "roi_pct": 81.03789126853377,
+        "max_losing_streak_races": 7
+      }
+    },
+    {
+      "mode": "mixed",
+      "pairs_n": 2,
+      "thirds_per_pair": 4,
+      "name": "MIXED_P2_K4",
+      "metrics": {
+        "races": 358,
+        "tickets": 2524,
+        "avg_tickets_per_race": 7.050279329608938,
+        "min_tickets_per_race": 7,
+        "max_tickets_per_race": 8,
+        "hit_races": 245,
+        "hit_rate_pct": 68.43575418994413,
+        "stake_yen": 252400,
+        "payout_yen": 195480,
+        "profit_yen": -56920,
+        "roi_pct": 77.44849445324881,
+        "max_losing_streak_races": 5
+      }
+    },
+    {
+      "mode": "prob",
+      "pairs_n": 2,
+      "thirds_per_pair": 4,
+      "name": "PROB_P2_K4",
+      "metrics": {
+        "races": 358,
+        "tickets": 2524,
+        "avg_tickets_per_race": 7.050279329608938,
+        "min_tickets_per_race": 7,
+        "max_tickets_per_race": 8,
+        "hit_races": 245,
+        "hit_rate_pct": 68.43575418994413,
+        "stake_yen": 252400,
+        "payout_yen": 195480,
+        "profit_yen": -56920,
+        "roi_pct": 77.44849445324881,
+        "max_losing_streak_races": 5
+      }
+    },
+    {
+      "mode": "uplift",
+      "pairs_n": 2,
+      "thirds_per_pair": 4,
+      "name": "UPLIFT_P2_K4",
+      "metrics": {
+        "races": 358,
+        "tickets": 2524,
+        "avg_tickets_per_race": 7.050279329608938,
+        "min_tickets_per_race": 7,
+        "max_tickets_per_race": 8,
+        "hit_races": 241,
+        "hit_rate_pct": 67.31843575418995,
+        "stake_yen": 252400,
+        "payout_yen": 188800,
+        "profit_yen": -63600,
+        "roi_pct": 74.80190174326466,
+        "max_losing_streak_races": 5
+      }
+    },
+    {
+      "mode": "uplift",
+      "pairs_n": 1,
+      "thirds_per_pair": 4,
+      "name": "UPLIFT_P1_K4",
+      "metrics": {
+        "races": 358,
+        "tickets": 1432,
+        "avg_tickets_per_race": 4,
+        "min_tickets_per_race": 4,
+        "max_tickets_per_race": 4,
+        "hit_races": 186,
+        "hit_rate_pct": 51.95530726256983,
+        "stake_yen": 143200,
+        "payout_yen": 106240,
+        "profit_yen": -36960,
+        "roi_pct": 74.18994413407822,
+        "max_losing_streak_races": 7
+      }
+    },
+    {
+      "mode": "mixed",
+      "pairs_n": 1,
+      "thirds_per_pair": 4,
+      "name": "MIXED_P1_K4",
+      "metrics": {
+        "races": 358,
+        "tickets": 1432,
+        "avg_tickets_per_race": 4,
+        "min_tickets_per_race": 4,
+        "max_tickets_per_race": 4,
+        "hit_races": 187,
+        "hit_rate_pct": 52.23463687150838,
+        "stake_yen": 143200,
+        "payout_yen": 104680,
+        "profit_yen": -38520,
+        "roi_pct": 73.10055865921788,
+        "max_losing_streak_races": 9
+      }
+    },
+    {
+      "mode": "prob",
+      "pairs_n": 1,
+      "thirds_per_pair": 4,
+      "name": "PROB_P1_K4",
+      "metrics": {
+        "races": 358,
+        "tickets": 1432,
+        "avg_tickets_per_race": 4,
+        "min_tickets_per_race": 4,
+        "max_tickets_per_race": 4,
+        "hit_races": 187,
+        "hit_rate_pct": 52.23463687150838,
+        "stake_yen": 143200,
+        "payout_yen": 104680,
+        "profit_yen": -38520,
+        "roi_pct": 73.10055865921788,
+        "max_losing_streak_races": 9
+      }
+    },
+    {
+      "mode": "mixed",
+      "pairs_n": 2,
+      "thirds_per_pair": 3,
+      "name": "MIXED_P2_K3",
+      "metrics": {
+        "races": 358,
+        "tickets": 1808,
+        "avg_tickets_per_race": 5.050279329608938,
+        "min_tickets_per_race": 5,
+        "max_tickets_per_race": 6,
+        "hit_races": 218,
+        "hit_rate_pct": 60.89385474860335,
+        "stake_yen": 180800,
+        "payout_yen": 131660,
+        "profit_yen": -49140,
+        "roi_pct": 72.820796460177,
+        "max_losing_streak_races": 5
+      }
+    },
+    {
+      "mode": "prob",
+      "pairs_n": 2,
+      "thirds_per_pair": 3,
+      "name": "PROB_P2_K3",
+      "metrics": {
+        "races": 358,
+        "tickets": 1808,
+        "avg_tickets_per_race": 5.050279329608938,
+        "min_tickets_per_race": 5,
+        "max_tickets_per_race": 6,
+        "hit_races": 218,
+        "hit_rate_pct": 60.89385474860335,
+        "stake_yen": 180800,
+        "payout_yen": 131660,
+        "profit_yen": -49140,
+        "roi_pct": 72.820796460177,
+        "max_losing_streak_races": 5
+      }
+    },
+    {
+      "mode": "mixed",
+      "pairs_n": 1,
+      "thirds_per_pair": 5,
+      "name": "MIXED_P1_K5",
+      "metrics": {
+        "races": 358,
+        "tickets": 1790,
+        "avg_tickets_per_race": 5,
+        "min_tickets_per_race": 5,
+        "max_tickets_per_race": 5,
+        "hit_races": 193,
+        "hit_rate_pct": 53.910614525139664,
+        "stake_yen": 179000,
+        "payout_yen": 118910,
+        "profit_yen": -60090,
+        "roi_pct": 66.43016759776536,
+        "max_losing_streak_races": 7
+      }
+    },
+    {
+      "mode": "prob",
+      "pairs_n": 1,
+      "thirds_per_pair": 5,
+      "name": "PROB_P1_K5",
+      "metrics": {
+        "races": 358,
+        "tickets": 1790,
+        "avg_tickets_per_race": 5,
+        "min_tickets_per_race": 5,
+        "max_tickets_per_race": 5,
+        "hit_races": 193,
+        "hit_rate_pct": 53.910614525139664,
+        "stake_yen": 179000,
+        "payout_yen": 118910,
+        "profit_yen": -60090,
+        "roi_pct": 66.43016759776536,
+        "max_losing_streak_races": 7
+      }
+    },
+    {
+      "mode": "uplift",
+      "pairs_n": 1,
+      "thirds_per_pair": 5,
+      "name": "UPLIFT_P1_K5",
+      "metrics": {
+        "races": 358,
+        "tickets": 1790,
+        "avg_tickets_per_race": 5,
+        "min_tickets_per_race": 5,
+        "max_tickets_per_race": 5,
+        "hit_races": 193,
+        "hit_rate_pct": 53.910614525139664,
+        "stake_yen": 179000,
+        "payout_yen": 118910,
+        "profit_yen": -60090,
+        "roi_pct": 66.43016759776536,
+        "max_losing_streak_races": 7
+      }
+    }
+  ],
+  "frozen_winner": {
+    "mode": "uplift",
+    "pairs_n": 2,
+    "thirds_per_pair": 3,
+    "name": "UPLIFT_P2_K3"
+  },
+  "forward_evaluation_same_rule": {
+    "2023": {
+      "races": 358,
+      "tickets": 1821,
+      "avg_tickets_per_race": 5.08659217877095,
+      "min_tickets_per_race": 5,
+      "max_tickets_per_race": 6,
+      "hit_races": 215,
+      "hit_rate_pct": 60.055865921787706,
+      "stake_yen": 182100,
+      "payout_yen": 147570,
+      "profit_yen": -34530,
+      "roi_pct": 81.03789126853377,
+      "max_losing_streak_races": 7
+    },
+    "2024": {
+      "races": 389,
+      "tickets": 1988,
+      "avg_tickets_per_race": 5.110539845758355,
+      "min_tickets_per_race": 5,
+      "max_tickets_per_race": 6,
+      "hit_races": 217,
+      "hit_rate_pct": 55.7840616966581,
+      "stake_yen": 198800,
+      "payout_yen": 150170,
+      "profit_yen": -48630,
+      "roi_pct": 75.53822937625755,
+      "max_losing_streak_races": 5
+    },
+    "2025": {
+      "races": 385,
+      "tickets": 1953,
+      "avg_tickets_per_race": 5.072727272727272,
+      "min_tickets_per_race": 5,
+      "max_tickets_per_race": 6,
+      "hit_races": 212,
+      "hit_rate_pct": 55.064935064935064,
+      "stake_yen": 195300,
+      "payout_yen": 131970,
+      "profit_yen": -63330,
+      "roi_pct": 67.57296466973887,
+      "max_losing_streak_races": 5
+    },
+    "2026_h1": {
+      "races": 183,
+      "tickets": 938,
+      "avg_tickets_per_race": 5.1256830601092895,
+      "min_tickets_per_race": 5,
+      "max_tickets_per_race": 6,
+      "hit_races": 108,
+      "hit_rate_pct": 59.01639344262295,
+      "stake_yen": 93800,
+      "payout_yen": 69780,
+      "profit_yen": -24020,
+      "roi_pct": 74.39232409381663,
+      "max_losing_streak_races": 5
+    }
+  },
+  "warning": "2023 is in-sample development for the formation rule. Only 2024, 2025 and 2026_h1 are forward checks. A profitable 2023 winner is not evidence by itself."
+}
