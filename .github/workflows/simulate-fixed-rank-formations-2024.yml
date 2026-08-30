@@ -1,0 +1,40 @@
+name: Simulate frozen rank formations 2024
+on:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/simulate_fixed_rank_formations_2024.py'
+      - '.github/workflows/simulate-fixed-rank-formations-2024.yml'
+permissions:
+  contents: write
+jobs:
+  simulate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run simulation
+        run: python src/keirin_market_analysis/simulate_fixed_rank_formations_2024.py
+      - name: Validate
+        run: |
+          python - <<'PY'
+          import json
+          p='data/audits/fixed_rank_formations_2024.json'
+          x=json.load(open(p,encoding='utf-8'))
+          assert x['frozen_context']['no_2024_tuning'] is True
+          assert x['accounting']['must_enter_evaluated'] > 300
+          assert x['results']['2023_champion_136_146']['tickets'] == 2*x['results']['2023_champion_136_146']['races']
+          print('PASS')
+          PY
+      - name: Commit result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/fixed_rank_formations_2024.json
+          git commit -m 'analysis: save frozen 2024 rank formation results' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
