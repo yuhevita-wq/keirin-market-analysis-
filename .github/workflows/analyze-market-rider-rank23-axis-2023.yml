@@ -1,0 +1,30 @@
+name: Analyze market rider rank23 axis 2023
+
+on:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/analyze_market_rider_rank23_axis_2023.py'
+      - '.github/workflows/analyze-market-rider-rank23-axis-2023.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run analysis
+        run: python src/keirin_market_analysis/analyze_market_rider_rank23_axis_2023.py
+      - name: Commit output
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/audits/market_rider_rank23_axis_2023.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Add 2023 market rider rank23 axis audit"
+          git push
