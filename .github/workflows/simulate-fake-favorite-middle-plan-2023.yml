@@ -1,0 +1,29 @@
+name: Simulate fake-favorite middle plan 2023
+
+on:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/simulate_fake_favorite_middle_plan_2023.py'
+      - '.github/workflows/simulate-fake-favorite-middle-plan-2023.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  simulate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run 2023 simulation
+        run: python -m src.keirin_market_analysis.simulate_fake_favorite_middle_plan_2023
+      - name: Commit audit output
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/fake_favorite_middle_plan_2023.json
+          git diff --cached --quiet || git commit -m "Add 2023 fake-favorite middle plan simulation"
+          git push
