@@ -98,7 +98,7 @@ def load_results() -> dict[str, tuple[int, int, int]]:
         raise RuntimeError("results.csv is empty")
     f = rows[0].keys()
     rid = pick_col(f, ["race_id"])
-    rank = pick_col(f, ["finish", "rank", "placing", "arrival_order", "着順"])
+    rank = pick_col(f, ["finish_position", "finish", "rank", "placing", "arrival_order", "着順"])
     number = pick_col(f, ["number", "car_no", "bike_no", "frame_no", "車番"])
     if rid and rank and number:
         grouped = defaultdict(list)
