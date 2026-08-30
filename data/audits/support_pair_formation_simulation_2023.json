@@ -1,0 +1,1035 @@
+{
+  "status": "SUPPORT_PAIR_FORMATION_SIMULATION_2023",
+  "scope": "2023 only, in-sample exploratory simulation",
+  "frozen_inputs": {
+    "beta": 0.02219612332210088,
+    "must_enter_tv_threshold": 0.004982810992042711,
+    "market_only_ticket_generation": true,
+    "outcome_used_only_for_scoring": true,
+    "odds_phase": "final",
+    "stake_rule": "100 yen equal stake per selected trio"
+  },
+  "formation_universe": {
+    "description": "For every 2-rider core, enumerate every 2-5 third-rider subset. 21 pair cores * 26 subsets = 546 formations per race.",
+    "synthetic_odds": "1 / sum(1 / trio_odds) over selected tickets",
+    "coverage": "sum of support-augmented probabilities P1 over selected tickets",
+    "model_ev_dutch": "coverage * synthetic_odds; descriptive only because all probabilities are market-derived and final odds are not executable snapshots",
+    "objectives": [
+      "coverage",
+      "model_ev"
+    ],
+    "synthetic_odds_min_grid": [
+      1.5,
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0,
+      4.5,
+      5.0
+    ]
+  },
+  "accounting": {
+    "market_races": 1486,
+    "excluded_non7_or_incomplete": 50,
+    "no_unique_paid_trio": 5,
+    "solver_failures": 0,
+    "non_must_enter": 1073,
+    "must_enter_evaluated": 358
+  },
+  "ranked_rules_by_realized_2023_roi": [
+    {
+      "objective": "model_ev",
+      "synthetic_odds_min": 1.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "avg_tickets_per_bet_race": 2,
+      "median_tickets_per_bet_race": 2.0,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_selected_synthetic_odds": 29.40458342276373,
+      "avg_selected_model_coverage": 0.046181770080443614,
+      "avg_selected_model_ev_dutch": 0.7723744070957149,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "objective": "model_ev",
+      "synthetic_odds_min": 2.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "avg_tickets_per_bet_race": 2,
+      "median_tickets_per_bet_race": 2.0,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_selected_synthetic_odds": 29.40458342276373,
+      "avg_selected_model_coverage": 0.046181770080443614,
+      "avg_selected_model_ev_dutch": 0.7723744070957149,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "objective": "model_ev",
+      "synthetic_odds_min": 2.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "avg_tickets_per_bet_race": 2,
+      "median_tickets_per_bet_race": 2.0,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_selected_synthetic_odds": 29.40458342276373,
+      "avg_selected_model_coverage": 0.046181770080443614,
+      "avg_selected_model_ev_dutch": 0.7723744070957149,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "objective": "model_ev",
+      "synthetic_odds_min": 3.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "avg_tickets_per_bet_race": 2,
+      "median_tickets_per_bet_race": 2.0,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_selected_synthetic_odds": 29.40458342276373,
+      "avg_selected_model_coverage": 0.046181770080443614,
+      "avg_selected_model_ev_dutch": 0.7723744070957149,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "objective": "model_ev",
+      "synthetic_odds_min": 3.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "avg_tickets_per_bet_race": 2,
+      "median_tickets_per_bet_race": 2.0,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_selected_synthetic_odds": 29.40458342276373,
+      "avg_selected_model_coverage": 0.046181770080443614,
+      "avg_selected_model_ev_dutch": 0.7723744070957149,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "objective": "model_ev",
+      "synthetic_odds_min": 4.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "avg_tickets_per_bet_race": 2,
+      "median_tickets_per_bet_race": 2.0,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_selected_synthetic_odds": 29.40458342276373,
+      "avg_selected_model_coverage": 0.046181770080443614,
+      "avg_selected_model_ev_dutch": 0.7723744070957149,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "objective": "model_ev",
+      "synthetic_odds_min": 4.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "avg_tickets_per_bet_race": 2,
+      "median_tickets_per_bet_race": 2.0,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_selected_synthetic_odds": 29.40458342276373,
+      "avg_selected_model_coverage": 0.046181770080443614,
+      "avg_selected_model_ev_dutch": 0.7723744070957149,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "objective": "model_ev",
+      "synthetic_odds_min": 5.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "avg_tickets_per_bet_race": 2,
+      "median_tickets_per_bet_race": 2.0,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_selected_synthetic_odds": 29.40458342276373,
+      "avg_selected_model_coverage": 0.046181770080443614,
+      "avg_selected_model_ev_dutch": 0.7723744070957149,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "objective": "coverage",
+      "synthetic_odds_min": 3.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 1182,
+      "avg_tickets_per_bet_race": 3.3016759776536313,
+      "median_tickets_per_bet_race": 3.0,
+      "hit_races": 82,
+      "hit_rate_pct": 22.905027932960895,
+      "stake_yen": 118200,
+      "payout_yen": 99940,
+      "profit_yen": -18260,
+      "roi_pct": 84.55160744500846,
+      "avg_selected_synthetic_odds": 3.572030386952889,
+      "avg_selected_model_coverage": 0.20912053190528349,
+      "avg_selected_model_ev_dutch": 0.745908811597372,
+      "max_losing_streak_bet_races": 13,
+      "top_pair_cores": [
+        [
+          "1-5",
+          40
+        ],
+        [
+          "3-5",
+          32
+        ],
+        [
+          "1-7",
+          29
+        ],
+        [
+          "1-4",
+          26
+        ],
+        [
+          "2-7",
+          26
+        ],
+        [
+          "2-4",
+          25
+        ],
+        [
+          "3-4",
+          23
+        ],
+        [
+          "1-3",
+          20
+        ],
+        [
+          "4-7",
+          19
+        ],
+        [
+          "5-7",
+          19
+        ]
+      ]
+    },
+    {
+      "objective": "coverage",
+      "synthetic_odds_min": 2.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 1272,
+      "avg_tickets_per_bet_race": 3.553072625698324,
+      "median_tickets_per_bet_race": 4.0,
+      "hit_races": 139,
+      "hit_rate_pct": 38.8268156424581,
+      "stake_yen": 127200,
+      "payout_yen": 90060,
+      "profit_yen": -37140,
+      "roi_pct": 70.80188679245283,
+      "avg_selected_synthetic_odds": 2.130683555419701,
+      "avg_selected_model_coverage": 0.3547125535494893,
+      "avg_selected_model_ev_dutch": 0.7452203213030201,
+      "max_losing_streak_bet_races": 12,
+      "top_pair_cores": [
+        [
+          "1-7",
+          45
+        ],
+        [
+          "1-5",
+          36
+        ],
+        [
+          "3-7",
+          33
+        ],
+        [
+          "2-5",
+          31
+        ],
+        [
+          "2-7",
+          30
+        ],
+        [
+          "1-4",
+          26
+        ],
+        [
+          "3-5",
+          26
+        ],
+        [
+          "2-4",
+          25
+        ],
+        [
+          "3-4",
+          20
+        ],
+        [
+          "4-7",
+          18
+        ]
+      ]
+    },
+    {
+      "objective": "coverage",
+      "synthetic_odds_min": 4.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 1177,
+      "avg_tickets_per_bet_race": 3.287709497206704,
+      "median_tickets_per_bet_race": 3.0,
+      "hit_races": 55,
+      "hit_rate_pct": 15.363128491620111,
+      "stake_yen": 117700,
+      "payout_yen": 79200,
+      "profit_yen": -38500,
+      "roi_pct": 67.28971962616822,
+      "avg_selected_synthetic_odds": 4.573470920491395,
+      "avg_selected_model_coverage": 0.16336387876927935,
+      "avg_selected_model_ev_dutch": 0.7465334208720281,
+      "max_losing_streak_bet_races": 42,
+      "top_pair_cores": [
+        [
+          "3-5",
+          36
+        ],
+        [
+          "1-4",
+          29
+        ],
+        [
+          "1-2",
+          25
+        ],
+        [
+          "1-5",
+          25
+        ],
+        [
+          "1-7",
+          25
+        ],
+        [
+          "2-4",
+          24
+        ],
+        [
+          "5-7",
+          22
+        ],
+        [
+          "1-3",
+          21
+        ],
+        [
+          "2-5",
+          20
+        ],
+        [
+          "4-7",
+          20
+        ]
+      ]
+    },
+    {
+      "objective": "coverage",
+      "synthetic_odds_min": 4.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 1186,
+      "avg_tickets_per_bet_race": 3.3128491620111733,
+      "median_tickets_per_bet_race": 3.0,
+      "hit_races": 72,
+      "hit_rate_pct": 20.11173184357542,
+      "stake_yen": 118600,
+      "payout_yen": 78500,
+      "profit_yen": -40100,
+      "roi_pct": 66.18887015177066,
+      "avg_selected_synthetic_odds": 4.070053904835571,
+      "avg_selected_model_coverage": 0.18357928739256843,
+      "avg_selected_model_ev_dutch": 0.7464005916518309,
+      "max_losing_streak_bet_races": 15,
+      "top_pair_cores": [
+        [
+          "1-5",
+          35
+        ],
+        [
+          "2-4",
+          27
+        ],
+        [
+          "3-5",
+          26
+        ],
+        [
+          "1-4",
+          25
+        ],
+        [
+          "1-7",
+          24
+        ],
+        [
+          "2-7",
+          24
+        ],
+        [
+          "2-5",
+          23
+        ],
+        [
+          "3-7",
+          23
+        ],
+        [
+          "4-7",
+          22
+        ],
+        [
+          "5-7",
+          22
+        ]
+      ]
+    },
+    {
+      "objective": "coverage",
+      "synthetic_odds_min": 1.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 1467,
+      "avg_tickets_per_bet_race": 4.097765363128492,
+      "median_tickets_per_bet_race": 4.0,
+      "hit_races": 165,
+      "hit_rate_pct": 46.089385474860336,
+      "stake_yen": 146700,
+      "payout_yen": 94780,
+      "profit_yen": -51920,
+      "roi_pct": 64.60804362644853,
+      "avg_selected_synthetic_odds": 1.6491540007068448,
+      "avg_selected_model_coverage": 0.4593758581044123,
+      "avg_selected_model_ev_dutch": 0.74546669670102,
+      "max_losing_streak_bet_races": 7,
+      "top_pair_cores": [
+        [
+          "1-7",
+          46
+        ],
+        [
+          "1-5",
+          43
+        ],
+        [
+          "1-4",
+          34
+        ],
+        [
+          "2-5",
+          34
+        ],
+        [
+          "3-7",
+          34
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "3-5",
+          28
+        ],
+        [
+          "2-4",
+          25
+        ],
+        [
+          "4-7",
+          23
+        ],
+        [
+          "3-4",
+          18
+        ]
+      ]
+    },
+    {
+      "objective": "coverage",
+      "synthetic_odds_min": 3.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 1195,
+      "avg_tickets_per_bet_race": 3.3379888268156424,
+      "median_tickets_per_bet_race": 3.0,
+      "hit_races": 97,
+      "hit_rate_pct": 27.094972067039105,
+      "stake_yen": 119500,
+      "payout_yen": 73380,
+      "profit_yen": -46120,
+      "roi_pct": 61.40585774058577,
+      "avg_selected_synthetic_odds": 3.0724311461702745,
+      "avg_selected_model_coverage": 0.24310046949002134,
+      "avg_selected_model_ev_dutch": 0.7451562891986828,
+      "max_losing_streak_bet_races": 12,
+      "top_pair_cores": [
+        [
+          "1-5",
+          33
+        ],
+        [
+          "1-7",
+          33
+        ],
+        [
+          "3-5",
+          31
+        ],
+        [
+          "1-4",
+          28
+        ],
+        [
+          "4-5",
+          27
+        ],
+        [
+          "2-7",
+          26
+        ],
+        [
+          "1-2",
+          23
+        ],
+        [
+          "2-5",
+          22
+        ],
+        [
+          "3-7",
+          21
+        ],
+        [
+          "3-4",
+          19
+        ]
+      ]
+    },
+    {
+      "objective": "coverage",
+      "synthetic_odds_min": 2.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 1257,
+      "avg_tickets_per_bet_race": 3.511173184357542,
+      "median_tickets_per_bet_race": 3.0,
+      "hit_races": 100,
+      "hit_rate_pct": 27.932960893854748,
+      "stake_yen": 125700,
+      "payout_yen": 70450,
+      "profit_yen": -55250,
+      "roi_pct": 56.0461416070008,
+      "avg_selected_synthetic_odds": 2.6008192915577926,
+      "avg_selected_model_coverage": 0.2879248703255259,
+      "avg_selected_model_ev_dutch": 0.7446783919653204,
+      "max_losing_streak_bet_races": 16,
+      "top_pair_cores": [
+        [
+          "1-5",
+          40
+        ],
+        [
+          "1-7",
+          36
+        ],
+        [
+          "2-7",
+          32
+        ],
+        [
+          "1-4",
+          31
+        ],
+        [
+          "3-7",
+          27
+        ],
+        [
+          "3-5",
+          26
+        ],
+        [
+          "3-4",
+          23
+        ],
+        [
+          "5-7",
+          22
+        ],
+        [
+          "2-4",
+          21
+        ],
+        [
+          "2-5",
+          19
+        ]
+      ]
+    },
+    {
+      "objective": "coverage",
+      "synthetic_odds_min": 5.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 1142,
+      "avg_tickets_per_bet_race": 3.189944134078212,
+      "median_tickets_per_bet_race": 3.0,
+      "hit_races": 49,
+      "hit_rate_pct": 13.687150837988828,
+      "stake_yen": 114200,
+      "payout_yen": 60740,
+      "profit_yen": -53460,
+      "roi_pct": 53.18739054290718,
+      "avg_selected_synthetic_odds": 5.076645052348153,
+      "avg_selected_model_coverage": 0.14725078929698587,
+      "avg_selected_model_ev_dutch": 0.7472459983939278,
+      "max_losing_streak_bet_races": 18,
+      "top_pair_cores": [
+        [
+          "2-4",
+          42
+        ],
+        [
+          "1-5",
+          32
+        ],
+        [
+          "1-7",
+          31
+        ],
+        [
+          "1-4",
+          27
+        ],
+        [
+          "3-5",
+          27
+        ],
+        [
+          "3-4",
+          26
+        ],
+        [
+          "3-7",
+          24
+        ],
+        [
+          "1-3",
+          22
+        ],
+        [
+          "4-7",
+          18
+        ],
+        [
+          "1-2",
+          16
+        ]
+      ]
+    }
+  ],
+  "warning": "The best 2023 rule is selected in-sample from a predefined 16-rule grid. It is not validated edge. Final odds are historical final prices, not T-10 executable odds."
+}
