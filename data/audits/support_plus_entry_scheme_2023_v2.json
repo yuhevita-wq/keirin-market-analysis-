@@ -1,0 +1,229 @@
+{
+  "status": "SUPPORT_PLUS_ENTRY_SCHEME_2023_V2",
+  "scope": "Race-entry simulation only; no ticket rule, no ROI.",
+  "data_note": "Support uses archived KDreams final trio odds; historical diagnostic, not T-10 executable.",
+  "design": {
+    "baseline": "3連複 rider support S",
+    "model": "offset logistic logit(F)=logit(S)+race-card correction, normalized to sum F=3",
+    "numeric_features": [
+      "score",
+      "win_rate",
+      "top2_rate",
+      "top3_rate",
+      "b_count",
+      "nige_count",
+      "makuri_count",
+      "sashi_count",
+      "mark_count",
+      "age",
+      "line_size",
+      "line_position",
+      "car_no"
+    ],
+    "categorical_features": [
+      "class",
+      "style",
+      "line_role"
+    ],
+    "excluded": [
+      "prediction_mark",
+      "evaluation"
+    ],
+    "walk_forward": "Jan-Apr bootstrap; monthly refit May-Dec using prior outcomes only",
+    "calibration": "May-Jun outputs only; thresholds do not use outcomes",
+    "evaluation": "Jul-Dec",
+    "must_enter": "Dmax>=May-Jun Q75 AND Dtotal>=May-Jun Q75 AND Nplus>=2",
+    "Dmax": "max abs(F-S)",
+    "Dtotal": "sum abs(F-S)",
+    "Nplus_threshold": "median positive E=F-S in May-Jun"
+  },
+  "accounting": {
+    "market_races": 1486,
+    "excluded_market": 50,
+    "excluded_entries": 0,
+    "excluded_winner": 5,
+    "eligible_complete_races": 1431
+  },
+  "models": {
+    "5": {
+      "train_races": 495,
+      "test_races": 124,
+      "features": 28
+    },
+    "6": {
+      "train_races": 619,
+      "test_races": 111,
+      "features": 28
+    },
+    "7": {
+      "train_races": 730,
+      "test_races": 126,
+      "features": 28
+    },
+    "8": {
+      "train_races": 856,
+      "test_races": 111,
+      "features": 28
+    },
+    "9": {
+      "train_races": 967,
+      "test_races": 106,
+      "features": 28
+    },
+    "10": {
+      "train_races": 1073,
+      "test_races": 125,
+      "features": 28
+    },
+    "11": {
+      "train_races": 1198,
+      "test_races": 123,
+      "features": 28
+    },
+    "12": {
+      "train_races": 1321,
+      "test_races": 110,
+      "features": 28
+    }
+  },
+  "calibration": {
+    "races": 235,
+    "dmax_q75": 0.12022345865421336,
+    "dtotal_q75": 0.39958626013615656,
+    "positive_e_median": 0.038637267852648316
+  },
+  "evaluation": {
+    "eligible_races": 701,
+    "must_enter_races": 80,
+    "must_enter_rate_pct": 11.412268188302425,
+    "all_metrics": {
+      "races": 701,
+      "support_brier": 0.17962726910975468,
+      "adjusted_brier": 0.18217833708318523,
+      "brier_improvement_pct": -1.4202008336895782,
+      "support_logloss": 0.5378235761534093,
+      "adjusted_logloss": 0.5440230518579654,
+      "logloss_improvement_pct": -1.152696902745634,
+      "support_top3_exact_rate_pct": 25.962910128388017,
+      "adjusted_top3_exact_rate_pct": 25.82025677603424,
+      "support_avg_top3_overlap": 2.0456490727532097,
+      "adjusted_avg_top3_overlap": 2.0456490727532097
+    },
+    "must_enter_metrics": {
+      "races": 80,
+      "support_brier": 0.18700316728138347,
+      "adjusted_brier": 0.194664443474318,
+      "brier_improvement_pct": -4.096869750557014,
+      "support_logloss": 0.5538114711581591,
+      "adjusted_logloss": 0.5735966284041638,
+      "logloss_improvement_pct": -3.5725437764279095,
+      "support_top3_exact_rate_pct": 17.5,
+      "adjusted_top3_exact_rate_pct": 17.5,
+      "support_avg_top3_overlap": 1.95,
+      "adjusted_avg_top3_overlap": 1.9375
+    },
+    "non_enter_metrics": {
+      "races": 621,
+      "support_brier": 0.1786770728879667,
+      "adjusted_brier": 0.18056982096194432,
+      "brier_improvement_pct": -1.059312223658601,
+      "support_logloss": 0.5357639439466798,
+      "adjusted_logloss": 0.5402132513367144,
+      "logloss_improvement_pct": -0.8304603996414813,
+      "support_top3_exact_rate_pct": 27.053140096618357,
+      "adjusted_top3_exact_rate_pct": 26.89210950080515,
+      "support_avg_top3_overlap": 2.0579710144927534,
+      "adjusted_avg_top3_overlap": 2.0595813204508855
+    },
+    "avg_dmax": 0.1584463400601276,
+    "avg_dtotal": 0.502073688873083,
+    "avg_nplus": 2.65,
+    "monthly": {
+      "7": {
+        "eligible": 126,
+        "must_enter": 26,
+        "rate_pct": 20.634920634920636,
+        "metrics": {
+          "races": 26,
+          "support_brier": 0.20072170055732028,
+          "adjusted_brier": 0.20789946611849314,
+          "brier_improvement_pct": -3.575978850937996,
+          "support_logloss": 0.5893217516484609,
+          "adjusted_logloss": 0.6063637897575748,
+          "logloss_improvement_pct": -2.8918053782070006,
+          "support_top3_exact_rate_pct": 3.8461538461538463,
+          "adjusted_top3_exact_rate_pct": 15.384615384615385,
+          "support_avg_top3_overlap": 1.8461538461538463,
+          "adjusted_avg_top3_overlap": 1.9230769230769231
+        }
+      },
+      "8": {
+        "eligible": 111,
+        "must_enter": 0,
+        "rate_pct": 0.0,
+        "metrics": {}
+      },
+      "9": {
+        "eligible": 106,
+        "must_enter": 1,
+        "rate_pct": 0.9433962264150944,
+        "metrics": {
+          "races": 1,
+          "support_brier": 0.16191105507855894,
+          "adjusted_brier": 0.1529632405103158,
+          "brier_improvement_pct": 5.52637654291221,
+          "support_logloss": 0.4902724219334679,
+          "adjusted_logloss": 0.474910375539071,
+          "logloss_improvement_pct": 3.133369471163435,
+          "support_top3_exact_rate_pct": 0.0,
+          "adjusted_top3_exact_rate_pct": 0.0,
+          "support_avg_top3_overlap": 2.0,
+          "adjusted_avg_top3_overlap": 2.0
+        }
+      },
+      "10": {
+        "eligible": 125,
+        "must_enter": 0,
+        "rate_pct": 0.0,
+        "metrics": {}
+      },
+      "11": {
+        "eligible": 123,
+        "must_enter": 45,
+        "rate_pct": 36.58536585365854,
+        "metrics": {
+          "races": 45,
+          "support_brier": 0.1735742102420754,
+          "adjusted_brier": 0.1806446016353852,
+          "brier_improvement_pct": -4.073411242055543,
+          "support_logloss": 0.5192616957515407,
+          "adjusted_logloss": 0.5384488560193385,
+          "logloss_improvement_pct": -3.6950848531254805,
+          "support_top3_exact_rate_pct": 24.444444444444443,
+          "adjusted_top3_exact_rate_pct": 20.0,
+          "support_avg_top3_overlap": 2.0444444444444443,
+          "adjusted_avg_top3_overlap": 2.0
+        }
+      },
+      "12": {
+        "eligible": 110,
+        "must_enter": 8,
+        "rate_pct": 7.2727272727272725,
+        "metrics": {
+          "races": 8,
+          "support_brier": 0.22109233150604957,
+          "adjusted_brier": 0.23572488059524677,
+          "brier_improvement_pct": -6.618297880131054,
+          "support_logloss": 0.6406879273799885,
+          "adjusted_logloss": 0.6771453552783537,
+          "logloss_improvement_pct": -5.690356621429293,
+          "support_top3_exact_rate_pct": 25.0,
+          "adjusted_top3_exact_rate_pct": 12.5,
+          "support_avg_top3_overlap": 1.75,
+          "adjusted_avg_top3_overlap": 1.625
+        }
+      }
+    }
+  },
+  "pass_rule": "Proceed to 2-point formation only if adjusted F improves BOTH Brier and logloss vs S on MUST_ENTER subset."
+}
