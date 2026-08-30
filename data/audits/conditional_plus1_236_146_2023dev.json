@@ -1,0 +1,522 @@
+{
+  "status": "CONDITIONAL_PLUS1_236_146_2023_DEVELOPMENT_SCAN",
+  "years_read": [
+    2023,
+    2024,
+    2025
+  ],
+  "base_patterns": [
+    [
+      2,
+      3,
+      6
+    ],
+    [
+      1,
+      4,
+      6
+    ]
+  ],
+  "base_by_year": {
+    "2023": {
+      "selected_races": 366,
+      "added_tickets": 0,
+      "add_rate_pct": 0.0,
+      "added_ticket_hits": 0,
+      "hit_races": 22,
+      "race_hit_rate_pct": 6.0109289617486334,
+      "stake_yen": 73200,
+      "payout_yen": 82520,
+      "profit_yen": 9320,
+      "roi_pct": 112.73224043715847,
+      "max_losing_streak": 82
+    },
+    "2024": {
+      "selected_races": 311,
+      "added_tickets": 0,
+      "add_rate_pct": 0.0,
+      "added_ticket_hits": 0,
+      "hit_races": 14,
+      "race_hit_rate_pct": 4.501607717041801,
+      "stake_yen": 62200,
+      "payout_yen": 76330,
+      "profit_yen": 14130,
+      "roi_pct": 122.71704180064309,
+      "max_losing_streak": 58
+    },
+    "2025": {
+      "selected_races": 292,
+      "added_tickets": 0,
+      "add_rate_pct": 0.0,
+      "added_ticket_hits": 0,
+      "hit_races": 13,
+      "race_hit_rate_pct": 4.4520547945205475,
+      "stake_yen": 58400,
+      "payout_yen": 64420,
+      "profit_yen": 6020,
+      "roi_pct": 110.3082191780822,
+      "max_losing_streak": 99
+    }
+  },
+  "development_rule": "Use 2023 only to set candidate/feature/threshold. Constraint: 2023 combined ROI >=110% and add rate <=35%; rank by shortest 2023 max losing streak, then higher hit rate, then ROI.",
+  "candidates": [
+    [
+      1,
+      2,
+      3
+    ],
+    [
+      1,
+      3,
+      4
+    ]
+  ],
+  "features": [
+    "candidate normalized probability p",
+    "candidate p / max(p236,p146)"
+  ],
+  "top_2023_rules_with_fixed_forward_checks": [
+    {
+      "candidate": [
+        1,
+        2,
+        3
+      ],
+      "feature": "ratio_to_base_max",
+      "quantile_2023": 0.8,
+      "threshold": 13.536585365853659,
+      "dev_2023": {
+        "selected_races": 366,
+        "added_tickets": 74,
+        "add_rate_pct": 20.218579234972676,
+        "added_ticket_hits": 17,
+        "hit_races": 39,
+        "race_hit_rate_pct": 10.655737704918034,
+        "stake_yen": 80600,
+        "payout_yen": 89200,
+        "profit_yen": 8600,
+        "roi_pct": 110.66997518610422,
+        "max_losing_streak": 26
+      },
+      "forward_2024": {
+        "selected_races": 311,
+        "added_tickets": 67,
+        "add_rate_pct": 21.543408360128616,
+        "added_ticket_hits": 13,
+        "hit_races": 27,
+        "race_hit_rate_pct": 8.681672025723472,
+        "stake_yen": 68900,
+        "payout_yen": 81290,
+        "profit_yen": 12390,
+        "roi_pct": 117.98258345428157,
+        "max_losing_streak": 39
+      },
+      "forward_2025": {
+        "selected_races": 292,
+        "added_tickets": 54,
+        "add_rate_pct": 18.493150684931507,
+        "added_ticket_hits": 11,
+        "hit_races": 24,
+        "race_hit_rate_pct": 8.219178082191782,
+        "stake_yen": 63800,
+        "payout_yen": 68480,
+        "profit_yen": 4680,
+        "roi_pct": 107.33542319749216,
+        "max_losing_streak": 69
+      }
+    },
+    {
+      "candidate": [
+        1,
+        2,
+        3
+      ],
+      "feature": "ratio_to_base_max",
+      "quantile_2023": 0.85,
+      "threshold": 15.112514688601646,
+      "dev_2023": {
+        "selected_races": 366,
+        "added_tickets": 55,
+        "add_rate_pct": 15.027322404371585,
+        "added_ticket_hits": 15,
+        "hit_races": 37,
+        "race_hit_rate_pct": 10.109289617486338,
+        "stake_yen": 78700,
+        "payout_yen": 88490,
+        "profit_yen": 9790,
+        "roi_pct": 112.43964421855146,
+        "max_losing_streak": 26
+      },
+      "forward_2024": {
+        "selected_races": 311,
+        "added_tickets": 45,
+        "add_rate_pct": 14.469453376205788,
+        "added_ticket_hits": 9,
+        "hit_races": 23,
+        "race_hit_rate_pct": 7.395498392282958,
+        "stake_yen": 66700,
+        "payout_yen": 79740,
+        "profit_yen": 13040,
+        "roi_pct": 119.55022488755623,
+        "max_losing_streak": 39
+      },
+      "forward_2025": {
+        "selected_races": 292,
+        "added_tickets": 42,
+        "add_rate_pct": 14.383561643835616,
+        "added_ticket_hits": 9,
+        "hit_races": 22,
+        "race_hit_rate_pct": 7.534246575342466,
+        "stake_yen": 62600,
+        "payout_yen": 67590,
+        "profit_yen": 4990,
+        "roi_pct": 107.97124600638978,
+        "max_losing_streak": 69
+      }
+    },
+    {
+      "candidate": [
+        1,
+        2,
+        3
+      ],
+      "feature": "ratio_to_base_max",
+      "quantile_2023": 0.9,
+      "threshold": 16.771576227390184,
+      "dev_2023": {
+        "selected_races": 366,
+        "added_tickets": 37,
+        "add_rate_pct": 10.109289617486338,
+        "added_ticket_hits": 11,
+        "hit_races": 33,
+        "race_hit_rate_pct": 9.01639344262295,
+        "stake_yen": 76900,
+        "payout_yen": 86760,
+        "profit_yen": 9860,
+        "roi_pct": 112.8218465539662,
+        "max_losing_streak": 42
+      },
+      "forward_2024": {
+        "selected_races": 311,
+        "added_tickets": 30,
+        "add_rate_pct": 9.646302250803858,
+        "added_ticket_hits": 3,
+        "hit_races": 17,
+        "race_hit_rate_pct": 5.466237942122186,
+        "stake_yen": 65200,
+        "payout_yen": 77400,
+        "profit_yen": 12200,
+        "roi_pct": 118.71165644171779,
+        "max_losing_streak": 39
+      },
+      "forward_2025": {
+        "selected_races": 292,
+        "added_tickets": 32,
+        "add_rate_pct": 10.95890410958904,
+        "added_ticket_hits": 8,
+        "hit_races": 21,
+        "race_hit_rate_pct": 7.191780821917808,
+        "stake_yen": 61600,
+        "payout_yen": 67240,
+        "profit_yen": 5640,
+        "roi_pct": 109.15584415584415,
+        "max_losing_streak": 69
+      }
+    },
+    {
+      "candidate": [
+        1,
+        3,
+        4
+      ],
+      "feature": "p",
+      "quantile_2023": 0.75,
+      "threshold": 0.10380993197717114,
+      "dev_2023": {
+        "selected_races": 366,
+        "added_tickets": 92,
+        "add_rate_pct": 25.136612021857925,
+        "added_ticket_hits": 15,
+        "hit_races": 37,
+        "race_hit_rate_pct": 10.109289617486338,
+        "stake_yen": 82400,
+        "payout_yen": 90950,
+        "profit_yen": 8550,
+        "roi_pct": 110.37621359223301,
+        "max_losing_streak": 44
+      },
+      "forward_2024": {
+        "selected_races": 311,
+        "added_tickets": 69,
+        "add_rate_pct": 22.186495176848876,
+        "added_ticket_hits": 11,
+        "hit_races": 25,
+        "race_hit_rate_pct": 8.038585209003216,
+        "stake_yen": 69100,
+        "payout_yen": 82520,
+        "profit_yen": 13420,
+        "roi_pct": 119.42112879884226,
+        "max_losing_streak": 58
+      },
+      "forward_2025": {
+        "selected_races": 292,
+        "added_tickets": 65,
+        "add_rate_pct": 22.26027397260274,
+        "added_ticket_hits": 12,
+        "hit_races": 25,
+        "race_hit_rate_pct": 8.561643835616438,
+        "stake_yen": 64900,
+        "payout_yen": 70370,
+        "profit_yen": 5470,
+        "roi_pct": 108.42835130970724,
+        "max_losing_streak": 35
+      }
+    },
+    {
+      "candidate": [
+        1,
+        3,
+        4
+      ],
+      "feature": "p",
+      "quantile_2023": 0.8,
+      "threshold": 0.11164681595675574,
+      "dev_2023": {
+        "selected_races": 366,
+        "added_tickets": 74,
+        "add_rate_pct": 20.218579234972676,
+        "added_ticket_hits": 12,
+        "hit_races": 34,
+        "race_hit_rate_pct": 9.289617486338798,
+        "stake_yen": 80600,
+        "payout_yen": 88870,
+        "profit_yen": 8270,
+        "roi_pct": 110.26054590570719,
+        "max_losing_streak": 44
+      },
+      "forward_2024": {
+        "selected_races": 311,
+        "added_tickets": 52,
+        "add_rate_pct": 16.720257234726688,
+        "added_ticket_hits": 9,
+        "hit_races": 23,
+        "race_hit_rate_pct": 7.395498392282958,
+        "stake_yen": 67400,
+        "payout_yen": 81180,
+        "profit_yen": 13780,
+        "roi_pct": 120.44510385756676,
+        "max_losing_streak": 58
+      },
+      "forward_2025": {
+        "selected_races": 292,
+        "added_tickets": 51,
+        "add_rate_pct": 17.465753424657535,
+        "added_ticket_hits": 11,
+        "hit_races": 24,
+        "race_hit_rate_pct": 8.219178082191782,
+        "stake_yen": 63500,
+        "payout_yen": 69670,
+        "profit_yen": 6170,
+        "roi_pct": 109.71653543307086,
+        "max_losing_streak": 35
+      }
+    },
+    {
+      "candidate": [
+        1,
+        3,
+        4
+      ],
+      "feature": "p",
+      "quantile_2023": 0.85,
+      "threshold": 0.12502642493317004,
+      "dev_2023": {
+        "selected_races": 366,
+        "added_tickets": 55,
+        "add_rate_pct": 15.027322404371585,
+        "added_ticket_hits": 10,
+        "hit_races": 32,
+        "race_hit_rate_pct": 8.743169398907105,
+        "stake_yen": 78700,
+        "payout_yen": 87620,
+        "profit_yen": 8920,
+        "roi_pct": 111.33418043202033,
+        "max_losing_streak": 44
+      },
+      "forward_2024": {
+        "selected_races": 311,
+        "added_tickets": 29,
+        "add_rate_pct": 9.32475884244373,
+        "added_ticket_hits": 4,
+        "hit_races": 18,
+        "race_hit_rate_pct": 5.787781350482315,
+        "stake_yen": 65100,
+        "payout_yen": 78100,
+        "profit_yen": 13000,
+        "roi_pct": 119.96927803379417,
+        "max_losing_streak": 58
+      },
+      "forward_2025": {
+        "selected_races": 292,
+        "added_tickets": 37,
+        "add_rate_pct": 12.67123287671233,
+        "added_ticket_hits": 11,
+        "hit_races": 24,
+        "race_hit_rate_pct": 8.219178082191782,
+        "stake_yen": 62100,
+        "payout_yen": 69670,
+        "profit_yen": 7570,
+        "roi_pct": 112.19001610305958,
+        "max_losing_streak": 35
+      }
+    },
+    {
+      "candidate": [
+        1,
+        3,
+        4
+      ],
+      "feature": "p",
+      "quantile_2023": 0.9,
+      "threshold": 0.13553384133424526,
+      "dev_2023": {
+        "selected_races": 366,
+        "added_tickets": 37,
+        "add_rate_pct": 10.109289617486338,
+        "added_ticket_hits": 8,
+        "hit_races": 30,
+        "race_hit_rate_pct": 8.19672131147541,
+        "stake_yen": 76900,
+        "payout_yen": 86510,
+        "profit_yen": 9610,
+        "roi_pct": 112.49674902470741,
+        "max_losing_streak": 44
+      },
+      "forward_2024": {
+        "selected_races": 311,
+        "added_tickets": 25,
+        "add_rate_pct": 8.038585209003216,
+        "added_ticket_hits": 4,
+        "hit_races": 18,
+        "race_hit_rate_pct": 5.787781350482315,
+        "stake_yen": 64700,
+        "payout_yen": 78100,
+        "profit_yen": 13400,
+        "roi_pct": 120.71097372488408,
+        "max_losing_streak": 58
+      },
+      "forward_2025": {
+        "selected_races": 292,
+        "added_tickets": 33,
+        "add_rate_pct": 11.301369863013699,
+        "added_ticket_hits": 9,
+        "hit_races": 22,
+        "race_hit_rate_pct": 7.534246575342466,
+        "stake_yen": 61700,
+        "payout_yen": 68510,
+        "profit_yen": 6810,
+        "roi_pct": 111.03727714748784,
+        "max_losing_streak": 41
+      }
+    },
+    {
+      "candidate": [
+        1,
+        2,
+        3
+      ],
+      "feature": "p",
+      "quantile_2023": 0.85,
+      "threshold": 0.20708712604193813,
+      "dev_2023": {
+        "selected_races": 366,
+        "added_tickets": 55,
+        "add_rate_pct": 15.027322404371585,
+        "added_ticket_hits": 13,
+        "hit_races": 35,
+        "race_hit_rate_pct": 9.562841530054644,
+        "stake_yen": 78700,
+        "payout_yen": 87010,
+        "profit_yen": 8310,
+        "roi_pct": 110.55908513341804,
+        "max_losing_streak": 52
+      },
+      "forward_2024": {
+        "selected_races": 311,
+        "added_tickets": 43,
+        "add_rate_pct": 13.82636655948553,
+        "added_ticket_hits": 6,
+        "hit_races": 20,
+        "race_hit_rate_pct": 6.430868167202572,
+        "stake_yen": 66500,
+        "payout_yen": 78400,
+        "profit_yen": 11900,
+        "roi_pct": 117.89473684210526,
+        "max_losing_streak": 39
+      },
+      "forward_2025": {
+        "selected_races": 292,
+        "added_tickets": 42,
+        "add_rate_pct": 14.383561643835616,
+        "added_ticket_hits": 12,
+        "hit_races": 25,
+        "race_hit_rate_pct": 8.561643835616438,
+        "stake_yen": 62600,
+        "payout_yen": 68490,
+        "profit_yen": 5890,
+        "roi_pct": 109.40894568690096,
+        "max_losing_streak": 50
+      }
+    }
+  ],
+  "chosen_by_predeclared_objective": {
+    "candidate": [
+      1,
+      2,
+      3
+    ],
+    "feature": "ratio_to_base_max",
+    "quantile_2023": 0.8,
+    "threshold": 13.536585365853659,
+    "dev_2023": {
+      "selected_races": 366,
+      "added_tickets": 74,
+      "add_rate_pct": 20.218579234972676,
+      "added_ticket_hits": 17,
+      "hit_races": 39,
+      "race_hit_rate_pct": 10.655737704918034,
+      "stake_yen": 80600,
+      "payout_yen": 89200,
+      "profit_yen": 8600,
+      "roi_pct": 110.66997518610422,
+      "max_losing_streak": 26
+    },
+    "forward_2024": {
+      "selected_races": 311,
+      "added_tickets": 67,
+      "add_rate_pct": 21.543408360128616,
+      "added_ticket_hits": 13,
+      "hit_races": 27,
+      "race_hit_rate_pct": 8.681672025723472,
+      "stake_yen": 68900,
+      "payout_yen": 81290,
+      "profit_yen": 12390,
+      "roi_pct": 117.98258345428157,
+      "max_losing_streak": 39
+    },
+    "forward_2025": {
+      "selected_races": 292,
+      "added_tickets": 54,
+      "add_rate_pct": 18.493150684931507,
+      "added_ticket_hits": 11,
+      "hit_races": 24,
+      "race_hit_rate_pct": 8.219178082191782,
+      "stake_yen": 63800,
+      "payout_yen": 68480,
+      "profit_yen": 4680,
+      "roi_pct": 107.33542319749216,
+      "max_losing_streak": 69
+    }
+  },
+  "warning": "Exploratory redesign. 2023 is development. 2024/2025 are already exposed project years, so forward checks are replication diagnostics, not clean OOS validation. 2026 remains untouched."
+}
