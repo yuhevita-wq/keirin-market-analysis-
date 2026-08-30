@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "data" / "2023" / "s_class_yosen"
 AUDITS = ROOT / "data" / "audits"
+GATE_JSON = AUDITS / "fake_favorite_true_middle_2023_2024.json"
 OUT_JSON = AUDITS / "fake_favorite_formation_sim_2023.json"
 OUT_CSV = AUDITS / "fake_favorite_formation_sim_2023_decisions.csv"
 
@@ -37,6 +38,15 @@ def pick_col(fieldnames, candidates):
         if c.lower() in lower:
             return lower[c.lower()]
     return None
+
+
+def load_audited_gate() -> dict[str, dict]:
+    payload = json.loads(GATE_JSON.read_text(encoding="utf-8"))
+    rows = payload["years"]["2023"]["races"]
+    gate = {str(r["race_id"]): r for r in rows}
+    if len(gate) != 208:
+        raise RuntimeError(f"Expected audited 2023 fake-favorite gate of 208 races, got {len(gate)}")
+    return gate
 
 
 def load_trio_odds() -> dict[str, dict[tuple[int, int, int], float]]:
@@ -128,25 +138,21 @@ def trifecta_set_distribution(tf_odds):
     return dict(grouped)
 
 
-def race_signals(trio_odds, tf_odds):
+def compute_delta(trio_odds, tf_odds):
     p_trio = implied_distribution(trio_odds)
     p_tf_set = trifecta_set_distribution(tf_odds)
     common = set(p_trio) & set(p_tf_set)
-    delta = {c: p_tf_set[c] - p_trio[c] for c in common}
-    ranked = sorted(trio_odds.items(), key=lambda kv: (kv[1], kv[0]))
-    if len(ranked) < 2:
-        return None
-    favorite, fav_odds = ranked[0]
-    second_odds = ranked[1][1]
-    fav_consensus = p_trio[favorite]
-    ratio = second_odds / fav_odds
-    fake = fav_consensus <= FAV_CONSENSUS_MAX and ratio <= SECOND_TO_FAV_ODDS_RATIO_MAX
-    return favorite, fav_odds, fav_consensus, ratio, delta, fake
+    return {c: p_tf_set[c] - p_trio[c] for c in common}
 
 
-def two_of_three_middle_candidates(favorite, delta):
+def entrants_from_trio(trio_odds) -> tuple[int, ...]:
+    entrants = sorted({car for combo in trio_odds for car in combo})
+    return tuple(entrants)
+
+
+def two_of_three_middle_candidates(favorite, delta, entrants):
     fav = set(favorite)
-    outsiders = sorted(set(range(1, 8)) - fav)
+    outsiders = sorted(set(entrants) - fav)
     rows = []
     for o in outsiders:
         replacements = []
@@ -182,10 +188,7 @@ def select_fourth(core, favorite, candidates, delta):
     pool -= set(core)
     if not pool:
         return None
-    def car_score(car):
-        combos = [norm_combo(core[0], core[1], car)]
-        return (max(delta.get(c, float("-inf")) for c in combos), -car)
-    return max(pool, key=car_score)
+    return max(pool, key=lambda car: (delta.get(norm_combo(core[0], core[1], car), float("-inf")), -car))
 
 
 def payout_for_hit(result_set, ticket, trio_odds):
@@ -196,29 +199,35 @@ def payout_for_hit(result_set, ticket, trio_odds):
 
 
 def main():
+    gate = load_audited_gate()
     trio = load_trio_odds()
     trifecta = load_trifecta_odds()
     results = load_results()
-    race_ids = sorted(set(trio) & set(trifecta) & set(results))
 
-    totals = {k: {"bet_races": 0, "tickets": 0, "hit_races": 0, "stake_yen": 0, "payout_yen": 0} for k in ["A_2of3_representatives", "B_core_pair_all", "C_four_car_box", "D_four_car_without_favorite"]}
+    available = set(trio) & set(trifecta) & set(results)
+    missing_gate = sorted(set(gate) - available)
+    if missing_gate:
+        raise RuntimeError(f"Audited gate races missing required data: {missing_gate}")
+    race_ids = sorted(gate)
+
+    names = ["A_2of3_representatives", "B_core_pair_all", "C_four_car_box", "D_four_car_without_favorite"]
+    totals = {k: {"bet_races": 0, "tickets": 0, "hit_races": 0, "stake_yen": 0, "payout_yen": 0} for k in names}
     decisions = []
-    fake_count = 0
 
     for rid in race_ids:
-        sig = race_signals(trio[rid], trifecta[rid])
-        if sig is None:
-            continue
-        favorite, fav_odds, fav_consensus, ratio, delta, fake = sig
-        if not fake:
-            continue
-        fake_count += 1
-        candidates = two_of_three_middle_candidates(favorite, delta)
+        gate_row = gate[rid]
+        favorite = norm_combo(*gate_row["favorite"])
+        fav_odds = float(gate_row["favorite_odds"])
+        fav_consensus = float(gate_row["favorite_consensus"])
+        ratio = float(gate_row["second_to_fav_odds_ratio"])
+        delta = compute_delta(trio[rid], trifecta[rid])
+        entrants = entrants_from_trio(trio[rid])
+        candidates = two_of_three_middle_candidates(favorite, delta, entrants)
         core = select_core_pair(candidates)
 
         methods = {}
         methods["A_2of3_representatives"] = sorted({c["representative"] for c in candidates})
-        methods["B_core_pair_all"] = [norm_combo(core[0], core[1], x) for x in range(1, 8) if x not in core] if core else []
+        methods["B_core_pair_all"] = [norm_combo(core[0], core[1], x) for x in entrants if x not in core] if core else []
 
         fourth = select_fourth(core, favorite, candidates, delta) if core else None
         four = sorted(set(core or ()) | ({fourth} if fourth else set()) | set(favorite))
@@ -236,6 +245,8 @@ def main():
         result_set = norm_combo(*results[rid])
         row = {
             "race_id": rid,
+            "entrant_count": len(entrants),
+            "entrants": "-".join(map(str, entrants)),
             "favorite": "-".join(map(str, favorite)),
             "favorite_odds": fav_odds,
             "favorite_consensus": fav_consensus,
@@ -269,32 +280,37 @@ def main():
         s["race_hit_rate_pct"] = (100.0 * s["hit_races"] / s["bet_races"]) if s["bet_races"] else None
         s["avg_tickets_per_bet_race"] = (s["tickets"] / s["bet_races"]) if s["bet_races"] else None
 
+    candidate_distribution = defaultdict(int)
+    for r in decisions:
+        candidate_distribution[str(r["candidate_count"])] += 1
+
     output = {
-        "status": "FAKE_FAVORITE_FORMATION_SIM_2023",
+        "status": "FAKE_FAVORITE_FORMATION_SIM_2023_AUDITED_GATE",
         "year": 2023,
         "years_read": [2023],
         "evaluation_year_2024_used": False,
         "evaluation_year_2025_used": False,
         "evaluation_year_2026_used": False,
         "staking": "Flat 100 yen per trio ticket; no dutching.",
+        "gate_source": "data/audits/fake_favorite_true_middle_2023_2024.json exact 2023 race list",
         "fake_gate": {"fav_consensus_max": FAV_CONSENSUS_MAX, "second_to_fav_odds_ratio_max": SECOND_TO_FAV_ODDS_RATIO_MAX},
         "definitions": {
-            "A_2of3_representatives": "For each outsider where at least 2 of the 3 one-car replacements of the trio favorite have positive delta=P_trifecta_set-P_trio, buy the strongest-delta representative.",
-            "B_core_pair_all": "Choose the pair with greatest candidate support, breaking ties by summed positive delta, then buy that pair with every other entrant.",
-            "C_four_car_box": "Core pair plus two strongest relevant additional cars, including favorite members/candidate cars, translated to a 4-car trio BOX (4 tickets).",
-            "D_four_car_without_favorite": "Same four cars as C, but remove the exact trio-market favorite ticket if present.",
+            "A_2of3_representatives": "For each actual outsider where at least 2 of the 3 one-car replacements of the audited trio favorite have positive delta=P_trifecta_set-P_trio, buy the strongest-delta representative.",
+            "B_core_pair_all": "Choose the pair with greatest candidate support, breaking ties by summed positive delta, then buy that pair with every other actual entrant.",
+            "C_four_car_box": "Core pair plus two strongest relevant additional cars, using only actual entrants, translated to a 4-car trio BOX (4 tickets).",
+            "D_four_car_without_favorite": "Same four cars as C, but remove the exact audited trio-market favorite ticket if present.",
         },
-        "fake_favorite_races": fake_count,
+        "fake_favorite_races": len(race_ids),
+        "candidate_count_distribution": dict(sorted(candidate_distribution.items(), key=lambda kv: int(kv[0]))),
         "methods": totals,
     }
 
     AUDITS.mkdir(parents=True, exist_ok=True)
     OUT_JSON.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
-    if decisions:
-        with OUT_CSV.open("w", encoding="utf-8-sig", newline="") as f:
-            w = csv.DictWriter(f, fieldnames=list(decisions[0].keys()))
-            w.writeheader()
-            w.writerows(decisions)
+    with OUT_CSV.open("w", encoding="utf-8-sig", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=list(decisions[0].keys()))
+        w.writeheader()
+        w.writerows(decisions)
     print(json.dumps(output, ensure_ascii=False, indent=2))
 
 
