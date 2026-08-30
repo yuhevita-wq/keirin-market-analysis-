@@ -1,0 +1,29 @@
+name: Analyze middle ticket hit anatomy 2023 validate 2024
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/analyze_middle_ticket_hit_anatomy_2023_validate_2024.py'
+      - '.github/workflows/analyze-middle-ticket-hit-anatomy-2023-validate-2024.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run analysis
+        run: python -m src.keirin_market_analysis.analyze_middle_ticket_hit_anatomy_2023_validate_2024
+      - name: Commit audit output
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/middle_ticket_hit_anatomy_2023_validate_2024.json
+          git diff --cached --quiet || git commit -m "Add middle ticket hit anatomy 2023-2024 audit"
+          git push
