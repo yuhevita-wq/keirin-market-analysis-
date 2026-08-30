@@ -1,0 +1,39 @@
+name: Analyze conditional wings 2023
+on:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/analyze_conditional_wings_2023.py'
+      - '.github/workflows/analyze-conditional-wings-2023.yml'
+permissions:
+  contents: write
+jobs:
+  analyze:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run analysis
+        run: python src/keirin_market_analysis/analyze_conditional_wings_2023.py
+      - name: Validate
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('data/audits/conditional_wings_2023.json',encoding='utf-8'))
+          assert x['outcome_used_for_entry_or_ticket_selection'] is False
+          assert len(x['ranked_by_temporal_robustness']) == 4
+          assert x['must_enter_races'] > 300
+          print('PASS', x['selected_for_2024_oos'])
+          PY
+      - name: Commit result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/conditional_wings_2023.json
+          git commit -m 'analysis: save conditional wing results 2023' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
