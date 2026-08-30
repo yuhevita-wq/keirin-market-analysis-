@@ -1,0 +1,47 @@
+name: Develop MUST_ENTER support formations
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/keirin_market_analysis/develop_must_enter_formations_2023.py'
+      - '.github/workflows/develop-must-enter-formations-2023.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  develop:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run formation development and forward checks
+        run: python src/keirin_market_analysis/develop_must_enter_formations_2023.py
+      - name: Validate output
+        run: |
+          python - <<'PY'
+          import json
+          p='data/audits/must_enter_formation_development_2023_forward.json'
+          x=json.load(open(p,encoding='utf-8'))
+          assert x['frozen_inputs']['market_and_support_only_for_ticket_selection'] is True
+          assert len(x['development_2023_ranked']) == 12
+          assert x['accounting']['2023']['must_enter_evaluated'] > 100
+          for y in ('2024','2025','2026_h1'):
+              assert x['forward_evaluation_same_rule'][y]['races'] > 100
+          print('PASS', x['frozen_winner'], x['forward_evaluation_same_rule'])
+          PY
+      - name: Commit result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/must_enter_formation_development_2023_forward.json
+          git commit -m 'analysis: save MUST_ENTER formation development' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
