@@ -1,0 +1,44 @@
+name: Audit rider support construction
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/keirin_market_analysis/audit_rider_support_construction.py'
+      - '.github/workflows/audit-rider-support-construction.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run audit
+        run: python src/keirin_market_analysis/audit_rider_support_construction.py
+      - name: Require PASS
+        run: |
+          python - <<'PY'
+          import json
+          p='data/audits/rider_support_construction_audit.json'
+          d=json.load(open(p,encoding='utf-8'))
+          assert d['verdict']=='PASS', d
+          assert d['totals']['invariant_failures']==0, d['totals']
+          assert d['totals']['rank_mismatches']==0, d['totals']
+          print(d['totals'])
+          PY
+      - name: Commit audit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/rider_support_construction_audit.json
+          git commit -m 'audit: verify rider support construction' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
