@@ -60,7 +60,6 @@ def main():
 
     for rid in sorted(set(trio_by_race) & set(payouts)):
         rows = trio_by_race[rid]
-        odds_map = {c:o for c,o in rows}
         inv = {c:1.0/o for c,o in rows}
         z = sum(inv.values())
         p = {c:w/z for c,w in inv.items()}
@@ -79,8 +78,9 @@ def main():
         fav_ranked = sorted(favorite, key=lambda c:(-rider_support[c],c))
         dropped = fav_ranked[-1]
         retained = tuple(sorted(set(favorite)-{dropped}))
+        favorite_set = set(favorite)
 
-        repl_cars = [ranked[i-1] for i in (4,5,6) if i <= len(ranked) and ranked[i-1] not in retained]
+        repl_cars = [ranked[i-1] for i in (4,5,6) if i <= len(ranked) and ranked[i-1] not in favorite_set]
         tickets = []
         meta = []
         for rc in repl_cars:
@@ -136,7 +136,7 @@ def main():
         by_rank[k] = dict(s)
 
     out = {
-        "status":"TRIO_FAVORITE_MISS_REPLACEMENT_SIM_2023",
+        "status":"TRIO_FAVORITE_MISS_REPLACEMENT_SIM_2023_OUTSIDERS_ONLY",
         "year":2023,
         "years_read":[2023],
         "gate":{
@@ -144,7 +144,7 @@ def main():
             "entropy_min":ENTROPY_MIN,
             "definition":"Select races where final 3連複 favorite market share <= threshold AND normalized trio-market entropy >= threshold."
         },
-        "strategy":"Within the 3連複 favorite trio, drop the member with the weakest individual marginal trio-market support. Retain the other two and buy one replacement each using individual market-support ranks 4, 5, and 6. Flat 100 yen per unique trio ticket.",
+        "strategy":"Within the 3連複 favorite trio, drop the member with the weakest individual marginal trio-market support. Retain the other two and buy outsider riders whose individual market-support rank is 4, 5, or 6. Any rider already in the original favorite trio is excluded from replacement. Flat 100 yen per unique trio ticket.",
         "payout_method":"Actual published 3連複 payout_yen from payouts.csv.",
         "result":totals,
         "diagnostic_by_replacement_support_rank":by_rank,
