@@ -1,0 +1,1809 @@
+{
+  "status": "TRIO_FAVORITE_FAILURE_2023_VALIDATE_2024",
+  "years_read": [
+    2023,
+    2024
+  ],
+  "evaluation_year_2025_used": false,
+  "evaluation_year_2026_used": false,
+  "definition": "Favorite = shortest final 3連複 odds in a complete 35-combination market. Favorite miss means that exact 3-car set did not win.",
+  "discipline": "All race-selection features are pre-result market-only. Single-feature thresholds are discovered from 2023 quartiles and applied unchanged to 2024. Middle performance buys all already-selected frozen v1 middle tickets at flat 100 yen; no ticket pruning.",
+  "baseline": {
+    "2023": {
+      "races": 1436,
+      "fav_hits": 376,
+      "fav_misses": 1060,
+      "fav_miss_rate_pct": 73.81615598885794,
+      "winner_rank_median": 3.0,
+      "middle_races": 1307,
+      "middle_hit_races": 198,
+      "middle_race_hit_rate_pct": 15.14919663351186,
+      "middle_tickets": 2709,
+      "middle_stake_yen": 270900,
+      "middle_payout_yen": 201980,
+      "middle_profit_yen": -68920,
+      "middle_roi_pct": 74.55887781469177
+    },
+    "2024": {
+      "races": 1379,
+      "fav_hits": 390,
+      "fav_misses": 989,
+      "fav_miss_rate_pct": 71.71863669325599,
+      "winner_rank_median": 3,
+      "middle_races": 1234,
+      "middle_hit_races": 191,
+      "middle_race_hit_rate_pct": 15.478119935170179,
+      "middle_tickets": 2548,
+      "middle_stake_yen": 254800,
+      "middle_payout_yen": 223100,
+      "middle_profit_yen": -31700,
+      "middle_roi_pct": 87.55886970172685
+    }
+  },
+  "anatomy": {
+    "2023": {
+      "favorite_hit": {
+        "races": 376,
+        "fav_hits": 376,
+        "fav_misses": 0,
+        "fav_miss_rate_pct": 0.0,
+        "winner_rank_median": 1.0,
+        "middle_races": 334,
+        "middle_hit_races": 0,
+        "middle_race_hit_rate_pct": 0.0,
+        "middle_tickets": 683,
+        "middle_stake_yen": 68300,
+        "middle_payout_yen": 0,
+        "middle_profit_yen": -68300,
+        "middle_roi_pct": 0.0
+      },
+      "favorite_miss": {
+        "races": 1060,
+        "fav_hits": 0,
+        "fav_misses": 1060,
+        "fav_miss_rate_pct": 100.0,
+        "winner_rank_median": 5.0,
+        "middle_races": 973,
+        "middle_hit_races": 198,
+        "middle_race_hit_rate_pct": 20.349434737923946,
+        "middle_tickets": 2026,
+        "middle_stake_yen": 202600,
+        "middle_payout_yen": 201980,
+        "middle_profit_yen": -620,
+        "middle_roi_pct": 99.69397828232971
+      },
+      "winner_rank_distribution_when_favorite_misses": [
+        {
+          "rank_from": 2,
+          "rank_to": 3,
+          "wins": 392,
+          "share_pct": 36.9811320754717
+        },
+        {
+          "rank_from": 4,
+          "rank_to": 6,
+          "wins": 265,
+          "share_pct": 25.0
+        },
+        {
+          "rank_from": 7,
+          "rank_to": 10,
+          "wins": 162,
+          "share_pct": 15.283018867924529
+        },
+        {
+          "rank_from": 11,
+          "rank_to": 15,
+          "wins": 111,
+          "share_pct": 10.471698113207546
+        },
+        {
+          "rank_from": 16,
+          "rank_to": 20,
+          "wins": 59,
+          "share_pct": 5.566037735849057
+        },
+        {
+          "rank_from": 21,
+          "rank_to": 35,
+          "wins": 71,
+          "share_pct": 6.69811320754717
+        }
+      ],
+      "feature_means": {
+        "fav_odds": {
+          "fav_hit_mean": 2.9837765957446822,
+          "fav_miss_mean": 3.461886792452829
+        },
+        "second_to_fav_odds_ratio": {
+          "fav_hit_mean": 2.114082369237442,
+          "fav_miss_mean": 1.6940686943921712
+        },
+        "fav_market_share": {
+          "fav_hit_mean": 0.28224379548391443,
+          "fav_miss_mean": 0.2387506998530435
+        },
+        "top3_market_share": {
+          "fav_hit_mean": 0.5292585335898079,
+          "fav_miss_mean": 0.4923114339317346
+        },
+        "top5_market_share": {
+          "fav_hit_mean": 0.6550688538068875,
+          "fav_miss_mean": 0.6252418050747975
+        },
+        "top10_market_share": {
+          "fav_hit_mean": 0.8061801594994084,
+          "fav_miss_mean": 0.7893488866850576
+        },
+        "trio_entropy": {
+          "fav_hit_mean": 2.602173965750764,
+          "fav_miss_mean": 2.70444125522798
+        },
+        "trifecta_set_entropy": {
+          "fav_hit_mean": 2.510740200583589,
+          "fav_miss_mean": 2.6297705400719273
+        },
+        "fav_delta": {
+          "fav_hit_mean": 0.011823918164706066,
+          "fav_miss_mean": 0.008245307775871798
+        },
+        "fav_abs_delta": {
+          "fav_hit_mean": 0.019678515953553414,
+          "fav_miss_mean": 0.01758318175429594
+        },
+        "fav_ratio": {
+          "fav_hit_mean": 1.0437209242624204,
+          "fav_miss_mean": 1.0366466325641555
+        },
+        "fav_consensus": {
+          "fav_hit_mean": 0.2878987421332079,
+          "fav_miss_mean": 0.24260835374741194
+        },
+        "nonfav_positive_delta_count": {
+          "fav_hit_mean": 9.970744680851064,
+          "fav_miss_mean": 11.022641509433962
+        },
+        "nonfav_positive_delta_sum": {
+          "fav_hit_mean": 0.03839077573328031,
+          "fav_miss_mean": 0.04153074515006959
+        },
+        "nonfav_delta_max": {
+          "fav_hit_mean": 0.015969624949096768,
+          "fav_miss_mean": 0.01609723055257076
+        },
+        "nonfav_ratio_max": {
+          "fav_hit_mean": 1.2961918333129023,
+          "fav_miss_mean": 1.295747958897708
+        },
+        "middle_count": {
+          "fav_hit_mean": 1.8164893617021276,
+          "fav_miss_mean": 1.911320754716981
+        }
+      }
+    },
+    "2024": {
+      "favorite_hit": {
+        "races": 390,
+        "fav_hits": 390,
+        "fav_misses": 0,
+        "fav_miss_rate_pct": 0.0,
+        "winner_rank_median": 1.0,
+        "middle_races": 337,
+        "middle_hit_races": 1,
+        "middle_race_hit_rate_pct": 0.29673590504451036,
+        "middle_tickets": 673,
+        "middle_stake_yen": 67300,
+        "middle_payout_yen": 340,
+        "middle_profit_yen": -66960,
+        "middle_roi_pct": 0.5052005943536404
+      },
+      "favorite_miss": {
+        "races": 989,
+        "fav_hits": 0,
+        "fav_misses": 989,
+        "fav_miss_rate_pct": 100.0,
+        "winner_rank_median": 5,
+        "middle_races": 897,
+        "middle_hit_races": 190,
+        "middle_race_hit_rate_pct": 21.181716833890746,
+        "middle_tickets": 1875,
+        "middle_stake_yen": 187500,
+        "middle_payout_yen": 222760,
+        "middle_profit_yen": 35260,
+        "middle_roi_pct": 118.80533333333334
+      },
+      "winner_rank_distribution_when_favorite_misses": [
+        {
+          "rank_from": 2,
+          "rank_to": 3,
+          "wins": 327,
+          "share_pct": 33.06370070778564
+        },
+        {
+          "rank_from": 4,
+          "rank_to": 6,
+          "wins": 264,
+          "share_pct": 26.693629929221437
+        },
+        {
+          "rank_from": 7,
+          "rank_to": 10,
+          "wins": 170,
+          "share_pct": 17.189079878665318
+        },
+        {
+          "rank_from": 11,
+          "rank_to": 15,
+          "wins": 97,
+          "share_pct": 9.80788675429727
+        },
+        {
+          "rank_from": 16,
+          "rank_to": 20,
+          "wins": 55,
+          "share_pct": 5.5611729019211324
+        },
+        {
+          "rank_from": 21,
+          "rank_to": 35,
+          "wins": 76,
+          "share_pct": 7.684529828109201
+        }
+      ],
+      "feature_means": {
+        "fav_odds": {
+          "fav_hit_mean": 2.789230769230769,
+          "fav_miss_mean": 3.4424671385237633
+        },
+        "second_to_fav_odds_ratio": {
+          "fav_hit_mean": 2.3051800960541873,
+          "fav_miss_mean": 1.749114957615094
+        },
+        "fav_market_share": {
+          "fav_hit_mean": 0.30541717312841815,
+          "fav_miss_mean": 0.2429610979137012
+        },
+        "top3_market_share": {
+          "fav_hit_mean": 0.5524338793634771,
+          "fav_miss_mean": 0.49241622439541016
+        },
+        "top5_market_share": {
+          "fav_hit_mean": 0.6712107364433169,
+          "fav_miss_mean": 0.6249632646350104
+        },
+        "top10_market_share": {
+          "fav_hit_mean": 0.8136449320795643,
+          "fav_miss_mean": 0.7889054744473565
+        },
+        "trio_entropy": {
+          "fav_hit_mean": 2.5392079076139527,
+          "fav_miss_mean": 2.7003622956887403
+        },
+        "trifecta_set_entropy": {
+          "fav_hit_mean": 2.442024792943978,
+          "fav_miss_mean": 2.627128239805397
+        },
+        "fav_delta": {
+          "fav_hit_mean": 0.012332716507345074,
+          "fav_miss_mean": 0.007952551902328324
+        },
+        "fav_abs_delta": {
+          "fav_hit_mean": 0.020353988984691037,
+          "fav_miss_mean": 0.017026771818142553
+        },
+        "fav_ratio": {
+          "fav_hit_mean": 1.0428103993416502,
+          "fav_miss_mean": 1.0327266416580125
+        },
+        "fav_consensus": {
+          "fav_hit_mean": 0.3113181856536303,
+          "fav_miss_mean": 0.24670053260338937
+        },
+        "nonfav_positive_delta_count": {
+          "fav_hit_mean": 9.48974358974359,
+          "fav_miss_mean": 10.949443882709808
+        },
+        "nonfav_positive_delta_sum": {
+          "fav_hit_mean": 0.038248513504421815,
+          "fav_miss_mean": 0.04085507303039906
+        },
+        "nonfav_delta_max": {
+          "fav_hit_mean": 0.016410307870714087,
+          "fav_miss_mean": 0.015864808520083092
+        },
+        "nonfav_ratio_max": {
+          "fav_hit_mean": 1.287549554030752,
+          "fav_miss_mean": 1.2903071906476553
+        },
+        "middle_count": {
+          "fav_hit_mean": 1.7256410256410257,
+          "fav_miss_mean": 1.8958543983822043
+        }
+      }
+    }
+  },
+  "top20_by_2023_favorite_miss_uplift_with_frozen_2024": [
+    {
+      "feature": "fav_consensus",
+      "op": "<=",
+      "threshold": 0.1884985310418076,
+      "train_2023": {
+        "races": 359,
+        "fav_hits": 58,
+        "fav_misses": 301,
+        "fav_miss_rate_pct": 83.84401114206128,
+        "winner_rank_median": 4,
+        "middle_races": 340,
+        "middle_hit_races": 40,
+        "middle_race_hit_rate_pct": 11.764705882352942,
+        "middle_tickets": 718,
+        "middle_stake_yen": 71800,
+        "middle_payout_yen": 59890,
+        "middle_profit_yen": -11910,
+        "middle_roi_pct": 83.41225626740948
+      },
+      "validation_2024": {
+        "races": 315,
+        "fav_hits": 49,
+        "fav_misses": 266,
+        "fav_miss_rate_pct": 84.44444444444444,
+        "winner_rank_median": 5,
+        "middle_races": 301,
+        "middle_hit_races": 42,
+        "middle_race_hit_rate_pct": 13.953488372093023,
+        "middle_tickets": 621,
+        "middle_stake_yen": 62100,
+        "middle_payout_yen": 53990,
+        "middle_profit_yen": -8110,
+        "middle_roi_pct": 86.94041867954911
+      },
+      "miss_uplift_2023_pt": 10.027855153203333,
+      "miss_uplift_2024_pt": 12.725807751188455
+    },
+    {
+      "feature": "second_to_fav_odds_ratio",
+      "op": "<=",
+      "threshold": 1.2058823529411764,
+      "train_2023": {
+        "races": 361,
+        "fav_hits": 59,
+        "fav_misses": 302,
+        "fav_miss_rate_pct": 83.65650969529086,
+        "winner_rank_median": 4,
+        "middle_races": 333,
+        "middle_hit_races": 44,
+        "middle_race_hit_rate_pct": 13.213213213213214,
+        "middle_tickets": 687,
+        "middle_stake_yen": 68700,
+        "middle_payout_yen": 55550,
+        "middle_profit_yen": -13150,
+        "middle_roi_pct": 80.85880640465793
+      },
+      "validation_2024": {
+        "races": 346,
+        "fav_hits": 68,
+        "fav_misses": 278,
+        "fav_miss_rate_pct": 80.34682080924856,
+        "winner_rank_median": 4.0,
+        "middle_races": 315,
+        "middle_hit_races": 42,
+        "middle_race_hit_rate_pct": 13.333333333333334,
+        "middle_tickets": 643,
+        "middle_stake_yen": 64300,
+        "middle_payout_yen": 52410,
+        "middle_profit_yen": -11890,
+        "middle_roi_pct": 81.5085536547434
+      },
+      "miss_uplift_2023_pt": 9.840353706432921,
+      "miss_uplift_2024_pt": 8.628184115992568
+    },
+    {
+      "feature": "trifecta_set_entropy",
+      "op": ">=",
+      "threshold": 2.7941491509245173,
+      "train_2023": {
+        "races": 359,
+        "fav_hits": 60,
+        "fav_misses": 299,
+        "fav_miss_rate_pct": 83.28690807799443,
+        "winner_rank_median": 5,
+        "middle_races": 345,
+        "middle_hit_races": 32,
+        "middle_race_hit_rate_pct": 9.27536231884058,
+        "middle_tickets": 720,
+        "middle_stake_yen": 72000,
+        "middle_payout_yen": 37820,
+        "middle_profit_yen": -34180,
+        "middle_roi_pct": 52.52777777777778
+      },
+      "validation_2024": {
+        "races": 337,
+        "fav_hits": 55,
+        "fav_misses": 282,
+        "fav_miss_rate_pct": 83.67952522255193,
+        "winner_rank_median": 6,
+        "middle_races": 321,
+        "middle_hit_races": 46,
+        "middle_race_hit_rate_pct": 14.330218068535826,
+        "middle_tickets": 670,
+        "middle_stake_yen": 67000,
+        "middle_payout_yen": 71160,
+        "middle_profit_yen": 4160,
+        "middle_roi_pct": 106.2089552238806
+      },
+      "miss_uplift_2023_pt": 9.470752089136482,
+      "miss_uplift_2024_pt": 11.960888529295943
+    },
+    {
+      "feature": "trio_entropy",
+      "op": ">=",
+      "threshold": 2.856512307140793,
+      "train_2023": {
+        "races": 359,
+        "fav_hits": 61,
+        "fav_misses": 298,
+        "fav_miss_rate_pct": 83.008356545961,
+        "winner_rank_median": 5,
+        "middle_races": 342,
+        "middle_hit_races": 30,
+        "middle_race_hit_rate_pct": 8.771929824561404,
+        "middle_tickets": 695,
+        "middle_stake_yen": 69500,
+        "middle_payout_yen": 43880,
+        "middle_profit_yen": -25620,
+        "middle_roi_pct": 63.13669064748201
+      },
+      "validation_2024": {
+        "races": 324,
+        "fav_hits": 52,
+        "fav_misses": 272,
+        "fav_miss_rate_pct": 83.95061728395062,
+        "winner_rank_median": 6.0,
+        "middle_races": 307,
+        "middle_hit_races": 44,
+        "middle_race_hit_rate_pct": 14.332247557003257,
+        "middle_tickets": 618,
+        "middle_stake_yen": 61800,
+        "middle_payout_yen": 60770,
+        "middle_profit_yen": -1030,
+        "middle_roi_pct": 98.33333333333333
+      },
+      "miss_uplift_2023_pt": 9.192200557103064,
+      "miss_uplift_2024_pt": 12.231980590694633
+    },
+    {
+      "feature": "fav_market_share",
+      "op": "<=",
+      "threshold": 0.18238129871207254,
+      "train_2023": {
+        "races": 359,
+        "fav_hits": 62,
+        "fav_misses": 297,
+        "fav_miss_rate_pct": 82.72980501392757,
+        "winner_rank_median": 4,
+        "middle_races": 339,
+        "middle_hit_races": 37,
+        "middle_race_hit_rate_pct": 10.914454277286136,
+        "middle_tickets": 696,
+        "middle_stake_yen": 69600,
+        "middle_payout_yen": 50720,
+        "middle_profit_yen": -18880,
+        "middle_roi_pct": 72.8735632183908
+      },
+      "validation_2024": {
+        "races": 306,
+        "fav_hits": 50,
+        "fav_misses": 256,
+        "fav_miss_rate_pct": 83.66013071895425,
+        "winner_rank_median": 5.0,
+        "middle_races": 286,
+        "middle_hit_races": 37,
+        "middle_race_hit_rate_pct": 12.937062937062937,
+        "middle_tickets": 581,
+        "middle_stake_yen": 58100,
+        "middle_payout_yen": 49660,
+        "middle_profit_yen": -8440,
+        "middle_roi_pct": 85.47332185886403
+      },
+      "miss_uplift_2023_pt": 8.913649025069631,
+      "miss_uplift_2024_pt": 11.941494025698262
+    },
+    {
+      "feature": "fav_odds",
+      "op": ">=",
+      "threshold": 4.1,
+      "train_2023": {
+        "races": 360,
+        "fav_hits": 63,
+        "fav_misses": 297,
+        "fav_miss_rate_pct": 82.5,
+        "winner_rank_median": 4.0,
+        "middle_races": 340,
+        "middle_hit_races": 37,
+        "middle_race_hit_rate_pct": 10.882352941176471,
+        "middle_tickets": 698,
+        "middle_stake_yen": 69800,
+        "middle_payout_yen": 50720,
+        "middle_profit_yen": -19080,
+        "middle_roi_pct": 72.6647564469914
+      },
+      "validation_2024": {
+        "races": 307,
+        "fav_hits": 51,
+        "fav_misses": 256,
+        "fav_miss_rate_pct": 83.38762214983713,
+        "winner_rank_median": 5,
+        "middle_races": 287,
+        "middle_hit_races": 37,
+        "middle_race_hit_rate_pct": 12.89198606271777,
+        "middle_tickets": 582,
+        "middle_stake_yen": 58200,
+        "middle_payout_yen": 49660,
+        "middle_profit_yen": -8540,
+        "middle_roi_pct": 85.32646048109966
+      },
+      "miss_uplift_2023_pt": 8.683844011142057,
+      "miss_uplift_2024_pt": 11.66898545658114
+    },
+    {
+      "feature": "top3_market_share",
+      "op": "<=",
+      "threshold": 0.4317219866759231,
+      "train_2023": {
+        "races": 359,
+        "fav_hits": 65,
+        "fav_misses": 294,
+        "fav_miss_rate_pct": 81.8941504178273,
+        "winner_rank_median": 5,
+        "middle_races": 342,
+        "middle_hit_races": 38,
+        "middle_race_hit_rate_pct": 11.11111111111111,
+        "middle_tickets": 694,
+        "middle_stake_yen": 69400,
+        "middle_payout_yen": 48070,
+        "middle_profit_yen": -21330,
+        "middle_roi_pct": 69.26512968299711
+      },
+      "validation_2024": {
+        "races": 328,
+        "fav_hits": 49,
+        "fav_misses": 279,
+        "fav_miss_rate_pct": 85.0609756097561,
+        "winner_rank_median": 6.0,
+        "middle_races": 310,
+        "middle_hit_races": 42,
+        "middle_race_hit_rate_pct": 13.548387096774194,
+        "middle_tickets": 627,
+        "middle_stake_yen": 62700,
+        "middle_payout_yen": 58060,
+        "middle_profit_yen": -4640,
+        "middle_roi_pct": 92.59968102073366
+      },
+      "miss_uplift_2023_pt": 8.077994428969362,
+      "miss_uplift_2024_pt": 13.342338916500111
+    },
+    {
+      "feature": "top10_market_share",
+      "op": "<=",
+      "threshold": 0.7595750068928457,
+      "train_2023": {
+        "races": 359,
+        "fav_hits": 65,
+        "fav_misses": 294,
+        "fav_miss_rate_pct": 81.8941504178273,
+        "winner_rank_median": 5,
+        "middle_races": 342,
+        "middle_hit_races": 32,
+        "middle_race_hit_rate_pct": 9.35672514619883,
+        "middle_tickets": 688,
+        "middle_stake_yen": 68800,
+        "middle_payout_yen": 48940,
+        "middle_profit_yen": -19860,
+        "middle_roi_pct": 71.13372093023256
+      },
+      "validation_2024": {
+        "races": 334,
+        "fav_hits": 56,
+        "fav_misses": 278,
+        "fav_miss_rate_pct": 83.23353293413173,
+        "winner_rank_median": 6.0,
+        "middle_races": 312,
+        "middle_hit_races": 45,
+        "middle_race_hit_rate_pct": 14.423076923076923,
+        "middle_tickets": 638,
+        "middle_stake_yen": 63800,
+        "middle_payout_yen": 66870,
+        "middle_profit_yen": 3070,
+        "middle_roi_pct": 104.81191222570533
+      },
+      "miss_uplift_2023_pt": 8.077994428969362,
+      "miss_uplift_2024_pt": 11.514896240875743
+    },
+    {
+      "feature": "fav_consensus",
+      "op": "<=",
+      "threshold": 0.23692122620713885,
+      "train_2023": {
+        "races": 718,
+        "fav_hits": 131,
+        "fav_misses": 587,
+        "fav_miss_rate_pct": 81.75487465181058,
+        "winner_rank_median": 4.0,
+        "middle_races": 676,
+        "middle_hit_races": 84,
+        "middle_race_hit_rate_pct": 12.42603550295858,
+        "middle_tickets": 1409,
+        "middle_stake_yen": 140900,
+        "middle_payout_yen": 94420,
+        "middle_profit_yen": -46480,
+        "middle_roi_pct": 67.01206529453513
+      },
+      "validation_2024": {
+        "races": 653,
+        "fav_hits": 120,
+        "fav_misses": 533,
+        "fav_miss_rate_pct": 81.62327718223584,
+        "winner_rank_median": 4,
+        "middle_races": 606,
+        "middle_hit_races": 87,
+        "middle_race_hit_rate_pct": 14.356435643564357,
+        "middle_tickets": 1240,
+        "middle_stake_yen": 124000,
+        "middle_payout_yen": 100570,
+        "middle_profit_yen": -23430,
+        "middle_roi_pct": 81.10483870967742
+      },
+      "miss_uplift_2023_pt": 7.938718662952638,
+      "miss_uplift_2024_pt": 9.904640488979851
+    },
+    {
+      "feature": "top5_market_share",
+      "op": "<=",
+      "threshold": 0.57342711979756,
+      "train_2023": {
+        "races": 359,
+        "fav_hits": 66,
+        "fav_misses": 293,
+        "fav_miss_rate_pct": 81.61559888579387,
+        "winner_rank_median": 5,
+        "middle_races": 342,
+        "middle_hit_races": 33,
+        "middle_race_hit_rate_pct": 9.649122807017545,
+        "middle_tickets": 703,
+        "middle_stake_yen": 70300,
+        "middle_payout_yen": 41810,
+        "middle_profit_yen": -28490,
+        "middle_roi_pct": 59.473684210526315
+      },
+      "validation_2024": {
+        "races": 321,
+        "fav_hits": 51,
+        "fav_misses": 270,
+        "fav_miss_rate_pct": 84.11214953271028,
+        "winner_rank_median": 6,
+        "middle_races": 303,
+        "middle_hit_races": 46,
+        "middle_race_hit_rate_pct": 15.181518151815181,
+        "middle_tickets": 622,
+        "middle_stake_yen": 62200,
+        "middle_payout_yen": 64390,
+        "middle_profit_yen": 2190,
+        "middle_roi_pct": 103.52090032154341
+      },
+      "miss_uplift_2023_pt": 7.799442896935929,
+      "miss_uplift_2024_pt": 12.393512839454289
+    },
+    {
+      "feature": "fav_market_share",
+      "op": "<=",
+      "threshold": 0.23217630455238708,
+      "train_2023": {
+        "races": 718,
+        "fav_hits": 134,
+        "fav_misses": 584,
+        "fav_miss_rate_pct": 81.33704735376044,
+        "winner_rank_median": 4.0,
+        "middle_races": 672,
+        "middle_hit_races": 83,
+        "middle_race_hit_rate_pct": 12.351190476190476,
+        "middle_tickets": 1373,
+        "middle_stake_yen": 137300,
+        "middle_payout_yen": 94900,
+        "middle_profit_yen": -42400,
+        "middle_roi_pct": 69.11871813546978
+      },
+      "validation_2024": {
+        "races": 641,
+        "fav_hits": 116,
+        "fav_misses": 525,
+        "fav_miss_rate_pct": 81.90327613104525,
+        "winner_rank_median": 4,
+        "middle_races": 592,
+        "middle_hit_races": 86,
+        "middle_race_hit_rate_pct": 14.527027027027026,
+        "middle_tickets": 1196,
+        "middle_stake_yen": 119600,
+        "middle_payout_yen": 96940,
+        "middle_profit_yen": -22660,
+        "middle_roi_pct": 81.05351170568562
+      },
+      "miss_uplift_2023_pt": 7.520891364902496,
+      "miss_uplift_2024_pt": 10.184639437789258
+    },
+    {
+      "feature": "fav_odds",
+      "op": ">=",
+      "threshold": 3.2,
+      "train_2023": {
+        "races": 762,
+        "fav_hits": 147,
+        "fav_misses": 615,
+        "fav_miss_rate_pct": 80.70866141732283,
+        "winner_rank_median": 4.0,
+        "middle_races": 713,
+        "middle_hit_races": 89,
+        "middle_race_hit_rate_pct": 12.482468443197757,
+        "middle_tickets": 1461,
+        "middle_stake_yen": 146100,
+        "middle_payout_yen": 102810,
+        "middle_profit_yen": -43290,
+        "middle_roi_pct": 70.36960985626284
+      },
+      "validation_2024": {
+        "races": 679,
+        "fav_hits": 124,
+        "fav_misses": 555,
+        "fav_miss_rate_pct": 81.73784977908689,
+        "winner_rank_median": 4,
+        "middle_races": 627,
+        "middle_hit_races": 90,
+        "middle_race_hit_rate_pct": 14.354066985645932,
+        "middle_tickets": 1268,
+        "middle_stake_yen": 126800,
+        "middle_payout_yen": 102530,
+        "middle_profit_yen": -24270,
+        "middle_roi_pct": 80.8596214511041
+      },
+      "miss_uplift_2023_pt": 6.892505428464887,
+      "miss_uplift_2024_pt": 10.019213085830899
+    },
+    {
+      "feature": "trio_entropy",
+      "op": ">=",
+      "threshold": 2.705690125677538,
+      "train_2023": {
+        "races": 718,
+        "fav_hits": 143,
+        "fav_misses": 575,
+        "fav_miss_rate_pct": 80.08356545961003,
+        "winner_rank_median": 4.0,
+        "middle_races": 676,
+        "middle_hit_races": 85,
+        "middle_race_hit_rate_pct": 12.57396449704142,
+        "middle_tickets": 1398,
+        "middle_stake_yen": 139800,
+        "middle_payout_yen": 106950,
+        "middle_profit_yen": -32850,
+        "middle_roi_pct": 76.50214592274678
+      },
+      "validation_2024": {
+        "races": 662,
+        "fav_hits": 120,
+        "fav_misses": 542,
+        "fav_miss_rate_pct": 81.87311178247734,
+        "winner_rank_median": 5.0,
+        "middle_races": 616,
+        "middle_hit_races": 91,
+        "middle_race_hit_rate_pct": 14.772727272727273,
+        "middle_tickets": 1272,
+        "middle_stake_yen": 127200,
+        "middle_payout_yen": 116610,
+        "middle_profit_yen": -10590,
+        "middle_roi_pct": 91.6745283018868
+      },
+      "miss_uplift_2023_pt": 6.267409470752085,
+      "miss_uplift_2024_pt": 10.15447508922135
+    },
+    {
+      "feature": "trifecta_set_entropy",
+      "op": ">=",
+      "threshold": 2.62443671187102,
+      "train_2023": {
+        "races": 718,
+        "fav_hits": 145,
+        "fav_misses": 573,
+        "fav_miss_rate_pct": 79.8050139275766,
+        "winner_rank_median": 4.0,
+        "middle_races": 681,
+        "middle_hit_races": 83,
+        "middle_race_hit_rate_pct": 12.187958883994126,
+        "middle_tickets": 1454,
+        "middle_stake_yen": 145400,
+        "middle_payout_yen": 115550,
+        "middle_profit_yen": -29850,
+        "middle_roi_pct": 79.47042640990371
+      },
+      "validation_2024": {
+        "races": 666,
+        "fav_hits": 120,
+        "fav_misses": 546,
+        "fav_miss_rate_pct": 81.98198198198199,
+        "winner_rank_median": 5.0,
+        "middle_races": 627,
+        "middle_hit_races": 94,
+        "middle_race_hit_rate_pct": 14.992025518341308,
+        "middle_tickets": 1340,
+        "middle_stake_yen": 134000,
+        "middle_payout_yen": 119970,
+        "middle_profit_yen": -14030,
+        "middle_roi_pct": 89.52985074626865
+      },
+      "miss_uplift_2023_pt": 5.9888579387186525,
+      "miss_uplift_2024_pt": 10.263345288726
+    },
+    {
+      "feature": "top5_market_share",
+      "op": "<=",
+      "threshold": 0.6355085055186522,
+      "train_2023": {
+        "races": 718,
+        "fav_hits": 147,
+        "fav_misses": 571,
+        "fav_miss_rate_pct": 79.52646239554318,
+        "winner_rank_median": 4.0,
+        "middle_races": 679,
+        "middle_hit_races": 84,
+        "middle_race_hit_rate_pct": 12.371134020618557,
+        "middle_tickets": 1400,
+        "middle_stake_yen": 140000,
+        "middle_payout_yen": 107150,
+        "middle_profit_yen": -32850,
+        "middle_roi_pct": 76.53571428571429
+      },
+      "validation_2024": {
+        "races": 656,
+        "fav_hits": 130,
+        "fav_misses": 526,
+        "fav_miss_rate_pct": 80.1829268292683,
+        "winner_rank_median": 5.0,
+        "middle_races": 612,
+        "middle_hit_races": 85,
+        "middle_race_hit_rate_pct": 13.88888888888889,
+        "middle_tickets": 1268,
+        "middle_stake_yen": 126800,
+        "middle_payout_yen": 115180,
+        "middle_profit_yen": -11620,
+        "middle_roi_pct": 90.83596214511041
+      },
+      "miss_uplift_2023_pt": 5.710306406685234,
+      "miss_uplift_2024_pt": 8.464290136012309
+    },
+    {
+      "feature": "top3_market_share",
+      "op": "<=",
+      "threshold": 0.5002145013949675,
+      "train_2023": {
+        "races": 718,
+        "fav_hits": 148,
+        "fav_misses": 570,
+        "fav_miss_rate_pct": 79.38718662952647,
+        "winner_rank_median": 4.0,
+        "middle_races": 674,
+        "middle_hit_races": 84,
+        "middle_race_hit_rate_pct": 12.462908011869436,
+        "middle_tickets": 1397,
+        "middle_stake_yen": 139700,
+        "middle_payout_yen": 104000,
+        "middle_profit_yen": -35700,
+        "middle_roi_pct": 74.4452397995705
+      },
+      "validation_2024": {
+        "races": 677,
+        "fav_hits": 123,
+        "fav_misses": 554,
+        "fav_miss_rate_pct": 81.83161004431315,
+        "winner_rank_median": 5,
+        "middle_races": 634,
+        "middle_hit_races": 93,
+        "middle_race_hit_rate_pct": 14.668769716088327,
+        "middle_tickets": 1313,
+        "middle_stake_yen": 131300,
+        "middle_payout_yen": 116930,
+        "middle_profit_yen": -14370,
+        "middle_roi_pct": 89.05559786747905
+      },
+      "miss_uplift_2023_pt": 5.571030640668525,
+      "miss_uplift_2024_pt": 10.112973351057164
+    },
+    {
+      "feature": "top10_market_share",
+      "op": "<=",
+      "threshold": 0.7996805760284644,
+      "train_2023": {
+        "races": 718,
+        "fav_hits": 150,
+        "fav_misses": 568,
+        "fav_miss_rate_pct": 79.10863509749304,
+        "winner_rank_median": 4.0,
+        "middle_races": 681,
+        "middle_hit_races": 85,
+        "middle_race_hit_rate_pct": 12.481644640234949,
+        "middle_tickets": 1415,
+        "middle_stake_yen": 141500,
+        "middle_payout_yen": 107050,
+        "middle_profit_yen": -34450,
+        "middle_roi_pct": 75.65371024734982
+      },
+      "validation_2024": {
+        "races": 676,
+        "fav_hits": 142,
+        "fav_misses": 534,
+        "fav_miss_rate_pct": 78.99408284023669,
+        "winner_rank_median": 4.5,
+        "middle_races": 631,
+        "middle_hit_races": 93,
+        "middle_race_hit_rate_pct": 14.73851030110935,
+        "middle_tickets": 1301,
+        "middle_stake_yen": 130100,
+        "middle_payout_yen": 121990,
+        "middle_profit_yen": -8110,
+        "middle_roi_pct": 93.7663335895465
+      },
+      "miss_uplift_2023_pt": 5.292479108635092,
+      "miss_uplift_2024_pt": 7.275446146980698
+    },
+    {
+      "feature": "fav_consensus",
+      "op": "<=",
+      "threshold": 0.2985187188381263,
+      "train_2023": {
+        "races": 1077,
+        "fav_hits": 229,
+        "fav_misses": 848,
+        "fav_miss_rate_pct": 78.7372330547818,
+        "winner_rank_median": 4,
+        "middle_races": 998,
+        "middle_hit_races": 148,
+        "middle_race_hit_rate_pct": 14.829659318637274,
+        "middle_tickets": 2045,
+        "middle_stake_yen": 204500,
+        "middle_payout_yen": 160080,
+        "middle_profit_yen": -44420,
+        "middle_roi_pct": 78.27872860635696
+      },
+      "validation_2024": {
+        "races": 981,
+        "fav_hits": 211,
+        "fav_misses": 770,
+        "fav_miss_rate_pct": 78.49133537206932,
+        "winner_rank_median": 4,
+        "middle_races": 903,
+        "middle_hit_races": 137,
+        "middle_race_hit_rate_pct": 15.171650055370986,
+        "middle_tickets": 1872,
+        "middle_stake_yen": 187200,
+        "middle_payout_yen": 162040,
+        "middle_profit_yen": -25160,
+        "middle_roi_pct": 86.55982905982906
+      },
+      "miss_uplift_2023_pt": 4.921077065923853,
+      "miss_uplift_2024_pt": 6.772698678813327
+    },
+    {
+      "feature": "second_to_fav_odds_ratio",
+      "op": "<=",
+      "threshold": 1.9658045977011496,
+      "train_2023": {
+        "races": 1077,
+        "fav_hits": 230,
+        "fav_misses": 847,
+        "fav_miss_rate_pct": 78.64438254410399,
+        "winner_rank_median": 3,
+        "middle_races": 993,
+        "middle_hit_races": 155,
+        "middle_race_hit_rate_pct": 15.609264853977844,
+        "middle_tickets": 2009,
+        "middle_stake_yen": 200900,
+        "middle_payout_yen": 156440,
+        "middle_profit_yen": -44460,
+        "middle_roi_pct": 77.8695868591339
+      },
+      "validation_2024": {
+        "races": 967,
+        "fav_hits": 217,
+        "fav_misses": 750,
+        "fav_miss_rate_pct": 77.55946225439503,
+        "winner_rank_median": 4,
+        "middle_races": 876,
+        "middle_hit_races": 128,
+        "middle_race_hit_rate_pct": 14.61187214611872,
+        "middle_tickets": 1781,
+        "middle_stake_yen": 178100,
+        "middle_payout_yen": 145350,
+        "middle_profit_yen": -32750,
+        "middle_roi_pct": 81.61145423919146
+      },
+      "miss_uplift_2023_pt": 4.828226555246047,
+      "miss_uplift_2024_pt": 5.840825561139042
+    },
+    {
+      "feature": "second_to_fav_odds_ratio",
+      "op": "<=",
+      "threshold": 1.4583333333333335,
+      "train_2023": {
+        "races": 719,
+        "fav_hits": 154,
+        "fav_misses": 565,
+        "fav_miss_rate_pct": 78.58136300417246,
+        "winner_rank_median": 3,
+        "middle_races": 662,
+        "middle_hit_races": 94,
+        "middle_race_hit_rate_pct": 14.19939577039275,
+        "middle_tickets": 1342,
+        "middle_stake_yen": 134200,
+        "middle_payout_yen": 101970,
+        "middle_profit_yen": -32230,
+        "middle_roi_pct": 75.98360655737704
+      },
+      "validation_2024": {
+        "races": 647,
+        "fav_hits": 136,
+        "fav_misses": 511,
+        "fav_miss_rate_pct": 78.97990726429676,
+        "winner_rank_median": 4,
+        "middle_races": 585,
+        "middle_hit_races": 82,
+        "middle_race_hit_rate_pct": 14.017094017094017,
+        "middle_tickets": 1183,
+        "middle_stake_yen": 118300,
+        "middle_payout_yen": 90450,
+        "middle_profit_yen": -27850,
+        "middle_roi_pct": 76.458157227388
+      },
+      "miss_uplift_2023_pt": 4.765207015314516,
+      "miss_uplift_2024_pt": 7.261270571040768
+    }
+  ],
+  "top20_exploratory_middle_roi_among_2023_miss_uplift_conditions": [
+    {
+      "feature": "fav_consensus",
+      "op": "<=",
+      "threshold": 0.1884985310418076,
+      "train_2023": {
+        "races": 359,
+        "fav_hits": 58,
+        "fav_misses": 301,
+        "fav_miss_rate_pct": 83.84401114206128,
+        "winner_rank_median": 4,
+        "middle_races": 340,
+        "middle_hit_races": 40,
+        "middle_race_hit_rate_pct": 11.764705882352942,
+        "middle_tickets": 718,
+        "middle_stake_yen": 71800,
+        "middle_payout_yen": 59890,
+        "middle_profit_yen": -11910,
+        "middle_roi_pct": 83.41225626740948
+      },
+      "validation_2024": {
+        "races": 315,
+        "fav_hits": 49,
+        "fav_misses": 266,
+        "fav_miss_rate_pct": 84.44444444444444,
+        "winner_rank_median": 5,
+        "middle_races": 301,
+        "middle_hit_races": 42,
+        "middle_race_hit_rate_pct": 13.953488372093023,
+        "middle_tickets": 621,
+        "middle_stake_yen": 62100,
+        "middle_payout_yen": 53990,
+        "middle_profit_yen": -8110,
+        "middle_roi_pct": 86.94041867954911
+      },
+      "miss_uplift_2023_pt": 10.027855153203333,
+      "miss_uplift_2024_pt": 12.725807751188455
+    },
+    {
+      "feature": "nonfav_positive_delta_count",
+      "op": ">=",
+      "threshold": 10.0,
+      "train_2023": {
+        "races": 837,
+        "fav_hits": 188,
+        "fav_misses": 649,
+        "fav_miss_rate_pct": 77.53882915173237,
+        "winner_rank_median": 4,
+        "middle_races": 816,
+        "middle_hit_races": 131,
+        "middle_race_hit_rate_pct": 16.05392156862745,
+        "middle_tickets": 1896,
+        "middle_stake_yen": 189600,
+        "middle_payout_yen": 154870,
+        "middle_profit_yen": -34730,
+        "middle_roi_pct": 81.6824894514768
+      },
+      "validation_2024": {
+        "races": 774,
+        "fav_hits": 187,
+        "fav_misses": 587,
+        "fav_miss_rate_pct": 75.83979328165374,
+        "winner_rank_median": 4.0,
+        "middle_races": 746,
+        "middle_hit_races": 121,
+        "middle_race_hit_rate_pct": 16.219839142091153,
+        "middle_tickets": 1716,
+        "middle_stake_yen": 171600,
+        "middle_payout_yen": 152350,
+        "middle_profit_yen": -19250,
+        "middle_roi_pct": 88.78205128205128
+      },
+      "miss_uplift_2023_pt": 3.722673162874429,
+      "miss_uplift_2024_pt": 4.121156588397753
+    },
+    {
+      "feature": "second_to_fav_odds_ratio",
+      "op": "<=",
+      "threshold": 1.2058823529411764,
+      "train_2023": {
+        "races": 361,
+        "fav_hits": 59,
+        "fav_misses": 302,
+        "fav_miss_rate_pct": 83.65650969529086,
+        "winner_rank_median": 4,
+        "middle_races": 333,
+        "middle_hit_races": 44,
+        "middle_race_hit_rate_pct": 13.213213213213214,
+        "middle_tickets": 687,
+        "middle_stake_yen": 68700,
+        "middle_payout_yen": 55550,
+        "middle_profit_yen": -13150,
+        "middle_roi_pct": 80.85880640465793
+      },
+      "validation_2024": {
+        "races": 346,
+        "fav_hits": 68,
+        "fav_misses": 278,
+        "fav_miss_rate_pct": 80.34682080924856,
+        "winner_rank_median": 4.0,
+        "middle_races": 315,
+        "middle_hit_races": 42,
+        "middle_race_hit_rate_pct": 13.333333333333334,
+        "middle_tickets": 643,
+        "middle_stake_yen": 64300,
+        "middle_payout_yen": 52410,
+        "middle_profit_yen": -11890,
+        "middle_roi_pct": 81.5085536547434
+      },
+      "miss_uplift_2023_pt": 9.840353706432921,
+      "miss_uplift_2024_pt": 8.628184115992568
+    },
+    {
+      "feature": "trifecta_set_entropy",
+      "op": ">=",
+      "threshold": 2.62443671187102,
+      "train_2023": {
+        "races": 718,
+        "fav_hits": 145,
+        "fav_misses": 573,
+        "fav_miss_rate_pct": 79.8050139275766,
+        "winner_rank_median": 4.0,
+        "middle_races": 681,
+        "middle_hit_races": 83,
+        "middle_race_hit_rate_pct": 12.187958883994126,
+        "middle_tickets": 1454,
+        "middle_stake_yen": 145400,
+        "middle_payout_yen": 115550,
+        "middle_profit_yen": -29850,
+        "middle_roi_pct": 79.47042640990371
+      },
+      "validation_2024": {
+        "races": 666,
+        "fav_hits": 120,
+        "fav_misses": 546,
+        "fav_miss_rate_pct": 81.98198198198199,
+        "winner_rank_median": 5.0,
+        "middle_races": 627,
+        "middle_hit_races": 94,
+        "middle_race_hit_rate_pct": 14.992025518341308,
+        "middle_tickets": 1340,
+        "middle_stake_yen": 134000,
+        "middle_payout_yen": 119970,
+        "middle_profit_yen": -14030,
+        "middle_roi_pct": 89.52985074626865
+      },
+      "miss_uplift_2023_pt": 5.9888579387186525,
+      "miss_uplift_2024_pt": 10.263345288726
+    },
+    {
+      "feature": "nonfav_positive_delta_sum",
+      "op": ">=",
+      "threshold": 0.049993407323336264,
+      "train_2023": {
+        "races": 359,
+        "fav_hits": 84,
+        "fav_misses": 275,
+        "fav_miss_rate_pct": 76.6016713091922,
+        "winner_rank_median": 3,
+        "middle_races": 332,
+        "middle_hit_races": 66,
+        "middle_race_hit_rate_pct": 19.879518072289155,
+        "middle_tickets": 764,
+        "middle_stake_yen": 76400,
+        "middle_payout_yen": 60260,
+        "middle_profit_yen": -16140,
+        "middle_roi_pct": 78.87434554973822
+      },
+      "validation_2024": {
+        "races": 308,
+        "fav_hits": 80,
+        "fav_misses": 228,
+        "fav_miss_rate_pct": 74.02597402597402,
+        "winner_rank_median": 3.0,
+        "middle_races": 281,
+        "middle_hit_races": 55,
+        "middle_race_hit_rate_pct": 19.572953736654803,
+        "middle_tickets": 633,
+        "middle_stake_yen": 63300,
+        "middle_payout_yen": 58240,
+        "middle_profit_yen": -5060,
+        "middle_roi_pct": 92.00631911532385
+      },
+      "miss_uplift_2023_pt": 2.7855153203342553,
+      "miss_uplift_2024_pt": 2.307337332718035
+    },
+    {
+      "feature": "nonfav_delta_max",
+      "op": ">=",
+      "threshold": 0.013915292781815837,
+      "train_2023": {
+        "races": 718,
+        "fav_hits": 180,
+        "fav_misses": 538,
+        "fav_miss_rate_pct": 74.93036211699165,
+        "winner_rank_median": 3.0,
+        "middle_races": 643,
+        "middle_hit_races": 112,
+        "middle_race_hit_rate_pct": 17.418351477449455,
+        "middle_tickets": 1329,
+        "middle_stake_yen": 132900,
+        "middle_payout_yen": 104720,
+        "middle_profit_yen": -28180,
+        "middle_roi_pct": 78.79608728367194
+      },
+      "validation_2024": {
+        "races": 702,
+        "fav_hits": 212,
+        "fav_misses": 490,
+        "fav_miss_rate_pct": 69.8005698005698,
+        "winner_rank_median": 3.0,
+        "middle_races": 614,
+        "middle_hit_races": 106,
+        "middle_race_hit_rate_pct": 17.263843648208468,
+        "middle_tickets": 1247,
+        "middle_stake_yen": 124700,
+        "middle_payout_yen": 106830,
+        "middle_profit_yen": -17870,
+        "middle_roi_pct": 85.66960705693664
+      },
+      "miss_uplift_2023_pt": 1.1142061281337021,
+      "miss_uplift_2024_pt": -1.9180668926861841
+    },
+    {
+      "feature": "nonfav_ratio_max",
+      "op": ">=",
+      "threshold": 1.3622501650694527,
+      "train_2023": {
+        "races": 359,
+        "fav_hits": 91,
+        "fav_misses": 268,
+        "fav_miss_rate_pct": 74.65181058495821,
+        "winner_rank_median": 3,
+        "middle_races": 346,
+        "middle_hit_races": 56,
+        "middle_race_hit_rate_pct": 16.184971098265898,
+        "middle_tickets": 786,
+        "middle_stake_yen": 78600,
+        "middle_payout_yen": 61600,
+        "middle_profit_yen": -17000,
+        "middle_roi_pct": 78.37150127226464
+      },
+      "validation_2024": {
+        "races": 308,
+        "fav_hits": 80,
+        "fav_misses": 228,
+        "fav_miss_rate_pct": 74.02597402597402,
+        "winner_rank_median": 4.0,
+        "middle_races": 294,
+        "middle_hit_races": 53,
+        "middle_race_hit_rate_pct": 18.027210884353742,
+        "middle_tickets": 686,
+        "middle_stake_yen": 68600,
+        "middle_payout_yen": 78080,
+        "middle_profit_yen": 9480,
+        "middle_roi_pct": 113.8192419825073
+      },
+      "miss_uplift_2023_pt": 0.8356545961002695,
+      "miss_uplift_2024_pt": 2.307337332718035
+    },
+    {
+      "feature": "fav_consensus",
+      "op": "<=",
+      "threshold": 0.2985187188381263,
+      "train_2023": {
+        "races": 1077,
+        "fav_hits": 229,
+        "fav_misses": 848,
+        "fav_miss_rate_pct": 78.7372330547818,
+        "winner_rank_median": 4,
+        "middle_races": 998,
+        "middle_hit_races": 148,
+        "middle_race_hit_rate_pct": 14.829659318637274,
+        "middle_tickets": 2045,
+        "middle_stake_yen": 204500,
+        "middle_payout_yen": 160080,
+        "middle_profit_yen": -44420,
+        "middle_roi_pct": 78.27872860635696
+      },
+      "validation_2024": {
+        "races": 981,
+        "fav_hits": 211,
+        "fav_misses": 770,
+        "fav_miss_rate_pct": 78.49133537206932,
+        "winner_rank_median": 4,
+        "middle_races": 903,
+        "middle_hit_races": 137,
+        "middle_race_hit_rate_pct": 15.171650055370986,
+        "middle_tickets": 1872,
+        "middle_stake_yen": 187200,
+        "middle_payout_yen": 162040,
+        "middle_profit_yen": -25160,
+        "middle_roi_pct": 86.55982905982906
+      },
+      "miss_uplift_2023_pt": 4.921077065923853,
+      "miss_uplift_2024_pt": 6.772698678813327
+    },
+    {
+      "feature": "fav_odds",
+      "op": ">=",
+      "threshold": 2.5,
+      "train_2023": {
+        "races": 1108,
+        "fav_hits": 244,
+        "fav_misses": 864,
+        "fav_miss_rate_pct": 77.9783393501805,
+        "winner_rank_median": 3.0,
+        "middle_races": 1026,
+        "middle_hit_races": 153,
+        "middle_race_hit_rate_pct": 14.912280701754385,
+        "middle_tickets": 2095,
+        "middle_stake_yen": 209500,
+        "middle_payout_yen": 163480,
+        "middle_profit_yen": -46020,
+        "middle_roi_pct": 78.03341288782816
+      },
+      "validation_2024": {
+        "races": 1025,
+        "fav_hits": 226,
+        "fav_misses": 799,
+        "fav_miss_rate_pct": 77.95121951219512,
+        "winner_rank_median": 4,
+        "middle_races": 937,
+        "middle_hit_races": 139,
+        "middle_race_hit_rate_pct": 14.834578441835646,
+        "middle_tickets": 1933,
+        "middle_stake_yen": 193300,
+        "middle_payout_yen": 165720,
+        "middle_profit_yen": -27580,
+        "middle_roi_pct": 85.73202276254527
+      },
+      "miss_uplift_2023_pt": 4.162183361322562,
+      "miss_uplift_2024_pt": 6.232582818939136
+    },
+    {
+      "feature": "fav_market_share",
+      "op": "<=",
+      "threshold": 0.29620008658742775,
+      "train_2023": {
+        "races": 1077,
+        "fav_hits": 234,
+        "fav_misses": 843,
+        "fav_miss_rate_pct": 78.27298050139275,
+        "winner_rank_median": 4,
+        "middle_races": 998,
+        "middle_hit_races": 145,
+        "middle_race_hit_rate_pct": 14.529058116232465,
+        "middle_tickets": 2038,
+        "middle_stake_yen": 203800,
+        "middle_payout_yen": 159030,
+        "middle_profit_yen": -44770,
+        "middle_roi_pct": 78.0323846908734
+      },
+      "validation_2024": {
+        "races": 981,
+        "fav_hits": 213,
+        "fav_misses": 768,
+        "fav_miss_rate_pct": 78.2874617737003,
+        "winner_rank_median": 4,
+        "middle_races": 899,
+        "middle_hit_races": 133,
+        "middle_race_hit_rate_pct": 14.794215795328142,
+        "middle_tickets": 1851,
+        "middle_stake_yen": 185100,
+        "middle_payout_yen": 157510,
+        "middle_profit_yen": -27590,
+        "middle_roi_pct": 85.0945434900054
+      },
+      "miss_uplift_2023_pt": 4.4568245125348085,
+      "miss_uplift_2024_pt": 6.568825080444313
+    },
+    {
+      "feature": "second_to_fav_odds_ratio",
+      "op": "<=",
+      "threshold": 1.9658045977011496,
+      "train_2023": {
+        "races": 1077,
+        "fav_hits": 230,
+        "fav_misses": 847,
+        "fav_miss_rate_pct": 78.64438254410399,
+        "winner_rank_median": 3,
+        "middle_races": 993,
+        "middle_hit_races": 155,
+        "middle_race_hit_rate_pct": 15.609264853977844,
+        "middle_tickets": 2009,
+        "middle_stake_yen": 200900,
+        "middle_payout_yen": 156440,
+        "middle_profit_yen": -44460,
+        "middle_roi_pct": 77.8695868591339
+      },
+      "validation_2024": {
+        "races": 967,
+        "fav_hits": 217,
+        "fav_misses": 750,
+        "fav_miss_rate_pct": 77.55946225439503,
+        "winner_rank_median": 4,
+        "middle_races": 876,
+        "middle_hit_races": 128,
+        "middle_race_hit_rate_pct": 14.61187214611872,
+        "middle_tickets": 1781,
+        "middle_stake_yen": 178100,
+        "middle_payout_yen": 145350,
+        "middle_profit_yen": -32750,
+        "middle_roi_pct": 81.61145423919146
+      },
+      "miss_uplift_2023_pt": 4.828226555246047,
+      "miss_uplift_2024_pt": 5.840825561139042
+    },
+    {
+      "feature": "trio_entropy",
+      "op": ">=",
+      "threshold": 2.5322918699156154,
+      "train_2023": {
+        "races": 1077,
+        "fav_hits": 248,
+        "fav_misses": 829,
+        "fav_miss_rate_pct": 76.97307335190344,
+        "winner_rank_median": 4,
+        "middle_races": 1006,
+        "middle_hit_races": 142,
+        "middle_race_hit_rate_pct": 14.115308151093439,
+        "middle_tickets": 2084,
+        "middle_stake_yen": 208400,
+        "middle_payout_yen": 160790,
+        "middle_profit_yen": -47610,
+        "middle_roi_pct": 77.15451055662189
+      },
+      "validation_2024": {
+        "races": 995,
+        "fav_hits": 223,
+        "fav_misses": 772,
+        "fav_miss_rate_pct": 77.58793969849246,
+        "winner_rank_median": 4,
+        "middle_races": 915,
+        "middle_hit_races": 135,
+        "middle_race_hit_rate_pct": 14.754098360655737,
+        "middle_tickets": 1885,
+        "middle_stake_yen": 188500,
+        "middle_payout_yen": 166210,
+        "middle_profit_yen": -22290,
+        "middle_roi_pct": 88.17506631299734
+      },
+      "miss_uplift_2023_pt": 3.156917363045494,
+      "miss_uplift_2024_pt": 5.869303005236475
+    },
+    {
+      "feature": "top5_market_share",
+      "op": "<=",
+      "threshold": 0.6958974154400988,
+      "train_2023": {
+        "races": 1077,
+        "fav_hits": 249,
+        "fav_misses": 828,
+        "fav_miss_rate_pct": 76.88022284122563,
+        "winner_rank_median": 4,
+        "middle_races": 1009,
+        "middle_hit_races": 141,
+        "middle_race_hit_rate_pct": 13.974231912784935,
+        "middle_tickets": 2107,
+        "middle_stake_yen": 210700,
+        "middle_payout_yen": 162140,
+        "middle_profit_yen": -48560,
+        "middle_roi_pct": 76.95301376364499
+      },
+      "validation_2024": {
+        "races": 1018,
+        "fav_hits": 232,
+        "fav_misses": 786,
+        "fav_miss_rate_pct": 77.21021611001964,
+        "winner_rank_median": 4.0,
+        "middle_races": 939,
+        "middle_hit_races": 142,
+        "middle_race_hit_rate_pct": 15.122470713525027,
+        "middle_tickets": 1942,
+        "middle_stake_yen": 194200,
+        "middle_payout_yen": 180630,
+        "middle_profit_yen": -13570,
+        "middle_roi_pct": 93.01235839340886
+      },
+      "miss_uplift_2023_pt": 3.064066852367688,
+      "miss_uplift_2024_pt": 5.491579416763656
+    },
+    {
+      "feature": "fav_ratio",
+      "op": "<=",
+      "threshold": 0.9900121125538546,
+      "train_2023": {
+        "races": 359,
+        "fav_hits": 88,
+        "fav_misses": 271,
+        "fav_miss_rate_pct": 75.4874651810585,
+        "winner_rank_median": 3,
+        "middle_races": 334,
+        "middle_hit_races": 62,
+        "middle_race_hit_rate_pct": 18.562874251497007,
+        "middle_tickets": 803,
+        "middle_stake_yen": 80300,
+        "middle_payout_yen": 61740,
+        "middle_profit_yen": -18560,
+        "middle_roi_pct": 76.88667496886676
+      },
+      "validation_2024": {
+        "races": 373,
+        "fav_hits": 89,
+        "fav_misses": 284,
+        "fav_miss_rate_pct": 76.13941018766756,
+        "winner_rank_median": 4,
+        "middle_races": 355,
+        "middle_hit_races": 68,
+        "middle_race_hit_rate_pct": 19.154929577464788,
+        "middle_tickets": 832,
+        "middle_stake_yen": 83200,
+        "middle_payout_yen": 76810,
+        "middle_profit_yen": -6390,
+        "middle_roi_pct": 92.31971153846153
+      },
+      "miss_uplift_2023_pt": 1.6713091922005532,
+      "miss_uplift_2024_pt": 4.420773494411577
+    },
+    {
+      "feature": "fav_delta",
+      "op": "<=",
+      "threshold": -0.002262418116602237,
+      "train_2023": {
+        "races": 359,
+        "fav_hits": 91,
+        "fav_misses": 268,
+        "fav_miss_rate_pct": 74.65181058495821,
+        "winner_rank_median": 3,
+        "middle_races": 333,
+        "middle_hit_races": 62,
+        "middle_race_hit_rate_pct": 18.61861861861862,
+        "middle_tickets": 803,
+        "middle_stake_yen": 80300,
+        "middle_payout_yen": 61740,
+        "middle_profit_yen": -18560,
+        "middle_roi_pct": 76.88667496886676
+      },
+      "validation_2024": {
+        "races": 378,
+        "fav_hits": 91,
+        "fav_misses": 287,
+        "fav_miss_rate_pct": 75.92592592592592,
+        "winner_rank_median": 4.0,
+        "middle_races": 360,
+        "middle_hit_races": 68,
+        "middle_race_hit_rate_pct": 18.88888888888889,
+        "middle_tickets": 845,
+        "middle_stake_yen": 84500,
+        "middle_payout_yen": 76810,
+        "middle_profit_yen": -7690,
+        "middle_roi_pct": 90.89940828402366
+      },
+      "miss_uplift_2023_pt": 0.8356545961002695,
+      "miss_uplift_2024_pt": 4.207289232669936
+    },
+    {
+      "feature": "top5_market_share",
+      "op": "<=",
+      "threshold": 0.6355085055186522,
+      "train_2023": {
+        "races": 718,
+        "fav_hits": 147,
+        "fav_misses": 571,
+        "fav_miss_rate_pct": 79.52646239554318,
+        "winner_rank_median": 4.0,
+        "middle_races": 679,
+        "middle_hit_races": 84,
+        "middle_race_hit_rate_pct": 12.371134020618557,
+        "middle_tickets": 1400,
+        "middle_stake_yen": 140000,
+        "middle_payout_yen": 107150,
+        "middle_profit_yen": -32850,
+        "middle_roi_pct": 76.53571428571429
+      },
+      "validation_2024": {
+        "races": 656,
+        "fav_hits": 130,
+        "fav_misses": 526,
+        "fav_miss_rate_pct": 80.1829268292683,
+        "winner_rank_median": 5.0,
+        "middle_races": 612,
+        "middle_hit_races": 85,
+        "middle_race_hit_rate_pct": 13.88888888888889,
+        "middle_tickets": 1268,
+        "middle_stake_yen": 126800,
+        "middle_payout_yen": 115180,
+        "middle_profit_yen": -11620,
+        "middle_roi_pct": 90.83596214511041
+      },
+      "miss_uplift_2023_pt": 5.710306406685234,
+      "miss_uplift_2024_pt": 8.464290136012309
+    },
+    {
+      "feature": "trio_entropy",
+      "op": ">=",
+      "threshold": 2.705690125677538,
+      "train_2023": {
+        "races": 718,
+        "fav_hits": 143,
+        "fav_misses": 575,
+        "fav_miss_rate_pct": 80.08356545961003,
+        "winner_rank_median": 4.0,
+        "middle_races": 676,
+        "middle_hit_races": 85,
+        "middle_race_hit_rate_pct": 12.57396449704142,
+        "middle_tickets": 1398,
+        "middle_stake_yen": 139800,
+        "middle_payout_yen": 106950,
+        "middle_profit_yen": -32850,
+        "middle_roi_pct": 76.50214592274678
+      },
+      "validation_2024": {
+        "races": 662,
+        "fav_hits": 120,
+        "fav_misses": 542,
+        "fav_miss_rate_pct": 81.87311178247734,
+        "winner_rank_median": 5.0,
+        "middle_races": 616,
+        "middle_hit_races": 91,
+        "middle_race_hit_rate_pct": 14.772727272727273,
+        "middle_tickets": 1272,
+        "middle_stake_yen": 127200,
+        "middle_payout_yen": 116610,
+        "middle_profit_yen": -10590,
+        "middle_roi_pct": 91.6745283018868
+      },
+      "miss_uplift_2023_pt": 6.267409470752085,
+      "miss_uplift_2024_pt": 10.15447508922135
+    },
+    {
+      "feature": "nonfav_positive_delta_count",
+      "op": ">=",
+      "threshold": 8.0,
+      "train_2023": {
+        "races": 1137,
+        "fav_hits": 270,
+        "fav_misses": 867,
+        "fav_miss_rate_pct": 76.2532981530343,
+        "winner_rank_median": 3,
+        "middle_races": 1078,
+        "middle_hit_races": 168,
+        "middle_race_hit_rate_pct": 15.584415584415584,
+        "middle_tickets": 2368,
+        "middle_stake_yen": 236800,
+        "middle_payout_yen": 180130,
+        "middle_profit_yen": -56670,
+        "middle_roi_pct": 76.06841216216216
+      },
+      "validation_2024": {
+        "races": 1068,
+        "fav_hits": 271,
+        "fav_misses": 797,
+        "fav_miss_rate_pct": 74.62546816479401,
+        "winner_rank_median": 4.0,
+        "middle_races": 1016,
+        "middle_hit_races": 164,
+        "middle_race_hit_rate_pct": 16.141732283464567,
+        "middle_tickets": 2211,
+        "middle_stake_yen": 221100,
+        "middle_payout_yen": 200590,
+        "middle_profit_yen": -20510,
+        "middle_roi_pct": 90.72365445499774
+      },
+      "miss_uplift_2023_pt": 2.4371421641763504,
+      "miss_uplift_2024_pt": 2.906831471538027
+    },
+    {
+      "feature": "second_to_fav_odds_ratio",
+      "op": "<=",
+      "threshold": 1.4583333333333335,
+      "train_2023": {
+        "races": 719,
+        "fav_hits": 154,
+        "fav_misses": 565,
+        "fav_miss_rate_pct": 78.58136300417246,
+        "winner_rank_median": 3,
+        "middle_races": 662,
+        "middle_hit_races": 94,
+        "middle_race_hit_rate_pct": 14.19939577039275,
+        "middle_tickets": 1342,
+        "middle_stake_yen": 134200,
+        "middle_payout_yen": 101970,
+        "middle_profit_yen": -32230,
+        "middle_roi_pct": 75.98360655737704
+      },
+      "validation_2024": {
+        "races": 647,
+        "fav_hits": 136,
+        "fav_misses": 511,
+        "fav_miss_rate_pct": 78.97990726429676,
+        "winner_rank_median": 4,
+        "middle_races": 585,
+        "middle_hit_races": 82,
+        "middle_race_hit_rate_pct": 14.017094017094017,
+        "middle_tickets": 1183,
+        "middle_stake_yen": 118300,
+        "middle_payout_yen": 90450,
+        "middle_profit_yen": -27850,
+        "middle_roi_pct": 76.458157227388
+      },
+      "miss_uplift_2023_pt": 4.765207015314516,
+      "miss_uplift_2024_pt": 7.261270571040768
+    },
+    {
+      "feature": "top3_market_share",
+      "op": "<=",
+      "threshold": 0.5689127188163474,
+      "train_2023": {
+        "races": 1077,
+        "fav_hits": 251,
+        "fav_misses": 826,
+        "fav_miss_rate_pct": 76.69452181987,
+        "winner_rank_median": 3,
+        "middle_races": 1005,
+        "middle_hit_races": 142,
+        "middle_race_hit_rate_pct": 14.129353233830846,
+        "middle_tickets": 2080,
+        "middle_stake_yen": 208000,
+        "middle_payout_yen": 157900,
+        "middle_profit_yen": -50100,
+        "middle_roi_pct": 75.91346153846153
+      },
+      "validation_2024": {
+        "races": 992,
+        "fav_hits": 221,
+        "fav_misses": 771,
+        "fav_miss_rate_pct": 77.72177419354838,
+        "winner_rank_median": 4.0,
+        "middle_races": 918,
+        "middle_hit_races": 140,
+        "middle_race_hit_rate_pct": 15.250544662309368,
+        "middle_tickets": 1894,
+        "middle_stake_yen": 189400,
+        "middle_payout_yen": 173600,
+        "middle_profit_yen": -15800,
+        "middle_roi_pct": 91.65786694825765
+      },
+      "miss_uplift_2023_pt": 2.8783658310120614,
+      "miss_uplift_2024_pt": 6.003137500292397
+    }
+  ]
+}
