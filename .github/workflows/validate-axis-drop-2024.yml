@@ -1,0 +1,30 @@
+name: Validate axis drop v1 on 2024
+
+on:
+  push:
+    paths:
+      - '.github/workflows/validate-axis-drop-2024.yml'
+      - 'src/keirin_market_analysis/validate_axis_drop_rule_2024.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run validation
+        run: python src/keirin_market_analysis/validate_axis_drop_rule_2024.py
+      - name: Commit output
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/audits/axis_drop_rule_v1_validation_2024.json data/audits/axis_drop_rule_v1_validation_2024_decisions.csv
+          git diff --cached --quiet || git commit -m "Validate frozen axis drop v1 on 2024"
+          git pull --rebase origin main
+          git push
