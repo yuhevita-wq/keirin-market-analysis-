@@ -1,0 +1,519 @@
+{
+  "status": "DISCOUNT_BAND_FORMATION_SIMULATION_2023",
+  "year": 2023,
+  "scope": "7-rider exact S-class qualifying races with complete 35-way trio final odds and paid trio result.",
+  "methodology_lock": {
+    "ticket_selection_uses_results_or_payouts": false,
+    "market_probability_M": "normalized inverse odds across all 35 trios",
+    "support": "rider marginal of M",
+    "maxent_Q": "maximum-entropy 35-trio distribution reproducing the seven rider marginals",
+    "residual_R": "M/Q; lower means market discount relative to rider supports",
+    "band_definition": "For each of the 21 support-rank pairs, inspect its 5 containing trios; keep the 4 lowest-R trios and score the band by their geometric-mean R.",
+    "one_band_rule": "Buy the 4 tickets from the single lowest-score pair-band.",
+    "two_band_rule": "Buy the union of the 4 tickets from each of the two lowest-score pair-bands; duplicates removed, yielding 7 or 8 tickets.",
+    "stake_per_ticket_yen": 100,
+    "payout_scoring": "actual published 3連複 payout_yen; ties/multiple paid trios summed if multiple selected tickets win.",
+    "warning": "2023 market structure motivated this family before outcome scoring. These results are development/in-sample for profitability and are not validation."
+  },
+  "accounting": {
+    "market_races": 1486,
+    "excluded_non7_or_incomplete": 50,
+    "no_payout": 0,
+    "solver_failures": 0,
+    "evaluated_races": 1436,
+    "max_solver_error": 9.953149415764528e-13
+  },
+  "strategies": [
+    {
+      "name": "ONE_DISCOUNT_BAND_4",
+      "races": 1436,
+      "tickets": 5744,
+      "avg_tickets_per_race": 4.0,
+      "min_tickets_per_race": 4,
+      "max_tickets_per_race": 4,
+      "hit_races": 56,
+      "race_hit_rate_pct": 3.8997214484679668,
+      "hit_tickets": 56,
+      "stake_yen": 574400,
+      "payout_yen": 345630,
+      "profit_yen": -228770,
+      "roi_pct": 60.17235376044568,
+      "max_losing_streak_races": 122
+    },
+    {
+      "name": "TWO_DISCOUNT_BANDS_7_OR_8",
+      "races": 1436,
+      "tickets": 10665,
+      "avg_tickets_per_race": 7.426880222841226,
+      "min_tickets_per_race": 7,
+      "max_tickets_per_race": 8,
+      "hit_races": 123,
+      "race_hit_rate_pct": 8.565459610027855,
+      "hit_tickets": 123,
+      "stake_yen": 1066500,
+      "payout_yen": 608530,
+      "profit_yen": -457970,
+      "roi_pct": 57.058602906704174,
+      "max_losing_streak_races": 42
+    }
+  ],
+  "formation_diagnostics": {
+    "first_band_core_frequency": [
+      [
+        "23",
+        299
+      ],
+      [
+        "24",
+        188
+      ],
+      [
+        "25",
+        133
+      ],
+      [
+        "13",
+        108
+      ],
+      [
+        "15",
+        108
+      ],
+      [
+        "17",
+        104
+      ],
+      [
+        "14",
+        94
+      ],
+      [
+        "16",
+        78
+      ],
+      [
+        "26",
+        78
+      ],
+      [
+        "27",
+        71
+      ],
+      [
+        "34",
+        68
+      ],
+      [
+        "35",
+        30
+      ],
+      [
+        "36",
+        24
+      ],
+      [
+        "37",
+        22
+      ],
+      [
+        "45",
+        12
+      ],
+      [
+        "47",
+        7
+      ],
+      [
+        "46",
+        6
+      ],
+      [
+        "57",
+        2
+      ],
+      [
+        "56",
+        2
+      ],
+      [
+        "67",
+        1
+      ],
+      [
+        "12",
+        1
+      ]
+    ],
+    "second_band_core_frequency": [
+      [
+        "23",
+        204
+      ],
+      [
+        "13",
+        145
+      ],
+      [
+        "24",
+        134
+      ],
+      [
+        "27",
+        123
+      ],
+      [
+        "17",
+        120
+      ],
+      [
+        "25",
+        88
+      ],
+      [
+        "14",
+        84
+      ],
+      [
+        "26",
+        79
+      ],
+      [
+        "34",
+        73
+      ],
+      [
+        "35",
+        65
+      ],
+      [
+        "15",
+        59
+      ],
+      [
+        "16",
+        52
+      ],
+      [
+        "37",
+        47
+      ],
+      [
+        "36",
+        43
+      ],
+      [
+        "45",
+        39
+      ],
+      [
+        "46",
+        26
+      ],
+      [
+        "47",
+        23
+      ],
+      [
+        "12",
+        13
+      ],
+      [
+        "56",
+        11
+      ],
+      [
+        "57",
+        7
+      ],
+      [
+        "67",
+        1
+      ]
+    ],
+    "one_band_selected_support_patterns": [
+      [
+        "234",
+        528
+      ],
+      [
+        "235",
+        449
+      ],
+      [
+        "236",
+        387
+      ],
+      [
+        "237",
+        369
+      ],
+      [
+        "245",
+        326
+      ],
+      [
+        "246",
+        267
+      ],
+      [
+        "247",
+        260
+      ],
+      [
+        "135",
+        214
+      ],
+      [
+        "256",
+        211
+      ],
+      [
+        "134",
+        207
+      ],
+      [
+        "137",
+        206
+      ],
+      [
+        "145",
+        203
+      ],
+      [
+        "157",
+        201
+      ],
+      [
+        "257",
+        198
+      ],
+      [
+        "147",
+        192
+      ],
+      [
+        "156",
+        188
+      ],
+      [
+        "136",
+        174
+      ],
+      [
+        "146",
+        173
+      ],
+      [
+        "167",
+        172
+      ],
+      [
+        "267",
+        141
+      ],
+      [
+        "345",
+        109
+      ],
+      [
+        "346",
+        96
+      ],
+      [
+        "347",
+        95
+      ],
+      [
+        "127",
+        80
+      ],
+      [
+        "356",
+        55
+      ],
+      [
+        "357",
+        53
+      ],
+      [
+        "126",
+        47
+      ],
+      [
+        "367",
+        39
+      ],
+      [
+        "125",
+        28
+      ],
+      [
+        "456",
+        20
+      ],
+      [
+        "457",
+        20
+      ],
+      [
+        "124",
+        20
+      ],
+      [
+        "467",
+        9
+      ],
+      [
+        "123",
+        4
+      ],
+      [
+        "567",
+        3
+      ]
+    ],
+    "two_band_selected_support_patterns": [
+      [
+        "234",
+        781
+      ],
+      [
+        "235",
+        698
+      ],
+      [
+        "237",
+        654
+      ],
+      [
+        "236",
+        644
+      ],
+      [
+        "245",
+        507
+      ],
+      [
+        "247",
+        475
+      ],
+      [
+        "137",
+        465
+      ],
+      [
+        "246",
+        462
+      ],
+      [
+        "134",
+        423
+      ],
+      [
+        "135",
+        417
+      ],
+      [
+        "147",
+        364
+      ],
+      [
+        "136",
+        360
+      ],
+      [
+        "256",
+        356
+      ],
+      [
+        "257",
+        349
+      ],
+      [
+        "145",
+        347
+      ],
+      [
+        "157",
+        339
+      ],
+      [
+        "146",
+        305
+      ],
+      [
+        "156",
+        294
+      ],
+      [
+        "167",
+        287
+      ],
+      [
+        "127",
+        286
+      ],
+      [
+        "267",
+        260
+      ],
+      [
+        "345",
+        224
+      ],
+      [
+        "346",
+        212
+      ],
+      [
+        "347",
+        204
+      ],
+      [
+        "356",
+        153
+      ],
+      [
+        "357",
+        147
+      ],
+      [
+        "126",
+        137
+      ],
+      [
+        "125",
+        106
+      ],
+      [
+        "124",
+        90
+      ],
+      [
+        "456",
+        85
+      ],
+      [
+        "367",
+        85
+      ],
+      [
+        "457",
+        66
+      ],
+      [
+        "123",
+        36
+      ],
+      [
+        "467",
+        35
+      ],
+      [
+        "567",
+        12
+      ]
+    ]
+  },
+  "solver_failure_examples": []
+}
