@@ -1,0 +1,45 @@
+name: Simulate 2023 discount-band formations
+
+on:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/simulate_discount_band_formations_2023.py'
+      - '.github/workflows/simulate-discount-band-formations-2023.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  simulate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run simulation
+        run: python src/keirin_market_analysis/simulate_discount_band_formations_2023.py
+      - name: Validate output
+        run: |
+          python - <<'PY'
+          import json
+          p='data/audits/discount_band_formations_2023.json'
+          x=json.load(open(p,encoding='utf-8'))
+          assert x['methodology_lock']['ticket_selection_uses_results_or_payouts'] is False
+          assert x['accounting']['solver_failures'] == 0
+          assert x['accounting']['evaluated_races'] > 1000
+          assert len(x['strategies']) == 2
+          print('PASS', x['strategies'])
+          PY
+      - name: Commit result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/discount_band_formations_2023.json
+          git commit -m 'analysis: save 2023 discount-band formation simulation' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
