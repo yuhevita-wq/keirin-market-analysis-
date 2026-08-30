@@ -1,0 +1,8711 @@
+{
+  "status": "BEST_TWO_POINT_FORMATION_SEARCH_2023",
+  "scope": "2023 development only; in-sample exploratory search",
+  "fixed_context": {
+    "must_enter_rule": "Frozen prior TV(P1,M) threshold; unchanged here.",
+    "two_point_definition": "Exactly two 3連複 tickets sharing the same 2-rider core.",
+    "candidate_formations_per_race": 210,
+    "outcome_used_only_for_final_scoring": true,
+    "selection_features": [
+      "P1 coverage",
+      "final-odds synthetic odds",
+      "P1/market coverage uplift",
+      "P1 pair mass"
+    ],
+    "odds_phase": "final; not executable T-10 data",
+    "stake": "100 yen on each of the two tickets"
+  },
+  "accounting": {
+    "market_races": 1486,
+    "excluded_non7_or_incomplete": 50,
+    "no_unique_paid_trio": 5,
+    "solver_failures": 0,
+    "non_must_enter": 1073,
+    "must_enter_evaluated": 358
+  },
+  "predefined_rule_count": 132,
+  "rule_grid": {
+    "score_specs": [
+      [
+        "COV",
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        "EV",
+        1.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        "COVxSQRTODDS",
+        1.0,
+        0.5,
+        0.0,
+        0.0
+      ],
+      [
+        "COV2xODDS",
+        2.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        "SQRTOFCOVxODDS",
+        0.5,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        "EVxUPLIFT05",
+        1.0,
+        1.0,
+        0.5,
+        0.0
+      ],
+      [
+        "EVxUPLIFT1",
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ],
+      [
+        "EVxUPLIFT2",
+        1.0,
+        1.0,
+        2.0,
+        0.0
+      ],
+      [
+        "EVxPAIR05",
+        1.0,
+        1.0,
+        0.0,
+        0.5
+      ],
+      [
+        "EVxPAIR1",
+        1.0,
+        1.0,
+        0.0,
+        1.0
+      ],
+      [
+        "COVxPAIR1",
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        "UPLIFT",
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ]
+    ],
+    "synthetic_odds_min_grid": [
+      0.0,
+      1.5,
+      2.0,
+      2.5,
+      3.0,
+      4.0,
+      5.0,
+      7.5,
+      10.0,
+      15.0,
+      20.0
+    ]
+  },
+  "ranked_by_realized_2023_roi": [
+    {
+      "rule": "COV2xODDS",
+      "coverage_power": 2.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 15.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 16,
+      "hit_rate_pct": 4.4692737430167595,
+      "stake_yen": 71600,
+      "payout_yen": 63910,
+      "profit_yen": -7690,
+      "roi_pct": 89.25977653631286,
+      "avg_synthetic_odds": 15.517284105125414,
+      "avg_coverage": 0.048380096499561265,
+      "avg_model_ev": 0.749775716409102,
+      "avg_uplift": 1.007359829399749,
+      "max_losing_streak_bet_races": 73,
+      "top_pair_cores": [
+        [
+          "1-2",
+          29
+        ],
+        [
+          "2-4",
+          27
+        ],
+        [
+          "2-5",
+          26
+        ],
+        [
+          "3-5",
+          25
+        ],
+        [
+          "2-3",
+          24
+        ],
+        [
+          "3-4",
+          21
+        ],
+        [
+          "3-7",
+          21
+        ],
+        [
+          "1-5",
+          20
+        ],
+        [
+          "1-7",
+          20
+        ],
+        [
+          "5-7",
+          20
+        ]
+      ]
+    },
+    {
+      "rule": "COVxSQRTODDS",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.5,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 15.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 16,
+      "hit_rate_pct": 4.4692737430167595,
+      "stake_yen": 71600,
+      "payout_yen": 63910,
+      "profit_yen": -7690,
+      "roi_pct": 89.25977653631286,
+      "avg_synthetic_odds": 15.517284105125414,
+      "avg_coverage": 0.048380096499561265,
+      "avg_model_ev": 0.749775716409102,
+      "avg_uplift": 1.007359829399749,
+      "max_losing_streak_bet_races": 73,
+      "top_pair_cores": [
+        [
+          "1-2",
+          29
+        ],
+        [
+          "2-4",
+          27
+        ],
+        [
+          "2-5",
+          26
+        ],
+        [
+          "3-5",
+          25
+        ],
+        [
+          "2-3",
+          24
+        ],
+        [
+          "3-4",
+          21
+        ],
+        [
+          "3-7",
+          21
+        ],
+        [
+          "1-5",
+          20
+        ],
+        [
+          "1-7",
+          20
+        ],
+        [
+          "5-7",
+          20
+        ]
+      ]
+    },
+    {
+      "rule": "COV2xODDS",
+      "coverage_power": 2.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 20.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 14,
+      "hit_rate_pct": 3.910614525139665,
+      "stake_yen": 71600,
+      "payout_yen": 63710,
+      "profit_yen": -7890,
+      "roi_pct": 88.9804469273743,
+      "avg_synthetic_odds": 20.6104374049662,
+      "avg_coverage": 0.036488636212716266,
+      "avg_model_ev": 0.7512919189900114,
+      "avg_uplift": 1.0093994295637108,
+      "max_losing_streak_bet_races": 59,
+      "top_pair_cores": [
+        [
+          "2-4",
+          33
+        ],
+        [
+          "2-3",
+          32
+        ],
+        [
+          "3-4",
+          26
+        ],
+        [
+          "3-7",
+          22
+        ],
+        [
+          "1-3",
+          21
+        ],
+        [
+          "1-2",
+          19
+        ],
+        [
+          "1-4",
+          18
+        ],
+        [
+          "1-5",
+          18
+        ],
+        [
+          "2-7",
+          18
+        ],
+        [
+          "3-5",
+          18
+        ]
+      ]
+    },
+    {
+      "rule": "COVxSQRTODDS",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.5,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 20.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 14,
+      "hit_rate_pct": 3.910614525139665,
+      "stake_yen": 71600,
+      "payout_yen": 63710,
+      "profit_yen": -7890,
+      "roi_pct": 88.9804469273743,
+      "avg_synthetic_odds": 20.6104374049662,
+      "avg_coverage": 0.036488636212716266,
+      "avg_model_ev": 0.7512919189900114,
+      "avg_uplift": 1.0093994295637108,
+      "max_losing_streak_bet_races": 59,
+      "top_pair_cores": [
+        [
+          "2-4",
+          33
+        ],
+        [
+          "2-3",
+          32
+        ],
+        [
+          "3-4",
+          26
+        ],
+        [
+          "3-7",
+          22
+        ],
+        [
+          "1-3",
+          21
+        ],
+        [
+          "1-2",
+          19
+        ],
+        [
+          "1-4",
+          18
+        ],
+        [
+          "1-5",
+          18
+        ],
+        [
+          "2-7",
+          18
+        ],
+        [
+          "3-5",
+          18
+        ]
+      ]
+    },
+    {
+      "rule": "COV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 15.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 15,
+      "hit_rate_pct": 4.189944134078212,
+      "stake_yen": 71600,
+      "payout_yen": 62840,
+      "profit_yen": -8760,
+      "roi_pct": 87.76536312849161,
+      "avg_synthetic_odds": 15.457686756439802,
+      "avg_coverage": 0.04843611123280064,
+      "avg_model_ev": 0.7478038858313127,
+      "avg_uplift": 1.0047110213288986,
+      "max_losing_streak_bet_races": 116,
+      "top_pair_cores": [
+        [
+          "1-2",
+          28
+        ],
+        [
+          "3-5",
+          27
+        ],
+        [
+          "2-4",
+          26
+        ],
+        [
+          "2-3",
+          24
+        ],
+        [
+          "2-5",
+          24
+        ],
+        [
+          "5-7",
+          21
+        ],
+        [
+          "1-4",
+          20
+        ],
+        [
+          "3-4",
+          20
+        ],
+        [
+          "1-5",
+          19
+        ],
+        [
+          "3-7",
+          19
+        ]
+      ]
+    },
+    {
+      "rule": "EV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 0.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 1.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 2.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 2.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 3.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 4.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 5.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.5,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 0.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.5,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 1.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.5,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 2.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.5,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 2.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.5,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 3.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.5,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 4.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.5,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 5.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 0.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 1.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 2.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 2.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 3.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 4.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 5.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT2",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 2.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 0.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT2",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 2.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 1.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT2",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 2.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 2.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT2",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 2.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 2.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT2",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 2.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 3.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT2",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 2.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 4.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT2",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 2.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 5.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "UPLIFT",
+      "coverage_power": 0.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 0.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "UPLIFT",
+      "coverage_power": 0.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 1.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "UPLIFT",
+      "coverage_power": 0.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 2.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "UPLIFT",
+      "coverage_power": 0.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 2.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "UPLIFT",
+      "coverage_power": 0.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 3.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "UPLIFT",
+      "coverage_power": 0.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 4.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "UPLIFT",
+      "coverage_power": 0.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 5.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 62350,
+      "profit_yen": -9250,
+      "roi_pct": 87.08100558659218,
+      "avg_synthetic_odds": 29.40458342276373,
+      "avg_coverage": 0.046181770080443614,
+      "avg_model_ev": 0.7723744070957149,
+      "avg_uplift": 1.0377305350934236,
+      "max_losing_streak_bet_races": 64,
+      "top_pair_cores": [
+        [
+          "2-6",
+          61
+        ],
+        [
+          "3-6",
+          57
+        ],
+        [
+          "1-6",
+          29
+        ],
+        [
+          "4-7",
+          17
+        ],
+        [
+          "2-4",
+          16
+        ],
+        [
+          "4-6",
+          16
+        ],
+        [
+          "2-5",
+          15
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "2-7",
+          13
+        ],
+        [
+          "3-5",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "COV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 20.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 13,
+      "hit_rate_pct": 3.631284916201117,
+      "stake_yen": 71600,
+      "payout_yen": 61090,
+      "profit_yen": -10510,
+      "roi_pct": 85.32122905027933,
+      "avg_synthetic_odds": 20.49317808744837,
+      "avg_coverage": 0.03654894842719826,
+      "avg_model_ev": 0.7483771522180211,
+      "avg_uplift": 1.005481520628892,
+      "max_losing_streak_bet_races": 59,
+      "top_pair_cores": [
+        [
+          "2-4",
+          32
+        ],
+        [
+          "2-3",
+          29
+        ],
+        [
+          "3-4",
+          25
+        ],
+        [
+          "1-2",
+          21
+        ],
+        [
+          "1-3",
+          21
+        ],
+        [
+          "3-7",
+          21
+        ],
+        [
+          "3-5",
+          20
+        ],
+        [
+          "2-7",
+          19
+        ],
+        [
+          "4-7",
+          19
+        ],
+        [
+          "1-5",
+          17
+        ]
+      ]
+    },
+    {
+      "rule": "EV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 7.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 14,
+      "hit_rate_pct": 3.910614525139665,
+      "stake_yen": 71600,
+      "payout_yen": 59050,
+      "profit_yen": -12550,
+      "roi_pct": 82.47206703910615,
+      "avg_synthetic_odds": 32.72271744355194,
+      "avg_coverage": 0.03789289033006196,
+      "avg_model_ev": 0.771713828607466,
+      "avg_uplift": 1.0368448394939922,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "2-6",
+          63
+        ],
+        [
+          "3-6",
+          63
+        ],
+        [
+          "1-6",
+          32
+        ],
+        [
+          "4-6",
+          18
+        ],
+        [
+          "2-4",
+          15
+        ],
+        [
+          "3-5",
+          14
+        ],
+        [
+          "2-3",
+          13
+        ],
+        [
+          "3-7",
+          13
+        ],
+        [
+          "4-7",
+          13
+        ],
+        [
+          "2-5",
+          12
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.5,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 7.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 14,
+      "hit_rate_pct": 3.910614525139665,
+      "stake_yen": 71600,
+      "payout_yen": 59050,
+      "profit_yen": -12550,
+      "roi_pct": 82.47206703910615,
+      "avg_synthetic_odds": 32.72271744355194,
+      "avg_coverage": 0.03789289033006196,
+      "avg_model_ev": 0.771713828607466,
+      "avg_uplift": 1.0368448394939922,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "2-6",
+          63
+        ],
+        [
+          "3-6",
+          63
+        ],
+        [
+          "1-6",
+          32
+        ],
+        [
+          "4-6",
+          18
+        ],
+        [
+          "2-4",
+          15
+        ],
+        [
+          "3-5",
+          14
+        ],
+        [
+          "2-3",
+          13
+        ],
+        [
+          "3-7",
+          13
+        ],
+        [
+          "4-7",
+          13
+        ],
+        [
+          "2-5",
+          12
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 7.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 14,
+      "hit_rate_pct": 3.910614525139665,
+      "stake_yen": 71600,
+      "payout_yen": 59050,
+      "profit_yen": -12550,
+      "roi_pct": 82.47206703910615,
+      "avg_synthetic_odds": 32.72271744355194,
+      "avg_coverage": 0.03789289033006196,
+      "avg_model_ev": 0.771713828607466,
+      "avg_uplift": 1.0368448394939922,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "2-6",
+          63
+        ],
+        [
+          "3-6",
+          63
+        ],
+        [
+          "1-6",
+          32
+        ],
+        [
+          "4-6",
+          18
+        ],
+        [
+          "2-4",
+          15
+        ],
+        [
+          "3-5",
+          14
+        ],
+        [
+          "2-3",
+          13
+        ],
+        [
+          "3-7",
+          13
+        ],
+        [
+          "4-7",
+          13
+        ],
+        [
+          "2-5",
+          12
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT2",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 2.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 7.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 14,
+      "hit_rate_pct": 3.910614525139665,
+      "stake_yen": 71600,
+      "payout_yen": 59050,
+      "profit_yen": -12550,
+      "roi_pct": 82.47206703910615,
+      "avg_synthetic_odds": 32.72271744355194,
+      "avg_coverage": 0.03789289033006196,
+      "avg_model_ev": 0.771713828607466,
+      "avg_uplift": 1.0368448394939922,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "2-6",
+          63
+        ],
+        [
+          "3-6",
+          63
+        ],
+        [
+          "1-6",
+          32
+        ],
+        [
+          "4-6",
+          18
+        ],
+        [
+          "2-4",
+          15
+        ],
+        [
+          "3-5",
+          14
+        ],
+        [
+          "2-3",
+          13
+        ],
+        [
+          "3-7",
+          13
+        ],
+        [
+          "4-7",
+          13
+        ],
+        [
+          "2-5",
+          12
+        ]
+      ]
+    },
+    {
+      "rule": "UPLIFT",
+      "coverage_power": 0.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 7.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 14,
+      "hit_rate_pct": 3.910614525139665,
+      "stake_yen": 71600,
+      "payout_yen": 59050,
+      "profit_yen": -12550,
+      "roi_pct": 82.47206703910615,
+      "avg_synthetic_odds": 32.72271744355194,
+      "avg_coverage": 0.03789289033006196,
+      "avg_model_ev": 0.771713828607466,
+      "avg_uplift": 1.0368448394939922,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "2-6",
+          63
+        ],
+        [
+          "3-6",
+          63
+        ],
+        [
+          "1-6",
+          32
+        ],
+        [
+          "4-6",
+          18
+        ],
+        [
+          "2-4",
+          15
+        ],
+        [
+          "3-5",
+          14
+        ],
+        [
+          "2-3",
+          13
+        ],
+        [
+          "3-7",
+          13
+        ],
+        [
+          "4-7",
+          13
+        ],
+        [
+          "2-5",
+          12
+        ]
+      ]
+    },
+    {
+      "rule": "COVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 0.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 151,
+      "hit_rate_pct": 42.17877094972067,
+      "stake_yen": 71600,
+      "payout_yen": 58690,
+      "profit_yen": -12910,
+      "roi_pct": 81.96927374301676,
+      "avg_synthetic_odds": 2.065859885164134,
+      "avg_coverage": 0.3828120083287448,
+      "avg_model_ev": 0.7474798271537866,
+      "avg_uplift": 1.0042609995093053,
+      "max_losing_streak_bet_races": 9,
+      "top_pair_cores": [
+        [
+          "1-7",
+          47
+        ],
+        [
+          "1-5",
+          45
+        ],
+        [
+          "1-4",
+          37
+        ],
+        [
+          "3-7",
+          35
+        ],
+        [
+          "2-5",
+          34
+        ],
+        [
+          "3-5",
+          28
+        ],
+        [
+          "2-7",
+          25
+        ],
+        [
+          "2-4",
+          24
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          15
+        ]
+      ]
+    },
+    {
+      "rule": "EV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 20.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 8,
+      "hit_rate_pct": 2.2346368715083798,
+      "stake_yen": 71600,
+      "payout_yen": 56870,
+      "profit_yen": -14730,
+      "roi_pct": 79.42737430167598,
+      "avg_synthetic_odds": 47.60669562222729,
+      "avg_coverage": 0.02069757976674394,
+      "avg_model_ev": 0.7686643293769413,
+      "avg_uplift": 1.032751319922316,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "3-6",
+          84
+        ],
+        [
+          "2-6",
+          78
+        ],
+        [
+          "1-6",
+          36
+        ],
+        [
+          "4-6",
+          24
+        ],
+        [
+          "5-6",
+          18
+        ],
+        [
+          "6-7",
+          15
+        ],
+        [
+          "2-7",
+          14
+        ],
+        [
+          "2-5",
+          13
+        ],
+        [
+          "3-7",
+          12
+        ],
+        [
+          "2-4",
+          11
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.5,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 20.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 8,
+      "hit_rate_pct": 2.2346368715083798,
+      "stake_yen": 71600,
+      "payout_yen": 56870,
+      "profit_yen": -14730,
+      "roi_pct": 79.42737430167598,
+      "avg_synthetic_odds": 47.60669562222729,
+      "avg_coverage": 0.02069757976674394,
+      "avg_model_ev": 0.7686643293769413,
+      "avg_uplift": 1.032751319922316,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "3-6",
+          84
+        ],
+        [
+          "2-6",
+          78
+        ],
+        [
+          "1-6",
+          36
+        ],
+        [
+          "4-6",
+          24
+        ],
+        [
+          "5-6",
+          18
+        ],
+        [
+          "6-7",
+          15
+        ],
+        [
+          "2-7",
+          14
+        ],
+        [
+          "2-5",
+          13
+        ],
+        [
+          "3-7",
+          12
+        ],
+        [
+          "2-4",
+          11
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 20.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 8,
+      "hit_rate_pct": 2.2346368715083798,
+      "stake_yen": 71600,
+      "payout_yen": 56870,
+      "profit_yen": -14730,
+      "roi_pct": 79.42737430167598,
+      "avg_synthetic_odds": 47.60669562222729,
+      "avg_coverage": 0.02069757976674394,
+      "avg_model_ev": 0.7686643293769413,
+      "avg_uplift": 1.032751319922316,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "3-6",
+          84
+        ],
+        [
+          "2-6",
+          78
+        ],
+        [
+          "1-6",
+          36
+        ],
+        [
+          "4-6",
+          24
+        ],
+        [
+          "5-6",
+          18
+        ],
+        [
+          "6-7",
+          15
+        ],
+        [
+          "2-7",
+          14
+        ],
+        [
+          "2-5",
+          13
+        ],
+        [
+          "3-7",
+          12
+        ],
+        [
+          "2-4",
+          11
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT2",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 2.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 20.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 8,
+      "hit_rate_pct": 2.2346368715083798,
+      "stake_yen": 71600,
+      "payout_yen": 56870,
+      "profit_yen": -14730,
+      "roi_pct": 79.42737430167598,
+      "avg_synthetic_odds": 47.60669562222729,
+      "avg_coverage": 0.02069757976674394,
+      "avg_model_ev": 0.7686643293769413,
+      "avg_uplift": 1.032751319922316,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "3-6",
+          84
+        ],
+        [
+          "2-6",
+          78
+        ],
+        [
+          "1-6",
+          36
+        ],
+        [
+          "4-6",
+          24
+        ],
+        [
+          "5-6",
+          18
+        ],
+        [
+          "6-7",
+          15
+        ],
+        [
+          "2-7",
+          14
+        ],
+        [
+          "2-5",
+          13
+        ],
+        [
+          "3-7",
+          12
+        ],
+        [
+          "2-4",
+          11
+        ]
+      ]
+    },
+    {
+      "rule": "UPLIFT",
+      "coverage_power": 0.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 20.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 8,
+      "hit_rate_pct": 2.2346368715083798,
+      "stake_yen": 71600,
+      "payout_yen": 56870,
+      "profit_yen": -14730,
+      "roi_pct": 79.42737430167598,
+      "avg_synthetic_odds": 47.60669562222729,
+      "avg_coverage": 0.02069757976674394,
+      "avg_model_ev": 0.7686643293769413,
+      "avg_uplift": 1.032751319922316,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "3-6",
+          84
+        ],
+        [
+          "2-6",
+          78
+        ],
+        [
+          "1-6",
+          36
+        ],
+        [
+          "4-6",
+          24
+        ],
+        [
+          "5-6",
+          18
+        ],
+        [
+          "6-7",
+          15
+        ],
+        [
+          "2-7",
+          14
+        ],
+        [
+          "2-5",
+          13
+        ],
+        [
+          "3-7",
+          12
+        ],
+        [
+          "2-4",
+          11
+        ]
+      ]
+    },
+    {
+      "rule": "COV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 0.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 148,
+      "hit_rate_pct": 41.340782122905026,
+      "stake_yen": 71600,
+      "payout_yen": 56240,
+      "profit_yen": -15360,
+      "roi_pct": 78.54748603351955,
+      "avg_synthetic_odds": 2.0594027378134494,
+      "avg_coverage": 0.3832737397346951,
+      "avg_model_ev": 0.7473911277942741,
+      "avg_uplift": 1.0041420895722455,
+      "max_losing_streak_bet_races": 9,
+      "top_pair_cores": [
+        [
+          "1-7",
+          48
+        ],
+        [
+          "1-5",
+          46
+        ],
+        [
+          "1-4",
+          35
+        ],
+        [
+          "3-7",
+          35
+        ],
+        [
+          "2-5",
+          33
+        ],
+        [
+          "3-5",
+          27
+        ],
+        [
+          "2-7",
+          25
+        ],
+        [
+          "2-4",
+          24
+        ],
+        [
+          "4-7",
+          19
+        ],
+        [
+          "3-4",
+          15
+        ]
+      ]
+    },
+    {
+      "rule": "COV2xODDS",
+      "coverage_power": 2.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 0.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 148,
+      "hit_rate_pct": 41.340782122905026,
+      "stake_yen": 71600,
+      "payout_yen": 56240,
+      "profit_yen": -15360,
+      "roi_pct": 78.54748603351955,
+      "avg_synthetic_odds": 2.0595742705053834,
+      "avg_coverage": 0.38326510319046664,
+      "avg_model_ev": 0.7474185513325929,
+      "avg_uplift": 1.004178898725646,
+      "max_losing_streak_bet_races": 9,
+      "top_pair_cores": [
+        [
+          "1-7",
+          49
+        ],
+        [
+          "1-5",
+          47
+        ],
+        [
+          "3-7",
+          35
+        ],
+        [
+          "1-4",
+          34
+        ],
+        [
+          "2-5",
+          33
+        ],
+        [
+          "3-5",
+          27
+        ],
+        [
+          "2-7",
+          25
+        ],
+        [
+          "2-4",
+          24
+        ],
+        [
+          "4-7",
+          19
+        ],
+        [
+          "3-4",
+          15
+        ]
+      ]
+    },
+    {
+      "rule": "COVxSQRTODDS",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.5,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 0.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 148,
+      "hit_rate_pct": 41.340782122905026,
+      "stake_yen": 71600,
+      "payout_yen": 56240,
+      "profit_yen": -15360,
+      "roi_pct": 78.54748603351955,
+      "avg_synthetic_odds": 2.0595742705053834,
+      "avg_coverage": 0.38326510319046664,
+      "avg_model_ev": 0.7474185513325929,
+      "avg_uplift": 1.004178898725646,
+      "max_losing_streak_bet_races": 9,
+      "top_pair_cores": [
+        [
+          "1-7",
+          49
+        ],
+        [
+          "1-5",
+          47
+        ],
+        [
+          "3-7",
+          35
+        ],
+        [
+          "1-4",
+          34
+        ],
+        [
+          "2-5",
+          33
+        ],
+        [
+          "3-5",
+          27
+        ],
+        [
+          "2-7",
+          25
+        ],
+        [
+          "2-4",
+          24
+        ],
+        [
+          "4-7",
+          19
+        ],
+        [
+          "3-4",
+          15
+        ]
+      ]
+    },
+    {
+      "rule": "EV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 10.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 10,
+      "hit_rate_pct": 2.793296089385475,
+      "stake_yen": 71600,
+      "payout_yen": 55320,
+      "profit_yen": -16280,
+      "roi_pct": 77.26256983240224,
+      "avg_synthetic_odds": 35.60576546300285,
+      "avg_coverage": 0.03240223456806772,
+      "avg_model_ev": 0.7710028921442981,
+      "avg_uplift": 1.035891807880024,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "2-6",
+          67
+        ],
+        [
+          "3-6",
+          66
+        ],
+        [
+          "1-6",
+          28
+        ],
+        [
+          "4-6",
+          20
+        ],
+        [
+          "2-4",
+          15
+        ],
+        [
+          "3-5",
+          14
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "3-4",
+          13
+        ],
+        [
+          "6-7",
+          13
+        ],
+        [
+          "2-7",
+          12
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.5,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 10.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 10,
+      "hit_rate_pct": 2.793296089385475,
+      "stake_yen": 71600,
+      "payout_yen": 55320,
+      "profit_yen": -16280,
+      "roi_pct": 77.26256983240224,
+      "avg_synthetic_odds": 35.60576546300285,
+      "avg_coverage": 0.03240223456806772,
+      "avg_model_ev": 0.7710028921442981,
+      "avg_uplift": 1.035891807880024,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "2-6",
+          67
+        ],
+        [
+          "3-6",
+          66
+        ],
+        [
+          "1-6",
+          28
+        ],
+        [
+          "4-6",
+          20
+        ],
+        [
+          "2-4",
+          15
+        ],
+        [
+          "3-5",
+          14
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "3-4",
+          13
+        ],
+        [
+          "6-7",
+          13
+        ],
+        [
+          "2-7",
+          12
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 10.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 10,
+      "hit_rate_pct": 2.793296089385475,
+      "stake_yen": 71600,
+      "payout_yen": 55320,
+      "profit_yen": -16280,
+      "roi_pct": 77.26256983240224,
+      "avg_synthetic_odds": 35.60576546300285,
+      "avg_coverage": 0.03240223456806772,
+      "avg_model_ev": 0.7710028921442981,
+      "avg_uplift": 1.035891807880024,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "2-6",
+          67
+        ],
+        [
+          "3-6",
+          66
+        ],
+        [
+          "1-6",
+          28
+        ],
+        [
+          "4-6",
+          20
+        ],
+        [
+          "2-4",
+          15
+        ],
+        [
+          "3-5",
+          14
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "3-4",
+          13
+        ],
+        [
+          "6-7",
+          13
+        ],
+        [
+          "2-7",
+          12
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT2",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 2.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 10.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 10,
+      "hit_rate_pct": 2.793296089385475,
+      "stake_yen": 71600,
+      "payout_yen": 55320,
+      "profit_yen": -16280,
+      "roi_pct": 77.26256983240224,
+      "avg_synthetic_odds": 35.60576546300285,
+      "avg_coverage": 0.03240223456806772,
+      "avg_model_ev": 0.7710028921442981,
+      "avg_uplift": 1.035891807880024,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "2-6",
+          67
+        ],
+        [
+          "3-6",
+          66
+        ],
+        [
+          "1-6",
+          28
+        ],
+        [
+          "4-6",
+          20
+        ],
+        [
+          "2-4",
+          15
+        ],
+        [
+          "3-5",
+          14
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "3-4",
+          13
+        ],
+        [
+          "6-7",
+          13
+        ],
+        [
+          "2-7",
+          12
+        ]
+      ]
+    },
+    {
+      "rule": "UPLIFT",
+      "coverage_power": 0.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 10.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 10,
+      "hit_rate_pct": 2.793296089385475,
+      "stake_yen": 71600,
+      "payout_yen": 55320,
+      "profit_yen": -16280,
+      "roi_pct": 77.26256983240224,
+      "avg_synthetic_odds": 35.60576546300285,
+      "avg_coverage": 0.03240223456806772,
+      "avg_model_ev": 0.7710028921442981,
+      "avg_uplift": 1.035891807880024,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "2-6",
+          67
+        ],
+        [
+          "3-6",
+          66
+        ],
+        [
+          "1-6",
+          28
+        ],
+        [
+          "4-6",
+          20
+        ],
+        [
+          "2-4",
+          15
+        ],
+        [
+          "3-5",
+          14
+        ],
+        [
+          "5-6",
+          14
+        ],
+        [
+          "3-4",
+          13
+        ],
+        [
+          "6-7",
+          13
+        ],
+        [
+          "2-7",
+          12
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.5,
+      "synthetic_odds_min": 20.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 8,
+      "hit_rate_pct": 2.2346368715083798,
+      "stake_yen": 71600,
+      "payout_yen": 52640,
+      "profit_yen": -18960,
+      "roi_pct": 73.5195530726257,
+      "avg_synthetic_odds": 29.554192101811754,
+      "avg_coverage": 0.027389693234987106,
+      "avg_model_ev": 0.7325750243286054,
+      "avg_uplift": 0.9842343775657161,
+      "max_losing_streak_bet_races": 121,
+      "top_pair_cores": [
+        [
+          "1-4",
+          34
+        ],
+        [
+          "1-5",
+          31
+        ],
+        [
+          "1-7",
+          29
+        ],
+        [
+          "2-7",
+          27
+        ],
+        [
+          "4-7",
+          27
+        ],
+        [
+          "5-7",
+          23
+        ],
+        [
+          "1-2",
+          22
+        ],
+        [
+          "1-3",
+          21
+        ],
+        [
+          "2-3",
+          21
+        ],
+        [
+          "2-5",
+          19
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 20.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 8,
+      "hit_rate_pct": 2.2346368715083798,
+      "stake_yen": 71600,
+      "payout_yen": 52640,
+      "profit_yen": -18960,
+      "roi_pct": 73.5195530726257,
+      "avg_synthetic_odds": 29.58831428823828,
+      "avg_coverage": 0.02734917460333698,
+      "avg_model_ev": 0.7324575910933618,
+      "avg_uplift": 0.9840769097481121,
+      "max_losing_streak_bet_races": 121,
+      "top_pair_cores": [
+        [
+          "1-4",
+          35
+        ],
+        [
+          "1-5",
+          30
+        ],
+        [
+          "1-7",
+          29
+        ],
+        [
+          "2-7",
+          27
+        ],
+        [
+          "4-7",
+          27
+        ],
+        [
+          "5-7",
+          23
+        ],
+        [
+          "1-2",
+          22
+        ],
+        [
+          "1-3",
+          21
+        ],
+        [
+          "2-3",
+          21
+        ],
+        [
+          "3-5",
+          19
+        ]
+      ]
+    },
+    {
+      "rule": "COVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 1.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 137,
+      "hit_rate_pct": 38.26815642458101,
+      "stake_yen": 71600,
+      "payout_yen": 52190,
+      "profit_yen": -19410,
+      "roi_pct": 72.89106145251397,
+      "avg_synthetic_odds": 2.1322917343074534,
+      "avg_coverage": 0.3716991019378256,
+      "avg_model_ev": 0.7474378785047165,
+      "avg_uplift": 1.0042038773574693,
+      "max_losing_streak_bet_races": 11,
+      "top_pair_cores": [
+        [
+          "1-7",
+          47
+        ],
+        [
+          "1-5",
+          46
+        ],
+        [
+          "1-4",
+          37
+        ],
+        [
+          "3-7",
+          35
+        ],
+        [
+          "2-5",
+          34
+        ],
+        [
+          "3-5",
+          27
+        ],
+        [
+          "2-7",
+          25
+        ],
+        [
+          "2-4",
+          24
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          15
+        ]
+      ]
+    },
+    {
+      "rule": "COVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 2.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 120,
+      "hit_rate_pct": 33.5195530726257,
+      "stake_yen": 71600,
+      "payout_yen": 51040,
+      "profit_yen": -20560,
+      "roi_pct": 71.28491620111731,
+      "avg_synthetic_odds": 2.541991638194818,
+      "avg_coverage": 0.30978100072814396,
+      "avg_model_ev": 0.7467549770684931,
+      "avg_uplift": 1.003282895172945,
+      "max_losing_streak_bet_races": 13,
+      "top_pair_cores": [
+        [
+          "1-7",
+          45
+        ],
+        [
+          "1-5",
+          44
+        ],
+        [
+          "1-4",
+          37
+        ],
+        [
+          "3-7",
+          34
+        ],
+        [
+          "2-5",
+          32
+        ],
+        [
+          "3-5",
+          28
+        ],
+        [
+          "2-4",
+          25
+        ],
+        [
+          "2-7",
+          23
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          18
+        ]
+      ]
+    },
+    {
+      "rule": "COV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 2.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 96,
+      "hit_rate_pct": 26.81564245810056,
+      "stake_yen": 71600,
+      "payout_yen": 51030,
+      "profit_yen": -20570,
+      "roi_pct": 71.27094972067039,
+      "avg_synthetic_odds": 2.921046887175056,
+      "avg_coverage": 0.262867810852565,
+      "avg_model_ev": 0.7455662230196964,
+      "avg_uplift": 1.0016864278361575,
+      "max_losing_streak_bet_races": 19,
+      "top_pair_cores": [
+        [
+          "1-7",
+          45
+        ],
+        [
+          "1-4",
+          34
+        ],
+        [
+          "1-5",
+          34
+        ],
+        [
+          "3-5",
+          32
+        ],
+        [
+          "2-5",
+          29
+        ],
+        [
+          "2-7",
+          29
+        ],
+        [
+          "3-7",
+          25
+        ],
+        [
+          "3-4",
+          21
+        ],
+        [
+          "2-4",
+          20
+        ],
+        [
+          "4-7",
+          20
+        ]
+      ]
+    },
+    {
+      "rule": "COVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 7.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 31,
+      "hit_rate_pct": 8.659217877094973,
+      "stake_yen": 71600,
+      "payout_yen": 50940,
+      "profit_yen": -20660,
+      "roi_pct": 71.14525139664805,
+      "avg_synthetic_odds": 9.248197183246553,
+      "avg_coverage": 0.08272468153443775,
+      "avg_model_ev": 0.7381563145040082,
+      "avg_uplift": 0.9917312404737756,
+      "max_losing_streak_bet_races": 40,
+      "top_pair_cores": [
+        [
+          "1-7",
+          41
+        ],
+        [
+          "1-5",
+          38
+        ],
+        [
+          "3-7",
+          34
+        ],
+        [
+          "1-4",
+          33
+        ],
+        [
+          "3-5",
+          27
+        ],
+        [
+          "2-5",
+          26
+        ],
+        [
+          "2-4",
+          25
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "2-7",
+          20
+        ],
+        [
+          "3-4",
+          18
+        ]
+      ]
+    },
+    {
+      "rule": "EV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 15.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 7,
+      "hit_rate_pct": 1.9553072625698324,
+      "stake_yen": 71600,
+      "payout_yen": 50600,
+      "profit_yen": -21000,
+      "roi_pct": 70.67039106145252,
+      "avg_synthetic_odds": 42.3499164347004,
+      "avg_coverage": 0.02470283790946484,
+      "avg_model_ev": 0.7695598311973381,
+      "avg_uplift": 1.0339533875098228,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "3-6",
+          75
+        ],
+        [
+          "2-6",
+          70
+        ],
+        [
+          "1-6",
+          34
+        ],
+        [
+          "4-6",
+          21
+        ],
+        [
+          "5-6",
+          19
+        ],
+        [
+          "6-7",
+          15
+        ],
+        [
+          "2-5",
+          14
+        ],
+        [
+          "3-7",
+          14
+        ],
+        [
+          "2-4",
+          13
+        ],
+        [
+          "2-7",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.5,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 15.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 7,
+      "hit_rate_pct": 1.9553072625698324,
+      "stake_yen": 71600,
+      "payout_yen": 50600,
+      "profit_yen": -21000,
+      "roi_pct": 70.67039106145252,
+      "avg_synthetic_odds": 42.3499164347004,
+      "avg_coverage": 0.02470283790946484,
+      "avg_model_ev": 0.7695598311973381,
+      "avg_uplift": 1.0339533875098228,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "3-6",
+          75
+        ],
+        [
+          "2-6",
+          70
+        ],
+        [
+          "1-6",
+          34
+        ],
+        [
+          "4-6",
+          21
+        ],
+        [
+          "5-6",
+          19
+        ],
+        [
+          "6-7",
+          15
+        ],
+        [
+          "2-5",
+          14
+        ],
+        [
+          "3-7",
+          14
+        ],
+        [
+          "2-4",
+          13
+        ],
+        [
+          "2-7",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 15.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 7,
+      "hit_rate_pct": 1.9553072625698324,
+      "stake_yen": 71600,
+      "payout_yen": 50600,
+      "profit_yen": -21000,
+      "roi_pct": 70.67039106145252,
+      "avg_synthetic_odds": 42.3499164347004,
+      "avg_coverage": 0.02470283790946484,
+      "avg_model_ev": 0.7695598311973381,
+      "avg_uplift": 1.0339533875098228,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "3-6",
+          75
+        ],
+        [
+          "2-6",
+          70
+        ],
+        [
+          "1-6",
+          34
+        ],
+        [
+          "4-6",
+          21
+        ],
+        [
+          "5-6",
+          19
+        ],
+        [
+          "6-7",
+          15
+        ],
+        [
+          "2-5",
+          14
+        ],
+        [
+          "3-7",
+          14
+        ],
+        [
+          "2-4",
+          13
+        ],
+        [
+          "2-7",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "EVxUPLIFT2",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 2.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 15.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 7,
+      "hit_rate_pct": 1.9553072625698324,
+      "stake_yen": 71600,
+      "payout_yen": 50600,
+      "profit_yen": -21000,
+      "roi_pct": 70.67039106145252,
+      "avg_synthetic_odds": 42.3499164347004,
+      "avg_coverage": 0.02470283790946484,
+      "avg_model_ev": 0.7695598311973381,
+      "avg_uplift": 1.0339533875098228,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "3-6",
+          75
+        ],
+        [
+          "2-6",
+          70
+        ],
+        [
+          "1-6",
+          34
+        ],
+        [
+          "4-6",
+          21
+        ],
+        [
+          "5-6",
+          19
+        ],
+        [
+          "6-7",
+          15
+        ],
+        [
+          "2-5",
+          14
+        ],
+        [
+          "3-7",
+          14
+        ],
+        [
+          "2-4",
+          13
+        ],
+        [
+          "2-7",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "UPLIFT",
+      "coverage_power": 0.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 1.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 15.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 7,
+      "hit_rate_pct": 1.9553072625698324,
+      "stake_yen": 71600,
+      "payout_yen": 50600,
+      "profit_yen": -21000,
+      "roi_pct": 70.67039106145252,
+      "avg_synthetic_odds": 42.3499164347004,
+      "avg_coverage": 0.02470283790946484,
+      "avg_model_ev": 0.7695598311973381,
+      "avg_uplift": 1.0339533875098228,
+      "max_losing_streak_bet_races": 91,
+      "top_pair_cores": [
+        [
+          "3-6",
+          75
+        ],
+        [
+          "2-6",
+          70
+        ],
+        [
+          "1-6",
+          34
+        ],
+        [
+          "4-6",
+          21
+        ],
+        [
+          "5-6",
+          19
+        ],
+        [
+          "6-7",
+          15
+        ],
+        [
+          "2-5",
+          14
+        ],
+        [
+          "3-7",
+          14
+        ],
+        [
+          "2-4",
+          13
+        ],
+        [
+          "2-7",
+          13
+        ]
+      ]
+    },
+    {
+      "rule": "COVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 20.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 9,
+      "hit_rate_pct": 2.5139664804469275,
+      "stake_yen": 71600,
+      "payout_yen": 50150,
+      "profit_yen": -21450,
+      "roi_pct": 70.04189944134079,
+      "avg_synthetic_odds": 22.86020545862079,
+      "avg_coverage": 0.03247283896140498,
+      "avg_model_ev": 0.7327026674357119,
+      "avg_uplift": 0.9844036766970988,
+      "max_losing_streak_bet_races": 121,
+      "top_pair_cores": [
+        [
+          "1-4",
+          35
+        ],
+        [
+          "1-5",
+          34
+        ],
+        [
+          "1-7",
+          31
+        ],
+        [
+          "1-2",
+          27
+        ],
+        [
+          "5-7",
+          26
+        ],
+        [
+          "2-7",
+          23
+        ],
+        [
+          "3-7",
+          23
+        ],
+        [
+          "4-7",
+          23
+        ],
+        [
+          "1-3",
+          22
+        ],
+        [
+          "2-3",
+          19
+        ]
+      ]
+    },
+    {
+      "rule": "COV2xODDS",
+      "coverage_power": 2.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 2.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 94,
+      "hit_rate_pct": 26.256983240223462,
+      "stake_yen": 71600,
+      "payout_yen": 49780,
+      "profit_yen": -21820,
+      "roi_pct": 69.52513966480447,
+      "avg_synthetic_odds": 2.922572104265661,
+      "avg_coverage": 0.2628159507765133,
+      "avg_model_ev": 0.7458375845044829,
+      "avg_uplift": 1.002050954755653,
+      "max_losing_streak_bet_races": 19,
+      "top_pair_cores": [
+        [
+          "1-7",
+          47
+        ],
+        [
+          "1-4",
+          33
+        ],
+        [
+          "1-5",
+          33
+        ],
+        [
+          "3-5",
+          32
+        ],
+        [
+          "2-5",
+          29
+        ],
+        [
+          "2-7",
+          29
+        ],
+        [
+          "3-7",
+          25
+        ],
+        [
+          "3-4",
+          23
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "2-4",
+          19
+        ]
+      ]
+    },
+    {
+      "rule": "COVxSQRTODDS",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.5,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 2.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 94,
+      "hit_rate_pct": 26.256983240223462,
+      "stake_yen": 71600,
+      "payout_yen": 49780,
+      "profit_yen": -21820,
+      "roi_pct": 69.52513966480447,
+      "avg_synthetic_odds": 2.922572104265661,
+      "avg_coverage": 0.2628159507765133,
+      "avg_model_ev": 0.7458375845044829,
+      "avg_uplift": 1.002050954755653,
+      "max_losing_streak_bet_races": 19,
+      "top_pair_cores": [
+        [
+          "1-7",
+          47
+        ],
+        [
+          "1-4",
+          33
+        ],
+        [
+          "1-5",
+          33
+        ],
+        [
+          "3-5",
+          32
+        ],
+        [
+          "2-5",
+          29
+        ],
+        [
+          "2-7",
+          29
+        ],
+        [
+          "3-7",
+          25
+        ],
+        [
+          "3-4",
+          23
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "2-4",
+          19
+        ]
+      ]
+    },
+    {
+      "rule": "COV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 1.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 134,
+      "hit_rate_pct": 37.43016759776536,
+      "stake_yen": 71600,
+      "payout_yen": 49740,
+      "profit_yen": -21860,
+      "roi_pct": 69.46927374301676,
+      "avg_synthetic_odds": 2.1202518480157813,
+      "avg_coverage": 0.37242604966068726,
+      "avg_model_ev": 0.7473561276653405,
+      "avg_uplift": 1.0040943040614076,
+      "max_losing_streak_bet_races": 11,
+      "top_pair_cores": [
+        [
+          "1-7",
+          50
+        ],
+        [
+          "1-5",
+          46
+        ],
+        [
+          "3-7",
+          35
+        ],
+        [
+          "1-4",
+          34
+        ],
+        [
+          "2-5",
+          32
+        ],
+        [
+          "3-5",
+          26
+        ],
+        [
+          "2-4",
+          24
+        ],
+        [
+          "2-7",
+          24
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          15
+        ]
+      ]
+    },
+    {
+      "rule": "COV2xODDS",
+      "coverage_power": 2.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 1.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 134,
+      "hit_rate_pct": 37.43016759776536,
+      "stake_yen": 71600,
+      "payout_yen": 49740,
+      "profit_yen": -21860,
+      "roi_pct": 69.46927374301676,
+      "avg_synthetic_odds": 2.1204233807077157,
+      "avg_coverage": 0.3724174131164588,
+      "avg_model_ev": 0.7473835512036595,
+      "avg_uplift": 1.004131113214808,
+      "max_losing_streak_bet_races": 11,
+      "top_pair_cores": [
+        [
+          "1-7",
+          51
+        ],
+        [
+          "1-5",
+          47
+        ],
+        [
+          "3-7",
+          35
+        ],
+        [
+          "1-4",
+          33
+        ],
+        [
+          "2-5",
+          32
+        ],
+        [
+          "3-5",
+          26
+        ],
+        [
+          "2-4",
+          24
+        ],
+        [
+          "2-7",
+          24
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          15
+        ]
+      ]
+    },
+    {
+      "rule": "COVxSQRTODDS",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.5,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 1.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 134,
+      "hit_rate_pct": 37.43016759776536,
+      "stake_yen": 71600,
+      "payout_yen": 49740,
+      "profit_yen": -21860,
+      "roi_pct": 69.46927374301676,
+      "avg_synthetic_odds": 2.1204233807077157,
+      "avg_coverage": 0.3724174131164588,
+      "avg_model_ev": 0.7473835512036595,
+      "avg_uplift": 1.004131113214808,
+      "max_losing_streak_bet_races": 11,
+      "top_pair_cores": [
+        [
+          "1-7",
+          51
+        ],
+        [
+          "1-5",
+          47
+        ],
+        [
+          "3-7",
+          35
+        ],
+        [
+          "1-4",
+          33
+        ],
+        [
+          "2-5",
+          32
+        ],
+        [
+          "3-5",
+          26
+        ],
+        [
+          "2-4",
+          24
+        ],
+        [
+          "2-7",
+          24
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          15
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 2.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 95,
+      "hit_rate_pct": 26.536312849162012,
+      "stake_yen": 71600,
+      "payout_yen": 49490,
+      "profit_yen": -22110,
+      "roi_pct": 69.12011173184358,
+      "avg_synthetic_odds": 3.6933060061666203,
+      "avg_coverage": 0.2250188624028241,
+      "avg_model_ev": 0.7504196852745291,
+      "avg_uplift": 1.008203449392689,
+      "max_losing_streak_bet_races": 17,
+      "top_pair_cores": [
+        [
+          "1-7",
+          45
+        ],
+        [
+          "1-5",
+          44
+        ],
+        [
+          "1-4",
+          36
+        ],
+        [
+          "2-5",
+          36
+        ],
+        [
+          "3-7",
+          35
+        ],
+        [
+          "3-5",
+          29
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "2-4",
+          25
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          18
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.5,
+      "synthetic_odds_min": 2.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 94,
+      "hit_rate_pct": 26.256983240223462,
+      "stake_yen": 71600,
+      "payout_yen": 49110,
+      "profit_yen": -22490,
+      "roi_pct": 68.58938547486034,
+      "avg_synthetic_odds": 3.7187337929564173,
+      "avg_coverage": 0.2242795588640785,
+      "avg_model_ev": 0.7504840079892935,
+      "avg_uplift": 1.0082895695879437,
+      "max_losing_streak_bet_races": 17,
+      "top_pair_cores": [
+        [
+          "1-7",
+          45
+        ],
+        [
+          "1-5",
+          44
+        ],
+        [
+          "1-4",
+          36
+        ],
+        [
+          "2-5",
+          35
+        ],
+        [
+          "3-7",
+          34
+        ],
+        [
+          "3-5",
+          30
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "2-4",
+          25
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          19
+        ]
+      ]
+    },
+    {
+      "rule": "COV2xODDS",
+      "coverage_power": 2.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 7.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 34,
+      "hit_rate_pct": 9.497206703910615,
+      "stake_yen": 71600,
+      "payout_yen": 49020,
+      "profit_yen": -22580,
+      "roi_pct": 68.46368715083798,
+      "avg_synthetic_odds": 7.883685798336751,
+      "avg_coverage": 0.09507594631995936,
+      "avg_model_ev": 0.7457538055893256,
+      "avg_uplift": 1.0019418395786956,
+      "max_losing_streak_bet_races": 30,
+      "top_pair_cores": [
+        [
+          "2-4",
+          31
+        ],
+        [
+          "3-5",
+          31
+        ],
+        [
+          "1-4",
+          27
+        ],
+        [
+          "2-5",
+          27
+        ],
+        [
+          "1-2",
+          26
+        ],
+        [
+          "1-3",
+          23
+        ],
+        [
+          "1-5",
+          23
+        ],
+        [
+          "1-7",
+          22
+        ],
+        [
+          "2-7",
+          21
+        ],
+        [
+          "4-5",
+          20
+        ]
+      ]
+    },
+    {
+      "rule": "COVxSQRTODDS",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.5,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 7.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 34,
+      "hit_rate_pct": 9.497206703910615,
+      "stake_yen": 71600,
+      "payout_yen": 49020,
+      "profit_yen": -22580,
+      "roi_pct": 68.46368715083798,
+      "avg_synthetic_odds": 7.883685798336751,
+      "avg_coverage": 0.09507594631995936,
+      "avg_model_ev": 0.7457538055893256,
+      "avg_uplift": 1.0019418395786956,
+      "max_losing_streak_bet_races": 30,
+      "top_pair_cores": [
+        [
+          "2-4",
+          31
+        ],
+        [
+          "3-5",
+          31
+        ],
+        [
+          "1-4",
+          27
+        ],
+        [
+          "2-5",
+          27
+        ],
+        [
+          "1-2",
+          26
+        ],
+        [
+          "1-3",
+          23
+        ],
+        [
+          "1-5",
+          23
+        ],
+        [
+          "1-7",
+          22
+        ],
+        [
+          "2-7",
+          21
+        ],
+        [
+          "4-5",
+          20
+        ]
+      ]
+    },
+    {
+      "rule": "COV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 10.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 21,
+      "hit_rate_pct": 5.865921787709497,
+      "stake_yen": 71600,
+      "payout_yen": 48690,
+      "profit_yen": -22910,
+      "roi_pct": 68.00279329608938,
+      "avg_synthetic_odds": 10.449105219164903,
+      "avg_coverage": 0.07176818833542194,
+      "avg_model_ev": 0.7469096569460487,
+      "avg_uplift": 1.00350597171835,
+      "max_losing_streak_bet_races": 42,
+      "top_pair_cores": [
+        [
+          "1-5",
+          30
+        ],
+        [
+          "3-5",
+          28
+        ],
+        [
+          "3-4",
+          27
+        ],
+        [
+          "2-5",
+          26
+        ],
+        [
+          "1-4",
+          25
+        ],
+        [
+          "2-3",
+          25
+        ],
+        [
+          "1-3",
+          20
+        ],
+        [
+          "2-4",
+          19
+        ],
+        [
+          "3-7",
+          19
+        ],
+        [
+          "1-2",
+          18
+        ]
+      ]
+    },
+    {
+      "rule": "COV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 7.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 34,
+      "hit_rate_pct": 9.497206703910615,
+      "stake_yen": 71600,
+      "payout_yen": 48600,
+      "profit_yen": -23000,
+      "roi_pct": 67.87709497206704,
+      "avg_synthetic_odds": 7.866551490573892,
+      "avg_coverage": 0.0951416072283159,
+      "avg_model_ev": 0.7446387139347836,
+      "avg_uplift": 1.000444966777411,
+      "max_losing_streak_bet_races": 30,
+      "top_pair_cores": [
+        [
+          "1-2",
+          30
+        ],
+        [
+          "3-5",
+          30
+        ],
+        [
+          "2-4",
+          29
+        ],
+        [
+          "1-4",
+          28
+        ],
+        [
+          "5-7",
+          25
+        ],
+        [
+          "1-5",
+          22
+        ],
+        [
+          "1-7",
+          22
+        ],
+        [
+          "1-3",
+          21
+        ],
+        [
+          "2-5",
+          21
+        ],
+        [
+          "3-4",
+          21
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.5,
+      "synthetic_odds_min": 10.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 19,
+      "hit_rate_pct": 5.307262569832402,
+      "stake_yen": 71600,
+      "payout_yen": 48320,
+      "profit_yen": -23280,
+      "roi_pct": 67.48603351955308,
+      "avg_synthetic_odds": 16.390757787527882,
+      "avg_coverage": 0.05081420137611457,
+      "avg_model_ev": 0.7356256068766954,
+      "avg_uplift": 0.9883321878736941,
+      "max_losing_streak_bet_races": 54,
+      "top_pair_cores": [
+        [
+          "1-7",
+          35
+        ],
+        [
+          "3-7",
+          34
+        ],
+        [
+          "1-4",
+          33
+        ],
+        [
+          "1-5",
+          33
+        ],
+        [
+          "2-5",
+          32
+        ],
+        [
+          "2-7",
+          29
+        ],
+        [
+          "4-7",
+          26
+        ],
+        [
+          "2-4",
+          24
+        ],
+        [
+          "3-4",
+          21
+        ],
+        [
+          "3-5",
+          21
+        ]
+      ]
+    },
+    {
+      "rule": "COV2xODDS",
+      "coverage_power": 2.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 2.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 118,
+      "hit_rate_pct": 32.960893854748605,
+      "stake_yen": 71600,
+      "payout_yen": 48030,
+      "profit_yen": -23570,
+      "roi_pct": 67.08100558659218,
+      "avg_synthetic_odds": 2.49126594064504,
+      "avg_coverage": 0.313942378107969,
+      "avg_model_ev": 0.7468839029343692,
+      "avg_uplift": 1.0034585764431725,
+      "max_losing_streak_bet_races": 13,
+      "top_pair_cores": [
+        [
+          "1-7",
+          45
+        ],
+        [
+          "1-5",
+          41
+        ],
+        [
+          "3-7",
+          33
+        ],
+        [
+          "1-4",
+          30
+        ],
+        [
+          "2-5",
+          30
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "3-5",
+          27
+        ],
+        [
+          "2-4",
+          21
+        ],
+        [
+          "3-4",
+          18
+        ],
+        [
+          "1-3",
+          17
+        ]
+      ]
+    },
+    {
+      "rule": "COVxSQRTODDS",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.5,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 2.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 118,
+      "hit_rate_pct": 32.960893854748605,
+      "stake_yen": 71600,
+      "payout_yen": 48030,
+      "profit_yen": -23570,
+      "roi_pct": 67.08100558659218,
+      "avg_synthetic_odds": 2.49126594064504,
+      "avg_coverage": 0.313942378107969,
+      "avg_model_ev": 0.7468839029343692,
+      "avg_uplift": 1.0034585764431725,
+      "max_losing_streak_bet_races": 13,
+      "top_pair_cores": [
+        [
+          "1-7",
+          45
+        ],
+        [
+          "1-5",
+          41
+        ],
+        [
+          "3-7",
+          33
+        ],
+        [
+          "1-4",
+          30
+        ],
+        [
+          "2-5",
+          30
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "3-5",
+          27
+        ],
+        [
+          "2-4",
+          21
+        ],
+        [
+          "3-4",
+          18
+        ],
+        [
+          "1-3",
+          17
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.5,
+      "synthetic_odds_min": 15.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 12,
+      "hit_rate_pct": 3.35195530726257,
+      "stake_yen": 71600,
+      "payout_yen": 47990,
+      "profit_yen": -23610,
+      "roi_pct": 67.02513966480447,
+      "avg_synthetic_odds": 22.712894721307023,
+      "avg_coverage": 0.03560566263382533,
+      "avg_model_ev": 0.7337298660016983,
+      "avg_uplift": 0.9857852872623429,
+      "max_losing_streak_bet_races": 89,
+      "top_pair_cores": [
+        [
+          "1-4",
+          34
+        ],
+        [
+          "1-5",
+          31
+        ],
+        [
+          "1-7",
+          31
+        ],
+        [
+          "2-7",
+          29
+        ],
+        [
+          "4-7",
+          26
+        ],
+        [
+          "1-3",
+          25
+        ],
+        [
+          "2-5",
+          23
+        ],
+        [
+          "5-7",
+          22
+        ],
+        [
+          "1-2",
+          21
+        ],
+        [
+          "3-7",
+          19
+        ]
+      ]
+    },
+    {
+      "rule": "COV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 2.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 117,
+      "hit_rate_pct": 32.68156424581006,
+      "stake_yen": 71600,
+      "payout_yen": 47730,
+      "profit_yen": -23870,
+      "roi_pct": 66.66201117318435,
+      "avg_synthetic_odds": 2.491001041406216,
+      "avg_coverage": 0.3139549601204787,
+      "avg_model_ev": 0.7468379818083181,
+      "avg_uplift": 1.0033969080539609,
+      "max_losing_streak_bet_races": 13,
+      "top_pair_cores": [
+        [
+          "1-7",
+          43
+        ],
+        [
+          "1-5",
+          40
+        ],
+        [
+          "3-7",
+          33
+        ],
+        [
+          "1-4",
+          31
+        ],
+        [
+          "2-5",
+          30
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "3-5",
+          27
+        ],
+        [
+          "2-4",
+          22
+        ],
+        [
+          "1-3",
+          18
+        ],
+        [
+          "3-4",
+          17
+        ]
+      ]
+    },
+    {
+      "rule": "COVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 2.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 89,
+      "hit_rate_pct": 24.860335195530727,
+      "stake_yen": 71600,
+      "payout_yen": 47640,
+      "profit_yen": -23960,
+      "roi_pct": 66.53631284916202,
+      "avg_synthetic_odds": 3.030426564180224,
+      "avg_coverage": 0.25523371657159416,
+      "avg_model_ev": 0.745018945909799,
+      "avg_uplift": 1.0009466598473138,
+      "max_losing_streak_bet_races": 14,
+      "top_pair_cores": [
+        [
+          "1-7",
+          47
+        ],
+        [
+          "1-5",
+          44
+        ],
+        [
+          "1-4",
+          36
+        ],
+        [
+          "3-7",
+          34
+        ],
+        [
+          "3-5",
+          31
+        ],
+        [
+          "2-5",
+          30
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "2-4",
+          25
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          15
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 0.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 99,
+      "hit_rate_pct": 27.6536312849162,
+      "stake_yen": 71600,
+      "payout_yen": 46120,
+      "profit_yen": -25480,
+      "roi_pct": 64.41340782122904,
+      "avg_synthetic_odds": 3.357447547398662,
+      "avg_coverage": 0.253200727328607,
+      "avg_model_ev": 0.7513435479619124,
+      "avg_uplift": 1.009450044316691,
+      "max_losing_streak_bet_races": 18,
+      "top_pair_cores": [
+        [
+          "1-7",
+          45
+        ],
+        [
+          "1-5",
+          44
+        ],
+        [
+          "1-4",
+          36
+        ],
+        [
+          "2-5",
+          36
+        ],
+        [
+          "3-7",
+          35
+        ],
+        [
+          "3-5",
+          29
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "2-4",
+          25
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          18
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 10.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 18,
+      "hit_rate_pct": 5.027932960893855,
+      "stake_yen": 71600,
+      "payout_yen": 45910,
+      "profit_yen": -25690,
+      "roi_pct": 64.12011173184358,
+      "avg_synthetic_odds": 16.407644584757882,
+      "avg_coverage": 0.050771718191829594,
+      "avg_model_ev": 0.7355704719735664,
+      "avg_uplift": 0.9882582203760752,
+      "max_losing_streak_bet_races": 54,
+      "top_pair_cores": [
+        [
+          "1-7",
+          37
+        ],
+        [
+          "1-4",
+          33
+        ],
+        [
+          "1-5",
+          33
+        ],
+        [
+          "3-7",
+          33
+        ],
+        [
+          "2-5",
+          32
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "4-7",
+          26
+        ],
+        [
+          "2-4",
+          24
+        ],
+        [
+          "3-4",
+          21
+        ],
+        [
+          "3-5",
+          21
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.5,
+      "synthetic_odds_min": 0.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 98,
+      "hit_rate_pct": 27.374301675977655,
+      "stake_yen": 71600,
+      "payout_yen": 45740,
+      "profit_yen": -25860,
+      "roi_pct": 63.88268156424581,
+      "avg_synthetic_odds": 3.382875334188459,
+      "avg_coverage": 0.2524614237898614,
+      "avg_model_ev": 0.7514078706766769,
+      "avg_uplift": 1.0095361645119458,
+      "max_losing_streak_bet_races": 18,
+      "top_pair_cores": [
+        [
+          "1-7",
+          45
+        ],
+        [
+          "1-5",
+          44
+        ],
+        [
+          "1-4",
+          36
+        ],
+        [
+          "2-5",
+          35
+        ],
+        [
+          "3-7",
+          34
+        ],
+        [
+          "3-5",
+          30
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "2-4",
+          25
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          19
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 1.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 96,
+      "hit_rate_pct": 26.81564245810056,
+      "stake_yen": 71600,
+      "payout_yen": 45680,
+      "profit_yen": -25920,
+      "roi_pct": 63.798882681564244,
+      "avg_synthetic_odds": 3.410156398676262,
+      "avg_coverage": 0.2486052670960945,
+      "avg_model_ev": 0.751237567079923,
+      "avg_uplift": 1.0093069034654225,
+      "max_losing_streak_bet_races": 18,
+      "top_pair_cores": [
+        [
+          "1-7",
+          45
+        ],
+        [
+          "1-5",
+          44
+        ],
+        [
+          "1-4",
+          36
+        ],
+        [
+          "2-5",
+          36
+        ],
+        [
+          "3-7",
+          35
+        ],
+        [
+          "3-5",
+          29
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "2-4",
+          25
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          18
+        ]
+      ]
+    },
+    {
+      "rule": "COV2xODDS",
+      "coverage_power": 2.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 10.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 20,
+      "hit_rate_pct": 5.58659217877095,
+      "stake_yen": 71600,
+      "payout_yen": 45580,
+      "profit_yen": -26020,
+      "roi_pct": 63.659217877094974,
+      "avg_synthetic_odds": 10.478556073237515,
+      "avg_coverage": 0.07170812441766777,
+      "avg_model_ev": 0.7483134570890785,
+      "avg_uplift": 1.0053939449567386,
+      "max_losing_streak_bet_races": 52,
+      "top_pair_cores": [
+        [
+          "3-5",
+          32
+        ],
+        [
+          "3-4",
+          29
+        ],
+        [
+          "1-5",
+          28
+        ],
+        [
+          "1-4",
+          25
+        ],
+        [
+          "2-5",
+          24
+        ],
+        [
+          "1-3",
+          23
+        ],
+        [
+          "2-3",
+          22
+        ],
+        [
+          "3-7",
+          22
+        ],
+        [
+          "2-4",
+          20
+        ],
+        [
+          "1-2",
+          19
+        ]
+      ]
+    },
+    {
+      "rule": "COVxSQRTODDS",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.5,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 10.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 20,
+      "hit_rate_pct": 5.58659217877095,
+      "stake_yen": 71600,
+      "payout_yen": 45580,
+      "profit_yen": -26020,
+      "roi_pct": 63.659217877094974,
+      "avg_synthetic_odds": 10.478556073237515,
+      "avg_coverage": 0.07170812441766777,
+      "avg_model_ev": 0.7483134570890785,
+      "avg_uplift": 1.0053939449567386,
+      "max_losing_streak_bet_races": 52,
+      "top_pair_cores": [
+        [
+          "3-5",
+          32
+        ],
+        [
+          "3-4",
+          29
+        ],
+        [
+          "1-5",
+          28
+        ],
+        [
+          "1-4",
+          25
+        ],
+        [
+          "2-5",
+          24
+        ],
+        [
+          "1-3",
+          23
+        ],
+        [
+          "2-3",
+          22
+        ],
+        [
+          "3-7",
+          22
+        ],
+        [
+          "2-4",
+          20
+        ],
+        [
+          "1-2",
+          19
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 15.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 11,
+      "hit_rate_pct": 3.0726256983240225,
+      "stake_yen": 71600,
+      "payout_yen": 45580,
+      "profit_yen": -26020,
+      "roi_pct": 63.659217877094974,
+      "avg_synthetic_odds": 22.716751469002755,
+      "avg_coverage": 0.03560018961677164,
+      "avg_model_ev": 0.7336497329677999,
+      "avg_uplift": 0.9856777689124196,
+      "max_losing_streak_bet_races": 89,
+      "top_pair_cores": [
+        [
+          "1-4",
+          35
+        ],
+        [
+          "1-7",
+          32
+        ],
+        [
+          "1-5",
+          30
+        ],
+        [
+          "2-7",
+          29
+        ],
+        [
+          "4-7",
+          26
+        ],
+        [
+          "1-3",
+          25
+        ],
+        [
+          "2-5",
+          23
+        ],
+        [
+          "5-7",
+          22
+        ],
+        [
+          "1-2",
+          21
+        ],
+        [
+          "4-5",
+          19
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.5,
+      "synthetic_odds_min": 1.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 95,
+      "hit_rate_pct": 26.536312849162012,
+      "stake_yen": 71600,
+      "payout_yen": 45300,
+      "profit_yen": -26300,
+      "roi_pct": 63.26815642458101,
+      "avg_synthetic_odds": 3.4355841854660585,
+      "avg_coverage": 0.2478659635573489,
+      "avg_model_ev": 0.7513018897946874,
+      "avg_uplift": 1.0093930236606772,
+      "max_losing_streak_bet_races": 18,
+      "top_pair_cores": [
+        [
+          "1-7",
+          45
+        ],
+        [
+          "1-5",
+          44
+        ],
+        [
+          "1-4",
+          36
+        ],
+        [
+          "2-5",
+          35
+        ],
+        [
+          "3-7",
+          34
+        ],
+        [
+          "3-5",
+          30
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "2-4",
+          25
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          19
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 2.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 77,
+      "hit_rate_pct": 21.508379888268156,
+      "stake_yen": 71600,
+      "payout_yen": 45300,
+      "profit_yen": -26300,
+      "roi_pct": 63.26815642458101,
+      "avg_synthetic_odds": 4.009639863836339,
+      "avg_coverage": 0.20197106622739294,
+      "avg_model_ev": 0.7488463787156496,
+      "avg_uplift": 1.0060862425996586,
+      "max_losing_streak_bet_races": 14,
+      "top_pair_cores": [
+        [
+          "1-7",
+          45
+        ],
+        [
+          "1-5",
+          44
+        ],
+        [
+          "1-4",
+          36
+        ],
+        [
+          "2-5",
+          36
+        ],
+        [
+          "3-7",
+          35
+        ],
+        [
+          "3-5",
+          29
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "2-4",
+          25
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          18
+        ]
+      ]
+    },
+    {
+      "rule": "COV2xODDS",
+      "coverage_power": 2.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 4.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 62,
+      "hit_rate_pct": 17.318435754189945,
+      "stake_yen": 71600,
+      "payout_yen": 45020,
+      "profit_yen": -26580,
+      "roi_pct": 62.87709497206704,
+      "avg_synthetic_odds": 4.322579706516014,
+      "avg_coverage": 0.17419192172765813,
+      "avg_model_ev": 0.7454090980462132,
+      "avg_uplift": 1.0014761525394098,
+      "max_losing_streak_bet_races": 33,
+      "top_pair_cores": [
+        [
+          "1-5",
+          32
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "2-5",
+          27
+        ],
+        [
+          "1-7",
+          26
+        ],
+        [
+          "3-7",
+          26
+        ],
+        [
+          "1-3",
+          25
+        ],
+        [
+          "1-4",
+          24
+        ],
+        [
+          "2-4",
+          24
+        ],
+        [
+          "5-7",
+          24
+        ],
+        [
+          "1-2",
+          23
+        ]
+      ]
+    },
+    {
+      "rule": "COVxSQRTODDS",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.5,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 4.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 62,
+      "hit_rate_pct": 17.318435754189945,
+      "stake_yen": 71600,
+      "payout_yen": 45020,
+      "profit_yen": -26580,
+      "roi_pct": 62.87709497206704,
+      "avg_synthetic_odds": 4.322579706516014,
+      "avg_coverage": 0.17419192172765813,
+      "avg_model_ev": 0.7454090980462132,
+      "avg_uplift": 1.0014761525394098,
+      "max_losing_streak_bet_races": 33,
+      "top_pair_cores": [
+        [
+          "1-5",
+          32
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "2-5",
+          27
+        ],
+        [
+          "1-7",
+          26
+        ],
+        [
+          "3-7",
+          26
+        ],
+        [
+          "1-3",
+          25
+        ],
+        [
+          "1-4",
+          24
+        ],
+        [
+          "2-4",
+          24
+        ],
+        [
+          "5-7",
+          24
+        ],
+        [
+          "1-2",
+          23
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.5,
+      "synthetic_odds_min": 2.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 76,
+      "hit_rate_pct": 21.22905027932961,
+      "stake_yen": 71600,
+      "payout_yen": 44920,
+      "profit_yen": -26680,
+      "roi_pct": 62.737430167597765,
+      "avg_synthetic_odds": 4.035067650626136,
+      "avg_coverage": 0.20123176268864734,
+      "avg_model_ev": 0.748910701430414,
+      "avg_uplift": 1.0061723627949135,
+      "max_losing_streak_bet_races": 14,
+      "top_pair_cores": [
+        [
+          "1-7",
+          45
+        ],
+        [
+          "1-5",
+          44
+        ],
+        [
+          "1-4",
+          36
+        ],
+        [
+          "2-5",
+          35
+        ],
+        [
+          "3-7",
+          34
+        ],
+        [
+          "3-5",
+          30
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "2-4",
+          25
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          19
+        ]
+      ]
+    },
+    {
+      "rule": "COV2xODDS",
+      "coverage_power": 2.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 5.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 52,
+      "hit_rate_pct": 14.525139664804469,
+      "stake_yen": 71600,
+      "payout_yen": 44850,
+      "profit_yen": -26750,
+      "roi_pct": 62.63966480446928,
+      "avg_synthetic_odds": 5.2878910240331685,
+      "avg_coverage": 0.14152976272092307,
+      "avg_model_ev": 0.7448887580596221,
+      "avg_uplift": 1.00077701717586,
+      "max_losing_streak_bet_races": 25,
+      "top_pair_cores": [
+        [
+          "1-5",
+          33
+        ],
+        [
+          "3-5",
+          33
+        ],
+        [
+          "2-4",
+          31
+        ],
+        [
+          "1-4",
+          26
+        ],
+        [
+          "2-5",
+          26
+        ],
+        [
+          "4-7",
+          26
+        ],
+        [
+          "1-7",
+          25
+        ],
+        [
+          "2-7",
+          23
+        ],
+        [
+          "1-3",
+          22
+        ],
+        [
+          "3-7",
+          20
+        ]
+      ]
+    },
+    {
+      "rule": "COVxSQRTODDS",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.5,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 5.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 52,
+      "hit_rate_pct": 14.525139664804469,
+      "stake_yen": 71600,
+      "payout_yen": 44850,
+      "profit_yen": -26750,
+      "roi_pct": 62.63966480446928,
+      "avg_synthetic_odds": 5.2878910240331685,
+      "avg_coverage": 0.14152976272092307,
+      "avg_model_ev": 0.7448887580596221,
+      "avg_uplift": 1.00077701717586,
+      "max_losing_streak_bet_races": 25,
+      "top_pair_cores": [
+        [
+          "1-5",
+          33
+        ],
+        [
+          "3-5",
+          33
+        ],
+        [
+          "2-4",
+          31
+        ],
+        [
+          "1-4",
+          26
+        ],
+        [
+          "2-5",
+          26
+        ],
+        [
+          "4-7",
+          26
+        ],
+        [
+          "1-7",
+          25
+        ],
+        [
+          "2-7",
+          23
+        ],
+        [
+          "1-3",
+          22
+        ],
+        [
+          "3-7",
+          20
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 3.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 69,
+      "hit_rate_pct": 19.273743016759777,
+      "stake_yen": 71600,
+      "payout_yen": 43570,
+      "profit_yen": -28030,
+      "roi_pct": 60.85195530726257,
+      "avg_synthetic_odds": 4.321968457748285,
+      "avg_coverage": 0.18667342342956247,
+      "avg_model_ev": 0.7471960047679149,
+      "avg_uplift": 1.0038676851288737,
+      "max_losing_streak_bet_races": 16,
+      "top_pair_cores": [
+        [
+          "1-7",
+          45
+        ],
+        [
+          "1-5",
+          44
+        ],
+        [
+          "1-4",
+          36
+        ],
+        [
+          "2-5",
+          36
+        ],
+        [
+          "3-7",
+          35
+        ],
+        [
+          "3-5",
+          29
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "2-4",
+          25
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          18
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.5,
+      "synthetic_odds_min": 4.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 48,
+      "hit_rate_pct": 13.40782122905028,
+      "stake_yen": 71600,
+      "payout_yen": 43380,
+      "profit_yen": -28220,
+      "roi_pct": 60.58659217877095,
+      "avg_synthetic_odds": 6.224188124922775,
+      "avg_coverage": 0.1367344834002018,
+      "avg_model_ev": 0.742505470431365,
+      "avg_uplift": 0.9975665088297488,
+      "max_losing_streak_bet_races": 19,
+      "top_pair_cores": [
+        [
+          "1-7",
+          45
+        ],
+        [
+          "1-5",
+          44
+        ],
+        [
+          "1-4",
+          35
+        ],
+        [
+          "2-5",
+          35
+        ],
+        [
+          "3-7",
+          33
+        ],
+        [
+          "3-5",
+          31
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "2-4",
+          26
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          19
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 4.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 48,
+      "hit_rate_pct": 13.40782122905028,
+      "stake_yen": 71600,
+      "payout_yen": 43380,
+      "profit_yen": -28220,
+      "roi_pct": 60.58659217877095,
+      "avg_synthetic_odds": 6.239192136585329,
+      "avg_coverage": 0.13658774124950906,
+      "avg_model_ev": 0.7424360158706338,
+      "avg_uplift": 0.9974734740881996,
+      "max_losing_streak_bet_races": 19,
+      "top_pair_cores": [
+        [
+          "1-7",
+          45
+        ],
+        [
+          "1-5",
+          44
+        ],
+        [
+          "2-5",
+          36
+        ],
+        [
+          "1-4",
+          35
+        ],
+        [
+          "3-7",
+          34
+        ],
+        [
+          "3-5",
+          30
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "2-4",
+          26
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          19
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.5,
+      "synthetic_odds_min": 3.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 68,
+      "hit_rate_pct": 18.99441340782123,
+      "stake_yen": 71600,
+      "payout_yen": 43190,
+      "profit_yen": -28410,
+      "roi_pct": 60.32122905027933,
+      "avg_synthetic_odds": 4.347396244538081,
+      "avg_coverage": 0.18593411989081685,
+      "avg_model_ev": 0.7472603274826795,
+      "avg_uplift": 1.0039538053241286,
+      "max_losing_streak_bet_races": 16,
+      "top_pair_cores": [
+        [
+          "1-7",
+          45
+        ],
+        [
+          "1-5",
+          44
+        ],
+        [
+          "1-4",
+          36
+        ],
+        [
+          "2-5",
+          35
+        ],
+        [
+          "3-7",
+          34
+        ],
+        [
+          "3-5",
+          30
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "2-4",
+          25
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          19
+        ]
+      ]
+    },
+    {
+      "rule": "COV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 4.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 59,
+      "hit_rate_pct": 16.480446927374302,
+      "stake_yen": 71600,
+      "payout_yen": 43110,
+      "profit_yen": -28490,
+      "roi_pct": 60.20949720670391,
+      "avg_synthetic_odds": 4.316477750868644,
+      "avg_coverage": 0.17428786546864383,
+      "avg_model_ev": 0.7447248212695255,
+      "avg_uplift": 1.000558602810691,
+      "max_losing_streak_bet_races": 33,
+      "top_pair_cores": [
+        [
+          "1-5",
+          33
+        ],
+        [
+          "1-7",
+          28
+        ],
+        [
+          "2-5",
+          27
+        ],
+        [
+          "2-7",
+          27
+        ],
+        [
+          "3-7",
+          26
+        ],
+        [
+          "1-3",
+          25
+        ],
+        [
+          "5-7",
+          24
+        ],
+        [
+          "1-4",
+          23
+        ],
+        [
+          "4-5",
+          23
+        ],
+        [
+          "1-2",
+          22
+        ]
+      ]
+    },
+    {
+      "rule": "COVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 3.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 72,
+      "hit_rate_pct": 20.11173184357542,
+      "stake_yen": 71600,
+      "payout_yen": 43000,
+      "profit_yen": -28600,
+      "roi_pct": 60.055865921787706,
+      "avg_synthetic_odds": 3.4806329264399816,
+      "avg_coverage": 0.2192985447584999,
+      "avg_model_ev": 0.7445813737740153,
+      "avg_uplift": 1.000358587240761,
+      "max_losing_streak_bet_races": 18,
+      "top_pair_cores": [
+        [
+          "1-5",
+          47
+        ],
+        [
+          "1-7",
+          46
+        ],
+        [
+          "1-4",
+          36
+        ],
+        [
+          "3-7",
+          36
+        ],
+        [
+          "2-5",
+          32
+        ],
+        [
+          "3-5",
+          28
+        ],
+        [
+          "2-7",
+          26
+        ],
+        [
+          "2-4",
+          23
+        ],
+        [
+          "4-7",
+          20
+        ],
+        [
+          "5-7",
+          17
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.5,
+      "synthetic_odds_min": 5.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 33,
+      "hit_rate_pct": 9.217877094972067,
+      "stake_yen": 71600,
+      "payout_yen": 42270,
+      "profit_yen": -29330,
+      "roi_pct": 59.03631284916201,
+      "avg_synthetic_odds": 7.902812266539853,
+      "avg_coverage": 0.10692603002667479,
+      "avg_model_ev": 0.7397201611315565,
+      "avg_uplift": 0.9938288293441763,
+      "max_losing_streak_bet_races": 43,
+      "top_pair_cores": [
+        [
+          "1-7",
+          46
+        ],
+        [
+          "1-5",
+          44
+        ],
+        [
+          "1-4",
+          36
+        ],
+        [
+          "2-5",
+          36
+        ],
+        [
+          "3-7",
+          33
+        ],
+        [
+          "3-5",
+          31
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "2-4",
+          25
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          18
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 5.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 33,
+      "hit_rate_pct": 9.217877094972067,
+      "stake_yen": 71600,
+      "payout_yen": 42270,
+      "profit_yen": -29330,
+      "roi_pct": 59.03631284916201,
+      "avg_synthetic_odds": 7.95018861456685,
+      "avg_coverage": 0.10645616112284545,
+      "avg_model_ev": 0.7396131071554308,
+      "avg_uplift": 0.9936849851545122,
+      "max_losing_streak_bet_races": 43,
+      "top_pair_cores": [
+        [
+          "1-7",
+          45
+        ],
+        [
+          "1-5",
+          44
+        ],
+        [
+          "1-4",
+          36
+        ],
+        [
+          "2-5",
+          36
+        ],
+        [
+          "3-7",
+          34
+        ],
+        [
+          "3-5",
+          30
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "2-4",
+          25
+        ],
+        [
+          "4-7",
+          21
+        ],
+        [
+          "3-4",
+          18
+        ]
+      ]
+    },
+    {
+      "rule": "COVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 4.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 51,
+      "hit_rate_pct": 14.245810055865922,
+      "stake_yen": 71600,
+      "payout_yen": 42010,
+      "profit_yen": -29590,
+      "roi_pct": 58.6731843575419,
+      "avg_synthetic_odds": 4.764365621590144,
+      "avg_coverage": 0.1600731200375275,
+      "avg_model_ev": 0.7415802152857937,
+      "avg_uplift": 0.9963275746199226,
+      "max_losing_streak_bet_races": 24,
+      "top_pair_cores": [
+        [
+          "1-5",
+          44
+        ],
+        [
+          "1-7",
+          41
+        ],
+        [
+          "1-4",
+          36
+        ],
+        [
+          "2-5",
+          35
+        ],
+        [
+          "3-7",
+          33
+        ],
+        [
+          "2-7",
+          30
+        ],
+        [
+          "2-4",
+          27
+        ],
+        [
+          "3-5",
+          26
+        ],
+        [
+          "4-7",
+          22
+        ],
+        [
+          "3-4",
+          18
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR05",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.5,
+      "synthetic_odds_min": 7.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 23,
+      "hit_rate_pct": 6.424581005586592,
+      "stake_yen": 71600,
+      "payout_yen": 41790,
+      "profit_yen": -29810,
+      "roi_pct": 58.365921787709496,
+      "avg_synthetic_odds": 13.001089549867782,
+      "avg_coverage": 0.06535475972223638,
+      "avg_model_ev": 0.7367964080985646,
+      "avg_uplift": 0.9899034789242397,
+      "max_losing_streak_bet_races": 52,
+      "top_pair_cores": [
+        [
+          "1-7",
+          41
+        ],
+        [
+          "1-5",
+          39
+        ],
+        [
+          "3-7",
+          38
+        ],
+        [
+          "1-4",
+          36
+        ],
+        [
+          "2-5",
+          34
+        ],
+        [
+          "2-4",
+          27
+        ],
+        [
+          "2-7",
+          25
+        ],
+        [
+          "3-5",
+          25
+        ],
+        [
+          "4-7",
+          25
+        ],
+        [
+          "3-4",
+          17
+        ]
+      ]
+    },
+    {
+      "rule": "COV2xODDS",
+      "coverage_power": 2.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 3.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 73,
+      "hit_rate_pct": 20.391061452513966,
+      "stake_yen": 71600,
+      "payout_yen": 40190,
+      "profit_yen": -31410,
+      "roi_pct": 56.13128491620112,
+      "avg_synthetic_odds": 3.320672744503893,
+      "avg_coverage": 0.2281196440989067,
+      "avg_model_ev": 0.7454501426655766,
+      "avg_uplift": 1.0015296641126028,
+      "max_losing_streak_bet_races": 13,
+      "top_pair_cores": [
+        [
+          "1-5",
+          46
+        ],
+        [
+          "2-7",
+          34
+        ],
+        [
+          "3-5",
+          34
+        ],
+        [
+          "1-7",
+          33
+        ],
+        [
+          "1-4",
+          28
+        ],
+        [
+          "3-7",
+          26
+        ],
+        [
+          "1-2",
+          21
+        ],
+        [
+          "4-5",
+          19
+        ],
+        [
+          "2-4",
+          18
+        ],
+        [
+          "2-5",
+          18
+        ]
+      ]
+    },
+    {
+      "rule": "COVxSQRTODDS",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.5,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 3.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 73,
+      "hit_rate_pct": 20.391061452513966,
+      "stake_yen": 71600,
+      "payout_yen": 40190,
+      "profit_yen": -31410,
+      "roi_pct": 56.13128491620112,
+      "avg_synthetic_odds": 3.320672744503893,
+      "avg_coverage": 0.2281196440989067,
+      "avg_model_ev": 0.7454501426655766,
+      "avg_uplift": 1.0015296641126028,
+      "max_losing_streak_bet_races": 13,
+      "top_pair_cores": [
+        [
+          "1-5",
+          46
+        ],
+        [
+          "2-7",
+          34
+        ],
+        [
+          "3-5",
+          34
+        ],
+        [
+          "1-7",
+          33
+        ],
+        [
+          "1-4",
+          28
+        ],
+        [
+          "3-7",
+          26
+        ],
+        [
+          "1-2",
+          21
+        ],
+        [
+          "4-5",
+          19
+        ],
+        [
+          "2-4",
+          18
+        ],
+        [
+          "2-5",
+          18
+        ]
+      ]
+    },
+    {
+      "rule": "COV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 3.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 73,
+      "hit_rate_pct": 20.391061452513966,
+      "stake_yen": 71600,
+      "payout_yen": 40040,
+      "profit_yen": -31560,
+      "roi_pct": 55.92178770949721,
+      "avg_synthetic_odds": 3.3191741317869345,
+      "avg_coverage": 0.22815062047338536,
+      "avg_model_ev": 0.7452100062172732,
+      "avg_uplift": 1.0012075212678255,
+      "max_losing_streak_bet_races": 13,
+      "top_pair_cores": [
+        [
+          "1-5",
+          44
+        ],
+        [
+          "1-7",
+          34
+        ],
+        [
+          "2-7",
+          34
+        ],
+        [
+          "3-5",
+          34
+        ],
+        [
+          "1-4",
+          30
+        ],
+        [
+          "3-7",
+          25
+        ],
+        [
+          "1-2",
+          21
+        ],
+        [
+          "4-5",
+          19
+        ],
+        [
+          "2-4",
+          18
+        ],
+        [
+          "3-4",
+          18
+        ]
+      ]
+    },
+    {
+      "rule": "COV",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 5.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 49,
+      "hit_rate_pct": 13.687150837988828,
+      "stake_yen": 71600,
+      "payout_yen": 39970,
+      "profit_yen": -31630,
+      "roi_pct": 55.824022346368714,
+      "avg_synthetic_odds": 5.279853223902925,
+      "avg_coverage": 0.14160233547018888,
+      "avg_model_ev": 0.7441432825633629,
+      "avg_uplift": 0.9997762137971936,
+      "max_losing_streak_bet_races": 26,
+      "top_pair_cores": [
+        [
+          "1-5",
+          37
+        ],
+        [
+          "3-5",
+          32
+        ],
+        [
+          "2-4",
+          29
+        ],
+        [
+          "2-5",
+          27
+        ],
+        [
+          "1-4",
+          25
+        ],
+        [
+          "1-3",
+          23
+        ],
+        [
+          "1-7",
+          23
+        ],
+        [
+          "2-7",
+          23
+        ],
+        [
+          "4-7",
+          23
+        ],
+        [
+          "3-7",
+          22
+        ]
+      ]
+    },
+    {
+      "rule": "EVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 7.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 22,
+      "hit_rate_pct": 6.145251396648045,
+      "stake_yen": 71600,
+      "payout_yen": 39380,
+      "profit_yen": -32220,
+      "roi_pct": 55.0,
+      "avg_synthetic_odds": 13.029966628051799,
+      "avg_coverage": 0.06524435590371634,
+      "avg_model_ev": 0.7367084697209983,
+      "avg_uplift": 0.9897854770895178,
+      "max_losing_streak_bet_races": 52,
+      "top_pair_cores": [
+        [
+          "1-7",
+          43
+        ],
+        [
+          "1-5",
+          38
+        ],
+        [
+          "3-7",
+          37
+        ],
+        [
+          "1-4",
+          36
+        ],
+        [
+          "2-5",
+          34
+        ],
+        [
+          "2-4",
+          27
+        ],
+        [
+          "2-7",
+          25
+        ],
+        [
+          "3-5",
+          25
+        ],
+        [
+          "4-7",
+          25
+        ],
+        [
+          "3-4",
+          17
+        ]
+      ]
+    },
+    {
+      "rule": "COVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 5.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 37,
+      "hit_rate_pct": 10.335195530726256,
+      "stake_yen": 71600,
+      "payout_yen": 37670,
+      "profit_yen": -33930,
+      "roi_pct": 52.61173184357542,
+      "avg_synthetic_odds": 5.830965617663955,
+      "avg_coverage": 0.12922031013344637,
+      "avg_model_ev": 0.7393967926834858,
+      "avg_uplift": 0.993396874045699,
+      "max_losing_streak_bet_races": 30,
+      "top_pair_cores": [
+        [
+          "1-7",
+          44
+        ],
+        [
+          "1-5",
+          43
+        ],
+        [
+          "1-4",
+          36
+        ],
+        [
+          "2-7",
+          32
+        ],
+        [
+          "3-7",
+          32
+        ],
+        [
+          "2-5",
+          27
+        ],
+        [
+          "3-5",
+          25
+        ],
+        [
+          "2-4",
+          22
+        ],
+        [
+          "3-4",
+          20
+        ],
+        [
+          "4-7",
+          20
+        ]
+      ]
+    },
+    {
+      "rule": "COVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 15.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 10,
+      "hit_rate_pct": 2.793296089385475,
+      "stake_yen": 71600,
+      "payout_yen": 28700,
+      "profit_yen": -42900,
+      "roi_pct": 40.08379888268156,
+      "avg_synthetic_odds": 17.695986076829474,
+      "avg_coverage": 0.04233811905342034,
+      "avg_model_ev": 0.7344176988619214,
+      "avg_uplift": 0.9867090056162667,
+      "max_losing_streak_bet_races": 96,
+      "top_pair_cores": [
+        [
+          "1-7",
+          35
+        ],
+        [
+          "1-4",
+          34
+        ],
+        [
+          "1-5",
+          28
+        ],
+        [
+          "2-7",
+          28
+        ],
+        [
+          "1-3",
+          27
+        ],
+        [
+          "1-2",
+          25
+        ],
+        [
+          "2-5",
+          23
+        ],
+        [
+          "3-7",
+          21
+        ],
+        [
+          "2-4",
+          20
+        ],
+        [
+          "3-5",
+          19
+        ]
+      ]
+    },
+    {
+      "rule": "COVxPAIR1",
+      "coverage_power": 1.0,
+      "synthetic_odds_power": 0.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 1.0,
+      "synthetic_odds_min": 10.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 15,
+      "hit_rate_pct": 4.189944134078212,
+      "stake_yen": 71600,
+      "payout_yen": 26280,
+      "profit_yen": -45320,
+      "roi_pct": 36.70391061452514,
+      "avg_synthetic_odds": 12.212704492223203,
+      "avg_coverage": 0.06218128232314628,
+      "avg_model_ev": 0.736998244325601,
+      "avg_uplift": 0.9901753567888503,
+      "max_losing_streak_bet_races": 55,
+      "top_pair_cores": [
+        [
+          "1-5",
+          38
+        ],
+        [
+          "1-7",
+          36
+        ],
+        [
+          "3-7",
+          33
+        ],
+        [
+          "2-5",
+          32
+        ],
+        [
+          "1-4",
+          26
+        ],
+        [
+          "2-7",
+          26
+        ],
+        [
+          "4-7",
+          23
+        ],
+        [
+          "1-3",
+          20
+        ],
+        [
+          "2-4",
+          20
+        ],
+        [
+          "3-5",
+          19
+        ]
+      ]
+    },
+    {
+      "rule": "SQRTOFCOVxODDS",
+      "coverage_power": 0.5,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 0.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 0,
+      "hit_rate_pct": 0.0,
+      "stake_yen": 71600,
+      "payout_yen": 0,
+      "profit_yen": -71600,
+      "roi_pct": 0.0,
+      "avg_synthetic_odds": 185.86390368912697,
+      "avg_coverage": 0.004392754222070092,
+      "avg_model_ev": 0.739600553007525,
+      "avg_uplift": 0.9936877451039396,
+      "max_losing_streak_bet_races": 358,
+      "top_pair_cores": [
+        [
+          "6-7",
+          79
+        ],
+        [
+          "4-6",
+          68
+        ],
+        [
+          "5-6",
+          61
+        ],
+        [
+          "3-6",
+          38
+        ],
+        [
+          "1-6",
+          31
+        ],
+        [
+          "2-6",
+          25
+        ],
+        [
+          "4-5",
+          13
+        ],
+        [
+          "3-7",
+          6
+        ],
+        [
+          "5-7",
+          6
+        ],
+        [
+          "1-5",
+          5
+        ]
+      ]
+    },
+    {
+      "rule": "SQRTOFCOVxODDS",
+      "coverage_power": 0.5,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 1.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 0,
+      "hit_rate_pct": 0.0,
+      "stake_yen": 71600,
+      "payout_yen": 0,
+      "profit_yen": -71600,
+      "roi_pct": 0.0,
+      "avg_synthetic_odds": 185.86390368912697,
+      "avg_coverage": 0.004392754222070092,
+      "avg_model_ev": 0.739600553007525,
+      "avg_uplift": 0.9936877451039396,
+      "max_losing_streak_bet_races": 358,
+      "top_pair_cores": [
+        [
+          "6-7",
+          79
+        ],
+        [
+          "4-6",
+          68
+        ],
+        [
+          "5-6",
+          61
+        ],
+        [
+          "3-6",
+          38
+        ],
+        [
+          "1-6",
+          31
+        ],
+        [
+          "2-6",
+          25
+        ],
+        [
+          "4-5",
+          13
+        ],
+        [
+          "3-7",
+          6
+        ],
+        [
+          "5-7",
+          6
+        ],
+        [
+          "1-5",
+          5
+        ]
+      ]
+    },
+    {
+      "rule": "SQRTOFCOVxODDS",
+      "coverage_power": 0.5,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 2.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 0,
+      "hit_rate_pct": 0.0,
+      "stake_yen": 71600,
+      "payout_yen": 0,
+      "profit_yen": -71600,
+      "roi_pct": 0.0,
+      "avg_synthetic_odds": 185.86390368912697,
+      "avg_coverage": 0.004392754222070092,
+      "avg_model_ev": 0.739600553007525,
+      "avg_uplift": 0.9936877451039396,
+      "max_losing_streak_bet_races": 358,
+      "top_pair_cores": [
+        [
+          "6-7",
+          79
+        ],
+        [
+          "4-6",
+          68
+        ],
+        [
+          "5-6",
+          61
+        ],
+        [
+          "3-6",
+          38
+        ],
+        [
+          "1-6",
+          31
+        ],
+        [
+          "2-6",
+          25
+        ],
+        [
+          "4-5",
+          13
+        ],
+        [
+          "3-7",
+          6
+        ],
+        [
+          "5-7",
+          6
+        ],
+        [
+          "1-5",
+          5
+        ]
+      ]
+    },
+    {
+      "rule": "SQRTOFCOVxODDS",
+      "coverage_power": 0.5,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 2.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 0,
+      "hit_rate_pct": 0.0,
+      "stake_yen": 71600,
+      "payout_yen": 0,
+      "profit_yen": -71600,
+      "roi_pct": 0.0,
+      "avg_synthetic_odds": 185.86390368912697,
+      "avg_coverage": 0.004392754222070092,
+      "avg_model_ev": 0.739600553007525,
+      "avg_uplift": 0.9936877451039396,
+      "max_losing_streak_bet_races": 358,
+      "top_pair_cores": [
+        [
+          "6-7",
+          79
+        ],
+        [
+          "4-6",
+          68
+        ],
+        [
+          "5-6",
+          61
+        ],
+        [
+          "3-6",
+          38
+        ],
+        [
+          "1-6",
+          31
+        ],
+        [
+          "2-6",
+          25
+        ],
+        [
+          "4-5",
+          13
+        ],
+        [
+          "3-7",
+          6
+        ],
+        [
+          "5-7",
+          6
+        ],
+        [
+          "1-5",
+          5
+        ]
+      ]
+    },
+    {
+      "rule": "SQRTOFCOVxODDS",
+      "coverage_power": 0.5,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 3.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 0,
+      "hit_rate_pct": 0.0,
+      "stake_yen": 71600,
+      "payout_yen": 0,
+      "profit_yen": -71600,
+      "roi_pct": 0.0,
+      "avg_synthetic_odds": 185.86390368912697,
+      "avg_coverage": 0.004392754222070092,
+      "avg_model_ev": 0.739600553007525,
+      "avg_uplift": 0.9936877451039396,
+      "max_losing_streak_bet_races": 358,
+      "top_pair_cores": [
+        [
+          "6-7",
+          79
+        ],
+        [
+          "4-6",
+          68
+        ],
+        [
+          "5-6",
+          61
+        ],
+        [
+          "3-6",
+          38
+        ],
+        [
+          "1-6",
+          31
+        ],
+        [
+          "2-6",
+          25
+        ],
+        [
+          "4-5",
+          13
+        ],
+        [
+          "3-7",
+          6
+        ],
+        [
+          "5-7",
+          6
+        ],
+        [
+          "1-5",
+          5
+        ]
+      ]
+    },
+    {
+      "rule": "SQRTOFCOVxODDS",
+      "coverage_power": 0.5,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 4.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 0,
+      "hit_rate_pct": 0.0,
+      "stake_yen": 71600,
+      "payout_yen": 0,
+      "profit_yen": -71600,
+      "roi_pct": 0.0,
+      "avg_synthetic_odds": 185.86390368912697,
+      "avg_coverage": 0.004392754222070092,
+      "avg_model_ev": 0.739600553007525,
+      "avg_uplift": 0.9936877451039396,
+      "max_losing_streak_bet_races": 358,
+      "top_pair_cores": [
+        [
+          "6-7",
+          79
+        ],
+        [
+          "4-6",
+          68
+        ],
+        [
+          "5-6",
+          61
+        ],
+        [
+          "3-6",
+          38
+        ],
+        [
+          "1-6",
+          31
+        ],
+        [
+          "2-6",
+          25
+        ],
+        [
+          "4-5",
+          13
+        ],
+        [
+          "3-7",
+          6
+        ],
+        [
+          "5-7",
+          6
+        ],
+        [
+          "1-5",
+          5
+        ]
+      ]
+    },
+    {
+      "rule": "SQRTOFCOVxODDS",
+      "coverage_power": 0.5,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 5.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 0,
+      "hit_rate_pct": 0.0,
+      "stake_yen": 71600,
+      "payout_yen": 0,
+      "profit_yen": -71600,
+      "roi_pct": 0.0,
+      "avg_synthetic_odds": 185.86390368912697,
+      "avg_coverage": 0.004392754222070092,
+      "avg_model_ev": 0.739600553007525,
+      "avg_uplift": 0.9936877451039396,
+      "max_losing_streak_bet_races": 358,
+      "top_pair_cores": [
+        [
+          "6-7",
+          79
+        ],
+        [
+          "4-6",
+          68
+        ],
+        [
+          "5-6",
+          61
+        ],
+        [
+          "3-6",
+          38
+        ],
+        [
+          "1-6",
+          31
+        ],
+        [
+          "2-6",
+          25
+        ],
+        [
+          "4-5",
+          13
+        ],
+        [
+          "3-7",
+          6
+        ],
+        [
+          "5-7",
+          6
+        ],
+        [
+          "1-5",
+          5
+        ]
+      ]
+    },
+    {
+      "rule": "SQRTOFCOVxODDS",
+      "coverage_power": 0.5,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 7.5,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 0,
+      "hit_rate_pct": 0.0,
+      "stake_yen": 71600,
+      "payout_yen": 0,
+      "profit_yen": -71600,
+      "roi_pct": 0.0,
+      "avg_synthetic_odds": 185.86390368912697,
+      "avg_coverage": 0.004392754222070092,
+      "avg_model_ev": 0.739600553007525,
+      "avg_uplift": 0.9936877451039396,
+      "max_losing_streak_bet_races": 358,
+      "top_pair_cores": [
+        [
+          "6-7",
+          79
+        ],
+        [
+          "4-6",
+          68
+        ],
+        [
+          "5-6",
+          61
+        ],
+        [
+          "3-6",
+          38
+        ],
+        [
+          "1-6",
+          31
+        ],
+        [
+          "2-6",
+          25
+        ],
+        [
+          "4-5",
+          13
+        ],
+        [
+          "3-7",
+          6
+        ],
+        [
+          "5-7",
+          6
+        ],
+        [
+          "1-5",
+          5
+        ]
+      ]
+    },
+    {
+      "rule": "SQRTOFCOVxODDS",
+      "coverage_power": 0.5,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 10.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 0,
+      "hit_rate_pct": 0.0,
+      "stake_yen": 71600,
+      "payout_yen": 0,
+      "profit_yen": -71600,
+      "roi_pct": 0.0,
+      "avg_synthetic_odds": 185.86390368912697,
+      "avg_coverage": 0.004392754222070092,
+      "avg_model_ev": 0.739600553007525,
+      "avg_uplift": 0.9936877451039396,
+      "max_losing_streak_bet_races": 358,
+      "top_pair_cores": [
+        [
+          "6-7",
+          79
+        ],
+        [
+          "4-6",
+          68
+        ],
+        [
+          "5-6",
+          61
+        ],
+        [
+          "3-6",
+          38
+        ],
+        [
+          "1-6",
+          31
+        ],
+        [
+          "2-6",
+          25
+        ],
+        [
+          "4-5",
+          13
+        ],
+        [
+          "3-7",
+          6
+        ],
+        [
+          "5-7",
+          6
+        ],
+        [
+          "1-5",
+          5
+        ]
+      ]
+    },
+    {
+      "rule": "SQRTOFCOVxODDS",
+      "coverage_power": 0.5,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 15.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 0,
+      "hit_rate_pct": 0.0,
+      "stake_yen": 71600,
+      "payout_yen": 0,
+      "profit_yen": -71600,
+      "roi_pct": 0.0,
+      "avg_synthetic_odds": 185.86390368912697,
+      "avg_coverage": 0.004392754222070092,
+      "avg_model_ev": 0.739600553007525,
+      "avg_uplift": 0.9936877451039396,
+      "max_losing_streak_bet_races": 358,
+      "top_pair_cores": [
+        [
+          "6-7",
+          79
+        ],
+        [
+          "4-6",
+          68
+        ],
+        [
+          "5-6",
+          61
+        ],
+        [
+          "3-6",
+          38
+        ],
+        [
+          "1-6",
+          31
+        ],
+        [
+          "2-6",
+          25
+        ],
+        [
+          "4-5",
+          13
+        ],
+        [
+          "3-7",
+          6
+        ],
+        [
+          "5-7",
+          6
+        ],
+        [
+          "1-5",
+          5
+        ]
+      ]
+    },
+    {
+      "rule": "SQRTOFCOVxODDS",
+      "coverage_power": 0.5,
+      "synthetic_odds_power": 1.0,
+      "uplift_power": 0.0,
+      "pair_mass_power": 0.0,
+      "synthetic_odds_min": 20.0,
+      "must_enter_races": 358,
+      "bet_races": 358,
+      "purchase_rate_pct": 100.0,
+      "tickets": 716,
+      "hit_races": 0,
+      "hit_rate_pct": 0.0,
+      "stake_yen": 71600,
+      "payout_yen": 0,
+      "profit_yen": -71600,
+      "roi_pct": 0.0,
+      "avg_synthetic_odds": 185.86390368912697,
+      "avg_coverage": 0.004392754222070092,
+      "avg_model_ev": 0.739600553007525,
+      "avg_uplift": 0.9936877451039396,
+      "max_losing_streak_bet_races": 358,
+      "top_pair_cores": [
+        [
+          "6-7",
+          79
+        ],
+        [
+          "4-6",
+          68
+        ],
+        [
+          "5-6",
+          61
+        ],
+        [
+          "3-6",
+          38
+        ],
+        [
+          "1-6",
+          31
+        ],
+        [
+          "2-6",
+          25
+        ],
+        [
+          "4-5",
+          13
+        ],
+        [
+          "3-7",
+          6
+        ],
+        [
+          "5-7",
+          6
+        ],
+        [
+          "1-5",
+          5
+        ]
+      ]
+    }
+  ],
+  "warning": "The top row is selected on 2023 outcomes and is not evidence of edge. It must be frozen and forward-tested on untouched years before adoption."
+}
