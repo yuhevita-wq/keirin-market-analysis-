@@ -1,0 +1,965 @@
+{
+  "status": "RIDER_SUPPORT_RANK1_MISS_2023_FULL_POPULATION",
+  "year": 2023,
+  "years_read": [
+    2023
+  ],
+  "definition": "Individual rider support is marginal 3連複 market support: sum of normalized 1/odds probability mass over all trio combinations containing the rider. Rank1 miss means the highest-support rider finishes outside top3.",
+  "baseline": {
+    "analyzable_races": 1486,
+    "rank1_top3_races": 1197,
+    "rank1_miss_races": 289,
+    "rank1_miss_rate_pct": 19.448183041722746
+  },
+  "feature_comparison_top3_vs_miss": {
+    "rank1_share": {
+      "rank1_top3": {
+        "n": 1197,
+        "mean": 0.2635608881298809,
+        "median": 0.26576646935432996
+      },
+      "rank1_miss": {
+        "n": 289,
+        "mean": 0.2508854406248758,
+        "median": 0.2514545029694498
+      }
+    },
+    "support_gap_1_2": {
+      "rank1_top3": {
+        "n": 1197,
+        "mean": 0.0945840270160382,
+        "median": 0.0818781479954056
+      },
+      "rank1_miss": {
+        "n": 289,
+        "mean": 0.08787401886205799,
+        "median": 0.07304988362480314
+      }
+    },
+    "support_ratio_2_to_1": {
+      "rank1_top3": {
+        "n": 1197,
+        "mean": 0.8811255617962155,
+        "median": 0.8953288398083905
+      },
+      "rank1_miss": {
+        "n": 289,
+        "mean": 0.885366037255111,
+        "median": 0.9032682926783552
+      }
+    },
+    "top3_rider_support_sum": {
+      "rank1_top3": {
+        "n": 1197,
+        "mean": 2.0058912147868346,
+        "median": 2.0021749980063643
+      },
+      "rank1_miss": {
+        "n": 289,
+        "mean": 1.9362292532205192,
+        "median": 1.920282401844176
+      }
+    },
+    "trio_entropy": {
+      "rank1_top3": {
+        "n": 1197,
+        "mean": 0.7476432183658037,
+        "median": 0.7549051499003769
+      },
+      "rank1_miss": {
+        "n": 289,
+        "mean": 0.7784686709367216,
+        "median": 0.7870729345316799
+      }
+    },
+    "trio_top3_concentration": {
+      "rank1_top3": {
+        "n": 1197,
+        "mean": 0.5120022038499557,
+        "median": 0.5111893401946201
+      },
+      "rank1_miss": {
+        "n": 289,
+        "mean": 0.4644614964422752,
+        "median": 0.4533877726660656
+      }
+    }
+  },
+  "feature_quintiles": {
+    "rank1_share": [
+      {
+        "bin": 1,
+        "races": 297,
+        "min": 0.17404126975694745,
+        "max": 0.24052046746699127,
+        "miss_rate_pct": 34.343434343434346
+      },
+      {
+        "bin": 2,
+        "races": 297,
+        "min": 0.24054261443743438,
+        "max": 0.256590766256423,
+        "miss_rate_pct": 21.885521885521886
+      },
+      {
+        "bin": 3,
+        "races": 297,
+        "min": 0.2566194592351506,
+        "max": 0.26970389725618615,
+        "miss_rate_pct": 16.161616161616163
+      },
+      {
+        "bin": 4,
+        "races": 297,
+        "min": 0.26971727455002453,
+        "max": 0.2828172025660177,
+        "miss_rate_pct": 15.151515151515152
+      },
+      {
+        "bin": 5,
+        "races": 298,
+        "min": 0.28281768597616236,
+        "max": 0.3114305629004905,
+        "miss_rate_pct": 9.731543624161073
+      }
+    ],
+    "support_gap_1_2": [
+      {
+        "bin": 1,
+        "races": 297,
+        "min": 2.5473914081697302e-05,
+        "max": 0.03203389075447505,
+        "miss_rate_pct": 22.895622895622896
+      },
+      {
+        "bin": 2,
+        "races": 297,
+        "min": 0.03211243610830716,
+        "max": 0.06220540910196626,
+        "miss_rate_pct": 19.52861952861953
+      },
+      {
+        "bin": 3,
+        "races": 297,
+        "min": 0.06226646109966327,
+        "max": 0.09925691019837724,
+        "miss_rate_pct": 20.2020202020202
+      },
+      {
+        "bin": 4,
+        "races": 297,
+        "min": 0.09937960482521635,
+        "max": 0.1449552480278875,
+        "miss_rate_pct": 15.488215488215488
+      },
+      {
+        "bin": 5,
+        "races": 298,
+        "min": 0.14495672553755823,
+        "max": 0.3935590629560758,
+        "miss_rate_pct": 19.12751677852349
+      }
+    ],
+    "support_ratio_2_to_1": [
+      {
+        "bin": 1,
+        "races": 297,
+        "min": 0.5743507592160689,
+        "max": 0.8122087707657348,
+        "miss_rate_pct": 19.865319865319865
+      },
+      {
+        "bin": 2,
+        "races": 297,
+        "min": 0.8126660476511595,
+        "max": 0.8731181872951648,
+        "miss_rate_pct": 17.50841750841751
+      },
+      {
+        "bin": 3,
+        "races": 297,
+        "min": 0.8734419208349564,
+        "max": 0.9185908646421399,
+        "miss_rate_pct": 19.52861952861953
+      },
+      {
+        "bin": 4,
+        "races": 297,
+        "min": 0.918670679947605,
+        "max": 0.9583814819405557,
+        "miss_rate_pct": 18.855218855218855
+      },
+      {
+        "bin": 5,
+        "races": 298,
+        "min": 0.958397116013319,
+        "max": 0.9999559995018761,
+        "miss_rate_pct": 21.476510067114095
+      }
+    ],
+    "top3_rider_support_sum": [
+      {
+        "bin": 1,
+        "races": 297,
+        "min": 1.5267725834658847,
+        "max": 1.8711686293313425,
+        "miss_rate_pct": 32.65993265993266
+      },
+      {
+        "bin": 2,
+        "races": 297,
+        "min": 1.8711918514631298,
+        "max": 1.9505150523158485,
+        "miss_rate_pct": 25.252525252525253
+      },
+      {
+        "bin": 3,
+        "races": 297,
+        "min": 1.9506788070717778,
+        "max": 2.023321687081614,
+        "miss_rate_pct": 16.161616161616163
+      },
+      {
+        "bin": 4,
+        "races": 297,
+        "min": 2.0236270556051874,
+        "max": 2.111171110453471,
+        "miss_rate_pct": 11.11111111111111
+      },
+      {
+        "bin": 5,
+        "races": 298,
+        "min": 2.111252338855307,
+        "max": 2.50563404170138,
+        "miss_rate_pct": 12.080536912751677
+      }
+    ],
+    "trio_entropy": [
+      {
+        "bin": 1,
+        "races": 297,
+        "min": 0.485240275117814,
+        "max": 0.6968284516838025,
+        "miss_rate_pct": 12.121212121212121
+      },
+      {
+        "bin": 2,
+        "races": 297,
+        "min": 0.6970638263925326,
+        "max": 0.7418449937271779,
+        "miss_rate_pct": 11.447811447811448
+      },
+      {
+        "bin": 3,
+        "races": 297,
+        "min": 0.7419086751654144,
+        "max": 0.7777610093850676,
+        "miss_rate_pct": 17.50841750841751
+      },
+      {
+        "bin": 4,
+        "races": 297,
+        "min": 0.7778966383686344,
+        "max": 0.8115350737808602,
+        "miss_rate_pct": 22.55892255892256
+      },
+      {
+        "bin": 5,
+        "races": 298,
+        "min": 0.811538334365512,
+        "max": 0.9013581367529235,
+        "miss_rate_pct": 33.557046979865774
+      }
+    ],
+    "trio_top3_concentration": [
+      {
+        "bin": 1,
+        "races": 297,
+        "min": 0.26125268380035405,
+        "max": 0.415747563593886,
+        "miss_rate_pct": 32.996632996633
+      },
+      {
+        "bin": 2,
+        "races": 297,
+        "min": 0.4164328393202153,
+        "max": 0.47251070112702387,
+        "miss_rate_pct": 22.895622895622896
+      },
+      {
+        "bin": 3,
+        "races": 297,
+        "min": 0.47283427824871016,
+        "max": 0.5245124406171995,
+        "miss_rate_pct": 16.835016835016834
+      },
+      {
+        "bin": 4,
+        "races": 297,
+        "min": 0.5246425290616679,
+        "max": 0.5884213767058346,
+        "miss_rate_pct": 11.784511784511784
+      },
+      {
+        "bin": 5,
+        "races": 298,
+        "min": 0.5884296343573191,
+        "max": 0.7806657515201536,
+        "miss_rate_pct": 12.751677852348994
+      }
+    ]
+  },
+  "exploratory_single_feature_threshold_scans": {
+    "rank1_share": [
+      {
+        "expression": "rank1_share <= 0.24054261443743438",
+        "threshold": 0.24054261443743438,
+        "quantile": 0.2,
+        "races": 298,
+        "misses": 102,
+        "miss_rate_pct": 34.22818791946309,
+        "lift_vs_baseline": 1.75996841689696
+      },
+      {
+        "expression": "rank1_share <= 0.2490697922163908",
+        "threshold": 0.2490697922163908,
+        "quantile": 0.3,
+        "races": 446,
+        "misses": 136,
+        "miss_rate_pct": 30.493273542600896,
+        "lift_vs_baseline": 1.5679240305987865
+      },
+      {
+        "expression": "rank1_share <= 0.2566194592351506",
+        "threshold": 0.2566194592351506,
+        "quantile": 0.4,
+        "races": 595,
+        "misses": 167,
+        "miss_rate_pct": 28.067226890756302,
+        "lift_vs_baseline": 1.4431799017184728
+      },
+      {
+        "expression": "rank1_share <= 0.2632480358476118",
+        "threshold": 0.2632480358476118,
+        "quantile": 0.5,
+        "races": 743,
+        "misses": 188,
+        "miss_rate_pct": 25.3028263795424,
+        "lift_vs_baseline": 1.301038062283737
+      },
+      {
+        "expression": "rank1_share <= 0.26971727455002453",
+        "threshold": 0.26971727455002453,
+        "quantile": 0.6,
+        "races": 892,
+        "misses": 215,
+        "miss_rate_pct": 24.103139013452914,
+        "lift_vs_baseline": 1.2393517153630114
+      },
+      {
+        "expression": "rank1_share <= 0.27591614577936696",
+        "threshold": 0.27591614577936696,
+        "quantile": 0.7,
+        "races": 1040,
+        "misses": 240,
+        "miss_rate_pct": 23.076923076923077,
+        "lift_vs_baseline": 1.1865850412563215
+      },
+      {
+        "expression": "rank1_share <= 0.28281768597616236",
+        "threshold": 0.28281768597616236,
+        "quantile": 0.8,
+        "races": 1189,
+        "misses": 261,
+        "miss_rate_pct": 21.951219512195124,
+        "lift_vs_baseline": 1.1287028441218667
+      },
+      {
+        "expression": "rank1_share <= 0.2901553404274082",
+        "threshold": 0.2901553404274082,
+        "quantile": 0.9,
+        "races": 1337,
+        "misses": 280,
+        "miss_rate_pct": 20.94240837696335,
+        "lift_vs_baseline": 1.0768311020127175
+      }
+    ],
+    "support_gap_1_2": [
+      {
+        "expression": "support_gap_1_2 <= 0.03211243610830716",
+        "threshold": 0.03211243610830716,
+        "quantile": 0.2,
+        "races": 298,
+        "misses": 68,
+        "miss_rate_pct": 22.818791946308725,
+        "lift_vs_baseline": 1.1733122779313068
+      },
+      {
+        "expression": "support_gap_1_2 <= 0.06226646109966327",
+        "threshold": 0.06226646109966327,
+        "quantile": 0.4,
+        "races": 595,
+        "misses": 126,
+        "miss_rate_pct": 21.176470588235293,
+        "lift_vs_baseline": 1.0888662731528598
+      },
+      {
+        "expression": "support_gap_1_2 <= 0.0476866108143163",
+        "threshold": 0.0476866108143163,
+        "quantile": 0.3,
+        "races": 446,
+        "misses": 94,
+        "miss_rate_pct": 21.076233183856502,
+        "lift_vs_baseline": 1.0837121976197495
+      },
+      {
+        "expression": "support_gap_1_2 <= 0.08046634908287686",
+        "threshold": 0.08046634908287686,
+        "quantile": 0.5,
+        "races": 743,
+        "misses": 156,
+        "miss_rate_pct": 20.995962314939433,
+        "lift_vs_baseline": 1.079584775086505
+      },
+      {
+        "expression": "support_gap_1_2 <= 0.09937960482521635",
+        "threshold": 0.09937960482521635,
+        "quantile": 0.6,
+        "races": 892,
+        "misses": 186,
+        "miss_rate_pct": 20.85201793721973,
+        "lift_vs_baseline": 1.072183344453582
+      },
+      {
+        "expression": "support_gap_1_2 <= 0.12192859981590753",
+        "threshold": 0.12192859981590753,
+        "quantile": 0.7,
+        "races": 1040,
+        "misses": 209,
+        "miss_rate_pct": 20.096153846153847,
+        "lift_vs_baseline": 1.0333178067607134
+      },
+      {
+        "expression": "support_gap_1_2 <= 0.19197596042089532",
+        "threshold": 0.19197596042089532,
+        "quantile": 0.9,
+        "races": 1337,
+        "misses": 266,
+        "miss_rate_pct": 19.895287958115183,
+        "lift_vs_baseline": 1.0229895469120815
+      },
+      {
+        "expression": "support_gap_1_2 <= 0.14495672553755823",
+        "threshold": 0.14495672553755823,
+        "quantile": 0.8,
+        "races": 1189,
+        "misses": 233,
+        "miss_rate_pct": 19.596299411269975,
+        "lift_vs_baseline": 1.0076159489670304
+      }
+    ],
+    "support_ratio_2_to_1": [
+      {
+        "expression": "support_ratio_2_to_1 >= 0.958397116013319",
+        "threshold": 0.958397116013319,
+        "quantile": 0.8,
+        "races": 298,
+        "misses": 64,
+        "miss_rate_pct": 21.476510067114095,
+        "lift_vs_baseline": 1.1042939086412298
+      },
+      {
+        "expression": "support_ratio_2_to_1 >= 0.9387586557191276",
+        "threshold": 0.9387586557191276,
+        "quantile": 0.7,
+        "races": 446,
+        "misses": 91,
+        "miss_rate_pct": 20.40358744394619,
+        "lift_vs_baseline": 1.0491256381212468
+      },
+      {
+        "expression": "support_ratio_2_to_1 >= 0.8961167090186031",
+        "threshold": 0.8961167090186031,
+        "quantile": 0.5,
+        "races": 743,
+        "misses": 150,
+        "miss_rate_pct": 20.188425302826378,
+        "lift_vs_baseline": 1.0380622837370241
+      },
+      {
+        "expression": "support_ratio_2_to_1 >= 0.918670679947605",
+        "threshold": 0.918670679947605,
+        "quantile": 0.6,
+        "races": 595,
+        "misses": 120,
+        "miss_rate_pct": 20.168067226890756,
+        "lift_vs_baseline": 1.0370154982408188
+      },
+      {
+        "expression": "support_ratio_2_to_1 >= 0.8734419208349564",
+        "threshold": 0.8734419208349564,
+        "quantile": 0.4,
+        "races": 892,
+        "misses": 178,
+        "miss_rate_pct": 19.955156950672645,
+        "lift_vs_baseline": 1.0260679317889116
+      },
+      {
+        "expression": "support_ratio_2_to_1 >= 0.845950833249149",
+        "threshold": 0.845950833249149,
+        "quantile": 0.3,
+        "races": 1040,
+        "misses": 206,
+        "miss_rate_pct": 19.807692307692307,
+        "lift_vs_baseline": 1.0184854937450092
+      },
+      {
+        "expression": "support_ratio_2_to_1 >= 0.7612376482550065",
+        "threshold": 0.7612376482550065,
+        "quantile": 0.1,
+        "races": 1337,
+        "misses": 262,
+        "miss_rate_pct": 19.596110695587136,
+        "lift_vs_baseline": 1.0076062454547572
+      },
+      {
+        "expression": "support_ratio_2_to_1 >= 0.8126660476511595",
+        "threshold": 0.8126660476511595,
+        "quantile": 0.2,
+        "races": 1189,
+        "misses": 230,
+        "miss_rate_pct": 19.34398654331371,
+        "lift_vs_baseline": 0.9946423530575838
+      }
+    ],
+    "top3_rider_support_sum": [
+      {
+        "expression": "top3_rider_support_sum <= 1.8711918514631298",
+        "threshold": 1.8711918514631298,
+        "quantile": 0.2,
+        "races": 298,
+        "misses": 98,
+        "miss_rate_pct": 32.88590604026846,
+        "lift_vs_baseline": 1.6909500476068833
+      },
+      {
+        "expression": "top3_rider_support_sum <= 1.912722298983747",
+        "threshold": 1.912722298983747,
+        "quantile": 0.3,
+        "races": 446,
+        "misses": 135,
+        "miss_rate_pct": 30.269058295964125,
+        "lift_vs_baseline": 1.5563951774326188
+      },
+      {
+        "expression": "top3_rider_support_sum <= 1.9506788070717778",
+        "threshold": 1.9506788070717778,
+        "quantile": 0.4,
+        "races": 595,
+        "misses": 172,
+        "miss_rate_pct": 28.907563025210088,
+        "lift_vs_baseline": 1.4863888808118404
+      },
+      {
+        "expression": "top3_rider_support_sum <= 1.9861810144950092",
+        "threshold": 1.9861810144950092,
+        "quantile": 0.5,
+        "races": 743,
+        "misses": 197,
+        "miss_rate_pct": 26.51413189771198,
+        "lift_vs_baseline": 1.3633217993079585
+      },
+      {
+        "expression": "top3_rider_support_sum <= 2.0236270556051874",
+        "threshold": 2.0236270556051874,
+        "quantile": 0.6,
+        "races": 892,
+        "misses": 220,
+        "miss_rate_pct": 24.663677130044842,
+        "lift_vs_baseline": 1.2681738482784302
+      },
+      {
+        "expression": "top3_rider_support_sum <= 2.0647447108581938",
+        "threshold": 2.0647447108581938,
+        "quantile": 0.7,
+        "races": 1040,
+        "misses": 235,
+        "miss_rate_pct": 22.596153846153847,
+        "lift_vs_baseline": 1.1618645195634814
+      },
+      {
+        "expression": "top3_rider_support_sum <= 2.111252338855307",
+        "threshold": 2.111252338855307,
+        "quantile": 0.8,
+        "races": 1189,
+        "misses": 253,
+        "miss_rate_pct": 21.27838519764508,
+        "lift_vs_baseline": 1.094106588363342
+      },
+      {
+        "expression": "top3_rider_support_sum <= 2.1784636077195962",
+        "threshold": 2.1784636077195962,
+        "quantile": 0.9,
+        "races": 1337,
+        "misses": 273,
+        "miss_rate_pct": 20.418848167539267,
+        "lift_vs_baseline": 1.0499103244623995
+      }
+    ],
+    "trio_entropy": [
+      {
+        "expression": "trio_entropy >= 0.811538334365512",
+        "threshold": 0.811538334365512,
+        "quantile": 0.8,
+        "races": 298,
+        "misses": 100,
+        "miss_rate_pct": 33.557046979865774,
+        "lift_vs_baseline": 1.7254592322519215
+      },
+      {
+        "expression": "trio_entropy >= 0.7952876961770894",
+        "threshold": 0.7952876961770894,
+        "quantile": 0.7,
+        "races": 446,
+        "misses": 127,
+        "miss_rate_pct": 28.475336322869953,
+        "lift_vs_baseline": 1.4641643521032786
+      },
+      {
+        "expression": "trio_entropy >= 0.7778966383686344",
+        "threshold": 0.7778966383686344,
+        "quantile": 0.6,
+        "races": 595,
+        "misses": 167,
+        "miss_rate_pct": 28.067226890756302,
+        "lift_vs_baseline": 1.4431799017184728
+      },
+      {
+        "expression": "trio_entropy >= 0.7612560887198858",
+        "threshold": 0.7612560887198858,
+        "quantile": 0.5,
+        "races": 743,
+        "misses": 193,
+        "miss_rate_pct": 25.97577388963661,
+        "lift_vs_baseline": 1.3356401384083045
+      },
+      {
+        "expression": "trio_entropy >= 0.7419086751654144",
+        "threshold": 0.7419086751654144,
+        "quantile": 0.4,
+        "races": 892,
+        "misses": 219,
+        "miss_rate_pct": 24.551569506726455,
+        "lift_vs_baseline": 1.2624094216953463
+      },
+      {
+        "expression": "trio_entropy >= 0.7233625713123502",
+        "threshold": 0.7233625713123502,
+        "quantile": 0.3,
+        "races": 1040,
+        "misses": 232,
+        "miss_rate_pct": 22.30769230769231,
+        "lift_vs_baseline": 1.1470322065477774
+      },
+      {
+        "expression": "trio_entropy >= 0.6970638263925326",
+        "threshold": 0.6970638263925326,
+        "quantile": 0.2,
+        "races": 1189,
+        "misses": 253,
+        "miss_rate_pct": 21.27838519764508,
+        "lift_vs_baseline": 1.094106588363342
+      },
+      {
+        "expression": "trio_entropy >= 0.6638340131639964",
+        "threshold": 0.6638340131639964,
+        "quantile": 0.1,
+        "races": 1337,
+        "misses": 274,
+        "miss_rate_pct": 20.49364248317128,
+        "lift_vs_baseline": 1.0537561498267307
+      }
+    ],
+    "trio_top3_concentration": [
+      {
+        "expression": "trio_top3_concentration <= 0.4164328393202153",
+        "threshold": 0.4164328393202153,
+        "quantile": 0.2,
+        "races": 298,
+        "misses": 99,
+        "miss_rate_pct": 33.22147651006711,
+        "lift_vs_baseline": 1.7082046399294024
+      },
+      {
+        "expression": "trio_top3_concentration <= 0.4467049332866426",
+        "threshold": 0.4467049332866426,
+        "quantile": 0.3,
+        "races": 446,
+        "misses": 134,
+        "miss_rate_pct": 30.04484304932735,
+        "lift_vs_baseline": 1.5448663242664513
+      },
+      {
+        "expression": "trio_top3_concentration <= 0.47283427824871016",
+        "threshold": 0.47283427824871016,
+        "quantile": 0.4,
+        "races": 595,
+        "misses": 167,
+        "miss_rate_pct": 28.067226890756302,
+        "lift_vs_baseline": 1.4431799017184728
+      },
+      {
+        "expression": "trio_top3_concentration <= 0.5009041368232587",
+        "threshold": 0.5009041368232587,
+        "quantile": 0.5,
+        "races": 743,
+        "misses": 195,
+        "miss_rate_pct": 26.244952893674295,
+        "lift_vs_baseline": 1.3494809688581315
+      },
+      {
+        "expression": "trio_top3_concentration <= 0.5246425290616679",
+        "threshold": 0.5246425290616679,
+        "quantile": 0.6,
+        "races": 892,
+        "misses": 216,
+        "miss_rate_pct": 24.2152466367713,
+        "lift_vs_baseline": 1.2451161419460952
+      },
+      {
+        "expression": "trio_top3_concentration <= 0.5522949661806318",
+        "threshold": 0.5522949661806318,
+        "quantile": 0.7,
+        "races": 1040,
+        "misses": 231,
+        "miss_rate_pct": 22.21153846153846,
+        "lift_vs_baseline": 1.1420881022092093
+      },
+      {
+        "expression": "trio_top3_concentration <= 0.5884296343573191",
+        "threshold": 0.5884296343573191,
+        "quantile": 0.8,
+        "races": 1189,
+        "misses": 251,
+        "miss_rate_pct": 21.11017661900757,
+        "lift_vs_baseline": 1.085457524423711
+      },
+      {
+        "expression": "trio_top3_concentration <= 0.6331856818054642",
+        "threshold": 0.6331856818054642,
+        "quantile": 0.9,
+        "races": 1337,
+        "misses": 273,
+        "miss_rate_pct": 20.418848167539267,
+        "lift_vs_baseline": 1.0499103244623995
+      }
+    ]
+  },
+  "exploratory_top_pair_conditions": [
+    {
+      "features": [
+        "rank1_share",
+        "trio_entropy"
+      ],
+      "expressions": [
+        "rank1_share <= 0.24054261443743438",
+        "trio_entropy >= 0.811538334365512"
+      ],
+      "races": 185,
+      "misses": 67,
+      "miss_rate_pct": 36.21621621621622,
+      "lift_vs_baseline": 1.8621902178995604
+    },
+    {
+      "features": [
+        "rank1_share",
+        "top3_rider_support_sum"
+      ],
+      "expressions": [
+        "rank1_share <= 0.24054261443743438",
+        "top3_rider_support_sum <= 1.8711918514631298"
+      ],
+      "races": 180,
+      "misses": 65,
+      "miss_rate_pct": 36.11111111111111,
+      "lift_vs_baseline": 1.85678585159554
+    },
+    {
+      "features": [
+        "rank1_share",
+        "trio_top3_concentration"
+      ],
+      "expressions": [
+        "rank1_share <= 0.24054261443743438",
+        "trio_top3_concentration <= 0.4164328393202153"
+      ],
+      "races": 195,
+      "misses": 68,
+      "miss_rate_pct": 34.87179487179487,
+      "lift_vs_baseline": 1.7930618401206635
+    },
+    {
+      "features": [
+        "trio_entropy",
+        "trio_top3_concentration"
+      ],
+      "expressions": [
+        "trio_entropy >= 0.811538334365512",
+        "trio_top3_concentration <= 0.4164328393202153"
+      ],
+      "races": 248,
+      "misses": 86,
+      "miss_rate_pct": 34.67741935483871,
+      "lift_vs_baseline": 1.7830673066190423
+    },
+    {
+      "features": [
+        "top3_rider_support_sum",
+        "trio_entropy"
+      ],
+      "expressions": [
+        "top3_rider_support_sum <= 1.8711918514631298",
+        "trio_entropy >= 0.811538334365512"
+      ],
+      "races": 225,
+      "misses": 78,
+      "miss_rate_pct": 34.66666666666667,
+      "lift_vs_baseline": 1.7825144175317185
+    },
+    {
+      "features": [
+        "top3_rider_support_sum",
+        "trio_top3_concentration"
+      ],
+      "expressions": [
+        "top3_rider_support_sum <= 1.8711918514631298",
+        "trio_top3_concentration <= 0.4164328393202153"
+      ],
+      "races": 237,
+      "misses": 80,
+      "miss_rate_pct": 33.755274261603375,
+      "lift_vs_baseline": 1.7356518184340004
+    },
+    {
+      "features": [
+        "support_gap_1_2",
+        "support_ratio_2_to_1"
+      ],
+      "expressions": [
+        "support_gap_1_2 <= 0.03211243610830716",
+        "support_ratio_2_to_1 >= 0.958397116013319"
+      ],
+      "races": 284,
+      "misses": 63,
+      "miss_rate_pct": 22.183098591549296,
+      "lift_vs_baseline": 1.1406257614893514
+    }
+  ],
+  "miss_outcomes": {
+    "winning_rider_support_rank_patterns_top20": [
+      [
+        "2-3-4",
+        49
+      ],
+      [
+        "2-4-5",
+        34
+      ],
+      [
+        "2-3-5",
+        30
+      ],
+      [
+        "3-4-5",
+        24
+      ],
+      [
+        "2-3-6",
+        22
+      ],
+      [
+        "2-4-6",
+        21
+      ],
+      [
+        "3-4-6",
+        19
+      ],
+      [
+        "4-5-6",
+        11
+      ],
+      [
+        "2-5-6",
+        10
+      ],
+      [
+        "2-3-7",
+        10
+      ],
+      [
+        "3-4-7",
+        10
+      ],
+      [
+        "3-5-7",
+        8
+      ],
+      [
+        "3-5-6",
+        7
+      ],
+      [
+        "2-4-7",
+        7
+      ],
+      [
+        "2-5-7",
+        5
+      ],
+      [
+        "4-5-7",
+        5
+      ],
+      [
+        "2-6-7",
+        4
+      ],
+      [
+        "4-6-7",
+        4
+      ],
+      [
+        "5-6-7",
+        4
+      ],
+      [
+        "4-5-8",
+        3
+      ]
+    ],
+    "rider_support_rank_presence": {
+      "2": 192,
+      "3": 181,
+      "4": 187,
+      "5": 141,
+      "6": 104,
+      "7": 59,
+      "8": 3
+    },
+    "winning_trio_popularity_buckets": {
+      "4-5": 38,
+      "1-3": 11,
+      "16+": 90,
+      "6-10": 97,
+      "11-15": 53
+    },
+    "payout_yen": {
+      "mean": 5118.027681660899,
+      "median": 3060,
+      "min": 540,
+      "max": 59020
+    }
+  },
+  "warning": "2023 exploratory development only. Thresholds are in-sample and must not be called validated. 2024/2025/2026 not read."
+}
