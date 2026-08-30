@@ -1,0 +1,46 @@
+{
+  "status": "FROZEN_AXIS_DROP_RULE_V1",
+  "development_year": 2023,
+  "validation_year": 2024,
+  "years_used_to_select_rule": [2023],
+  "2024_seen_before_freeze": false,
+  "2025_used": false,
+  "2026_used": false,
+  "population": "Audited fake-favorite gate: F1 AND F2, exact trio-market favorite baseline.",
+  "rule": {
+    "name": "positive_count_then_sum",
+    "favorite": "Let exact 3連複 #1 favorite be A-B-C.",
+    "pair_candidates": "AB, AC, BC only.",
+    "pair_score": "For each favorite pair, inspect pair+X for every actual outsider X. Primary score = count(delta>0). First tie-break = sum of positive delta. Second tie-break = sum of all delta. Final deterministic tie-break = lower car-number tuple.",
+    "axis": "Choose the highest-scoring favorite pair as the 2-car axis.",
+    "drop": "Drop the one member of the original favorite not contained in the selected axis.",
+    "two_head_flow": "Buy axis + every actual outsider only. Never buy the dropped favorite member as third car, so the original #1 favorite ticket is never bought.",
+    "four_car_box": "Choose the two outsiders with the highest pair-specific delta for the selected axis. Form a 4-car BOX from selected axis + those two outsiders. The dropped favorite member is excluded, so the original #1 favorite ticket is never bought.",
+    "stake": "100 yen per unique trio ticket; no dutching."
+  },
+  "2023_development_result": {
+    "two_head_flow": {
+      "races": 208,
+      "tickets": 832,
+      "hit_races": 50,
+      "hit_rate_pct": 24.03846153846154,
+      "stake_yen": 83200,
+      "payout_yen": 60310,
+      "profit_yen": -22890,
+      "roi_pct": 72.48798076923077,
+      "axis_pair_survival_pct": 39.90384615384615
+    },
+    "four_car_box": {
+      "races": 208,
+      "tickets": 832,
+      "hit_races": 41,
+      "hit_rate_pct": 19.71153846153846,
+      "stake_yen": 83200,
+      "payout_yen": 76300,
+      "profit_yen": -6900,
+      "roi_pct": 91.70673076923077,
+      "axis_pair_survival_pct": 39.90384615384615
+    }
+  },
+  "discipline": "Apply this rule unchanged to 2024. Do not alter scoring order, tie-breaks, outsider selection, ticket structure, or staking after seeing 2024 results."
+}
