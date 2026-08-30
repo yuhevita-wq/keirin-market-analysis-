@@ -1,0 +1,293 @@
+{
+  "status": "MARKET_SUPPORT_1_3_4_VS_1_3_6_2023",
+  "year": 2023,
+  "years_read": [
+    2023
+  ],
+  "population": "Audited 208 fake-favorite races only.",
+  "market_support_definition": "For each rider, sum 1/trio_final_odds across every valid trio containing that rider; rank descending, lower car number only breaks exact ties.",
+  "strategies": {
+    "1-3-4": "rank1-rank3-rank4; exactly 1 trio ticket/race.",
+    "1-3-6": "rank1-rank3-rank6; exactly 1 trio ticket/race."
+  },
+  "payout_method": "100 yen times final trio odds for apples-to-apples comparison with prior development simulations; actual payout CSV not yet used.",
+  "results": {
+    "1-3-4": {
+      "name": "1-3-4",
+      "bet_races": 208,
+      "tickets": 208,
+      "avg_tickets_per_race": 1.0,
+      "hit_races": 23,
+      "race_hit_rate_pct": 11.057692307692308,
+      "stake_yen": 20800,
+      "payout_yen": 18810,
+      "profit_yen": -1990,
+      "roi_pct": 90.4326923076923,
+      "max_losing_streak": 23,
+      "mean_winning_odds": 8.178260869565218,
+      "median_winning_odds": 6.6,
+      "min_winning_odds": 4.5,
+      "max_winning_odds": 30.3
+    },
+    "1-3-6": {
+      "name": "1-3-6",
+      "bet_races": 208,
+      "tickets": 208,
+      "avg_tickets_per_race": 1.0,
+      "hit_races": 6,
+      "race_hit_rate_pct": 2.8846153846153846,
+      "stake_yen": 20800,
+      "payout_yen": 17320,
+      "profit_yen": -3480,
+      "roi_pct": 83.26923076923077,
+      "max_losing_streak": 86,
+      "mean_winning_odds": 28.866666666666664,
+      "median_winning_odds": 22.8,
+      "min_winning_odds": 5.0,
+      "max_winning_odds": 75.5
+    }
+  },
+  "examples_first_10": [
+    {
+      "race_id": "1120230427010006",
+      "market_rank_1": 7,
+      "market_rank_3": 1,
+      "market_rank_4": 3,
+      "market_rank_6": 4,
+      "result": [
+        1,
+        5,
+        7
+      ],
+      "ticket_1-3-4": [
+        1,
+        3,
+        7
+      ],
+      "hit_1-3-4": false,
+      "ticket_1-3-6": [
+        1,
+        4,
+        7
+      ],
+      "hit_1-3-6": false
+    },
+    {
+      "race_id": "1120230622010007",
+      "market_rank_1": 5,
+      "market_rank_3": 2,
+      "market_rank_4": 3,
+      "market_rank_6": 4,
+      "result": [
+        2,
+        3,
+        5
+      ],
+      "ticket_1-3-4": [
+        2,
+        3,
+        5
+      ],
+      "hit_1-3-4": true,
+      "ticket_1-3-6": [
+        2,
+        4,
+        5
+      ],
+      "hit_1-3-6": false
+    },
+    {
+      "race_id": "1120230622010009",
+      "market_rank_1": 1,
+      "market_rank_3": 7,
+      "market_rank_4": 3,
+      "market_rank_6": 5,
+      "result": [
+        1,
+        3,
+        4
+      ],
+      "ticket_1-3-4": [
+        1,
+        3,
+        7
+      ],
+      "hit_1-3-4": false,
+      "ticket_1-3-6": [
+        1,
+        5,
+        7
+      ],
+      "hit_1-3-6": false
+    },
+    {
+      "race_id": "1120230823010010",
+      "market_rank_1": 3,
+      "market_rank_3": 7,
+      "market_rank_4": 5,
+      "market_rank_6": 1,
+      "result": [
+        2,
+        3,
+        4
+      ],
+      "ticket_1-3-4": [
+        3,
+        5,
+        7
+      ],
+      "hit_1-3-4": false,
+      "ticket_1-3-6": [
+        1,
+        3,
+        7
+      ],
+      "hit_1-3-6": false
+    },
+    {
+      "race_id": "1120231023010006",
+      "market_rank_1": 7,
+      "market_rank_3": 5,
+      "market_rank_4": 2,
+      "market_rank_6": 1,
+      "result": [
+        1,
+        2,
+        5
+      ],
+      "ticket_1-3-4": [
+        2,
+        5,
+        7
+      ],
+      "hit_1-3-4": false,
+      "ticket_1-3-6": [
+        1,
+        5,
+        7
+      ],
+      "hit_1-3-6": false
+    },
+    {
+      "race_id": "1120231023010007",
+      "market_rank_1": 1,
+      "market_rank_3": 7,
+      "market_rank_4": 3,
+      "market_rank_6": 5,
+      "result": [
+        2,
+        3,
+        5
+      ],
+      "ticket_1-3-4": [
+        1,
+        3,
+        7
+      ],
+      "hit_1-3-4": false,
+      "ticket_1-3-6": [
+        1,
+        5,
+        7
+      ],
+      "hit_1-3-6": false
+    },
+    {
+      "race_id": "1120231023010008",
+      "market_rank_1": 4,
+      "market_rank_3": 1,
+      "market_rank_4": 7,
+      "market_rank_6": 5,
+      "result": [
+        1,
+        5,
+        7
+      ],
+      "ticket_1-3-4": [
+        1,
+        4,
+        7
+      ],
+      "hit_1-3-4": false,
+      "ticket_1-3-6": [
+        1,
+        4,
+        5
+      ],
+      "hit_1-3-6": false
+    },
+    {
+      "race_id": "1120231023010009",
+      "market_rank_1": 1,
+      "market_rank_3": 3,
+      "market_rank_4": 4,
+      "market_rank_6": 6,
+      "result": [
+        1,
+        3,
+        5
+      ],
+      "ticket_1-3-4": [
+        1,
+        3,
+        4
+      ],
+      "hit_1-3-4": false,
+      "ticket_1-3-6": [
+        1,
+        3,
+        6
+      ],
+      "hit_1-3-6": false
+    },
+    {
+      "race_id": "1120231023010010",
+      "market_rank_1": 1,
+      "market_rank_3": 3,
+      "market_rank_4": 2,
+      "market_rank_6": 5,
+      "result": [
+        1,
+        4,
+        6
+      ],
+      "ticket_1-3-4": [
+        1,
+        2,
+        3
+      ],
+      "hit_1-3-4": false,
+      "ticket_1-3-6": [
+        1,
+        3,
+        5
+      ],
+      "hit_1-3-6": false
+    },
+    {
+      "race_id": "1220230724010009",
+      "market_rank_1": 7,
+      "market_rank_3": 2,
+      "market_rank_4": 5,
+      "market_rank_6": 3,
+      "result": [
+        2,
+        3,
+        7
+      ],
+      "ticket_1-3-4": [
+        2,
+        5,
+        7
+      ],
+      "hit_1-3-4": false,
+      "ticket_1-3-6": [
+        2,
+        3,
+        7
+      ],
+      "hit_1-3-6": true
+    }
+  ],
+  "note": "2023 development simulation only. No 2024/2025/2026 data read."
+}
