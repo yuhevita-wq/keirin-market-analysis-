@@ -1,0 +1,45 @@
+name: Diagnose support value thresholds
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/keirin_market_analysis/diagnose_support_value_thresholds.py'
+      - '.github/workflows/diagnose-support-value-thresholds.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run diagnostic
+        run: python src/keirin_market_analysis/diagnose_support_value_thresholds.py
+      - name: Validate
+        run: |
+          python - <<'PY'
+          import json
+          p='data/audits/support_value_threshold_diagnostic.json'
+          x=json.load(open(p,encoding='utf-8'))
+          assert x['status']=='SUPPORT_VALUE_THRESHOLD_DIAGNOSTIC'
+          assert x['years']['2023']['must_enter_races']>100
+          assert x['critical_limit'].startswith('All archived trio odds are KDreams FINAL odds')
+          print('PASS')
+          PY
+      - name: Commit result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/support_value_threshold_diagnostic.json
+          git commit -m 'analysis: save support value threshold diagnostic' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
