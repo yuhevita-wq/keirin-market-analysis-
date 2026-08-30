@@ -1,0 +1,28 @@
+name: Compact trio popularity takeout summary
+
+on:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/compact_trio_popularity_takeout_2023_2024.py'
+      - '.github/workflows/compact-trio-popularity-takeout-2023-2024.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  compact:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m src.keirin_market_analysis.compact_trio_popularity_takeout_2023_2024
+      - name: Commit compact result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/trio_popularity_takeout_2023_2024_compact.json
+          git commit -m 'Save compact trio popularity takeout summary' || exit 0
+          git push
