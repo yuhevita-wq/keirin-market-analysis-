@@ -1,0 +1,313 @@
+{
+  "status": "RIDER_SUPPORT_CONSTRUCTION_AUDIT",
+  "definition": {
+    "trio_weight": "w(combo) = 1 / trio_odds(combo)",
+    "normalized_trio_mass": "p(combo) = w(combo) / sum_all_valid_combos w",
+    "rider_support": "S(rider) = sum p(combo) for every trio containing rider",
+    "rider_share": "share(rider) = S(rider) / 3; shares sum to 1 because each trio contains exactly 3 riders",
+    "ranking_equivalence": "Ranking by S(rider), share(rider), or raw sum 1/odds over containing trios is exactly equivalent because all transformations use positive race-level constants."
+  },
+  "important_semantics": "This is a derived market-support share from 3連複 odds, not a literal probability that the rider finishes top-3 and not a published market field.",
+  "datasets": {
+    "2023": {
+      "dataset": "2023",
+      "source_file": "data/2023/s_class_yosen/trio_final_odds.csv",
+      "race_count_with_any_available_trio_odds": 1486,
+      "fully_verified_races": 1486,
+      "complete_market_counts_by_observed_riders": {
+        "5_rider_complete_markets": 5,
+        "6_rider_complete_markets": 28,
+        "7_rider_complete_markets": 1436,
+        "9_rider_complete_markets": 17
+      },
+      "incomplete_market_count": 0,
+      "duplicate_combo_race_count": 0,
+      "invariant_failure_count": 0,
+      "rank_mismatch_count": 0,
+      "incomplete_market_examples": [],
+      "duplicate_combo_examples": [],
+      "invariant_failure_examples": [],
+      "rank_mismatch_examples": [],
+      "sample_verified_race": {
+        "race_id": "1120230427010006",
+        "riders": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "available_combo_count": 35,
+        "normalization_z_sum_inverse_odds": 1.3379336563496294,
+        "sum_trio_prob": 1.0,
+        "sum_rider_support": 3.0,
+        "sum_rider_share": 1.0,
+        "support_rank": [
+          7,
+          5,
+          1,
+          3,
+          2,
+          4,
+          6
+        ],
+        "rider_support": {
+          "7": 0.6556437755952933,
+          "5": 0.6167743506142226,
+          "1": 0.5684161244643273,
+          "3": 0.38671410459545635,
+          "2": 0.3574649789282136,
+          "4": 0.22766402501295047,
+          "6": 0.1873226407895363
+        },
+        "rider_share_pct": {
+          "7": 21.854792519843112,
+          "5": 20.559145020474087,
+          "1": 18.94720414881091,
+          "3": 12.89047015318188,
+          "2": 11.91549929760712,
+          "4": 7.588800833765015,
+          "6": 6.244088026317876
+        },
+        "raw_inverse_odds_support": {
+          "7": 0.8772078739450866,
+          "5": 0.8252031620599551,
+          "1": 0.7605030637326435,
+          "3": 0.5173978159233719,
+          "2": 0.47826442627436805,
+          "4": 0.3045993614048503,
+          "6": 0.25062526570861254
+        },
+        "note": "Ranking is mathematically identical whether using raw sum(1/odds), normalized trio probability mass, or rider share divided by 3."
+      }
+    },
+    "2024": {
+      "dataset": "2024",
+      "source_file": "data/2024/s_class_yosen/trio_final_odds.csv",
+      "race_count_with_any_available_trio_odds": 1430,
+      "fully_verified_races": 1430,
+      "complete_market_counts_by_observed_riders": {
+        "6_rider_complete_markets": 34,
+        "7_rider_complete_markets": 1379,
+        "9_rider_complete_markets": 17
+      },
+      "incomplete_market_count": 0,
+      "duplicate_combo_race_count": 0,
+      "invariant_failure_count": 0,
+      "rank_mismatch_count": 0,
+      "incomplete_market_examples": [],
+      "duplicate_combo_examples": [],
+      "invariant_failure_examples": [],
+      "rank_mismatch_examples": [],
+      "sample_verified_race": {
+        "race_id": "1120240418010006",
+        "riders": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "available_combo_count": 35,
+        "normalization_z_sum_inverse_odds": 1.3403559456088114,
+        "sum_trio_prob": 1.0,
+        "sum_rider_support": 3.0,
+        "sum_rider_share": 1.0,
+        "support_rank": [
+          2,
+          1,
+          3,
+          4,
+          7,
+          5,
+          6
+        ],
+        "rider_support": {
+          "2": 0.6620866285644813,
+          "1": 0.6337409282757053,
+          "3": 0.5145890168316856,
+          "4": 0.476585099308359,
+          "7": 0.3807032667724232,
+          "5": 0.19324689261819641,
+          "6": 0.13904816762914912
+        },
+        "rider_share_pct": {
+          "2": 22.06955428548271,
+          "1": 21.124697609190175,
+          "3": 17.15296722772285,
+          "4": 15.8861699769453,
+          "7": 12.690108892414106,
+          "5": 6.441563087273214,
+          "6": 4.634938920971638
+        },
+        "raw_inverse_odds_support": {
+          "2": 0.8874317491044953,
+          "1": 0.8494384211899888,
+          "3": 0.6897324482553425,
+          "4": 0.6387936714465249,
+          "7": 0.510277887131115,
+          "5": 0.25901962149122715,
+          "6": 0.1863740382077407
+        },
+        "note": "Ranking is mathematically identical whether using raw sum(1/odds), normalized trio probability mass, or rider share divided by 3."
+      }
+    },
+    "2025": {
+      "dataset": "2025",
+      "source_file": "data/2025/s_class_yosen/trio_final_odds.csv",
+      "race_count_with_any_available_trio_odds": 1456,
+      "fully_verified_races": 1456,
+      "complete_market_counts_by_observed_riders": {
+        "6_rider_complete_markets": 16,
+        "7_rider_complete_markets": 1431,
+        "9_rider_complete_markets": 9
+      },
+      "incomplete_market_count": 0,
+      "duplicate_combo_race_count": 0,
+      "invariant_failure_count": 0,
+      "rank_mismatch_count": 0,
+      "incomplete_market_examples": [],
+      "duplicate_combo_examples": [],
+      "invariant_failure_examples": [],
+      "rank_mismatch_examples": [],
+      "sample_verified_race": {
+        "race_id": "1120250416010006",
+        "riders": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "available_combo_count": 35,
+        "normalization_z_sum_inverse_odds": 1.3473425355479438,
+        "sum_trio_prob": 0.9999999999999999,
+        "sum_rider_support": 3.0,
+        "sum_rider_share": 0.9999999999999999,
+        "support_rank": [
+          2,
+          1,
+          7,
+          5,
+          4,
+          6,
+          3
+        ],
+        "rider_support": {
+          "2": 0.7493004733563948,
+          "1": 0.7369980406561822,
+          "7": 0.5834391801255899,
+          "5": 0.3657398238389245,
+          "4": 0.2866476135084904,
+          "6": 0.1460589959606748,
+          "3": 0.1318158725537431
+        },
+        "rider_share_pct": {
+          "2": 24.97668244521316,
+          "1": 24.566601355206075,
+          "7": 19.447972670852998,
+          "5": 12.191327461297483,
+          "4": 9.554920450283012,
+          "6": 4.868633198689159,
+          "3": 4.393862418458103
+        },
+        "raw_inverse_odds_support": {
+          "2": 1.0095643996592796,
+          "1": 0.9929888087915673,
+          "7": 0.7860924242884259,
+          "5": 0.4927768216019949,
+          "4": 0.3862125223932965,
+          "6": 0.19679149795724246,
+          "3": 0.17760113195202484
+        },
+        "note": "Ranking is mathematically identical whether using raw sum(1/odds), normalized trio probability mass, or rider share divided by 3."
+      }
+    },
+    "2026_h1": {
+      "dataset": "2026_h1",
+      "source_file": "data/2026_h1/s_class_yosen/trio_final_odds.csv",
+      "race_count_with_any_available_trio_odds": 731,
+      "fully_verified_races": 731,
+      "complete_market_counts_by_observed_riders": {
+        "5_rider_complete_markets": 10,
+        "6_rider_complete_markets": 14,
+        "7_rider_complete_markets": 707
+      },
+      "incomplete_market_count": 0,
+      "duplicate_combo_race_count": 0,
+      "invariant_failure_count": 0,
+      "rank_mismatch_count": 0,
+      "incomplete_market_examples": [],
+      "duplicate_combo_examples": [],
+      "invariant_failure_examples": [],
+      "rank_mismatch_examples": [],
+      "sample_verified_race": {
+        "race_id": "1120260415010006",
+        "riders": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "available_combo_count": 35,
+        "normalization_z_sum_inverse_odds": 1.3552698663092704,
+        "sum_trio_prob": 1.0,
+        "sum_rider_support": 3.0,
+        "sum_rider_share": 1.0,
+        "support_rank": [
+          2,
+          5,
+          4,
+          7,
+          3,
+          1,
+          6
+        ],
+        "rider_support": {
+          "2": 0.8207236537375588,
+          "5": 0.7585688541319062,
+          "4": 0.5217302517840696,
+          "7": 0.4047958431493981,
+          "3": 0.19811495333911028,
+          "1": 0.14836270021247858,
+          "6": 0.14770374364547836
+        },
+        "rider_share_pct": {
+          "2": 27.357455124585293,
+          "5": 25.285628471063543,
+          "4": 17.39100839280232,
+          "7": 13.493194771646602,
+          "3": 6.603831777970343,
+          "1": 4.945423340415952,
+          "6": 4.923458121515945
+        },
+        "raw_inverse_odds_support": {
+          "2": 1.1123020364777574,
+          "5": 1.028065509525725,
+          "4": 0.707085288584898,
+          "7": 0.5486076082276331,
+          "3": 0.26849922632576334,
+          "1": 0.20107149688224818,
+          "6": 0.20017843290378617
+        },
+        "note": "Ranking is mathematically identical whether using raw sum(1/odds), normalized trio probability mass, or rider share divided by 3."
+      }
+    }
+  },
+  "totals": {
+    "fully_verified_races": 5103,
+    "incomplete_market_races_excluded_from_invariant_check": 0,
+    "invariant_failures": 0,
+    "rank_mismatches": 0
+  },
+  "verdict": "PASS"
+}
