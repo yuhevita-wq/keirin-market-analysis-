@@ -1,0 +1,83 @@
+{
+  "status": "PAIR_FLOW_TWO_POINT_2023_DEVELOPMENT",
+  "scope": "2023 development; model-specific entry threshold defined from market structure only",
+  "law": {
+    "core": "pair with maximum pair residual delta = sum(M-Q) over its five trios",
+    "entry_metric": "top positive pair delta / sum of all positive pair deltas",
+    "entry_threshold_rule": "nearest-rank 75th percentile of 2023 complete-race market-only entry metric",
+    "entry_threshold": 0.3179241680895883,
+    "wings": "among five trios containing selected pair, choose two largest absolute trio residual |M-Q|",
+    "stake": "100 yen each, exactly two tickets",
+    "outcome_used_for_entry_or_ticket_selection": false
+  },
+  "accounting": {
+    "market_races": 1486,
+    "excluded_non7_or_incomplete": 50,
+    "no_unique_paid_trio": 5,
+    "solver_failures": 0,
+    "non_must_enter": 0,
+    "date_parse_failures": 0,
+    "must_enter_evaluated": 1431
+  },
+  "eligible_complete_races": 1431,
+  "must_enter_races": 358,
+  "must_enter_rate_pct": 25.01747030048917,
+  "full_year": {
+    "races": 358,
+    "tickets": 716,
+    "stake_yen": 71600,
+    "payout_yen": 59730,
+    "profit_yen": -11870,
+    "roi_pct": 83.42178770949721,
+    "hit_races": 114,
+    "hit_rate_pct": 31.843575418994412,
+    "max_losing_streak_races": 15
+  },
+  "quarters": {
+    "Q1": {
+      "races": 86,
+      "tickets": 172,
+      "stake_yen": 17200,
+      "payout_yen": 12300,
+      "profit_yen": -4900,
+      "roi_pct": 71.51162790697674,
+      "hit_races": 28,
+      "hit_rate_pct": 32.55813953488372,
+      "max_losing_streak_races": 10
+    },
+    "Q2": {
+      "races": 99,
+      "tickets": 198,
+      "stake_yen": 19800,
+      "payout_yen": 10130,
+      "profit_yen": -9670,
+      "roi_pct": 51.16161616161616,
+      "hit_races": 22,
+      "hit_rate_pct": 22.22222222222222,
+      "max_losing_streak_races": 20
+    },
+    "Q3": {
+      "races": 90,
+      "tickets": 180,
+      "stake_yen": 18000,
+      "payout_yen": 20260,
+      "profit_yen": 2260,
+      "roi_pct": 112.55555555555556,
+      "hit_races": 37,
+      "hit_rate_pct": 41.111111111111114,
+      "max_losing_streak_races": 7
+    },
+    "Q4": {
+      "races": 83,
+      "tickets": 166,
+      "stake_yen": 16600,
+      "payout_yen": 17040,
+      "profit_yen": 440,
+      "roi_pct": 102.65060240963855,
+      "hit_races": 27,
+      "hit_rate_pct": 32.53012048192771,
+      "max_losing_streak_races": 8
+    }
+  },
+  "warning": "2023 outcome is development scoring, not validation. Freeze threshold and law for 2024."
+}
