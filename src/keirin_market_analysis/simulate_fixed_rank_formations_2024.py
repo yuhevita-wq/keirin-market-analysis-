@@ -17,6 +17,7 @@ base.DATA = ROOT / 'data' / '2024' / 's_class_yosen'
 FORMATIONS = {
     '2023_champion_136_146': ((1, 3, 6), (1, 4, 6)),
     '2023_stable_123_136': ((1, 2, 3), (1, 3, 6)),
+    '2023_temporal_robust_136_156': ((1, 3, 6), (1, 5, 6)),
 }
 
 
