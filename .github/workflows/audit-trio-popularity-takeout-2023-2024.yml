@@ -1,0 +1,40 @@
+name: Audit trio popularity vs takeout 2023-2024
+
+on:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/audit_trio_popularity_takeout_2023_2024.py'
+      - '.github/workflows/audit-trio-popularity-takeout-2023-2024.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -e .
+      - run: python -m keirin_market_analysis.audit_trio_popularity_takeout_2023_2024
+      - name: Validate scope
+        run: |
+          python - <<'PY'
+          import json
+          p='data/audits/trio_popularity_takeout_2023_2024.json'
+          d=json.load(open(p,encoding='utf-8'))
+          assert d['years_read']==[2023,2024]
+          assert d['evaluation_year_2025_used'] is False
+          assert d['evaluation_year_2026_used'] is False
+          assert d['status']=='TRIO_POPULARITY_TAKEOUT_AUDIT_2023_2024'
+          PY
+      - name: Commit result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/trio_popularity_takeout_2023_2024.json
+          git commit -m 'Save trio popularity vs takeout audit result' || exit 0
+          git push
