@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Run
+      - name: Run model-specific pair-flow law
         run: python src/keirin_market_analysis/develop_pair_flow_two_point_2023.py
       - name: Validate
         run: |
