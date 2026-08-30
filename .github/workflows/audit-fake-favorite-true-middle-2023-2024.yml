@@ -1,0 +1,26 @@
+name: Audit true fake-favorite middle 2023-2024
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/audit_fake_favorite_true_middle_2023_2024.py'
+      - '.github/workflows/audit-fake-favorite-true-middle-2023-2024.yml'
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run audit
+        run: python -m src.keirin_market_analysis.audit_fake_favorite_true_middle_2023_2024
+      - name: Commit audit output
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/fake_favorite_true_middle_2023_2024.json
+          git diff --cached --quiet || git commit -m "Add true fake-favorite middle audit"
+          git push
