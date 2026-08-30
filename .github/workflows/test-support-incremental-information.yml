@@ -1,0 +1,44 @@
+name: Test support incremental information
+
+on:
+  push:
+    paths:
+      - 'src/keirin_market_analysis/test_support_incremental_information.py'
+      - '.github/workflows/test-support-incremental-information.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run test
+        run: python src/keirin_market_analysis/test_support_incremental_information.py
+      - name: Validate output
+        run: |
+          python - <<'PY'
+          import json
+          p='data/audits/support_incremental_information_2023dev_forward.json'
+          x=json.load(open(p,encoding='utf-8'))
+          assert x['development']=='2023 only'
+          assert x['accounting']['2023']['evaluated_races']>1000
+          assert len(x['evaluation'])==4
+          print('PASS',x['model_lock']['fitted_beta'],x['model_lock']['must_enter_tv_threshold'])
+          PY
+      - name: Commit result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/support_incremental_information_2023dev_forward.json
+          git commit -m 'analysis: save support incremental information test' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
