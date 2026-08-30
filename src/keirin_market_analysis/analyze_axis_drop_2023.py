@@ -71,10 +71,9 @@ def main():
     trifecta = load_trifecta_odds()
     results = load_results()
 
-    flow = {r: defaultdict(int) for r in RULES}
+    full_flow = {r: defaultdict(int) for r in RULES}
     box = {r: defaultdict(int) for r in RULES}
     dropped = {r: defaultdict(int) for r in RULES}
-    details = []
 
     for rid in sorted(gate):
         favorite = norm_combo(*gate[rid]["favorite"])
@@ -94,19 +93,18 @@ def main():
             dropped_car = next(x for x in favorite if x not in pair)
             dropped[rule][str(dropped_car)] += 1
 
-            # 2-head flow: keep the selected two favorite cars, exclude the dropped favorite car,
-            # and flow only to actual outsiders. The original favorite ticket is therefore never bought.
-            flow_tickets = [norm_combo(pair[0], pair[1], x) for x in outsiders]
-            flow[rule]["bet_races"] += 1
-            flow[rule]["tickets"] += len(flow_tickets)
-            flow[rule]["axis_survived"] += int(set(pair).issubset(result_set))
+            # Literal 2-head full flow: axis + every other actual entrant.
+            # No special exclusion for the remaining member of the trio-market favorite.
+            flow_tickets = [norm_combo(pair[0], pair[1], x) for x in entrants if x not in pair]
+            full_flow[rule]["bet_races"] += 1
+            full_flow[rule]["tickets"] += len(flow_tickets)
+            full_flow[rule]["axis_survived"] += int(set(pair).issubset(result_set))
             hit = result in flow_tickets
-            flow[rule]["hit_races"] += int(hit)
+            full_flow[rule]["hit_races"] += int(hit)
             if hit:
-                flow[rule]["payout"] += round(STAKE * trio[rid][result])
+                full_flow[rule]["payout"] += round(STAKE * trio[rid][result])
 
-            # 4-car BOX: selected pair + top two outsiders by pair-specific delta.
-            # Requires at least two outsiders; original favorite cannot be present because dropped_car is excluded.
+            # 4-car BOX remains selected pair + top two outsiders by pair-specific delta.
             ranked_out = sorted(
                 outsiders,
                 key=lambda x: (delta.get(norm_combo(pair[0], pair[1], x), float("-inf")), -x),
@@ -123,35 +121,25 @@ def main():
                 if bhit:
                     box[rule]["payout"] += round(STAKE * trio[rid][result])
 
-            details.append({
-                "race_id": rid,
-                "rule": rule,
-                "favorite": favorite,
-                "selected_pair": pair,
-                "dropped_favorite_car": dropped_car,
-                "pair_stats": st,
-                "result": result,
-            })
-
     out = {
-        "status": "AXIS_DROP_RULE_SEARCH_2023",
+        "status": "AXIS_RULE_SEARCH_2023_LITERAL_FULL_FLOW",
         "year": 2023,
         "years_read": [2023],
         "evaluation_year_2024_used": False,
         "evaluation_year_2025_used": False,
         "evaluation_year_2026_used": False,
         "population": "Audited 208 fake-favorite races only.",
-        "principle": "Choose 2 survivors only from the exact trio favorite's 3 cars. The third favorite car is dropped. Original favorite ticket is never bought.",
+        "principle": "Choose the 2-car axis from the exact trio favorite's 3 cars. For the two-head method, buy a literal full flow to every other actual entrant. No favorite-ticket exclusion rule exists.",
         "pair_scoring_rules": {
             "positive_sum": "Sum of positive delta for pair+outsider across all actual outsiders; ties by positive count, total delta.",
             "positive_count_then_sum": "Count of positive pair+outsider deltas first; ties by positive-delta sum, then total delta.",
             "all_delta_sum": "Sum of all pair+outsider deltas; ties by positive sum, positive count.",
             "max_delta_then_sum": "Largest pair+outsider delta first; ties by positive sum, positive count.",
         },
-        "two_head_outsider_flow": {r: summarize(flow[r]) for r in RULES},
+        "two_head_full_flow": {r: summarize(full_flow[r]) for r in RULES},
         "four_car_box": {r: summarize(box[r]) for r in RULES},
-        "dropped_favorite_car_number_distribution": {r: dict(dropped[r]) for r in RULES},
-        "selection_note": "Freeze one scoring rule after reviewing only this 2023 output; apply unchanged to 2024 later.",
+        "unselected_favorite_car_number_distribution": {r: dict(dropped[r]) for r in RULES},
+        "selection_note": "2023 redevelopment after removing the ambiguous favorite-ticket exclusion definition.",
     }
     AUDITS.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
