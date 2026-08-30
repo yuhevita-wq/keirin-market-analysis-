@@ -1,0 +1,511 @@
+{
+  "status": "SUPPORT_INCREMENTAL_INFORMATION_TEST",
+  "conceptual_note": "Support and R are deterministic transforms of the full 35-way market, so they cannot add information to a model that already uses the full 35-way vector without restriction. This test asks the practical question: do support-derived structural features improve prediction over using each combination own normalized market probability M alone?",
+  "development": "2023 only",
+  "forward_checks": [
+    "2024",
+    "2025",
+    "2026_h1"
+  ],
+  "model_lock": {
+    "baseline": "P0(c)=M(c), normalized inverse 3連複 odds.",
+    "support_augmented": "P1(c) proportional to M(c) * R(c)^beta, where R=M/Q and Q is maximum entropy constrained by rider support marginals.",
+    "beta_fit": "Single beta fitted on 2023 by maximizing race-level log likelihood; frozen unchanged afterward.",
+    "fitted_beta": 0.02219612332210088,
+    "must_enter_definition": "A race is MUST_ENTER when total-variation distance TV(P1,M) is at or above the 2023 75th percentile. This identifies the top quartile of races where the support model materially disagrees with the raw market. Threshold frozen before 2024+ scoring.",
+    "must_enter_tv_threshold": 0.004982810992042711,
+    "R_decile_cuts_2023": [
+      0.4171388689835631,
+      0.5212354753538607,
+      0.6186099565646699,
+      0.7347295676920447,
+      0.8788001265007052,
+      1.061983609871686,
+      1.3270316234750794,
+      1.8023682070688516,
+      2.951603620885528
+    ]
+  },
+  "accounting": {
+    "2023": {
+      "market_races": 1486,
+      "excluded_non7_or_incomplete": 50,
+      "multi_or_nonunique_paid_trio": 5,
+      "solver_failures": 0,
+      "evaluated_races": 1431
+    },
+    "2024": {
+      "market_races": 1430,
+      "excluded_non7_or_incomplete": 51,
+      "multi_or_nonunique_paid_trio": 5,
+      "solver_failures": 0,
+      "evaluated_races": 1374
+    },
+    "2025": {
+      "market_races": 1456,
+      "excluded_non7_or_incomplete": 25,
+      "multi_or_nonunique_paid_trio": 6,
+      "solver_failures": 0,
+      "evaluated_races": 1425
+    },
+    "2026_h1": {
+      "market_races": 731,
+      "excluded_non7_or_incomplete": 24,
+      "multi_or_nonunique_paid_trio": 2,
+      "solver_failures": 0,
+      "evaluated_races": 705
+    }
+  },
+  "evaluation": {
+    "2023": {
+      "all_races": {
+        "market_baseline": {
+          "races": 1431,
+          "log_loss": 2.5496937542652818,
+          "brier": 0.865216381131093,
+          "top1_hit_pct": 26.20545073375262,
+          "top3_hit_pct": 53.389238294898675
+        },
+        "support_augmented": {
+          "races": 1431,
+          "log_loss": 2.549616012878006,
+          "brier": 0.8651674382811905,
+          "top1_hit_pct": 26.135569531795948,
+          "top3_hit_pct": 53.459119496855344,
+          "mean_tv_vs_market": 0.004383557487684695
+        },
+        "log_loss_improvement_pct": 0.003049048033538363,
+        "brier_improvement_pct": 0.005656717899694729
+      },
+      "must_enter_races": {
+        "market_baseline": {
+          "races": 358,
+          "log_loss": 2.5880591064660194,
+          "brier": 0.867086095453109,
+          "top1_hit_pct": 25.139664804469273,
+          "top3_hit_pct": 51.39664804469274
+        },
+        "support_augmented": {
+          "races": 358,
+          "log_loss": 2.5875786886330068,
+          "brier": 0.8669746705110003,
+          "top1_hit_pct": 25.69832402234637,
+          "top3_hit_pct": 51.11731843575419,
+          "mean_tv_vs_market": 0.005618733870947026
+        },
+        "log_loss_improvement_pct": 0.018562861714108127,
+        "brier_improvement_pct": 0.01285050500671086
+      },
+      "R_decile_calibration_using_2023_fixed_cuts": [
+        {
+          "decile": 1,
+          "expected_market_hits": 35.9982889310021,
+          "actual_hits": 30,
+          "candidate_rows": 5009,
+          "actual_over_market_expected": 0.8333729432946377
+        },
+        {
+          "decile": 2,
+          "expected_market_hits": 50.7946882042387,
+          "actual_hits": 47,
+          "candidate_rows": 5008,
+          "actual_over_market_expected": 0.9252936017840927
+        },
+        {
+          "decile": 3,
+          "expected_market_hits": 68.56039804862057,
+          "actual_hits": 49,
+          "candidate_rows": 5009,
+          "actual_over_market_expected": 0.7146983009820183
+        },
+        {
+          "decile": 4,
+          "expected_market_hits": 92.92782218981503,
+          "actual_hits": 81,
+          "candidate_rows": 5008,
+          "actual_over_market_expected": 0.8716442298039528
+        },
+        {
+          "decile": 5,
+          "expected_market_hits": 140.56782410884335,
+          "actual_hits": 147,
+          "candidate_rows": 5009,
+          "actual_over_market_expected": 1.0457585221364467
+        },
+        {
+          "decile": 6,
+          "expected_market_hits": 261.4524799263126,
+          "actual_hits": 274,
+          "candidate_rows": 5008,
+          "actual_over_market_expected": 1.047991589436152
+        },
+        {
+          "decile": 7,
+          "expected_market_hits": 320.16615619580875,
+          "actual_hits": 324,
+          "candidate_rows": 5008,
+          "actual_over_market_expected": 1.0119745442483512
+        },
+        {
+          "decile": 8,
+          "expected_market_hits": 248.92624240256,
+          "actual_hits": 277,
+          "candidate_rows": 5009,
+          "actual_over_market_expected": 1.1127794214321507
+        },
+        {
+          "decile": 9,
+          "expected_market_hits": 138.71946037982931,
+          "actual_hits": 145,
+          "candidate_rows": 5008,
+          "actual_over_market_expected": 1.0452751157117672
+        },
+        {
+          "decile": 10,
+          "expected_market_hits": 72.88663961296979,
+          "actual_hits": 57,
+          "candidate_rows": 5009,
+          "actual_over_market_expected": 0.7820363279562851
+        }
+      ]
+    },
+    "2024": {
+      "all_races": {
+        "market_baseline": {
+          "races": 1374,
+          "log_loss": 2.536966875823339,
+          "brier": 0.8534309037797708,
+          "top1_hit_pct": 28.238719068413392,
+          "top3_hit_pct": 52.037845705967975
+        },
+        "support_augmented": {
+          "races": 1374,
+          "log_loss": 2.536647106215319,
+          "brier": 0.853284429986807,
+          "top1_hit_pct": 28.529839883551674,
+          "top3_hit_pct": 52.40174672489083,
+          "mean_tv_vs_market": 0.004451295049109054
+        },
+        "log_loss_improvement_pct": 0.012604406114523606,
+        "brier_improvement_pct": 0.01716293519664239
+      },
+      "must_enter_races": {
+        "market_baseline": {
+          "races": 389,
+          "log_loss": 2.626643989089216,
+          "brier": 0.8727189479273486,
+          "top1_hit_pct": 26.99228791773779,
+          "top3_hit_pct": 49.10025706940874
+        },
+        "support_augmented": {
+          "races": 389,
+          "log_loss": 2.6263359209678745,
+          "brier": 0.872478881654611,
+          "top1_hit_pct": 26.99228791773779,
+          "top3_hit_pct": 49.61439588688946,
+          "mean_tv_vs_market": 0.005701479273104343
+        },
+        "log_loss_improvement_pct": 0.011728583036799503,
+        "brier_improvement_pct": 0.027507856144041675
+      },
+      "R_decile_calibration_using_2023_fixed_cuts": [
+        {
+          "decile": 1,
+          "expected_market_hits": 34.330090584533586,
+          "actual_hits": 29,
+          "candidate_rows": 4616,
+          "actual_over_market_expected": 0.8447399790161083
+        },
+        {
+          "decile": 2,
+          "expected_market_hits": 51.78794753405415,
+          "actual_hits": 42,
+          "candidate_rows": 4912,
+          "actual_over_market_expected": 0.81099950857064
+        },
+        {
+          "decile": 3,
+          "expected_market_hits": 64.526698515349,
+          "actual_hits": 63,
+          "candidate_rows": 4483,
+          "actual_over_market_expected": 0.9763400491505723
+        },
+        {
+          "decile": 4,
+          "expected_market_hits": 91.75769177265401,
+          "actual_hits": 95,
+          "candidate_rows": 4913,
+          "actual_over_market_expected": 1.0353355469684153
+        },
+        {
+          "decile": 5,
+          "expected_market_hits": 138.75256053107674,
+          "actual_hits": 144,
+          "candidate_rows": 4850,
+          "actual_over_market_expected": 1.0378186856432676
+        },
+        {
+          "decile": 6,
+          "expected_market_hits": 237.32414651018104,
+          "actual_hits": 211,
+          "candidate_rows": 4855,
+          "actual_over_market_expected": 0.8890793587703822
+        },
+        {
+          "decile": 7,
+          "expected_market_hits": 307.3532109376573,
+          "actual_hits": 323,
+          "candidate_rows": 4806,
+          "actual_over_market_expected": 1.0509081685355044
+        },
+        {
+          "decile": 8,
+          "expected_market_hits": 243.21621655022437,
+          "actual_hits": 254,
+          "candidate_rows": 4861,
+          "actual_over_market_expected": 1.0443382583724583
+        },
+        {
+          "decile": 9,
+          "expected_market_hits": 131.6736499391824,
+          "actual_hits": 136,
+          "candidate_rows": 4727,
+          "actual_over_market_expected": 1.032856612259293
+        },
+        {
+          "decile": 10,
+          "expected_market_hits": 73.27778712508635,
+          "actual_hits": 77,
+          "candidate_rows": 5067,
+          "actual_over_market_expected": 1.0507959235799489
+        }
+      ]
+    },
+    "2025": {
+      "all_races": {
+        "market_baseline": {
+          "races": 1425,
+          "log_loss": 2.5135894601615747,
+          "brier": 0.8571621291719544,
+          "top1_hit_pct": 27.92982456140351,
+          "top3_hit_pct": 53.824561403508774
+        },
+        "support_augmented": {
+          "races": 1425,
+          "log_loss": 2.513506239520146,
+          "brier": 0.857107364099125,
+          "top1_hit_pct": 27.92982456140351,
+          "top3_hit_pct": 53.96491228070175,
+          "mean_tv_vs_market": 0.004426324438283281
+        },
+        "log_loss_improvement_pct": 0.0033108287072220995,
+        "brier_improvement_pct": 0.006389114843690787
+      },
+      "must_enter_races": {
+        "market_baseline": {
+          "races": 385,
+          "log_loss": 2.6107534684572475,
+          "brier": 0.8720510061674496,
+          "top1_hit_pct": 26.493506493506494,
+          "top3_hit_pct": 50.38961038961039
+        },
+        "support_augmented": {
+          "races": 385,
+          "log_loss": 2.6092665367859462,
+          "brier": 0.8718258763028784,
+          "top1_hit_pct": 26.753246753246753,
+          "top3_hit_pct": 50.64935064935065,
+          "mean_tv_vs_market": 0.005706887894751272
+        },
+        "log_loss_improvement_pct": 0.056954120305353004,
+        "brier_improvement_pct": 0.025816134948406733
+      },
+      "R_decile_calibration_using_2023_fixed_cuts": [
+        {
+          "decile": 1,
+          "expected_market_hits": 39.198510709789,
+          "actual_hits": 36,
+          "candidate_rows": 5472,
+          "actual_over_market_expected": 0.9184022389659249
+        },
+        {
+          "decile": 2,
+          "expected_market_hits": 52.82635847552918,
+          "actual_hits": 40,
+          "candidate_rows": 5180,
+          "actual_over_market_expected": 0.7571977541955546
+        },
+        {
+          "decile": 3,
+          "expected_market_hits": 63.061307933730404,
+          "actual_hits": 57,
+          "candidate_rows": 4587,
+          "actual_over_market_expected": 0.9038822991096207
+        },
+        {
+          "decile": 4,
+          "expected_market_hits": 88.86753211364618,
+          "actual_hits": 82,
+          "candidate_rows": 4745,
+          "actual_over_market_expected": 0.9227216965487036
+        },
+        {
+          "decile": 5,
+          "expected_market_hits": 139.02070389702592,
+          "actual_hits": 158,
+          "candidate_rows": 4640,
+          "actual_over_market_expected": 1.1365213638756442
+        },
+        {
+          "decile": 6,
+          "expected_market_hits": 257.8510298134366,
+          "actual_hits": 277,
+          "candidate_rows": 4875,
+          "actual_over_market_expected": 1.0742636948179665
+        },
+        {
+          "decile": 7,
+          "expected_market_hits": 320.44697111434107,
+          "actual_hits": 297,
+          "candidate_rows": 4837,
+          "actual_over_market_expected": 0.9268304174234969
+        },
+        {
+          "decile": 8,
+          "expected_market_hits": 253.23682019613057,
+          "actual_hits": 260,
+          "candidate_rows": 4896,
+          "actual_over_market_expected": 1.0267069370032027
+        },
+        {
+          "decile": 9,
+          "expected_market_hits": 135.2486956498307,
+          "actual_hits": 143,
+          "candidate_rows": 5015,
+          "actual_over_market_expected": 1.0573114906057064
+        },
+        {
+          "decile": 10,
+          "expected_market_hits": 75.24207009654239,
+          "actual_hits": 75,
+          "candidate_rows": 5628,
+          "actual_over_market_expected": 0.9967827826077645
+        }
+      ]
+    },
+    "2026_h1": {
+      "all_races": {
+        "market_baseline": {
+          "races": 705,
+          "log_loss": 2.6422746961579224,
+          "brier": 0.8777768073988217,
+          "top1_hit_pct": 21.70212765957447,
+          "top3_hit_pct": 49.9290780141844
+        },
+        "support_augmented": {
+          "races": 705,
+          "log_loss": 2.6426263007910267,
+          "brier": 0.8777626879892729,
+          "top1_hit_pct": 21.98581560283688,
+          "top3_hit_pct": 50.354609929078016,
+          "mean_tv_vs_market": 0.004363393927347982
+        },
+        "log_loss_improvement_pct": -0.01330689173292626,
+        "brier_improvement_pct": 0.0016085421065753541
+      },
+      "must_enter_races": {
+        "market_baseline": {
+          "races": 183,
+          "log_loss": 2.5763151552868755,
+          "brier": 0.8743601518379595,
+          "top1_hit_pct": 24.043715846994534,
+          "top3_hit_pct": 50.27322404371585
+        },
+        "support_augmented": {
+          "races": 183,
+          "log_loss": 2.5747460974040504,
+          "brier": 0.8741101610386811,
+          "top1_hit_pct": 24.59016393442623,
+          "top3_hit_pct": 51.91256830601093,
+          "mean_tv_vs_market": 0.005674245845935845
+        },
+        "log_loss_improvement_pct": 0.06090318102601911,
+        "brier_improvement_pct": 0.028591284581399007
+      },
+      "R_decile_calibration_using_2023_fixed_cuts": [
+        {
+          "decile": 1,
+          "expected_market_hits": 17.643932738070717,
+          "actual_hits": 18,
+          "candidate_rows": 2484,
+          "actual_over_market_expected": 1.0201807197530848
+        },
+        {
+          "decile": 2,
+          "expected_market_hits": 26.401094561169362,
+          "actual_hits": 22,
+          "candidate_rows": 2594,
+          "actual_over_market_expected": 0.8332987842237997
+        },
+        {
+          "decile": 3,
+          "expected_market_hits": 32.209458693474794,
+          "actual_hits": 34,
+          "candidate_rows": 2403,
+          "actual_over_market_expected": 1.05559054324896
+        },
+        {
+          "decile": 4,
+          "expected_market_hits": 43.9797760540483,
+          "actual_hits": 49,
+          "candidate_rows": 2408,
+          "actual_over_market_expected": 1.1141484654169718
+        },
+        {
+          "decile": 5,
+          "expected_market_hits": 71.3525812249708,
+          "actual_hits": 64,
+          "candidate_rows": 2514,
+          "actual_over_market_expected": 0.8969542362905062
+        },
+        {
+          "decile": 6,
+          "expected_market_hits": 135.00934583753306,
+          "actual_hits": 150,
+          "candidate_rows": 2528,
+          "actual_over_market_expected": 1.1110341959623027
+        },
+        {
+          "decile": 7,
+          "expected_market_hits": 153.726783797907,
+          "actual_hits": 146,
+          "candidate_rows": 2368,
+          "actual_over_market_expected": 0.9497369059118234
+        },
+        {
+          "decile": 8,
+          "expected_market_hits": 117.8556826196442,
+          "actual_hits": 127,
+          "candidate_rows": 2396,
+          "actual_over_market_expected": 1.0775891087905134
+        },
+        {
+          "decile": 9,
+          "expected_market_hits": 71.31777069634308,
+          "actual_hits": 65,
+          "candidate_rows": 2493,
+          "actual_over_market_expected": 0.9114137944209881
+        },
+        {
+          "decile": 10,
+          "expected_market_hits": 35.50357377683891,
+          "actual_hits": 30,
+          "candidate_rows": 2487,
+          "actual_over_market_expected": 0.8449853580534695
+        }
+      ]
+    }
+  },
+  "decision_rule": "Call support practically additive only if the frozen support-augmented model improves log loss and Brier versus M in the same direction across forward years, with special attention to MUST_ENTER races. Do not call a one-year improvement proof.",
+  "project_rule_for_all_future_models": "Before any new model is evaluated on outcomes, define its MUST_ENTER race rule from pre-race observables/model outputs, freeze it, and report performance both on all eligible races and MUST_ENTER races. No post-result race inclusion/exclusion."
+}
