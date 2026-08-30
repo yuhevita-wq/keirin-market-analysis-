@@ -1,0 +1,461 @@
+{
+  "status": "MARKET_RIDER_RANK23_AXIS_2023",
+  "year": 2023,
+  "years_read": [
+    2023
+  ],
+  "population": "Audited 208 fake-favorite races only.",
+  "market_support_definition": "For each rider, sum 1/trio_final_odds across every valid trio combination containing that rider. Rank riders descending by this marginal trio-market support; lower car number only breaks exact ties.",
+  "strategy": "Use market-supported rider rank #2 and #3 as the two-head trio axis. Rank #1 is not removed; it remains one of the literal full-flow targets.",
+  "payout_method": "100 yen times final trio odds for apples-to-apples comparison with prior development simulations; actual payout CSV not yet used.",
+  "result": {
+    "bet_races": 208,
+    "tickets": 1040,
+    "hit_races": 49,
+    "race_hit_rate_pct": 23.557692307692307,
+    "axis_pair_survival_pct": 23.557692307692307,
+    "stake_yen": 104000,
+    "payout_yen": 59410,
+    "profit_yen": -44590,
+    "roi_pct": 57.125,
+    "max_losing_streak": 15,
+    "mean_winning_odds": 12.124489795918368,
+    "median_winning_odds": 5.3,
+    "market_rank1_top3_pct": 71.63461538461539,
+    "market_rank2_top3_pct": 59.13461538461539,
+    "market_rank3_top3_pct": 53.84615384615385
+  },
+  "examples_first_10": [
+    {
+      "race_id": "1120230427010006",
+      "market_rank_1": 7,
+      "market_rank_2": 5,
+      "market_rank_3": 1,
+      "axis": [
+        1,
+        5
+      ],
+      "tickets": [
+        [
+          1,
+          2,
+          5
+        ],
+        [
+          1,
+          3,
+          5
+        ],
+        [
+          1,
+          4,
+          5
+        ],
+        [
+          1,
+          5,
+          6
+        ],
+        [
+          1,
+          5,
+          7
+        ]
+      ],
+      "result": [
+        1,
+        5,
+        7
+      ],
+      "hit": true
+    },
+    {
+      "race_id": "1120230622010007",
+      "market_rank_1": 5,
+      "market_rank_2": 7,
+      "market_rank_3": 2,
+      "axis": [
+        2,
+        7
+      ],
+      "tickets": [
+        [
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          7
+        ],
+        [
+          2,
+          4,
+          7
+        ],
+        [
+          2,
+          5,
+          7
+        ],
+        [
+          2,
+          6,
+          7
+        ]
+      ],
+      "result": [
+        2,
+        3,
+        5
+      ],
+      "hit": false
+    },
+    {
+      "race_id": "1120230622010009",
+      "market_rank_1": 1,
+      "market_rank_2": 4,
+      "market_rank_3": 7,
+      "axis": [
+        4,
+        7
+      ],
+      "tickets": [
+        [
+          1,
+          4,
+          7
+        ],
+        [
+          2,
+          4,
+          7
+        ],
+        [
+          3,
+          4,
+          7
+        ],
+        [
+          4,
+          5,
+          7
+        ],
+        [
+          4,
+          6,
+          7
+        ]
+      ],
+      "result": [
+        1,
+        3,
+        4
+      ],
+      "hit": false
+    },
+    {
+      "race_id": "1120230823010010",
+      "market_rank_1": 3,
+      "market_rank_2": 4,
+      "market_rank_3": 7,
+      "axis": [
+        4,
+        7
+      ],
+      "tickets": [
+        [
+          1,
+          4,
+          7
+        ],
+        [
+          2,
+          4,
+          7
+        ],
+        [
+          3,
+          4,
+          7
+        ],
+        [
+          4,
+          5,
+          7
+        ],
+        [
+          4,
+          6,
+          7
+        ]
+      ],
+      "result": [
+        2,
+        3,
+        4
+      ],
+      "hit": false
+    },
+    {
+      "race_id": "1120231023010006",
+      "market_rank_1": 7,
+      "market_rank_2": 4,
+      "market_rank_3": 5,
+      "axis": [
+        4,
+        5
+      ],
+      "tickets": [
+        [
+          1,
+          4,
+          5
+        ],
+        [
+          2,
+          4,
+          5
+        ],
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          4,
+          5,
+          6
+        ],
+        [
+          4,
+          5,
+          7
+        ]
+      ],
+      "result": [
+        1,
+        2,
+        5
+      ],
+      "hit": false
+    },
+    {
+      "race_id": "1120231023010007",
+      "market_rank_1": 1,
+      "market_rank_2": 4,
+      "market_rank_3": 7,
+      "axis": [
+        4,
+        7
+      ],
+      "tickets": [
+        [
+          1,
+          4,
+          7
+        ],
+        [
+          2,
+          4,
+          7
+        ],
+        [
+          3,
+          4,
+          7
+        ],
+        [
+          4,
+          5,
+          7
+        ],
+        [
+          4,
+          6,
+          7
+        ]
+      ],
+      "result": [
+        2,
+        3,
+        5
+      ],
+      "hit": false
+    },
+    {
+      "race_id": "1120231023010008",
+      "market_rank_1": 4,
+      "market_rank_2": 3,
+      "market_rank_3": 1,
+      "axis": [
+        1,
+        3
+      ],
+      "tickets": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          1,
+          3,
+          4
+        ],
+        [
+          1,
+          3,
+          5
+        ],
+        [
+          1,
+          3,
+          6
+        ],
+        [
+          1,
+          3,
+          7
+        ]
+      ],
+      "result": [
+        1,
+        5,
+        7
+      ],
+      "hit": false
+    },
+    {
+      "race_id": "1120231023010009",
+      "market_rank_1": 1,
+      "market_rank_2": 5,
+      "market_rank_3": 3,
+      "axis": [
+        3,
+        5
+      ],
+      "tickets": [
+        [
+          1,
+          3,
+          5
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          3,
+          5,
+          6
+        ],
+        [
+          3,
+          5,
+          7
+        ]
+      ],
+      "result": [
+        1,
+        3,
+        5
+      ],
+      "hit": true
+    },
+    {
+      "race_id": "1120231023010010",
+      "market_rank_1": 1,
+      "market_rank_2": 4,
+      "market_rank_3": 3,
+      "axis": [
+        3,
+        4
+      ],
+      "tickets": [
+        [
+          1,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          3,
+          4,
+          6
+        ],
+        [
+          3,
+          4,
+          7
+        ]
+      ],
+      "result": [
+        1,
+        4,
+        6
+      ],
+      "hit": false
+    },
+    {
+      "race_id": "1220230724010009",
+      "market_rank_1": 7,
+      "market_rank_2": 4,
+      "market_rank_3": 2,
+      "axis": [
+        2,
+        4
+      ],
+      "tickets": [
+        [
+          1,
+          2,
+          4
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5
+        ],
+        [
+          2,
+          4,
+          6
+        ],
+        [
+          2,
+          4,
+          7
+        ]
+      ],
+      "result": [
+        2,
+        3,
+        7
+      ],
+      "hit": false
+    }
+  ],
+  "note": "Development simulation only. No 2024/2025/2026 data read."
+}
