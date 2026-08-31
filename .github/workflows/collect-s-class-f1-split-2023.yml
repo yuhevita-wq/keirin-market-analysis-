@@ -1,0 +1,111 @@
+name: Collect 2023 F1 S-class checkpointed quarters
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/collect-s-class-f1-split-2023.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include:
+          - period: 2023_q1
+            start: '2023-01-01'
+            end: '2023-03-31'
+          - period: 2023_q2
+            start: '2023-04-01'
+            end: '2023-06-30'
+          - period: 2023_q3
+            start: '2023-07-01'
+            end: '2023-09-30'
+          - period: 2023_q4
+            start: '2023-10-01'
+            end: '2023-12-31'
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      OUT_DIR: data/2023/f1_s_class_quarters/${{ matrix.period }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install
+        run: pip install -e '.[scrape]'
+      - name: Collect race cards
+        run: python -m keirin_market_analysis.s_class_f1 --start-date '${{ matrix.start }}' --end-date '${{ matrix.end }}' --out-dir "$OUT_DIR"
+      - name: Validate base collection
+        run: |
+          python - <<'PY'
+          import csv, json, os
+          d=os.environ['OUT_DIR']
+          s=json.load(open(f'{d}/summary.json', encoding='utf-8'))
+          assert s['race_count'] > 0 and s['entry_count'] > 0, s
+          assert s.get('failure_count', 0) == 0, s
+          with open(f'{d}/races.csv', encoding='utf-8-sig', newline='') as f: rows=list(csv.DictReader(f))
+          assert rows
+          assert all(r.get('meeting_grade') == 'F1' for r in rows)
+          assert all(r.get('race_type','').startswith('Ｓ級') for r in rows)
+          assert len({r['race_type'] for r in rows}) >= 2
+          PY
+      - name: Checkpoint base collection
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add "$OUT_DIR"
+          git commit -m "data: checkpoint ${{ matrix.period }} F1 S-class race cards" || true
+          for i in 1 2 3 4 5; do git pull --rebase origin main && git push origin HEAD:main && break || sleep $((i*5)); done
+      - name: Enrich predicted line formation
+        run: python -m keirin_market_analysis.kdreams_line_formation --data-dir "$OUT_DIR" --sleep 0.2
+      - name: Checkpoint line formation
+        run: |
+          git add "$OUT_DIR"
+          git commit -m "data: checkpoint ${{ matrix.period }} F1 S-class line formation" || true
+          for i in 1 2 3 4 5; do git pull --rebase origin main && git push origin HEAD:main && break || sleep $((i*5)); done
+      - name: Extract results and payouts
+        run: python -m keirin_market_analysis.kdreams_results --data-dir "$OUT_DIR" --sleep 0.2
+      - name: Validate results and payouts
+        run: |
+          python - <<'PY'
+          import json, os
+          d=os.environ['OUT_DIR']; s=json.load(open(f'{d}/result_summary.json', encoding='utf-8'))
+          assert s['race_count'] == s['complete_result_races'] == s['complete_payout_races'], s
+          assert s.get('parse_failures',0) == 0, s
+          PY
+      - name: Checkpoint results and payouts
+        run: |
+          git add "$OUT_DIR"
+          git commit -m "data: checkpoint ${{ matrix.period }} F1 S-class results" || true
+          for i in 1 2 3 4 5; do git pull --rebase origin main && git push origin HEAD:main && break || sleep $((i*5)); done
+      - name: Collect historical final trifecta and trio odds
+        run: python -m keirin_market_analysis.kdreams_historical_odds --data-dir "$OUT_DIR" --sleep 0.2
+      - name: Validate final odds
+        run: |
+          python - <<'PY'
+          import csv, json, math, os
+          d=os.environ['OUT_DIR']; s=json.load(open(f'{d}/odds_summary.json', encoding='utf-8'))
+          assert s['race_count_attempted'] > 0, s
+          assert s['complete_races'] + s['failed_races'] == s['race_count_attempted'], s
+          assert s['coverage_rate'] >= .95, s
+          with open(f'{d}/races.csv', encoding='utf-8-sig', newline='') as f: races=list(csv.DictReader(f))
+          expected3=expectedt=0
+          for r in races:
+              n=int(r['entry_count']); expected3 += math.comb(n,3); expectedt += n*(n-1)*(n-2)
+          assert s['trio_rows'] <= expected3 and s['trifecta_rows'] <= expectedt, s
+          PY
+      - name: Checkpoint final odds
+        run: |
+          git add "$OUT_DIR"
+          git commit -m "data: checkpoint ${{ matrix.period }} F1 S-class final odds" || true
+          for i in 1 2 3 4 5; do git pull --rebase origin main && git push origin HEAD:main && break || sleep $((i*5)); done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: s-class-f1-${{ matrix.period }}
+          path: ${{ env.OUT_DIR }}
