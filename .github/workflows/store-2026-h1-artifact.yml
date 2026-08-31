@@ -1,0 +1,65 @@
+name: Store completed 2026 H1 F1 S-class artifact
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/store-2026-h1-artifact.yml"
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  store:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Download completed 2026 H1 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: s-class-f1-all-2026_h1
+          path: /tmp/s-class-f1-all-2026_h1
+          github-token: ${{ github.token }}
+          repository: yuhevita-wq/keirin-market-analysis-
+          run-id: 33343959666
+
+      - name: Verify artifact
+        run: |
+          test -f /tmp/s-class-f1-all-2026_h1/summary.json
+          test -f /tmp/s-class-f1-all-2026_h1/result_summary.json
+          test -f /tmp/s-class-f1-all-2026_h1/odds_summary.json
+          test -f /tmp/s-class-f1-all-2026_h1/races.csv
+          test -f /tmp/s-class-f1-all-2026_h1/entries.csv
+          test -f /tmp/s-class-f1-all-2026_h1/results.csv
+          test -f /tmp/s-class-f1-all-2026_h1/payouts.csv
+          test -f /tmp/s-class-f1-all-2026_h1/trio_final_odds.csv
+          test -f /tmp/s-class-f1-all-2026_h1/trifecta_final_odds.csv
+
+      - name: Store dataset in repository
+        run: |
+          rm -rf data/2026_h1/s_class_f1_all
+          mkdir -p data/2026_h1/s_class_f1_all
+          cp -a /tmp/s-class-f1-all-2026_h1/. data/2026_h1/s_class_f1_all/
+
+      - name: Commit completed dataset
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/2026_h1/s_class_f1_all
+          if git diff --cached --quiet; then
+            echo "Dataset already stored"
+            exit 0
+          fi
+          git commit -m "data: store completed 2026 H1 F1 S-class dataset"
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep $((i*5))
+          done
+          exit 1
