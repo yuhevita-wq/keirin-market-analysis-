@@ -34,3 +34,5 @@ if __name__=='__main__':
  latest_v8_16()
  from evaluate_v8_17_q1 import main as latest_v8_17
  latest_v8_17()
+ from evaluate_v8_17_q2_oos import main as latest_v8_17_q2
+ latest_v8_17_q2()
