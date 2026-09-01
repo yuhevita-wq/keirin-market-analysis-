@@ -24,6 +24,7 @@ class G3Meeting:
     slug: str
     start: date
     end: date
+    max_races: int = 12
 
 
 @dataclass(frozen=True)
@@ -34,19 +35,20 @@ class G3RaceRef:
     url: str
 
 
-# 2024 Q2 G3 schedule, taken from the published Rakuten KDreams 2024 GIII schedule.
-# Using meeting IDs avoids crawling F1/F2 race-detail pages.
-G3_MEETINGS_2024_Q2 = (
-    G3Meeting("川崎", "34", "kawasaki", date(2024, 4, 4), date(2024, 4, 7)),
-    G3Meeting("高知", "74", "kochi", date(2024, 4, 11), date(2024, 4, 14)),
-    G3Meeting("西武園", "26", "seibuen", date(2024, 4, 20), date(2024, 4, 23)),
-    G3Meeting("武雄", "84", "takeo", date(2024, 5, 11), date(2024, 5, 14)),
-    G3Meeting("函館", "11", "hakodate", date(2024, 5, 16), date(2024, 5, 19)),
-    G3Meeting("前橋", "22", "maebashi", date(2024, 6, 1), date(2024, 6, 4)),
-    G3Meeting("函館", "11", "hakodate", date(2024, 6, 6), date(2024, 6, 9)),
-    G3Meeting("奈良", "53", "nara", date(2024, 6, 6), date(2024, 6, 9)),
-    G3Meeting("久留米", "83", "kurume", date(2024, 6, 22), date(2024, 6, 25)),
-    G3Meeting("取手", "23", "toride", date(2024, 6, 27), date(2024, 6, 30)),
+# 2024 Q3 G3 schedule, verified against the published 2024 grade-race schedule.
+# Using deterministic meeting IDs avoids crawling F1/F2 race-detail pages.
+G3_MEETINGS_2024_Q3 = (
+    G3Meeting("小松島", "73", "komatsushima", date(2024, 7, 4), date(2024, 7, 7)),
+    G3Meeting("佐世保", "85", "sasebo", date(2024, 7, 16), date(2024, 7, 18), 9),
+    G3Meeting("福井", "51", "fukui", date(2024, 7, 20), date(2024, 7, 23)),
+    G3Meeting("別府", "86", "beppu", date(2024, 7, 25), date(2024, 7, 28)),
+    G3Meeting("松戸", "31", "matsudo", date(2024, 8, 1), date(2024, 8, 4)),
+    G3Meeting("松山", "75", "matsuyama", date(2024, 8, 8), date(2024, 8, 11)),
+    G3Meeting("小田原", "36", "odawara", date(2024, 8, 24), date(2024, 8, 27)),
+    G3Meeting("富山", "46", "toyama", date(2024, 8, 29), date(2024, 9, 1)),
+    G3Meeting("向日町", "54", "mukomachi", date(2024, 9, 5), date(2024, 9, 8)),
+    G3Meeting("岐阜", "43", "gifu", date(2024, 9, 21), date(2024, 9, 24)),
+    G3Meeting("青森", "12", "aomori", date(2024, 9, 26), date(2024, 9, 29)),
 )
 
 
@@ -92,9 +94,9 @@ def collect(start: date, end: date, out_dir: Path, sleep_seconds: float) -> dict
     if start.year != 2024 or end.year != 2024:
         raise ValueError("this G3 collector is intentionally restricted to 2024")
 
-    meetings = [m for m in G3_MEETINGS_2024_Q2 if m.end >= start and m.start <= end]
+    meetings = [m for m in G3_MEETINGS_2024_Q3 if m.end >= start and m.start <= end]
     if not meetings:
-        raise ValueError("no configured 2024 Q2 G3 meetings overlap the requested window")
+        raise ValueError("no configured 2024 Q3 G3 meetings overlap the requested window")
 
     session = base.make_session()
     races: list[dict[str, object]] = []
@@ -111,14 +113,11 @@ def collect(start: date, end: date, out_dir: Path, sleep_seconds: float) -> dict
         for offset in range(days):
             race_date = meeting.start + timedelta(days=offset)
             if race_date < start or race_date > end:
-                skipped_outside_window += 12
+                skipped_outside_window += meeting.max_races
                 continue
             day_index = offset + 1
 
-            # Standard KDreams daytime/G3 cards have at most 12 races. Probe only
-            # this known G3 meeting's 12 deterministic race IDs; a genuine 404
-            # simply means that race number was not offered that day.
-            for race_no in range(1, 13):
+            for race_no in range(1, meeting.max_races + 1):
                 url = race_url(meeting, day_index, race_no)
                 try:
                     html = base.fetch_html(session, url)
@@ -212,7 +211,7 @@ def collect(start: date, end: date, out_dir: Path, sleep_seconds: float) -> dict
         "end_date": end.isoformat(),
         "captured_at_utc": datetime.now(timezone.utc).isoformat(),
         "source": "楽天Kドリームス 公開レース情報",
-        "meeting_source": "楽天Kドリームス 2024年GIII開催スケジュール",
+        "meeting_source": "KEIRIN.JP 2024年度グレードレース開催日程",
         "configured_meetings": len(meetings),
         "candidate_g3_races": candidate_g3_races,
         "parsed_g3_races": len(races),
@@ -224,7 +223,7 @@ def collect(start: date, end: date, out_dir: Path, sleep_seconds: float) -> dict
         "race_type_counts": dict(sorted(Counter(str(r["race_type"]) for r in races).items())),
         "entry_count_counts": dict(sorted(Counter(str(r["entry_count"]) for r in races).items())),
         "tracks": sorted({str(r["track"]) for r in races}),
-        "definition_note": "楽天Kドリームスの2024年GIII開催スケジュールで確定したQ2のG3開催IDだけを使用し、その開催のレース詳細だけを取得する。F1/F2等のレース詳細ページは取得しない。級班・車立て数では絞らない。",
+        "definition_note": "2024年度グレードレース開催日程で確定したQ3のG3開催IDだけを使用し、その開催の楽天Kドリームスレース詳細だけを取得する。G1/G2/F1/F2等は取得しない。級班・車立て数では絞らない。",
     }
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "summary.json").write_text(
@@ -235,7 +234,7 @@ def collect(start: date, end: date, out_dir: Path, sleep_seconds: float) -> dict
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Collect all races from 2024 Q2 G3 meetings")
+    parser = argparse.ArgumentParser(description="Collect all races from 2024 Q3 G3 meetings")
     parser.add_argument("--start-date", required=True)
     parser.add_argument("--end-date", required=True)
     parser.add_argument("--out-dir", required=True)
