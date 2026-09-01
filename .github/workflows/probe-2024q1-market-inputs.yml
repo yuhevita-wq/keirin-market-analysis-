@@ -1,4 +1,4 @@
-name: Probe 2024Q1 market inputs
+name: Simulate v6.1 HM01 on 2024Q1
 
 on:
   push:
@@ -19,7 +19,7 @@ permissions:
   contents: read
 
 jobs:
-  probe:
+  simulate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -36,8 +36,13 @@ jobs:
           python-version: '3.12'
       - name: Probe CSV inputs
         run: python scripts/probe_2024q1_market_inputs.py
-      - name: Upload probe
+      - name: Reproduce v6.1 and run HM01
+        run: python src/keirin_market_analysis/v6_1_hm01_2024q1.py
+      - name: Upload analysis artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: 2024q1-market-input-probe
-          path: artifacts/2024q1_market_input_probe.json
+          name: v6-1-hm01-2024q1
+          path: |
+            artifacts/2024q1_market_input_probe.json
+            artifacts/v6_1_hm01_2024q1/v6_1_hm01_summary.json
+            artifacts/v6_1_hm01_2024q1/v6_1_hm01_races.csv
