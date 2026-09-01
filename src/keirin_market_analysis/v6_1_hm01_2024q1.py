@@ -8,19 +8,19 @@ from collections import defaultdict
 from pathlib import Path
 
 BASE_SCHEME_VERSION = "v6.1"
-VALIDATION_VERSION = "v6.3-D01-Q2-OOS"
-VALIDATION_DATASET = "2024Q2"
+VALIDATION_VERSION = "v6.3-D01-Q3-OOS"
+VALIDATION_DATASET = "2024Q3"
 ENTRY_FILTER_THRESHOLD = 0.35640013538348414
 STAKE = 100
 
 ROOT = Path(__file__).resolve().parents[2]
-DATA_REL = Path("data/2024/s_class_f1_all_parts/2024_q2")
+DATA_REL = Path("data/2024/s_class_f1_all_parts/2024_q3")
 DATA = ROOT / DATA_REL
 OUT = ROOT / "artifacts" / "v6_1_hm01_2024q1"
-Q2_OUT = ROOT / "artifacts" / "v6_3_d01_2024q2_oos"
+Q3_OUT = ROOT / "artifacts" / "v6_3_d01_2024q3_oos"
 
 
-def ensure_q2_checkout():
+def ensure_q3_checkout():
     if not (DATA / "races.csv").exists():
         subprocess.run(
             ["git", "sparse-checkout", "add", DATA_REL.as_posix()],
@@ -236,7 +236,7 @@ def summarize(rows):
 
 
 def main():
-    ensure_q2_checkout()
+    ensure_q3_checkout()
     races, trio, tf, payouts = load_data()
 
     attr = defaultdict(int)
@@ -323,7 +323,7 @@ def main():
             "name": "M_PRE_FORMATION_MASS",
             "rule": f"M_pre >= {ENTRY_FILTER_THRESHOLD}",
             "threshold": ENTRY_FILTER_THRESHOLD,
-            "threshold_source": "fixed on 2024Q1 before 2024Q2 validation",
+            "threshold_source": "fixed on 2024Q1 before Q2/Q3 validation",
         },
         "attrition": dict(attr),
         "entry_fail_reasons": dict(entry_fail_reasons),
@@ -343,7 +343,7 @@ def main():
             if d01["hit_rate_pct"] > base["hit_rate_pct"]
             else "FAIL_HIT_RATE_NOT_IMPROVED"
         ),
-        "no_q2_tuning": True,
+        "no_q3_tuning": True,
     }
 
     OUT.mkdir(parents=True, exist_ok=True)
@@ -356,21 +356,21 @@ def main():
         json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8"
     )
 
-    Q2_OUT.mkdir(parents=True, exist_ok=True)
-    (Q2_OUT / "v6_3_d01_2024q2_oos_summary.json").write_text(
+    Q3_OUT.mkdir(parents=True, exist_ok=True)
+    (Q3_OUT / "v6_3_d01_2024q3_oos_summary.json").write_text(
         json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8"
     )
     if selected:
-        with (Q2_OUT / "v6_3_d01_2024q2_oos_selected_races.csv").open(
+        with (Q3_OUT / "v6_3_d01_2024q3_oos_selected_races.csv").open(
             "w", encoding="utf-8-sig", newline=""
         ) as f:
             w = csv.DictWriter(f, fieldnames=list(selected[0].keys()))
             w.writeheader()
             w.writerows(selected)
 
-    print("Q2_OOS_RESULT_BEGIN")
+    print("Q3_OOS_RESULT_BEGIN")
     print(json.dumps(result, ensure_ascii=False, indent=2))
-    print("Q2_OOS_RESULT_END")
+    print("Q3_OOS_RESULT_END")
 
 
 if __name__ == "__main__":
