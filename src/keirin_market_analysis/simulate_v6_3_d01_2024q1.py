@@ -118,3 +118,5 @@ if __name__ == "__main__":
     develop_v6_4_d02()
     from simulate_v6_4_d02_2024q1 import main as simulate_v6_4_d02_q1
     simulate_v6_4_d02_q1()
+    from inspect_v6_4_d02_q1_random3 import main as inspect_v6_4_d02_q1_random3
+    inspect_v6_4_d02_q1_random3()
