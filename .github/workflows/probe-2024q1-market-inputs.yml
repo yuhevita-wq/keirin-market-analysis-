@@ -1,14 +1,15 @@
 name: Probe 2024Q1 market inputs
 
 on:
-  push:
+  pull_request:
     paths:
       - 'scripts/probe_2024q1_market_inputs.py'
+      - 'src/keirin_market_analysis/v6_1_hm01_2024q1.py'
       - '.github/workflows/probe-2024q1-market-inputs.yml'
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   probe:
@@ -20,13 +21,8 @@ jobs:
           python-version: '3.12'
       - name: Probe CSV inputs
         run: python scripts/probe_2024q1_market_inputs.py
-      - name: Persist probe result
-        run: |
-          mkdir -p results/probes
-          cp artifacts/2024q1_market_input_probe.json results/probes/2024q1_market_input_probe.json
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add results/probes/2024q1_market_input_probe.json
-          git diff --cached --quiet && exit 0
-          git commit -m 'Store 2024Q1 market input probe result'
-          git push
+      - name: Upload probe
+        uses: actions/upload-artifact@v4
+        with:
+          name: 2024q1-market-input-probe
+          path: artifacts/2024q1_market_input_probe.json
