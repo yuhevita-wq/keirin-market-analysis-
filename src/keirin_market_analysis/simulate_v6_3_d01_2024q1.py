@@ -26,5 +26,5 @@ def main():
  OUT.mkdir(parents=True,exist_ok=True);(OUT/'v6_3_d01_summary.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8');print(json.dumps(result,ensure_ascii=False,indent=2))
 if __name__=='__main__':
  main()
- from analyze_v8_4_f05_hit_payout_q1 import main as analyze_payout
- analyze_payout()
+ from simulate_v8_5_f06_2024q1 import main as latest
+ latest()
