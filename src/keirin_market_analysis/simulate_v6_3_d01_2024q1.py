@@ -124,3 +124,5 @@ if __name__ == "__main__":
     simulate_v7_0_f01_q1()
     from simulate_v7_1_f02_2024q1 import main as simulate_v7_1_f02_q1
     simulate_v7_1_f02_q1()
+    from simulate_v7_2_f03_2024q1 import main as simulate_v7_2_f03_q1
+    simulate_v7_2_f03_q1()
