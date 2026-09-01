@@ -30,3 +30,5 @@ if __name__=='__main__':
  latest()
  from analyze_selection_final_q1 import main as diagnose_selection_final
  diagnose_selection_final()
+ from evaluate_v8_16_q1 import main as latest_v8_16
+ latest_v8_16()
