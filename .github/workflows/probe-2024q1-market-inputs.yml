@@ -23,6 +23,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            data/2024/s_class_f1_all_parts/2024_q1
+            scripts
+            src/keirin_market_analysis
+          sparse-checkout-cone-mode: true
+          show-progress: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
