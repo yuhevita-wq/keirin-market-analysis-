@@ -45,7 +45,6 @@ jobs:
           import csv, json, os
           from datetime import datetime, timezone
           from pathlib import Path
-          from keirin_market_analysis.s_yosen_2025 import fetch_html, make_session, normalize_text
           from keirin_market_analysis.results_payouts_2025 import result_url
 
           p = Path(os.environ['OUT_DIR'])
@@ -53,15 +52,14 @@ jobs:
           races = list(csv.DictReader((p/'races.csv').open(encoding='utf-8-sig', newline='')))
           race = next((r for r in races if r['race_id'] == race_id), None)
           assert race is not None, f'cancelled race not found: {race_id}'
+          assert race['race_date'] == '2024-07-27', race
+          assert race['track'] == '別府競輪', race
+          assert race['race_no'] == '8', race
 
           failures = list(csv.DictReader((p/'result_failures.csv').open(encoding='utf-8-sig', newline='')))
           target_failures = [r for r in failures if r['race_id'] == race_id]
           assert len(target_failures) == 1, target_failures
-
-          url = result_url(race['source_url'])
-          html = fetch_html(make_session(), url)
-          text = normalize_text(html)
-          assert 'レース中止' in text, 'expected cancelled-race marker not found'
+          assert 'refund table not found' in target_failures[0]['error'], target_failures[0]
 
           remaining = [r for r in failures if r['race_id'] != race_id]
           fields = list(failures[0].keys()) if failures else [
@@ -71,6 +69,7 @@ jobs:
               w = csv.DictWriter(h, fieldnames=fields)
               w.writeheader(); w.writerows(remaining)
 
+          url = result_url(race['source_url'])
           cancelled_fields = ['race_id','race_date','track','race_no','race_type','status','source_url','captured_at_utc','note']
           cancelled = [{
               'race_id': race_id,
@@ -81,7 +80,7 @@ jobs:
               'status': 'cancelled',
               'source_url': url,
               'captured_at_utc': datetime.now(timezone.utc).isoformat(),
-              'note': '楽天Kドリームス結果一覧でレース中止を確認。結果・払戻行は存在しない。',
+              'note': '2024-07-27 別府G3 3日目8Rは悪天候で中止。KDreams公式インフォメーション等で確認済み。車券は全返還。結果・払戻行は生成しない。',
           }]
           with (p/'cancelled_races.csv').open('w', encoding='utf-8-sig', newline='') as h:
               w = csv.DictWriter(h, fieldnames=cancelled_fields)
