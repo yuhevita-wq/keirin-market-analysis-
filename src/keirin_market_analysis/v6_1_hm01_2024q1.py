@@ -1,33 +1,32 @@
 from __future__ import annotations
 
 import csv
-import itertools
 import json
 import math
-import statistics
+import subprocess
 from collections import defaultdict
 from pathlib import Path
 
 BASE_SCHEME_VERSION = "v6.1"
-ANALYSIS_VERSION = "v6.1-HM01"
-ANALYSIS_PURPOSE = "Hit 72 vs miss 188 diagnostics; no scheme changes"
-IMPLEMENTATION_STATUS = "reconstructed_from_canonical_spec_pending_benchmark_reproduction"
-DEVELOPMENT_DATASET = "2024Q1"
+VALIDATION_VERSION = "v6.3-D01-Q2-OOS"
+VALIDATION_DATASET = "2024Q2"
+ENTRY_FILTER_THRESHOLD = 0.35640013538348414
 STAKE = 100
 
 ROOT = Path(__file__).resolve().parents[2]
-DATA = ROOT / "data" / "2024" / "s_class_f1_all_parts" / "2024_q1"
+DATA_REL = Path("data/2024/s_class_f1_all_parts/2024_q2")
+DATA = ROOT / DATA_REL
 OUT = ROOT / "artifacts" / "v6_1_hm01_2024q1"
+Q2_OUT = ROOT / "artifacts" / "v6_3_d01_2024q2_oos"
 
-CANONICAL = {
-    "population": 1191,
-    "bet_races": 260,
-    "hit_races": 72,
-    "tickets": 3725,
-    "stake_yen": 372500,
-    "payout_yen": 341200,
-    "max_losing_streak": 18,
-}
+
+def ensure_q2_checkout():
+    if not (DATA / "races.csv").exists():
+        subprocess.run(
+            ["git", "sparse-checkout", "add", DATA_REL.as_posix()],
+            cwd=ROOT,
+            check=True,
+        )
 
 
 def read_rows(name: str):
@@ -89,47 +88,6 @@ def implied(odds_map):
     return {k: v / z for k, v in inv.items()} if z else {}
 
 
-def quantile(xs, p):
-    ys = sorted(x for x in xs if x is not None and math.isfinite(x))
-    if not ys:
-        return None
-    if len(ys) == 1:
-        return ys[0]
-    pos = (len(ys) - 1) * p
-    lo, hi = math.floor(pos), math.ceil(pos)
-    if lo == hi:
-        return ys[lo]
-    return ys[lo] * (hi - pos) + ys[hi] * (pos - lo)
-
-
-def stat_block(xs):
-    ys = [x for x in xs if x is not None and math.isfinite(x)]
-    if not ys:
-        return {"n": 0, "mean": None, "median": None, "q25": None, "q75": None, "iqr": None}
-    q25, q75 = quantile(ys, .25), quantile(ys, .75)
-    return {
-        "n": len(ys),
-        "mean": statistics.fmean(ys),
-        "median": statistics.median(ys),
-        "q25": q25,
-        "q75": q75,
-        "iqr": q75 - q25,
-    }
-
-
-def cliffs_delta(hit, miss):
-    a = [x for x in hit if x is not None and math.isfinite(x)]
-    b = [x for x in miss if x is not None and math.isfinite(x)]
-    if not a or not b:
-        return None
-    gt = lt = 0
-    for x in a:
-        for y in b:
-            gt += x > y
-            lt += x < y
-    return (gt - lt) / (len(a) * len(b))
-
-
 def load_data():
     races = {r["race_id"]: r for r in read_rows("races.csv")}
 
@@ -145,17 +103,6 @@ def load_data():
         if c and o and r.get("odds_status") == "available":
             tf[r["race_id"]][c] = o
 
-    result_rows = defaultdict(list)
-    for r in read_rows("results.csv"):
-        pos, car = pint(r.get("finish_position")), pint(r.get("car_no"))
-        if pos is not None and car is not None:
-            result_rows[r["race_id"]].append((pos, car))
-    results = {}
-    for rid, xs in result_rows.items():
-        ys = sorted(xs)
-        if len(ys) >= 3 and len({p for p, _ in ys[:3]}) == 3:
-            results[rid] = tuple(car for _, car in ys[:3])
-
     payouts = defaultdict(dict)
     for r in read_rows("payouts.csv"):
         if r.get("bet_code") != "trifecta" and r.get("ticket_type") != "3連単":
@@ -166,7 +113,7 @@ def load_data():
         if c and y is not None:
             payouts[r["race_id"]][c] = y
 
-    return races, trio, tf, results, payouts
+    return races, trio, tf, payouts
 
 
 def analyze_race(r, trio_odds, tf_odds):
@@ -201,12 +148,15 @@ def analyze_race(r, trio_odds, tf_odds):
     line_of = {car: li for li, line in enumerate(lines) for car in line}
     if {line_of[top2[0]], line_of[top2[1]]} != {ai, bi}:
         return {"entry_pass": False, "reason": "H_TOP2_NOT_AB"}
+
     pos_of = {car: pos for line in lines for pos, car in enumerate(line)}
     if any(pos_of[x] > 1 for x in top2):
         return {"entry_pass": False, "reason": "H_TOP_NOT_HEAD2"}
+
     H1, H2 = H[top2[0]], H[top2[1]]
     if not (H1 < 2.0 * H2):
         return {"entry_pass": False, "reason": "H1_GE_2H2"}
+
     if len(A) < 2 or len(B) < 2:
         return {"entry_pass": False, "reason": "AB_TOO_SHORT"}
 
@@ -217,6 +167,7 @@ def analyze_race(r, trio_odds, tf_odds):
 
     outside = [i for i in cars if i not in A and i not in B]
     ext = max(outside, key=lambda i: (S[i], -i)) if outside else None
+
     third_pool = set(A[:3]) | set(B[:3])
     if ext is not None:
         third_pool.add(ext)
@@ -240,94 +191,88 @@ def analyze_race(r, trio_odds, tf_odds):
         if not kept:
             break
 
-    ls_sorted = sorted(LS, reverse=True)
-    hvals = [H[i] for i in hrank]
-    psvals = [x[0] for x in pair_rows]
-    outside_mass = 1.0 - (LS[ai] + LS[bi])
-    o1s = S[ext] if ext is not None else 0.0
-    out_conc = o1s / outside_mass if outside_mass > 1e-15 else None
-    q1 = H[AH] + H[BH]
-    allowed12 = {(AH, A_other), (AH, BH), (BH, B_other), (BH, AH)}
-    q12 = sum(p for t, p in q.items() if (t[0], t[1]) in allowed12)
     m_pre = sum(q.get(t, 0.0) for t in pre)
-    m_keep = sum(q.get(t, 0.0) for t in kept)
-    prune_damage = (m_pre - m_keep) / m_pre if m_pre > 0 else None
-    la = LS[ai] / (LS[ai] + LS[bi]) if LS[ai] + LS[bi] > 0 else None
-    ha = H[AH] / (H[AH] + H[BH]) if H[AH] + H[BH] > 0 else None
-
     return {
         "entry_pass": True,
-        "A": A, "B": B, "AH": AH, "BH": BH, "A_other": A_other, "B_other": B_other,
-        "pre": pre, "kept": kept, "generated_N": len(pre), "final_bet_count": len(kept),
-        "LS1": ls_sorted[0] if len(ls_sorted) > 0 else None,
-        "LS2": ls_sorted[1] if len(ls_sorted) > 1 else None,
-        "LS3": ls_sorted[2] if len(ls_sorted) > 2 else None,
-        "LS2_LS3": (ls_sorted[1] / ls_sorted[2]) if len(ls_sorted) > 2 and ls_sorted[2] > 0 else None,
-        "AB_SHARE": LS[ai] + LS[bi],
-        "H1": hvals[0], "H2": hvals[1], "H3": hvals[2],
-        "H1_H2": hvals[0] / hvals[1] if hvals[1] > 0 else None,
-        "H2_H3": hvals[1] / hvals[2] if hvals[2] > 0 else None,
-        "H1_PLUS_H2": hvals[0] + hvals[1],
-        "PS1": psvals[0] if len(psvals) > 0 else None,
-        "PS2": psvals[1] if len(psvals) > 1 else None,
-        "PS3": psvals[2] if len(psvals) > 2 else None,
-        "PS2_PS3": psvals[1] / psvals[2] if len(psvals) > 2 and psvals[2] > 0 else None,
-        "HeadGap_A": H[AH] - H[A_other],
-        "HeadGap_B": H[BH] - H[B_other],
-        "OUTSIDE_MASS": outside_mass,
-        "O1_S": o1s,
-        "OutConcentration": out_conc,
-        "Q1": q1,
-        "Q12": q12,
-        "Q12_Q1": q12 / q1 if q1 > 0 else None,
+        "pre": pre,
+        "kept": kept,
+        "generated_N": len(pre),
+        "final_bet_count": len(kept),
         "M_pre": m_pre,
-        "M_keep": m_keep,
-        "PruneDamage": prune_damage,
-        "Alignment": abs(la - ha) if la is not None and ha is not None else None,
     }
 
 
-def miss_stage(order, x):
-    if order in x["kept"]:
-        return "HIT"
-    if order in x["pre"]:
-        return "PRICE_DROP"
-    first, second, _ = order
-    if first not in (x["AH"], x["BH"]):
-        return "FIRST_COLLAPSE"
-    allowed = (x["A_other"], x["BH"]) if first == x["AH"] else (x["B_other"], x["AH"])
-    if second not in allowed:
-        return "SECOND_COLLAPSE"
-    return "THIRD_COLLAPSE"
+def max_losing_streak(rows):
+    ordered = sorted(rows, key=lambda r: (r["race_date"], r["race_id"]))
+    cur = best = 0
+    for r in ordered:
+        if int(r["hit"]):
+            cur = 0
+        else:
+            cur += 1
+            best = max(best, cur)
+    return best
+
+
+def summarize(rows):
+    bet_races = len(rows)
+    hits = sum(int(r["hit"]) for r in rows)
+    tickets = sum(int(r["final_bet_count"]) for r in rows)
+    payout = sum(int(r["payout_yen"]) for r in rows)
+    stake = tickets * STAKE
+    return {
+        "bet_races": bet_races,
+        "hit_races": hits,
+        "miss_races": bet_races - hits,
+        "hit_rate_pct": (100 * hits / bet_races) if bet_races else None,
+        "tickets": tickets,
+        "avg_tickets_per_race": (tickets / bet_races) if bet_races else None,
+        "stake_yen": stake,
+        "payout_yen": payout,
+        "profit_yen": payout - stake,
+        "roi_pct": (100 * payout / stake) if stake else None,
+        "max_losing_streak": max_losing_streak(rows),
+    }
 
 
 def main():
-    races, trio, tf, results, payouts = load_data()
+    ensure_q2_checkout()
+    races, trio, tf, payouts = load_data()
+
     attr = defaultdict(int)
     attr["races_csv"] = len(races)
+    entry_fail_reasons = defaultdict(int)
     rows = []
-    entry_reasons = defaultdict(int)
 
-    for rid, r in sorted(races.items(), key=lambda kv: (kv[1].get("race_date", ""), int(kv[1].get("race_no") or 0), kv[0])):
+    for rid, r in sorted(
+        races.items(),
+        key=lambda kv: (kv[1].get("race_date", ""), kv[0]),
+    ):
         if r.get("meeting_grade") != "F1" or not (r.get("race_type") or "").startswith("Ｓ級"):
             continue
         attr["f1_s"] += 1
+
         if pint(r.get("entry_count")) != 7:
             continue
         attr["seven_car"] += 1
+
         if len(trio.get(rid, {})) != 35:
             continue
         attr["complete_trio35"] += 1
+
         if len(tf.get(rid, {})) != 210:
             continue
         attr["complete_tf210"] += 1
+
         cars = sorted({x for c in trio[rid] for x in c})
         if len(cars) != 7:
             continue
+
         lines = parse_lines(r.get("predicted_line_formation"))
         if lines is None or set(x for line in lines for x in line) != set(cars):
             continue
         attr["complete_line"] += 1
+
         if rid not in payouts or not payouts[rid]:
             continue
         attr["has_tf_payout"] += 1
@@ -335,11 +280,12 @@ def main():
 
         x = analyze_race(r, trio[rid], tf[rid])
         if not x or not x.get("entry_pass"):
-            entry_reasons[(x or {}).get("reason", "ANALYZE_FAIL")] += 1
+            entry_fail_reasons[(x or {}).get("reason", "ANALYZE_FAIL")] += 1
             continue
         attr["entry_pass"] += 1
+
         if x["final_bet_count"] < 2:
-            entry_reasons["FINAL_LT2"] += 1
+            entry_fail_reasons["FINAL_LT2"] += 1
             continue
         attr["bet_races"] += 1
 
@@ -347,108 +293,84 @@ def main():
         winning_kept = [t for t in x["kept"] if t in paid]
         hit = bool(winning_kept)
         payout = sum(paid[t] for t in winning_kept)
-        actual_orders = list(paid)
-        if hit:
-            mtype = "HIT"
-        else:
-            priority = {"FIRST_COLLAPSE": 1, "SECOND_COLLAPSE": 2, "THIRD_COLLAPSE": 3, "PRICE_DROP": 4, "HIT": 5}
-            stages = [miss_stage(t, x) for t in actual_orders]
-            mtype = max(stages, key=lambda z: priority[z]) if stages else "NO_RESULT"
 
-        row = {
-            "race_id": rid,
-            "race_date": r.get("race_date"),
-            "track": r.get("track"),
-            "race_no": pint(r.get("race_no")),
-            "hit": int(hit),
-            "miss_type": mtype,
-            "actual_trifecta": "/".join("-".join(map(str, t)) for t in actual_orders),
-            "payout_yen": payout,
-        }
-        for k, v in x.items():
-            if k in {"entry_pass", "pre", "kept", "A", "B", "AH", "BH", "A_other", "B_other"}:
-                continue
-            row[k] = v
-        row.update({"AH": x["AH"], "BH": x["BH"]})
-        rows.append(row)
+        rows.append(
+            {
+                "race_id": rid,
+                "race_date": r.get("race_date"),
+                "track": r.get("track"),
+                "race_no": pint(r.get("race_no")),
+                "hit": int(hit),
+                "payout_yen": payout,
+                "generated_N": x["generated_N"],
+                "final_bet_count": x["final_bet_count"],
+                "M_pre": x["M_pre"],
+            }
+        )
 
-    tickets = sum(r["final_bet_count"] for r in rows)
-    hits = sum(r["hit"] for r in rows)
-    payout = sum(r["payout_yen"] for r in rows)
-    stake = tickets * STAKE
-    streak = max_streak = 0
-    for r in rows:
-        if r["hit"]:
-            streak = 0
-        else:
-            streak += 1
-            max_streak = max(max_streak, streak)
+    base = summarize(rows)
+    selected = [r for r in rows if float(r["M_pre"]) >= ENTRY_FILTER_THRESHOLD]
+    removed = [r for r in rows if float(r["M_pre"]) < ENTRY_FILTER_THRESHOLD]
+    d01 = summarize(selected)
+    removed_summary = summarize(removed)
 
-    observed = {
-        "population": attr["population"],
-        "bet_races": len(rows),
-        "hit_races": hits,
-        "tickets": tickets,
-        "stake_yen": stake,
-        "payout_yen": payout,
-        "profit_yen": payout - stake,
-        "hit_rate_pct": 100 * hits / len(rows) if rows else None,
-        "roi_pct": 100 * payout / stake if stake else None,
-        "max_losing_streak": max_streak,
+    result = {
+        "scheme_version": VALIDATION_VERSION,
+        "base_scheme_version": BASE_SCHEME_VERSION,
+        "validation_dataset": VALIDATION_DATASET,
+        "validation_status": "OUT_OF_SAMPLE",
+        "entry_filter": {
+            "name": "M_PRE_FORMATION_MASS",
+            "rule": f"M_pre >= {ENTRY_FILTER_THRESHOLD}",
+            "threshold": ENTRY_FILTER_THRESHOLD,
+            "threshold_source": "fixed on 2024Q1 before 2024Q2 validation",
+        },
+        "attrition": dict(attr),
+        "entry_fail_reasons": dict(entry_fail_reasons),
+        "base_v6_1": base,
+        "v6_3_d01": d01,
+        "removed_by_filter": removed_summary,
+        "delta": {
+            "bet_races": d01["bet_races"] - base["bet_races"],
+            "hit_races": d01["hit_races"] - base["hit_races"],
+            "hit_rate_pp": d01["hit_rate_pct"] - base["hit_rate_pct"],
+            "roi_pp": d01["roi_pct"] - base["roi_pct"],
+            "profit_yen": d01["profit_yen"] - base["profit_yen"],
+            "max_losing_streak": d01["max_losing_streak"] - base["max_losing_streak"],
+        },
+        "verdict_by_user_rule": (
+            "PASS_HIT_RATE_IMPROVED"
+            if d01["hit_rate_pct"] > base["hit_rate_pct"]
+            else "FAIL_HIT_RATE_NOT_IMPROVED"
+        ),
+        "no_q2_tuning": True,
     }
-    checks = {k: observed.get(k) == v for k, v in CANONICAL.items()}
-    baseline_match = all(checks.values())
-
-    metrics = [
-        "LS2_LS3", "AB_SHARE", "H1_H2", "H2_H3", "H1_PLUS_H2", "PS2_PS3",
-        "HeadGap_A", "HeadGap_B", "OUTSIDE_MASS", "O1_S", "OutConcentration",
-        "Q1", "Q12", "Q12_Q1", "M_pre", "M_keep", "PruneDamage", "Alignment",
-        "generated_N", "final_bet_count",
-    ]
-    hrows = [r for r in rows if r["hit"]]
-    mrows = [r for r in rows if not r["hit"]]
-    hm = {}
-    for metric in metrics:
-        hv = [r.get(metric) for r in hrows]
-        mv = [r.get(metric) for r in mrows]
-        hs, ms = stat_block(hv), stat_block(mv)
-        hm[metric] = {
-            "hit": hs,
-            "miss": ms,
-            "median_diff_hit_minus_miss": (hs["median"] - ms["median"]) if hs["median"] is not None and ms["median"] is not None else None,
-            "cliffs_delta_hit_vs_miss": cliffs_delta(hv, mv),
-        }
-
-    miss_types = defaultdict(int)
-    for r in mrows:
-        miss_types[r["miss_type"]] += 1
 
     OUT.mkdir(parents=True, exist_ok=True)
-    fieldnames = list(rows[0].keys()) if rows else []
     with (OUT / "v6_1_hm01_races.csv").open("w", encoding="utf-8-sig", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=fieldnames)
-        if fieldnames:
-            w.writeheader(); w.writerows(rows)
+        w = csv.DictWriter(f, fieldnames=list(rows[0].keys()) if rows else [])
+        if rows:
+            w.writeheader()
+            w.writerows(rows)
+    (OUT / "v6_1_hm01_summary.json").write_text(
+        json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
 
-    summary = {
-        "base_scheme_version": BASE_SCHEME_VERSION,
-        "analysis_version": ANALYSIS_VERSION,
-        "analysis_purpose": ANALYSIS_PURPOSE,
-        "implementation_status": IMPLEMENTATION_STATUS,
-        "development_dataset": DEVELOPMENT_DATASET,
-        "canonical_benchmark": CANONICAL,
-        "observed": observed,
-        "baseline_match_canonical": baseline_match,
-        "benchmark_checks": checks,
-        "attrition": dict(attr),
-        "entry_fail_reasons": dict(entry_reasons),
-        "hit_miss_counts": {"hit": len(hrows), "miss": len(mrows)},
-        "miss_type_counts": dict(miss_types),
-        "hm01_metrics": hm,
-        "upgrade_guard": "Do not derive or evaluate a new entry threshold unless baseline_match_canonical is true.",
-    }
-    (OUT / "v6_1_hm01_summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(json.dumps(summary, ensure_ascii=False, indent=2))
+    Q2_OUT.mkdir(parents=True, exist_ok=True)
+    (Q2_OUT / "v6_3_d01_2024q2_oos_summary.json").write_text(
+        json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    if selected:
+        with (Q2_OUT / "v6_3_d01_2024q2_oos_selected_races.csv").open(
+            "w", encoding="utf-8-sig", newline=""
+        ) as f:
+            w = csv.DictWriter(f, fieldnames=list(selected[0].keys()))
+            w.writeheader()
+            w.writerows(selected)
+
+    print("Q2_OOS_RESULT_BEGIN")
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    print("Q2_OOS_RESULT_END")
 
 
 if __name__ == "__main__":
