@@ -34,3 +34,4 @@ if __name__=='__main__':
  from simulate_v7_2_f03_2024q1 import main as x6;x6()
  from simulate_v7_3_f04_2024q1 import main as x7;x7()
  from simulate_v7_4_f05_2024q1 import main as x8;x8()
+ from simulate_v7_5_f06_2024q1 import main as x9;x9()
