@@ -6,7 +6,7 @@ import re
 import time
 from collections import Counter
 from dataclasses import dataclass
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 from bs4 import BeautifulSoup
@@ -18,6 +18,15 @@ G3_MARKER_RE = re.compile(r"(?:Ｇ３|G3|ＧⅢ|GIII)", flags=re.IGNORECASE)
 
 
 @dataclass(frozen=True)
+class G3Meeting:
+    track: str
+    venue_code: str
+    slug: str
+    start: date
+    end: date
+
+
+@dataclass(frozen=True)
 class G3RaceRef:
     discovered_on: str
     race_no: int
@@ -25,83 +34,46 @@ class G3RaceRef:
     url: str
 
 
-def looks_like_race_type(label: str) -> bool:
-    return bool(re.match(r"^(?:Ｓ級|S級|Ａ級|A級|Ｌ級|L級)", label))
+# 2024 Q2 G3 schedule, taken from the published Rakuten KDreams 2024 GIII schedule.
+# Using meeting IDs avoids crawling F1/F2 race-detail pages.
+G3_MEETINGS_2024_Q2 = (
+    G3Meeting("川崎", "34", "kawasaki", date(2024, 4, 4), date(2024, 4, 7)),
+    G3Meeting("高知", "74", "kochi", date(2024, 4, 11), date(2024, 4, 14)),
+    G3Meeting("西武園", "26", "seibuen", date(2024, 4, 20), date(2024, 4, 23)),
+    G3Meeting("武雄", "84", "takeo", date(2024, 5, 11), date(2024, 5, 14)),
+    G3Meeting("函館", "11", "hakodate", date(2024, 5, 16), date(2024, 5, 19)),
+    G3Meeting("前橋", "22", "maebashi", date(2024, 6, 1), date(2024, 6, 4)),
+    G3Meeting("函館", "11", "hakodate", date(2024, 6, 6), date(2024, 6, 9)),
+    G3Meeting("奈良", "53", "nara", date(2024, 6, 6), date(2024, 6, 9)),
+    G3Meeting("久留米", "83", "kurume", date(2024, 6, 22), date(2024, 6, 25)),
+    G3Meeting("取手", "23", "toride", date(2024, 6, 27), date(2024, 6, 30)),
+)
 
 
-def discover_g3_races_from_daily_html(
-    html: str,
-    daily_url: str,
-    discovered_on: str,
-) -> list[G3RaceRef]:
-    """Discover race-detail links only from columns marked G3 on the daily page.
+def race_url(meeting: G3Meeting, day_index: int, race_no: int) -> str:
+    race_id = (
+        f"{meeting.venue_code}{meeting.start:%Y%m%d}"
+        f"{day_index:02d}{race_no:04d}"
+    )
+    return f"https://keirin.kdreams.jp/{meeting.slug}/racedetail/{race_id}/?pageType=result"
 
-    The KDreams daily schedule is column-oriented by meeting.  We first identify
-    columns containing an explicit G3 marker, then inspect race labels and links
-    only in those columns.  This prevents fetching F1/F2 race-detail pages merely
-    to discard them later.
-    """
+
+def detect_race_type(html: str, expected_race_no: int) -> str:
     soup = BeautifulSoup(html, "lxml")
-    found: dict[str, G3RaceRef] = {}
-
-    for table in soup.find_all("table"):
-        rows = table.find_all("tr")
-        expanded_rows = [base.expand_row_cells(row) for row in rows]
-        column_count = max((len(cells) for cells in expanded_rows), default=0)
-        if column_count == 0:
-            continue
-
-        g3_indexes: set[int] = set()
-        for index in range(column_count):
-            for cells in expanded_rows:
-                if index >= len(cells):
-                    continue
-                text = base.normalize_text(cells[index].get_text(" ", strip=True))
-                if G3_MARKER_RE.search(text):
-                    g3_indexes.add(index)
-                    break
-
-        if not g3_indexes:
-            continue
-
-        for row_index, expanded in enumerate(expanded_rows):
-            if not expanded:
-                continue
-            labels = [base.normalize_text(cell.get_text(" ", strip=True)) for cell in expanded]
-            target_indexes = [
-                index
-                for index, label in enumerate(labels)
-                if index in g3_indexes and looks_like_race_type(label)
-            ]
-
-            for target_index in target_indexes:
-                race_type = labels[target_index]
-                href = None
-                for later_cells in expanded_rows[row_index + 1 :]:
-                    if target_index >= len(later_cells):
-                        continue
-                    for link in later_cells[target_index].find_all("a", href=True):
-                        candidate = str(link.get("href", ""))
-                        if "/racedetail/" in candidate:
-                            href = candidate
-                            break
-                    if href:
-                        break
-
-                if href is None:
-                    continue
-
-                url = base.canonical_race_url(daily_url, href)
-                match = re.search(r"/racedetail/(\d{16})/", url)
-                race_no = int(match.group(1)[-4:]) if match else target_index + 1
-                found[url] = G3RaceRef(
-                    discovered_on=discovered_on,
-                    race_no=race_no,
-                    race_type=race_type,
-                    url=url,
-                )
-
-    return sorted(found.values(), key=lambda item: (item.discovered_on, item.url, item.race_no))
+    title = base.normalize_text(soup.title.get_text(" ", strip=True) if soup.title else "")
+    match = re.search(
+        rf"(?<!\d){expected_race_no}R\s*([ＳSＡAＬL]級[^\s|]+)",
+        title,
+    )
+    if not match:
+        text = base.normalize_text(soup.get_text(" ", strip=True))
+        match = re.search(
+            rf"(?<!\d){expected_race_no}R\s*([ＳSＡAＬL]級[^\s|]+)",
+            text,
+        )
+    if not match:
+        raise base.CollectorError(f"race type not found for {expected_race_no}R")
+    return match.group(1)
 
 
 def extract_entries_for_ref(html: str, ref: G3RaceRef):
@@ -120,60 +92,90 @@ def collect(start: date, end: date, out_dir: Path, sleep_seconds: float) -> dict
     if start.year != 2024 or end.year != 2024:
         raise ValueError("this G3 collector is intentionally restricted to 2024")
 
+    meetings = [m for m in G3_MEETINGS_2024_Q2 if m.end >= start and m.start <= end]
+    if not meetings:
+        raise ValueError("no configured 2024 Q2 G3 meetings overlap the requested window")
+
     session = base.make_session()
     races: list[dict[str, object]] = []
     entries: list[dict[str, object]] = []
     failures: list[dict[str, object]] = []
-    discovered: dict[str, G3RaceRef] = {}
+    candidate_g3_races = 0
+    not_found_candidates = 0
     skipped_outside_window = 0
-    days_with_g3 = 0
+    meeting_race_counts: Counter[str] = Counter()
 
-    for day in base.daterange(start, end):
-        daily_url = base.KDREAMS_DAILY.format(year=day.year, month=day.month, day=day.day)
-        try:
-            html = base.fetch_html(session, daily_url)
-            refs = discover_g3_races_from_daily_html(html, daily_url, day.isoformat())
-            if refs:
-                days_with_g3 += 1
-            for ref in refs:
-                discovered.setdefault(ref.url, ref)
-        except Exception as exc:
-            failures.append(
-                {
-                    "stage": "daily_discovery",
-                    "discovered_on": day.isoformat(),
-                    "url": daily_url,
-                    "error": f"{type(exc).__name__}: {exc}",
-                }
-            )
-        if sleep_seconds:
-            time.sleep(sleep_seconds)
-
-    for ref in sorted(discovered.values(), key=lambda item: (item.discovered_on, item.url)):
-        try:
-            html = base.fetch_html(session, ref.url)
-            race_meta, race_entries = extract_entries_for_ref(html, ref)
-            actual_date = date.fromisoformat(str(race_meta["race_date"]))
-            if actual_date < start or actual_date > end:
-                skipped_outside_window += 1
+    for meeting in meetings:
+        meeting_key = f"{meeting.track}|{meeting.start.isoformat()}"
+        days = (meeting.end - meeting.start).days + 1
+        for offset in range(days):
+            race_date = meeting.start + timedelta(days=offset)
+            if race_date < start or race_date > end:
+                skipped_outside_window += 12
                 continue
+            day_index = offset + 1
 
-            race_meta["meeting_grade"] = "G3"
-            for entry in race_entries:
-                entry["meeting_grade"] = "G3"
-            races.append(race_meta)
-            entries.extend(race_entries)
-        except Exception as exc:
-            failures.append(
-                {
-                    "stage": "race_parse",
-                    "discovered_on": ref.discovered_on,
-                    "url": ref.url,
-                    "error": f"{type(exc).__name__}: {exc}",
-                }
-            )
-        if sleep_seconds:
-            time.sleep(sleep_seconds)
+            # Standard KDreams daytime/G3 cards have at most 12 races. Probe only
+            # this known G3 meeting's 12 deterministic race IDs; a genuine 404
+            # simply means that race number was not offered that day.
+            for race_no in range(1, 13):
+                url = race_url(meeting, day_index, race_no)
+                try:
+                    html = base.fetch_html(session, url)
+                except Exception as exc:
+                    status = getattr(getattr(exc, "response", None), "status_code", None)
+                    if status == 404:
+                        not_found_candidates += 1
+                        continue
+                    failures.append(
+                        {
+                            "stage": "race_fetch",
+                            "discovered_on": race_date.isoformat(),
+                            "url": url,
+                            "error": f"{type(exc).__name__}: {exc}",
+                        }
+                    )
+                    continue
+
+                try:
+                    soup = BeautifulSoup(html, "lxml")
+                    page_text = base.normalize_text(soup.get_text(" ", strip=True))
+                    if not G3_MARKER_RE.search(page_text):
+                        raise base.CollectorError("page is not marked G3")
+
+                    race_type = detect_race_type(html, race_no)
+                    ref = G3RaceRef(
+                        discovered_on=race_date.isoformat(),
+                        race_no=race_no,
+                        race_type=race_type,
+                        url=url,
+                    )
+                    race_meta, race_entries = extract_entries_for_ref(html, ref)
+                    actual_date = date.fromisoformat(str(race_meta["race_date"]))
+                    if actual_date != race_date:
+                        raise base.CollectorError(
+                            f"race date mismatch expected={race_date} actual={actual_date}"
+                        )
+
+                    race_meta["meeting_grade"] = "G3"
+                    for entry in race_entries:
+                        entry["meeting_grade"] = "G3"
+                    races.append(race_meta)
+                    entries.extend(race_entries)
+                    candidate_g3_races += 1
+                    meeting_race_counts[meeting_key] += 1
+                except Exception as exc:
+                    failures.append(
+                        {
+                            "stage": "race_parse",
+                            "discovered_on": race_date.isoformat(),
+                            "url": url,
+                            "error": f"{type(exc).__name__}: {exc}",
+                        }
+                    )
+
+                if sleep_seconds:
+                    time.sleep(sleep_seconds)
 
     races.sort(key=lambda row: (str(row["race_date"]), str(row["track"]), int(row["race_no"])))
     entries.sort(
@@ -210,17 +212,19 @@ def collect(start: date, end: date, out_dir: Path, sleep_seconds: float) -> dict
         "end_date": end.isoformat(),
         "captured_at_utc": datetime.now(timezone.utc).isoformat(),
         "source": "楽天Kドリームス 公開レース情報",
-        "daily_source_template": base.KDREAMS_DAILY,
-        "candidate_g3_races": len(discovered),
+        "meeting_source": "楽天Kドリームス 2024年GIII開催スケジュール",
+        "configured_meetings": len(meetings),
+        "candidate_g3_races": candidate_g3_races,
         "parsed_g3_races": len(races),
         "entry_rows": len(entries),
-        "days_with_g3": days_with_g3,
+        "not_found_candidate_urls": not_found_candidates,
         "skipped_outside_window": skipped_outside_window,
         "failures": len(failures),
+        "meeting_race_counts": dict(sorted(meeting_race_counts.items())),
         "race_type_counts": dict(sorted(Counter(str(r["race_type"]) for r in races).items())),
         "entry_count_counts": dict(sorted(Counter(str(r["entry_count"]) for r in races).items())),
         "tracks": sorted({str(r["track"]) for r in races}),
-        "definition_note": "楽天Kドリームス日別開催一覧でG3と明示された開催列だけを先に選別し、その開催内の全レースを保存する。F1/F2等のレース詳細ページは取得しない。級班・車立て数では絞らない。",
+        "definition_note": "楽天Kドリームスの2024年GIII開催スケジュールで確定したQ2のG3開催IDだけを使用し、その開催のレース詳細だけを取得する。F1/F2等のレース詳細ページは取得しない。級班・車立て数では絞らない。",
     }
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "summary.json").write_text(
@@ -231,7 +235,7 @@ def collect(start: date, end: date, out_dir: Path, sleep_seconds: float) -> dict
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Collect all races from G3 meetings")
+    parser = argparse.ArgumentParser(description="Collect all races from 2024 Q2 G3 meetings")
     parser.add_argument("--start-date", required=True)
     parser.add_argument("--end-date", required=True)
     parser.add_argument("--out-dir", required=True)
