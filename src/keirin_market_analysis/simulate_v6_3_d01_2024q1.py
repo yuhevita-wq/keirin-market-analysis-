@@ -26,6 +26,7 @@ def main():
  OUT.mkdir(parents=True,exist_ok=True);(OUT/'v6_3_d01_summary.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8');print(json.dumps(result,ensure_ascii=False,indent=2))
 if __name__=='__main__':
  main()
- # audit-only rerun: v8.9 scheme logic unchanged; print representative bought-race samples.
  from simulate_v8_9_f10_2024q1 import main as latest
  latest()
+ from analyze_v8_9_f10_price_compression_q1 import main as analyze_price_compression
+ analyze_price_compression()
