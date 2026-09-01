@@ -35,20 +35,20 @@ class G3RaceRef:
     url: str
 
 
-# 2024 Q3 G3 schedule, verified against the published 2024 grade-race schedule.
-# Using deterministic meeting IDs avoids crawling F1/F2 race-detail pages.
-G3_MEETINGS_2024_Q3 = (
-    G3Meeting("小松島", "73", "komatsushima", date(2024, 7, 4), date(2024, 7, 7)),
-    G3Meeting("佐世保", "85", "sasebo", date(2024, 7, 16), date(2024, 7, 18), 9),
-    G3Meeting("福井", "51", "fukui", date(2024, 7, 20), date(2024, 7, 23)),
-    G3Meeting("別府", "86", "beppu", date(2024, 7, 25), date(2024, 7, 28)),
-    G3Meeting("松戸", "31", "matsudo", date(2024, 8, 1), date(2024, 8, 4)),
-    G3Meeting("松山", "75", "matsuyama", date(2024, 8, 8), date(2024, 8, 11)),
-    G3Meeting("小田原", "36", "odawara", date(2024, 8, 24), date(2024, 8, 27)),
-    G3Meeting("富山", "46", "toyama", date(2024, 8, 29), date(2024, 9, 1)),
-    G3Meeting("向日町", "54", "mukomachi", date(2024, 9, 5), date(2024, 9, 8)),
-    G3Meeting("岐阜", "43", "gifu", date(2024, 9, 21), date(2024, 9, 24)),
-    G3Meeting("青森", "12", "aomori", date(2024, 9, 26), date(2024, 9, 29)),
+# 2024 Q4 G3 schedule, verified against KEIRIN.JP / KDreams published schedules.
+# Using deterministic meeting IDs avoids crawling G1/G2/GP/F1/F2 race-detail pages.
+G3_MEETINGS_2024_Q4 = (
+    G3Meeting("熊本", "87", "kumamoto", date(2024, 10, 3), date(2024, 10, 6)),
+    G3Meeting("川崎", "34", "kawasaki", date(2024, 10, 11), date(2024, 10, 14)),
+    G3Meeting("別府", "86", "beppu", date(2024, 10, 11), date(2024, 10, 14)),
+    G3Meeting("京王閣", "27", "keiokaku", date(2024, 10, 26), date(2024, 10, 29)),
+    G3Meeting("防府", "63", "hofu", date(2024, 11, 1), date(2024, 11, 4)),
+    G3Meeting("四日市", "48", "yokkaichi", date(2024, 11, 7), date(2024, 11, 10)),
+    G3Meeting("松阪", "47", "matsusaka", date(2024, 11, 14), date(2024, 11, 17)),
+    G3Meeting("大垣", "44", "ogaki", date(2024, 11, 30), date(2024, 12, 3)),
+    G3Meeting("松山", "75", "matsuyama", date(2024, 12, 5), date(2024, 12, 8)),
+    G3Meeting("玉野", "61", "tamano", date(2024, 12, 12), date(2024, 12, 15)),
+    G3Meeting("佐世保", "85", "sasebo", date(2024, 12, 19), date(2024, 12, 22)),
 )
 
 
@@ -94,9 +94,9 @@ def collect(start: date, end: date, out_dir: Path, sleep_seconds: float) -> dict
     if start.year != 2024 or end.year != 2024:
         raise ValueError("this G3 collector is intentionally restricted to 2024")
 
-    meetings = [m for m in G3_MEETINGS_2024_Q3 if m.end >= start and m.start <= end]
+    meetings = [m for m in G3_MEETINGS_2024_Q4 if m.end >= start and m.start <= end]
     if not meetings:
-        raise ValueError("no configured 2024 Q3 G3 meetings overlap the requested window")
+        raise ValueError("no configured 2024 Q4 G3 meetings overlap the requested window")
 
     session = base.make_session()
     races: list[dict[str, object]] = []
@@ -223,7 +223,7 @@ def collect(start: date, end: date, out_dir: Path, sleep_seconds: float) -> dict
         "race_type_counts": dict(sorted(Counter(str(r["race_type"]) for r in races).items())),
         "entry_count_counts": dict(sorted(Counter(str(r["entry_count"]) for r in races).items())),
         "tracks": sorted({str(r["track"]) for r in races}),
-        "definition_note": "2024年度グレードレース開催日程で確定したQ3のG3開催IDだけを使用し、その開催の楽天Kドリームスレース詳細だけを取得する。G1/G2/F1/F2等は取得しない。級班・車立て数では絞らない。",
+        "definition_note": "2024年度グレードレース開催日程で確定したQ4のG3開催IDだけを使用し、その開催の楽天Kドリームスレース詳細だけを取得する。G1/G2/GP/F1/F2等は取得しない。級班・車立て数では絞らない。取得不能・中止・特殊レース等はfailureとして記録してスキップし、他レースの収集を継続する。",
     }
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "summary.json").write_text(
@@ -234,7 +234,7 @@ def collect(start: date, end: date, out_dir: Path, sleep_seconds: float) -> dict
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Collect all races from 2024 Q3 G3 meetings")
+    parser = argparse.ArgumentParser(description="Collect all races from 2024 Q4 G3 meetings")
     parser.add_argument("--start-date", required=True)
     parser.add_argument("--end-date", required=True)
     parser.add_argument("--out-dir", required=True)
