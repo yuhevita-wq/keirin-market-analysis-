@@ -26,15 +26,5 @@ def main():
  OUT.mkdir(parents=True,exist_ok=True);(OUT/'v6_3_d01_summary.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8');print(json.dumps(result,ensure_ascii=False,indent=2))
 if __name__=='__main__':
  main()
- from evaluate_v8_15_q1 import main as latest
- latest()
- from analyze_selection_final_q1 import main as diagnose_selection_final
- diagnose_selection_final()
- from evaluate_v8_16_q1 import main as latest_v8_16
- latest_v8_16()
- from evaluate_v8_17_q1 import main as latest_v8_17
- latest_v8_17()
- from evaluate_v8_17_q2_oos import main as latest_v8_17_q2
- latest_v8_17_q2()
  from analyze_semifinal_rebuild_q1q2 import main as semifinal_rebuild
  semifinal_rebuild()
