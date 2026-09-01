@@ -28,3 +28,5 @@ if __name__=='__main__':
  main()
  from evaluate_v8_13_q1 import main as latest
  latest()
+ from analyze_general_anchor_spread_2024q1 import main as general_anchor
+ general_anchor()
