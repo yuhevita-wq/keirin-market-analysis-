@@ -1,6 +1,13 @@
 name: Probe 2024Q1 market inputs
 
 on:
+  push:
+    branches:
+      - 'analysis/v6-1-hm01-2024q1'
+    paths:
+      - 'scripts/probe_2024q1_market_inputs.py'
+      - 'src/keirin_market_analysis/v6_1_hm01_2024q1.py'
+      - '.github/workflows/probe-2024q1-market-inputs.yml'
   pull_request:
     paths:
       - 'scripts/probe_2024q1_market_inputs.py'
