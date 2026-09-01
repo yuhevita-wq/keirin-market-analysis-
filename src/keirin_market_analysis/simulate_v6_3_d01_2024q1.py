@@ -116,3 +116,5 @@ if __name__ == "__main__":
     main()
     from develop_v6_4_d02_q2q3 import main as develop_v6_4_d02
     develop_v6_4_d02()
+    from simulate_v6_4_d02_2024q1 import main as simulate_v6_4_d02_q1
+    simulate_v6_4_d02_q1()
