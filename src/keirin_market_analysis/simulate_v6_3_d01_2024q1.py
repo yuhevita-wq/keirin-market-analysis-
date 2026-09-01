@@ -36,3 +36,5 @@ if __name__=='__main__':
  latest_v8_17()
  from evaluate_v8_17_q2_oos import main as latest_v8_17_q2
  latest_v8_17_q2()
+ from analyze_semifinal_rebuild_q1q2 import main as semifinal_rebuild
+ semifinal_rebuild()
