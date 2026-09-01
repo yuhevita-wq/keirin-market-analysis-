@@ -122,3 +122,5 @@ if __name__ == "__main__":
     inspect_v6_4_d02_q1_random3()
     from simulate_v7_0_f01_2024q1 import main as simulate_v7_0_f01_q1
     simulate_v7_0_f01_q1()
+    from simulate_v7_1_f02_2024q1 import main as simulate_v7_1_f02_q1
+    simulate_v7_1_f02_q1()
