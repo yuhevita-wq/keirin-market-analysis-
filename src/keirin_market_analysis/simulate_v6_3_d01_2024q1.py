@@ -26,5 +26,5 @@ def main():
  OUT.mkdir(parents=True,exist_ok=True);(OUT/'v6_3_d01_summary.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8');print(json.dumps(result,ensure_ascii=False,indent=2))
 if __name__=='__main__':
  main()
- from analyze_semifinal_rebuild_q1q2 import main as semifinal_rebuild
- semifinal_rebuild()
+ from analyze_semifinal_h_adaptive_q1q2 import main as semifinal_h_adaptive
+ semifinal_h_adaptive()
