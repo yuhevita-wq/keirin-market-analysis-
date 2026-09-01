@@ -28,4 +28,5 @@ if __name__=='__main__':
  main()
  from evaluate_v8_15_q1 import main as latest
  latest()
-# rerun full 2024Q1 v8.15-F16 2026-09-02
+ from analyze_selection_final_q1 import main as diagnose_selection_final
+ diagnose_selection_final()
