@@ -34,7 +34,6 @@ def to_float(x):
 
 
 def max_losing_streak(rows):
-    # Canonical chronology used by the handoff benchmark: race date, then race_id.
     ordered = sorted(rows, key=lambda r: (r["race_date"], r["race_id"]))
     cur = best = 0
     for r in ordered:
@@ -71,19 +70,14 @@ def main():
     with IN_CSV.open("r", encoding="utf-8-sig", newline="") as f:
         base = list(csv.DictReader(f))
 
-    selected = []
-    removed = []
+    selected, removed = [], []
     for r in base:
         m = to_float(r.get("M_pre"))
-        if m is not None and m >= ENTRY_FILTER_THRESHOLD:
-            selected.append(r)
-        else:
-            removed.append(r)
+        (selected if m is not None and m >= ENTRY_FILTER_THRESHOLD else removed).append(r)
 
     base_summary = summarize(base)
     d01_summary = summarize(selected)
     removed_summary = summarize(removed)
-
     result = {
         "scheme_version": SCHEME_VERSION,
         "base_scheme_version": BASE_SCHEME_VERSION,
@@ -96,29 +90,29 @@ def main():
             "threshold": ENTRY_FILTER_THRESHOLD,
             "derivation": ENTRY_FILTER_DERIVATION,
         },
-        "unchanged_components": ["v6.1 entry prerequisites", "AH/BH definition", "trifecta formation", "iterative odds>N trimming", "100 yen per retained ticket"],
+        "unchanged_components": [
+            "v6.1 entry prerequisites",
+            "AH/BH definition",
+            "trifecta formation",
+            "iterative odds>N trimming",
+            "100 yen per retained ticket",
+        ],
         "base_v6_1": base_summary,
         "v6_3_d01": d01_summary,
         "removed_by_filter": removed_summary,
-        "delta": {
-            "bet_races": d01_summary["bet_races"] - base_summary["bet_races"],
-            "hit_races": d01_summary["hit_races"] - base_summary["hit_races"],
-            "hit_rate_pp": d01_summary["hit_rate_pct"] - base_summary["hit_rate_pct"],
-            "roi_pp": d01_summary["roi_pct"] - base_summary["roi_pct"],
-            "profit_yen": d01_summary["profit_yen"] - base_summary["profit_yen"],
-            "max_losing_streak": d01_summary["max_losing_streak"] - base_summary["max_losing_streak"],
-        },
-        "development_warning": "2024Q1 was used to derive the threshold. D01 results on 2024Q1 are development results, not out-of-sample validation.",
+        "development_warning": "2024Q1 was used to derive D01. This output remains development-only.",
     }
-
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "v6_3_d01_summary.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     if selected:
         with (OUT / "v6_3_d01_selected_races.csv").open("w", encoding="utf-8-sig", newline="") as f:
             w = csv.DictWriter(f, fieldnames=list(selected[0].keys()))
-            w.writeheader(); w.writerows(selected)
+            w.writeheader()
+            w.writerows(selected)
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
     main()
+    from develop_v6_4_d02_q2q3 import main as develop_v6_4_d02
+    develop_v6_4_d02()
