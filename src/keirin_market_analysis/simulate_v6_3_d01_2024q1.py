@@ -28,3 +28,5 @@ if __name__=='__main__':
  main()
  from evaluate_v8_12_q1 import main as latest
  latest()
+ from analyze_general_rebuild_2024q1 import main as general_diag
+ general_diag()
