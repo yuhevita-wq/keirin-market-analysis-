@@ -1,0 +1,330 @@
+name: Collect G3 2023 then 2022 non-girls and persist
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - g3-2023-2022-annual
+    paths:
+      - '.github/workflows/collect-g3-2023-then-2022.yml'
+
+permissions:
+  actions: read
+  contents: write
+
+concurrency:
+  group: g3-2023-then-2022-annual
+  cancel-in-progress: false
+
+env:
+  RELEASE_TAG: grade-race-databank-2026-09-02
+
+jobs:
+  collect_2023:
+    name: 2023-${{ matrix.quarter }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - quarter: q1
+            start: '2023-01-01'
+            end: '2023-03-31'
+            expected_meetings: 10
+          - quarter: q2
+            start: '2023-04-01'
+            end: '2023-06-30'
+            expected_meetings: 11
+          - quarter: q3
+            start: '2023-07-01'
+            end: '2023-09-30'
+            expected_meetings: 12
+          - quarter: q4
+            start: '2023-10-01'
+            end: '2023-12-31'
+            expected_meetings: 11
+    env:
+      YEAR: '2023'
+      QUARTER: ${{ matrix.quarter }}
+      START_DATE: ${{ matrix.start }}
+      END_DATE: ${{ matrix.end }}
+      EXPECTED_MEETINGS: ${{ matrix.expected_meetings }}
+      OUT_DIR: data/2023/g3_${{ matrix.quarter }}_non_girls
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install scraper dependencies
+        run: python -m pip install -q --disable-pip-version-check -e '.[scrape]'
+      - name: Collect 2023 G3 race cards
+        run: |
+          python -m keirin_market_analysis.g3_all_2022_2023 \
+            --year "$YEAR" \
+            --start-date "$START_DATE" \
+            --end-date "$END_DATE" \
+            --out-dir "$OUT_DIR" \
+            --sleep 0.05 \
+            --allow-failures
+      - name: Validate G3-only non-girls base scope
+        run: |
+          python - <<'PY'
+          import csv, json, os
+          from pathlib import Path
+          p=Path(os.environ['OUT_DIR'])
+          races=list(csv.DictReader((p/'races.csv').open(encoding='utf-8-sig')))
+          entries=list(csv.DictReader((p/'entries.csv').open(encoding='utf-8-sig')))
+          s=json.loads((p/'summary.json').read_text(encoding='utf-8'))
+          assert races, s
+          assert len({r['race_id'] for r in races}) == len(races), 'duplicate race_id'
+          assert all(r['meeting_grade']=='G3' for r in races), 'non-G3 race leaked'
+          assert all(e['meeting_grade']=='G3' for e in entries), 'non-G3 entry leaked'
+          assert all('ガールズ' not in r['race_type'] and '女子' not in r['race_type'] and 'パールカップ' not in r['race_type'] for r in races), 'girls race leaked'
+          assert all(not str(e.get('class','')).upper().replace('Ｌ','L').startswith('L') for e in entries), 'L-class entry leaked'
+          assert s['configured_meetings'] == int(os.environ['EXPECTED_MEETINGS']), s
+          assert s['parsed_g3_races'] == len(races)
+          assert s['entry_rows'] == len(entries)
+          print(json.dumps(s, ensure_ascii=False, indent=2))
+          PY
+      - name: Enrich KDreams predicted line formation
+        run: |
+          python -m keirin_market_analysis.line_formation_2025 \
+            --data-dir "$OUT_DIR" \
+            --sleep 0.05 \
+            --allow-failures
+      - name: Extract results and payouts
+        run: |
+          python -m keirin_market_analysis.results_payouts_2025 \
+            --data-dir "$OUT_DIR" \
+            --sleep 0.05 \
+            --allow-failures
+      - name: Collect historical final trifecta and trio odds
+        run: |
+          python -m keirin_market_analysis.historical_final_odds \
+            --data-dir "$OUT_DIR" \
+            --workers 6 \
+            --sleep 0.03
+      - name: Build quarter report
+        if: always()
+        run: |
+          python - <<'PY'
+          import csv, json, os
+          from pathlib import Path
+          p=Path(os.environ['OUT_DIR']); p.mkdir(parents=True, exist_ok=True)
+          def rows(name):
+              f=p/name
+              if not f.exists(): return None
+              with f.open(encoding='utf-8-sig', newline='') as h: return sum(1 for _ in csv.reader(h))-1
+          def js(name):
+              f=p/name
+              return json.loads(f.read_text(encoding='utf-8')) if f.exists() else None
+          report={
+              'target':f"{os.environ['YEAR']} G3 non-girls {os.environ['QUARTER']}",
+              'failure_policy':'Girls/L-class races are excluded. Individual fetch/parse/line/result/odds failures are recorded and skipped; the quarter continues.',
+              'row_counts':{
+                  'races':rows('races.csv'),'entries':rows('entries.csv'),'excluded_girls':rows('excluded_girls.csv'),
+                  'results':rows('results.csv'),'payouts':rows('payouts.csv'),
+                  'trifecta_final_odds':rows('trifecta_final_odds.csv'),'trio_final_odds':rows('trio_final_odds.csv')},
+              'base_summary':js('summary.json'),'line_summary':js('line_summary.json'),
+              'result_summary':js('result_summary.json'),'odds_summary':js('odds_summary.json')}
+          (p/f"{os.environ['QUARTER']}_report.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          PY
+      - name: Upload 2023 quarter dataset
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: g3-all-2023-${{ matrix.quarter }}-non-girls
+          retention-days: 7
+          if-no-files-found: error
+          path: ${{ env.OUT_DIR }}
+
+  archive_2023:
+    name: Persist 2023 to databank release
+    needs: collect_2023
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Download all 2023 quarter artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: g3-all-2023-*-non-girls
+          path: archive
+      - name: Zip and checksum 2023 quarters
+        run: |
+          set -euo pipefail
+          find archive -mindepth 1 -maxdepth 1 -type d -name 'g3-all-2023-*-non-girls' -print0 | while IFS= read -r -d '' d; do
+            zip -qr "${d}.zip" "$d"
+          done
+          test "$(find archive -maxdepth 1 -type f -name 'g3-all-2023-*-non-girls.zip' | wc -l)" -eq 4
+          sha256sum archive/g3-all-2023-*-non-girls.zip > archive/g3-2023-sha256.txt
+          cat archive/g3-2023-sha256.txt
+      - name: Upload 2023 to persistent release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null
+          gh release upload "$RELEASE_TAG" archive/g3-all-2023-*-non-girls.zip archive/g3-2023-sha256.txt --clobber --repo "$GITHUB_REPOSITORY"
+      - name: Verify 2023 release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          assets="$(gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name')"
+          for q in q1 q2 q3 q4; do grep -qx "g3-all-2023-${q}-non-girls.zip" <<<"$assets"; done
+          grep -qx 'g3-2023-sha256.txt' <<<"$assets"
+
+  collect_2022:
+    name: 2022-${{ matrix.quarter }}
+    needs: archive_2023
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - quarter: q1
+            start: '2022-01-01'
+            end: '2022-03-31'
+            expected_meetings: 11
+          - quarter: q2
+            start: '2022-04-01'
+            end: '2022-06-30'
+            expected_meetings: 10
+          - quarter: q3
+            start: '2022-07-01'
+            end: '2022-09-30'
+            expected_meetings: 11
+          - quarter: q4
+            start: '2022-10-01'
+            end: '2022-12-31'
+            expected_meetings: 11
+    env:
+      YEAR: '2022'
+      QUARTER: ${{ matrix.quarter }}
+      START_DATE: ${{ matrix.start }}
+      END_DATE: ${{ matrix.end }}
+      EXPECTED_MEETINGS: ${{ matrix.expected_meetings }}
+      OUT_DIR: data/2022/g3_${{ matrix.quarter }}_non_girls
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install scraper dependencies
+        run: python -m pip install -q --disable-pip-version-check -e '.[scrape]'
+      - name: Collect 2022 G3 race cards
+        run: |
+          python -m keirin_market_analysis.g3_all_2022_2023 \
+            --year "$YEAR" \
+            --start-date "$START_DATE" \
+            --end-date "$END_DATE" \
+            --out-dir "$OUT_DIR" \
+            --sleep 0.05 \
+            --allow-failures
+      - name: Validate G3-only non-girls base scope
+        run: |
+          python - <<'PY'
+          import csv, json, os
+          from pathlib import Path
+          p=Path(os.environ['OUT_DIR'])
+          races=list(csv.DictReader((p/'races.csv').open(encoding='utf-8-sig')))
+          entries=list(csv.DictReader((p/'entries.csv').open(encoding='utf-8-sig')))
+          s=json.loads((p/'summary.json').read_text(encoding='utf-8'))
+          assert races, s
+          assert len({r['race_id'] for r in races}) == len(races), 'duplicate race_id'
+          assert all(r['meeting_grade']=='G3' for r in races), 'non-G3 race leaked'
+          assert all(e['meeting_grade']=='G3' for e in entries), 'non-G3 entry leaked'
+          assert all('ガールズ' not in r['race_type'] and '女子' not in r['race_type'] and 'パールカップ' not in r['race_type'] for r in races), 'girls race leaked'
+          assert all(not str(e.get('class','')).upper().replace('Ｌ','L').startswith('L') for e in entries), 'L-class entry leaked'
+          assert s['configured_meetings'] == int(os.environ['EXPECTED_MEETINGS']), s
+          assert s['parsed_g3_races'] == len(races)
+          assert s['entry_rows'] == len(entries)
+          print(json.dumps(s, ensure_ascii=False, indent=2))
+          PY
+      - name: Enrich KDreams predicted line formation
+        run: |
+          python -m keirin_market_analysis.line_formation_2025 \
+            --data-dir "$OUT_DIR" \
+            --sleep 0.05 \
+            --allow-failures
+      - name: Extract results and payouts
+        run: |
+          python -m keirin_market_analysis.results_payouts_2025 \
+            --data-dir "$OUT_DIR" \
+            --sleep 0.05 \
+            --allow-failures
+      - name: Collect historical final trifecta and trio odds
+        run: |
+          python -m keirin_market_analysis.historical_final_odds \
+            --data-dir "$OUT_DIR" \
+            --workers 6 \
+            --sleep 0.03
+      - name: Build quarter report
+        if: always()
+        run: |
+          python - <<'PY'
+          import csv, json, os
+          from pathlib import Path
+          p=Path(os.environ['OUT_DIR']); p.mkdir(parents=True, exist_ok=True)
+          def rows(name):
+              f=p/name
+              if not f.exists(): return None
+              with f.open(encoding='utf-8-sig', newline='') as h: return sum(1 for _ in csv.reader(h))-1
+          def js(name):
+              f=p/name
+              return json.loads(f.read_text(encoding='utf-8')) if f.exists() else None
+          report={
+              'target':f"{os.environ['YEAR']} G3 non-girls {os.environ['QUARTER']}",
+              'failure_policy':'Girls/L-class races are excluded. Individual fetch/parse/line/result/odds failures are recorded and skipped; the quarter continues.',
+              'row_counts':{
+                  'races':rows('races.csv'),'entries':rows('entries.csv'),'excluded_girls':rows('excluded_girls.csv'),
+                  'results':rows('results.csv'),'payouts':rows('payouts.csv'),
+                  'trifecta_final_odds':rows('trifecta_final_odds.csv'),'trio_final_odds':rows('trio_final_odds.csv')},
+              'base_summary':js('summary.json'),'line_summary':js('line_summary.json'),
+              'result_summary':js('result_summary.json'),'odds_summary':js('odds_summary.json')}
+          (p/f"{os.environ['QUARTER']}_report.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          PY
+      - name: Upload 2022 quarter dataset
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: g3-all-2022-${{ matrix.quarter }}-non-girls
+          retention-days: 7
+          if-no-files-found: error
+          path: ${{ env.OUT_DIR }}
+
+  archive_2022:
+    name: Persist 2022 to databank release
+    needs: collect_2022
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Download all 2022 quarter artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: g3-all-2022-*-non-girls
+          path: archive
+      - name: Zip and checksum 2022 quarters
+        run: |
+          set -euo pipefail
+          find archive -mindepth 1 -maxdepth 1 -type d -name 'g3-all-2022-*-non-girls' -print0 | while IFS= read -r -d '' d; do
+            zip -qr "${d}.zip" "$d"
+          done
+          test "$(find archive -maxdepth 1 -type f -name 'g3-all-2022-*-non-girls.zip' | wc -l)" -eq 4
+          sha256sum archive/g3-all-2022-*-non-girls.zip > archive/g3-2022-sha256.txt
+          cat archive/g3-2022-sha256.txt
+      - name: Upload 2022 to persistent release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null
+          gh release upload "$RELEASE_TAG" archive/g3-all-2022-*-non-girls.zip archive/g3-2022-sha256.txt --clobber --repo "$GITHUB_REPOSITORY"
+      - name: Verify 2022 release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          assets="$(gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name')"
+          for q in q1 q2 q3 q4; do grep -qx "g3-all-2022-${q}-non-girls.zip" <<<"$assets"; done
+          grep -qx 'g3-2022-sha256.txt' <<<"$assets"
