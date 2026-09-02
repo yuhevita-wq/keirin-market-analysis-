@@ -1,35 +1,44 @@
 # Current Scheme Status
 
-## Active baseline
+## Current scheme
 
-**v8.25-F26**
+**v12.0-N01 — MARKET CONNECTION TOPOLOGY**
 
-Restored as the current active market-psychology baseline.
+Status: **DESIGN_FROZEN_PRE_SIMULATION**
 
-The project is intentionally rolled back to the last market-hierarchy scheme before the v9/v10 fundamental-layer experiments became the active direction.
+No simulation has been run for v12.0-N01.
 
-## Why restored
+## Architecture
 
-- v9.0 directly used race-card fundamentals to veto market first-position branches and was rejected.
-- v9.2 used a post-hoc market/fundamental top-two-line disagreement gate and is rejected as an active scheme because it was selected after observing outcomes and produced suspiciously sparse/high-ROI selection.
-- v10.0 replaced the market-psychology architecture with a broad blended probability model. Its frozen 2024Q1 simulation bought 533 races at 96.45 tickets per race and returned ROI 73.68%, so it is rejected as the desired scheme direction.
+v12 is a fresh betting-scheme root. It does not inherit the betting decisions, race-type branches, formations, or buy/no-buy gates of v8, v9, v10, or v11.
 
-These files remain in the repository as experiment history only. They are **not current** and must not be used unless explicitly requested for diagnostic comparison.
+It uses:
 
-## Current direction
+- complete 35-way trio market;
+- complete 210-way trifecta market;
+- market first-place support;
+- head-conditioned companion-pair attachment;
+- trio companion-pair attachment;
+- deterministic historical race-card fundamental F;
+- natural top blocks derived from within-race structure;
+- two-of-three informative-view support at the individual connection level.
 
-Return to the v8.25-F26 market-psychology architecture:
+Tickets are directed connection paths, not line formations.
 
-- complete trio 35-way market
-- complete trifecta 210-way market
-- market hierarchy
-- line structure
-- H / PS / LS relationships
-- market-driven formation geometry
-- race-type market behavior as developed in the v8 lineage
+Line information may affect only race-card role fit inside F. Line membership does not directly create, replace, or delete a v12 ticket.
 
-Future race-card work, if resumed, must be added as a careful explanatory/complementary layer without replacing or post-hoc filtering the market-psychology core.
+`race_type` is metadata only and cannot change the decision rule.
+
+## Rejected accumulation rule
+
+The rejected `v11.1-C02 HEAD SURVIVES × LINE FADE` code, evaluator, Q1 workflow, specification, and Q1 result were removed before v12 was created.
+
+Going forward, a betting logic that is explicitly rejected should not become another inherited layer of the active scheme. A replacement scheme should either remove the rejected active implementation or start from a clean root that does not import it.
+
+## Reused utility
+
+`racecard_fundamentals_v1.py` remains because it is a deterministic feature utility, not a betting scheme. It contains no outcome-dependent betting gate.
 
 ## Execution rule
 
-Creating or updating a scheme does **not** authorize simulation. Simulation is run only when the user explicitly requests it.
+Creating or updating a scheme does **not** authorize simulation. Simulation runs only when explicitly requested by the user.
