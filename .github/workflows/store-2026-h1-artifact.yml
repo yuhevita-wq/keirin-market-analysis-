@@ -2,12 +2,6 @@ name: Store completed 2026 H1 F1 S-class artifact
 
 on:
   workflow_dispatch:
-  issues:
-    types: [opened]
-  push:
-    branches: [main]
-    paths:
-      - ".github/workflows/store-2026-h1-artifact.yml"
 
 permissions:
   actions: read
@@ -15,7 +9,6 @@ permissions:
 
 jobs:
   store:
-    if: github.event_name != 'issues' || github.event.issue.title == 'STORE_2026_H1_TO_MAIN'
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
