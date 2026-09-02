@@ -32,3 +32,5 @@ if __name__=='__main__':
  v9main()
  from analyze_v9_1_line_agreement_q1q2q3 import main as v91diag
  v91diag()
+ from evaluate_v9_2_q1q2q3 import main as v92main
+ v92main()
