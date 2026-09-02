@@ -1,35 +1,36 @@
 # Current Scheme Status
 
-## Current scheme
+## Current scheme candidate
 
 **v12.1-N02 — ANOMALY FIRST**
 
-Status: **DESIGN_FROZEN_PRE_SIMULATION**
+Status: **Q1 SIMULATED — BETTING THESIS FAILED; FEATURE/RACE-SELECTION ARCHITECTURE RETAINED FOR REDESIGN**
 
-No simulation has been run for v12.1-N02.
+The v12.1-N02 code was not changed during the Q1 simulation.
+
+## 2024Q1 result
+
+- population: 1,191
+- bet races: 84
+- buy rate: 7.05%
+- hits: 0
+- tickets: 212
+- average tickets: 2.52
+- stake: ¥21,200
+- payout: ¥0
+- ROI: 0.00%
+
+The entrance mechanism did materially restrict participation compared with v12.0-N01, but the specific N02 interpretation of a robust negative cross-market residual as a bet on `head-a-b / head-b-a` failed completely.
 
 ## Priority
 
-**Race selection is the first and most important decision.**
+**Race selection remains the first and most important decision.**
 
 The active architecture must decide whether a race contains an unusual market structure before it is allowed to generate tickets.
 
-## What was wrong with v12.0-N01
+## What remains useful
 
-The useful market-connection concept was not the part rejected by the Q1 test. The rejected parts were the betting/participation rules:
-
-- broad natural top blocks;
-- two-of-three overlap treated as sufficient evidence;
-- one accepted ordinary connection was enough to enter the race;
-- every accepted connection became tickets.
-
-That architecture bought all 1,191 Q1 races and averaged 37.65 tickets per race. Those rules are removed and must not be inherited.
-
-## What is retained
-
-`market_connection_features_v1.py` restores the useful connection-analysis layer as a pure feature utility. It cannot buy a race or create a ticket.
-
-It retains:
+`market_connection_features_v1.py` remains a pure feature utility and retains:
 
 - complete trio 35-way market;
 - complete trifecta 210-way market;
@@ -42,21 +43,17 @@ It retains:
 
 Line information may enter only inside F role fit. Line membership is not a direct betting rule.
 
-## v12.1 race gate
+## What Q1 rejected
 
-v12.1 examines all 105 possible head/pair connections inside one race and searches for a robust within-race cross-market anomaly.
+Do not treat an extreme **negative** cross-market connection residual, even when market-head, F-head, and trio-package support align, as sufficient reason to buy the corresponding head-fixed tail-swap trifectas.
 
-The race may participate only when an under-attached connection is an extreme modified-z residual and is also structurally supported by the market head hierarchy, the independent F head hierarchy, and the trio package structure.
-
-If there is no such anomaly, the race is **NO BET**.
-
-The robust-outlier cutoff is the conventional modified-z value 3.5, fixed before any v12.1 simulation and not selected from keirin outcomes.
+Do not rescue N02 with a Q1-fitted modified-z cutoff, race-type split, ticket-count bucket, or other post-result filter.
 
 ## Rejected accumulation rule
 
-When a version fails, remove the failed betting logic, not every useful feature or representation that version introduced.
+When a version fails, remove or replace the failed betting logic, not every useful feature or representation that version introduced.
 
-The audit result for v12.0 remains available to explain why its participation rule was rejected, but v12.1 does not import the v12.0 betting implementation.
+The Q1 result remains as an audit record. A future redesign should preserve the race-selection-first architecture while changing the interpretation or direction of the anomaly before ticket generation.
 
 ## Execution rule
 
