@@ -1,44 +1,42 @@
 # Current Scheme Status
 
-## Current scheme
+## Active scheme
 
-**v12.0-N01 — MARKET CONNECTION TOPOLOGY**
+**None.**
 
-Status: **DESIGN_FROZEN_PRE_SIMULATION**
+The most recent candidate, `v12.0-N01 — MARKET CONNECTION TOPOLOGY`, was rejected after its fixed 2024Q1 simulation.
 
-No simulation has been run for v12.0-N01.
+## v12.0-N01 rejection
 
-## Architecture
+2024Q1 fixed simulation:
 
-v12 is a fresh betting-scheme root. It does not inherit the betting decisions, race-type branches, formations, or buy/no-buy gates of v8, v9, v10, or v11.
+- population: 1,191
+- bet races: 1,191
+- buy rate: 100.00%
+- hits: 685
+- hit rate: 57.51%
+- total tickets: 44,842
+- average tickets per race: 37.65
+- stake: ¥4,484,200
+- payout: ¥3,428,300
+- profit: -¥1,055,900
+- ROI: 76.45%
 
-It uses:
+The scheme failed structurally because its connection-acceptance rule produced at least one buy connection in every eligible race and expanded into broad exact-trifecta coverage.
 
-- complete 35-way trio market;
-- complete 210-way trifecta market;
-- market first-place support;
-- head-conditioned companion-pair attachment;
-- trio companion-pair attachment;
-- deterministic historical race-card fundamental F;
-- natural top blocks derived from within-race structure;
-- two-of-three informative-view support at the individual connection level.
+## Removal rule applied
 
-Tickets are directed connection paths, not line formations.
+Because the user requires rejected betting logic not to accumulate into later versions, the following v12 active implementation files were removed after the simulation:
 
-Line information may affect only race-card role fit inside F. Line membership does not directly create, replace, or delete a v12 ticket.
+- v12 betting-scheme implementation
+- v12 Q1 evaluator
+- v12 Q1 workflow
+- v12 scheme specification
 
-`race_type` is metadata only and cannot change the decision rule.
+The Q1 result document remains only as an audit record of why v12 was rejected. Future schemes must not import or inherit v12 betting logic.
 
-## Rejected accumulation rule
-
-The rejected `v11.1-C02 HEAD SURVIVES × LINE FADE` code, evaluator, Q1 workflow, specification, and Q1 result were removed before v12 was created.
-
-Going forward, a betting logic that is explicitly rejected should not become another inherited layer of the active scheme. A replacement scheme should either remove the rejected active implementation or start from a clean root that does not import it.
-
-## Reused utility
-
-`racecard_fundamentals_v1.py` remains because it is a deterministic feature utility, not a betting scheme. It contains no outcome-dependent betting gate.
+`racecard_fundamentals_v1.py` remains available because it is a deterministic feature utility rather than a betting scheme.
 
 ## Execution rule
 
-Creating or updating a scheme does **not** authorize simulation. Simulation runs only when explicitly requested by the user.
+Creating or updating a scheme does not authorize simulation. Simulation runs only when explicitly requested by the user.
