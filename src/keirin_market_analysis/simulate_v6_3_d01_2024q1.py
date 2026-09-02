@@ -30,3 +30,5 @@ if __name__=='__main__':
  latest()
  from evaluate_v9_0_q1q2q3 import main as v9main
  v9main()
+ from analyze_v9_1_line_agreement_q1q2q3 import main as v91diag
+ v91diag()
