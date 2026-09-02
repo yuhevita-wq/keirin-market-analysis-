@@ -1,59 +1,71 @@
 # Current Scheme Status
 
-## Current scheme candidate
+## Current scheme
 
-**v12.1-N02 — ANOMALY FIRST**
+**v11.0-C01 — MARKET PSYCHOLOGY + RACECARD CONTEXT**
 
-Status: **Q1 SIMULATED — BETTING THESIS FAILED; FEATURE/RACE-SELECTION ARCHITECTURE RETAINED FOR REDESIGN**
+Status: **RESTORED AS DEVELOPMENT BASELINE**
 
-The v12.1-N02 code was not changed during the Q1 simulation.
+The project has been rolled back from the rejected v12/v12.1 betting logic to v11.0-C01.
 
-## 2024Q1 result
+## Why v11.0-C01 is the restoration point
 
-- population: 1,191
-- bet races: 84
-- buy rate: 7.05%
-- hits: 0
-- tickets: 212
-- average tickets: 2.52
-- stake: ¥21,200
-- payout: ¥0
-- ROI: 0.00%
+v11.0-C01 kept the useful market-psychology engine intact and added deterministic historical race-card context without immediately changing tickets.
 
-The entrance mechanism did materially restrict participation compared with v12.0-N01, but the specific N02 interpretation of a robust negative cross-market residual as a bet on `head-a-b / head-b-a` failed completely.
+It observes:
 
-## Priority
+- complete 35-way trio market;
+- complete 210-way trifecta market;
+- market first-place support and concentration;
+- market head support/challenge from race-card fundamentals;
+- market line support/challenge from race-card fundamentals;
+- deterministic race-card F components.
 
-**Race selection remains the first and most important decision.**
+The race-card context does not directly add, delete, or prune trifecta tickets in v11.0-C01.
 
-The active architecture must decide whether a race contains an unusual market structure before it is allowed to generate tickets.
+## What was good and must remain
 
-## What remains useful
+- market psychology remains primary;
+- race-card information explains or challenges market psychology rather than replacing it;
+- no direct fundamental hard veto;
+- no blended pseudo-probability model;
+- no post-result ticket pruning;
+- no automatic conversion of disagreement into an opposite-line bet;
+- the existing v8.25 formation is kept fixed while race-selection work is developed.
 
-`market_connection_features_v1.py` remains a pure feature utility and retains:
+## The specific weakness to change next
 
-- complete trio 35-way market;
-- complete trifecta 210-way market;
-- market head support H;
-- head-conditioned companion-pair attachment;
-- trio-set companion attachment;
-- cross-market connection residual;
-- tail-order asymmetry;
-- deterministic historical race-card F.
+The betting entrance is still inherited from v8.25-F26.
 
-Line information may enter only inside F role fit. Line membership is not a direct betting rule.
+That means v11.0-C01 successfully *observes* race-card context but does not yet use that context to improve the most important decision: **whether to enter the race at all**.
 
-## What Q1 rejected
+This is the only active redesign target.
 
-Do not treat an extreme **negative** cross-market connection residual, even when market-head, F-head, and trio-package support align, as sufficient reason to buy the corresponding head-fixed tail-swap trifectas.
+### Development constraint
 
-Do not rescue N02 with a Q1-fitted modified-z cutoff, race-type split, ticket-count bucket, or other post-result filter.
+**Change race selection only. Keep the formation/ticket-generation logic fixed while the entrance is being developed.**
 
-## Rejected accumulation rule
+Do not simultaneously change:
 
-When a version fails, remove or replace the failed betting logic, not every useful feature or representation that version introduced.
+- race-selection rule;
+- first/second/third formation;
+- ticket pruning;
+- stake sizing.
 
-The Q1 result remains as an audit record. A future redesign should preserve the race-selection-first architecture while changing the interpretation or direction of the anomaly before ticket generation.
+Otherwise the cause of improvement or failure becomes unidentifiable.
+
+## v12 / v12.1 cleanup
+
+Rejected betting logic has been removed from the active branch:
+
+- v12.1-N02 betting implementation;
+- v12.1 Q1 evaluator;
+- v12.1 Q1 workflow;
+- v12.1 scheme specification.
+
+The v12/v12.1 simulation-result documents remain only as audit evidence of failure.
+
+`market_connection_features_v1.py` is retained only as a pure descriptive feature utility. It has no betting authority and is not part of the active v11 betting decision.
 
 ## Execution rule
 
