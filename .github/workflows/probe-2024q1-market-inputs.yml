@@ -1,19 +1,17 @@
-name: Simulate v6.1 HM01 and v6.3-D01 on 2024Q1
+name: Simulate v9.2-F28 on 2024Q1
 
 on:
   push:
     branches:
       - 'analysis/v6-1-hm01-2024q1'
     paths:
-      - 'scripts/probe_2024q1_market_inputs.py'
-      - 'src/keirin_market_analysis/v6_1_hm01_2024q1.py'
-      - 'src/keirin_market_analysis/simulate_v6_3_d01_2024q1.py'
+      - 'src/keirin_market_analysis/evaluate_v9_2_q1_only.py'
+      - 'src/keirin_market_analysis/v9_2_f28_fundamental_line_set_mispricing.py'
       - '.github/workflows/probe-2024q1-market-inputs.yml'
   pull_request:
     paths:
-      - 'scripts/probe_2024q1_market_inputs.py'
-      - 'src/keirin_market_analysis/v6_1_hm01_2024q1.py'
-      - 'src/keirin_market_analysis/simulate_v6_3_d01_2024q1.py'
+      - 'src/keirin_market_analysis/evaluate_v9_2_q1_only.py'
+      - 'src/keirin_market_analysis/v9_2_f28_fundamental_line_set_mispricing.py'
       - '.github/workflows/probe-2024q1-market-inputs.yml'
   workflow_dispatch:
 
@@ -29,26 +27,11 @@ jobs:
           fetch-depth: 1
           sparse-checkout: |
             data/2024/s_class_f1_all_parts/2024_q1
-            scripts
             src/keirin_market_analysis
           sparse-checkout-cone-mode: true
           show-progress: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Probe CSV inputs
-        run: python scripts/probe_2024q1_market_inputs.py
-      - name: Reproduce v6.1 and run HM01
-        run: python src/keirin_market_analysis/v6_1_hm01_2024q1.py
-      - name: Simulate fixed v6.3-D01
-        run: python src/keirin_market_analysis/simulate_v6_3_d01_2024q1.py
-      - name: Upload analysis artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: v6-3-d01-2024q1
-          path: |
-            artifacts/2024q1_market_input_probe.json
-            artifacts/v6_1_hm01_2024q1/v6_1_hm01_summary.json
-            artifacts/v6_1_hm01_2024q1/v6_1_hm01_races.csv
-            artifacts/v6_3_d01_2024q1/v6_3_d01_summary.json
-            artifacts/v6_3_d01_2024q1/v6_3_d01_selected_races.csv
+      - name: Simulate fixed v9.2-F28 on 2024Q1 only
+        run: python src/keirin_market_analysis/evaluate_v9_2_q1_only.py
