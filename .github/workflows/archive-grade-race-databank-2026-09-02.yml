@@ -1,0 +1,103 @@
+name: Archive grade-race databank to release
+
+on:
+  push:
+    branches:
+      - archive-grade-races-2026-09-02
+    paths:
+      - '.github/workflows/archive-grade-race-databank-2026-09-02.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+concurrency:
+  group: archive-grade-race-databank-2026-09-02
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      TAG: grade-race-databank-2026-09-02
+      GH_TOKEN: ${{ github.token }}
+
+    steps:
+      - name: Download and validate current grade-race artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p archive
+
+          cat > archive/artifacts.tsv <<'EOF'
+          G1G2-2021-corrected	9844653993	g1-g2-2021-non-girls-corrected.zip
+          G1G2-2022	9840693623	g1-g2-2022-non-girls.zip
+          G1G2-2023	9834632940	g1-g2-2023-non-girls.zip
+          G1G2-2024	9832657251	g1-g2-2024-non-girls.zip
+          G1G2-2025	9829495864	g1-g2-2025-non-girls.zip
+          G3-2024-Q1	9785544974	g3-2024-q1.zip
+          G3-2024-Q2	9790740336	g3-2024-q2.zip
+          G3-2024-Q3	9796166761	g3-2024-q3.zip
+          G3-2024-Q4	9802470186	g3-2024-q4.zip
+          G3-2025-Q1	9810481117	g3-2025-q1.zip
+          G3-2025-Q2	9810185856	g3-2025-q2.zip
+          G3-2025-Q3	9810152428	g3-2025-q3.zip
+          G3-2025-Q4	9810151108	g3-2025-q4.zip
+          G3-2026-Q1-non-girls	9825216498	g3-2026-q1-non-girls.zip
+          G3-2026-Q2-non-girls	9824781860	g3-2026-q2-non-girls.zip
+          EOF
+
+          printf '# Grade-race databank archive\n\n' > archive/manifest.md
+          printf 'Created from GitHub Actions artifacts before their 7-day expiry. Release assets persist until the release/repository is deleted.\n\n' >> archive/manifest.md
+          printf '**Scope:** G1/G2 2021-2025 (2021 corrected edition only), G3 2024-2025, G3 2026 Q1-Q2 non-girls.\n\n' >> archive/manifest.md
+          printf '**Odds note:** historical odds files are KDreams final odds, not T-10 snapshots.\n\n' >> archive/manifest.md
+          printf '| Dataset | Artifact ID | File | Bytes | SHA256 |\n|---|---:|---|---:|---|\n' >> archive/manifest.md
+          printf 'dataset,artifact_id,file,bytes,sha256\n' > archive/manifest.csv
+
+          while IFS=$'\t' read -r label id file; do
+            echo "Downloading $label artifact=$id -> $file"
+            curl --fail --location --retry 3 --retry-all-errors \
+              -H "Authorization: Bearer ${GH_TOKEN}" \
+              -H 'Accept: application/vnd.github+json' \
+              -H 'X-GitHub-Api-Version: 2022-11-28' \
+              "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/artifacts/${id}/zip" \
+              -o "archive/${file}"
+            test -s "archive/${file}"
+            unzip -tq "archive/${file}" >/dev/null
+            bytes=$(stat -c%s "archive/${file}")
+            sha=$(sha256sum "archive/${file}" | awk '{print $1}')
+            printf '| %s | %s | `%s` | %s | `%s` |\n' "$label" "$id" "$file" "$bytes" "$sha" >> archive/manifest.md
+            printf '%s,%s,%s,%s,%s\n' "$label" "$id" "$file" "$bytes" "$sha" >> archive/manifest.csv
+          done < archive/artifacts.tsv
+
+          rm archive/artifacts.tsv
+          ls -lh archive
+
+      - name: Create or update persistent GitHub Release
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release edit "$TAG" \
+              --repo "$GITHUB_REPOSITORY" \
+              --title 'Grade Race Databank 2021-2026 archive' \
+              --notes-file archive/manifest.md
+          else
+            gh release create "$TAG" \
+              --repo "$GITHUB_REPOSITORY" \
+              --target "$GITHUB_SHA" \
+              --title 'Grade Race Databank 2021-2026 archive' \
+              --notes-file archive/manifest.md
+          fi
+
+          gh release upload "$TAG" archive/*.zip archive/manifest.md archive/manifest.csv \
+            --repo "$GITHUB_REPOSITORY" \
+            --clobber
+
+      - name: Verify release assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json tagName,name,url,assets
