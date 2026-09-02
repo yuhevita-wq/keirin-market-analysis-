@@ -1,0 +1,128 @@
+name: Collect 2022 G1 G2 all non-girls races annual
+
+on:
+  push:
+    branches:
+      - g1g2-2022-annual
+    paths:
+      - '.github/workflows/collect-g1-g2-all-2022.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: g1g2-2022-annual
+  cancel-in-progress: true
+
+jobs:
+  collect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    env:
+      OUT_DIR: data/2022/g1_g2_all
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install scraper dependencies
+        run: python -m pip install -q --disable-pip-version-check -e '.[scrape]'
+
+      - name: Collect 2022 G1 G2 non-girls race cards
+        run: |
+          python -m keirin_market_analysis.g1_g2_all_2022 \
+            --start-date 2022-01-01 \
+            --end-date 2022-12-31 \
+            --out-dir "$OUT_DIR" \
+            --sleep 0.05 \
+            --allow-failures
+
+      - name: Validate G1 G2 only non-girls base scope
+        run: |
+          python - <<'PY'
+          import csv, json, os
+          from pathlib import Path
+          p = Path(os.environ['OUT_DIR'])
+          races = list(csv.DictReader((p/'races.csv').open(encoding='utf-8-sig')))
+          entries = list(csv.DictReader((p/'entries.csv').open(encoding='utf-8-sig')))
+          s = json.loads((p/'summary.json').read_text(encoding='utf-8'))
+          assert races, s
+          assert len({r['race_id'] for r in races}) == len(races), 'duplicate race_id'
+          assert all(r['meeting_grade'] in {'G1','G2'} for r in races), 'non G1/G2 race leaked'
+          assert all(e['meeting_grade'] in {'G1','G2'} for e in entries), 'non G1/G2 entry leaked'
+          assert all('ガールズ' not in r['race_type'] and '女子' not in r['race_type'] and 'パールカップ' not in r['race_type'] for r in races), 'girls race leaked by race_type'
+          assert all(not str(e.get('class','')).upper().replace('Ｌ','L').startswith('L') for e in entries), 'L-class entry leaked'
+          assert s['configured_meetings'] == 10, s
+          assert s['parsed_races'] == len(races)
+          assert s['entry_rows'] == len(entries)
+          assert set(s['grade_counts']).issubset({'G1','G2'})
+          assert 'G1' in s['grade_counts'] and 'G2' in s['grade_counts'], s
+          print(json.dumps(s, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Enrich KDreams predicted line formation
+        run: |
+          python -m keirin_market_analysis.line_formation_2025 \
+            --data-dir "$OUT_DIR" \
+            --sleep 0.05 \
+            --allow-failures
+
+      - name: Extract results and payouts
+        run: |
+          python -m keirin_market_analysis.results_payouts_2025 \
+            --data-dir "$OUT_DIR" \
+            --sleep 0.05 \
+            --allow-failures
+
+      - name: Collect historical final trifecta and trio odds
+        run: |
+          python -m keirin_market_analysis.historical_final_odds \
+            --data-dir "$OUT_DIR" \
+            --workers 6 \
+            --sleep 0.03
+
+      - name: Build annual report
+        if: always()
+        run: |
+          python - <<'PY'
+          import csv, json, os
+          from pathlib import Path
+          p = Path(os.environ['OUT_DIR']); p.mkdir(parents=True, exist_ok=True)
+          def rows(name):
+              f=p/name
+              if not f.exists(): return None
+              with f.open(encoding='utf-8-sig', newline='') as h: return sum(1 for _ in csv.reader(h))-1
+          def js(name):
+              f=p/name
+              return json.loads(f.read_text(encoding='utf-8')) if f.exists() else None
+          report = {
+              'target':'2022 calendar-year G1/G2 non-girls races',
+              'failure_policy':'Girls races are excluded. Individual fetch/parse/line/result/odds failures are recorded and skipped; the annual run continues.',
+              'row_counts':{
+                  'races':rows('races.csv'),
+                  'entries':rows('entries.csv'),
+                  'excluded_girls':rows('excluded_girls.csv'),
+                  'excluded_non_target':rows('excluded_non_target.csv'),
+                  'results':rows('results.csv'),
+                  'payouts':rows('payouts.csv'),
+                  'trifecta_final_odds':rows('trifecta_final_odds.csv'),
+                  'trio_final_odds':rows('trio_final_odds.csv'),
+              },
+              'base_summary':js('summary.json'),
+              'line_summary':js('line_summary.json'),
+              'result_summary':js('result_summary.json'),
+              'odds_summary':js('odds_summary.json'),
+          }
+          (p/'annual_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          PY
+
+      - name: Upload 2022 G1 G2 dataset
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: g1-g2-all-2022-non-girls
+          path: data/2022/g1_g2_all
+          retention-days: 7
+          if-no-files-found: error
