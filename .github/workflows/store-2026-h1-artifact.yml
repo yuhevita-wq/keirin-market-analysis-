@@ -42,11 +42,80 @@ jobs:
           test -f /tmp/s-class-f1-all-2026_h1/trio_final_odds.csv
           test -f /tmp/s-class-f1-all-2026_h1/trifecta_final_odds.csv
 
-      - name: Store dataset in repository
+      - name: Store dataset and split oversized trifecta file
         run: |
           rm -rf data/2026_h1/s_class_f1_all
           mkdir -p data/2026_h1/s_class_f1_all
           cp -a /tmp/s-class-f1-all-2026_h1/. data/2026_h1/s_class_f1_all/
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path('data/2026_h1/s_class_f1_all')
+          src = root / 'trifecta_final_odds.csv'
+          rows_per_part = 180_000
+          parts = []
+          total_rows = 0
+
+          with src.open('r', encoding='utf-8-sig', newline='') as f:
+              header = f.readline()
+              part_index = 0
+              out = None
+              rows_in_part = 0
+              try:
+                  for line in f:
+                      if out is None or rows_in_part >= rows_per_part:
+                          if out is not None:
+                              out.close()
+                          part_index += 1
+                          part = root / f'trifecta_final_odds_part{part_index:02d}.csv'
+                          parts.append(part)
+                          out = part.open('w', encoding='utf-8-sig', newline='')
+                          out.write(header)
+                          rows_in_part = 0
+                      out.write(line)
+                      rows_in_part += 1
+                      total_rows += 1
+              finally:
+                  if out is not None:
+                      out.close()
+
+          assert total_rows == 514890, total_rows
+          assert len(parts) == 3, parts
+          for part in parts:
+              assert part.stat().st_size < 100_000_000, (part, part.stat().st_size)
+
+          manifest = {
+              'original_file': 'trifecta_final_odds.csv',
+              'storage': 'split_csv_due_to_github_100mb_limit',
+              'row_count': total_rows,
+              'parts': [p.name for p in parts],
+              'rows_per_part_target': rows_per_part,
+              'note': 'Concatenate data rows from parts in numeric order; each part repeats the same CSV header.'
+          }
+          (root / 'trifecta_final_odds_manifest.json').write_text(
+              json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+          )
+          src.unlink()
+          print(json.dumps({**manifest, 'sizes': {p.name: p.stat().st_size for p in parts}}, indent=2))
+          PY
+
+      - name: Verify repository-safe dataset
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          root = Path('data/2026_h1/s_class_f1_all')
+          manifest = json.loads((root/'trifecta_final_odds_manifest.json').read_text(encoding='utf-8'))
+          count = 0
+          for name in manifest['parts']:
+              with (root/name).open(encoding='utf-8-sig', newline='') as f:
+                  count += sum(1 for _ in csv.DictReader(f))
+          assert count == manifest['row_count'] == 514890, count
+          assert not (root/'trifecta_final_odds.csv').exists()
+          assert all(p.stat().st_size < 100_000_000 for p in root.iterdir() if p.is_file())
+          print(f'verified split trifecta rows={count}')
+          PY
 
       - name: Commit completed dataset
         run: |
@@ -63,5 +132,3 @@ jobs:
             sleep $((i*5))
           done
           exit 1
-
-# retry-trigger: 2026-09-02
