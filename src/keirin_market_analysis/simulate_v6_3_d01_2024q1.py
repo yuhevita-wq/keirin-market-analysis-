@@ -26,5 +26,5 @@ def main():
  OUT.mkdir(parents=True,exist_ok=True);(OUT/'v6_3_d01_summary.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8');print(json.dumps(result,ensure_ascii=False,indent=2))
 if __name__=='__main__':
  main()
- from analyze_final_head_tail_heat_q1q2 import main as latest
+ from evaluate_v8_21_q1q2 import main as latest
  latest()
