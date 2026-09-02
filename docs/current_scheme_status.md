@@ -1,41 +1,62 @@
 # Current Scheme Status
 
-## Active scheme
+## Current scheme
 
-**None.**
+**v12.1-N02 — ANOMALY FIRST**
 
-The most recent candidate, `v12.0-N01 — MARKET CONNECTION TOPOLOGY`, was rejected after its fixed 2024Q1 simulation.
+Status: **DESIGN_FROZEN_PRE_SIMULATION**
 
-## v12.0-N01 rejection
+No simulation has been run for v12.1-N02.
 
-2024Q1 fixed simulation:
+## Priority
 
-- population: 1,191
-- bet races: 1,191
-- buy rate: 100.00%
-- hits: 685
-- hit rate: 57.51%
-- total tickets: 44,842
-- average tickets per race: 37.65
-- stake: ¥4,484,200
-- payout: ¥3,428,300
-- profit: -¥1,055,900
-- ROI: 76.45%
+**Race selection is the first and most important decision.**
 
-The scheme failed structurally because its connection-acceptance rule produced at least one buy connection in every eligible race and expanded into broad exact-trifecta coverage.
+The active architecture must decide whether a race contains an unusual market structure before it is allowed to generate tickets.
 
-## Removal rule applied
+## What was wrong with v12.0-N01
 
-Because the user requires rejected betting logic not to accumulate into later versions, the following v12 active implementation files were removed after the simulation:
+The useful market-connection concept was not the part rejected by the Q1 test. The rejected parts were the betting/participation rules:
 
-- v12 betting-scheme implementation
-- v12 Q1 evaluator
-- v12 Q1 workflow
-- v12 scheme specification
+- broad natural top blocks;
+- two-of-three overlap treated as sufficient evidence;
+- one accepted ordinary connection was enough to enter the race;
+- every accepted connection became tickets.
 
-The Q1 result document remains only as an audit record of why v12 was rejected. Future schemes must not import or inherit v12 betting logic.
+That architecture bought all 1,191 Q1 races and averaged 37.65 tickets per race. Those rules are removed and must not be inherited.
 
-`racecard_fundamentals_v1.py` remains available because it is a deterministic feature utility rather than a betting scheme.
+## What is retained
+
+`market_connection_features_v1.py` restores the useful connection-analysis layer as a pure feature utility. It cannot buy a race or create a ticket.
+
+It retains:
+
+- complete trio 35-way market;
+- complete trifecta 210-way market;
+- market head support H;
+- head-conditioned companion-pair attachment;
+- trio-set companion attachment;
+- cross-market connection residual;
+- tail-order asymmetry;
+- deterministic historical race-card F.
+
+Line information may enter only inside F role fit. Line membership is not a direct betting rule.
+
+## v12.1 race gate
+
+v12.1 examines all 105 possible head/pair connections inside one race and searches for a robust within-race cross-market anomaly.
+
+The race may participate only when an under-attached connection is an extreme modified-z residual and is also structurally supported by the market head hierarchy, the independent F head hierarchy, and the trio package structure.
+
+If there is no such anomaly, the race is **NO BET**.
+
+The robust-outlier cutoff is the conventional modified-z value 3.5, fixed before any v12.1 simulation and not selected from keirin outcomes.
+
+## Rejected accumulation rule
+
+When a version fails, remove the failed betting logic, not every useful feature or representation that version introduced.
+
+The audit result for v12.0 remains available to explain why its participation rule was rejected, but v12.1 does not import the v12.0 betting implementation.
 
 ## Execution rule
 
