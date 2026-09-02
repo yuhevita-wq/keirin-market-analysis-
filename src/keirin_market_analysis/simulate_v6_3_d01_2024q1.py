@@ -28,3 +28,5 @@ if __name__=='__main__':
  main()
  from evaluate_v8_25_q3_oos import main as latest
  latest()
+ from evaluate_v9_0_q1q2q3 import main as v9main
+ v9main()
