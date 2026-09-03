@@ -214,7 +214,6 @@ def calibrate_policy_2024(root: Path, out_dir: Path, contract: EngineContract) -
     selected = best[4]
     selected_q3 = best[5]
 
-    # Q4 is opened only after the Q3 winner is frozen. No alternative policy is scored on Q4.
     q4_races, q4_entries = concat_pre_race(q4, seven_rider_only=True)
     q4_payouts = _concat_payouts(q4)
     q4_packs = [_compact_pack(pack) for pack in _prediction_packs(engine, q4_races, q4_entries)]
@@ -247,7 +246,17 @@ def calibrate_policy_2024(root: Path, out_dir: Path, contract: EngineContract) -
     return selected, report
 
 
-def destruction_test_2025(root: Path, out_dir: Path, policy: TicketPolicy, contract: EngineContract) -> dict:
+def destruction_test_2025(
+    root: Path,
+    out_dir: Path,
+    policy: TicketPolicy,
+    contract: EngineContract,
+    *,
+    development_gate_passed: bool = False,
+) -> dict:
+    if not development_gate_passed:
+        raise RuntimeError("2025 destruction test is locked until the frozen 2024 Q4 gate has passed")
+
     catalog = DatasetCatalog(root)
     development = _segments(catalog, ("2024_q1", "2024_q2", "2024_q3", "2024_q4"))
     h1 = _segments(catalog, ("2025_q1", "2025_q2"))
@@ -284,6 +293,7 @@ def destruction_test_2025(root: Path, out_dir: Path, policy: TicketPolicy, contr
     report = {
         "contract": asdict(contract),
         "policy": asdict(policy),
+        "2024_q4_gate_proof": "PASSED",
         "2025_h1": h1_summary,
         "2025_h2": h2_summary,
         "2025_full": all_summary,
@@ -307,7 +317,13 @@ def run_develop_and_test(root: Path, out_dir: Path) -> dict:
         }
         _write_json(out_dir / "prediction_engine_v1_report.json", combined)
         return combined
-    test_report = destruction_test_2025(root, out_dir, policy, contract)
+    test_report = destruction_test_2025(
+        root,
+        out_dir,
+        policy,
+        contract,
+        development_gate_passed=True,
+    )
     combined = {
         "development": development_report,
         "destruction_test": test_report,
@@ -344,9 +360,20 @@ def main() -> None:
         if not args.policy_json:
             raise SystemExit("--policy-json is required for destruction-test-2025")
         spec = json.loads(Path(args.policy_json).read_text(encoding="utf-8"))
-        raw = spec.get("selected_policy", spec)
+        gate_passed = bool(spec.get("q4_gate", {}).get("passed"))
+        if not gate_passed:
+            raise SystemExit("2025 remains locked: --policy-json must contain a passed 2024 Q4 gate")
+        raw = spec.get("selected_policy")
+        if not isinstance(raw, dict):
+            raise SystemExit("--policy-json must contain selected_policy from the 2024 calibration report")
         policy = TicketPolicy(**raw)
-        payload = destruction_test_2025(root, out, policy, contract)
+        payload = destruction_test_2025(
+            root,
+            out,
+            policy,
+            contract,
+            development_gate_passed=True,
+        )
     else:
         payload = run_develop_and_test(root, out)
 
