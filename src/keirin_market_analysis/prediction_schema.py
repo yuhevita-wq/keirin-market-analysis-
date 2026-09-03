@@ -88,6 +88,8 @@ def load_pre_race_segment(segment: Segment, seven_rider_only: bool = True) -> tu
 
     races = races.copy()
     entries = entries.copy()
+    races["race_id"] = races["race_id"].astype(str)
+    entries["race_id"] = entries["race_id"].astype(str)
     races["segment"] = segment.name
     races["dataset_role"] = segment.role
     entries["segment"] = segment.name
@@ -113,6 +115,7 @@ def load_labels(segment: Segment, *, unlock_sealed: bool = False) -> pd.DataFram
     if missing:
         raise KeyError(f"results.csv missing columns: {sorted(missing)}")
     out = results.copy()
+    out["race_id"] = out["race_id"].astype(str)
     out["order_numeric"] = pd.to_numeric(out["order_numeric"], errors="coerce")
     out["car_no"] = pd.to_numeric(out["car_no"], errors="coerce")
     out = out[out["order_numeric"].notna() & out["car_no"].notna()].copy()
@@ -122,7 +125,10 @@ def load_labels(segment: Segment, *, unlock_sealed: bool = False) -> pd.DataFram
 def load_payouts(segment: Segment, *, unlock_sealed: bool = False) -> pd.DataFrame:
     if segment.sealed and not unlock_sealed:
         raise SealedValidationError("2026_h1 payouts are sealed with the validation labels.")
-    return _read_csv(segment.path / "payouts.csv")
+    out = _read_csv(segment.path / "payouts.csv")
+    if "race_id" in out.columns:
+        out["race_id"] = out["race_id"].astype(str)
+    return out
 
 
 def concat_pre_race(segments: Iterable[Segment], seven_rider_only: bool = True) -> tuple[pd.DataFrame, pd.DataFrame]:
