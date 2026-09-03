@@ -135,7 +135,9 @@ def evaluate_decisions(decisions: list[dict], payouts: pd.DataFrame) -> tuple[pd
     max_dd = 0
     max_losing_streak = 0
     streak = 0
-    for r in bought.sort_values([c for c in ["race_date", "track", "race_no"] if c in bought.columns]).itertuples(index=False):
+    sort_cols = [c for c in ["race_date", "track", "race_no"] if c in bought.columns]
+    ordered = bought.sort_values(sort_cols) if sort_cols else bought
+    for r in ordered.itertuples(index=False):
         equity += int(r.profit_yen)
         peak = max(peak, equity)
         max_dd = max(max_dd, peak - equity)
@@ -162,9 +164,15 @@ def evaluate_decisions(decisions: list[dict], payouts: pd.DataFrame) -> tuple[pd
 
 
 def policy_grid() -> list[TicketPolicy]:
-    """Small pre-declared grid for 2024-only development; never expanded after 2025 is opened."""
+    """Pre-declared grid for Q3-only policy selection. It must not be expanded after Q4 is opened."""
     return [
-        TicketPolicy(cumulative_mass=mass, max_tickets=max_t, max_normalized_entropy=ent, min_top10_mass=top10, max_model_tv_distance=tv)
+        TicketPolicy(
+            cumulative_mass=mass,
+            max_tickets=max_t,
+            max_normalized_entropy=ent,
+            min_top10_mass=top10,
+            max_model_tv_distance=tv,
+        )
         for mass, max_t, ent, top10, tv in product(
             (0.42, 0.48, 0.54),
             (8, 12, 16),
@@ -173,23 +181,3 @@ def policy_grid() -> list[TicketPolicy]:
             (0.45, 0.60, 0.75),
         )
     ]
-
-
-def robust_policy_choice(q3_scores: pd.DataFrame, q4_scores: pd.DataFrame, min_bought_races: int = 60) -> pd.Series:
-    """Choose by worst-quarter ROI, then sample size, then lower drawdown. No 2025 information allowed."""
-    keys = ["policy_id", "bought_races", "roi", "max_drawdown_yen"]
-    a = q3_scores[keys].rename(columns={
-        "bought_races": "q3_bought", "roi": "q3_roi", "max_drawdown_yen": "q3_dd"
-    })
-    b = q4_scores[keys].rename(columns={
-        "bought_races": "q4_bought", "roi": "q4_roi", "max_drawdown_yen": "q4_dd"
-    })
-    j = a.merge(b, on="policy_id", how="inner")
-    j = j[(j["q3_bought"] >= min_bought_races) & (j["q4_bought"] >= min_bought_races)].copy()
-    if j.empty:
-        raise ValueError("No policy has enough bought races in both Q3 and Q4")
-    j["worst_roi"] = j[["q3_roi", "q4_roi"]].min(axis=1)
-    j["total_bought"] = j["q3_bought"] + j["q4_bought"]
-    j["worst_dd"] = j[["q3_dd", "q4_dd"]].max(axis=1)
-    j = j.sort_values(["worst_roi", "total_bought", "worst_dd"], ascending=[False, False, True])
-    return j.iloc[0]
