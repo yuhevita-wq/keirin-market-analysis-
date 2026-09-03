@@ -1,39 +1,99 @@
+from pathlib import Path
+
 import pandas as pd
 import pytest
 
-from keirin_prediction_engine import LeakageError, add_relative_features, similarity_neighbors, validate_pre_race_frame
+from keirin_market_analysis.prediction_features import RelationshipTracker, add_race_relative_features, normalize_entries
+from keirin_market_analysis.prediction_models import marginals_from_trifecta, plackett_luce_trifecta
+from keirin_market_analysis.prediction_schema import (
+    DatasetCatalog,
+    LeakageError,
+    SealedValidationError,
+    load_labels,
+    validate_pre_race_columns,
+)
+from keirin_market_analysis.prediction_strategy import TicketPolicy, select_tickets
 
 
-def test_rejects_result_columns():
-    df = pd.DataFrame({"race_id": ["r1"], "score": [100.0], "finish": [1]})
-    with pytest.raises(LeakageError):
-        add_relative_features(df)
-
-
-def test_rejects_final_odds_columns():
-    df = pd.DataFrame({"race_id": ["r1"], "score": [100.0], "trifecta_final_odds": [5.2]})
-    with pytest.raises(LeakageError):
-        validate_pre_race_frame(df)
-
-
-def test_relative_score_features_are_race_local():
-    df = pd.DataFrame({
-        "race_id": ["r1", "r1", "r2", "r2"],
-        "score": [100.0, 90.0, 80.0, 70.0],
-        "line_id": [1, 2, 1, 2],
-        "b": [10, 2, 8, 1],
+def sample_entries() -> pd.DataFrame:
+    return pd.DataFrame({
+        "race_id": ["r1"] * 7,
+        "player_name": [f"選手{i}" for i in range(1, 8)],
+        "car_no": list(range(1, 8)),
+        "age": ["30", "31", "32", "33", "34", "35", "36"],
+        "gear": ["3.92"] * 7,
+        "score": ["106.0", "104.0", "102.0", "101.0", "100.0", "99.0", "98.0"],
+        "s_count": ["2", "1", "0", "0", "1", "0", "0"],
+        "b_count": ["10", "1", "0", "7", "0", "3", "0"],
+        "nige_count": ["5", "0", "0", "3", "0", "1", "0"],
+        "makuri_count": ["2", "0", "0", "2", "0", "1", "0"],
+        "sashi_count": ["0", "5", "2", "0", "4", "0", "2"],
+        "mark_count": ["0", "3", "4", "0", "3", "0", "2"],
+        "win_rate": ["25.0%", "20.0%", "12.0%", "18.0%", "10.0%", "8.0%", "6.0%"],
+        "top2_rate": ["45.0%", "42.0%", "33.0%", "35.0%", "28.0%", "22.0%", "20.0%"],
+        "top3_rate": ["60.0%", "58.0%", "50.0%", "48.0%", "40.0%", "35.0%", "30.0%"],
+        "line_id": [1, 1, 1, 2, 2, 3, 3],
+        "line_position": [1, 2, 3, 1, 2, 1, 2],
+        "line_size": [3, 3, 3, 2, 2, 2, 2],
     })
-    out = add_relative_features(df)
-    assert out.loc[0, "score_delta_mean"] == 5.0
-    assert out.loc[2, "score_delta_mean"] == 5.0
 
 
-def test_similarity_returns_nearest_first():
-    history = pd.DataFrame({
-        "race_id": ["a", "b", "c"],
-        "score__max": [100.0, 110.0, 130.0],
-        "score__std": [2.0, 5.0, 10.0],
-    })
-    target = pd.Series({"race_id": "t", "score__max": 109.0, "score__std": 5.5})
-    out = similarity_neighbors(history, target, k=2)
-    assert out.iloc[0]["race_id"] == "b"
+def test_final_odds_columns_are_rejected():
+    with pytest.raises(LeakageError):
+        validate_pre_race_columns(["race_id", "score", "trifecta_final_odds"])
+
+
+def test_actual_collector_aliases_and_percentages_are_normalized():
+    out = normalize_entries(sample_entries())
+    assert out.loc[0, "rider_key"] == "選手1"
+    assert out.loc[0, "nige"] == 5
+    assert out.loc[0, "quinella_rate"] == 45.0
+    assert out.loc[0, "trio_rate"] == 60.0
+
+
+def test_race_relative_score_feature_is_local():
+    df = pd.concat([
+        sample_entries(),
+        sample_entries().assign(race_id="r2", score=["86", "84", "82", "81", "80", "79", "78"]),
+    ], ignore_index=True)
+    out = add_race_relative_features(df)
+    r1 = out[out["race_id"] == "r1"]
+    r2 = out[out["race_id"] == "r2"]
+    assert round(float(r1.iloc[0]["score_delta"]), 6) == round(float(r2.iloc[0]["score_delta"]), 6)
+
+
+def test_plackett_luce_is_exactly_210_for_seven_riders_and_normalized():
+    tri = plackett_luce_trifecta({i: 8 - i for i in range(1, 8)})
+    assert len(tri) == 210
+    assert tri["combo"].nunique() == 210
+    assert abs(float(tri["probability"].sum()) - 1.0) < 1e-10
+    marg = marginals_from_trifecta(tri)
+    assert abs(float(marg["p_first"].sum()) - 1.0) < 1e-10
+    assert abs(float(marg["p_top2"].sum()) - 2.0) < 1e-10
+    assert abs(float(marg["p_top3"].sum()) - 3.0) < 1e-10
+
+
+def test_relationship_tracker_starts_shrunk_to_neutral():
+    t = RelationshipTracker(prior_strength=8.0)
+    f = t.features("A", "B")
+    assert f["h2h_meetings"] == 0
+    assert f["h2h_a_rate_shrunk"] == 0.5
+    assert f["h2h_confidence"] == 0.0
+
+
+def test_2026_labels_are_locked_before_any_file_is_opened(tmp_path: Path):
+    catalog = DatasetCatalog(tmp_path)
+    sealed = next(s for s in catalog.segments if s.name == "2026_h1")
+    with pytest.raises(SealedValidationError):
+        load_labels(sealed)
+
+
+def test_price_blind_policy_can_skip_model_disagreement():
+    stat = plackett_luce_trifecta({i: 8 - i for i in range(1, 8)})
+    sim = stat.copy()
+    sim["probability"] = sim["probability"].iloc[::-1].to_numpy()
+    blended = stat.copy()
+    policy = TicketPolicy(max_model_tv_distance=0.01)
+    decision = select_tickets(blended, stat, sim, policy)
+    assert decision["buy"] is False
+    assert "model_disagreement" in decision["skip_reasons"]
