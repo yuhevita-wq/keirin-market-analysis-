@@ -63,12 +63,7 @@ def _write_json(path: Path, payload) -> None:
 
 
 def _decision_from_pack(pack: dict, policy: TicketPolicy) -> dict:
-    d = select_tickets(
-        pack["trifecta"],
-        pack["statistical_trifecta"],
-        pack["similarity_trifecta"],
-        policy,
-    )
+    d = select_tickets(pack["trifecta"], pack["statistical_trifecta"], pack["similarity_trifecta"], policy)
     meta = pack["meta"]
     return {
         "race_id": str(pack["race_id"]),
@@ -142,8 +137,7 @@ def _decision_from_compact(pack: dict, policy: TicketPolicy) -> dict:
 
 def _prediction_packs(engine: KeirinPredictionEngine, races: pd.DataFrame, entries: pd.DataFrame):
     by_race = {str(rid): g for rid, g in entries.groupby("race_id", sort=False)}
-    ordered = engine._sort_races(races)
-    for r in ordered.itertuples(index=False):
+    for r in engine._sort_races(races).itertuples(index=False):
         rid = str(getattr(r, "race_id"))
         eg = by_race.get(rid)
         if eg is None or len(eg) != 7:
@@ -152,14 +146,42 @@ def _prediction_packs(engine: KeirinPredictionEngine, races: pd.DataFrame, entri
         yield engine.predict_race(race_row, eg)
 
 
+def _monthly_summaries(evaluated: pd.DataFrame) -> list[dict]:
+    if evaluated.empty:
+        return []
+    df = evaluated.copy()
+    df["race_date"] = pd.to_datetime(df["race_date"], errors="coerce")
+    df["month"] = df["race_date"].dt.month
+    out: list[dict] = []
+    for month, g in df.groupby("month", dropna=True):
+        bought = g[g["buy"]]
+        stake = int(bought["stake_yen"].sum()) if not bought.empty else 0
+        ret = int(bought["return_yen"].sum()) if not bought.empty else 0
+        out.append({
+            "month": int(month),
+            "evaluated_races": int(len(g)),
+            "bought_races": int(len(bought)),
+            "stake_yen": stake,
+            "return_yen": ret,
+            "roi": float(ret / stake) if stake else 0.0,
+        })
+    return sorted(out, key=lambda x: x["month"])
+
+
 def _score_policy_on_compact(packs: list[dict], payouts: pd.DataFrame, policy: TicketPolicy) -> dict:
     decisions = [_decision_from_compact(pack, policy) for pack in packs]
-    _, summary = evaluate_decisions(decisions, payouts)
+    evaluated, summary = evaluate_decisions(decisions, payouts)
+    summary["monthly"] = _monthly_summaries(evaluated)
+    monthly_with_sample = [m for m in summary["monthly"] if m["bought_races"] >= 15]
+    summary["minimum_monthly_roi_15plus"] = (
+        min(m["roi"] for m in monthly_with_sample) if monthly_with_sample else 0.0
+    )
+    summary["months_with_15plus_buys"] = len(monthly_with_sample)
     return summary
 
 
 def calibrate_policy_2024(root: Path, out_dir: Path, contract: EngineContract) -> tuple[TicketPolicy, dict]:
-    """Fit on 2024H1, then select one fixed price-blind policy using Q3 and Q4 separately."""
+    """Q3 selects exactly one policy. Q4 is pass/fail only and may not select a replacement."""
     catalog = DatasetCatalog(root)
     h1 = _segments(catalog, ("2024_q1", "2024_q2"))
     q3 = _segments(catalog, ("2024_q3",))
@@ -167,53 +189,61 @@ def calibrate_policy_2024(root: Path, out_dir: Path, contract: EngineContract) -
     engine = _fit_on_segments(root, h1, contract)
 
     q3_races, q3_entries = concat_pre_race(q3, seven_rider_only=True)
-    q4_races, q4_entries = concat_pre_race(q4, seven_rider_only=True)
     q3_payouts = _concat_payouts(q3)
-    q4_payouts = _concat_payouts(q4)
-
-    # History/model snapshot stays frozen at 2024-06-30 throughout H2 calibration.
     q3_packs = [_compact_pack(pack) for pack in _prediction_packs(engine, q3_races, q3_entries)]
-    q4_packs = [_compact_pack(pack) for pack in _prediction_packs(engine, q4_races, q4_entries)]
 
-    records: list[dict] = []
-    best: tuple[float, int, int, TicketPolicy, dict, dict] | None = None
+    candidates: list[dict] = []
+    best: tuple[float, float, int, int, TicketPolicy, dict] | None = None
     for policy_id, policy in enumerate(policy_grid()):
-        s3 = _score_policy_on_compact(q3_packs, q3_payouts, policy)
-        s4 = _score_policy_on_compact(q4_packs, q4_payouts, policy)
-        min_sample = min(int(s3["bought_races"]), int(s4["bought_races"]))
-        worst_roi = min(float(s3["roi"]), float(s4["roi"]))
-        worst_dd = max(int(s3["max_drawdown_yen"]), int(s4["max_drawdown_yen"]))
-        eligible = min_sample >= 60
-        record = {
-            "policy_id": policy_id,
-            "policy": asdict(policy),
-            "eligible": eligible,
-            "worst_quarter_roi": worst_roi,
-            "minimum_quarter_bought_races": min_sample,
-            "worst_drawdown_yen": worst_dd,
-            "q3": s3,
-            "q4": s4,
-        }
-        records.append(record)
+        score = _score_policy_on_compact(q3_packs, q3_payouts, policy)
+        eligible = int(score["bought_races"]) >= 60 and int(score["months_with_15plus_buys"]) == 3
+        record = {"policy_id": policy_id, "policy": asdict(policy), "eligible": eligible, "q3": score}
+        candidates.append(record)
         if eligible:
-            key = (worst_roi, min_sample, -worst_dd)
-            if best is None or key > best[:3]:
-                best = (worst_roi, min_sample, -worst_dd, policy, s3, s4)
-
+            key = (
+                float(score["minimum_monthly_roi_15plus"]),
+                float(score["roi"]),
+                int(score["bought_races"]),
+                -int(score["max_drawdown_yen"]),
+            )
+            if best is None or key > best[:4]:
+                best = (*key, policy, score)
     if best is None:
-        raise RuntimeError("No 2024 policy candidate met the pre-declared minimum sample requirement")
-    selected = best[3]
+        raise RuntimeError("No Q3 policy candidate met the pre-declared sample/stability requirement")
+
+    selected = best[4]
+    selected_q3 = best[5]
+
+    # Q4 is opened only after the Q3 winner is frozen. No alternative policy is scored on Q4.
+    q4_races, q4_entries = concat_pre_race(q4, seven_rider_only=True)
+    q4_payouts = _concat_payouts(q4)
+    q4_packs = [_compact_pack(pack) for pack in _prediction_packs(engine, q4_races, q4_entries)]
+    q4_score = _score_policy_on_compact(q4_packs, q4_payouts, selected)
+    q4_months_ok = sum(1 for m in q4_score["monthly"] if m["bought_races"] >= 15 and m["roi"] >= 0.85)
+    validation_passed = (
+        int(q4_score["bought_races"]) >= 60
+        and float(q4_score["roi"]) >= 1.00
+        and q4_months_ok >= 2
+    )
+
     report = {
-        "method": "model fit=2024H1; policy selection=maximize worst ROI across 2024Q3/Q4 with >=60 bought races in each quarter",
+        "method": "fit model on 2024H1; choose one policy on Q3 only; Q4 is an irreversible validation gate",
         "contract": asdict(contract),
         "selected_policy": asdict(selected),
-        "selected_q3": best[4],
-        "selected_q4": best[5],
-        "candidate_count": len(records),
-        "important": "2025 was not used for policy selection; final odds were not used as prediction or ticket features.",
+        "selected_q3": selected_q3,
+        "q4_validation": q4_score,
+        "q4_gate": {
+            "minimum_bought_races": 60,
+            "minimum_full_quarter_roi": 1.00,
+            "minimum_months_with_15plus_buys_and_roi_0_85": 2,
+            "observed_qualifying_months": q4_months_ok,
+            "passed": validation_passed,
+        },
+        "candidate_count_q3_only": len(candidates),
+        "important": "No Q4 result can select a replacement policy. 2025 must remain unopened if this gate fails.",
     }
-    _write_json(out_dir / "2024_policy_candidates.json", records)
-    _write_json(out_dir / "2024_selected_policy.json", report)
+    _write_json(out_dir / "2024_q3_policy_candidates.json", candidates)
+    _write_json(out_dir / "2024_selected_policy_and_q4_gate.json", report)
     return selected, report
 
 
@@ -228,8 +258,8 @@ def destruction_test_2025(root: Path, out_dir: Path, policy: TicketPolicy, contr
     h1_decisions = [_decision_from_pack(pack, policy) for pack in _prediction_packs(engine, h1_races, h1_entries)]
     h1_payouts = _concat_payouts(h1)
     h1_eval, h1_summary = evaluate_decisions(h1_decisions, h1_payouts)
+    h1_summary["monthly"] = _monthly_summaries(h1_eval)
 
-    # Refresh only at the archival boundary. Coefficients and selected policy remain frozen.
     h1_results = _filter_labels(concat_labels(h1), h1_races)
     engine.refresh_history(h1_races, h1_entries, h1_results)
 
@@ -237,10 +267,12 @@ def destruction_test_2025(root: Path, out_dir: Path, policy: TicketPolicy, contr
     h2_decisions = [_decision_from_pack(pack, policy) for pack in _prediction_packs(engine, h2_races, h2_entries)]
     h2_payouts = _concat_payouts(h2)
     h2_eval, h2_summary = evaluate_decisions(h2_decisions, h2_payouts)
+    h2_summary["monthly"] = _monthly_summaries(h2_eval)
 
     all_decisions = h1_decisions + h2_decisions
     all_payouts = pd.concat([h1_payouts, h2_payouts], ignore_index=True)
     all_eval, all_summary = evaluate_decisions(all_decisions, all_payouts)
+    all_summary["monthly"] = _monthly_summaries(all_eval)
 
     out_dir.mkdir(parents=True, exist_ok=True)
     h1_eval.to_csv(out_dir / "2025_h1_evaluation.csv", index=False)
@@ -255,7 +287,7 @@ def destruction_test_2025(root: Path, out_dir: Path, policy: TicketPolicy, contr
         "2025_h1": h1_summary,
         "2025_h2": h2_summary,
         "2025_full": all_summary,
-        "history_refresh": "2025H1 enters relationship/similarity memory only after all H1 predictions are frozen; model coefficients are not refit.",
+        "history_refresh": "2025H1 enters relationship/similarity memory only after all H1 predictions are frozen; coefficients and policy are unchanged.",
         "sealed_2026_status": "NOT_OPENED",
         "market_rule": "historical final odds were not loaded by this command",
     }
@@ -267,6 +299,14 @@ def destruction_test_2025(root: Path, out_dir: Path, policy: TicketPolicy, contr
 def run_develop_and_test(root: Path, out_dir: Path) -> dict:
     contract = EngineContract()
     policy, development_report = calibrate_policy_2024(root, out_dir, contract)
+    if not bool(development_report["q4_gate"]["passed"]):
+        combined = {
+            "development": development_report,
+            "destruction_test": "NOT_RUN_BECAUSE_Q4_GATE_FAILED",
+            "sealed_2026_status": "NOT_OPENED",
+        }
+        _write_json(out_dir / "prediction_engine_v1_report.json", combined)
+        return combined
     test_report = destruction_test_2025(root, out_dir, policy, contract)
     combined = {
         "development": development_report,
