@@ -10,9 +10,9 @@ import numpy as np
 import pandas as pd
 
 from .prediction_engine import EngineContract, KeirinPredictionEngine
-from .prediction_models import blend_trifecta
+from .prediction_models import distribution_metrics
 from .prediction_schema import DatasetCatalog, Segment, concat_labels, concat_pre_race, load_payouts
-from .prediction_strategy import TicketPolicy, evaluate_decisions, policy_grid, select_tickets, trifecta_payout_map
+from .prediction_strategy import TicketPolicy, evaluate_decisions, model_tv_distance, policy_grid, select_tickets
 
 
 def _segments(catalog: DatasetCatalog, names: Iterable[str]) -> tuple[Segment, ...]:
@@ -43,14 +43,17 @@ def _fit_on_segments(root: Path, segments: tuple[Segment, ...], contract: Engine
 
 
 def _json_default(obj):
-    if isinstance(obj, (np.integer,)):
+    if isinstance(obj, np.integer):
         return int(obj)
-    if isinstance(obj, (np.floating,)):
+    if isinstance(obj, np.floating):
         return float(obj)
-    if isinstance(obj, (pd.Timestamp,)):
+    if isinstance(obj, pd.Timestamp):
         return obj.isoformat()
-    if pd.isna(obj):
-        return None
+    try:
+        if pd.isna(obj):
+            return None
+    except (TypeError, ValueError):
+        pass
     return str(obj)
 
 
@@ -81,6 +84,62 @@ def _decision_from_pack(pack: dict, policy: TicketPolicy) -> dict:
     }
 
 
+def _compact_pack(pack: dict) -> dict:
+    tri = pack["trifecta"].sort_values("probability", ascending=False)
+    meta = pack["meta"]
+    metrics = distribution_metrics(tri)
+    metrics["model_tv_distance"] = model_tv_distance(pack["statistical_trifecta"], pack["similarity_trifecta"])
+    return {
+        "race_id": str(pack["race_id"]),
+        "race_date": meta.get("race_date"),
+        "track": meta.get("track"),
+        "race_no": meta.get("race_no"),
+        "race_type": meta.get("race_type"),
+        "combos": tri["combo"].astype(str).tolist(),
+        "probabilities": tri["probability"].astype(float).tolist(),
+        "metrics": metrics,
+    }
+
+
+def _decision_from_compact(pack: dict, policy: TicketPolicy) -> dict:
+    m = pack["metrics"]
+    reasons: list[str] = []
+    if m["normalized_entropy"] > policy.max_normalized_entropy:
+        reasons.append("entropy")
+    if m["top10_mass"] < policy.min_top10_mass:
+        reasons.append("diffuse_top10")
+    if m["model_tv_distance"] > policy.max_model_tv_distance:
+        reasons.append("model_disagreement")
+
+    tickets: list[str] = []
+    mass = 0.0
+    if not reasons:
+        for combo, prob in zip(pack["combos"], pack["probabilities"]):
+            if len(tickets) >= policy.max_tickets:
+                break
+            tickets.append(combo)
+            mass += float(prob)
+            if mass >= policy.cumulative_mass:
+                break
+        if not tickets:
+            reasons.append("no_ticket")
+
+    buy = not reasons
+    return {
+        "race_id": pack["race_id"],
+        "race_date": pack.get("race_date"),
+        "track": pack.get("track"),
+        "race_no": pack.get("race_no"),
+        "race_type": pack.get("race_type"),
+        "buy": buy,
+        "tickets": tickets if buy else [],
+        "stake_yen": len(tickets) * policy.unit_yen if buy else 0,
+        "covered_probability_mass": mass if buy else 0.0,
+        "skip_reasons": reasons,
+        "metrics": m,
+    }
+
+
 def _prediction_packs(engine: KeirinPredictionEngine, races: pd.DataFrame, entries: pd.DataFrame):
     by_race = {str(rid): g for rid, g in entries.groupby("race_id", sort=False)}
     ordered = engine._sort_races(races)
@@ -93,14 +152,14 @@ def _prediction_packs(engine: KeirinPredictionEngine, races: pd.DataFrame, entri
         yield engine.predict_race(race_row, eg)
 
 
-def _score_policy_on_packs(packs: list[dict], payouts: pd.DataFrame, policy: TicketPolicy) -> dict:
-    decisions = [_decision_from_pack(pack, policy) for pack in packs]
+def _score_policy_on_compact(packs: list[dict], payouts: pd.DataFrame, policy: TicketPolicy) -> dict:
+    decisions = [_decision_from_compact(pack, policy) for pack in packs]
     _, summary = evaluate_decisions(decisions, payouts)
     return summary
 
 
 def calibrate_policy_2024(root: Path, out_dir: Path, contract: EngineContract) -> tuple[TicketPolicy, dict]:
-    """Use 2024H1 for model fit, then Q3/Q4 separately for a robust price-blind policy choice."""
+    """Fit on 2024H1, then select one fixed price-blind policy using Q3 and Q4 separately."""
     catalog = DatasetCatalog(root)
     h1 = _segments(catalog, ("2024_q1", "2024_q2"))
     q3 = _segments(catalog, ("2024_q3",))
@@ -112,16 +171,15 @@ def calibrate_policy_2024(root: Path, out_dir: Path, contract: EngineContract) -
     q3_payouts = _concat_payouts(q3)
     q4_payouts = _concat_payouts(q4)
 
-    # The model/history snapshot is frozen at 2024-06-30 for both Q3 and Q4.
-    # Q3/Q4 outcomes are never fed back into the provisional predictor.
-    q3_packs = list(_prediction_packs(engine, q3_races, q3_entries))
-    q4_packs = list(_prediction_packs(engine, q4_races, q4_entries))
+    # History/model snapshot stays frozen at 2024-06-30 throughout H2 calibration.
+    q3_packs = [_compact_pack(pack) for pack in _prediction_packs(engine, q3_races, q3_entries)]
+    q4_packs = [_compact_pack(pack) for pack in _prediction_packs(engine, q4_races, q4_entries)]
 
     records: list[dict] = []
     best: tuple[float, int, int, TicketPolicy, dict, dict] | None = None
     for policy_id, policy in enumerate(policy_grid()):
-        s3 = _score_policy_on_packs(q3_packs, q3_payouts, policy)
-        s4 = _score_policy_on_packs(q4_packs, q4_payouts, policy)
+        s3 = _score_policy_on_compact(q3_packs, q3_payouts, policy)
+        s4 = _score_policy_on_compact(q4_packs, q4_payouts, policy)
         min_sample = min(int(s3["bought_races"]), int(s4["bought_races"]))
         worst_roi = min(float(s3["roi"]), float(s4["roi"]))
         worst_dd = max(int(s3["max_drawdown_yen"]), int(s4["max_drawdown_yen"]))
@@ -146,7 +204,7 @@ def calibrate_policy_2024(root: Path, out_dir: Path, contract: EngineContract) -
         raise RuntimeError("No 2024 policy candidate met the pre-declared minimum sample requirement")
     selected = best[3]
     report = {
-        "method": "fit model on 2024H1; select policy by worst ROI across 2024Q3 and Q4; minimum 60 bought races each",
+        "method": "model fit=2024H1; policy selection=maximize worst ROI across 2024Q3/Q4 with >=60 bought races in each quarter",
         "contract": asdict(contract),
         "selected_policy": asdict(selected),
         "selected_q3": best[4],
@@ -167,18 +225,16 @@ def destruction_test_2025(root: Path, out_dir: Path, policy: TicketPolicy, contr
     engine = _fit_on_segments(root, development, contract)
 
     h1_races, h1_entries = concat_pre_race(h1, seven_rider_only=True)
-    h1_packs = list(_prediction_packs(engine, h1_races, h1_entries))
-    h1_decisions = [_decision_from_pack(pack, policy) for pack in h1_packs]
+    h1_decisions = [_decision_from_pack(pack, policy) for pack in _prediction_packs(engine, h1_races, h1_entries)]
     h1_payouts = _concat_payouts(h1)
     h1_eval, h1_summary = evaluate_decisions(h1_decisions, h1_payouts)
 
-    # Historical memory is refreshed only at the half-year boundary. Coefficients and policy stay frozen.
+    # Refresh only at the archival boundary. Coefficients and selected policy remain frozen.
     h1_results = _filter_labels(concat_labels(h1), h1_races)
     engine.refresh_history(h1_races, h1_entries, h1_results)
 
     h2_races, h2_entries = concat_pre_race(h2, seven_rider_only=True)
-    h2_packs = list(_prediction_packs(engine, h2_races, h2_entries))
-    h2_decisions = [_decision_from_pack(pack, policy) for pack in h2_packs]
+    h2_decisions = [_decision_from_pack(pack, policy) for pack in _prediction_packs(engine, h2_races, h2_entries)]
     h2_payouts = _concat_payouts(h2)
     h2_eval, h2_summary = evaluate_decisions(h2_decisions, h2_payouts)
 
@@ -199,7 +255,7 @@ def destruction_test_2025(root: Path, out_dir: Path, policy: TicketPolicy, contr
         "2025_h1": h1_summary,
         "2025_h2": h2_summary,
         "2025_full": all_summary,
-        "history_refresh": "2025H1 outcomes enter relationship/similarity memory only after every H1 prediction is already frozen; model coefficients are not refit.",
+        "history_refresh": "2025H1 enters relationship/similarity memory only after all H1 predictions are frozen; model coefficients are not refit.",
         "sealed_2026_status": "NOT_OPENED",
         "market_rule": "historical final odds were not loaded by this command",
     }
@@ -243,8 +299,7 @@ def main() -> None:
             "available_commands": ["calibrate-2024", "destruction-test-2025", "develop-and-test"],
         }
     elif args.command == "calibrate-2024":
-        policy, report = calibrate_policy_2024(root, out, contract)
-        payload = report
+        _, payload = calibrate_policy_2024(root, out, contract)
     elif args.command == "destruction-test-2025":
         if not args.policy_json:
             raise SystemExit("--policy-json is required for destruction-test-2025")
