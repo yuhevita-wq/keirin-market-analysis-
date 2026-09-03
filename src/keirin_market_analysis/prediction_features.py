@@ -40,6 +40,7 @@ NUMERIC_ALIASES = {
     "line_position": ("line_position",),
     "line_size": ("line_size",),
     "car_no": ("car_no",),
+    "race_no": ("race_no",),
 }
 
 
@@ -101,9 +102,13 @@ def normalize_entries(entries: pd.DataFrame) -> pd.DataFrame:
     if missing:
         raise KeyError(f"entries.csv missing required normalized fields: {sorted(missing)}")
 
-    for optional in ("line_id", "line_position", "line_size", "b_count", "s_count"):
+    for optional in ("line_id", "line_position", "line_size", "b_count", "s_count", "race_no"):
         if optional not in out.columns:
             out[optional] = np.nan
+    for optional in ("track", "race_type", "style", "class", "prefecture", "line_role"):
+        if optional not in out.columns:
+            out[optional] = ""
+        out[optional] = out[optional].fillna("").astype(str).str.strip()
     return out
 
 
@@ -130,6 +135,27 @@ def add_race_relative_features(entries: pd.DataFrame) -> pd.DataFrame:
         out.loc[valid_line, "line_score_mean"] = line["score"].transform("mean")
         out.loc[valid_line, "line_b_sum"] = line["b_count"].transform("sum")
         out.loc[valid_line, "line_member_count"] = line["race_id"].transform("size")
+
+    race_score_max = out.groupby("race_id")["score"].transform("max")
+    race_score_min = out.groupby("race_id")["score"].transform("min")
+    out["race_score_spread"] = race_score_max - race_score_min
+    out["race_b_total"] = out.groupby("race_id")["b_count"].transform("sum")
+    out["race_line_count"] = out.groupby("race_id")["line_id"].transform(lambda s: s.dropna().nunique())
+    out["race_max_line_size"] = out.groupby("race_id")["line_size"].transform("max")
+
+    line_shapes: dict[str, str] = {}
+    b_concentrations: dict[str, float] = {}
+    for race_id, g in out.groupby("race_id", sort=False):
+        sizes = sorted(
+            [int(len(lg)) for _, lg in g[g["line_id"].notna()].groupby("line_id", sort=False)],
+            reverse=True,
+        )
+        line_shapes[str(race_id)] = "-".join(str(x) for x in sizes) if sizes else "unpublished"
+        b_by_line = [float(lg["b_count"].fillna(0).sum()) for _, lg in g[g["line_id"].notna()].groupby("line_id", sort=False)]
+        total_b = float(g["b_count"].fillna(0).sum())
+        b_concentrations[str(race_id)] = max(b_by_line) / total_b if b_by_line and total_b > 0 else 0.0
+    out["race_line_shape"] = out["race_id"].map(line_shapes)
+    out["race_b_line_concentration"] = out["race_id"].map(b_concentrations).astype(float)
     return out
 
 
@@ -263,6 +289,23 @@ def _pair_row(a: dict, b: dict, tracker: RelationshipTracker, numeric_base: list
         "car_b": int(b["car_no"]),
         "same_line": int(pd.notna(a.get("line_id")) and pd.notna(b.get("line_id")) and a.get("line_id") == b.get("line_id")),
         "same_line_position_gap": _value(a.get("line_position")) - _value(b.get("line_position")),
+        "delta_car_no": _value(a.get("car_no")) - _value(b.get("car_no")),
+        "race_no": _value(a.get("race_no"), np.nan),
+        "race_score_spread": _value(a.get("race_score_spread"), np.nan),
+        "race_b_total": _value(a.get("race_b_total"), np.nan),
+        "race_line_count": _value(a.get("race_line_count"), np.nan),
+        "race_max_line_size": _value(a.get("race_max_line_size"), np.nan),
+        "race_b_line_concentration": _value(a.get("race_b_line_concentration"), np.nan),
+        "track": str(a.get("track", "")),
+        "race_type": str(a.get("race_type", "")),
+        "race_line_shape": str(a.get("race_line_shape", "")),
+        "a_style": str(a.get("style", "")),
+        "b_style": str(b.get("style", "")),
+        "a_class": str(a.get("class", "")),
+        "b_class": str(b.get("class", "")),
+        "a_prefecture": str(a.get("prefecture", "")),
+        "b_prefecture": str(b.get("prefecture", "")),
+        "same_prefecture": int(str(a.get("prefecture", "")) != "" and str(a.get("prefecture", "")) == str(b.get("prefecture", ""))),
         **rel,
     }
     for col in numeric_base:
