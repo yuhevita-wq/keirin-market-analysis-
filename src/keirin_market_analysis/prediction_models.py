@@ -6,10 +6,11 @@ from math import exp, log
 
 import numpy as np
 import pandas as pd
+from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from .prediction_features import (
     RelationshipTracker,
@@ -37,7 +38,7 @@ def _softmax(values: dict[int, float]) -> dict[int, float]:
 
 
 def plackett_luce_trifecta(utilities: dict[int, float]) -> pd.DataFrame:
-    """Generate a normalized ordered top-3 distribution from positive rider utilities."""
+    """Generate all ordered top-three probabilities. Seven riders => exactly 210 rows."""
     cars = sorted(utilities)
     u = {c: max(float(utilities[c]), 1e-12) for c in cars}
     rows: list[dict] = []
@@ -72,36 +73,54 @@ def marginals_from_trifecta(trifecta: pd.DataFrame) -> pd.DataFrame:
 @dataclass
 class PairwiseKeirinModel:
     c: float = 0.35
-    max_iter: int = 2000
+    max_iter: int = 2500
     model: Pipeline | None = None
     feature_columns: tuple[str, ...] = ()
+    numeric_columns: tuple[str, ...] = ()
+    categorical_columns: tuple[str, ...] = ()
 
     def fit(self, pair_rows: pd.DataFrame) -> "PairwiseKeirinModel":
         if pair_rows.empty:
             raise ValueError("pairwise training data is empty")
-        features = [
-            c for c in pair_rows.columns
-            if c not in PAIR_ID_COLUMNS and pd.api.types.is_numeric_dtype(pair_rows[c])
-        ]
-        if not features:
+        candidates = [c for c in pair_rows.columns if c not in PAIR_ID_COLUMNS]
+        numeric = [c for c in candidates if pd.api.types.is_numeric_dtype(pair_rows[c])]
+        categorical = [c for c in candidates if c not in numeric]
+        if not numeric:
             raise ValueError("no numeric pairwise features")
-        x = pair_rows[features].replace([np.inf, -np.inf], np.nan)
+
+        numeric_pipe = Pipeline([
+            ("imputer", SimpleImputer(strategy="median")),
+            ("scale", StandardScaler()),
+        ])
+        categorical_pipe = Pipeline([
+            ("imputer", SimpleImputer(strategy="constant", fill_value="__MISSING__")),
+            ("onehot", OneHotEncoder(handle_unknown="ignore", min_frequency=10)),
+        ])
+        preprocess = ColumnTransformer([
+            ("numeric", numeric_pipe, numeric),
+            ("categorical", categorical_pipe, categorical),
+        ])
+        classifier = LogisticRegression(C=self.c, max_iter=self.max_iter, solver="liblinear")
+        self.model = Pipeline([("features", preprocess), ("logit", classifier)])
+        x = pair_rows[candidates].replace([np.inf, -np.inf], np.nan)
         y = pair_rows["label_a_beats_b"].astype(int)
         if y.nunique() < 2:
             raise ValueError("pairwise labels contain only one class")
-        self.model = Pipeline([
-            ("imputer", SimpleImputer(strategy="median")),
-            ("scale", StandardScaler()),
-            ("logit", LogisticRegression(C=self.c, max_iter=self.max_iter, class_weight="balanced")),
-        ])
         self.model.fit(x, y)
-        self.feature_columns = tuple(features)
+        self.feature_columns = tuple(candidates)
+        self.numeric_columns = tuple(numeric)
+        self.categorical_columns = tuple(categorical)
         return self
 
     def _predict_pair_frame(self, pairs: pd.DataFrame) -> pd.DataFrame:
         if self.model is None:
             raise RuntimeError("model is not fitted")
-        x = pairs.reindex(columns=self.feature_columns).replace([np.inf, -np.inf], np.nan)
+        x = pairs.reindex(columns=self.feature_columns).copy()
+        for c in self.numeric_columns:
+            x[c] = pd.to_numeric(x[c], errors="coerce")
+        for c in self.categorical_columns:
+            x[c] = x[c].fillna("").astype(str)
+        x = x.replace([np.inf, -np.inf], np.nan)
         p = self.model.predict_proba(x)[:, 1]
         out = pairs[["race_id", "car_a", "car_b"]].copy()
         out["p_a_beats_b"] = p
@@ -126,14 +145,16 @@ class PairwiseKeirinModel:
         tri = plackett_luce_trifecta(utilities)
         return {
             "pairwise": pp,
-            "strength": pd.DataFrame([{"car_no": c, "latent_score": mean_score[c], "strength_share": strength_share[c]} for c in cars]),
+            "strength": pd.DataFrame([
+                {"car_no": c, "latent_score": mean_score[c], "strength_share": strength_share[c]} for c in cars
+            ]),
             "trifecta": tri,
             "marginals": marginals_from_trifecta(tri),
         }
 
 
 def assign_structural_roles(entries_for_race: pd.DataFrame) -> pd.DataFrame:
-    """Create anonymous, future-safe roles such as L1P1 (best-scored line head)."""
+    """Anonymous roles: lines ranked by head score, then position within each line."""
     g = add_race_relative_features(entries_for_race).copy()
     lines: list[tuple[float, object]] = []
     for line_id, lg in g[g["line_id"].notna()].groupby("line_id", sort=False):
@@ -161,6 +182,7 @@ def assign_structural_roles(entries_for_race: pd.DataFrame) -> pd.DataFrame:
 class SimilarityRoleModel:
     k: int = 250
     distance_floor: float = 0.08
+    min_exact_pool: int = 80
     structures: pd.DataFrame | None = None
     outcomes: pd.DataFrame | None = None
     feature_columns: tuple[str, ...] = ()
@@ -169,13 +191,19 @@ class SimilarityRoleModel:
 
     def fit(self, races: pd.DataFrame, entries: pd.DataFrame, results: pd.DataFrame) -> "SimilarityRoleModel":
         structures = build_race_structure(races, entries)
+        if "race_no" in structures.columns:
+            structures["race_no"] = pd.to_numeric(structures["race_no"], errors="coerce")
         outcome_rows: list[dict] = []
-        result_groups = {rid: g for rid, g in results.groupby("race_id", sort=False)}
-        for race_id, eg in entries.groupby("race_id", sort=False):
+        result_groups = {str(rid): g for rid, g in results.groupby("race_id", sort=False)}
+        for raw_race_id, eg in entries.groupby("race_id", sort=False):
+            race_id = str(raw_race_id)
             if race_id not in result_groups:
                 continue
             role = assign_structural_roles(eg)
-            role_by_car = {int(r.car_no): r.structural_role for r in role[["car_no", "structural_role"]].itertuples(index=False)}
+            role_by_car = {
+                int(r.car_no): r.structural_role
+                for r in role[["car_no", "structural_role"]].itertuples(index=False)
+            }
             rg = result_groups[race_id].copy()
             rg["order_numeric"] = pd.to_numeric(rg["order_numeric"], errors="coerce")
             rg["car_no"] = pd.to_numeric(rg["car_no"], errors="coerce")
@@ -192,7 +220,10 @@ class SimilarityRoleModel:
                 "role_third": role_by_car[cars[2]],
             })
         outcomes = pd.DataFrame(outcome_rows)
-        numeric = [c for c in structures.columns if pd.api.types.is_numeric_dtype(structures[c]) and c not in {"race_no"}]
+        numeric = [
+            c for c in structures.columns
+            if pd.api.types.is_numeric_dtype(structures[c]) and c not in {"rider_count"}
+        ]
         if not numeric:
             raise ValueError("no race-structure numeric features")
         x = structures[numeric].replace([np.inf, -np.inf], np.nan)
@@ -205,16 +236,37 @@ class SimilarityRoleModel:
         self.scales = scales
         return self
 
+    def _candidate_pool(self, target: pd.Series) -> pd.DataFrame:
+        assert self.structures is not None
+        pool = self.structures
+        race_type = str(target.get("race_type", ""))
+        if race_type and "race_type" in pool.columns:
+            exact_type = pool[pool["race_type"].astype(str) == race_type]
+            if len(exact_type) >= self.min_exact_pool:
+                pool = exact_type
+        if "line_count" in pool.columns and pd.notna(target.get("line_count")):
+            exact_line = pool[pd.to_numeric(pool["line_count"], errors="coerce") == float(target["line_count"])]
+            if len(exact_line) >= self.min_exact_pool:
+                pool = exact_line
+        return pool
+
     def predict_race(self, race_row: pd.DataFrame, entries_for_race: pd.DataFrame) -> pd.DataFrame:
         if self.structures is None or self.outcomes is None or self.medians is None or self.scales is None:
             raise RuntimeError("similarity model is not fitted")
         target_struct = build_race_structure(race_row, entries_for_race)
         if target_struct.empty:
             raise ValueError("target race structure could not be built")
-        x = self.structures[list(self.feature_columns)].replace([np.inf, -np.inf], np.nan).fillna(self.medians)
-        t = target_struct.iloc[0][list(self.feature_columns)].replace([np.inf, -np.inf], np.nan).fillna(self.medians)
+        if "race_no" in target_struct.columns:
+            target_struct["race_no"] = pd.to_numeric(target_struct["race_no"], errors="coerce")
+        target = target_struct.iloc[0]
+        pool = self._candidate_pool(target)
+        if pool.empty:
+            return pd.DataFrame(columns=["first", "second", "third", "combo", "probability"])
+
+        x = pool[list(self.feature_columns)].replace([np.inf, -np.inf], np.nan).fillna(self.medians)
+        t = target[list(self.feature_columns)].replace([np.inf, -np.inf], np.nan).fillna(self.medians)
         d = np.sqrt((((x - t) / self.scales) ** 2).mean(axis=1))
-        neigh = self.structures[["race_id"]].copy()
+        neigh = pool[["race_id"]].copy()
         neigh["distance"] = d
         neigh = neigh.nsmallest(min(self.k, len(neigh)), "distance")
         neigh = neigh.merge(self.outcomes, on="race_id", how="inner")
@@ -223,7 +275,10 @@ class SimilarityRoleModel:
         neigh["weight"] = 1.0 / np.maximum(neigh["distance"].astype(float), self.distance_floor)
 
         target_roles = assign_structural_roles(entries_for_race)
-        car_by_role = {r.structural_role: int(r.car_no) for r in target_roles[["car_no", "structural_role"]].itertuples(index=False)}
+        car_by_role = {
+            r.structural_role: int(r.car_no)
+            for r in target_roles[["car_no", "structural_role"]].itertuples(index=False)
+        }
         probs: dict[tuple[int, int, int], float] = {}
         for r in neigh.itertuples(index=False):
             roles = (r.role_first, r.role_second, r.role_third)
@@ -236,7 +291,10 @@ class SimilarityRoleModel:
         z = sum(probs.values())
         if z <= 0:
             return pd.DataFrame(columns=["first", "second", "third", "combo", "probability"])
-        rows = [{"first": a, "second": b, "third": c, "combo": f"{a}{b}{c}", "probability": w / z} for (a, b, c), w in probs.items()]
+        rows = [
+            {"first": a, "second": b, "third": c, "combo": f"{a}{b}{c}", "probability": w / z}
+            for (a, b, c), w in probs.items()
+        ]
         return pd.DataFrame(rows).sort_values("probability", ascending=False).reset_index(drop=True)
 
 
