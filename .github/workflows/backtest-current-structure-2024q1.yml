@@ -1,0 +1,35 @@
+name: Backtest current structure 2024 Q1
+
+on:
+  push:
+    branches:
+      - main
+      - analysis/2024q1-current-structure-v0
+    paths:
+      - '.github/workflows/backtest-current-structure-2024q1.yml'
+      - 'scripts/backtest_current_structure_2024q1.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run frozen current-structure backtest
+        run: python scripts/backtest_current_structure_2024q1.py
+      - name: Verify pre-result predictions exist
+        run: |
+          test -s results/current_structure_v0/2024_q1/predictions_pre_result.json
+          test -s results/current_structure_v0/2024_q1/summary.json
+      - name: Upload reality-check outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: current-structure-v0-2024q1
+          path: results/current_structure_v0/2024_q1/
