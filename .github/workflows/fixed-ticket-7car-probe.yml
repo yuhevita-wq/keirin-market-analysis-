@@ -1,0 +1,23 @@
+name: Fixed ticket 7-car F1 main probe
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/fixed-ticket-7car-probe.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run seven-car fixed-ticket probe
+        run: python3 scripts/fixed_ticket_7car_probe.py
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: fixed-ticket-7car-f1-main-result
+          path: results/fixed_ticket_7car_f1_20260904.json
