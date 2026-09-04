@@ -1,0 +1,40 @@
+name: MCE v1 2024 Q1 simulation
+
+on:
+  push:
+    branches:
+      - analysis-mce-v1-2024q1-20260904
+    paths:
+      - .github/workflows/mce-v1-2024q1.yml
+
+permissions:
+  contents: write
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: analysis-mce-v1-2024q1-20260904
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run frozen MCE v1 simulation
+        run: python scripts/mce_v1_2024q1.py
+
+      - name: Commit simulation results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/mce_v1/2024_q1
+          if git diff --cached --quiet; then
+            echo "No result changes to commit"
+          else
+            git commit -m "analysis: save MCE v1 2024 Q1 simulation results"
+            git push origin HEAD:analysis-mce-v1-2024q1-20260904
+          fi
