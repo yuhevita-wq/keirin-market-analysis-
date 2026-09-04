@@ -1,0 +1,14 @@
+name: Runner smoke macOS
+
+on:
+  push:
+    branches:
+      - archive-grade-races-2026-09-02
+    paths:
+      - '.github/workflows/runner-smoke-macos.yml'
+
+jobs:
+  smoke:
+    runs-on: macos-latest
+    steps:
+      - run: echo runner-ok
