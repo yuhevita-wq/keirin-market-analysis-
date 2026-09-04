@@ -1,0 +1,27 @@
+name: Temporary wide blindspot Jan 2024 simulation
+on:
+  push:
+    branches:
+      - analysis-wide-blindspot-2024jan-20260904
+    paths:
+      - '.github/workflows/tmp-wide-blindspot-2024jan.yml'
+      - 'src/keirin_market_analysis/tmp_wide_blindspot_2024jan.py'
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run frozen simulation
+        run: python src/keirin_market_analysis/tmp_wide_blindspot_2024jan.py
+      - name: Commit audit output
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/audits/wide_blindspot_2024jan.json
+          git diff --cached --quiet || git commit -m "analysis: add Jan 2024 wide blindspot audit"
+          git push origin HEAD:${{ github.ref_name }}
