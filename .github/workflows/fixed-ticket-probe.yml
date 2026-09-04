@@ -1,0 +1,21 @@
+name: Fixed ticket all F1 probe
+on:
+  push:
+    branches: [analysis/fixed-ticket-all-f1-20260904]
+  workflow_dispatch:
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run probe
+        run: python scripts/fixed_ticket_probe.py | tee fixed_ticket_probe.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fixed-ticket-all-f1-result
+          path: |
+            results/fixed_ticket_all_f1_20260904.json
+            fixed_ticket_probe.log
