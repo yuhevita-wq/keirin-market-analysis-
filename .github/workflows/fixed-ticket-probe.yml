@@ -1,21 +1,37 @@
-name: Fixed ticket all F1 probe
+name: Fixed ticket 7-car F1 probe
 on:
   push:
     branches: [analysis/fixed-ticket-all-f1-20260904]
   workflow_dispatch:
+permissions:
+  contents: read
 jobs:
   probe:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Show Python
+        run: python3 --version
+      - name: Run seven-car fixed-ticket probe
+        run: python3 scripts/fixed_ticket_probe.py > fixed_ticket_probe.log
+      - name: Show compact result
+        run: python3 - <<'PY'
+          import json
+          p='results/fixed_ticket_7car_f1_20260904.json'
+          d=json.load(open(p,encoding='utf-8'))
+          print('seven_car_race_counts', d['seven_car_race_counts'])
+          for tt,x in d['ticket_types'].items():
+              print(tt, 'available=', x['available_races'], 'cross_positive=', x['cross_period_positive_count'])
+              print('  2024pick=', x['frozen_2024_pick_all_periods'])
+              print('  24_25_to_26=', x['best_selected_on_2024_2025_then_2026H1_oos'])
+              print('  top=', x['cross_period_positive_top20'][:3])
+          PY
+      - name: Upload result
+        uses: actions/upload-artifact@v4
         with:
-          python-version: '3.12'
-      - name: Run probe
-        run: python scripts/fixed_ticket_probe.py | tee fixed_ticket_probe.log
-      - uses: actions/upload-artifact@v4
-        with:
-          name: fixed-ticket-all-f1-result
+          name: fixed-ticket-7car-f1-result
           path: |
-            results/fixed_ticket_all_f1_20260904.json
+            results/fixed_ticket_7car_f1_20260904.json
             fixed_ticket_probe.log
