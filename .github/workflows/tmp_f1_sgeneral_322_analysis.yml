@@ -1,0 +1,226 @@
+name: Temporary F1 S-general 3-2-2 analysis
+
+on:
+  push:
+    branches:
+      - analysis-f1-sgeneral-322-20260904
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Analyze exact F1 S-class general 7-car 3-2-2
+        shell: bash
+        run: |
+          python - <<'PY'
+          import csv, glob, json, os, statistics
+          from collections import Counter, defaultdict
+
+          bases = []
+          bases += sorted(glob.glob('data/2024/s_class_f1_all_parts/*'))
+          bases += sorted(glob.glob('data/2025/s_class_f1_all_parts/*'))
+          if os.path.isdir('data/2026_h1/s_class_f1_all'):
+              bases.append('data/2026_h1/s_class_f1_all')
+
+          def read_csv(path):
+              with open(path, encoding='utf-8-sig', newline='') as f:
+                  return list(csv.DictReader(f))
+
+          def formation_groups(s):
+              if not s: return []
+              gs=[]
+              for g in s.split('/'):
+                  a=[]
+                  for x in g.split('-'):
+                      x=x.strip()
+                      if x.isdigit(): a.append(int(x))
+                  if a: gs.append(a)
+              return gs
+
+          def med(vals):
+              return statistics.median(vals) if vals else None
+
+          records=[]
+          raw_target=0
+          by_period=Counter()
+          excluded_result=0
+          excluded_odds=0
+
+          for base in bases:
+              rp=os.path.join(base,'races.csv')
+              rsp=os.path.join(base,'results.csv')
+              op=os.path.join(base,'trio_final_odds.csv')
+              if not (os.path.exists(rp) and os.path.exists(rsp) and os.path.exists(op)):
+                  continue
+              races=read_csv(rp)
+              targets={}
+              for r in races:
+                  if r.get('race_type')!='Ｓ級一般': continue
+                  try: n=int(r.get('entry_count') or 0)
+                  except: n=0
+                  if n!=7: continue
+                  gs=formation_groups(r.get('predicted_line_formation',''))
+                  if sorted(map(len,gs)) != [2,2,3]: continue
+                  rid=r['race_id']
+                  targets[rid]={'race':r,'groups':gs}
+              if not targets: continue
+              raw_target += len(targets)
+              period=os.path.basename(base)
+              if period=='s_class_f1_all': period='2026_h1'
+              by_period[period]+=len(targets)
+
+              res_by=defaultdict(list)
+              for rr in read_csv(rsp):
+                  rid=rr.get('race_id')
+                  if rid in targets:
+                      res_by[rid].append(rr)
+              odds_by=defaultdict(list)
+              for oo in read_csv(op):
+                  rid=oo.get('race_id')
+                  if rid in targets:
+                      odds_by[rid].append(oo)
+
+              for rid,t in targets.items():
+                  top=[]
+                  for rr in res_by.get(rid,[]):
+                      try: fp=int(rr.get('finish_position') or 999)
+                      except: continue
+                      if fp in (1,2,3):
+                          try: car=int(rr['car_no'])
+                          except: continue
+                          top.append((fp,car))
+                  top=sorted(top)
+                  if len(top)!=3 or [x[0] for x in top] != [1,2,3] or len({x[1] for x in top})!=3:
+                      excluded_result += 1
+                      continue
+                  orows=[]
+                  for o in odds_by.get(rid,[]):
+                      if o.get('odds_status') not in ('available',''): continue
+                      try:
+                          comb=tuple(sorted(int(x) for x in o['combination'].replace('-','=').split('=')))
+                          odd=float(o['odds'])
+                          rank=int(float(o['market_rank']))
+                      except: continue
+                      if len(comb)==3 and odd>0:
+                          orows.append((comb,odd,rank))
+                  # exact 7-car trio market should have 35 combinations
+                  uniq={x[0]:x for x in orows}
+                  if len(uniq)!=35:
+                      excluded_odds += 1
+                      continue
+                  orows=list(uniq.values())
+
+                  gs=t['groups']
+                  g3=[g for g in gs if len(g)==3][0]
+                  g2=[g for g in gs if len(g)==2]
+                  supports=[]
+                  for g in g2:
+                      pair=set(g)
+                      s=sum(1/odd for comb,odd,rank in orows if pair.issubset(comb))
+                      supports.append((s,g))
+                  supports.sort(key=lambda x:x[0], reverse=True)
+                  g2strong=supports[0][1]
+                  g2weak=supports[1][1]
+
+                  slot={}
+                  line={}
+                  for i,c in enumerate(g3,1):
+                      slot[c]=f'3{i}'; line[c]='3'
+                  for lab,g in [('2強',g2strong),('2弱',g2weak)]:
+                      for i,c in enumerate(g,1):
+                          slot[c]=f'{lab}{i}'; line[c]=lab
+
+                  cars=[c for fp,c in top]
+                  lc=Counter(line[c] for c in cars)
+                  if len(lc)==1:
+                      structure='3'
+                  elif sorted(lc.values(), reverse=True)==[2,1]:
+                      structure='2+1'
+                  elif sorted(lc.values())==[1,1,1]:
+                      structure='1+1+1'
+                  else:
+                      structure='other'
+
+                  pattern=''
+                  if structure=='3':
+                      pattern='3①②③'
+                  elif structure=='2+1':
+                      pairline=[k for k,v in lc.items() if v==2][0]
+                      pc=[c for c in cars if line[c]==pairline]
+                      one=[c for c in cars if line[c]!=pairline][0]
+                      def posnum(c): return int(slot[c][-1])
+                      ps=sorted(posnum(c) for c in pc)
+                      if pairline=='3': pair=f"3{''.join('①②③'[p-1] for p in ps)}"
+                      else: pair=f"{pairline}①②"
+                      olab=slot[one]
+                      olab=olab[:-1] + '①②③'[int(olab[-1])-1]
+                      pattern=f'{pair}+{olab}'
+                  elif structure=='1+1+1':
+                      parts=[]
+                      for lab in ['3','2強','2弱']:
+                          c=[c for c in cars if line[c]==lab][0]
+                          sn=slot[c]
+                          parts.append(sn[:-1]+'①②③'[int(sn[-1])-1])
+                      pattern='+'.join(parts)
+
+                  wincomb=tuple(sorted(cars))
+                  wrow=uniq.get(wincomb)
+                  wrank=wrow[2] if wrow else None
+                  records.append({'rid':rid,'period':period,'structure':structure,'pattern':pattern,'rank':wrank})
+
+          n=len(records)
+          structures=Counter(r['structure'] for r in records)
+          pats=Counter(r['pattern'] for r in records)
+          p2=Counter(r['pattern'] for r in records if r['structure']=='2+1')
+          p111=Counter(r['pattern'] for r in records if r['structure']=='1+1+1')
+          rank_by=defaultdict(list)
+          for r in records:
+              if r['rank'] is not None: rank_by[r['pattern']].append(r['rank'])
+
+          # pair-side counts separately
+          pairside=Counter()
+          plusone=Counter()
+          for r in records:
+              if r['structure']=='2+1':
+                  a,b=r['pattern'].split('+',1)
+                  pairside[a]+=1
+                  plusone[b]+=1
+
+          # slot inclusion rates
+          slots=Counter()
+          for r in records:
+              # recover from pattern string by structural tokens is awkward; count via patterns
+              pass
+
+          def rows(counter, denom, limit=None):
+              out=[]
+              for k,v in counter.most_common(limit):
+                  rv=rank_by.get(k,[])
+                  out.append({'pattern':k,'count':v,'pct':round(100*v/denom,1) if denom else None,
+                              'median_market_rank':med(rv),
+                              'rank21plus':sum(x>=21 for x in rv),
+                              'rank21plus_pct':round(100*sum(x>=21 for x in rv)/len(rv),1) if rv else None})
+              return out
+
+          out={
+              'definition':'F1 / exact Ｓ級一般 / 7 cars / predicted line sizes exactly 3-2-2; 2-car lines ranked by final trio implied pair support',
+              'bases':bases,
+              'raw_target_races':raw_target,
+              'usable_complete_races':n,
+              'excluded_result':excluded_result,
+              'excluded_odds':excluded_odds,
+              'raw_by_period':dict(sorted(by_period.items())),
+              'structures':[{'structure':k,'count':v,'pct':round(100*v/n,1)} for k,v in structures.most_common()],
+              'pair_side_2plus1':[{'pair':k,'count':v,'pct_of_2plus1':round(100*v/structures.get('2+1',1),1)} for k,v in pairside.most_common()],
+              'plus_one_2plus1':[{'plus1':k,'count':v,'pct_of_2plus1':round(100*v/structures.get('2+1',1),1)} for k,v in plusone.most_common()],
+              'complete_2plus1':rows(p2,structures.get('2+1',0)),
+              'complete_111':rows(p111,structures.get('1+1+1',0)),
+          }
+          print('ANALYSIS_JSON_BEGIN')
+          print(json.dumps(out,ensure_ascii=False,indent=2))
+          print('ANALYSIS_JSON_END')
+          PY
