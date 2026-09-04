@@ -1,4 +1,4 @@
-name: Archive grade-race databank to release
+name: Persist grade-race databank to main
 
 on:
   push:
@@ -13,91 +13,130 @@ permissions:
   contents: write
 
 concurrency:
-  group: archive-grade-race-databank-2026-09-02
+  group: persist-grade-race-databank-to-main
   cancel-in-progress: false
 
 jobs:
-  archive:
+  persist:
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 90
     env:
-      TAG: grade-race-databank-2026-09-02
       GH_TOKEN: ${{ github.token }}
 
     steps:
-      - name: Download and validate current grade-race artifacts
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Download and validate every acquired grade-race artifact
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p archive
+          root='data/grade_races'
+          mkdir -p "$root"
+          list="$RUNNER_TEMP/grade-race-artifacts.tsv"
 
-          cat > archive/artifacts.tsv <<'EOF'
-          G1G2-2021-corrected	9844653993	g1-g2-2021-non-girls-corrected.zip
-          G1G2-2022	9840693623	g1-g2-2022-non-girls.zip
-          G1G2-2023	9834632940	g1-g2-2023-non-girls.zip
-          G1G2-2024	9832657251	g1-g2-2024-non-girls.zip
-          G1G2-2025	9829495864	g1-g2-2025-non-girls.zip
-          G3-2024-Q1	9785544974	g3-2024-q1.zip
-          G3-2024-Q2	9790740336	g3-2024-q2.zip
-          G3-2024-Q3	9796166761	g3-2024-q3.zip
-          G3-2024-Q4	9802470186	g3-2024-q4.zip
-          G3-2025-Q1	9810481117	g3-2025-q1.zip
-          G3-2025-Q2	9810185856	g3-2025-q2.zip
-          G3-2025-Q3	9810152428	g3-2025-q3.zip
-          G3-2025-Q4	9810151108	g3-2025-q4.zip
-          G3-2026-Q1-non-girls	9825216498	g3-2026-q1-non-girls.zip
-          G3-2026-Q2-non-girls	9824781860	g3-2026-q2-non-girls.zip
+          cat > "$list" <<'EOF'
+          G1G2-2021-corrected	9844653993	data/grade_races/g1_g2/2021/g1-g2-2021-non-girls-corrected.zip
+          G1G2-2022	9840693623	data/grade_races/g1_g2/2022/g1-g2-2022-non-girls.zip
+          G1G2-2023	9834632940	data/grade_races/g1_g2/2023/g1-g2-2023-non-girls.zip
+          G1G2-2024	9832657251	data/grade_races/g1_g2/2024/g1-g2-2024-non-girls.zip
+          G1G2-2025	9829495864	data/grade_races/g1_g2/2025/g1-g2-2025-non-girls.zip
+          G3-2022-Q1	9848133970	data/grade_races/g3/2022/g3-2022-q1.zip
+          G3-2022-Q2	9848391831	data/grade_races/g3/2022/g3-2022-q2.zip
+          G3-2022-Q3	9848669615	data/grade_races/g3/2022/g3-2022-q3.zip
+          G3-2022-Q4	9848923697	data/grade_races/g3/2022/g3-2022-q4.zip
+          G3-2023-Q1	9849178821	data/grade_races/g3/2023/g3-2023-q1.zip
+          G3-2023-Q2	9849456650	data/grade_races/g3/2023/g3-2023-q2.zip
+          G3-2023-Q3	9849699095	data/grade_races/g3/2023/g3-2023-q3.zip
+          G3-2023-Q4	9849947949	data/grade_races/g3/2023/g3-2023-q4.zip
+          G3-2024-Q1	9785544974	data/grade_races/g3/2024/g3-2024-q1.zip
+          G3-2024-Q2	9790740336	data/grade_races/g3/2024/g3-2024-q2.zip
+          G3-2024-Q3	9796166761	data/grade_races/g3/2024/g3-2024-q3.zip
+          G3-2024-Q4	9802470186	data/grade_races/g3/2024/g3-2024-q4.zip
+          G3-2024-Q1-odds	9796570607	data/grade_races/g3/2024/optimized/g3-2024-q1-odds.zip
+          G3-2024-Q2-odds	9803221621	data/grade_races/g3/2024/optimized/g3-2024-q2-odds.zip
+          G3-2024-Q3-odds	9808836603	data/grade_races/g3/2024/optimized/g3-2024-q3-odds.zip
+          G3-2024-Q4-odds	9810317771	data/grade_races/g3/2024/optimized/g3-2024-q4-odds.zip
+          G3-2025-Q1	9810481117	data/grade_races/g3/2025/g3-2025-q1.zip
+          G3-2025-Q2	9810185856	data/grade_races/g3/2025/g3-2025-q2.zip
+          G3-2025-Q3	9810152428	data/grade_races/g3/2025/g3-2025-q3.zip
+          G3-2025-Q4	9810151108	data/grade_races/g3/2025/g3-2025-q4.zip
+          G3-2025-Q1-odds	9818276713	data/grade_races/g3/2025/optimized/g3-2025-q1-odds.zip
+          G3-2025-Q2-odds	9818289518	data/grade_races/g3/2025/optimized/g3-2025-q2-odds.zip
+          G3-2025-Q3-odds	9818301604	data/grade_races/g3/2025/optimized/g3-2025-q3-odds.zip
+          G3-2025-Q4-odds	9818315930	data/grade_races/g3/2025/optimized/g3-2025-q4-odds.zip
+          G3-2026-Q1-non-girls	9825216498	data/grade_races/g3/2026_h1/g3-2026-q1-non-girls.zip
+          G3-2026-Q2-non-girls	9824781860	data/grade_races/g3/2026_h1/g3-2026-q2-non-girls.zip
           EOF
 
-          printf '# Grade-race databank archive\n\n' > archive/manifest.md
-          printf 'Created from GitHub Actions artifacts before their 7-day expiry. Release assets persist until the release/repository is deleted.\n\n' >> archive/manifest.md
-          printf '**Scope:** G1/G2 2021-2025 (2021 corrected edition only), G3 2024-2025, G3 2026 Q1-Q2 non-girls.\n\n' >> archive/manifest.md
-          printf '**Odds note:** historical odds files are KDreams final odds, not T-10 snapshots.\n\n' >> archive/manifest.md
-          printf '| Dataset | Artifact ID | File | Bytes | SHA256 |\n|---|---:|---|---:|---|\n' >> archive/manifest.md
-          printf 'dataset,artifact_id,file,bytes,sha256\n' > archive/manifest.csv
+          printf 'dataset,artifact_id,path,bytes,sha256\n' > "$root/MANIFEST.csv"
+          : > "$root/SHA256SUMS"
 
-          while IFS=$'\t' read -r label id file; do
-            echo "Downloading $label artifact=$id -> $file"
-            curl --fail --location --retry 3 --retry-all-errors \
+          while IFS=$'\t' read -r label id path; do
+            mkdir -p "$(dirname "$path")"
+            echo "Downloading $label artifact=$id"
+            curl --fail --location --retry 4 --retry-all-errors \
               -H "Authorization: Bearer ${GH_TOKEN}" \
               -H 'Accept: application/vnd.github+json' \
               -H 'X-GitHub-Api-Version: 2022-11-28' \
               "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/artifacts/${id}/zip" \
-              -o "archive/${file}"
-            test -s "archive/${file}"
-            unzip -tq "archive/${file}" >/dev/null
-            bytes=$(stat -c%s "archive/${file}")
-            sha=$(sha256sum "archive/${file}" | awk '{print $1}')
-            printf '| %s | %s | `%s` | %s | `%s` |\n' "$label" "$id" "$file" "$bytes" "$sha" >> archive/manifest.md
-            printf '%s,%s,%s,%s,%s\n' "$label" "$id" "$file" "$bytes" "$sha" >> archive/manifest.csv
-          done < archive/artifacts.tsv
+              -o "$path"
+            test -s "$path"
+            unzip -tq "$path" >/dev/null
+            bytes=$(stat -c%s "$path")
+            sha=$(sha256sum "$path" | awk '{print $1}')
+            printf '%s,%s,%s,%s,%s\n' "$label" "$id" "$path" "$bytes" "$sha" >> "$root/MANIFEST.csv"
+            printf '%s  %s\n' "$sha" "$path" >> "$root/SHA256SUMS"
+          done < "$list"
 
-          rm archive/artifacts.tsv
-          ls -lh archive
+          cat > "$root/README.md" <<'EOF'
+          # Grade-race databank on main
 
-      - name: Create or update persistent GitHub Release
+          This directory is the durable main-branch copy of the acquired grade-race datasets.
+
+          - `g1_g2/`: G1/G2 non-girls datasets, 2021 corrected edition through 2025.
+          - `g3/`: acquired G3 datasets, 2022 through 2026 H1.
+          - ZIP files are the original GitHub Actions artifact archives, preserved byte-for-byte.
+          - `MANIFEST.csv` records the source artifact ID, stored path, byte size and SHA256.
+          - `SHA256SUMS` can be used to verify every archive after download.
+          - Historical odds contained in these archives are KDreams final odds unless an archive itself states otherwise; they are not T-10 snapshots.
+
+          Main branch storage is the authoritative criterion for whether these datasets are considered saved in this project.
+          EOF
+
+          zip_count=$(find "$root" -type f -name '*.zip' | wc -l)
+          manifest_count=$(tail -n +2 "$root/MANIFEST.csv" | wc -l)
+          test "$zip_count" -eq 31
+          test "$manifest_count" -eq 31
+          sha256sum -c "$root/SHA256SUMS"
+
+      - name: Commit durable archives to main
         shell: bash
         run: |
           set -euo pipefail
-          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release edit "$TAG" \
-              --repo "$GITHUB_REPOSITORY" \
-              --title 'Grade Race Databank 2021-2026 archive' \
-              --notes-file archive/manifest.md
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/grade_races
+          if git diff --cached --quiet; then
+            echo 'No changes to commit.'
           else
-            gh release create "$TAG" \
-              --repo "$GITHUB_REPOSITORY" \
-              --target "$GITHUB_SHA" \
-              --title 'Grade Race Databank 2021-2026 archive' \
-              --notes-file archive/manifest.md
+            git commit -m 'data: persist acquired G1 G2 and G3 databank to main'
+            git pull --rebase origin main
+            git push origin HEAD:main
           fi
 
-          gh release upload "$TAG" archive/*.zip archive/manifest.md archive/manifest.csv \
-            --repo "$GITHUB_REPOSITORY" \
-            --clobber
-
-      - name: Verify release assets
+      - name: Verify committed main tree
         shell: bash
         run: |
           set -euo pipefail
-          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json tagName,name,url,assets
+          git fetch origin main
+          git checkout --detach origin/main
+          test -f data/grade_races/MANIFEST.csv
+          test -f data/grade_races/SHA256SUMS
+          test "$(find data/grade_races -type f -name '*.zip' | wc -l)" -eq 31
+          test "$(tail -n +2 data/grade_races/MANIFEST.csv | wc -l)" -eq 31
+          sha256sum -c data/grade_races/SHA256SUMS
+          git rev-parse HEAD
