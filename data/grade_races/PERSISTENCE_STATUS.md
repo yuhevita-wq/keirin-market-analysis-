@@ -1,18 +1,12 @@
 # Grade-race persistence status
 
-Status: `MAIN_PARTIAL_RESCUE_COMPLETE`
+Status: `MAIN_RESCUE_COMPLETE`
 
-## Verified on main as of 2026-09-06
+Verified on `main` as of 2026-09-06.
 
-### G3
-The following 10 rescued ZIP archives are physically present on `main` under `data/grade_races/g3/` and were re-fetched from GitHub with byte sizes matching the rescued source files exactly:
+## G1/G2
 
-- 2024 Q1-Q4
-- 2025 Q1-Q4
-- 2026 H1 Q1-Q2
-
-### G1/G2
-The following 5 non-girls ZIP archives are physically present on `main` and their byte sizes match `RELEASE_INDEX.csv` exactly:
+The five non-girls archives are physically present under `data/grade_races/g1g2/`:
 
 - 2021 corrected edition
 - 2022
@@ -20,17 +14,31 @@ The following 5 non-girls ZIP archives are physically present on `main` and thei
 - 2024
 - 2025
 
-They were uploaded on 2026-09-06 and currently live at `data/grade_races/g3/g1-g2-*.zip` because they were committed one directory higher than the intended `data/grade_races/g1g2/` target. This is an organization issue only; the binary files are durably stored on `main`.
+All five byte sizes match `RELEASE_INDEX.csv` exactly. The files were sourced from GitHub Release `grade-race-databank-2026-09-02`; the release SHA256 digests remain the canonical integrity references.
 
-## Durable release source
+## G3
 
-The GitHub Release tagged `grade-race-databank-2026-09-02` remains the canonical release backup. `RELEASE_INDEX.csv` records canonical asset names, byte sizes and SHA256 digests.
+The historical G3 archives are physically present under `data/grade_races/g3/` in year folders:
 
-Release scope includes:
+- 2022 Q1-Q4
+- 2023 Q1-Q4
+- 2024 Q1-Q4
+- 2025 Q1-Q4
+- 2026 H1 Q1-Q2
 
-- G1/G2 non-girls: 2021 corrected edition, 2022, 2023, 2024, 2025.
-- G3: 2022 Q1-Q4, 2023 Q1-Q4, 2024 Q1-Q4, 2025 Q1-Q4, 2026 Q1-Q2 non-girls.
+The 2022 and 2023 archives were copied from the durable GitHub Release and their byte sizes match `RELEASE_INDEX.csv` exactly. The 2024-2026H1 rescued archives were previously ZIP-tested and SHA256-verified before import, and their byte sizes on `main` match the rescued source files exactly.
 
-## Still not copied to main
+## Durable backup
 
-The release-backed G3 2022 Q1-Q4 and 2023 Q1-Q4 archives are not yet physically copied into the rescued `main` G3 archive set. Do not report those eight archives as main-copied until their ZIP files are directly verified on `main`.
+GitHub Release `grade-race-databank-2026-09-02` remains the canonical secondary backup. `RELEASE_INDEX.csv` records canonical asset names, byte sizes and SHA256 digests.
+
+## Authoritative layout
+
+- G1/G2: `data/grade_races/g1g2/`
+- G3 2022: `data/grade_races/g3/2022/`
+- G3 2023: `data/grade_races/g3/2023/`
+- G3 2024: `data/grade_races/g3/2024/`
+- G3 2025: `data/grade_races/g3/2025/`
+- G3 2026 H1: `data/grade_races/g3/2026_h1/`
+
+Completion criterion satisfied: archives exist on `main`, expected byte sizes match, and the final layout was re-fetched directly from `main` after the rescue commits.
