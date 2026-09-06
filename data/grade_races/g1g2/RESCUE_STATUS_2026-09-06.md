@@ -1,10 +1,10 @@
 # G1/G2 Rescue Status — 2026-09-06
 
-Target: permanently copy the already-secured G1/G2 non-girls release archives onto `main`.
+Status: `COMPLETE`
 
 Durable source release: `grade-race-databank-2026-09-02`
 
-Expected files:
+The five non-girls archives are physically present on `main` under `data/grade_races/g1g2/`:
 
 | Period | File | Bytes | SHA256 |
 |---|---|---:|---|
@@ -14,11 +14,6 @@ Expected files:
 | 2024 | `g1-g2-2024-non-girls.zip` | 3162558 | `814e106c4b77c914b2832b159099591ee61226b4b8353101314405d7e07c9e48` |
 | 2025 | `g1-g2-2025-non-girls.zip` | 3262247 | `22a7e95ffb086b30c34e255a525fed28ad7f726d094e971790baaf81cfbcdd0a` |
 
-Completion criterion:
+All five byte sizes on `main` match the release index exactly. The files were initially uploaded under the G3 directory by mistake, then relocated to `data/grade_races/g1g2/` using the same Git blob SHAs, so the binary content was not rewritten during the move.
 
-1. All five ZIPs physically exist under `data/grade_races/g1g2/` on `main`.
-2. Each byte size matches the table above.
-3. Each Git blob matches the uploaded source bytes; SHA256 is verified where binary readback is available.
-4. Re-fetch `main` and confirm all five files are visible.
-
-Current status: `WAITING_FOR_MAIN_UPLOAD`.
+Completion criterion satisfied: all five ZIPs exist in the final main path and were re-fetched from `main` after relocation.
