@@ -1,0 +1,48 @@
+name: tmp g3 line inspect
+
+on:
+  push:
+    branches:
+      - analysis/g3-line-2022-2023
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect archive schemas
+        shell: bash
+        run: |
+          python - <<'PY'
+          import zipfile, csv, io, json
+          from pathlib import Path
+
+          for p in [
+              Path("data/grade_races/g3/2022/g3-all-2022-q1-non-girls.zip"),
+              Path("data/grade_races/g3/2023/g3-all-2023-q1-non-girls.zip"),
+          ]:
+              print("\nARCHIVE", p)
+              with zipfile.ZipFile(p) as z:
+                  names = z.namelist()
+                  print("FILES", len(names))
+                  for n in names[:80]:
+                      print(" -", n)
+                  for n in names:
+                      if n.lower().endswith(".csv"):
+                          raw = z.read(n)
+                          try:
+                              txt = raw.decode("utf-8-sig")
+                          except UnicodeDecodeError:
+                              txt = raw.decode("cp932", errors="replace")
+                          first = txt.splitlines()[:3]
+                          print("\nCSV", n)
+                          for line in first:
+                              print(line[:1200])
+                      elif n.lower().endswith(".json"):
+                          raw = z.read(n)
+                          try:
+                              txt = raw.decode("utf-8-sig")
+                          except UnicodeDecodeError:
+                              txt = raw.decode("cp932", errors="replace")
+                          print("\nJSON", n, txt[:1500].replace("\n"," "))
+          PY
