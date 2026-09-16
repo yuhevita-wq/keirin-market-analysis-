@@ -1,0 +1,26 @@
+{
+  "algorithm": "keirin_shogi_v2_winner_shape",
+  "train_period": {
+    "start": "2024-01-01",
+    "end": "2024-01-07"
+  },
+  "test_period": {
+    "start": "2024-01-08",
+    "end": "2024-01-14"
+  },
+  "train_races": 115,
+  "test_races": 81,
+  "first_hit_rate": 0.4444444444444444,
+  "avg_first_candidate_count": 1.4197530864197532,
+  "features": [
+    "score",
+    "win_rate",
+    "b_count",
+    "nige_count",
+    "makuri_count",
+    "sashi_count",
+    "top2_rate"
+  ],
+  "method": "各特徴をレース内1〜7位へ変換。第1週の勝者/全選手から順位別勝率のlog-likelihood ratioを学習し、主要特徴の順位ペアを35%加点。役割・ライン位置は不使用。第2週は完全固定。",
+  "leakage_guard": "2024-01-08以降の結果はモデル構築に未使用。オッズ不使用。"
+}
