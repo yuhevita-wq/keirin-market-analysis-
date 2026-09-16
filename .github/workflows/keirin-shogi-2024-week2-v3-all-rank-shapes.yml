@@ -1,0 +1,27 @@
+name: Keirin Shogi 2024 Week 2 v3 All Rank Shapes
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/keirin-shogi-2024-week2-v3-all-rank-shapes.yml'
+      - 'scripts/keirin_shogi_weekly_v3_all_rank_shapes.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run-v3:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/keirin_shogi_weekly_v3_all_rank_shapes.py
+      - name: Commit generated results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/keirin_shogi/v3_all_rank_shapes/2024-01-08_2024-01-14
+          if git diff --cached --quiet; then
+            echo "No result changes."
+          else
+            git commit -m "results: keirin shogi v3 all-rank-shapes 2024 week 2"
+            git push
+          fi
