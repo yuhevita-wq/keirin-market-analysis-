@@ -47,6 +47,8 @@
     .piece[data-piece="5"], .piece-5 { background: #ffd60a; color: #111; }
     .piece[data-piece="6"], .piece-6 { background: #1f9d55; color: #fff; }
     .piece[data-piece="7"], .piece-7 { background: #f28c28; color: #111; }
+    .piece[data-piece="8"], .piece-8 { background: #f4a7c5; color: #111; }
+    .piece[data-piece="9"], .piece-9 { background: #7a3db8; color: #fff; }
 
     button.action, .clear {
       padding: 10px 14px;
@@ -110,6 +112,8 @@
     .placed.piece-5 { background: #ffd60a; color: #111; }
     .placed.piece-6 { background: #1f9d55; color: #fff; }
     .placed.piece-7 { background: #f28c28; color: #111; }
+    .placed.piece-8 { background: #f4a7c5; color: #111; }
+    .placed.piece-9 { background: #7a3db8; color: #fff; }
 
     .empty-hint { color: #aaa; font-size: 13px; pointer-events: none; }
 
@@ -235,6 +239,8 @@
       <button class="piece" data-piece="5">5</button>
       <button class="piece" data-piece="6">6</button>
       <button class="piece" data-piece="7">7</button>
+      <button class="piece" data-piece="8">8</button>
+      <button class="piece" data-piece="9">9</button>
       <button class="clear" id="clearBoard">盤面全消去</button>
     </section>
 
@@ -280,7 +286,7 @@
   </main>
 
   <script>
-    const racers = [1,2,3,4,5,6,7];
+    const racers = [1,2,3,4,5,6,7,8,9];
     const rows = [
       { key: "first", label: "1着" },
       { key: "second", label: "2着" },
