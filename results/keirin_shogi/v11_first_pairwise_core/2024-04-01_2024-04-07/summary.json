@@ -1,0 +1,31 @@
+{
+  "algorithm": "keirin_shogi_v11_first_pairwise_core",
+  "train_period": {
+    "start": "2024-03-25",
+    "end": "2024-03-31"
+  },
+  "test_period": {
+    "start": "2024-04-01",
+    "end": "2024-04-07"
+  },
+  "train_races": 100,
+  "test_races": 85,
+  "v11_pairwise_core": {
+    "top1_hit_rate": 0.3058823529411765,
+    "top2_capture_rate": 0.5176470588235295,
+    "top3_capture_rate": 0.6705882352941176
+  },
+  "same_week_v7_first_baseline": {
+    "top1_hit_rate": 0.2823529411764706,
+    "top2_capture_rate": 0.5058823529411764,
+    "top3_capture_rate": 0.6235294117647059
+  },
+  "paired_top1_comparison": {
+    "v11_only_hit": 8,
+    "v7_only_hit": 6,
+    "both_hit": 18,
+    "both_miss": 53
+  },
+  "method": "1着専用コア。従来の全特徴加点ランキングを捨て、学習週の実勝者と各非勝者の直接差から特徴方向を学習。未来週では各選手が他6人に対して持つpair marginを統合し1位を決定。top2/top3率、従来pairwise加点、従来gap bonusは1着コアから除外。オッズ不使用。",
+  "leakage_guard": "2024-04-01以降の結果は学習に未使用。Q1最終週のみで学習し、Q2最初の週を完全ホールドアウト。"
+}
