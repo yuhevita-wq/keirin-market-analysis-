@@ -1,0 +1,354 @@
+{
+  "algorithm": "keirin_shogi_v28_second_slot_allocation",
+  "concept": "Allocate the 2nd-row slots by regime instead of blending everything into one ranking. High inside probability uses both v21 first candidates; low uses two outsiders; middle uses one+one.",
+  "first_core": "v21 frozen",
+  "selected_calibration": {
+    "variant": "all_d3",
+    "low": 0.5,
+    "high": 0.8,
+    "objective": 0.8469349149170445,
+    "races": 206,
+    "second_capture": 0.3883495145631068,
+    "avg_second_candidates": 2,
+    "second_given_first_capture": 0.42857142857142855,
+    "when_both_first_second_in_first_candidates": 0.4430379746835443,
+    "outside_first_candidates_capture_given_first": 0.4117647058823529,
+    "hard_diff_line_outside_capture_given_first": 0.35135135135135137,
+    "hard_races": 37,
+    "mode_stats": {
+      "both_inside": {
+        "races": 0,
+        "capture": 0
+      },
+      "split": {
+        "races": 166,
+        "capture": 0.3795180722891566
+      },
+      "two_outside": {
+        "races": 40,
+        "capture": 0.425
+      }
+    }
+  },
+  "test_metrics": {
+    "races": 511,
+    "second_capture": 0.410958904109589,
+    "avg_second_candidates": 2,
+    "second_given_first_capture": 0.4532967032967033,
+    "when_both_first_second_in_first_candidates": 0.43617021276595747,
+    "outside_first_candidates_capture_given_first": 0.4715909090909091,
+    "hard_diff_line_outside_capture_given_first": 0.38235294117647056,
+    "hard_races": 102,
+    "mode_stats": {
+      "both_inside": {
+        "races": 0,
+        "capture": 0
+      },
+      "split": {
+        "races": 383,
+        "capture": 0.40992167101827676
+      },
+      "two_outside": {
+        "races": 128,
+        "capture": 0.4140625
+      }
+    }
+  },
+  "v23_baseline": {
+    "second_capture": 0.5342465753424658,
+    "second_given_first_capture": 0.5934065934065934,
+    "avg_second_candidates": 2.0332681017612524,
+    "hard_diff_line_outside_capture_given_first": 0.1259259259259259,
+    "when_both_first_second_in_first_candidates": 0.851063829787234
+  },
+  "delta_vs_v23": {
+    "second_capture": -0.12328767123287676,
+    "second_given_first_capture": -0.1401098901098901,
+    "avg_second_candidates": -0.03326810176125239,
+    "hard_diff_line_outside_capture_given_first": 0.2564270152505447,
+    "when_both_first_second_in_first_candidates": -0.4148936170212766
+  },
+  "calibration_top10": [
+    {
+      "variant": "all_d3",
+      "low": 0.5,
+      "high": 0.8,
+      "objective": 0.8469349149170445,
+      "races": 206,
+      "second_capture": 0.3883495145631068,
+      "avg_second_candidates": 2,
+      "second_given_first_capture": 0.42857142857142855,
+      "when_both_first_second_in_first_candidates": 0.4430379746835443,
+      "outside_first_candidates_capture_given_first": 0.4117647058823529,
+      "hard_diff_line_outside_capture_given_first": 0.35135135135135137,
+      "hard_races": 37,
+      "mode_stats": {
+        "both_inside": {
+          "races": 0,
+          "capture": 0
+        },
+        "split": {
+          "races": 166,
+          "capture": 0.3795180722891566
+        },
+        "two_outside": {
+          "races": 40,
+          "capture": 0.425
+        }
+      }
+    },
+    {
+      "variant": "all_d3",
+      "low": 0.2,
+      "high": 0.8,
+      "objective": 0.8392311662947766,
+      "races": 206,
+      "second_capture": 0.4029126213592233,
+      "avg_second_candidates": 2,
+      "second_given_first_capture": 0.4421768707482993,
+      "when_both_first_second_in_first_candidates": 0.5063291139240507,
+      "outside_first_candidates_capture_given_first": 0.36764705882352944,
+      "hard_diff_line_outside_capture_given_first": 0.32432432432432434,
+      "hard_races": 37,
+      "mode_stats": {
+        "both_inside": {
+          "races": 0,
+          "capture": 0
+        },
+        "split": {
+          "races": 206,
+          "capture": 0.4029126213592233
+        },
+        "two_outside": {
+          "races": 0,
+          "capture": 0
+        }
+      }
+    },
+    {
+      "variant": "all_d3",
+      "low": 0.3,
+      "high": 0.8,
+      "objective": 0.8392311662947766,
+      "races": 206,
+      "second_capture": 0.4029126213592233,
+      "avg_second_candidates": 2,
+      "second_given_first_capture": 0.4421768707482993,
+      "when_both_first_second_in_first_candidates": 0.5063291139240507,
+      "outside_first_candidates_capture_given_first": 0.36764705882352944,
+      "hard_diff_line_outside_capture_given_first": 0.32432432432432434,
+      "hard_races": 37,
+      "mode_stats": {
+        "both_inside": {
+          "races": 0,
+          "capture": 0
+        },
+        "split": {
+          "races": 206,
+          "capture": 0.4029126213592233
+        },
+        "two_outside": {
+          "races": 0,
+          "capture": 0
+        }
+      }
+    },
+    {
+      "variant": "all_d3",
+      "low": 0.4,
+      "high": 0.8,
+      "objective": 0.8392311662947766,
+      "races": 206,
+      "second_capture": 0.4077669902912621,
+      "avg_second_candidates": 2,
+      "second_given_first_capture": 0.4421768707482993,
+      "when_both_first_second_in_first_candidates": 0.5063291139240507,
+      "outside_first_candidates_capture_given_first": 0.36764705882352944,
+      "hard_diff_line_outside_capture_given_first": 0.32432432432432434,
+      "hard_races": 37,
+      "mode_stats": {
+        "both_inside": {
+          "races": 0,
+          "capture": 0
+        },
+        "split": {
+          "races": 200,
+          "capture": 0.41
+        },
+        "two_outside": {
+          "races": 6,
+          "capture": 0.3333333333333333
+        }
+      }
+    },
+    {
+      "variant": "all_d2",
+      "low": 0.2,
+      "high": 0.5,
+      "objective": 0.8373726466296406,
+      "races": 206,
+      "second_capture": 0.5436893203883495,
+      "avg_second_candidates": 2,
+      "second_given_first_capture": 0.5918367346938775,
+      "when_both_first_second_in_first_candidates": 0.9620253164556962,
+      "outside_first_candidates_capture_given_first": 0.16176470588235295,
+      "hard_diff_line_outside_capture_given_first": 0.08108108108108109,
+      "hard_races": 37,
+      "mode_stats": {
+        "both_inside": {
+          "races": 166,
+          "capture": 0.5602409638554217
+        },
+        "split": {
+          "races": 40,
+          "capture": 0.475
+        },
+        "two_outside": {
+          "races": 0,
+          "capture": 0
+        }
+      }
+    },
+    {
+      "variant": "all_d2",
+      "low": 0.3,
+      "high": 0.5,
+      "objective": 0.8373726466296406,
+      "races": 206,
+      "second_capture": 0.5436893203883495,
+      "avg_second_candidates": 2,
+      "second_given_first_capture": 0.5918367346938775,
+      "when_both_first_second_in_first_candidates": 0.9620253164556962,
+      "outside_first_candidates_capture_given_first": 0.16176470588235295,
+      "hard_diff_line_outside_capture_given_first": 0.08108108108108109,
+      "hard_races": 37,
+      "mode_stats": {
+        "both_inside": {
+          "races": 166,
+          "capture": 0.5602409638554217
+        },
+        "split": {
+          "races": 40,
+          "capture": 0.475
+        },
+        "two_outside": {
+          "races": 0,
+          "capture": 0
+        }
+      }
+    },
+    {
+      "variant": "all_d2",
+      "low": 0.4,
+      "high": 0.5,
+      "objective": 0.8373726466296406,
+      "races": 206,
+      "second_capture": 0.5485436893203883,
+      "avg_second_candidates": 2,
+      "second_given_first_capture": 0.5918367346938775,
+      "when_both_first_second_in_first_candidates": 0.9620253164556962,
+      "outside_first_candidates_capture_given_first": 0.16176470588235295,
+      "hard_diff_line_outside_capture_given_first": 0.08108108108108109,
+      "hard_races": 37,
+      "mode_stats": {
+        "both_inside": {
+          "races": 166,
+          "capture": 0.5602409638554217
+        },
+        "split": {
+          "races": 34,
+          "capture": 0.5294117647058824
+        },
+        "two_outside": {
+          "races": 6,
+          "capture": 0.3333333333333333
+        }
+      }
+    },
+    {
+      "variant": "all_d3",
+      "low": 0.2,
+      "high": 0.5,
+      "objective": 0.82867119136399,
+      "races": 206,
+      "second_capture": 0.5485436893203883,
+      "avg_second_candidates": 2,
+      "second_given_first_capture": 0.5850340136054422,
+      "when_both_first_second_in_first_candidates": 0.9493670886075949,
+      "outside_first_candidates_capture_given_first": 0.16176470588235295,
+      "hard_diff_line_outside_capture_given_first": 0.08108108108108109,
+      "hard_races": 37,
+      "mode_stats": {
+        "both_inside": {
+          "races": 166,
+          "capture": 0.5602409638554217
+        },
+        "split": {
+          "races": 40,
+          "capture": 0.5
+        },
+        "two_outside": {
+          "races": 0,
+          "capture": 0
+        }
+      }
+    },
+    {
+      "variant": "all_d3",
+      "low": 0.3,
+      "high": 0.5,
+      "objective": 0.82867119136399,
+      "races": 206,
+      "second_capture": 0.5485436893203883,
+      "avg_second_candidates": 2,
+      "second_given_first_capture": 0.5850340136054422,
+      "when_both_first_second_in_first_candidates": 0.9493670886075949,
+      "outside_first_candidates_capture_given_first": 0.16176470588235295,
+      "hard_diff_line_outside_capture_given_first": 0.08108108108108109,
+      "hard_races": 37,
+      "mode_stats": {
+        "both_inside": {
+          "races": 166,
+          "capture": 0.5602409638554217
+        },
+        "split": {
+          "races": 40,
+          "capture": 0.5
+        },
+        "two_outside": {
+          "races": 0,
+          "capture": 0
+        }
+      }
+    },
+    {
+      "variant": "all_d3",
+      "low": 0.4,
+      "high": 0.5,
+      "objective": 0.82867119136399,
+      "races": 206,
+      "second_capture": 0.5533980582524272,
+      "avg_second_candidates": 2,
+      "second_given_first_capture": 0.5850340136054422,
+      "when_both_first_second_in_first_candidates": 0.9493670886075949,
+      "outside_first_candidates_capture_given_first": 0.16176470588235295,
+      "hard_diff_line_outside_capture_given_first": 0.08108108108108109,
+      "hard_races": 37,
+      "mode_stats": {
+        "both_inside": {
+          "races": 166,
+          "capture": 0.5602409638554217
+        },
+        "split": {
+          "races": 34,
+          "capture": 0.5588235294117647
+        },
+        "two_outside": {
+          "races": 6,
+          "capture": 0.3333333333333333
+        }
+      }
+    }
+  ],
+  "leakage_guard": "Regime thresholds selected only on 2025-10-27..12-28 calibration. 2026 H1 untouched until final test. Odds unused."
+}
