@@ -1,0 +1,68 @@
+{
+  "algorithm": "keirin_shogi_v12_top3_final_rerank",
+  "train_period": {
+    "start": "2024-04-01",
+    "end": "2024-04-07"
+  },
+  "test_period": {
+    "start": "2024-04-08",
+    "end": "2024-04-14"
+  },
+  "reranker_learning_source": "2024-04-01〜2024-04-07 v11完全ホールドアウト結果",
+  "reranker_model": {
+    "usable_top3_train_races": 57,
+    "correction_cases": 31,
+    "winner_was_rank2": 18,
+    "winner_was_rank3": 13,
+    "features": {
+      "score": {
+        "winner_minus_wrong_top1_mean": -25.411277630861516,
+        "sd": 15.703223854004307,
+        "weight": -1.618220428309163
+      },
+      "raw_score": {
+        "winner_minus_wrong_top1_mean": -1.8251702651902946,
+        "sd": 1.3113188992087903,
+        "weight": -1.3918584306926
+      },
+      "avg_pair_margin": {
+        "winner_minus_wrong_top1_mean": -1.4082000410224005,
+        "sd": 1.020069072423068,
+        "weight": -1.380494791080537
+      },
+      "worst_pair_margin": {
+        "winner_minus_wrong_top1_mean": -1.6678808966715764,
+        "sd": 1.2666465446096775,
+        "weight": -1.3167689942939378
+      },
+      "best_pair_margin": {
+        "winner_minus_wrong_top1_mean": -1.2861203185878056,
+        "sd": 1.19632584564339,
+        "weight": -1.075058541342575
+      },
+      "pair_margin_sd": {
+        "winner_minus_wrong_top1_mean": 0.13280138844039657,
+        "sd": 0.31698615153941273,
+        "weight": 0.41895012698649264
+      }
+    }
+  },
+  "test_races": 108,
+  "v11_base": {
+    "top1_hit_rate": 0.3611111111111111,
+    "top2_capture_rate": 0.6203703703703703,
+    "top3_capture_rate": 0.8055555555555556
+  },
+  "v12_final_rerank": {
+    "top1_hit_rate": 0.19444444444444445,
+    "winner_in_base_top3_rate": 0.8055555555555556
+  },
+  "paired_top1_comparison": {
+    "v12_only_hit": 21,
+    "v11_only_hit": 39,
+    "both_hit": 0,
+    "both_miss": 48
+  },
+  "method": "v11で上位3人を抽出し、直前ホールドアウト週で『誤1位 vs 実勝者(2位/3位)』の差から最終決戦補正を学習。次週では上位3人だけを再順位付けし、候補数は広げず1位評価だけを変更。",
+  "leakage_guard": "2024-04-08以降の結果は学習に未使用。オッズ不使用。"
+}
