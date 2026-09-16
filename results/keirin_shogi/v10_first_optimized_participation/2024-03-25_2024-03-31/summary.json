@@ -1,0 +1,58 @@
+{
+  "algorithm": "keirin_shogi_v10_first_optimized_participation",
+  "train_period": {
+    "start": "2024-03-18",
+    "end": "2024-03-24"
+  },
+  "test_period": {
+    "start": "2024-03-25",
+    "end": "2024-03-31"
+  },
+  "first_policy_learning_source": "2024-03-18〜2024-03-24 v9固定検証のv9参加対象レース",
+  "first_policy": {
+    "condition": null,
+    "first_candidate_count": 3,
+    "train_selected_races": 57,
+    "train_coverage_within_v9": 1.0,
+    "train_first_hit_rate": 0.5789473684210527,
+    "train_efficiency": 0.3342554190045202,
+    "objective": 0.3342554190045202
+  },
+  "participation_rule": "v9反転参加条件 AND 1着構造条件",
+  "all_races": {
+    "races": 99,
+    "first_hit_rate": 0.7272727272727273,
+    "second_hit_rate": 0.5252525252525253,
+    "third_hit_rate": 0.6161616161616161,
+    "complete_capture_rate": 0.21212121212121213,
+    "avg_candidate_cells": 9.282828282828282
+  },
+  "participated_races": {
+    "races": 60,
+    "first_hit_rate": 0.6333333333333333,
+    "second_hit_rate": 0.55,
+    "third_hit_rate": 0.6333333333333333,
+    "complete_capture_rate": 0.23333333333333334,
+    "avg_candidate_cells": 9.316666666666666
+  },
+  "skipped_races": {
+    "races": 39,
+    "first_hit_rate": 0.8717948717948718,
+    "second_hit_rate": 0.48717948717948717,
+    "third_hit_rate": 0.5897435897435898,
+    "complete_capture_rate": 0.1794871794871795,
+    "avg_candidate_cells": 9.23076923076923
+  },
+  "participation_rate": 0.6060606060606061,
+  "same_week_v9_baseline_participated": {
+    "races": 60,
+    "first_hit_rate": 0.45,
+    "second_hit_rate": 0.55,
+    "third_hit_rate": 0.6333333333333333,
+    "complete_capture_rate": 0.13333333333333333,
+    "avg_candidate_cells": 8.1
+  },
+  "same_week_v9_baseline_participation_rate": 0.6060606060606061,
+  "method": "v9の反転参加思想を維持し、直前v9参加レースから1着構造(first_gap12/13, first_sd, line_strength_spread)と必要1着候補数k=1..3を同時最適化。目的関数は1着捕捉率/sqrt(k)×sqrt(参加カバレッジ)。次週では条件とkを固定し、参加判定にも同じ1着最適化を使用。",
+  "leakage_guard": "2024-03-25以降の結果は1着方針・参加判定・予測学習に未使用。オッズ不使用。"
+}
