@@ -1,0 +1,41 @@
+{
+  "algorithm": "keirin_shogi_v4_relative_gap",
+  "train_period": {
+    "start": "2024-01-08",
+    "end": "2024-01-14"
+  },
+  "test_period": {
+    "start": "2024-01-15",
+    "end": "2024-01-21"
+  },
+  "train_races_by_rank": {
+    "first": 81,
+    "second": 81,
+    "third": 81
+  },
+  "test_races": 81,
+  "first_hit_rate": 0.49382716049382713,
+  "second_hit_rate": 0.345679012345679,
+  "third_hit_rate": 0.5555555555555556,
+  "complete_capture_rate": 0.12345679012345678,
+  "avg_candidate_cells": 7.753086419753086,
+  "avg_first_candidates": 1.4567901234567902,
+  "avg_second_candidates": 2.6666666666666665,
+  "avg_third_candidates": 3.6296296296296298,
+  "first_relative_features": [
+    "score_gap_top",
+    "score_gap_second",
+    "win_rate_gap_top",
+    "win_rate_gap_second",
+    "b_count_gap_top",
+    "b_count_gap_second",
+    "nige_count_gap_top",
+    "nige_count_gap_second",
+    "makuri_count_gap_top",
+    "makuri_count_gap_second",
+    "top2_rate_gap_top",
+    "top2_rate_gap_second"
+  ],
+  "method": "v3の順位ベクトル学習に加え、1着だけは各主要特徴のレース内トップ/2番手との差を学習して補正。1着候補数も1位と2位のスコア差で決定。役割・ライン位置・オッズは不使用。1/8-1/14で学習し、1/15-1/21で固定検証。",
+  "leakage_guard": "2024-01-15以降の結果は学習に未使用。オッズ不使用。"
+}
