@@ -22,7 +22,7 @@ OUT_DIR=Path("results/keirin_shogi/v17_gbdt_walkforward")
 OUT_DIR.mkdir(parents=True,exist_ok=True)
 
 START_TEST=date(2024,5,6)
-END_TEST=date(2024,7,28)
+END_TEST=date(2024,9,29)
 ACCEPT={
     "top1_min":0.30,
     "candidate_capture_min":0.65,
