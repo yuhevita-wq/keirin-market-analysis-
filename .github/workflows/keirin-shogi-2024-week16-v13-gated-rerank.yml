@@ -1,0 +1,27 @@
+name: Keirin Shogi 2024 Week 16 v13 Gated Rerank
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/keirin-shogi-2024-week16-v13-gated-rerank.yml'
+      - 'scripts/keirin_shogi_weekly_v13_gated_rerank.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run-v13:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/keirin_shogi_weekly_v13_gated_rerank.py
+      - name: Commit generated results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/keirin_shogi/v13_gated_rerank/2024-04-15_2024-04-21
+          if git diff --cached --quiet; then
+            echo "No result changes."
+          else
+            git commit -m "results: keirin shogi v13 gated rerank 2024 week 16"
+            git push
+          fi
