@@ -18,10 +18,12 @@ v17.BASES=[
  Path("data/2024/s_class_f1_all_parts/2024_q4"),
  Path("data/2025/s_class_f1_all_parts/2025_q1"),
  Path("data/2025/s_class_f1_all_parts/2025_q2"),
+ Path("data/2025/s_class_f1_all_parts/2025_q3"),
+ Path("data/2025/s_class_f1_all_parts/2025_q4"),
 ]
 
 OUT_DIR=Path("results/keirin_shogi/v18_ensemble_walkforward");OUT_DIR.mkdir(parents=True,exist_ok=True)
-START_TEST=date(2024,12,30);END_TEST=date(2025,6,29)
+START_TEST=date(2025,6,30);END_TEST=date(2025,12,28)
 ACCEPT={"top1_min":0.30,"candidate_capture_min":0.65,"avg_candidates_max":2.20,"three_candidate_share_max":0.50,"consecutive_weeks":2}
 
 def fit_ensemble(ds):
