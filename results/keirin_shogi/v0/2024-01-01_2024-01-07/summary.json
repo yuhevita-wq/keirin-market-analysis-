@@ -1,0 +1,50 @@
+{
+  "period": {
+    "start": "2024-01-01",
+    "end": "2024-01-07"
+  },
+  "scope": "F1 S級・7車立てのみ",
+  "algorithm": "keirin_shogi_v0",
+  "races_evaluated": 114,
+  "first_hit_rate": 0.41228070175438597,
+  "second_hit_rate": 0.5614035087719298,
+  "third_hit_rate": 0.5526315789473685,
+  "complete_capture_rate": 0.15789473684210525,
+  "avg_candidate_cells": 8.06140350877193,
+  "missing_rank_counts": {
+    "1着": 67,
+    "2着": 50,
+    "3着": 51
+  },
+  "feature_definition": {
+    "B数": "entries.b_count",
+    "勝率": "entries.win_rate",
+    "ライン長": "entries.line_size",
+    "番手差し評価": "line_position==2 のとき、レース内正規化 sashi_count×0.70 + mark_count×0.30。その他は0",
+    "別線能力": "レース内正規化 score×0.50 + makuri_count×0.30 + top2_rate×0.20"
+  },
+  "weights": {
+    "first": {
+      "b": 0.3,
+      "win": 0.35,
+      "line": 0.15,
+      "ban": 0.05,
+      "cross": 0.15
+    },
+    "second": {
+      "b": 0.1,
+      "win": 0.2,
+      "line": 0.2,
+      "ban": 0.3,
+      "cross": 0.2
+    },
+    "third": {
+      "b": 0.05,
+      "win": 0.1,
+      "line": 0.2,
+      "ban": 0.2,
+      "cross": 0.45
+    }
+  },
+  "note": "2024-01-01〜01-07は同一v0で固定。結果・オッズは特徴量計算に使用していない。"
+}
