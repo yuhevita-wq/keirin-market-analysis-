@@ -50,6 +50,15 @@
       outline: 4px solid #bbb;
       transform: translateY(-1px);
     }
+
+    /* 競輪の車番カラー */
+    .piece[data-piece="1"], .piece-1 { background: #fff; color: #111; }
+    .piece[data-piece="2"], .piece-2 { background: #111; color: #fff; }
+    .piece[data-piece="3"], .piece-3 { background: #d62828; color: #fff; }
+    .piece[data-piece="4"], .piece-4 { background: #1769aa; color: #fff; }
+    .piece[data-piece="5"], .piece-5 { background: #ffd60a; color: #111; }
+    .piece[data-piece="6"], .piece-6 { background: #1f9d55; color: #fff; }
+    .piece[data-piece="7"], .piece-7 { background: #f28c28; color: #111; }
     .clear {
       margin-left: auto;
       padding: 10px 14px;
@@ -187,7 +196,7 @@
           const pieceNo = state[row.key][column];
           if (pieceNo) {
             const piece = document.createElement("div");
-            piece.className = "placed";
+            piece.className = "placed piece-" + pieceNo;
             piece.textContent = pieceNo;
             cell.appendChild(piece);
           }
