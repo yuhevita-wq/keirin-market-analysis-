@@ -1,0 +1,48 @@
+{
+  "algorithm": "keirin_shogi_v5_relative_second",
+  "train_period": {
+    "start": "2024-01-15",
+    "end": "2024-01-21"
+  },
+  "test_period": {
+    "start": "2024-01-22",
+    "end": "2024-01-28"
+  },
+  "train_races_by_rank": {
+    "first": 82,
+    "second": 82,
+    "third": 82
+  },
+  "test_races": 108,
+  "first_hit_rate": 0.4074074074074074,
+  "second_hit_rate": 0.5,
+  "third_hit_rate": 0.6481481481481481,
+  "complete_capture_rate": 0.14814814814814814,
+  "avg_candidate_cells": 7.787037037037037,
+  "avg_first_candidates": 1.5462962962962963,
+  "avg_second_candidates": 2.5833333333333335,
+  "avg_third_candidates": 3.6574074074074074,
+  "second_relative_features": [
+    "score_gap_top",
+    "score_gap_second",
+    "score_gap_third",
+    "win_rate_gap_top",
+    "win_rate_gap_second",
+    "win_rate_gap_third",
+    "b_count_gap_top",
+    "b_count_gap_second",
+    "nige_count_gap_top",
+    "nige_count_gap_second",
+    "makuri_count_gap_top",
+    "makuri_count_gap_second",
+    "makuri_count_gap_third",
+    "top2_rate_gap_top",
+    "top2_rate_gap_second",
+    "top2_rate_gap_third",
+    "top3_rate_gap_top",
+    "top3_rate_gap_second",
+    "top3_rate_gap_third"
+  ],
+  "method": "1着はv4相対差補正を維持。2着にも各主要特徴のトップ/2番手/3番手との差を学習して補正し、2着候補数も2位と3位のスコア差で2枚/3枚を決定。3着は従来モデル。役割・ライン位置・オッズ不使用。1/15-1/21学習、1/22-1/28固定検証。",
+  "leakage_guard": "2024-01-22以降の結果は学習に未使用。オッズ不使用。"
+}
