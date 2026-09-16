@@ -1,0 +1,27 @@
+name: Live Ito 9R v9
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/live-ito-9r-v9.yml'
+      - 'scripts/run_2026_09_16_ito_9r_v9.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run-live:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/run_2026_09_16_ito_9r_v9.py
+      - name: Commit live result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/live/2026-09-16_ito_9r_v9.json
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "results: v9 trial on 2026-09-16 Ito 9R"
+            git push
+          fi
