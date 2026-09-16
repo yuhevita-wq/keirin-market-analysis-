@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>競輪将棋 - 盤面プロトタイプ</title>
+  <title>競輪将棋 - 駒置きアルゴリズム v0</title>
   <style>
     :root {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -11,27 +11,11 @@
       background: #f5f5f5;
     }
     * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      padding: 24px;
-    }
-
-    .wrap {
-      max-width: 980px;
-      margin: 0 auto;
-    }
-
-    h1 {
-      margin: 0 0 8px;
-      font-size: 28px;
-    }
-
-    .note {
-      margin: 0 0 20px;
-      color: #666;
-      font-size: 14px;
-    }
+    body { margin: 0; padding: 24px; }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    h1 { margin: 0 0 8px; font-size: 28px; }
+    h2 { margin: 28px 0 10px; font-size: 20px; }
+    .note { margin: 0 0 20px; color: #666; font-size: 14px; }
 
     .toolbar {
       display: flex;
@@ -54,13 +38,8 @@
       font-size: 18px;
       cursor: pointer;
     }
+    .piece.selected { outline: 4px solid #bbb; transform: translateY(-1px); }
 
-    .piece.selected {
-      outline: 4px solid #bbb;
-      transform: translateY(-1px);
-    }
-
-    /* 競輪の車番カラー */
     .piece[data-piece="1"], .piece-1 { background: #fff; color: #111; }
     .piece[data-piece="2"], .piece-2 { background: #111; color: #fff; }
     .piece[data-piece="3"], .piece-3 { background: #d62828; color: #fff; }
@@ -69,27 +48,24 @@
     .piece[data-piece="6"], .piece-6 { background: #1f9d55; color: #fff; }
     .piece[data-piece="7"], .piece-7 { background: #f28c28; color: #111; }
 
-    .clear {
-      margin-left: auto;
+    button.action, .clear {
       padding: 10px 14px;
       border: 1px solid #aaa;
       background: #fff;
       border-radius: 8px;
       cursor: pointer;
+      font-weight: 700;
     }
+    button.action.primary { background: #222; color: #fff; border-color: #222; }
+    .clear { margin-left: auto; }
 
-    .board {
-      display: grid;
-      gap: 10px;
-    }
-
+    .board { display: grid; gap: 10px; }
     .rank-row {
       display: grid;
       grid-template-columns: 72px 1fr;
       gap: 10px;
       align-items: center;
     }
-
     .row-label {
       min-height: 70px;
       display: flex;
@@ -100,7 +76,6 @@
       border: 1px solid #bbb;
       border-radius: 8px;
     }
-
     .row-zone {
       min-height: 70px;
       display: flex;
@@ -113,10 +88,7 @@
       border-radius: 10px;
       cursor: pointer;
     }
-
-    .row-zone:hover {
-      outline: 2px solid #ccc;
-    }
+    .row-zone:hover { outline: 2px solid #ccc; }
 
     .placed {
       width: 44px;
@@ -131,8 +103,6 @@
       cursor: pointer;
       flex: 0 0 auto;
     }
-
-    /* 配置後の駒にも車番カラーを確実に適用 */
     .placed.piece-1 { background: #fff; color: #111; }
     .placed.piece-2 { background: #111; color: #fff; }
     .placed.piece-3 { background: #d62828; color: #fff; }
@@ -141,11 +111,7 @@
     .placed.piece-6 { background: #1f9d55; color: #fff; }
     .placed.piece-7 { background: #f28c28; color: #111; }
 
-    .empty-hint {
-      color: #aaa;
-      font-size: 13px;
-      pointer-events: none;
-    }
+    .empty-hint { color: #aaa; font-size: 13px; pointer-events: none; }
 
     .status {
       margin-top: 16px;
@@ -156,42 +122,112 @@
       font-size: 14px;
     }
 
+    .panel {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 14px;
+      overflow-x: auto;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 820px;
+    }
+    th, td {
+      border-bottom: 1px solid #e5e5e5;
+      padding: 8px;
+      text-align: center;
+      font-size: 13px;
+    }
+    th { background: #f7f7f7; position: sticky; top: 0; }
+    input[type="number"] {
+      width: 78px;
+      padding: 7px;
+      border: 1px solid #bbb;
+      border-radius: 6px;
+      text-align: right;
+    }
+    .input-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+      align-items: center;
+    }
+    .small { color: #666; font-size: 12px; }
+
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .analysis-card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .analysis-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .mini-piece {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 2px solid #222;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+    }
+    .score-row {
+      display: grid;
+      grid-template-columns: 52px 70px 1fr;
+      gap: 8px;
+      align-items: start;
+      padding: 5px 0;
+      border-top: 1px solid #eee;
+      font-size: 13px;
+    }
+    .score-row:first-of-type { border-top: 0; }
+    .score { font-weight: 800; }
+    .accepted { color: #0b6b31; font-weight: 800; }
+    .rejected { color: #888; }
+    .weights {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+
+    @media (min-width: 820px) {
+      .analysis-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
     @media (max-width: 720px) {
       body { padding: 12px; }
-
-      .rank-row {
-        grid-template-columns: 58px 1fr;
-        gap: 6px;
-      }
-
-      .row-label,
-      .row-zone {
-        min-height: 60px;
-      }
-
-      .placed,
-      .piece {
-        width: 38px;
-        height: 38px;
-      }
-
-      .row-zone {
-        gap: 7px;
-        padding: 8px;
-      }
+      .rank-row { grid-template-columns: 58px 1fr; gap: 6px; }
+      .row-label, .row-zone { min-height: 60px; }
+      .placed, .piece { width: 38px; height: 38px; }
+      .row-zone { gap: 7px; padding: 8px; }
     }
   </style>
 </head>
 <body>
   <main class="wrap">
-    <h1>競輪将棋 盤面プロトタイプ</h1>
+    <h1>競輪将棋 駒置きアルゴリズム v0</h1>
     <p class="note">
-      横軸の車番固定は廃止。各着順の候補駒を中央揃えで表示します。
-      例：1着=1、2着=2・3、3着=2・3・4・5ならピラミッド状になります。
+      オッズは使わず、出走表由来の5特徴から1着・2着・3着を別評価します。
+      まずは透明なルールベース。ここから実測で重みを壊して育てます。
     </p>
 
     <section class="toolbar" aria-label="駒選択">
-      <strong>駒:</strong>
+      <strong>手動駒:</strong>
       <button class="piece" data-piece="1">1</button>
       <button class="piece" data-piece="2">2</button>
       <button class="piece" data-piece="3">3</button>
@@ -199,25 +235,67 @@
       <button class="piece" data-piece="5">5</button>
       <button class="piece" data-piece="6">6</button>
       <button class="piece" data-piece="7">7</button>
-      <button class="clear" id="clearBoard">全消去</button>
+      <button class="clear" id="clearBoard">盤面全消去</button>
     </section>
 
     <section class="board" id="board" aria-label="競輪将棋盤面"></section>
+    <div class="status" id="status">手動配置も可能。下の出走表入力から自動配置できます。</div>
 
-    <div class="status" id="status">駒を選択して、置きたい着順の段を押してください。</div>
+    <h2>出走表入力</h2>
+    <section class="panel">
+      <table>
+        <thead>
+          <tr>
+            <th>車番</th>
+            <th>B数</th>
+            <th>勝率 %</th>
+            <th>ライン長</th>
+            <th>番手差し評価 0-100</th>
+            <th>別線能力 0-100</th>
+          </tr>
+        </thead>
+        <tbody id="inputBody"></tbody>
+      </table>
+      <div class="input-actions">
+        <button class="action primary" id="autoPlace">自動で駒を置く</button>
+        <button class="action" id="zeroInputs">入力を0に戻す</button>
+        <span class="small">
+          1着は1〜2人、2着は2〜3人、3着は3〜4人。境界のスコア差が15以上なら候補を1人削ります。
+        </span>
+      </div>
+    </section>
+
+    <h2>アルゴリズム可視化</h2>
+    <section class="analysis-grid" id="analysisGrid"></section>
+
+    <section class="panel" style="margin-top:10px;">
+      <strong>暫定重み</strong>
+      <div class="weights">
+        1着：B数 30% / 勝率 35% / ライン長 15% / 番手差し 5% / 別線能力 15%<br>
+        2着：B数 10% / 勝率 20% / ライン長 20% / 番手差し 30% / 別線能力 20%<br>
+        3着：B数 5% / 勝率 10% / ライン長 20% / 番手差し 20% / 別線能力 45%<br>
+        各特徴は同一レース内で0〜100に正規化してから加重します。これは初期仮説であり、最終ルールではありません。
+      </div>
+    </section>
   </main>
 
   <script>
+    const racers = [1,2,3,4,5,6,7];
     const rows = [
       { key: "first", label: "1着" },
       { key: "second", label: "2着" },
       { key: "third", label: "3着" }
     ];
 
-    let selectedPiece = null;
+    const weights = {
+      first:  { b: 0.30, win: 0.35, line: 0.15, ban: 0.05, cross: 0.15 },
+      second: { b: 0.10, win: 0.20, line: 0.20, ban: 0.30, cross: 0.20 },
+      third:  { b: 0.05, win: 0.10, line: 0.20, ban: 0.20, cross: 0.45 }
+    };
 
-    // 各段は「その着順の候補車番」の配列。
-    // 横位置に車番の意味は持たせない。
+    let selectedPiece = null;
+    let lastAnalysis = [];
+
     const state = {
       first: [],
       second: [],
@@ -226,21 +304,129 @@
 
     const board = document.getElementById("board");
     const status = document.getElementById("status");
+    const inputBody = document.getElementById("inputBody");
+    const analysisGrid = document.getElementById("analysisGrid");
+
+    function makeInputs() {
+      inputBody.innerHTML = "";
+      racers.forEach(no => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><strong>${no}</strong></td>
+          <td><input type="number" min="0" step="1" id="b-${no}" value="0"></td>
+          <td><input type="number" min="0" max="100" step="0.1" id="win-${no}" value="0"></td>
+          <td><input type="number" min="1" max="7" step="1" id="line-${no}" value="1"></td>
+          <td><input type="number" min="0" max="100" step="1" id="ban-${no}" value="0"></td>
+          <td><input type="number" min="0" max="100" step="1" id="cross-${no}" value="0"></td>
+        `;
+        inputBody.appendChild(tr);
+      });
+    }
+
+    function readValue(id) {
+      const v = Number(document.getElementById(id).value);
+      return Number.isFinite(v) ? v : 0;
+    }
+
+    function readRacers() {
+      return racers.map(no => ({
+        no,
+        b: readValue("b-" + no),
+        win: readValue("win-" + no),
+        line: readValue("line-" + no),
+        ban: readValue("ban-" + no),
+        cross: readValue("cross-" + no)
+      }));
+    }
+
+    function normalize(values) {
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      if (max === min) return values.map(() => 50);
+      return values.map(v => ((v - min) / (max - min)) * 100);
+    }
+
+    function analyze(data) {
+      const nb = normalize(data.map(x => x.b));
+      const nwin = normalize(data.map(x => x.win));
+      const nline = normalize(data.map(x => x.line));
+      const nban = normalize(data.map(x => x.ban));
+      const ncross = normalize(data.map(x => x.cross));
+
+      return data.map((x, i) => {
+        const normalized = {
+          b: nb[i],
+          win: nwin[i],
+          line: nline[i],
+          ban: nban[i],
+          cross: ncross[i]
+        };
+
+        const result = { no: x.no, raw: x, normalized, scores: {}, parts: {} };
+
+        rows.forEach(row => {
+          const w = weights[row.key];
+          const parts = {
+            b: normalized.b * w.b,
+            win: normalized.win * w.win,
+            line: normalized.line * w.line,
+            ban: normalized.ban * w.ban,
+            cross: normalized.cross * w.cross
+          };
+          const total = Object.values(parts).reduce((a,b) => a + b, 0);
+          result.parts[row.key] = parts;
+          result.scores[row.key] = total;
+        });
+
+        return result;
+      });
+    }
+
+    function chooseCandidates(analysis, rowKey) {
+      const sorted = [...analysis].sort((a,b) => b.scores[rowKey] - a.scores[rowKey]);
+
+      let count;
+      if (rowKey === "first") {
+        count = 2;
+        if (sorted[0].scores.first - sorted[1].scores.first >= 15) count = 1;
+      } else if (rowKey === "second") {
+        count = 3;
+        if (sorted[1].scores.second - sorted[2].scores.second >= 15) count = 2;
+      } else {
+        count = 4;
+        if (sorted[2].scores.third - sorted[3].scores.third >= 15) count = 3;
+      }
+
+      return sorted.slice(0, count).map(x => x.no).sort((a,b) => a-b);
+    }
+
+    function autoPlace() {
+      const data = readRacers();
+      lastAnalysis = analyze(data);
+
+      state.first = chooseCandidates(lastAnalysis, "first");
+      state.second = chooseCandidates(lastAnalysis, "second");
+      state.third = chooseCandidates(lastAnalysis, "third");
+
+      renderBoard();
+      renderAnalysis();
+      status.textContent =
+        "自動配置しました。1着 " + state.first.join("・") +
+        " / 2着 " + state.second.join("・") +
+        " / 3着 " + state.third.join("・");
+    }
 
     function addPieceToRow(rowKey, rowLabel) {
       if (!selectedPiece) {
         status.textContent = "先に駒を選択してください。";
         return;
       }
-
       if (state[rowKey].includes(selectedPiece)) {
         status.textContent = rowLabel + "には駒" + selectedPiece + "がすでにあります。";
         return;
       }
-
       state[rowKey].push(selectedPiece);
-      state[rowKey].sort((a, b) => a - b);
-
+      state[rowKey].sort((a,b) => a-b);
       status.textContent = rowLabel + "候補に駒" + selectedPiece + "を追加しました。";
       renderBoard();
     }
@@ -253,7 +439,6 @@
 
     function renderBoard() {
       board.innerHTML = "";
-
       rows.forEach(row => {
         const rowWrap = document.createElement("div");
         rowWrap.className = "rank-row";
@@ -264,11 +449,8 @@
 
         const zone = document.createElement("div");
         zone.className = "row-zone";
-        zone.dataset.row = row.key;
 
-        zone.addEventListener("click", () => {
-          addPieceToRow(row.key, row.label);
-        });
+        zone.addEventListener("click", () => addPieceToRow(row.key, row.label));
 
         if (state[row.key].length === 0) {
           const hint = document.createElement("span");
@@ -282,12 +464,10 @@
             piece.className = "placed piece-" + pieceNo;
             piece.textContent = pieceNo;
             piece.title = row.label + "候補から" + pieceNo + "を削除";
-
             piece.addEventListener("click", event => {
               event.stopPropagation();
               removePieceFromRow(row.key, row.label, pieceNo);
             });
-
             zone.appendChild(piece);
           });
         }
@@ -298,14 +478,74 @@
       });
     }
 
+    function fmt(v) {
+      return Number(v).toFixed(1);
+    }
+
+    function renderAnalysis() {
+      analysisGrid.innerHTML = "";
+      if (!lastAnalysis.length) {
+        analysisGrid.innerHTML = '<div class="analysis-card small">まだ自動配置していません。</div>';
+        return;
+      }
+
+      [...lastAnalysis]
+        .sort((a,b) => a.no - b.no)
+        .forEach(item => {
+          const card = document.createElement("article");
+          card.className = "analysis-card";
+
+          const isFirst = state.first.includes(item.no);
+          const isSecond = state.second.includes(item.no);
+          const isThird = state.third.includes(item.no);
+
+          const rowHtml = rows.map(row => {
+            const parts = item.parts[row.key];
+            const accepted =
+              row.key === "first" ? isFirst :
+              row.key === "second" ? isSecond : isThird;
+
+            const reason =
+              "B " + fmt(parts.b) +
+              " / 勝率 " + fmt(parts.win) +
+              " / ライン " + fmt(parts.line) +
+              " / 番手 " + fmt(parts.ban) +
+              " / 別線 " + fmt(parts.cross);
+
+            return `
+              <div class="score-row">
+                <div><strong>${row.label}</strong></div>
+                <div class="score">${fmt(item.scores[row.key])}</div>
+                <div>
+                  <span class="${accepted ? "accepted" : "rejected"}">${accepted ? "採用" : "除外"}</span>
+                  <div class="small">${reason}</div>
+                </div>
+              </div>
+            `;
+          }).join("");
+
+          card.innerHTML = `
+            <div class="analysis-head">
+              <span class="mini-piece piece-${item.no}">${item.no}</span>
+              <strong>${item.no}番車</strong>
+              <span class="small">
+                B=${item.raw.b} / 勝率=${item.raw.win}% / ライン=${item.raw.line} /
+                番手=${item.raw.ban} / 別線=${item.raw.cross}
+              </span>
+            </div>
+            ${rowHtml}
+          `;
+
+          analysisGrid.appendChild(card);
+        });
+    }
+
     document.querySelectorAll(".piece").forEach(button => {
       button.addEventListener("click", () => {
         selectedPiece = Number(button.dataset.piece);
-
         document.querySelectorAll(".piece").forEach(b => {
           b.classList.toggle("selected", b === button);
         });
-
         status.textContent =
           "駒" + selectedPiece + "を選択中。置きたい着順の段を押してください。";
       });
@@ -315,9 +555,25 @@
       rows.forEach(row => state[row.key] = []);
       status.textContent = "盤面を全消去しました。";
       renderBoard();
+      renderAnalysis();
     });
 
+    document.getElementById("autoPlace").addEventListener("click", autoPlace);
+
+    document.getElementById("zeroInputs").addEventListener("click", () => {
+      racers.forEach(no => {
+        document.getElementById("b-" + no).value = 0;
+        document.getElementById("win-" + no).value = 0;
+        document.getElementById("line-" + no).value = 1;
+        document.getElementById("ban-" + no).value = 0;
+        document.getElementById("cross-" + no).value = 0;
+      });
+      status.textContent = "入力を初期値に戻しました。";
+    });
+
+    makeInputs();
     renderBoard();
+    renderAnalysis();
   </script>
 </body>
 </html>
