@@ -1,0 +1,27 @@
+name: Keirin Shogi 2024 Week 10 v8 Participation
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/keirin-shogi-2024-week10-v8-participation.yml'
+      - 'scripts/keirin_shogi_weekly_v8_participation.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run-v8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/keirin_shogi_weekly_v8_participation.py
+      - name: Commit generated results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/keirin_shogi/v8_participation/2024-03-04_2024-03-10
+          if git diff --cached --quiet; then
+            echo "No result changes."
+          else
+            git commit -m "results: keirin shogi v8 participation 2024 week 10"
+            git push
+          fi
