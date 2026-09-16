@@ -1,7 +1,7 @@
 {
   "version": "final_targeted_participation_v21",
   "selected_algorithm": "keirin_shogi_v21_quantile_participation",
-  "status": "accepted_for_next_stage",
+  "status": "adopted_first_place_core",
   "scope": "7-car F1 S-class",
   "no_odds": true,
   "first_candidates": {
@@ -50,5 +50,12 @@
     "scripts/keirin_shogi_v19_targeted_participation.py",
     "scripts/keirin_shogi_v21_quantile_participation.py",
     "results/keirin_shogi/v21_quantile_participation/summary.json"
-  ]
+  ],
+  "adopted_as": "競輪将棋 1着コア",
+  "lock_policy": {
+    "core": "v21 quantile participation",
+    "first_candidate_rule": "参加時は1着候補最大2人。1人固定ではない",
+    "participation_rule": "全レース参加禁止。参加selectorを先に通す",
+    "change_policy": "2着・3着学習では1着コアを原則固定。1着ロジック変更は独立検証で明確に上回った場合のみ"
+  }
 }
