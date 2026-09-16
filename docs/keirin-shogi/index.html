@@ -11,20 +11,28 @@
       background: #f5f5f5;
     }
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       padding: 24px;
     }
+
     .wrap {
       max-width: 980px;
       margin: 0 auto;
     }
-    h1 { margin: 0 0 8px; font-size: 28px; }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
     .note {
       margin: 0 0 20px;
       color: #666;
       font-size: 14px;
     }
+
     .toolbar {
       display: flex;
       flex-wrap: wrap;
@@ -36,16 +44,17 @@
       border: 1px solid #ddd;
       border-radius: 10px;
     }
+
     .piece {
       width: 44px;
       height: 44px;
       border: 2px solid #333;
       border-radius: 50%;
-      background: #fff;
       font-weight: 700;
       font-size: 18px;
       cursor: pointer;
     }
+
     .piece.selected {
       outline: 4px solid #bbb;
       transform: translateY(-1px);
@@ -59,6 +68,7 @@
     .piece[data-piece="5"], .piece-5 { background: #ffd60a; color: #111; }
     .piece[data-piece="6"], .piece-6 { background: #1f9d55; color: #fff; }
     .piece[data-piece="7"], .piece-7 { background: #f28c28; color: #111; }
+
     .clear {
       margin-left: auto;
       padding: 10px 14px;
@@ -67,35 +77,50 @@
       border-radius: 8px;
       cursor: pointer;
     }
+
     .board {
       display: grid;
-      grid-template-columns: 72px repeat(7, minmax(54px, 1fr));
-      gap: 6px;
-      align-items: stretch;
+      gap: 10px;
     }
-    .head, .row-label, .cell {
-      min-height: 62px;
-      border: 1px solid #bbb;
-      background: #fff;
+
+    .rank-row {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .row-label {
+      min-height: 70px;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-weight: 800;
+      background: #ececec;
+      border: 1px solid #bbb;
       border-radius: 8px;
     }
-    .head, .row-label {
-      font-weight: 700;
-      background: #ececec;
-    }
-    .cell {
+
+    .row-zone {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1px dashed #bbb;
+      border-radius: 10px;
       cursor: pointer;
-      position: relative;
     }
-    .cell:hover {
-      outline: 2px solid #bbb;
+
+    .row-zone:hover {
+      outline: 2px solid #ccc;
     }
+
     .placed {
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       border: 2px solid #222;
       display: flex;
@@ -103,9 +128,16 @@
       justify-content: center;
       font-weight: 800;
       font-size: 18px;
-      background: #fff;
+      cursor: pointer;
+      flex: 0 0 auto;
+    }
+
+    .empty-hint {
+      color: #aaa;
+      font-size: 13px;
       pointer-events: none;
     }
+
     .status {
       margin-top: 16px;
       padding: 12px 14px;
@@ -114,21 +146,40 @@
       border-radius: 8px;
       font-size: 14px;
     }
+
     @media (max-width: 720px) {
       body { padding: 12px; }
-      .board {
-        grid-template-columns: 58px repeat(7, minmax(40px, 1fr));
-        gap: 4px;
+
+      .rank-row {
+        grid-template-columns: 58px 1fr;
+        gap: 6px;
       }
-      .head, .row-label, .cell { min-height: 52px; }
-      .placed, .piece { width: 38px; height: 38px; }
+
+      .row-label,
+      .row-zone {
+        min-height: 60px;
+      }
+
+      .placed,
+      .piece {
+        width: 38px;
+        height: 38px;
+      }
+
+      .row-zone {
+        gap: 7px;
+        padding: 8px;
+      }
     }
   </style>
 </head>
 <body>
   <main class="wrap">
     <h1>競輪将棋 盤面プロトタイプ</h1>
-    <p class="note">駒を選んでマスを押すだけ。同じ選手を複数段に置けます。オッズ・移動ルール・車券化はまだ入れていません。</p>
+    <p class="note">
+      横軸の車番固定は廃止。各着順の候補駒を中央揃えで表示します。
+      例：1着=1、2着=2・3、3着=2・3・4・5ならピラミッド状になります。
+    </p>
 
     <section class="toolbar" aria-label="駒選択">
       <strong>駒:</strong>
@@ -144,11 +195,10 @@
 
     <section class="board" id="board" aria-label="競輪将棋盤面"></section>
 
-    <div class="status" id="status">駒を選択してください。</div>
+    <div class="status" id="status">駒を選択して、置きたい着順の段を押してください。</div>
   </main>
 
   <script>
-    const racers = [1,2,3,4,5,6,7];
     const rows = [
       { key: "first", label: "1着" },
       { key: "second", label: "2着" },
@@ -156,73 +206,86 @@
     ];
 
     let selectedPiece = null;
+
+    // 各段は「その着順の候補車番」の配列。
+    // 横位置に車番の意味は持たせない。
     const state = {
-      first: {},
-      second: {},
-      third: {}
+      first: [],
+      second: [],
+      third: []
     };
 
     const board = document.getElementById("board");
     const status = document.getElementById("status");
 
+    function addPieceToRow(rowKey, rowLabel) {
+      if (!selectedPiece) {
+        status.textContent = "先に駒を選択してください。";
+        return;
+      }
+
+      if (state[rowKey].includes(selectedPiece)) {
+        status.textContent = rowLabel + "には駒" + selectedPiece + "がすでにあります。";
+        return;
+      }
+
+      state[rowKey].push(selectedPiece);
+      state[rowKey].sort((a, b) => a - b);
+
+      status.textContent = rowLabel + "候補に駒" + selectedPiece + "を追加しました。";
+      renderBoard();
+    }
+
+    function removePieceFromRow(rowKey, rowLabel, pieceNo) {
+      state[rowKey] = state[rowKey].filter(no => no !== pieceNo);
+      status.textContent = rowLabel + "候補から駒" + pieceNo + "を削除しました。";
+      renderBoard();
+    }
+
     function renderBoard() {
       board.innerHTML = "";
 
-      const corner = document.createElement("div");
-      corner.className = "head";
-      corner.textContent = "着順";
-      board.appendChild(corner);
-
-      racers.forEach(no => {
-        const head = document.createElement("div");
-        head.className = "head";
-        head.textContent = no;
-        board.appendChild(head);
-      });
-
       rows.forEach(row => {
+        const rowWrap = document.createElement("div");
+        rowWrap.className = "rank-row";
+
         const label = document.createElement("div");
         label.className = "row-label";
         label.textContent = row.label;
-        board.appendChild(label);
 
-        racers.forEach(column => {
-          const cell = document.createElement("button");
-          cell.className = "cell";
-          cell.type = "button";
-          cell.dataset.row = row.key;
-          cell.dataset.column = column;
+        const zone = document.createElement("div");
+        zone.className = "row-zone";
+        zone.dataset.row = row.key;
 
-          const pieceNo = state[row.key][column];
-          if (pieceNo) {
-            const piece = document.createElement("div");
+        zone.addEventListener("click", () => {
+          addPieceToRow(row.key, row.label);
+        });
+
+        if (state[row.key].length === 0) {
+          const hint = document.createElement("span");
+          hint.className = "empty-hint";
+          hint.textContent = "ここを押して配置";
+          zone.appendChild(hint);
+        } else {
+          state[row.key].forEach(pieceNo => {
+            const piece = document.createElement("button");
+            piece.type = "button";
             piece.className = "placed piece-" + pieceNo;
             piece.textContent = pieceNo;
-            cell.appendChild(piece);
-          }
+            piece.title = row.label + "候補から" + pieceNo + "を削除";
 
-          cell.addEventListener("click", () => {
-            const current = state[row.key][column];
+            piece.addEventListener("click", event => {
+              event.stopPropagation();
+              removePieceFromRow(row.key, row.label, pieceNo);
+            });
 
-            if (current) {
-              delete state[row.key][column];
-              status.textContent = row.label + "・車番" + column + "の駒を削除しました。";
-              renderBoard();
-              return;
-            }
-
-            if (!selectedPiece) {
-              status.textContent = "先に駒を選択してください。";
-              return;
-            }
-
-            state[row.key][column] = selectedPiece;
-            status.textContent = row.label + "・車番" + column + "に駒" + selectedPiece + "を配置しました。";
-            renderBoard();
+            zone.appendChild(piece);
           });
+        }
 
-          board.appendChild(cell);
-        });
+        rowWrap.appendChild(label);
+        rowWrap.appendChild(zone);
+        board.appendChild(rowWrap);
       });
     }
 
@@ -234,12 +297,13 @@
           b.classList.toggle("selected", b === button);
         });
 
-        status.textContent = "駒" + selectedPiece + "を選択中。置きたいマスを押してください。";
+        status.textContent =
+          "駒" + selectedPiece + "を選択中。置きたい着順の段を押してください。";
       });
     });
 
     document.getElementById("clearBoard").addEventListener("click", () => {
-      rows.forEach(row => state[row.key] = {});
+      rows.forEach(row => state[row.key] = []);
       status.textContent = "盤面を全消去しました。";
       renderBoard();
     });
