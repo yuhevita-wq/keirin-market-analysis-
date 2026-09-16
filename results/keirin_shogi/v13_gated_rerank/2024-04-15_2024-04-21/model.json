@@ -1,0 +1,51 @@
+{
+  "gate": {
+    "condition": {
+      "feature": "worst_pair_margin_top1",
+      "operator": "<=",
+      "threshold": 5.432669877314886
+    },
+    "train_accuracy": 0.4166666666666667,
+    "train_v11_base_accuracy": 0.3611111111111111,
+    "train_switch_rate": 0.35185185185185186,
+    "train_switches": 38
+  },
+  "reranker": {
+    "usable_top3_train_races": 57,
+    "correction_cases": 31,
+    "winner_was_rank2": 18,
+    "winner_was_rank3": 13,
+    "features": {
+      "score": {
+        "winner_minus_wrong_top1_mean": -25.411277630861516,
+        "sd": 15.703223854004307,
+        "weight": -1.618220428309163
+      },
+      "raw_score": {
+        "winner_minus_wrong_top1_mean": -1.8251702651902946,
+        "sd": 1.3113188992087903,
+        "weight": -1.3918584306926
+      },
+      "avg_pair_margin": {
+        "winner_minus_wrong_top1_mean": -1.4082000410224005,
+        "sd": 1.020069072423068,
+        "weight": -1.380494791080537
+      },
+      "worst_pair_margin": {
+        "winner_minus_wrong_top1_mean": -1.6678808966715764,
+        "sd": 1.2666465446096775,
+        "weight": -1.3167689942939378
+      },
+      "best_pair_margin": {
+        "winner_minus_wrong_top1_mean": -1.2861203185878056,
+        "sd": 1.19632584564339,
+        "weight": -1.075058541342575
+      },
+      "pair_margin_sd": {
+        "winner_minus_wrong_top1_mean": 0.13280138844039657,
+        "sd": 0.31698615153941273,
+        "weight": 0.41895012698649264
+      }
+    }
+  }
+}

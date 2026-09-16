@@ -1,0 +1,36 @@
+{
+  "algorithm": "keirin_shogi_v13_gated_rerank",
+  "train_period": {
+    "start": "2024-04-08",
+    "end": "2024-04-14"
+  },
+  "test_period": {
+    "start": "2024-04-15",
+    "end": "2024-04-21"
+  },
+  "gate_learning_source": "2024-04-08〜2024-04-14 v12ホールドアウト結果。正解・不正解の両方を使用。",
+  "gate": {
+    "condition": {
+      "feature": "worst_pair_margin_top1",
+      "operator": "<=",
+      "threshold": 5.432669877314886
+    },
+    "train_accuracy": 0.4166666666666667,
+    "train_v11_base_accuracy": 0.3611111111111111,
+    "train_switch_rate": 0.35185185185185186,
+    "train_switches": 38
+  },
+  "test_races": 112,
+  "v11_base_top1_hit_rate": 0.35714285714285715,
+  "v12_always_rerank_top1_hit_rate": 0.17857142857142858,
+  "v13_gated_top1_hit_rate": 0.30357142857142855,
+  "v13_switch_rate": 0.49107142857142855,
+  "paired_v13_vs_v11": {
+    "v13_only_hit": 10,
+    "v11_only_hit": 16,
+    "both_hit": 24,
+    "both_miss": 62
+  },
+  "method": "v11を基本解として保持。v12の再順位付けを全レースに適用せず、直前ホールドアウト週の正解・不正解双方から学習した単一の透明ゲート条件を満たす時だけ上位3人再順位付けへ切り替える。候補数は広げない。",
+  "leakage_guard": "2024-04-15以降の結果はゲート・v11学習に未使用。オッズ不使用。"
+}
