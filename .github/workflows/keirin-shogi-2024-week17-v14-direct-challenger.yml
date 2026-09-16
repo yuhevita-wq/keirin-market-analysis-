@@ -1,0 +1,27 @@
+name: Keirin Shogi 2024 Week 17 v14 Direct Challenger
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/keirin-shogi-2024-week17-v14-direct-challenger.yml'
+      - 'scripts/keirin_shogi_weekly_v14_direct_challenger.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run-v14:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/keirin_shogi_weekly_v14_direct_challenger.py
+      - name: Commit generated results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/keirin_shogi/v14_direct_challenger/2024-04-22_2024-04-28
+          if git diff --cached --quiet; then
+            echo "No result changes."
+          else
+            git commit -m "results: keirin shogi v14 direct challenger 2024 week 17"
+            git push
+          fi
