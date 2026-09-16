@@ -1,0 +1,34 @@
+{
+  "algorithm": "keirin_shogi_v7_conditional_second",
+  "train_period": {
+    "start": "2024-02-19",
+    "end": "2024-02-25"
+  },
+  "test_period": {
+    "start": "2024-02-26",
+    "end": "2024-03-03"
+  },
+  "train_races": 73,
+  "test_races": 104,
+  "first_hit_rate": 0.34615384615384615,
+  "second_hit_rate": 0.46153846153846156,
+  "third_hit_rate": 0.4519230769230769,
+  "complete_capture_rate": 0.0673076923076923,
+  "avg_candidate_cells": 7.586538461538462,
+  "avg_first_candidates": 1.3557692307692308,
+  "avg_second_candidates": 2.605769230769231,
+  "avg_third_candidates": 3.625,
+  "conditional_features": [
+    "same_line",
+    "score_diff_b_minus_a",
+    "win_diff_b_minus_a",
+    "a_attack",
+    "b_support",
+    "line_strength_diff_b_minus_a",
+    "same_line_position_gap",
+    "b_gap_line_max_score",
+    "b_line_strength_vs_other"
+  ],
+  "method": "v6を維持し、2着のみP(2着=B|1着=A)を近似する条件付き関係モデルを追加。学習時は実際の1着Aと2着Bの関係を学び、予測時はv6の1着候補AごとにBを評価して統合。固定の番手セオリーは使わず、同ライン・能力差・ライン強度差・位置差などをデータ特徴として使用。2/19-2/25学習、2/26-3/3固定検証。",
+  "leakage_guard": "2024-02-26以降の結果は学習に未使用。オッズ不使用。"
+}
