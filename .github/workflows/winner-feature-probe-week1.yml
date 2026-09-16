@@ -1,0 +1,14 @@
+name: Winner Feature Probe Week 1
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/winner-feature-probe-week1.yml'
+      - 'scripts/analyze_winner_features_week1.py'
+  workflow_dispatch:
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/analyze_winner_features_week1.py
