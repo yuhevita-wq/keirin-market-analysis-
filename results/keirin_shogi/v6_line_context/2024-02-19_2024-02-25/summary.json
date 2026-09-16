@@ -1,0 +1,38 @@
+{
+  "algorithm": "keirin_shogi_v6_line_context",
+  "train_period": {
+    "start": "2024-02-12",
+    "end": "2024-02-18"
+  },
+  "test_period": {
+    "start": "2024-02-19",
+    "end": "2024-02-25"
+  },
+  "train_races_by_rank": {
+    "first": 93,
+    "second": 93,
+    "third": 93
+  },
+  "test_races": 73,
+  "first_hit_rate": 0.4520547945205479,
+  "second_hit_rate": 0.3835616438356164,
+  "third_hit_rate": 0.4931506849315068,
+  "complete_capture_rate": 0.0821917808219178,
+  "avg_candidate_cells": 7.493150684931507,
+  "avg_first_candidates": 1.3972602739726028,
+  "avg_second_candidates": 2.493150684931507,
+  "avg_third_candidates": 3.6027397260273974,
+  "line_features": [
+    "line_size_ctx",
+    "line_avg_score",
+    "line_max_score",
+    "line_b_sum",
+    "line_attack_sum",
+    "self_gap_line_max_score",
+    "line_max_vs_other_best",
+    "line_strength_vs_other",
+    "solo_flag"
+  ],
+  "method": "v5の順位ベクトル＋相対差を維持し、line_id/line_sizeから同ライン平均・最大得点、B合計、逃げ+捲り合計、本人とライン最大得点差、自ライン最大得点と他ライン最大得点差、自ライン総合力と他ライン総合力差、単騎フラグを関係特徴として追加。line_positionや役割固定ルールは不使用。2/12-2/18学習、2/19-2/25固定検証。",
+  "leakage_guard": "2024-02-19以降の結果は学習に未使用。オッズ不使用。"
+}
