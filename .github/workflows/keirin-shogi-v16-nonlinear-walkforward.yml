@@ -1,0 +1,27 @@
+name: Keirin Shogi v16 Nonlinear Walkforward
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/keirin-shogi-v16-nonlinear-walkforward.yml'
+      - 'scripts/keirin_shogi_v16_nonlinear_walkforward.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run-v16:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/keirin_shogi_v16_nonlinear_walkforward.py
+      - name: Commit generated results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/keirin_shogi/v16_nonlinear_walkforward
+          if git diff --cached --quiet; then
+            echo "No result changes."
+          else
+            git commit -m "results: keirin shogi v16 nonlinear walkforward"
+            git push
+          fi
