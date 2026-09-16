@@ -1,0 +1,102 @@
+{
+  "algorithm": "v24_second_diagnosis",
+  "base": "v21 first frozen + v23 conditional second",
+  "test_races": 511,
+  "headline": {
+    "current_adaptive_second_capture": 0.5342465753424658,
+    "oracle_actual_first_second_capture": 0.5851272015655578,
+    "top1_first_only_second_capture": 0.30332681017612523,
+    "current_second_top1_rate": 0.26810176125244617,
+    "current_second_top2_rate": 0.5283757338551859,
+    "current_second_top3_rate": 0.6555772994129159,
+    "oracle_second_top1_rate": 0.4931506849315068,
+    "oracle_second_top2_rate": 0.6790606653620352,
+    "oracle_second_top3_rate": 0.8336594911937377
+  },
+  "error_propagation": {
+    "first_captured_races": 364,
+    "second_capture_when_first_captured": 0.5934065934065934,
+    "first_missed_races": 147,
+    "second_capture_when_first_missed": 0.3877551020408163
+  },
+  "role_conflict": {
+    "actual_second_in_first_candidates_races": 267,
+    "rate": 0.5225048923679061,
+    "second_capture_when_conflict": 0.7827715355805244,
+    "second_capture_when_no_conflict": 0.26229508196721313,
+    "actual_second_is_first_top1_races": 137,
+    "second_capture_when_actual_second_is_first_top1": 0.7591240875912408
+  },
+  "by_first_candidate_count": {
+    "1": {
+      "races": 1,
+      "current_second_capture": 0.0,
+      "oracle_second_capture": 1.0,
+      "actual_second_in_first_candidates_rate": 1.0
+    },
+    "2": {
+      "races": 510,
+      "current_second_capture": 0.5352941176470588,
+      "oracle_second_capture": 0.5843137254901961,
+      "actual_second_in_first_candidates_rate": 0.5215686274509804
+    }
+  },
+  "by_first_second_relation": {
+    "different_line": {
+      "races": 229,
+      "current_second_capture": 0.27510917030567683,
+      "oracle_second_capture": 0.1965065502183406
+    },
+    "same_line_ahead_first": {
+      "races": 124,
+      "current_second_capture": 0.8064516129032258,
+      "oracle_second_capture": 0.9919354838709677
+    },
+    "same_line_behind_first": {
+      "races": 158,
+      "current_second_capture": 0.6962025316455697,
+      "oracle_second_capture": 0.8291139240506329
+    }
+  },
+  "by_actual_second_line_position": {
+    "1": {
+      "races": 247,
+      "current_second_capture": 0.5141700404858299,
+      "oracle_second_capture": 0.5748987854251012
+    },
+    "2": {
+      "races": 221,
+      "current_second_capture": 0.6425339366515838,
+      "oracle_second_capture": 0.6787330316742082
+    },
+    "3": {
+      "races": 40,
+      "current_second_capture": 0.1,
+      "oracle_second_capture": 0.175
+    },
+    "4": {
+      "races": 3,
+      "current_second_capture": 0.0,
+      "oracle_second_capture": 0.0
+    }
+  },
+  "current_rank_distribution": {
+    "1": 137,
+    "2": 133,
+    "3": 65,
+    "4": 72,
+    "5": 57,
+    "6": 33,
+    "7": 13,
+    "None": 1
+  },
+  "oracle_rank_distribution": {
+    "1": 252,
+    "2": 95,
+    "3": 79,
+    "4": 44,
+    "5": 25,
+    "6": 16
+  },
+  "interpretation_guard": "Oracle comparison uses the actual first only for diagnosis, never as a deployable feature."
+}
