@@ -1,0 +1,54 @@
+{
+  "version": "final_targeted_participation_v21",
+  "selected_algorithm": "keirin_shogi_v21_quantile_participation",
+  "status": "accepted_for_next_stage",
+  "scope": "7-car F1 S-class",
+  "no_odds": true,
+  "first_candidates": {
+    "max_when_participating": 2,
+    "not_fixed_to_one": true
+  },
+  "participation": {
+    "selector_source": "v19 fully out-of-sample predictions",
+    "score_features": [
+      "top1_prob",
+      "prob_gap12",
+      "prob_sum12",
+      "selected_candidate_prob_mass",
+      "entropy",
+      "top1_model_agreement_ratio",
+      "candidate_count_ratio",
+      "top1_model_prob_sd"
+    ],
+    "threshold_update": "rolling quantile from previous 4 weeks' selector-score distribution, labels unused",
+    "target_fraction": 0.25,
+    "max_candidate_count": 2
+  },
+  "validation": {
+    "period": [
+      "2025-12-29",
+      "2026-06-28"
+    ],
+    "total_races": 2357,
+    "participated_races": 515,
+    "participation_rate": 0.21849809079338142,
+    "participant_top1_hit_rate": 0.4,
+    "participant_first_candidate_capture_rate": 0.7106796116504854,
+    "participant_avg_first_candidates": 1.9980582524271844,
+    "skipped_races": 1842,
+    "skipped_first_candidate_capture_rate": 0.5575461454940283,
+    "capture_advantage_vs_skipped": 0.15313346615645718,
+    "acceptance_checkpoint": {
+      "week": "2026-01-19",
+      "consecutive_weeks": 2
+    },
+    "pass_weeks": 8,
+    "test_weeks": 26
+  },
+  "source_files": [
+    "scripts/keirin_shogi_v18_ensemble_walkforward.py",
+    "scripts/keirin_shogi_v19_targeted_participation.py",
+    "scripts/keirin_shogi_v21_quantile_participation.py",
+    "results/keirin_shogi/v21_quantile_participation/summary.json"
+  ]
+}
