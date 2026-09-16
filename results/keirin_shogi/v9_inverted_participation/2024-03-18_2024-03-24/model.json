@@ -1,0 +1,66 @@
+{
+  "participation_rule": {
+    "type": "fixed_inverse_of_v8",
+    "participate_when": "first_gap < 22.5746110558 OR line_strength_spread < 10.735",
+    "source": "v8検証で、従来参加群より見送り群の完全捕捉率が高かったため、v8参加条件の補集合を次週へ固定適用"
+  },
+  "conditional_second": {
+    "train_races": 99,
+    "features": {
+      "same_line": {
+        "target_mean": 0.5757575757575758,
+        "all_mean": 0.26262626262626265,
+        "sd": 0.4400610285008478,
+        "weight": 0.7115633806475774
+      },
+      "score_diff_b_minus_a": {
+        "target_mean": -0.4482828282828282,
+        "all_mean": -3.4229629629629623,
+        "sd": 6.3495212822526845,
+        "weight": 0.468488883247711
+      },
+      "win_diff_b_minus_a": {
+        "target_mean": -3.8232323232323235,
+        "all_mean": -6.746127946127946,
+        "sd": 16.81944702237597,
+        "weight": 0.1737807205556229
+      },
+      "a_attack": {
+        "target_mean": 4.424242424242424,
+        "all_mean": 4.424242424242424,
+        "sd": 4.727078473087308,
+        "weight": 0.0
+      },
+      "b_support": {
+        "target_mean": 5.777777777777778,
+        "all_mean": 4.191919191919192,
+        "sd": 3.3509939256534547,
+        "weight": 0.4732502120395035
+      },
+      "line_strength_diff_b_minus_a": {
+        "target_mean": -0.3865235690235696,
+        "all_mean": -3.926670875420875,
+        "sd": 11.993365884409151,
+        "weight": 0.29517546121054655
+      },
+      "same_line_position_gap": {
+        "target_mean": 0.18181818181818182,
+        "all_mean": 0.12121212121212122,
+        "sd": 0.6856793029687733,
+        "weight": 0.08838834764831845
+      },
+      "b_gap_line_max_score": {
+        "target_mean": 1.561818181818182,
+        "all_mean": 2.6016329966329965,
+        "sd": 3.2951478755701062,
+        "weight": 0.31555937823728536
+      },
+      "b_line_strength_vs_other": {
+        "target_mean": 1.0738215488215477,
+        "all_mean": -4.665143097643098,
+        "sd": 13.520017910821284,
+        "weight": 0.42447907127927964
+      }
+    }
+  }
+}
