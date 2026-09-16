@@ -1,0 +1,27 @@
+name: Keirin Shogi 2024 Week 15 v12 Top3 Final Rerank
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/keirin-shogi-2024-week15-v12-top3-final-rerank.yml'
+      - 'scripts/keirin_shogi_weekly_v12_top3_final_rerank.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run-v12:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/keirin_shogi_weekly_v12_top3_final_rerank.py
+      - name: Commit generated results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/keirin_shogi/v12_top3_final_rerank/2024-04-08_2024-04-14
+          if git diff --cached --quiet; then
+            echo "No result changes."
+          else
+            git commit -m "results: keirin shogi v12 top3 rerank 2024 week 15"
+            git push
+          fi
