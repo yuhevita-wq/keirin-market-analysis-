@@ -1,0 +1,144 @@
+{
+  "algorithm": "keirin_shogi_v15_race_level_softmax",
+  "train_period": {
+    "start": "2024-03-04",
+    "end": "2024-04-28"
+  },
+  "test_period": {
+    "start": "2024-04-29",
+    "end": "2024-05-05"
+  },
+  "train_races": 778,
+  "test_races": 67,
+  "architecture": "7人を同時入力するrace-level softmax。1レース=1学習単位。勝者vs敗者の水増しpair生成をしない。",
+  "v15": {
+    "top1_hit_rate": 0.26865671641791045,
+    "adaptive_first_capture_rate": 0.6865671641791045,
+    "avg_first_candidates": 2.7761194029850746,
+    "candidate_count_distribution": {
+      "1": 1,
+      "2": 13,
+      "3": 53
+    },
+    "candidate_threshold": 0.7,
+    "candidate_policy_train_stats": {
+      "threshold": 0.7,
+      "capture": 0.7506426735218509,
+      "avg_candidates": 2.7789203084832903,
+      "objective": 0.45029300838760217
+    }
+  },
+  "v11_one_week_baseline": {
+    "top1_hit_rate": 0.3283582089552239
+  },
+  "paired_top1_comparison": {
+    "v15_only_hit": 7,
+    "v11_only_hit": 11,
+    "both_hit": 11,
+    "both_miss": 38
+  },
+  "candidate_threshold_grid": [
+    {
+      "threshold": 0.7,
+      "capture": 0.7506426735218509,
+      "avg_candidates": 2.7789203084832903,
+      "objective": 0.45029300838760217
+    },
+    {
+      "threshold": 0.75,
+      "capture": 0.7609254498714653,
+      "avg_candidates": 2.8817480719794344,
+      "objective": 0.44824360686905224
+    },
+    {
+      "threshold": 0.65,
+      "capture": 0.7249357326478149,
+      "avg_candidates": 2.620822622107969,
+      "objective": 0.4477964977426328
+    },
+    {
+      "threshold": 0.55,
+      "capture": 0.6542416452442159,
+      "avg_candidates": 2.1426735218508997,
+      "objective": 0.4469512785175917
+    },
+    {
+      "threshold": 0.6,
+      "capture": 0.6889460154241646,
+      "avg_candidates": 2.3894601542416454,
+      "objective": 0.44569246958349934
+    },
+    {
+      "threshold": 0.5,
+      "capture": 0.6118251928020566,
+      "avg_candidates": 1.9331619537275064,
+      "objective": 0.4400410943800636
+    },
+    {
+      "threshold": 0.4,
+      "capture": 0.5462724935732648,
+      "avg_candidates": 1.575835475578406,
+      "objective": 0.43516493823083524
+    },
+    {
+      "threshold": 0.45,
+      "capture": 0.5719794344473008,
+      "avg_candidates": 1.7326478149100257,
+      "objective": 0.4345355038448162
+    }
+  ],
+  "training_loss": [
+    {
+      "epoch": 1,
+      "cross_entropy": 1.9459101490553345
+    },
+    {
+      "epoch": 50,
+      "cross_entropy": 1.5900248896298648
+    },
+    {
+      "epoch": 100,
+      "cross_entropy": 1.575368054321761
+    },
+    {
+      "epoch": 200,
+      "cross_entropy": 1.5679461593647543
+    },
+    {
+      "epoch": 300,
+      "cross_entropy": 1.5650767542635733
+    },
+    {
+      "epoch": 450,
+      "cross_entropy": 1.5630138696429907
+    }
+  ],
+  "feature_weights": {
+    "z_score": 0.493590882168529,
+    "line_pos_3p": -0.35160336265287756,
+    "line_pos_2": 0.3439331772298675,
+    "gap_to_line_max": 0.26205717058933586,
+    "line_strength_vs_other": 0.2565076153522055,
+    "z_makuri_count": 0.22179249684981636,
+    "z_b_count": 0.14251970385060836,
+    "score_x_pos2": 0.1388744061459734,
+    "z_mark_count": -0.1322796332591383,
+    "sashi_x_pos2": 0.107261258523804,
+    "makuri_x_line_adv": -0.07849784571549308,
+    "z_sashi_count": 0.07532753540557138,
+    "line_size_2": -0.06969965076544876,
+    "z_second_count": -0.05139419498095361,
+    "line_size_3p": 0.05034811104565805,
+    "z_line_strength": -0.038712502110337575,
+    "line_size_1": 0.019351539719790728,
+    "solo": 0.019351539719790728,
+    "z_win_rate": -0.012068900640663351,
+    "z_nige_count": 0.009232602237691512,
+    "attack_x_pos1": 0.00800827887872227,
+    "line_pos_1": 0.0076701854230101126,
+    "z_first_count": -0.0005734905873158979,
+    "z_third_count": 0.00010269090934850555
+  },
+  "method": "過去8週間を使い、各レース内で個人能力・相対能力・ライン構造・相互作用を7人同時に比較して勝者確率を学習。1着は必ず1人に固定せず、学習期間だけで選んだ累積確率閾値により上位1〜3人を盤面候補とする。候補を機械的に3人へ広げる方式ではない。",
+  "leakage_guard": "2024-04-29以降の結果は学習・候補閾値選択に未使用。オッズ不使用。車番は特徴量に未使用、同確率時の表示順のみ車番で決定。"
+}
