@@ -1,0 +1,122 @@
+{
+  "algorithm": "keirin_shogi_v23_conditional_second_third",
+  "first_core": "v21 adopted and frozen",
+  "train_period": [
+    "2025-07-01",
+    "2025-10-26"
+  ],
+  "calibration_period": [
+    "2025-10-27",
+    "2025-12-28"
+  ],
+  "test_period": [
+    "2025-12-29",
+    "2026-06-28"
+  ],
+  "architecture": {
+    "second": "P(2nd=j | first=f, race). Train with actual first; inference mixes over adopted first candidates weighted by v18/v21 first probabilities.",
+    "third": "P(3rd=k | first=f, second=s, race). Train with actual first+second; inference marginalizes over first-candidate and second distributions.",
+    "relations": "line_id / line_position / line_size plus candidate-vs-first and candidate-vs-second relative features.",
+    "candidate_rule": "1st stays v21 max2. 2nd/3rd each adaptive 1-3 by calibrated cumulative probability thresholds."
+  },
+  "model_info": {
+    "stage2_train_races": 1539,
+    "stage3_train_races": 1539,
+    "stage2_feature_count": 45,
+    "stage3_feature_count": 62
+  },
+  "calibration_policy": {
+    "t2": 0.45,
+    "t3": 0.55,
+    "races": 206,
+    "first_capture": 0.7135922330097088,
+    "second_capture": 0.5631067961165048,
+    "third_capture": 0.5339805825242718,
+    "complete_capture": 0.34951456310679613,
+    "second_given_first": 0.6462585034013606,
+    "third_given_first_second": 0.7578947368421053,
+    "avg_cells": 6.878640776699029,
+    "avg_second_candidates": 2.0388349514563107,
+    "avg_third_candidates": 2.8398058252427183
+  },
+  "calibration_participant_races": 206,
+  "test_participant_races": 511,
+  "test_metrics": {
+    "races": 511,
+    "first_capture": 0.7123287671232876,
+    "second_capture": 0.5342465753424658,
+    "third_capture": 0.5303326810176126,
+    "complete_capture": 0.2974559686888454,
+    "second_given_first": 0.5934065934065934,
+    "third_given_first_second": 0.7037037037037037,
+    "avg_cells": 6.87866927592955,
+    "avg_second_candidates": 2.0332681017612524,
+    "avg_third_candidates": 2.847358121330724
+  },
+  "monthly": [
+    {
+      "month": "2025-12",
+      "races": 7,
+      "complete_capture": 0.7142857142857143,
+      "first_capture": 0.8571428571428571,
+      "second_capture": 0.7142857142857143,
+      "third_capture": 0.8571428571428571,
+      "avg_cells": 6.857142857142857
+    },
+    {
+      "month": "2026-01",
+      "races": 82,
+      "complete_capture": 0.2926829268292683,
+      "first_capture": 0.7560975609756098,
+      "second_capture": 0.524390243902439,
+      "third_capture": 0.4878048780487805,
+      "avg_cells": 6.865853658536586
+    },
+    {
+      "month": "2026-02",
+      "races": 99,
+      "complete_capture": 0.31313131313131315,
+      "first_capture": 0.7676767676767676,
+      "second_capture": 0.5858585858585859,
+      "third_capture": 0.5858585858585859,
+      "avg_cells": 6.909090909090909
+    },
+    {
+      "month": "2026-03",
+      "races": 88,
+      "complete_capture": 0.3068181818181818,
+      "first_capture": 0.7272727272727273,
+      "second_capture": 0.5340909090909091,
+      "third_capture": 0.5568181818181818,
+      "avg_cells": 6.875
+    },
+    {
+      "month": "2026-04",
+      "races": 103,
+      "complete_capture": 0.2621359223300971,
+      "first_capture": 0.6601941747572816,
+      "second_capture": 0.5145631067961165,
+      "third_capture": 0.5339805825242718,
+      "avg_cells": 6.864077669902913
+    },
+    {
+      "month": "2026-05",
+      "races": 80,
+      "complete_capture": 0.3125,
+      "first_capture": 0.7125,
+      "second_capture": 0.5,
+      "third_capture": 0.475,
+      "avg_cells": 6.9
+    },
+    {
+      "month": "2026-06",
+      "races": 52,
+      "complete_capture": 0.25,
+      "first_capture": 0.5961538461538461,
+      "second_capture": 0.5192307692307693,
+      "third_capture": 0.4807692307692308,
+      "avg_cells": 6.846153846153846
+    }
+  ],
+  "leakage_guard": "2nd/3rd models trained only through 2025-10-26. Candidate thresholds calibrated only 2025-10-27..12-28. 2026 H1 top2/top3 results are untouched until final test. v21 participation is reconstructed from its prior OOS predictions; odds unused."
+}
