@@ -1,0 +1,43 @@
+{
+  "algorithm": "keirin_shogi_v9_inverted_participation",
+  "train_period": {
+    "start": "2024-03-04",
+    "end": "2024-03-10"
+  },
+  "test_period": {
+    "start": "2024-03-11",
+    "end": "2024-03-17"
+  },
+  "participation_rule": {
+    "type": "fixed_inverse_of_v8",
+    "participate_when": "first_gap < 22.5746110558 OR line_strength_spread < 10.735",
+    "source": "v8検証で、従来参加群より見送り群の完全捕捉率が高かったため、v8参加条件の補集合を次週へ固定適用"
+  },
+  "all_races": {
+    "races": 99,
+    "first_hit_rate": 0.5454545454545454,
+    "second_hit_rate": 0.5151515151515151,
+    "third_hit_rate": 0.6262626262626263,
+    "complete_capture_rate": 0.21212121212121213,
+    "avg_candidate_cells": 7.747474747474747
+  },
+  "participated_races": {
+    "races": 77,
+    "first_hit_rate": 0.5844155844155844,
+    "second_hit_rate": 0.5584415584415584,
+    "third_hit_rate": 0.6363636363636364,
+    "complete_capture_rate": 0.24675324675324675,
+    "avg_candidate_cells": 7.8311688311688314
+  },
+  "skipped_races": {
+    "races": 22,
+    "first_hit_rate": 0.4090909090909091,
+    "second_hit_rate": 0.36363636363636365,
+    "third_hit_rate": 0.5909090909090909,
+    "complete_capture_rate": 0.09090909090909091,
+    "avg_candidate_cells": 7.454545454545454
+  },
+  "participation_rate": 0.7777777777777778,
+  "method": "予測本体はv7を維持。参加思想だけを反転。『1着が明確・ライン差が大きいほど入りやすい』を捨て、v8で見送っていた曖昧側を参加対象とする。次週では閾値を変更しない。",
+  "leakage_guard": "2024-03-11以降の結果は学習・参加判定に未使用。オッズ不使用。"
+}

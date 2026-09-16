@@ -1,0 +1,66 @@
+{
+  "participation_rule": {
+    "type": "fixed_inverse_of_v8",
+    "participate_when": "first_gap < 22.5746110558 OR line_strength_spread < 10.735",
+    "source": "v8検証で、従来参加群より見送り群の完全捕捉率が高かったため、v8参加条件の補集合を次週へ固定適用"
+  },
+  "conditional_second": {
+    "train_races": 90,
+    "features": {
+      "same_line": {
+        "target_mean": 0.6,
+        "all_mean": 0.27037037037037037,
+        "sd": 0.4441511377855055,
+        "weight": 0.7421564453783254
+      },
+      "score_diff_b_minus_a": {
+        "target_mean": -1.4982222222222232,
+        "all_mean": -4.205518518518519,
+        "sd": 9.75664796669191,
+        "weight": 0.2774822157711028
+      },
+      "win_diff_b_minus_a": {
+        "target_mean": -2.3311111111111114,
+        "all_mean": -6.152777777777778,
+        "sd": 14.447572257504111,
+        "weight": 0.2645196437541042
+      },
+      "a_attack": {
+        "target_mean": 3.7777777777777777,
+        "all_mean": 3.7777777777777777,
+        "sd": 3.7764703619996447,
+        "weight": 0.0
+      },
+      "b_support": {
+        "target_mean": 3.7777777777777777,
+        "all_mean": 3.664814814814815,
+        "sd": 3.1228938032611975,
+        "weight": 0.03617252781538615
+      },
+      "line_strength_diff_b_minus_a": {
+        "target_mean": 0.2243981481481479,
+        "all_mean": -4.7384722222222235,
+        "sd": 11.089315691878653,
+        "weight": 0.44753621488158807
+      },
+      "same_line_position_gap": {
+        "target_mean": 0.1111111111111111,
+        "all_mean": 0.1574074074074074,
+        "sd": 0.6435151878411008,
+        "weight": 0.07194281839969248
+      },
+      "b_gap_line_max_score": {
+        "target_mean": 1.8847777777777788,
+        "all_mean": 3.048185185185186,
+        "sd": 7.52587945168284,
+        "weight": 0.1545875687853678
+      },
+      "b_line_strength_vs_other": {
+        "target_mean": 2.6231296296296307,
+        "all_mean": -4.991358024691359,
+        "sd": 12.953413186550067,
+        "weight": 0.587836390660907
+      }
+    }
+  }
+}
