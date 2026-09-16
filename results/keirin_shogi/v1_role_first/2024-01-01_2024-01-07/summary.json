@@ -1,0 +1,40 @@
+{
+  "period": {
+    "start": "2024-01-01",
+    "end": "2024-01-07"
+  },
+  "scope": "F1 S級・7車立てのみ",
+  "algorithm": "keirin_shogi_v1_role_first",
+  "races_evaluated": 114,
+  "first_hit_rate": 0.47368421052631576,
+  "second_hit_rate": 0.5614035087719298,
+  "third_hit_rate": 0.5526315789473685,
+  "complete_capture_rate": 0.14035087719298245,
+  "avg_candidate_cells": 8.18421052631579,
+  "winner_role_capture": {
+    "leader": {
+      "wins": 54,
+      "captured": 26
+    },
+    "second": {
+      "wins": 50,
+      "captured": 26
+    },
+    "solo": {
+      "wins": 5,
+      "captured": 2
+    },
+    "third_plus": {
+      "wins": 5,
+      "captured": 0
+    }
+  },
+  "first_algorithm": {
+    "leader": "勝率25% + 逃げ25% + 捲り25% + B15% + 競走得点10%",
+    "second": "勝率20% + 差し30% + マーク10% + 競走得点20% + 前の選手の先行力20%",
+    "third_plus": "勝率25% + 差し25% + マーク15% + 競走得点20% + 捲り15%",
+    "solo": "勝率30% + 競走得点25% + 捲り25% + 2連対率15% + B5%"
+  },
+  "leader_strength": "前の選手の B35% + 逃げ30% + 捲り20% + 競走得点15%",
+  "note": "1着のみ役割別ロジックへ変更。2着・3着はv0据え置き。結果・オッズは特徴量計算に未使用。"
+}
