@@ -1,0 +1,589 @@
+{
+  "algorithm": "keirin_shogi_v20_stable_participation",
+  "source": "v19の完全OOS予測だけを使用",
+  "train_period": [
+    "2025-06-30",
+    "2025-10-26"
+  ],
+  "calibration_period": [
+    "2025-10-27",
+    "2025-12-28"
+  ],
+  "test_period": [
+    "2025-12-29",
+    "2026-06-28"
+  ],
+  "frozen_gate": {
+    "max_candidate_count": 2,
+    "agree_min": 1,
+    "threshold": 0.5886568520326985,
+    "cal_participation_rate": 0.11955307262569832,
+    "participant": {
+      "races": 107,
+      "top1_hit_rate": 0.4766355140186916,
+      "candidate_capture_rate": 0.7383177570093458,
+      "avg_candidates": 2
+    },
+    "skipped": {
+      "races": 788,
+      "top1_hit_rate": 0.3883248730964467,
+      "candidate_capture_rate": 0.5545685279187818,
+      "avg_candidates": 1.7398477157360406
+    },
+    "capture_advantage": 0.18374922909056401,
+    "objective": 0.9828484386085757
+  },
+  "acceptance_rule": {
+    "participation_min": 0.12,
+    "participation_max": 0.4,
+    "participant_top1_min": 0.4,
+    "participant_candidate_capture_min": 0.7,
+    "capture_advantage_vs_skipped_min": 0.08,
+    "consecutive_weeks": 2
+  },
+  "test_weeks": 26,
+  "checkpoint": {
+    "week": "2026-03-30",
+    "week_index": 14
+  },
+  "pooled_test": {
+    "participation_rate": 0.11073398387781078,
+    "participant": {
+      "races": 261,
+      "top1_hit_rate": 0.4061302681992337,
+      "candidate_capture_rate": 0.7241379310344828,
+      "avg_candidates": 2
+    },
+    "skipped": {
+      "races": 2096,
+      "top1_hit_rate": 0.37547709923664124,
+      "candidate_capture_rate": 0.5744274809160306,
+      "avg_candidates": 1.8363549618320612
+    },
+    "capture_advantage_vs_skipped": 0.1497104501184522
+  },
+  "weekly": [
+    {
+      "week": "2025-12-29",
+      "races": 113,
+      "participation_rate": 0.13274336283185842,
+      "participant": {
+        "races": 15,
+        "top1_hit_rate": 0.5333333333333333,
+        "candidate_capture_rate": 0.8666666666666667,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 98,
+        "top1_hit_rate": 0.2857142857142857,
+        "candidate_capture_rate": 0.5612244897959183,
+        "avg_candidates": 1.969387755102041
+      },
+      "capture_advantage_vs_skipped": 0.30544217687074837,
+      "passes_acceptance": true,
+      "streak": 1
+    },
+    {
+      "week": "2026-01-05",
+      "races": 58,
+      "participation_rate": 0.06896551724137931,
+      "participant": {
+        "races": 4,
+        "top1_hit_rate": 0.0,
+        "candidate_capture_rate": 0.75,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 54,
+        "top1_hit_rate": 0.35185185185185186,
+        "candidate_capture_rate": 0.5,
+        "avg_candidates": 1.6296296296296295
+      },
+      "capture_advantage_vs_skipped": 0.25,
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "week": "2026-01-12",
+      "races": 79,
+      "participation_rate": 0.08860759493670886,
+      "participant": {
+        "races": 7,
+        "top1_hit_rate": 0.5714285714285714,
+        "candidate_capture_rate": 0.8571428571428571,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 72,
+        "top1_hit_rate": 0.4027777777777778,
+        "candidate_capture_rate": 0.5694444444444444,
+        "avg_candidates": 1.8333333333333333
+      },
+      "capture_advantage_vs_skipped": 0.2876984126984127,
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "week": "2026-01-19",
+      "races": 89,
+      "participation_rate": 0.12359550561797752,
+      "participant": {
+        "races": 11,
+        "top1_hit_rate": 0.45454545454545453,
+        "candidate_capture_rate": 0.9090909090909091,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 78,
+        "top1_hit_rate": 0.3076923076923077,
+        "candidate_capture_rate": 0.5128205128205128,
+        "avg_candidates": 1.7820512820512822
+      },
+      "capture_advantage_vs_skipped": 0.3962703962703963,
+      "passes_acceptance": true,
+      "streak": 1
+    },
+    {
+      "week": "2026-01-26",
+      "races": 88,
+      "participation_rate": 0.09090909090909091,
+      "participant": {
+        "races": 8,
+        "top1_hit_rate": 0.25,
+        "candidate_capture_rate": 0.625,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 80,
+        "top1_hit_rate": 0.4125,
+        "candidate_capture_rate": 0.6875,
+        "avg_candidates": 1.975
+      },
+      "capture_advantage_vs_skipped": -0.0625,
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "week": "2026-02-02",
+      "races": 102,
+      "participation_rate": 0.11764705882352941,
+      "participant": {
+        "races": 12,
+        "top1_hit_rate": 0.75,
+        "candidate_capture_rate": 0.8333333333333334,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 90,
+        "top1_hit_rate": 0.4444444444444444,
+        "candidate_capture_rate": 0.6,
+        "avg_candidates": 1.8333333333333333
+      },
+      "capture_advantage_vs_skipped": 0.2333333333333334,
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "week": "2026-02-09",
+      "races": 104,
+      "participation_rate": 0.08653846153846154,
+      "participant": {
+        "races": 9,
+        "top1_hit_rate": 0.4444444444444444,
+        "candidate_capture_rate": 0.7777777777777778,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 95,
+        "top1_hit_rate": 0.35789473684210527,
+        "candidate_capture_rate": 0.5894736842105263,
+        "avg_candidates": 1.7578947368421052
+      },
+      "capture_advantage_vs_skipped": 0.18830409356725153,
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "week": "2026-02-16",
+      "races": 105,
+      "participation_rate": 0.0761904761904762,
+      "participant": {
+        "races": 8,
+        "top1_hit_rate": 0.5,
+        "candidate_capture_rate": 0.875,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 97,
+        "top1_hit_rate": 0.41237113402061853,
+        "candidate_capture_rate": 0.6082474226804123,
+        "avg_candidates": 1.865979381443299
+      },
+      "capture_advantage_vs_skipped": 0.2667525773195877,
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "week": "2026-02-23",
+      "races": 113,
+      "participation_rate": 0.13274336283185842,
+      "participant": {
+        "races": 15,
+        "top1_hit_rate": 0.3333333333333333,
+        "candidate_capture_rate": 0.6,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 98,
+        "top1_hit_rate": 0.336734693877551,
+        "candidate_capture_rate": 0.5510204081632653,
+        "avg_candidates": 1.9081632653061225
+      },
+      "capture_advantage_vs_skipped": 0.048979591836734726,
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "week": "2026-03-02",
+      "races": 72,
+      "participation_rate": 0.1388888888888889,
+      "participant": {
+        "races": 10,
+        "top1_hit_rate": 0.5,
+        "candidate_capture_rate": 0.7,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 62,
+        "top1_hit_rate": 0.45161290322580644,
+        "candidate_capture_rate": 0.7096774193548387,
+        "avg_candidates": 1.8064516129032258
+      },
+      "capture_advantage_vs_skipped": -0.00967741935483879,
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "week": "2026-03-09",
+      "races": 48,
+      "participation_rate": 0.2916666666666667,
+      "participant": {
+        "races": 14,
+        "top1_hit_rate": 0.2857142857142857,
+        "candidate_capture_rate": 0.8571428571428571,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 34,
+        "top1_hit_rate": 0.4117647058823529,
+        "candidate_capture_rate": 0.5294117647058824,
+        "avg_candidates": 1.7058823529411764
+      },
+      "capture_advantage_vs_skipped": 0.32773109243697474,
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "week": "2026-03-16",
+      "races": 106,
+      "participation_rate": 0.1509433962264151,
+      "participant": {
+        "races": 16,
+        "top1_hit_rate": 0.5,
+        "candidate_capture_rate": 0.6875,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 90,
+        "top1_hit_rate": 0.4,
+        "candidate_capture_rate": 0.6,
+        "avg_candidates": 2.033333333333333
+      },
+      "capture_advantage_vs_skipped": 0.08750000000000002,
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "week": "2026-03-23",
+      "races": 121,
+      "participation_rate": 0.12396694214876033,
+      "participant": {
+        "races": 15,
+        "top1_hit_rate": 0.4,
+        "candidate_capture_rate": 0.7333333333333333,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 106,
+        "top1_hit_rate": 0.36792452830188677,
+        "candidate_capture_rate": 0.4811320754716981,
+        "avg_candidates": 1.5754716981132075
+      },
+      "capture_advantage_vs_skipped": 0.25220125786163516,
+      "passes_acceptance": true,
+      "streak": 1
+    },
+    {
+      "week": "2026-03-30",
+      "races": 86,
+      "participation_rate": 0.20930232558139536,
+      "participant": {
+        "races": 18,
+        "top1_hit_rate": 0.5,
+        "candidate_capture_rate": 0.7222222222222222,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 68,
+        "top1_hit_rate": 0.4117647058823529,
+        "candidate_capture_rate": 0.6176470588235294,
+        "avg_candidates": 1.8235294117647058
+      },
+      "capture_advantage_vs_skipped": 0.10457516339869277,
+      "passes_acceptance": true,
+      "streak": 2
+    },
+    {
+      "week": "2026-04-06",
+      "races": 115,
+      "participation_rate": 0.1826086956521739,
+      "participant": {
+        "races": 21,
+        "top1_hit_rate": 0.23809523809523808,
+        "candidate_capture_rate": 0.6190476190476191,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 94,
+        "top1_hit_rate": 0.4574468085106383,
+        "candidate_capture_rate": 0.6914893617021277,
+        "avg_candidates": 1.9787234042553192
+      },
+      "capture_advantage_vs_skipped": -0.07244174265450865,
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "week": "2026-04-13",
+      "races": 97,
+      "participation_rate": 0.15463917525773196,
+      "participant": {
+        "races": 15,
+        "top1_hit_rate": 0.3333333333333333,
+        "candidate_capture_rate": 0.6,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 82,
+        "top1_hit_rate": 0.36585365853658536,
+        "candidate_capture_rate": 0.5121951219512195,
+        "avg_candidates": 1.7682926829268293
+      },
+      "capture_advantage_vs_skipped": 0.08780487804878045,
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "week": "2026-04-20",
+      "races": 68,
+      "participation_rate": 0.14705882352941177,
+      "participant": {
+        "races": 10,
+        "top1_hit_rate": 0.5,
+        "candidate_capture_rate": 0.7,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 58,
+        "top1_hit_rate": 0.3103448275862069,
+        "candidate_capture_rate": 0.603448275862069,
+        "avg_candidates": 1.9482758620689655
+      },
+      "capture_advantage_vs_skipped": 0.096551724137931,
+      "passes_acceptance": true,
+      "streak": 1
+    },
+    {
+      "week": "2026-04-27",
+      "races": 110,
+      "participation_rate": 0.07272727272727272,
+      "participant": {
+        "races": 8,
+        "top1_hit_rate": 0.25,
+        "candidate_capture_rate": 0.5,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 102,
+        "top1_hit_rate": 0.3137254901960784,
+        "candidate_capture_rate": 0.4803921568627451,
+        "avg_candidates": 1.6764705882352942
+      },
+      "capture_advantage_vs_skipped": 0.019607843137254888,
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "week": "2026-05-04",
+      "races": 81,
+      "participation_rate": 0.08641975308641975,
+      "participant": {
+        "races": 7,
+        "top1_hit_rate": 0.2857142857142857,
+        "candidate_capture_rate": 0.7142857142857143,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 74,
+        "top1_hit_rate": 0.33783783783783783,
+        "candidate_capture_rate": 0.5,
+        "avg_candidates": 1.6216216216216217
+      },
+      "capture_advantage_vs_skipped": 0.2142857142857143,
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "week": "2026-05-11",
+      "races": 63,
+      "participation_rate": 0.031746031746031744,
+      "participant": {
+        "races": 2,
+        "top1_hit_rate": 0.0,
+        "candidate_capture_rate": 0.5,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 61,
+        "top1_hit_rate": 0.3770491803278688,
+        "candidate_capture_rate": 0.4918032786885246,
+        "avg_candidates": 1.540983606557377
+      },
+      "capture_advantage_vs_skipped": 0.008196721311475419,
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "week": "2026-05-18",
+      "races": 89,
+      "participation_rate": 0.056179775280898875,
+      "participant": {
+        "races": 5,
+        "top1_hit_rate": 0.8,
+        "candidate_capture_rate": 1.0,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 84,
+        "top1_hit_rate": 0.4166666666666667,
+        "candidate_capture_rate": 0.6666666666666666,
+        "avg_candidates": 2.0476190476190474
+      },
+      "capture_advantage_vs_skipped": 0.33333333333333337,
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "week": "2026-05-25",
+      "races": 108,
+      "participation_rate": 0.12962962962962962,
+      "participant": {
+        "races": 14,
+        "top1_hit_rate": 0.5,
+        "candidate_capture_rate": 0.8571428571428571,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 94,
+        "top1_hit_rate": 0.3829787234042553,
+        "candidate_capture_rate": 0.574468085106383,
+        "avg_candidates": 1.8617021276595744
+      },
+      "capture_advantage_vs_skipped": 0.28267477203647406,
+      "passes_acceptance": true,
+      "streak": 1
+    },
+    {
+      "week": "2026-06-01",
+      "races": 73,
+      "participation_rate": 0.0547945205479452,
+      "participant": {
+        "races": 4,
+        "top1_hit_rate": 0.25,
+        "candidate_capture_rate": 0.5,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 69,
+        "top1_hit_rate": 0.4782608695652174,
+        "candidate_capture_rate": 0.5507246376811594,
+        "avg_candidates": 1.710144927536232
+      },
+      "capture_advantage_vs_skipped": -0.050724637681159424,
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "week": "2026-06-08",
+      "races": 71,
+      "participation_rate": 0.04225352112676056,
+      "participant": {
+        "races": 3,
+        "top1_hit_rate": 0.0,
+        "candidate_capture_rate": 0.6666666666666666,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 68,
+        "top1_hit_rate": 0.4264705882352941,
+        "candidate_capture_rate": 0.6617647058823529,
+        "avg_candidates": 1.9852941176470589
+      },
+      "capture_advantage_vs_skipped": 0.004901960784313708,
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "week": "2026-06-15",
+      "races": 84,
+      "participation_rate": 0.023809523809523808,
+      "participant": {
+        "races": 2,
+        "top1_hit_rate": 0.5,
+        "candidate_capture_rate": 0.5,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 82,
+        "top1_hit_rate": 0.3780487804878049,
+        "candidate_capture_rate": 0.6097560975609756,
+        "avg_candidates": 1.9390243902439024
+      },
+      "capture_advantage_vs_skipped": -0.1097560975609756,
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "week": "2026-06-22",
+      "races": 114,
+      "participation_rate": 0.07017543859649122,
+      "participant": {
+        "races": 8,
+        "top1_hit_rate": 0.125,
+        "candidate_capture_rate": 0.5,
+        "avg_candidates": 2
+      },
+      "skipped": {
+        "races": 106,
+        "top1_hit_rate": 0.25471698113207547,
+        "candidate_capture_rate": 0.5,
+        "avg_candidates": 1.9528301886792452
+      },
+      "capture_advantage_vs_skipped": 0.0,
+      "passes_acceptance": false,
+      "streak": 0
+    }
+  ],
+  "method": "v19の週ごとに揺れるselectorを廃止。2025前半〜秋のOOS結果でselector学習、2025秋〜年末で参加閾値と候補数上限を固定。その後2026年前半は一切再調整せず検証。",
+  "leakage_guard": "2026テスト期間の結果はgate学習・閾値・候補数上限の決定に未使用。"
+}
