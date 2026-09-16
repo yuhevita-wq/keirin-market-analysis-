@@ -1,0 +1,27 @@
+name: Keirin Shogi 2024 Week 12 v9 Inverted Participation
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/keirin-shogi-2024-week12-v9-inverted-participation.yml'
+      - 'scripts/keirin_shogi_weekly_v9_inverted_participation_week12.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run-v9-week12:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/keirin_shogi_weekly_v9_inverted_participation_week12.py
+      - name: Commit generated results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/keirin_shogi/v9_inverted_participation/2024-03-18_2024-03-24
+          if git diff --cached --quiet; then
+            echo "No result changes."
+          else
+            git commit -m "results: keirin shogi v9 inverted participation 2024 week 12"
+            git push
+          fi
