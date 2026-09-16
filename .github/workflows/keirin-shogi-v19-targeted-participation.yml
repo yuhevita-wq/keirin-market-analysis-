@@ -1,0 +1,28 @@
+name: Keirin Shogi v19 Targeted Participation
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/keirin-shogi-v19-targeted-participation.yml'
+      - 'scripts/keirin_shogi_v19_targeted_participation.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run-v19:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python -m pip install -q scikit-learn
+      - run: python scripts/keirin_shogi_v19_targeted_participation.py
+      - name: Commit generated results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/keirin_shogi/v19_targeted_participation
+          if git diff --cached --quiet; then
+            echo "No result changes."
+          else
+            git commit -m "results: keirin shogi v19 targeted participation"
+            git push
+          fi
