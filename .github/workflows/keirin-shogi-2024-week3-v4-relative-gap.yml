@@ -1,0 +1,27 @@
+name: Keirin Shogi 2024 Week 3 v4 Relative Gap
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/keirin-shogi-2024-week3-v4-relative-gap.yml'
+      - 'scripts/keirin_shogi_weekly_v4_relative_gap.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run-v4:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/keirin_shogi_weekly_v4_relative_gap.py
+      - name: Commit generated results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/keirin_shogi/v4_relative_gap/2024-01-15_2024-01-21
+          if git diff --cached --quiet; then
+            echo "No result changes."
+          else
+            git commit -m "results: keirin shogi v4 relative-gap 2024 week 3"
+            git push
+          fi
