@@ -1,0 +1,27 @@
+name: Keirin Shogi 2024 Week 13 v10 First Optimized Participation
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/keirin-shogi-2024-week13-v10-first-optimized-participation.yml'
+      - 'scripts/keirin_shogi_weekly_v10_first_optimized_participation.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run-v10:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/keirin_shogi_weekly_v10_first_optimized_participation.py
+      - name: Commit generated results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/keirin_shogi/v10_first_optimized_participation/2024-03-25_2024-03-31
+          if git diff --cached --quiet; then
+            echo "No result changes."
+          else
+            git commit -m "results: keirin shogi v10 first-optimized participation 2024 week 13"
+            git push
+          fi
