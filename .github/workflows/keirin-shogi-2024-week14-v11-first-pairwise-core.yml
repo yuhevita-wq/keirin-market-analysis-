@@ -1,0 +1,27 @@
+name: Keirin Shogi 2024 Week 14 v11 First Pairwise Core
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/keirin-shogi-2024-week14-v11-first-pairwise-core.yml'
+      - 'scripts/keirin_shogi_weekly_v11_first_pairwise_core.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run-v11:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/keirin_shogi_weekly_v11_first_pairwise_core.py
+      - name: Commit generated results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/keirin_shogi/v11_first_pairwise_core/2024-04-01_2024-04-07
+          if git diff --cached --quiet; then
+            echo "No result changes."
+          else
+            git commit -m "results: keirin shogi v11 first pairwise 2024 week 14"
+            git push
+          fi
