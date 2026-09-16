@@ -1,0 +1,449 @@
+{
+  "algorithm": "keirin_shogi_v17_gbdt_walkforward",
+  "architecture": "race-relative nonlinear gradient boosting; each race weighted equally, probabilities renormalized within the 7-rider race",
+  "acceptance_rule": {
+    "top1_min": 0.3,
+    "candidate_capture_min": 0.65,
+    "avg_candidates_max": 2.2,
+    "three_candidate_share_max": 0.5,
+    "consecutive_weeks": 2
+  },
+  "weeks_tested": 12,
+  "checkpoint": null,
+  "weekly": [
+    {
+      "test_period": {
+        "start": "2024-05-06",
+        "end": "2024-05-12"
+      },
+      "train_period": {
+        "start": "2024-03-11",
+        "end": "2024-05-05"
+      },
+      "train_races": 755,
+      "inner_validation_races": 172,
+      "policy": {
+        "p1": 0.42,
+        "ratio12": 1.35,
+        "cum2": 0.54,
+        "ratio23": 1.45,
+        "capture": 0.5697674418604651,
+        "avg_candidates": 2.011627906976744,
+        "three_share": 0.3546511627906977,
+        "objective": 0.3724418604651163
+      },
+      "metrics": {
+        "races": 93,
+        "top1_hit_rate": 0.2903225806451613,
+        "candidate_capture_rate": 0.5591397849462365,
+        "avg_candidates": 2.2795698924731185,
+        "three_candidate_share": 0.4838709677419355,
+        "candidate_count_distribution": {
+          "1": 19,
+          "2": 29,
+          "3": 45
+        }
+      },
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "test_period": {
+        "start": "2024-05-13",
+        "end": "2024-05-19"
+      },
+      "train_period": {
+        "start": "2024-03-18",
+        "end": "2024-05-12"
+      },
+      "train_races": 749,
+      "inner_validation_races": 160,
+      "policy": {
+        "p1": 0.3,
+        "ratio12": 1.9,
+        "cum2": 0.48,
+        "ratio23": 1.25,
+        "capture": 0.525,
+        "avg_candidates": 1.95625,
+        "three_share": 0.2625,
+        "objective": 0.34575
+      },
+      "metrics": {
+        "races": 89,
+        "top1_hit_rate": 0.38202247191011235,
+        "candidate_capture_rate": 0.5842696629213483,
+        "avg_candidates": 2.168539325842697,
+        "three_candidate_share": 0.33707865168539325,
+        "candidate_count_distribution": {
+          "1": 15,
+          "2": 44,
+          "3": 30
+        }
+      },
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "test_period": {
+        "start": "2024-05-20",
+        "end": "2024-05-26"
+      },
+      "train_period": {
+        "start": "2024-03-25",
+        "end": "2024-05-19"
+      },
+      "train_races": 758,
+      "inner_validation_races": 182,
+      "policy": {
+        "p1": 0.34,
+        "ratio12": 1.35,
+        "cum2": 0.54,
+        "ratio23": 1.45,
+        "capture": 0.5384615384615384,
+        "avg_candidates": 1.956043956043956,
+        "three_share": 0.34615384615384615,
+        "objective": 0.3508791208791209
+      },
+      "metrics": {
+        "races": 94,
+        "top1_hit_rate": 0.4148936170212766,
+        "candidate_capture_rate": 0.648936170212766,
+        "avg_candidates": 1.9361702127659575,
+        "three_candidate_share": 0.3723404255319149,
+        "candidate_count_distribution": {
+          "1": 41,
+          "2": 18,
+          "3": 35
+        }
+      },
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "test_period": {
+        "start": "2024-05-27",
+        "end": "2024-06-02"
+      },
+      "train_period": {
+        "start": "2024-04-01",
+        "end": "2024-05-26"
+      },
+      "train_races": 753,
+      "inner_validation_races": 183,
+      "policy": {
+        "p1": 0.34,
+        "ratio12": 1.6,
+        "cum2": 0.48,
+        "ratio23": 1.1,
+        "capture": 0.5846994535519126,
+        "avg_candidates": 1.8797814207650274,
+        "three_share": 0.12021857923497267,
+        "objective": 0.43191256830601094
+      },
+      "metrics": {
+        "races": 117,
+        "top1_hit_rate": 0.41025641025641024,
+        "candidate_capture_rate": 0.6239316239316239,
+        "avg_candidates": 1.9572649572649572,
+        "three_candidate_share": 0.21367521367521367,
+        "candidate_count_distribution": {
+          "1": 30,
+          "2": 62,
+          "3": 25
+        }
+      },
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "test_period": {
+        "start": "2024-06-03",
+        "end": "2024-06-09"
+      },
+      "train_period": {
+        "start": "2024-04-08",
+        "end": "2024-06-02"
+      },
+      "train_races": 785,
+      "inner_validation_races": 211,
+      "policy": {
+        "p1": 0.38,
+        "ratio12": 1.35,
+        "cum2": 0.48,
+        "ratio23": 1.1,
+        "capture": 0.6398104265402843,
+        "avg_candidates": 1.8815165876777251,
+        "three_share": 0.17535545023696683,
+        "objective": 0.4812322274881516
+      },
+      "metrics": {
+        "races": 67,
+        "top1_hit_rate": 0.43283582089552236,
+        "candidate_capture_rate": 0.6716417910447762,
+        "avg_candidates": 1.8805970149253732,
+        "three_candidate_share": 0.14925373134328357,
+        "candidate_count_distribution": {
+          "1": 18,
+          "2": 39,
+          "3": 10
+        }
+      },
+      "passes_acceptance": true,
+      "streak": 1
+    },
+    {
+      "test_period": {
+        "start": "2024-06-10",
+        "end": "2024-06-16"
+      },
+      "train_period": {
+        "start": "2024-04-15",
+        "end": "2024-06-09"
+      },
+      "train_races": 744,
+      "inner_validation_races": 184,
+      "policy": {
+        "p1": 0.3,
+        "ratio12": 1.9,
+        "cum2": 0.48,
+        "ratio23": 1.1,
+        "capture": 0.6684782608695652,
+        "avg_candidates": 2.0217391304347827,
+        "three_share": 0.1793478260869565,
+        "objective": 0.48706521739130426
+      },
+      "metrics": {
+        "races": 62,
+        "top1_hit_rate": 0.3709677419354839,
+        "candidate_capture_rate": 0.6451612903225806,
+        "avg_candidates": 1.9516129032258065,
+        "three_candidate_share": 0.16129032258064516,
+        "candidate_count_distribution": {
+          "1": 13,
+          "2": 39,
+          "3": 10
+        }
+      },
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "test_period": {
+        "start": "2024-06-17",
+        "end": "2024-06-23"
+      },
+      "train_period": {
+        "start": "2024-04-22",
+        "end": "2024-06-16"
+      },
+      "train_races": 694,
+      "inner_validation_races": 129,
+      "policy": {
+        "p1": 0.3,
+        "ratio12": 1.9,
+        "cum2": 0.48,
+        "ratio23": 1.1,
+        "capture": 0.6976744186046512,
+        "avg_candidates": 2.0852713178294575,
+        "three_share": 0.23255813953488372,
+        "objective": 0.5007751937984496
+      },
+      "metrics": {
+        "races": 133,
+        "top1_hit_rate": 0.3684210526315789,
+        "candidate_capture_rate": 0.5714285714285714,
+        "avg_candidates": 2.007518796992481,
+        "three_candidate_share": 0.20300751879699247,
+        "candidate_count_distribution": {
+          "1": 26,
+          "2": 80,
+          "3": 27
+        }
+      },
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "test_period": {
+        "start": "2024-06-24",
+        "end": "2024-06-30"
+      },
+      "train_period": {
+        "start": "2024-04-29",
+        "end": "2024-06-23"
+      },
+      "train_races": 722,
+      "inner_validation_races": 195,
+      "policy": {
+        "p1": 0.42,
+        "ratio12": 1.35,
+        "cum2": 0.48,
+        "ratio23": 1.1,
+        "capture": 0.6,
+        "avg_candidates": 1.9692307692307693,
+        "three_share": 0.2153846153846154,
+        "objective": 0.4233846153846153
+      },
+      "metrics": {
+        "races": 81,
+        "top1_hit_rate": 0.3950617283950617,
+        "candidate_capture_rate": 0.6296296296296297,
+        "avg_candidates": 1.962962962962963,
+        "three_candidate_share": 0.18518518518518517,
+        "candidate_count_distribution": {
+          "1": 18,
+          "2": 48,
+          "3": 15
+        }
+      },
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "test_period": {
+        "start": "2024-07-01",
+        "end": "2024-07-07"
+      },
+      "train_period": {
+        "start": "2024-05-06",
+        "end": "2024-06-30"
+      },
+      "train_races": 736,
+      "inner_validation_races": 214,
+      "policy": {
+        "p1": 0.34,
+        "ratio12": 1.9,
+        "cum2": 0.48,
+        "ratio23": 1.25,
+        "capture": 0.5887850467289719,
+        "avg_candidates": 1.9626168224299065,
+        "three_share": 0.2570093457943925,
+        "objective": 0.40906542056074763
+      },
+      "metrics": {
+        "races": 84,
+        "top1_hit_rate": 0.44047619047619047,
+        "candidate_capture_rate": 0.6190476190476191,
+        "avg_candidates": 2.0238095238095237,
+        "three_candidate_share": 0.27380952380952384,
+        "candidate_count_distribution": {
+          "1": 21,
+          "2": 40,
+          "3": 23
+        }
+      },
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "test_period": {
+        "start": "2024-07-08",
+        "end": "2024-07-14"
+      },
+      "train_period": {
+        "start": "2024-05-13",
+        "end": "2024-07-07"
+      },
+      "train_races": 727,
+      "inner_validation_races": 165,
+      "policy": {
+        "p1": 0.38,
+        "ratio12": 1.9,
+        "cum2": 0.48,
+        "ratio23": 1.1,
+        "capture": 0.6181818181818182,
+        "avg_candidates": 1.9090909090909092,
+        "three_share": 0.16363636363636364,
+        "objective": 0.4563636363636363
+      },
+      "metrics": {
+        "races": 114,
+        "top1_hit_rate": 0.32456140350877194,
+        "candidate_capture_rate": 0.5877192982456141,
+        "avg_candidates": 2.0526315789473686,
+        "three_candidate_share": 0.2631578947368421,
+        "candidate_count_distribution": {
+          "1": 24,
+          "2": 60,
+          "3": 30
+        }
+      },
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "test_period": {
+        "start": "2024-07-15",
+        "end": "2024-07-21"
+      },
+      "train_period": {
+        "start": "2024-05-20",
+        "end": "2024-07-14"
+      },
+      "train_races": 752,
+      "inner_validation_races": 198,
+      "policy": {
+        "p1": 0.3,
+        "ratio12": 1.6,
+        "cum2": 0.48,
+        "ratio23": 1.1,
+        "capture": 0.5707070707070707,
+        "avg_candidates": 1.7676767676767677,
+        "three_share": 0.15151515151515152,
+        "objective": 0.43272727272727274
+      },
+      "metrics": {
+        "races": 94,
+        "top1_hit_rate": 0.2872340425531915,
+        "candidate_capture_rate": 0.5425531914893617,
+        "avg_candidates": 1.7553191489361701,
+        "three_candidate_share": 0.13829787234042554,
+        "candidate_count_distribution": {
+          "1": 36,
+          "2": 45,
+          "3": 13
+        }
+      },
+      "passes_acceptance": false,
+      "streak": 0
+    },
+    {
+      "test_period": {
+        "start": "2024-07-22",
+        "end": "2024-07-28"
+      },
+      "train_period": {
+        "start": "2024-05-27",
+        "end": "2024-07-21"
+      },
+      "train_races": 752,
+      "inner_validation_races": 208,
+      "policy": {
+        "p1": 0.3,
+        "ratio12": 1.6,
+        "cum2": 0.48,
+        "ratio23": 1.25,
+        "capture": 0.5528846153846154,
+        "avg_candidates": 1.8173076923076923,
+        "three_share": 0.22115384615384615,
+        "objective": 0.4000000000000001
+      },
+      "metrics": {
+        "races": 81,
+        "top1_hit_rate": 0.43209876543209874,
+        "candidate_capture_rate": 0.6049382716049383,
+        "avg_candidates": 1.7407407407407407,
+        "three_candidate_share": 0.18518518518518517,
+        "candidate_count_distribution": {
+          "1": 36,
+          "2": 30,
+          "3": 15
+        }
+      },
+      "passes_acceptance": false,
+      "streak": 0
+    }
+  ],
+  "method": "毎週、直前8週間で非線形モデルを再学習。候補数1/2/3の判定は直前2週間をinner validationとしてのみ使用し、3人乱用へ罰則。単発の良週では止めず事前条件2週連続を要求。",
+  "leakage_guard": "各週より未来の結果は学習・候補ポリシー選択に未使用。オッズ不使用。車番は特徴量不使用。"
+}
