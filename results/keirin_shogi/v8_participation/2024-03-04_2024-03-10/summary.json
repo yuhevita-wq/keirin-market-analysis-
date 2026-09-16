@@ -1,0 +1,57 @@
+{
+  "algorithm": "keirin_shogi_v8_participation",
+  "train_period": {
+    "start": "2024-02-26",
+    "end": "2024-03-03"
+  },
+  "test_period": {
+    "start": "2024-03-04",
+    "end": "2024-03-10"
+  },
+  "participation_rule_learning_source": "2024-02-26〜2024-03-03のv7アウトオブサンプル予測と結果",
+  "participation_rule": {
+    "conditions": [
+      {
+        "feature": "first_gap",
+        "operator": ">=",
+        "threshold": 22.574611055774504
+      },
+      {
+        "feature": "line_strength_spread",
+        "operator": ">=",
+        "threshold": 10.73500000000001
+      }
+    ],
+    "train_selected_races": 39,
+    "train_participation_rate": 0.375,
+    "train_complete_capture_rate": 0.15384615384615385,
+    "selection_score": 0.09421114395319916
+  },
+  "all_races": {
+    "races": 90,
+    "first_hit_rate": 0.5777777777777777,
+    "second_hit_rate": 0.6222222222222222,
+    "third_hit_rate": 0.5555555555555556,
+    "complete_capture_rate": 0.24444444444444444,
+    "avg_candidate_cells": 7.8
+  },
+  "participated_races": {
+    "races": 21,
+    "first_hit_rate": 0.42857142857142855,
+    "second_hit_rate": 0.6666666666666666,
+    "third_hit_rate": 0.42857142857142855,
+    "complete_capture_rate": 0.14285714285714285,
+    "avg_candidate_cells": 7.142857142857143
+  },
+  "skipped_races": {
+    "races": 69,
+    "first_hit_rate": 0.6231884057971014,
+    "second_hit_rate": 0.6086956521739131,
+    "third_hit_rate": 0.5942028985507246,
+    "complete_capture_rate": 0.2753623188405797,
+    "avg_candidate_cells": 8
+  },
+  "participation_rate": 0.23333333333333334,
+  "method": "v7の予測ロジックは維持。直前のアウトオブサンプル週で、1/2/3着スコア境界差・各段スコア分散・2着条件付きスコア差・ライン強度差・総配置マス数から、最低25%参加かつ15R以上となる透明な1〜2条件ルールを学習。検証週ではルールを固定。",
+  "leakage_guard": "2024-03-04以降の結果は予測・参加判定学習に未使用。オッズ不使用。"
+}
