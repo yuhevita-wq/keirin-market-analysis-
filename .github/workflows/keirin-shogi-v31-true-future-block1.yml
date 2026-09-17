@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/keirin-shogi-v31-true-future-block1.yml'
+      - 'scripts/keirin_shogi_v31_true_future_block1.py'
+      - 'results/keirin_shogi/v31_top2_membership_second/FREEZE.json'
+      - 'results/keirin_shogi/v21_quantile_participation/summary.json'
   workflow_dispatch:
 
 permissions:
@@ -27,6 +30,22 @@ jobs:
         run: |
           python -m pip install -e '.[scrape]'
           python -m pip install -q scikit-learn
+
+      - name: Verify frozen inputs before opening the block
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          freeze=json.loads(Path('results/keirin_shogi/v31_top2_membership_second/FREEZE.json').read_text(encoding='utf-8'))
+          v21=json.loads(Path('results/keirin_shogi/v21_quantile_participation/summary.json').read_text(encoding='utf-8'))
+          selector=v21.get('selector_model')
+          assert freeze['status']=='FROZEN_BEFORE_TRUE_FUTURE_TEST', freeze
+          assert freeze['second_core']['pair_variant']=='blind_d2a', freeze
+          assert freeze['second_core']['orientation_used'] is False, freeze
+          assert selector and len(selector['coefficients'])==8, selector
+          assert len(selector['feature_order'])==8, selector
+          print({'freeze':freeze['model'],'selector_features':selector['feature_order']})
+          PY
 
       - name: Collect sealed future block
         run: |
