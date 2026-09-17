@@ -21,13 +21,13 @@ def load_base_cache():
     return module
 
 
-def add_board_diagnostics(cache) -> None:
+def add_board_diagnostics(cache) -> dict[str, object]:
     if not cache.OUT.exists() or not cache.BOARD_OUT.exists():
-        return
+        return {}
     payload = json.loads(cache.OUT.read_text(encoding="utf-8"))
     board = json.loads(cache.BOARD_OUT.read_text(encoding="utf-8"))
     if not isinstance(payload, dict) or not isinstance(board, dict):
-        return
+        return {}
 
     races = [row for row in payload.get("races", []) if isinstance(row, dict)]
     board_rows = [row for row in board.get("races", []) if isinstance(row, dict)]
@@ -84,13 +84,28 @@ def add_board_diagnostics(cache) -> None:
         json.dumps(payload, ensure_ascii=False, separators=(",", ":")),
         encoding="utf-8",
     )
+    return engine
 
 
 def main() -> int:
     cache = load_base_cache()
     cache.AUTO_PLACE = RUNTIME_ENGINE
     result = int(cache.main())
-    add_board_diagnostics(cache)
+    engine = add_board_diagnostics(cache)
+    if engine:
+        print(
+            json.dumps(
+                {
+                    "board_engine_status": engine.get("status", "missing"),
+                    "input_race_count": engine.get("input_race_count", 0),
+                    "placed_race_count": engine.get("placed_race_count", 0),
+                    "missing_auto_board_count": engine.get("missing_auto_board_count", 0),
+                    "board_failure_count": engine.get("failure_count", 0),
+                    "by_entry_count": engine.get("by_entry_count", {}),
+                },
+                ensure_ascii=False,
+            )
+        )
     return result
 
 
