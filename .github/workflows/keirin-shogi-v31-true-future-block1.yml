@@ -1,0 +1,80 @@
+name: Keirin Shogi v31 True Future Block 1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/keirin-shogi-v31-true-future-block1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  future-block1:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: |
+          python -m pip install -e '.[scrape]'
+          python -m pip install -q scikit-learn
+
+      - name: Collect sealed future block
+        run: |
+          rm -rf data/2026_future_block1/s_class_f1_20260701_20260830
+          python -m keirin_market_analysis.s_class_f1 \
+            --start-date "2026-07-01" \
+            --end-date "2026-08-30" \
+            --out-dir "data/2026_future_block1/s_class_f1_20260701_20260830" \
+            --sleep 0.20
+
+      - name: Enrich predicted line formation
+        run: |
+          python -m keirin_market_analysis.line_formation_2025 \
+            --data-dir "data/2026_future_block1/s_class_f1_20260701_20260830" \
+            --sleep 0.20
+
+      - name: Collect results
+        run: |
+          python -m keirin_market_analysis.results_payouts_2025 \
+            --data-dir "data/2026_future_block1/s_class_f1_20260701_20260830" \
+            --sleep 0.20
+
+      - name: Validate collected block
+        run: |
+          python - <<'PY'
+          import csv,json
+          from pathlib import Path
+          p=Path("data/2026_future_block1/s_class_f1_20260701_20260830")
+          races=list(csv.DictReader((p/"races.csv").open(encoding="utf-8-sig")))
+          entries=list(csv.DictReader((p/"entries.csv").open(encoding="utf-8-sig")))
+          rs=json.loads((p/"result_summary.json").read_text(encoding="utf-8"))
+          assert races and entries
+          assert rs["complete_result_races"]==len(races), (rs,len(races))
+          assert rs["parse_failures"]==0, rs
+          assert all(r["meeting_grade"]=="F1" for r in races)
+          assert all(r["race_type"].startswith("Ｓ級") for r in races)
+          print({"races":len(races),"entries":len(entries)})
+          PY
+
+      - name: Run frozen v31 future evaluator
+        run: python scripts/keirin_shogi_v31_true_future_block1.py
+
+      - name: Commit sealed data and result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/2026_future_block1/s_class_f1_20260701_20260830
+          git add results/keirin_shogi/v31_true_future_block1
+          git commit -m "future: evaluate frozen v31 on sealed 2026 Jul-Aug block"
+          git pull --rebase origin main
+          git push
