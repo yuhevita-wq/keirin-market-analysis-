@@ -1,0 +1,32 @@
+name: Keirin Shogi v31 Top2 Membership Second
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/keirin-shogi-v31-top2-membership-second.yml'
+      - 'scripts/keirin_shogi_v31_top2_membership_second.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run-v31:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python -m pip install -q scikit-learn
+      - run: python scripts/keirin_shogi_v31_top2_membership_second.py
+      - name: Commit generated results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/keirin_shogi/v31_top2_membership_second
+          if git diff --cached --quiet; then
+            echo "No result changes."
+          else
+            git commit -m "results: keirin shogi v31 top2 membership second"
+            git pull --rebase origin main
+            git push
+          fi
