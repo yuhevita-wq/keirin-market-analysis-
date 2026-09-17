@@ -5,12 +5,39 @@ from __future__ import annotations
 
 import importlib.util
 import json
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE_CACHE = ROOT / "scripts/keirin_shogi_live_race_cache.py"
 RUNTIME_ENGINE = ROOT / "scripts/keirin_shogi_v37_auto_place_runtime.py"
+
+
+def homogeneity(group: list[dict[str, object]]) -> dict[str, object]:
+    def signature(row: dict[str, object], keys: tuple[str, ...]) -> tuple[tuple[int, ...], ...]:
+        return tuple(tuple(map(int, row.get(key, []))) for key in keys)
+
+    complete = Counter(signature(row, ("first_candidates", "second_candidates", "third_candidates")) for row in group)
+    first = Counter(signature(row, ("first_candidates",)) for row in group)
+    second = Counter(signature(row, ("second_candidates",)) for row in group)
+    third = Counter(signature(row, ("third_candidates",)) for row in group)
+
+    def stats(counter: Counter) -> dict[str, object]:
+        mode_count = counter.most_common(1)[0][1] if counter else 0
+        total = sum(counter.values())
+        return {
+            "unique_count": len(counter),
+            "most_frequent_count": mode_count,
+            "most_frequent_rate": mode_count / total if total else 0.0,
+        }
+
+    return {
+        "race_count": len(group),
+        "complete_board": stats(complete),
+        "first_row": stats(first),
+        "second_row": stats(second),
+        "third_row": stats(third),
+    }
 
 
 def load_base_cache():
@@ -50,6 +77,9 @@ def add_board_diagnostics(cache) -> dict[str, object]:
         summary[count]["failure"] += 1
 
     engine = dict(payload.get("board_engine", {}))
+    generated = [row for row in board_rows if row.get("board_generated") is True]
+    participants = [row for row in generated if bool(row.get("participate"))]
+    skipped = [row for row in generated if not bool(row.get("participate"))]
     engine.update(
         {
             "runtime_compatibility": "variable_rider_count",
@@ -60,6 +90,10 @@ def add_board_diagnostics(cache) -> dict[str, object]:
             ),
             "failures": board_failures[:50],
             "by_entry_count": {key: summary[key] for key in sorted(summary)},
+            "homogeneity": {
+                "participate": homogeneity(participants),
+                "skip": homogeneity(skipped),
+            },
         }
     )
     payload["board_engine"] = engine
@@ -71,6 +105,7 @@ def add_board_diagnostics(cache) -> dict[str, object]:
             "stage": "auto_place_race",
             "race_id": str(failure.get("race_id", "")),
             "url": "",
+            "failure_stage": str(failure.get("failure_stage", "")),
             "error": str(failure.get("error", "")),
         }
         key = (row["stage"], row["race_id"], row["error"])
@@ -106,6 +141,8 @@ def main() -> int:
                 ensure_ascii=False,
             )
         )
+    if engine and engine.get("status") != "ok":
+        return 1
     return result
 
 

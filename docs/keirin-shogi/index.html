@@ -62,7 +62,8 @@
 <script>
 const rows=[{key:'first',label:'1着'},{key:'second',label:'2着'},{key:'third',label:'3着'}];
 const state={first:[],second:[],third:[]};
-let selectedPiece=null, boardData=null, liveData=null;
+let selectedPiece=null, liveData=null;
+const expectedBoardPolicy='v21_raw_candidates_through_v31_v37_v1';
 const board=document.getElementById('board'), status=document.getElementById('status'), raceInfo=document.getElementById('raceInfo');
 
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
@@ -81,7 +82,9 @@ function renderBoard(){
 function applyRace(r,source='自動配置'){
   state.first=[...(r.first_candidates||[])];state.second=[...(r.second_candidates||[])];state.third=[...(r.third_candidates||[])];renderBoard();
   const score=Number.isFinite(Number(r.v21_selector_score))?` / v21 score ${(Number(r.v21_selector_score)*100).toFixed(2)}%` : '';
-  const threshold=Number.isFinite(Number(r.v21_threshold))?` ≥ ${(Number(r.v21_threshold)*100).toFixed(2)}%` : '';
+  const scoreValue=Number(r.v21_selector_score), thresholdValue=Number(r.v21_threshold);
+  const comparison=Number.isFinite(scoreValue)&&Number.isFinite(thresholdValue)?(scoreValue>=thresholdValue?' ≥ ':' < '):'';
+  const threshold=Number.isFinite(thresholdValue)?`${comparison}${(thresholdValue*100).toFixed(2)}%` : '';
   const decision=r.participate?'<span class="ok">参加</span>':'<span class="warn">見送り</span>';
   const reason=!r.participate&&r.skip_reason?`　${esc(r.skip_reason)}`:'';
   status.innerHTML=`<span class="ok">${esc(source)}完了</span>　参加判定: ${decision}${reason}<br>盤面　1着 ${state.first.join('・')||'なし'} / 2着 ${state.second.join('・')||'なし'} / 3着 ${state.third.join('・')||'なし'}${score}${threshold}`;
@@ -104,7 +107,18 @@ function renderRaceInfo(r){
 async function loadJson(path){const sep=path.includes('?')?'&':'?';const r=await fetch(`${path}${sep}_=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw new Error(`${path} HTTP ${r.status}`);return r.json()}
 async function ensureData(){
   liveData=await loadJson('live-race-data.json');
-  if(!boardData){try{boardData=await loadJson('v37-board-data.json')}catch(_e){boardData={races:[]}}}
+}
+function boardValidationError(auto){
+  if(!auto)return '自動配置データがありません';
+  if(auto.board_generated!==true){
+    if(auto.failure_stage)return `盤面生成失敗 (${auto.failure_stage}): ${auto.error||'詳細なし'}`;
+    return auto.scope_ok===false?'盤面予測対象外':'旧形式または未完了の盤面データです';
+  }
+  if(auto.board_policy&&auto.board_policy!==expectedBoardPolicy)return '異なる世代の盤面データです。再生成が必要です';
+  for(const key of ['first_candidates','second_candidates','third_candidates']){
+    if(!Array.isArray(auto[key])||auto[key].length===0)return `${key} が空のため正常盤面として表示できません`;
+  }
+  return '';
 }
 function isLegacyScopeDecision(auto){
   if(!auto)return false;
@@ -128,17 +142,17 @@ async function generate(){
     const auto=current.auto_board;
     const staleLegacyScope=isLegacyScopeDecision(auto);
     if(auto && !staleLegacyScope){
-      if(auto.board_generated===false){
+      const invalid=boardValidationError(auto);
+      if(invalid){
         state.first=[];state.second=[];state.third=[];renderBoard();
-        status.innerHTML=`<span class="warn">配置対象外</span>　${esc(auto.skip_reason||auto.scope_note||'盤面を構成できません')}`;
+        const label=auto.scope_ok===false?'盤面予測対象外':'盤面生成失敗';
+        status.innerHTML=`<span class="error">${label}</span>　${esc(invalid)}`;
         return;
       }
       applyRace(auto,'v21/v31/v37 自動配置');
       return;
     }
 
-    const known=boardData?.races?.find(r=>String(r.race_id)===raceId);
-    if(known){applyRace(known,'保存済みv37配置');return}
     state.first=[];state.second=[];state.third=[];renderBoard();
     if(staleLegacyScope){
       status.innerHTML='<span class="warn">旧7車/S級/F1限定キャッシュを検出したため無効化しました。</span> 現行ランタイムは取得できる5〜9車立てを可変処理します。';

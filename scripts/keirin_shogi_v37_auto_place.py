@@ -384,21 +384,43 @@ def main() -> int:
     failures = []
     for race in live.get("races", []):
         try:
-            output.append(
-                place_one(
-                    race,
-                    v21_state,
-                    pair_model,
-                    third_model,
-                    feature_names,
-                    freeze,
-                )
+            placed = place_one(
+                race,
+                v21_state,
+                pair_model,
+                third_model,
+                feature_names,
+                freeze,
             )
+            output.append(placed)
+            if placed.get("board_generated") is False and placed.get("failure_stage"):
+                failures.append(
+                    {
+                        "race_id": str(race.get("race_id", "")),
+                        "failure_stage": str(placed.get("failure_stage", "")),
+                        "error": str(placed.get("error", "")),
+                    }
+                )
         except Exception as exc:
-            failures.append(
+            failure = {
+                "race_id": str(race.get("race_id", "")),
+                "failure_stage": "unhandled",
+                "error": f"{type(exc).__name__}: {exc}",
+            }
+            failures.append(failure)
+            output.append(
                 {
-                    "race_id": str(race.get("race_id", "")),
-                    "error": f"{type(exc).__name__}: {exc}",
+                    "race_id": failure["race_id"],
+                    "race_date": race.get("race_date", ""),
+                    "track": race.get("track", ""),
+                    "race_no": race.get("race_no", ""),
+                    "race_type": race.get("race_type", ""),
+                    "board_generated": False,
+                    "participate": False,
+                    "first_candidates": [],
+                    "second_candidates": [],
+                    "third_candidates": [],
+                    **failure,
                 }
             )
 

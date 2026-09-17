@@ -242,6 +242,7 @@ def attach_auto_boards(payload: dict[str, object], failures: list[dict[str, str]
         "engine": board_payload.get("engine", ""),
         "mode": board_payload.get("mode", ""),
         "latest_historical_state": board_payload.get("latest_historical_state", {}),
+        "runtime_versions": board_payload.get("runtime_versions", {}),
         "guards": board_payload.get("guards", {}),
         "race_count": board_payload.get("race_count", 0),
         "failure_count": board_payload.get("failure_count", 0),
