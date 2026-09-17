@@ -1,0 +1,65 @@
+{
+  "decision": "CURRENT_BEST_PROVISIONAL",
+  "board_version": "v37",
+  "future_block": [
+    "2026-07-06",
+    "2026-08-30"
+  ],
+  "freeze_commit": "dbe4aa2ae876224927a2b54c2cbcd3b6ff6c701e",
+  "races": 153,
+  "v37": {
+    "races": 153,
+    "third_capture": 0.5228758169934641,
+    "avg_third_candidates": 2.816993464052288,
+    "two_candidate_rate": 0.1830065359477124,
+    "three_candidate_rate": 0.8169934640522876,
+    "four_candidate_rate": 0.0,
+    "first_capture": 0.673202614379085,
+    "second_capture": 0.6078431372549019,
+    "complete_board_capture": 0.3202614379084967,
+    "third_given_first_second": 0.7903225806451613,
+    "avg_first_candidates": 2,
+    "avg_second_candidates": 2.235294117647059,
+    "avg_board_cells": 7.052287581699346
+  },
+  "legacy_v23_same_board": {
+    "races": 153,
+    "third_capture": 0.477124183006536,
+    "complete_board_capture": 0.29411764705882354,
+    "third_given_first_second": 0.7258064516129032,
+    "avg_third_candidates": 2.869281045751634
+  },
+  "v37_minus_v23": {
+    "third_capture": 0.04575163398692811,
+    "complete_board_capture": 0.026143790849673165,
+    "third_given_first_second": 0.06451612903225801,
+    "avg_third_candidates": -0.05228758169934622
+  },
+  "paired_comparison": {
+    "third": {
+      "both": 67,
+      "v37_only": 13,
+      "v23_only": 6,
+      "neither": 67,
+      "discordant": 19,
+      "exact_mcnemar_two_sided_p": 0.1670684814453125
+    },
+    "complete_board": {
+      "both": 43,
+      "v37_only": 6,
+      "v23_only": 2,
+      "neither": 102,
+      "discordant": 8,
+      "exact_mcnemar_two_sided_p": 0.2890625
+    }
+  },
+  "requirements": {
+    "future_third_above_v23": true,
+    "future_complete_above_v23": true,
+    "future_candidate_count_below_v23": true,
+    "candidate_count_at_most_2_85": true,
+    "frozen_without_future_retuning": true
+  },
+  "interpretation": "v37 wins the same-race future comparison on third capture and complete-board capture with fewer candidates. The 153-race paired difference is not yet statistically decisive, so adoption is provisional and the next sealed block must be evaluated without retuning.",
+  "absolute_historical_target_note": "v37 future third capture is below the old historical 53.03% reference by 0.75 percentage points, but the legacy v23 model itself fell to 47.71% on the same future block."
+}

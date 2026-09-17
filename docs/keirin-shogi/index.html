@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>競輪将棋 - 駒置きアルゴリズム v31</title>
+  <title>競輪将棋 - 駒置きアルゴリズム v37</title>
   <style>
     :root {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -114,7 +114,7 @@
     .metric b { display: block; font-size: 18px; margin-bottom: 2px; }
 
     .data-grid {
-      display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px;
+      display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px;
     }
     table { border-collapse: collapse; width: 100%; min-width: 380px; }
     th, td {
@@ -138,14 +138,15 @@
 </head>
 <body>
   <main class="wrap">
-    <h1>競輪将棋 駒置きアルゴリズム v31 <span class="badge">FROZEN</span></h1>
+    <h1>競輪将棋 駒置きアルゴリズム v37 <span class="badge">CURRENT BEST</span></h1>
     <p class="note">
-      v31の凍結済み出力をGitHub Pages上の3段盤面へ直接表示します。
+      1着=v21、2着=v31、3着=v37の生成済み出力をGitHub Pages上の3段盤面へ直接表示します。
       旧v0の「5特徴を手入力して暫定重みで採点する方式」は使用しません。
       同じ選手を1着・2着・3着の複数段へ置くことができます。
+      v37は同一完全未来153レースで旧v23を上回った現行最良版ですが、次の未開封ブロック検証を継続します。
     </p>
 
-    <h2>v31レース選択</h2>
+    <h2>v37レース選択</h2>
     <section class="panel">
       <div class="race-controls">
         <label>
@@ -153,14 +154,14 @@
           <input id="raceSearch" type="search" placeholder="日付・場名・R・レース種別・race_id" />
         </label>
         <label>
-          v31盤面データ
+          v37盤面データ
           <select id="raceSelect">
             <option value="">読み込み中...</option>
           </select>
         </label>
         <button class="action primary" id="loadRace" type="button">この盤面を表示</button>
       </div>
-      <div class="race-meta" id="raceMeta">v31-board-data.json を読み込んでいます。</div>
+      <div class="race-meta" id="raceMeta">v37-board-data.json を読み込んでいます。</div>
       <div class="small" id="dataStatus"></div>
     </section>
 
@@ -180,17 +181,17 @@
     </section>
 
     <section class="board" id="board" aria-label="競輪将棋盤面"></section>
-    <div class="status" id="status">v31盤面データの読み込み待ちです。</div>
+    <div class="status" id="status">v37盤面データの読み込み待ちです。</div>
 
-    <h2>このv31で使っているアルゴリズム</h2>
+    <h2>このv37で使っているアルゴリズム</h2>
     <section class="algo-grid">
       <article class="algo-card">
         <h3>参加判定・1着段 <span class="badge">v21</span></h3>
         <ul>
-          <li>v21を採用し、このv31では固定。</li>
+          <li>v21を採用し、このv37でも固定。</li>
           <li>1着候補は最大2人。</li>
           <li>対象率の基準は25%。直近4週間のスコア分位点を使用。</li>
-          <li>v31の2着学習で1着コアは変更していない。</li>
+          <li>v31・v37の学習で1着コアは変更していない。</li>
         </ul>
       </article>
 
@@ -217,32 +218,32 @@
       </article>
 
       <article class="algo-card">
-        <h3>3着段 <span class="badge warning-badge">暫定 v23</span></h3>
+        <h3>3着段 <span class="badge">v37</span></h3>
         <ul>
-          <li>v31時点では3着コアの再設計前。</li>
-          <li>盤面表示だけ欠けないよう、v23 conditional thirdを暫定使用。</li>
-          <li>したがって現在の「v31」は、1着=v21 / 2着=v31 / 3着=v23暫定。</li>
-          <li>3着再学習版へ進む際はこの段だけ差し替える。</li>
+          <li>v31の全21個のTop2組を残し、各組に対する残り5人の3着確率を学習。</li>
+          <li>21分岐をv31組確率で周辺化し、3着確率を生成。</li>
+          <li>盤面整合性は候補除外に使わず、gamma=0.25の弱い再重み付けだけを適用。</li>
+          <li>上位2人を基本候補とし、3位/2位確率比が0.70以上なら3人目を追加。4人置きなし。</li>
         </ul>
       </article>
 
       <article class="algo-card full">
-        <h3>v31 retrospective test（511レース）</h3>
+        <h3>v37 完全未来比較（2026-07-06〜08-30・153レース）</h3>
         <div class="metric-grid">
-          <div class="metric"><b>59.10%</b><span class="small">2着捕捉</span></div>
-          <div class="metric"><b>42.86%</b><span class="small">Top2完全捕捉</span></div>
-          <div class="metric"><b>2.34人</b><span class="small">平均2着候補数</span></div>
-          <div class="metric"><b>34.05%</b><span class="small">3人目追加率</span></div>
-          <div class="metric"><b>60.16%</b><span class="small">1着捕捉時の2着捕捉</span></div>
+          <div class="metric"><b>52.29%</b><span class="small">v37 3着捕捉</span></div>
+          <div class="metric"><b>47.71%</b><span class="small">旧v23 同一未来</span></div>
+          <div class="metric"><b>32.03%</b><span class="small">v37 完全盤面</span></div>
+          <div class="metric"><b>2.817人</b><span class="small">平均3着候補数</span></div>
+          <div class="metric"><b>79.03%</b><span class="small">1・2着捕捉時の3着</span></div>
         </div>
         <p class="small">
-          校正: 2025-10-27〜2025-12-28。後方評価: 2025-12-29〜2026-06-28。
-          v31凍結後は未来データでパラメータ調整しない前提。
+          v37凍結コミット後に未来結果を開封。旧v23は同じv21・v31盤面で3着47.71%、完全盤面29.41%、平均2.869人。
+          v37は全指標を改善したため現行最良として暫定採用。ただし対応差のp値は0.167で、次ブロック確認が必要。
         </p>
       </article>
     </section>
 
-    <h2>選択レースのv31内部出力</h2>
+    <h2>選択レースのv31・v37内部出力</h2>
     <section class="data-grid">
       <div class="panel">
         <h3>2着 Top2所属質量</h3>
@@ -256,6 +257,13 @@
         <table>
           <thead><tr><th>順位</th><th>ペア</th><th>確率</th></tr></thead>
           <tbody id="pairBody"><tr><td colspan="3">レース未選択</td></tr></tbody>
+        </table>
+      </div>
+      <div class="panel">
+        <h3>v37 3着確率</h3>
+        <table>
+          <thead><tr><th>順位</th><th>車番</th><th>確率</th><th>3着候補</th></tr></thead>
+          <tbody id="thirdBody"><tr><td colspan="4">レース未選択</td></tr></tbody>
         </table>
       </div>
     </section>
@@ -283,6 +291,7 @@
     const dataStatus = document.getElementById("dataStatus");
     const membershipBody = document.getElementById("membershipBody");
     const pairBody = document.getElementById("pairBody");
+    const thirdBody = document.getElementById("thirdBody");
 
     function renderBoard() {
       board.innerHTML = "";
@@ -376,9 +385,9 @@
         race_id: ${race.race_id}<br>
         参加判定/1着: ${versions.participation_first || "v21"} /
         2着: ${versions.second || "v31_top2_membership"} /
-        3着: ${versions.third || "v23_legacy_until_v32"}
+        3着: ${versions.third || "v37_shrunk_board_third"}
       `;
-      status.textContent = `v31盤面を表示中。1着 ${state.first.join("・") || "なし"} / 2着 ${state.second.join("・") || "なし"} / 3着 ${state.third.join("・") || "なし"}`;
+      status.textContent = `v37盤面を表示中。1着 ${state.first.join("・") || "なし"} / 2着 ${state.second.join("・") || "なし"} / 3着 ${state.third.join("・") || "なし"}`;
       renderDetails(race);
     }
 
@@ -402,11 +411,22 @@
           <td>${(Number(x.prob) * 100).toFixed(2)}%</td>
         </tr>
       `).join("") : '<tr><td colspan="3">ペアデータなし</td></tr>';
+
+      const thirdSet = new Set(race.third_candidates || []);
+      const thirdRanking = race.third_ranking || [];
+      thirdBody.innerHTML = thirdRanking.length ? thirdRanking.map((x, i) => `
+        <tr class="${thirdSet.has(x.no) ? "active-row" : ""}">
+          <td>${i + 1}</td>
+          <td><strong>${x.no}</strong></td>
+          <td>${(Number(x.probability) * 100).toFixed(2)}%</td>
+          <td>${thirdSet.has(x.no) ? "採用" : ""}</td>
+        </tr>
+      `).join("") : '<tr><td colspan="4">3着確率データなし</td></tr>';
     }
 
     async function loadBoardData() {
       try {
-        const res = await fetch("v31-board-data.json", { cache: "no-store" });
+        const res = await fetch("v37-board-data.json", { cache: "no-store" });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         boardData = await res.json();
         filterRaces();
@@ -419,7 +439,7 @@
         }
       } catch (err) {
         raceSelect.innerHTML = '<option value="">読み込み失敗</option>';
-        raceMeta.textContent = "v31-board-data.json を読み込めませんでした。";
+        raceMeta.textContent = "v37-board-data.json を読み込めませんでした。";
         dataStatus.textContent = String(err);
         status.textContent = "自動盤面データの読み込みに失敗。手動配置は使えます。";
       }
