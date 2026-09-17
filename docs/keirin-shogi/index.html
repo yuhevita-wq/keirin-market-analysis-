@@ -3,483 +3,132 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>競輪将棋 - 駒置きアルゴリズム v37</title>
+  <title>競輪将棋 - URL駒置き v37</title>
   <style>
-    :root {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: #222;
-      background: #f5f5f5;
-    }
-    * { box-sizing: border-box; }
-    body { margin: 0; padding: 24px; }
-    .wrap { max-width: 1100px; margin: 0 auto; }
-    h1 { margin: 0 0 8px; font-size: 28px; }
-    h2 { margin: 28px 0 10px; font-size: 20px; }
-    h3 { margin: 0 0 8px; font-size: 16px; }
-    .note { margin: 0 0 20px; color: #666; font-size: 14px; line-height: 1.7; }
-    .badge {
-      display: inline-block; padding: 4px 8px; border-radius: 999px;
-      background: #222; color: #fff; font-size: 12px; font-weight: 800;
-      vertical-align: middle; margin-left: 6px;
-    }
-    .warning-badge { background: #8a5a00; }
-
-    .toolbar, .panel, .algo-card, .status {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-    }
-    .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 18px;
-      padding: 14px;
-    }
-    .panel { padding: 14px; overflow-x: auto; }
-    .status { margin-top: 16px; padding: 12px 14px; font-size: 14px; line-height: 1.6; }
-
-    .piece {
-      width: 44px; height: 44px; border: 2px solid #333; border-radius: 50%;
-      font-weight: 700; font-size: 18px; cursor: pointer;
-    }
-    .piece.selected { outline: 4px solid #bbb; transform: translateY(-1px); }
-
-    .piece[data-piece="1"], .piece-1 { background: #fff; color: #111; }
-    .piece[data-piece="2"], .piece-2 { background: #111; color: #fff; }
-    .piece[data-piece="3"], .piece-3 { background: #d62828; color: #fff; }
-    .piece[data-piece="4"], .piece-4 { background: #1769aa; color: #fff; }
-    .piece[data-piece="5"], .piece-5 { background: #ffd60a; color: #111; }
-    .piece[data-piece="6"], .piece-6 { background: #1f9d55; color: #fff; }
-    .piece[data-piece="7"], .piece-7 { background: #f28c28; color: #111; }
-    .piece[data-piece="8"], .piece-8 { background: #f4a7c5; color: #111; }
-    .piece[data-piece="9"], .piece-9 { background: #7a3db8; color: #fff; }
-
-    button.action, .clear {
-      padding: 10px 14px; border: 1px solid #aaa; background: #fff;
-      border-radius: 8px; cursor: pointer; font-weight: 700;
-    }
-    button.action.primary { background: #222; color: #fff; border-color: #222; }
-    .clear { margin-left: auto; }
-
-    .board { display: grid; gap: 10px; }
-    .rank-row {
-      display: grid; grid-template-columns: 72px 1fr; gap: 10px; align-items: center;
-    }
-    .row-label {
-      min-height: 70px; display: flex; align-items: center; justify-content: center;
-      font-weight: 800; background: #ececec; border: 1px solid #bbb; border-radius: 8px;
-    }
-    .row-zone {
-      min-height: 70px; display: flex; align-items: center; justify-content: center;
-      gap: 10px; padding: 8px 12px; background: #fff; border: 1px dashed #bbb;
-      border-radius: 10px; cursor: pointer;
-    }
-    .row-zone:hover { outline: 2px solid #ccc; }
-    .placed {
-      width: 44px; height: 44px; border-radius: 50%; border: 2px solid #222;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 18px; cursor: pointer; flex: 0 0 auto;
-    }
-    .empty-hint { color: #aaa; font-size: 13px; pointer-events: none; }
-
-    .race-controls {
-      display: grid;
-      grid-template-columns: minmax(220px, 1fr) minmax(320px, 2fr) auto;
-      gap: 10px;
-      align-items: end;
-    }
-    label { display: grid; gap: 5px; font-size: 12px; color: #666; }
-    input[type="search"], select {
-      width: 100%; min-height: 42px; padding: 9px 10px;
-      border: 1px solid #bbb; border-radius: 8px; background: #fff; color: #222;
-    }
-    .small { color: #666; font-size: 12px; line-height: 1.6; }
-    .race-meta { margin-top: 12px; line-height: 1.7; font-size: 14px; }
-
-    .algo-grid {
-      display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px;
-    }
-    .algo-card { padding: 14px; line-height: 1.7; font-size: 14px; }
-    .algo-card strong { font-weight: 800; }
-    .algo-card ul { margin: 6px 0 0; padding-left: 20px; }
-    .algo-card.full { grid-column: 1 / -1; }
-    .metric-grid {
-      display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 8px; margin-top: 10px;
-    }
-    .metric {
-      padding: 10px; background: #f7f7f7; border-radius: 8px; text-align: center;
-    }
-    .metric b { display: block; font-size: 18px; margin-bottom: 2px; }
-
-    .data-grid {
-      display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px;
-    }
-    table { border-collapse: collapse; width: 100%; min-width: 380px; }
-    th, td {
-      border-bottom: 1px solid #e5e5e5; padding: 8px; text-align: center; font-size: 13px;
-    }
-    th { background: #f7f7f7; }
-    .active-row { font-weight: 800; background: #f5faf6; }
-
-    @media (max-width: 800px) {
-      body { padding: 12px; }
-      .race-controls, .algo-grid, .data-grid { grid-template-columns: 1fr; }
-      .algo-card.full { grid-column: auto; }
-      .metric-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .rank-row { grid-template-columns: 58px 1fr; gap: 6px; }
-      .row-label, .row-zone { min-height: 60px; }
-      .placed, .piece { width: 38px; height: 38px; }
-      .row-zone { gap: 7px; padding: 8px; }
-      .clear { margin-left: 0; }
-    }
+    :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#222;background:#f5f5f5}
+    *{box-sizing:border-box} body{margin:0;padding:24px}.wrap{max-width:1050px;margin:0 auto}
+    h1{margin:0 0 8px;font-size:28px}h2{margin:28px 0 10px;font-size:20px}.note{margin:0 0 20px;color:#666;font-size:14px;line-height:1.7}
+    .badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#222;color:#fff;font-size:12px;font-weight:800;vertical-align:middle;margin-left:6px}
+    .panel,.toolbar,.status,.algo{background:#fff;border:1px solid #ddd;border-radius:10px}.panel{padding:16px}.status{margin-top:14px;padding:12px 14px;font-size:14px;line-height:1.7}
+    .url-grid{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}.field{display:grid;gap:6px;font-size:12px;color:#666}
+    input[type=url]{width:100%;min-height:46px;padding:10px 12px;border:1px solid #bbb;border-radius:8px;background:#fff;color:#222;font-size:15px}
+    button.action,.clear{padding:11px 15px;border:1px solid #aaa;background:#fff;border-radius:8px;cursor:pointer;font-weight:800}button.primary{background:#222;color:#fff;border-color:#222}.clear{margin-left:auto}
+    .source{margin-top:10px;font-size:12px;color:#666;line-height:1.6}.source code{word-break:break-all}
+    .race-info{margin-top:14px;padding-top:12px;border-top:1px solid #eee;line-height:1.7;font-size:14px}.race-info:empty{display:none}
+    .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:18px;padding:14px}.piece{width:44px;height:44px;border:2px solid #333;border-radius:50%;font-weight:700;font-size:18px;cursor:pointer}.piece.selected{outline:4px solid #bbb;transform:translateY(-1px)}
+    .piece[data-piece="1"],.piece-1{background:#fff;color:#111}.piece[data-piece="2"],.piece-2{background:#111;color:#fff}.piece[data-piece="3"],.piece-3{background:#d62828;color:#fff}.piece[data-piece="4"],.piece-4{background:#1769aa;color:#fff}.piece[data-piece="5"],.piece-5{background:#ffd60a;color:#111}.piece[data-piece="6"],.piece-6{background:#1f9d55;color:#fff}.piece[data-piece="7"],.piece-7{background:#f28c28;color:#111}.piece[data-piece="8"],.piece-8{background:#f4a7c5;color:#111}.piece[data-piece="9"],.piece-9{background:#7a3db8;color:#fff}
+    .board{display:grid;gap:10px}.rank-row{display:grid;grid-template-columns:72px 1fr;gap:10px;align-items:center}.row-label{min-height:70px;display:flex;align-items:center;justify-content:center;font-weight:800;background:#ececec;border:1px solid #bbb;border-radius:8px}.row-zone{min-height:70px;display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 12px;background:#fff;border:1px dashed #bbb;border-radius:10px;cursor:pointer}.placed{width:44px;height:44px;border-radius:50%;border:2px solid #222;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;cursor:pointer;flex:0 0 auto}.empty-hint{color:#aaa;font-size:13px;pointer-events:none}
+    .algo{padding:14px;line-height:1.75;font-size:14px}.algo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.algo b{display:block;margin-bottom:4px}
+    .ok{color:#166534}.warn{color:#92400e}.error{color:#991b1b}
+    @media(max-width:760px){body{padding:12px}.url-grid,.algo-grid{grid-template-columns:1fr}.rank-row{grid-template-columns:58px 1fr;gap:6px}.row-label,.row-zone{min-height:60px}.placed,.piece{width:38px;height:38px}.clear{margin-left:0}}
   </style>
 </head>
 <body>
-  <main class="wrap">
-    <h1>競輪将棋 駒置きアルゴリズム v37 <span class="badge">CURRENT BEST</span></h1>
-    <p class="note">
-      1着=v21、2着=v31、3着=v37の生成済み出力をGitHub Pages上の3段盤面へ直接表示します。
-      旧v0の「5特徴を手入力して暫定重みで採点する方式」は使用しません。
-      同じ選手を1着・2着・3着の複数段へ置くことができます。
-      v37は同一完全未来153レースで旧v23を上回った現行最良版ですが、次の未開封ブロック検証を継続します。
-    </p>
+<main class="wrap">
+  <h1>競輪将棋 駒置き <span class="badge">v37</span></h1>
+  <p class="note">楽天Kドリームスのレース詳細URLを貼り、出走表・ラインを読み込んで競輪将棋の盤面へつなぐ入口です。盤面アルゴリズムは 1着=v21 / 2着=v31 / 3着=v37 を維持します。</p>
 
-    <h2>v37レース選択</h2>
-    <section class="panel">
-      <div class="race-controls">
-        <label>
-          絞り込み
-          <input id="raceSearch" type="search" placeholder="日付・場名・R・レース種別・race_id" />
-        </label>
-        <label>
-          v37盤面データ
-          <select id="raceSelect">
-            <option value="">読み込み中...</option>
-          </select>
-        </label>
-        <button class="action primary" id="loadRace" type="button">この盤面を表示</button>
-      </div>
-      <div class="race-meta" id="raceMeta">v37-board-data.json を読み込んでいます。</div>
-      <div class="small" id="dataStatus"></div>
-    </section>
+  <h2>レースURL</h2>
+  <section class="panel">
+    <div class="url-grid">
+      <label class="field">楽天Kドリームス レース詳細URL
+        <input id="raceUrl" type="url" inputmode="url" autocomplete="off" placeholder="https://keirin.kdreams.jp/.../racedetail/3420260917010005/" />
+      </label>
+      <button class="action primary" id="generateBoard" type="button">駒配置を生成</button>
+    </div>
+    <div class="source">対象: <code>keirin.kdreams.jp/*/racedetail/...</code>　オッズ・人気は読み込みません。</div>
+    <div class="race-info" id="raceInfo"></div>
+  </section>
 
-    <h2>駒置き</h2>
-    <section class="toolbar" aria-label="駒選択">
-      <strong>手動修正:</strong>
-      <button class="piece" data-piece="1">1</button>
-      <button class="piece" data-piece="2">2</button>
-      <button class="piece" data-piece="3">3</button>
-      <button class="piece" data-piece="4">4</button>
-      <button class="piece" data-piece="5">5</button>
-      <button class="piece" data-piece="6">6</button>
-      <button class="piece" data-piece="7">7</button>
-      <button class="piece" data-piece="8">8</button>
-      <button class="piece" data-piece="9">9</button>
-      <button class="clear" id="clearBoard" type="button">盤面全消去</button>
-    </section>
+  <h2>駒置き</h2>
+  <section class="toolbar" aria-label="駒選択">
+    <strong>手動修正:</strong>
+    <button class="piece" data-piece="1">1</button><button class="piece" data-piece="2">2</button><button class="piece" data-piece="3">3</button>
+    <button class="piece" data-piece="4">4</button><button class="piece" data-piece="5">5</button><button class="piece" data-piece="6">6</button>
+    <button class="piece" data-piece="7">7</button><button class="piece" data-piece="8">8</button><button class="piece" data-piece="9">9</button>
+    <button class="clear" id="clearBoard" type="button">盤面全消去</button>
+  </section>
+  <section class="board" id="board" aria-label="競輪将棋盤面"></section>
+  <div class="status" id="status">KドリームスのレースURLを入力してください。</div>
 
-    <section class="board" id="board" aria-label="競輪将棋盤面"></section>
-    <div class="status" id="status">v37盤面データの読み込み待ちです。</div>
+  <h2>使用アルゴリズム</h2>
+  <section class="algo-grid">
+    <article class="algo"><b>1着段 <span class="badge">v21</span></b>Quantile Participation。1着候補最大2人。</article>
+    <article class="algo"><b>2着段 <span class="badge">v31</span></b>unordered Top2 pair の所属質量から2着候補を生成。</article>
+    <article class="algo"><b>3着段 <span class="badge">v37</span></b>Top2-conditioned third を周辺化し、gamma=0.25で弱く再重み付け。</article>
+  </section>
+</main>
+<script>
+const rows=[{key:'first',label:'1着'},{key:'second',label:'2着'},{key:'third',label:'3着'}];
+const state={first:[],second:[],third:[]};
+let selectedPiece=null, boardData=null;
+const board=document.getElementById('board'), status=document.getElementById('status'), raceInfo=document.getElementById('raceInfo');
 
-    <h2>このv37で使っているアルゴリズム</h2>
-    <section class="algo-grid">
-      <article class="algo-card">
-        <h3>参加判定・1着段 <span class="badge">v21</span></h3>
-        <ul>
-          <li>v21を採用し、このv37でも固定。</li>
-          <li>1着候補は最大2人。</li>
-          <li>対象率の基準は25%。直近4週間のスコア分位点を使用。</li>
-          <li>v31・v37の学習で1着コアは変更していない。</li>
-        </ul>
-      </article>
-
-      <article class="algo-card">
-        <h3>2着段 <span class="badge">v31 Top2 Membership</span></h3>
-        <ul>
-          <li>v26の「順序を持たないTop2ペア」事後確率を使用。</li>
-          <li>1着/2着への向き付けは行わない。</li>
-          <li>各選手の所属質量 = その選手を含む全ペアの確率合計。</li>
-          <li>所属質量上位2人を基本候補にする。</li>
-          <li>3位が0.30以上、かつ2位の65%以上なら3人目を追加。最大3人。</li>
-        </ul>
-      </article>
-
-      <article class="algo-card">
-        <h3>Top2ペアモデル設定</h3>
-        <ul>
-          <li>variant: <strong>blind_d2a</strong></li>
-          <li>depth 2 / leaf 18 / L2 1.5</li>
-          <li>learning rate 0.045 / 190 iterations</li>
-          <li>random_state 26</li>
-          <li>オッズ・人気は不使用。</li>
-        </ul>
-      </article>
-
-      <article class="algo-card">
-        <h3>3着段 <span class="badge">v37</span></h3>
-        <ul>
-          <li>v31の全21個のTop2組を残し、各組に対する残り5人の3着確率を学習。</li>
-          <li>21分岐をv31組確率で周辺化し、3着確率を生成。</li>
-          <li>盤面整合性は候補除外に使わず、gamma=0.25の弱い再重み付けだけを適用。</li>
-          <li>上位2人を基本候補とし、3位/2位確率比が0.70以上なら3人目を追加。4人置きなし。</li>
-        </ul>
-      </article>
-
-      <article class="algo-card full">
-        <h3>v37 完全未来比較（2026-07-06〜08-30・153レース）</h3>
-        <div class="metric-grid">
-          <div class="metric"><b>52.29%</b><span class="small">v37 3着捕捉</span></div>
-          <div class="metric"><b>47.71%</b><span class="small">旧v23 同一未来</span></div>
-          <div class="metric"><b>32.03%</b><span class="small">v37 完全盤面</span></div>
-          <div class="metric"><b>2.817人</b><span class="small">平均3着候補数</span></div>
-          <div class="metric"><b>79.03%</b><span class="small">1・2着捕捉時の3着</span></div>
-        </div>
-        <p class="small">
-          v37凍結コミット後に未来結果を開封。旧v23は同じv21・v31盤面で3着47.71%、完全盤面29.41%、平均2.869人。
-          v37は全指標を改善したため現行最良として暫定採用。ただし対応差のp値は0.167で、次ブロック確認が必要。
-        </p>
-      </article>
-    </section>
-
-    <h2>選択レースのv31・v37内部出力</h2>
-    <section class="data-grid">
-      <div class="panel">
-        <h3>2着 Top2所属質量</h3>
-        <table>
-          <thead><tr><th>順位</th><th>車番</th><th>所属質量</th><th>2着候補</th></tr></thead>
-          <tbody id="membershipBody"><tr><td colspan="4">レース未選択</td></tr></tbody>
-        </table>
-      </div>
-      <div class="panel">
-        <h3>Top2ペア事後確率 上位5</h3>
-        <table>
-          <thead><tr><th>順位</th><th>ペア</th><th>確率</th></tr></thead>
-          <tbody id="pairBody"><tr><td colspan="3">レース未選択</td></tr></tbody>
-        </table>
-      </div>
-      <div class="panel">
-        <h3>v37 3着確率</h3>
-        <table>
-          <thead><tr><th>順位</th><th>車番</th><th>確率</th><th>3着候補</th></tr></thead>
-          <tbody id="thirdBody"><tr><td colspan="4">レース未選択</td></tr></tbody>
-        </table>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    const racers = [1,2,3,4,5,6,7,8,9];
-    const rows = [
-      { key: "first", label: "1着" },
-      { key: "second", label: "2着" },
-      { key: "third", label: "3着" }
-    ];
-
-    const state = { first: [], second: [], third: [] };
-    let selectedPiece = null;
-    let boardData = null;
-    let visibleRaces = [];
-    let currentRace = null;
-
-    const board = document.getElementById("board");
-    const status = document.getElementById("status");
-    const raceSearch = document.getElementById("raceSearch");
-    const raceSelect = document.getElementById("raceSelect");
-    const raceMeta = document.getElementById("raceMeta");
-    const dataStatus = document.getElementById("dataStatus");
-    const membershipBody = document.getElementById("membershipBody");
-    const pairBody = document.getElementById("pairBody");
-    const thirdBody = document.getElementById("thirdBody");
-
-    function renderBoard() {
-      board.innerHTML = "";
-      rows.forEach(row => {
-        const wrapper = document.createElement("div");
-        wrapper.className = "rank-row";
-
-        const label = document.createElement("div");
-        label.className = "row-label";
-        label.textContent = row.label;
-
-        const zone = document.createElement("div");
-        zone.className = "row-zone";
-        zone.dataset.row = row.key;
-
-        if (state[row.key].length === 0) {
-          const hint = document.createElement("span");
-          hint.className = "empty-hint";
-          hint.textContent = "候補なし";
-          zone.appendChild(hint);
-        } else {
-          state[row.key].forEach(no => {
-            const p = document.createElement("div");
-            p.className = `placed piece-${no}`;
-            p.textContent = no;
-            p.title = `${row.label}候補 ${no}番。クリックでこの段から削除`;
-            p.addEventListener("click", e => {
-              e.stopPropagation();
-              state[row.key] = state[row.key].filter(x => x !== no);
-              renderBoard();
-              status.textContent = `${row.label}から${no}番を手動で削除しました。`;
-            });
-            zone.appendChild(p);
-          });
-        }
-
-        zone.addEventListener("click", () => {
-          if (!selectedPiece) {
-            status.textContent = "上の車番を選んでから、置きたい段をタップしてください。";
-            return;
-          }
-          if (!state[row.key].includes(selectedPiece)) state[row.key].push(selectedPiece);
-          renderBoard();
-          status.textContent = `${selectedPiece}番を${row.label}へ手動追加しました。`;
-        });
-
-        wrapper.append(label, zone);
-        board.appendChild(wrapper);
-      });
-    }
-
-    function raceLabel(r) {
-      const rno = r.race_no ? `${r.race_no}R` : "";
-      return `${r.race_date || "日付不明"} ${r.track || "場不明"} ${rno} ${r.race_type || ""} [${r.race_id}]`.trim();
-    }
-
-    function filterRaces() {
-      if (!boardData) return;
-      const q = raceSearch.value.trim().toLowerCase();
-      visibleRaces = boardData.races.filter(r => !q || raceLabel(r).toLowerCase().includes(q));
-      const keep = raceSelect.value;
-      raceSelect.innerHTML = "";
-      if (!visibleRaces.length) {
-        const opt = document.createElement("option");
-        opt.value = "";
-        opt.textContent = "該当レースなし";
-        raceSelect.appendChild(opt);
-        return;
-      }
-      visibleRaces.forEach(r => {
-        const opt = document.createElement("option");
-        opt.value = r.race_id;
-        opt.textContent = raceLabel(r);
-        raceSelect.appendChild(opt);
-      });
-      if (visibleRaces.some(r => r.race_id === keep)) raceSelect.value = keep;
-      else raceSelect.value = visibleRaces[visibleRaces.length - 1].race_id;
-    }
-
-    function applyRace(race) {
-      if (!race) return;
-      currentRace = race;
-      state.first = [...(race.first_candidates || [])];
-      state.second = [...(race.second_candidates || [])];
-      state.third = [...(race.third_candidates || [])];
-      renderBoard();
-
-      const versions = race.versions || {};
-      raceMeta.innerHTML = `
-        <strong>${race.race_date || ""} ${race.track || ""} ${race.race_no || ""}R ${race.race_type || ""}</strong><br>
-        race_id: ${race.race_id}<br>
-        参加判定/1着: ${versions.participation_first || "v21"} /
-        2着: ${versions.second || "v31_top2_membership"} /
-        3着: ${versions.third || "v37_shrunk_board_third"}
-      `;
-      status.textContent = `v37盤面を表示中。1着 ${state.first.join("・") || "なし"} / 2着 ${state.second.join("・") || "なし"} / 3着 ${state.third.join("・") || "なし"}`;
-      renderDetails(race);
-    }
-
-    function renderDetails(race) {
-      const secondSet = new Set(race.second_candidates || []);
-      const membership = race.second_membership || [];
-      membershipBody.innerHTML = membership.length ? membership.map((x, i) => `
-        <tr class="${secondSet.has(x.no) ? "active-row" : ""}">
-          <td>${i + 1}</td>
-          <td><strong>${x.no}</strong></td>
-          <td>${Number(x.mass).toFixed(4)}</td>
-          <td>${secondSet.has(x.no) ? "採用" : ""}</td>
-        </tr>
-      `).join("") : '<tr><td colspan="4">所属質量データなし</td></tr>';
-
-      const pairs = race.top_pairs || [];
-      pairBody.innerHTML = pairs.length ? pairs.map((x, i) => `
-        <tr>
-          <td>${i + 1}</td>
-          <td><strong>${x.a}-${x.b}</strong></td>
-          <td>${(Number(x.prob) * 100).toFixed(2)}%</td>
-        </tr>
-      `).join("") : '<tr><td colspan="3">ペアデータなし</td></tr>';
-
-      const thirdSet = new Set(race.third_candidates || []);
-      const thirdRanking = race.third_ranking || [];
-      thirdBody.innerHTML = thirdRanking.length ? thirdRanking.map((x, i) => `
-        <tr class="${thirdSet.has(x.no) ? "active-row" : ""}">
-          <td>${i + 1}</td>
-          <td><strong>${x.no}</strong></td>
-          <td>${(Number(x.probability) * 100).toFixed(2)}%</td>
-          <td>${thirdSet.has(x.no) ? "採用" : ""}</td>
-        </tr>
-      `).join("") : '<tr><td colspan="4">3着確率データなし</td></tr>';
-    }
-
-    async function loadBoardData() {
-      try {
-        const res = await fetch("v37-board-data.json", { cache: "no-store" });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        boardData = await res.json();
-        filterRaces();
-        dataStatus.textContent =
-          `board_version=${boardData.board_version} / ${boardData.race_count}レース / 3着欠損=${boardData.missing_third_count}`;
-        const latest = visibleRaces[visibleRaces.length - 1];
-        if (latest) {
-          raceSelect.value = latest.race_id;
-          applyRace(latest);
-        }
-      } catch (err) {
-        raceSelect.innerHTML = '<option value="">読み込み失敗</option>';
-        raceMeta.textContent = "v37-board-data.json を読み込めませんでした。";
-        dataStatus.textContent = String(err);
-        status.textContent = "自動盤面データの読み込みに失敗。手動配置は使えます。";
-      }
-    }
-
-    document.querySelectorAll(".piece").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const no = Number(btn.dataset.piece);
-        selectedPiece = selectedPiece === no ? null : no;
-        document.querySelectorAll(".piece").forEach(x =>
-          x.classList.toggle("selected", Number(x.dataset.piece) === selectedPiece)
-        );
-        status.textContent = selectedPiece
-          ? `${selectedPiece}番を選択中。置きたい段をタップしてください。`
-          : "手動駒の選択を解除しました。";
-      });
-    });
-
-    document.getElementById("clearBoard").addEventListener("click", () => {
-      state.first = [];
-      state.second = [];
-      state.third = [];
-      renderBoard();
-      status.textContent = "盤面を手動で全消去しました。";
-    });
-
-    document.getElementById("loadRace").addEventListener("click", () => {
-      if (!boardData || !raceSelect.value) return;
-      applyRace(boardData.races.find(r => r.race_id === raceSelect.value));
-    });
-
-    raceSelect.addEventListener("change", () => {
-      if (!boardData || !raceSelect.value) return;
-      applyRace(boardData.races.find(r => r.race_id === raceSelect.value));
-    });
-
-    raceSearch.addEventListener("input", filterRaces);
-
-    renderBoard();
-    loadBoardData();
-  </script>
+function renderBoard(){
+  board.innerHTML='';
+  rows.forEach(row=>{
+    const wrap=document.createElement('div'); wrap.className='rank-row';
+    const label=document.createElement('div'); label.className='row-label'; label.textContent=row.label;
+    const zone=document.createElement('div'); zone.className='row-zone'; zone.dataset.row=row.key;
+    if(!state[row.key].length){const hint=document.createElement('span');hint.className='empty-hint';hint.textContent='候補なし';zone.appendChild(hint)}
+    else state[row.key].forEach(no=>{const p=document.createElement('div');p.className=`placed piece-${no}`;p.textContent=no;p.title=`${row.label}候補 ${no}番。クリックで削除`;p.onclick=e=>{e.stopPropagation();state[row.key]=state[row.key].filter(x=>x!==no);renderBoard()};zone.appendChild(p)});
+    zone.onclick=()=>{if(!selectedPiece){status.textContent='上の車番を選んでから、置きたい段をタップしてください。';return}if(!state[row.key].includes(selectedPiece))state[row.key].push(selectedPiece);renderBoard()};
+    wrap.append(label,zone);board.appendChild(wrap);
+  });
+}
+function applyRace(r){
+  state.first=[...(r.first_candidates||[])];state.second=[...(r.second_candidates||[])];state.third=[...(r.third_candidates||[])];renderBoard();
+  status.innerHTML=`<span class="ok">駒配置完了</span>　1着 ${state.first.join('・')||'なし'} / 2着 ${state.second.join('・')||'なし'} / 3着 ${state.third.join('・')||'なし'}`;
+}
+function validateKdreamsUrl(value){
+  let u;try{u=new URL(value)}catch{throw new Error('URL形式が正しくありません')}
+  if(u.protocol!=='https:')throw new Error('https のURLを入力してください');
+  if(!(u.hostname==='keirin.kdreams.jp'||u.hostname.endsWith('.keirin.kdreams.jp')))throw new Error('楽天Kドリームスのレース詳細URLを入力してください');
+  if(!u.pathname.includes('/racedetail/'))throw new Error('レース詳細(racedetail)のURLを入力してください');
+  return u;
+}
+function raceIdFromUrl(u){
+  const m=u.pathname.match(/\/racedetail\/(\d+)/);return m?m[1]:'';
+}
+async function fetchRaceHtml(url){
+  try{const r=await fetch(url,{cache:'no-store'});if(r.ok)return {html:await r.text(),via:'direct'}}catch(_e){}
+  const proxy='https://api.allorigins.win/raw?url='+encodeURIComponent(url);
+  const r=await fetch(proxy,{cache:'no-store'});if(!r.ok)throw new Error(`出走表取得に失敗しました (HTTP ${r.status})`);
+  return {html:await r.text(),via:'allorigins'};
+}
+function summarizeHtml(html,url,raceId){
+  const doc=new DOMParser().parseFromString(html,'text/html');
+  const title=(doc.querySelector('h1')?.textContent||doc.querySelector('title')?.textContent||'').replace(/\s+/g,' ').trim();
+  const text=(doc.body?.innerText||'').replace(/[\t ]+/g,' ').replace(/\n{3,}/g,'\n\n');
+  const date=(text.match(/20\d{2}年\d{1,2}月\d{1,2}日/)||[])[0]||'';
+  const raceType=(text.match(/[ＳＡＬ]級(?:予選|一般|準決勝|特選|選抜|決勝|特予選|特一般)/)||[])[0]||'';
+  const lineMatch=text.match(/並び(?:予想|情報)?[\s\S]{0,180}/);
+  const lineText=lineMatch?lineMatch[0].replace(/\n+/g,' ').slice(0,180):'';
+  return {title,date,raceType,lineText,url,raceId};
+}
+async function loadBoardData(){
+  try{const r=await fetch('v37-board-data.json',{cache:'no-store'});if(r.ok)boardData=await r.json()}catch(_e){}
+}
+async function generate(){
+  const btn=document.getElementById('generateBoard');
+  try{
+    btn.disabled=true; status.textContent='出走表を取得しています…'; raceInfo.textContent='';
+    const u=validateKdreamsUrl(document.getElementById('raceUrl').value.trim());
+    const raceId=raceIdFromUrl(u);if(!raceId)throw new Error('URLからrace_idを取得できませんでした');
+    const fetched=await fetchRaceHtml(u.href); const info=summarizeHtml(fetched.html,u.href,raceId);
+    raceInfo.innerHTML=`<strong>${info.title||'Kドリームス レース詳細'}</strong><br>${info.date}${info.raceType?' / '+info.raceType:''}<br>race_id: ${raceId}${info.lineText?'<br>ライン付近: '+info.lineText:''}<br><span class="source">取得経路: ${fetched.via==='direct'?'直接':'CORS中継'}</span>`;
+    const known=boardData?.races?.find(r=>String(r.race_id)===raceId);
+    if(known){applyRace(known);return}
+    state.first=[];state.second=[];state.third=[];renderBoard();
+    status.innerHTML='<span class="warn">出走表URLの取得には成功しました。</span> ただし、このrace_idは既存v37出力に未登録です。未来レースをv21/v31/v37でその場推論するランタイム接続は未完了です。';
+  }catch(e){status.innerHTML=`<span class="error">${String(e.message||e)}</span>`}
+  finally{btn.disabled=false}
+}
+document.getElementById('generateBoard').onclick=generate;
+document.getElementById('raceUrl').addEventListener('keydown',e=>{if(e.key==='Enter')generate()});
+document.querySelectorAll('.piece').forEach(btn=>btn.onclick=()=>{const no=Number(btn.dataset.piece);selectedPiece=selectedPiece===no?null:no;document.querySelectorAll('.piece').forEach(x=>x.classList.toggle('selected',Number(x.dataset.piece)===selectedPiece))});
+document.getElementById('clearBoard').onclick=()=>{state.first=[];state.second=[];state.third=[];renderBoard();status.textContent='盤面を全消去しました。'};
+renderBoard();loadBoardData();
+</script>
 </body>
 </html>
