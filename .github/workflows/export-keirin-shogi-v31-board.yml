@@ -1,0 +1,34 @@
+name: Export Keirin Shogi v31 Board Data
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/export_keirin_shogi_v31_board_data.py'
+      - 'results/keirin_shogi/v31_top2_membership_second/race_log.json'
+      - 'results/keirin_shogi/v23_conditional_second_third/race_log.json'
+      - '.github/workflows/export-keirin-shogi-v31-board.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Export board JSON
+        run: python scripts/export_keirin_shogi_v31_board_data.py
+      - name: Commit board JSON
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/keirin-shogi/v31-board-data.json
+          if git diff --cached --quiet; then
+            echo "No board-data changes."
+          else
+            git commit -m "docs: publish v31 keirin shogi board data"
+            git pull --rebase origin main
+            git push
+          fi
