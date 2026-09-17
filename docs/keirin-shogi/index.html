@@ -37,7 +37,7 @@
       </label>
       <button class="action primary" id="generateBoard" type="button">駒配置を生成</button>
     </div>
-    <div class="source">対象: <code>keirin.kdreams.jp/*/racedetail/...</code>　取得できる5〜9車立てを配置計算対象とし、車数・級別・開催グレード・発走済み/未発走を理由に門前払いしません。レース内容によるv21参加判定の見送りは行います。対象レースのオッズ・人気・結果・払戻は読み込みません。</div>
+    <div class="source">対象: <code>keirin.kdreams.jp/*/racedetail/...</code>　取得できる5〜9車立てを配置計算対象とし、車数・級別・開催グレード・発走済み/未発走を理由に門前払いしません。v21参加判定は参加/見送りの表示だけに使い、見送りでもv21→v31→v37の盤面は生成します。対象レースのオッズ・人気・結果・払戻は読み込みません。</div>
     <div class="race-info" id="raceInfo"></div>
   </section>
 
@@ -54,7 +54,7 @@
 
   <h2>使用アルゴリズム</h2>
   <section class="algo-grid">
-    <article class="algo"><b>1着段 <span class="badge">v21</span></b>Quantile Participation。凍結済み7車F1 S級履歴から構築したモデルを機械適用し、参加時の1着候補は最大2人。</article>
+    <article class="algo"><b>1着段 <span class="badge">v21</span></b>凍結済みv21の1着候補と参加判定を別々に使用。見送りでも1着候補は盤面へ置き、参加判定だけを別表示します。</article>
     <article class="algo"><b>2着段 <span class="badge">v31</span></b>凍結済み blind unordered Top2 pair。出走n車から全C(n,2)組を計算し、所属質量から2着候補を生成（7車なら21組）。</article>
     <article class="algo"><b>3着段 <span class="badge">v37</span></b>全Top2分岐の条件付き3着を周辺化し、candidate_cross gamma=0.25で弱く再重み付け。モデル学習元は7車F1 S級のまま固定。</article>
   </section>
@@ -82,7 +82,9 @@ function applyRace(r,source='自動配置'){
   state.first=[...(r.first_candidates||[])];state.second=[...(r.second_candidates||[])];state.third=[...(r.third_candidates||[])];renderBoard();
   const score=Number.isFinite(Number(r.v21_selector_score))?` / v21 score ${(Number(r.v21_selector_score)*100).toFixed(2)}%` : '';
   const threshold=Number.isFinite(Number(r.v21_threshold))?` ≥ ${(Number(r.v21_threshold)*100).toFixed(2)}%` : '';
-  status.innerHTML=`<span class="ok">${esc(source)}完了</span>　1着 ${state.first.join('・')||'なし'} / 2着 ${state.second.join('・')||'なし'} / 3着 ${state.third.join('・')||'なし'}${score}${threshold}`;
+  const decision=r.participate?'<span class="ok">参加</span>':'<span class="warn">見送り</span>';
+  const reason=!r.participate&&r.skip_reason?`　${esc(r.skip_reason)}`:'';
+  status.innerHTML=`<span class="ok">${esc(source)}完了</span>　参加判定: ${decision}${reason}<br>盤面　1着 ${state.first.join('・')||'なし'} / 2着 ${state.second.join('・')||'なし'} / 3着 ${state.third.join('・')||'なし'}${score}${threshold}`;
 }
 function validateKdreamsUrl(value){
   let u;try{u=new URL(value)}catch{throw new Error('URL形式が正しくありません')}
@@ -126,9 +128,12 @@ async function generate(){
     const auto=current.auto_board;
     const staleLegacyScope=isLegacyScopeDecision(auto);
     if(auto && !staleLegacyScope){
-      if(auto.participate){applyRace(auto,'v21/v31/v37 自動配置');return}
-      state.first=[];state.second=[];state.third=[];renderBoard();
-      status.innerHTML=`<span class="warn">見送り</span>　${esc(auto.skip_reason||auto.scope_note||'v21参加判定で対象外')}。レース内容による参加判定のため盤面は配置しません。`;
+      if(auto.board_generated===false){
+        state.first=[];state.second=[];state.third=[];renderBoard();
+        status.innerHTML=`<span class="warn">配置対象外</span>　${esc(auto.skip_reason||auto.scope_note||'盤面を構成できません')}`;
+        return;
+      }
+      applyRace(auto,'v21/v31/v37 自動配置');
       return;
     }
 
