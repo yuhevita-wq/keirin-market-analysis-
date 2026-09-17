@@ -8,6 +8,9 @@ on:
     branches: [main]
     paths:
       - 'scripts/keirin_shogi_live_race_cache.py'
+      - 'scripts/keirin_shogi_live_race_cache_runtime.py'
+      - 'scripts/keirin_shogi_v37_auto_place.py'
+      - 'scripts/keirin_shogi_v37_auto_place_runtime.py'
       - 'src/keirin_market_analysis/s_yosen_2025.py'
       - 'src/keirin_market_analysis/line_formation_2025.py'
       - '.github/workflows/refresh-keirin-shogi-live-races.yml'
@@ -29,8 +32,8 @@ jobs:
           python-version: '3.12'
       - name: Install package
         run: python -m pip install -e .
-      - name: Build current race-card cache
-        run: python scripts/keirin_shogi_live_race_cache.py
+      - name: Build current race-card cache and auto boards
+        run: python scripts/keirin_shogi_live_race_cache_runtime.py
       - name: Commit refreshed cache
         run: |
           git config user.name "github-actions[bot]"
