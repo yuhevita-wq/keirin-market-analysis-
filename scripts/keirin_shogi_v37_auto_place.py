@@ -132,7 +132,6 @@ def build_v21_state():
 
     intercept, coefficients = frozen_selector()
 
-    # Reproduce the same score-history walk-forward used by the frozen future test.
     score_weeks = defaultdict(list)
     old = v25.load_v19_details()
     for row in old:
@@ -186,7 +185,6 @@ def build_v21_state():
         score_weeks[current.isoformat()].extend(generated)
         current += timedelta(days=7)
 
-    # Freeze the latest reconstructable production state: all fitting data is <= 2026-08-30.
     current = PRODUCTION_STATE_WEEK
     history_start = current - timedelta(days=91)
     core_a_end = current - timedelta(days=36)
@@ -277,12 +275,10 @@ def target_scope(race) -> tuple[bool, str]:
     race_type = str(race.get("race_type", ""))
     if "Ｓ級" not in race_type and "S級" not in race_type:
         return False, "S級ではない"
-    # The live cache currently does not expose meeting_grade. Restrict scoring
-    # to URLs known by the current project workflow to be F1 when supplied.
-    grade = str(race.get("meeting_grade", ""))
-    if grade and grade != "F1":
-        return False, f"F1ではない ({grade})"
-    return True, "7車F1 S級対象。meeting_grade未掲載時はKDreams対象URLをF1として扱う"
+    grade = str(race.get("meeting_grade", "")).strip()
+    if grade != "F1":
+        return False, f"F1確認不可 ({grade or '未取得'})"
+    return True, "7車F1 S級対象"
 
 
 def place_one(race, v21_state, pair_model, third_model, feature_names, freeze):
