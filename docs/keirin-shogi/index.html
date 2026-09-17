@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>競輪将棋 - 駒置きアルゴリズム v0</title>
+  <title>競輪将棋 - 駒置きアルゴリズム v31</title>
   <style>
     :root {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -15,8 +15,20 @@
     .wrap { max-width: 1100px; margin: 0 auto; }
     h1 { margin: 0 0 8px; font-size: 28px; }
     h2 { margin: 28px 0 10px; font-size: 20px; }
-    .note { margin: 0 0 20px; color: #666; font-size: 14px; }
+    h3 { margin: 0 0 8px; font-size: 16px; }
+    .note { margin: 0 0 20px; color: #666; font-size: 14px; line-height: 1.7; }
+    .badge {
+      display: inline-block; padding: 4px 8px; border-radius: 999px;
+      background: #222; color: #fff; font-size: 12px; font-weight: 800;
+      vertical-align: middle; margin-left: 6px;
+    }
+    .warning-badge { background: #8a5a00; }
 
+    .toolbar, .panel, .algo-card, .status {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
     .toolbar {
       display: flex;
       flex-wrap: wrap;
@@ -24,19 +36,13 @@
       align-items: center;
       margin-bottom: 18px;
       padding: 14px;
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 10px;
     }
+    .panel { padding: 14px; overflow-x: auto; }
+    .status { margin-top: 16px; padding: 12px 14px; font-size: 14px; line-height: 1.6; }
 
     .piece {
-      width: 44px;
-      height: 44px;
-      border: 2px solid #333;
-      border-radius: 50%;
-      font-weight: 700;
-      font-size: 18px;
-      cursor: pointer;
+      width: 44px; height: 44px; border: 2px solid #333; border-radius: 50%;
+      font-weight: 700; font-size: 18px; cursor: pointer;
     }
     .piece.selected { outline: 4px solid #bbb; transform: translateY(-1px); }
 
@@ -51,187 +57,116 @@
     .piece[data-piece="9"], .piece-9 { background: #7a3db8; color: #fff; }
 
     button.action, .clear {
-      padding: 10px 14px;
-      border: 1px solid #aaa;
-      background: #fff;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 700;
+      padding: 10px 14px; border: 1px solid #aaa; background: #fff;
+      border-radius: 8px; cursor: pointer; font-weight: 700;
     }
     button.action.primary { background: #222; color: #fff; border-color: #222; }
     .clear { margin-left: auto; }
 
     .board { display: grid; gap: 10px; }
     .rank-row {
-      display: grid;
-      grid-template-columns: 72px 1fr;
-      gap: 10px;
-      align-items: center;
+      display: grid; grid-template-columns: 72px 1fr; gap: 10px; align-items: center;
     }
     .row-label {
-      min-height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      background: #ececec;
-      border: 1px solid #bbb;
-      border-radius: 8px;
+      min-height: 70px; display: flex; align-items: center; justify-content: center;
+      font-weight: 800; background: #ececec; border: 1px solid #bbb; border-radius: 8px;
     }
     .row-zone {
-      min-height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 8px 12px;
-      background: #fff;
-      border: 1px dashed #bbb;
-      border-radius: 10px;
-      cursor: pointer;
+      min-height: 70px; display: flex; align-items: center; justify-content: center;
+      gap: 10px; padding: 8px 12px; background: #fff; border: 1px dashed #bbb;
+      border-radius: 10px; cursor: pointer;
     }
     .row-zone:hover { outline: 2px solid #ccc; }
-
     .placed {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      border: 2px solid #222;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 18px;
-      cursor: pointer;
-      flex: 0 0 auto;
+      width: 44px; height: 44px; border-radius: 50%; border: 2px solid #222;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 18px; cursor: pointer; flex: 0 0 auto;
     }
-    .placed.piece-1 { background: #fff; color: #111; }
-    .placed.piece-2 { background: #111; color: #fff; }
-    .placed.piece-3 { background: #d62828; color: #fff; }
-    .placed.piece-4 { background: #1769aa; color: #fff; }
-    .placed.piece-5 { background: #ffd60a; color: #111; }
-    .placed.piece-6 { background: #1f9d55; color: #fff; }
-    .placed.piece-7 { background: #f28c28; color: #111; }
-    .placed.piece-8 { background: #f4a7c5; color: #111; }
-    .placed.piece-9 { background: #7a3db8; color: #fff; }
-
     .empty-hint { color: #aaa; font-size: 13px; pointer-events: none; }
 
-    .status {
-      margin-top: 16px;
-      padding: 12px 14px;
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 14px;
+    .race-controls {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) minmax(320px, 2fr) auto;
+      gap: 10px;
+      align-items: end;
     }
+    label { display: grid; gap: 5px; font-size: 12px; color: #666; }
+    input[type="search"], select {
+      width: 100%; min-height: 42px; padding: 9px 10px;
+      border: 1px solid #bbb; border-radius: 8px; background: #fff; color: #222;
+    }
+    .small { color: #666; font-size: 12px; line-height: 1.6; }
+    .race-meta { margin-top: 12px; line-height: 1.7; font-size: 14px; }
 
-    .panel {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 14px;
-      overflow-x: auto;
+    .algo-grid {
+      display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px;
     }
+    .algo-card { padding: 14px; line-height: 1.7; font-size: 14px; }
+    .algo-card strong { font-weight: 800; }
+    .algo-card ul { margin: 6px 0 0; padding-left: 20px; }
+    .algo-card.full { grid-column: 1 / -1; }
+    .metric-grid {
+      display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 8px; margin-top: 10px;
+    }
+    .metric {
+      padding: 10px; background: #f7f7f7; border-radius: 8px; text-align: center;
+    }
+    .metric b { display: block; font-size: 18px; margin-bottom: 2px; }
 
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      min-width: 820px;
+    .data-grid {
+      display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px;
     }
+    table { border-collapse: collapse; width: 100%; min-width: 380px; }
     th, td {
-      border-bottom: 1px solid #e5e5e5;
-      padding: 8px;
-      text-align: center;
-      font-size: 13px;
+      border-bottom: 1px solid #e5e5e5; padding: 8px; text-align: center; font-size: 13px;
     }
-    th { background: #f7f7f7; position: sticky; top: 0; }
-    input[type="number"] {
-      width: 78px;
-      padding: 7px;
-      border: 1px solid #bbb;
-      border-radius: 6px;
-      text-align: right;
-    }
-    .input-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 12px;
-      align-items: center;
-    }
-    .small { color: #666; font-size: 12px; }
+    th { background: #f7f7f7; }
+    .active-row { font-weight: 800; background: #f5faf6; }
 
-    .analysis-grid {
-      display: grid;
-      grid-template-columns: repeat(1, minmax(0, 1fr));
-      gap: 10px;
-    }
-    .analysis-card {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 12px;
-    }
-    .analysis-head {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    .mini-piece {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      border: 2px solid #222;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-    }
-    .score-row {
-      display: grid;
-      grid-template-columns: 52px 70px 1fr;
-      gap: 8px;
-      align-items: start;
-      padding: 5px 0;
-      border-top: 1px solid #eee;
-      font-size: 13px;
-    }
-    .score-row:first-of-type { border-top: 0; }
-    .score { font-weight: 800; }
-    .accepted { color: #0b6b31; font-weight: 800; }
-    .rejected { color: #888; }
-    .weights {
-      font-size: 12px;
-      color: #666;
-      line-height: 1.6;
-      margin-top: 8px;
-    }
-
-    @media (min-width: 820px) {
-      .analysis-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-
-    @media (max-width: 720px) {
+    @media (max-width: 800px) {
       body { padding: 12px; }
+      .race-controls, .algo-grid, .data-grid { grid-template-columns: 1fr; }
+      .algo-card.full { grid-column: auto; }
+      .metric-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
       .rank-row { grid-template-columns: 58px 1fr; gap: 6px; }
       .row-label, .row-zone { min-height: 60px; }
       .placed, .piece { width: 38px; height: 38px; }
       .row-zone { gap: 7px; padding: 8px; }
+      .clear { margin-left: 0; }
     }
   </style>
 </head>
 <body>
   <main class="wrap">
-    <h1>競輪将棋 駒置きアルゴリズム v0</h1>
+    <h1>競輪将棋 駒置きアルゴリズム v31 <span class="badge">FROZEN</span></h1>
     <p class="note">
-      オッズは使わず、出走表由来の5特徴から1着・2着・3着を別評価します。
-      まずは透明なルールベース。ここから実測で重みを壊して育てます。
+      v31の凍結済み出力をGitHub Pages上の3段盤面へ直接表示します。
+      旧v0の「5特徴を手入力して暫定重みで採点する方式」は使用しません。
+      同じ選手を1着・2着・3着の複数段へ置くことができます。
     </p>
 
+    <h2>v31レース選択</h2>
+    <section class="panel">
+      <div class="race-controls">
+        <label>
+          絞り込み
+          <input id="raceSearch" type="search" placeholder="日付・場名・R・レース種別・race_id" />
+        </label>
+        <label>
+          v31盤面データ
+          <select id="raceSelect">
+            <option value="">読み込み中...</option>
+          </select>
+        </label>
+        <button class="action primary" id="loadRace" type="button">この盤面を表示</button>
+      </div>
+      <div class="race-meta" id="raceMeta">v31-board-data.json を読み込んでいます。</div>
+      <div class="small" id="dataStatus"></div>
+    </section>
+
+    <h2>駒置き</h2>
     <section class="toolbar" aria-label="駒選択">
-      <strong>手動駒:</strong>
+      <strong>手動修正:</strong>
       <button class="piece" data-piece="1">1</button>
       <button class="piece" data-piece="2">2</button>
       <button class="piece" data-piece="3">3</button>
@@ -241,46 +176,87 @@
       <button class="piece" data-piece="7">7</button>
       <button class="piece" data-piece="8">8</button>
       <button class="piece" data-piece="9">9</button>
-      <button class="clear" id="clearBoard">盤面全消去</button>
+      <button class="clear" id="clearBoard" type="button">盤面全消去</button>
     </section>
 
     <section class="board" id="board" aria-label="競輪将棋盤面"></section>
-    <div class="status" id="status">手動配置も可能。下の出走表入力から自動配置できます。</div>
+    <div class="status" id="status">v31盤面データの読み込み待ちです。</div>
 
-    <h2>出走表入力</h2>
-    <section class="panel">
-      <table>
-        <thead>
-          <tr>
-            <th>車番</th>
-            <th>B数</th>
-            <th>勝率 %</th>
-            <th>ライン長</th>
-            <th>番手差し評価 0-100</th>
-            <th>別線能力 0-100</th>
-          </tr>
-        </thead>
-        <tbody id="inputBody"></tbody>
-      </table>
-      <div class="input-actions">
-        <button class="action primary" id="autoPlace">自動で駒を置く</button>
-        <button class="action" id="zeroInputs">入力を0に戻す</button>
-        <span class="small">
-          1着は1〜2人、2着は2〜3人、3着は3〜4人。境界のスコア差が15以上なら候補を1人削ります。
-        </span>
-      </div>
+    <h2>このv31で使っているアルゴリズム</h2>
+    <section class="algo-grid">
+      <article class="algo-card">
+        <h3>参加判定・1着段 <span class="badge">v21</span></h3>
+        <ul>
+          <li>v21を採用し、このv31では固定。</li>
+          <li>1着候補は最大2人。</li>
+          <li>対象率の基準は25%。直近4週間のスコア分位点を使用。</li>
+          <li>v31の2着学習で1着コアは変更していない。</li>
+        </ul>
+      </article>
+
+      <article class="algo-card">
+        <h3>2着段 <span class="badge">v31 Top2 Membership</span></h3>
+        <ul>
+          <li>v26の「順序を持たないTop2ペア」事後確率を使用。</li>
+          <li>1着/2着への向き付けは行わない。</li>
+          <li>各選手の所属質量 = その選手を含む全ペアの確率合計。</li>
+          <li>所属質量上位2人を基本候補にする。</li>
+          <li>3位が0.30以上、かつ2位の65%以上なら3人目を追加。最大3人。</li>
+        </ul>
+      </article>
+
+      <article class="algo-card">
+        <h3>Top2ペアモデル設定</h3>
+        <ul>
+          <li>variant: <strong>blind_d2a</strong></li>
+          <li>depth 2 / leaf 18 / L2 1.5</li>
+          <li>learning rate 0.045 / 190 iterations</li>
+          <li>random_state 26</li>
+          <li>オッズ・人気は不使用。</li>
+        </ul>
+      </article>
+
+      <article class="algo-card">
+        <h3>3着段 <span class="badge warning-badge">暫定 v23</span></h3>
+        <ul>
+          <li>v31時点では3着コアの再設計前。</li>
+          <li>盤面表示だけ欠けないよう、v23 conditional thirdを暫定使用。</li>
+          <li>したがって現在の「v31」は、1着=v21 / 2着=v31 / 3着=v23暫定。</li>
+          <li>3着再学習版へ進む際はこの段だけ差し替える。</li>
+        </ul>
+      </article>
+
+      <article class="algo-card full">
+        <h3>v31 retrospective test（511レース）</h3>
+        <div class="metric-grid">
+          <div class="metric"><b>59.10%</b><span class="small">2着捕捉</span></div>
+          <div class="metric"><b>42.86%</b><span class="small">Top2完全捕捉</span></div>
+          <div class="metric"><b>2.34人</b><span class="small">平均2着候補数</span></div>
+          <div class="metric"><b>34.05%</b><span class="small">3人目追加率</span></div>
+          <div class="metric"><b>60.16%</b><span class="small">1着捕捉時の2着捕捉</span></div>
+        </div>
+        <p class="small">
+          校正: 2025-10-27〜2025-12-28。後方評価: 2025-12-29〜2026-06-28。
+          v31凍結後は未来データでパラメータ調整しない前提。
+        </p>
+      </article>
     </section>
 
-    <h2>アルゴリズム可視化</h2>
-    <section class="analysis-grid" id="analysisGrid"></section>
-
-    <section class="panel" style="margin-top:10px;">
-      <strong>暫定重み</strong>
-      <div class="weights">
-        1着：B数 30% / 勝率 35% / ライン長 15% / 番手差し 5% / 別線能力 15%<br>
-        2着：B数 10% / 勝率 20% / ライン長 20% / 番手差し 30% / 別線能力 20%<br>
-        3着：B数 5% / 勝率 10% / ライン長 20% / 番手差し 20% / 別線能力 45%<br>
-        各特徴は同一レース内で0〜100に正規化してから加重します。これは初期仮説であり、最終ルールではありません。
+    <h2>選択レースのv31内部出力</h2>
+    <section class="data-grid">
+      <div class="panel">
+        <h3>2着 Top2所属質量</h3>
+        <table>
+          <thead><tr><th>順位</th><th>車番</th><th>所属質量</th><th>2着候補</th></tr></thead>
+          <tbody id="membershipBody"><tr><td colspan="4">レース未選択</td></tr></tbody>
+        </table>
+      </div>
+      <div class="panel">
+        <h3>Top2ペア事後確率 上位5</h3>
+        <table>
+          <thead><tr><th>順位</th><th>ペア</th><th>確率</th></tr></thead>
+          <tbody id="pairBody"><tr><td colspan="3">レース未選択</td></tr></tbody>
+        </table>
       </div>
     </section>
   </main>
@@ -293,161 +269,26 @@
       { key: "third", label: "3着" }
     ];
 
-    const weights = {
-      first:  { b: 0.30, win: 0.35, line: 0.15, ban: 0.05, cross: 0.15 },
-      second: { b: 0.10, win: 0.20, line: 0.20, ban: 0.30, cross: 0.20 },
-      third:  { b: 0.05, win: 0.10, line: 0.20, ban: 0.20, cross: 0.45 }
-    };
-
+    const state = { first: [], second: [], third: [] };
     let selectedPiece = null;
-    let lastAnalysis = [];
-
-    const state = {
-      first: [],
-      second: [],
-      third: []
-    };
+    let boardData = null;
+    let visibleRaces = [];
+    let currentRace = null;
 
     const board = document.getElementById("board");
     const status = document.getElementById("status");
-    const inputBody = document.getElementById("inputBody");
-    const analysisGrid = document.getElementById("analysisGrid");
-
-    function makeInputs() {
-      inputBody.innerHTML = "";
-      racers.forEach(no => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td><strong>${no}</strong></td>
-          <td><input type="number" min="0" step="1" id="b-${no}" value="0"></td>
-          <td><input type="number" min="0" max="100" step="0.1" id="win-${no}" value="0"></td>
-          <td><input type="number" min="1" max="7" step="1" id="line-${no}" value="1"></td>
-          <td><input type="number" min="0" max="100" step="1" id="ban-${no}" value="0"></td>
-          <td><input type="number" min="0" max="100" step="1" id="cross-${no}" value="0"></td>
-        `;
-        inputBody.appendChild(tr);
-      });
-    }
-
-    function readValue(id) {
-      const v = Number(document.getElementById(id).value);
-      return Number.isFinite(v) ? v : 0;
-    }
-
-    function readRacers() {
-      return racers.map(no => ({
-        no,
-        b: readValue("b-" + no),
-        win: readValue("win-" + no),
-        line: readValue("line-" + no),
-        ban: readValue("ban-" + no),
-        cross: readValue("cross-" + no)
-      }));
-    }
-
-    function normalize(values) {
-      const min = Math.min(...values);
-      const max = Math.max(...values);
-      if (max === min) return values.map(() => 50);
-      return values.map(v => ((v - min) / (max - min)) * 100);
-    }
-
-    function analyze(data) {
-      const nb = normalize(data.map(x => x.b));
-      const nwin = normalize(data.map(x => x.win));
-      const nline = normalize(data.map(x => x.line));
-      const nban = normalize(data.map(x => x.ban));
-      const ncross = normalize(data.map(x => x.cross));
-
-      return data.map((x, i) => {
-        const normalized = {
-          b: nb[i],
-          win: nwin[i],
-          line: nline[i],
-          ban: nban[i],
-          cross: ncross[i]
-        };
-
-        const result = { no: x.no, raw: x, normalized, scores: {}, parts: {} };
-
-        rows.forEach(row => {
-          const w = weights[row.key];
-          const parts = {
-            b: normalized.b * w.b,
-            win: normalized.win * w.win,
-            line: normalized.line * w.line,
-            ban: normalized.ban * w.ban,
-            cross: normalized.cross * w.cross
-          };
-          const total = Object.values(parts).reduce((a,b) => a + b, 0);
-          result.parts[row.key] = parts;
-          result.scores[row.key] = total;
-        });
-
-        return result;
-      });
-    }
-
-    function chooseCandidates(analysis, rowKey) {
-      const sorted = [...analysis].sort((a,b) => b.scores[rowKey] - a.scores[rowKey]);
-
-      let count;
-      if (rowKey === "first") {
-        count = 2;
-        if (sorted[0].scores.first - sorted[1].scores.first >= 15) count = 1;
-      } else if (rowKey === "second") {
-        count = 3;
-        if (sorted[1].scores.second - sorted[2].scores.second >= 15) count = 2;
-      } else {
-        count = 4;
-        if (sorted[2].scores.third - sorted[3].scores.third >= 15) count = 3;
-      }
-
-      return sorted.slice(0, count).map(x => x.no).sort((a,b) => a-b);
-    }
-
-    function autoPlace() {
-      const data = readRacers();
-      lastAnalysis = analyze(data);
-
-      state.first = chooseCandidates(lastAnalysis, "first");
-      state.second = chooseCandidates(lastAnalysis, "second");
-      state.third = chooseCandidates(lastAnalysis, "third");
-
-      renderBoard();
-      renderAnalysis();
-      status.textContent =
-        "自動配置しました。1着 " + state.first.join("・") +
-        " / 2着 " + state.second.join("・") +
-        " / 3着 " + state.third.join("・");
-    }
-
-    function addPieceToRow(rowKey, rowLabel) {
-      if (!selectedPiece) {
-        status.textContent = "先に駒を選択してください。";
-        return;
-      }
-      if (state[rowKey].includes(selectedPiece)) {
-        status.textContent = rowLabel + "には駒" + selectedPiece + "がすでにあります。";
-        return;
-      }
-      state[rowKey].push(selectedPiece);
-      state[rowKey].sort((a,b) => a-b);
-      status.textContent = rowLabel + "候補に駒" + selectedPiece + "を追加しました。";
-      renderBoard();
-    }
-
-    function removePieceFromRow(rowKey, rowLabel, pieceNo) {
-      state[rowKey] = state[rowKey].filter(no => no !== pieceNo);
-      status.textContent = rowLabel + "候補から駒" + pieceNo + "を削除しました。";
-      renderBoard();
-    }
+    const raceSearch = document.getElementById("raceSearch");
+    const raceSelect = document.getElementById("raceSelect");
+    const raceMeta = document.getElementById("raceMeta");
+    const dataStatus = document.getElementById("dataStatus");
+    const membershipBody = document.getElementById("membershipBody");
+    const pairBody = document.getElementById("pairBody");
 
     function renderBoard() {
       board.innerHTML = "";
       rows.forEach(row => {
-        const rowWrap = document.createElement("div");
-        rowWrap.className = "rank-row";
+        const wrapper = document.createElement("div");
+        wrapper.className = "rank-row";
 
         const label = document.createElement("div");
         label.className = "row-label";
@@ -455,131 +296,170 @@
 
         const zone = document.createElement("div");
         zone.className = "row-zone";
-
-        zone.addEventListener("click", () => addPieceToRow(row.key, row.label));
+        zone.dataset.row = row.key;
 
         if (state[row.key].length === 0) {
           const hint = document.createElement("span");
           hint.className = "empty-hint";
-          hint.textContent = "ここを押して配置";
+          hint.textContent = "候補なし";
           zone.appendChild(hint);
         } else {
-          state[row.key].forEach(pieceNo => {
-            const piece = document.createElement("button");
-            piece.type = "button";
-            piece.className = "placed piece-" + pieceNo;
-            piece.textContent = pieceNo;
-            piece.title = row.label + "候補から" + pieceNo + "を削除";
-            piece.addEventListener("click", event => {
-              event.stopPropagation();
-              removePieceFromRow(row.key, row.label, pieceNo);
+          state[row.key].forEach(no => {
+            const p = document.createElement("div");
+            p.className = `placed piece-${no}`;
+            p.textContent = no;
+            p.title = `${row.label}候補 ${no}番。クリックでこの段から削除`;
+            p.addEventListener("click", e => {
+              e.stopPropagation();
+              state[row.key] = state[row.key].filter(x => x !== no);
+              renderBoard();
+              status.textContent = `${row.label}から${no}番を手動で削除しました。`;
             });
-            zone.appendChild(piece);
+            zone.appendChild(p);
           });
         }
 
-        rowWrap.appendChild(label);
-        rowWrap.appendChild(zone);
-        board.appendChild(rowWrap);
+        zone.addEventListener("click", () => {
+          if (!selectedPiece) {
+            status.textContent = "上の車番を選んでから、置きたい段をタップしてください。";
+            return;
+          }
+          if (!state[row.key].includes(selectedPiece)) state[row.key].push(selectedPiece);
+          renderBoard();
+          status.textContent = `${selectedPiece}番を${row.label}へ手動追加しました。`;
+        });
+
+        wrapper.append(label, zone);
+        board.appendChild(wrapper);
       });
     }
 
-    function fmt(v) {
-      return Number(v).toFixed(1);
+    function raceLabel(r) {
+      const rno = r.race_no ? `${r.race_no}R` : "";
+      return `${r.race_date || "日付不明"} ${r.track || "場不明"} ${rno} ${r.race_type || ""} [${r.race_id}]`.trim();
     }
 
-    function renderAnalysis() {
-      analysisGrid.innerHTML = "";
-      if (!lastAnalysis.length) {
-        analysisGrid.innerHTML = '<div class="analysis-card small">まだ自動配置していません。</div>';
+    function filterRaces() {
+      if (!boardData) return;
+      const q = raceSearch.value.trim().toLowerCase();
+      visibleRaces = boardData.races.filter(r => !q || raceLabel(r).toLowerCase().includes(q));
+      const keep = raceSelect.value;
+      raceSelect.innerHTML = "";
+      if (!visibleRaces.length) {
+        const opt = document.createElement("option");
+        opt.value = "";
+        opt.textContent = "該当レースなし";
+        raceSelect.appendChild(opt);
         return;
       }
-
-      [...lastAnalysis]
-        .sort((a,b) => a.no - b.no)
-        .forEach(item => {
-          const card = document.createElement("article");
-          card.className = "analysis-card";
-
-          const isFirst = state.first.includes(item.no);
-          const isSecond = state.second.includes(item.no);
-          const isThird = state.third.includes(item.no);
-
-          const rowHtml = rows.map(row => {
-            const parts = item.parts[row.key];
-            const accepted =
-              row.key === "first" ? isFirst :
-              row.key === "second" ? isSecond : isThird;
-
-            const reason =
-              "B " + fmt(parts.b) +
-              " / 勝率 " + fmt(parts.win) +
-              " / ライン " + fmt(parts.line) +
-              " / 番手 " + fmt(parts.ban) +
-              " / 別線 " + fmt(parts.cross);
-
-            return `
-              <div class="score-row">
-                <div><strong>${row.label}</strong></div>
-                <div class="score">${fmt(item.scores[row.key])}</div>
-                <div>
-                  <span class="${accepted ? "accepted" : "rejected"}">${accepted ? "採用" : "除外"}</span>
-                  <div class="small">${reason}</div>
-                </div>
-              </div>
-            `;
-          }).join("");
-
-          card.innerHTML = `
-            <div class="analysis-head">
-              <span class="mini-piece piece-${item.no}">${item.no}</span>
-              <strong>${item.no}番車</strong>
-              <span class="small">
-                B=${item.raw.b} / 勝率=${item.raw.win}% / ライン=${item.raw.line} /
-                番手=${item.raw.ban} / 別線=${item.raw.cross}
-              </span>
-            </div>
-            ${rowHtml}
-          `;
-
-          analysisGrid.appendChild(card);
-        });
+      visibleRaces.forEach(r => {
+        const opt = document.createElement("option");
+        opt.value = r.race_id;
+        opt.textContent = raceLabel(r);
+        raceSelect.appendChild(opt);
+      });
+      if (visibleRaces.some(r => r.race_id === keep)) raceSelect.value = keep;
+      else raceSelect.value = visibleRaces[visibleRaces.length - 1].race_id;
     }
 
-    document.querySelectorAll(".piece").forEach(button => {
-      button.addEventListener("click", () => {
-        selectedPiece = Number(button.dataset.piece);
-        document.querySelectorAll(".piece").forEach(b => {
-          b.classList.toggle("selected", b === button);
-        });
-        status.textContent =
-          "駒" + selectedPiece + "を選択中。置きたい着順の段を押してください。";
+    function applyRace(race) {
+      if (!race) return;
+      currentRace = race;
+      state.first = [...(race.first_candidates || [])];
+      state.second = [...(race.second_candidates || [])];
+      state.third = [...(race.third_candidates || [])];
+      renderBoard();
+
+      const versions = race.versions || {};
+      raceMeta.innerHTML = `
+        <strong>${race.race_date || ""} ${race.track || ""} ${race.race_no || ""}R ${race.race_type || ""}</strong><br>
+        race_id: ${race.race_id}<br>
+        参加判定/1着: ${versions.participation_first || "v21"} /
+        2着: ${versions.second || "v31_top2_membership"} /
+        3着: ${versions.third || "v23_legacy_until_v32"}
+      `;
+      status.textContent = `v31盤面を表示中。1着 ${state.first.join("・") || "なし"} / 2着 ${state.second.join("・") || "なし"} / 3着 ${state.third.join("・") || "なし"}`;
+      renderDetails(race);
+    }
+
+    function renderDetails(race) {
+      const secondSet = new Set(race.second_candidates || []);
+      const membership = race.second_membership || [];
+      membershipBody.innerHTML = membership.length ? membership.map((x, i) => `
+        <tr class="${secondSet.has(x.no) ? "active-row" : ""}">
+          <td>${i + 1}</td>
+          <td><strong>${x.no}</strong></td>
+          <td>${Number(x.mass).toFixed(4)}</td>
+          <td>${secondSet.has(x.no) ? "採用" : ""}</td>
+        </tr>
+      `).join("") : '<tr><td colspan="4">所属質量データなし</td></tr>';
+
+      const pairs = race.top_pairs || [];
+      pairBody.innerHTML = pairs.length ? pairs.map((x, i) => `
+        <tr>
+          <td>${i + 1}</td>
+          <td><strong>${x.a}-${x.b}</strong></td>
+          <td>${(Number(x.prob) * 100).toFixed(2)}%</td>
+        </tr>
+      `).join("") : '<tr><td colspan="3">ペアデータなし</td></tr>';
+    }
+
+    async function loadBoardData() {
+      try {
+        const res = await fetch("v31-board-data.json", { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        boardData = await res.json();
+        filterRaces();
+        dataStatus.textContent =
+          `board_version=${boardData.board_version} / ${boardData.race_count}レース / 3着欠損=${boardData.missing_third_count}`;
+        const latest = visibleRaces[visibleRaces.length - 1];
+        if (latest) {
+          raceSelect.value = latest.race_id;
+          applyRace(latest);
+        }
+      } catch (err) {
+        raceSelect.innerHTML = '<option value="">読み込み失敗</option>';
+        raceMeta.textContent = "v31-board-data.json を読み込めませんでした。";
+        dataStatus.textContent = String(err);
+        status.textContent = "自動盤面データの読み込みに失敗。手動配置は使えます。";
+      }
+    }
+
+    document.querySelectorAll(".piece").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const no = Number(btn.dataset.piece);
+        selectedPiece = selectedPiece === no ? null : no;
+        document.querySelectorAll(".piece").forEach(x =>
+          x.classList.toggle("selected", Number(x.dataset.piece) === selectedPiece)
+        );
+        status.textContent = selectedPiece
+          ? `${selectedPiece}番を選択中。置きたい段をタップしてください。`
+          : "手動駒の選択を解除しました。";
       });
     });
 
     document.getElementById("clearBoard").addEventListener("click", () => {
-      rows.forEach(row => state[row.key] = []);
-      status.textContent = "盤面を全消去しました。";
+      state.first = [];
+      state.second = [];
+      state.third = [];
       renderBoard();
-      renderAnalysis();
+      status.textContent = "盤面を手動で全消去しました。";
     });
 
-    document.getElementById("autoPlace").addEventListener("click", autoPlace);
-
-    document.getElementById("zeroInputs").addEventListener("click", () => {
-      racers.forEach(no => {
-        document.getElementById("b-" + no).value = 0;
-        document.getElementById("win-" + no).value = 0;
-        document.getElementById("line-" + no).value = 1;
-        document.getElementById("ban-" + no).value = 0;
-        document.getElementById("cross-" + no).value = 0;
-      });
-      status.textContent = "入力を初期値に戻しました。";
+    document.getElementById("loadRace").addEventListener("click", () => {
+      if (!boardData || !raceSelect.value) return;
+      applyRace(boardData.races.find(r => r.race_id === raceSelect.value));
     });
 
-    makeInputs();
+    raceSelect.addEventListener("change", () => {
+      if (!boardData || !raceSelect.value) return;
+      applyRace(boardData.races.find(r => r.race_id === raceSelect.value));
+    });
+
+    raceSearch.addEventListener("input", filterRaces);
+
     renderBoard();
-    renderAnalysis();
+    loadBoardData();
   </script>
 </body>
 </html>
