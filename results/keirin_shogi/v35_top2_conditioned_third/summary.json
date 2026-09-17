@@ -1,0 +1,997 @@
+{
+  "algorithm": "keirin_shogi_v35_top2_conditioned_third",
+  "status": "development_failed_not_frozen",
+  "concept": "For every unordered Top2 pair, predict the remaining rider that completes third; marginalize all 21 conditional branches with the unchanged v31 pair posterior.",
+  "data_inventory": {
+    "historical_complete_races": 11915,
+    "by_year": {
+      "2024": 4775,
+      "2025": 4791,
+      "2026": 2349
+    },
+    "future_block_loaded": false
+  },
+  "model_selection": [
+    {
+      "variant": {
+        "name": "cond_d2a",
+        "depth": 2,
+        "leaf": 24,
+        "l2": 1.5,
+        "lr": 0.045,
+        "iters": 190
+      },
+      "objective": 0.41547467752130474,
+      "minimum_fold_score": 0.4126793749387684,
+      "mean_fold_score": 0.4196676313951093,
+      "folds": [
+        {
+          "fold": {
+            "name": "2024_h2",
+            "train": [
+              "2024-01-01",
+              "2024-06-30"
+            ],
+            "validation": [
+              "2024-07-01",
+              "2024-12-31"
+            ]
+          },
+          "score": 0.42211368626851903,
+          "metrics": {
+            "races": 2363,
+            "actual_third_top1": 0.23614049936521372,
+            "actual_third_top2": 0.40626322471434617,
+            "actual_third_top3": 0.5501481168006771,
+            "actual_third_top4": 0.6813372831146848,
+            "mean_nll": 1.8898394511916912
+          }
+        },
+        {
+          "fold": {
+            "name": "2025_h1",
+            "train": [
+              "2024-01-01",
+              "2024-12-31"
+            ],
+            "validation": [
+              "2025-01-01",
+              "2025-06-30"
+            ]
+          },
+          "score": 0.4126793749387684,
+          "metrics": {
+            "races": 2336,
+            "actual_third_top1": 0.2268835616438356,
+            "actual_third_top2": 0.3891267123287671,
+            "actual_third_top3": 0.5449486301369864,
+            "actual_third_top4": 0.6870719178082192,
+            "mean_nll": 1.8847311684656727
+          }
+        },
+        {
+          "fold": {
+            "name": "2025_pre_calibration",
+            "train": [
+              "2024-01-01",
+              "2025-06-30"
+            ],
+            "validation": [
+              "2025-07-01",
+              "2025-10-26"
+            ]
+          },
+          "score": 0.4242098329780406,
+          "metrics": {
+            "races": 1539,
+            "actual_third_top1": 0.2235217673814165,
+            "actual_third_top2": 0.3996101364522417,
+            "actual_third_top3": 0.562053281351527,
+            "actual_third_top4": 0.6939571150097466,
+            "mean_nll": 1.878322159272063
+          }
+        }
+      ]
+    },
+    {
+      "variant": {
+        "name": "cond_d2b",
+        "depth": 2,
+        "leaf": 36,
+        "l2": 2.5,
+        "lr": 0.04,
+        "iters": 230
+      },
+      "objective": 0.41529207552597003,
+      "minimum_fold_score": 0.41267928966135303,
+      "mean_fold_score": 0.4192112543228955,
+      "folds": [
+        {
+          "fold": {
+            "name": "2024_h2",
+            "train": [
+              "2024-01-01",
+              "2024-06-30"
+            ],
+            "validation": [
+              "2024-07-01",
+              "2024-12-31"
+            ]
+          },
+          "score": 0.419596434677749,
+          "metrics": {
+            "races": 2363,
+            "actual_third_top1": 0.23444773592890394,
+            "actual_third_top2": 0.40330088870080405,
+            "actual_third_top3": 0.5476089716462125,
+            "actual_third_top4": 0.6809140922556073,
+            "mean_nll": 1.8900726437150288
+          }
+        },
+        {
+          "fold": {
+            "name": "2025_h1",
+            "train": [
+              "2024-01-01",
+              "2024-12-31"
+            ],
+            "validation": [
+              "2025-01-01",
+              "2025-06-30"
+            ]
+          },
+          "score": 0.41267928966135303,
+          "metrics": {
+            "races": 2336,
+            "actual_third_top1": 0.22602739726027396,
+            "actual_third_top2": 0.3874143835616438,
+            "actual_third_top3": 0.5462328767123288,
+            "actual_third_top4": 0.6862157534246576,
+            "mean_nll": 1.8847368536266946
+          }
+        },
+        {
+          "fold": {
+            "name": "2025_pre_calibration",
+            "train": [
+              "2024-01-01",
+              "2025-06-30"
+            ],
+            "validation": [
+              "2025-07-01",
+              "2025-10-26"
+            ]
+          },
+          "score": 0.42535803862958455,
+          "metrics": {
+            "races": 1539,
+            "actual_third_top1": 0.22612085769980506,
+            "actual_third_top2": 0.3996101364522417,
+            "actual_third_top3": 0.5633528265107213,
+            "actual_third_top4": 0.6978557504873294,
+            "mean_nll": 1.8780150985085253
+          }
+        }
+      ]
+    },
+    {
+      "variant": {
+        "name": "cond_d3b",
+        "depth": 3,
+        "leaf": 42,
+        "l2": 3.0,
+        "lr": 0.035,
+        "iters": 250
+      },
+      "objective": 0.4147688183044649,
+      "minimum_fold_score": 0.4121486582686323,
+      "mean_fold_score": 0.41869905835821386,
+      "folds": [
+        {
+          "fold": {
+            "name": "2024_h2",
+            "train": [
+              "2024-01-01",
+              "2024-06-30"
+            ],
+            "validation": [
+              "2024-07-01",
+              "2024-12-31"
+            ]
+          },
+          "score": 0.4195977676336264,
+          "metrics": {
+            "races": 2363,
+            "actual_third_top1": 0.23825645366060094,
+            "actual_third_top2": 0.4054168429961913,
+            "actual_third_top3": 0.5450698264917477,
+            "actual_third_top4": 0.6881083368599238,
+            "mean_nll": 1.8899837799898689
+          }
+        },
+        {
+          "fold": {
+            "name": "2025_h1",
+            "train": [
+              "2024-01-01",
+              "2024-12-31"
+            ],
+            "validation": [
+              "2025-01-01",
+              "2025-06-30"
+            ]
+          },
+          "score": 0.4121486582686323,
+          "metrics": {
+            "races": 2336,
+            "actual_third_top1": 0.230736301369863,
+            "actual_third_top2": 0.3835616438356164,
+            "actual_third_top3": 0.545804794520548,
+            "actual_third_top4": 0.6870719178082192,
+            "mean_nll": 1.8847241519541929
+          }
+        },
+        {
+          "fold": {
+            "name": "2025_pre_calibration",
+            "train": [
+              "2024-01-01",
+              "2025-06-30"
+            ],
+            "validation": [
+              "2025-07-01",
+              "2025-10-26"
+            ]
+          },
+          "score": 0.42435074917238297,
+          "metrics": {
+            "races": 1539,
+            "actual_third_top1": 0.2202729044834308,
+            "actual_third_top2": 0.396361273554256,
+            "actual_third_top3": 0.5653021442495126,
+            "actual_third_top4": 0.6991552956465237,
+            "mean_nll": 1.8775913807105302
+          }
+        }
+      ]
+    },
+    {
+      "variant": {
+        "name": "cond_d3a",
+        "depth": 3,
+        "leaf": 28,
+        "l2": 2.0,
+        "lr": 0.04,
+        "iters": 210
+      },
+      "objective": 0.4133738500747537,
+      "minimum_fold_score": 0.4106613339828099,
+      "mean_fold_score": 0.4174426242126694,
+      "folds": [
+        {
+          "fold": {
+            "name": "2024_h2",
+            "train": [
+              "2024-01-01",
+              "2024-06-30"
+            ],
+            "validation": [
+              "2024-07-01",
+              "2024-12-31"
+            ]
+          },
+          "score": 0.4198836835769441,
+          "metrics": {
+            "races": 2363,
+            "actual_third_top1": 0.2369868810833686,
+            "actual_third_top2": 0.4041472704189589,
+            "actual_third_top3": 0.5467625899280576,
+            "actual_third_top4": 0.6855691917054592,
+            "mean_nll": 1.8889788604226545
+          }
+        },
+        {
+          "fold": {
+            "name": "2025_h1",
+            "train": [
+              "2024-01-01",
+              "2024-12-31"
+            ],
+            "validation": [
+              "2025-01-01",
+              "2025-06-30"
+            ]
+          },
+          "score": 0.4106613339828099,
+          "metrics": {
+            "races": 2336,
+            "actual_third_top1": 0.22773972602739725,
+            "actual_third_top2": 0.3818493150684932,
+            "actual_third_top3": 0.5449486301369864,
+            "actual_third_top4": 0.692208904109589,
+            "mean_nll": 1.8839932595934985
+          }
+        },
+        {
+          "fold": {
+            "name": "2025_pre_calibration",
+            "train": [
+              "2024-01-01",
+              "2025-06-30"
+            ],
+            "validation": [
+              "2025-07-01",
+              "2025-10-26"
+            ]
+          },
+          "score": 0.42178285507825425,
+          "metrics": {
+            "races": 1539,
+            "actual_third_top1": 0.2222222222222222,
+            "actual_third_top2": 0.39116309291747886,
+            "actual_third_top3": 0.5627030539311241,
+            "actual_third_top4": 0.6978557504873294,
+            "mean_nll": 1.8781107227449272
+          }
+        }
+      ]
+    }
+  ],
+  "selected_variant": {
+    "name": "cond_d2a",
+    "depth": 2,
+    "leaf": 24,
+    "l2": 1.5,
+    "lr": 0.045,
+    "iters": 190
+  },
+  "feature_count": 299,
+  "feature_names": [
+    "candidate_adjacent_pair_count",
+    "candidate_ahead_pair_count",
+    "candidate_behind_pair_count",
+    "candidate_different_from_both",
+    "candidate_immediately_ahead_count",
+    "candidate_immediately_behind_count",
+    "candidate_line_attack_sum_z",
+    "candidate_line_b_sum_z",
+    "candidate_line_max_score_z",
+    "candidate_line_mean_score_z",
+    "candidate_line_pos",
+    "candidate_line_pos1",
+    "candidate_line_pos2",
+    "candidate_line_pos3p",
+    "candidate_line_position",
+    "candidate_line_size",
+    "candidate_minus_pair_max_line_attack_sum_z",
+    "candidate_minus_pair_max_line_b_sum_z",
+    "candidate_minus_pair_max_line_max_score_z",
+    "candidate_minus_pair_max_line_mean_score_z",
+    "candidate_minus_pair_max_line_pos",
+    "candidate_minus_pair_max_line_pos1",
+    "candidate_minus_pair_max_line_pos2",
+    "candidate_minus_pair_max_line_pos3p",
+    "candidate_minus_pair_max_line_size",
+    "candidate_minus_pair_max_style_both",
+    "candidate_minus_pair_max_style_chase",
+    "candidate_minus_pair_max_style_escape",
+    "candidate_minus_pair_max_z_b_count",
+    "candidate_minus_pair_max_z_first_count",
+    "candidate_minus_pair_max_z_makuri_count",
+    "candidate_minus_pair_max_z_mark_count",
+    "candidate_minus_pair_max_z_nige_count",
+    "candidate_minus_pair_max_z_outside_count",
+    "candidate_minus_pair_max_z_s_count",
+    "candidate_minus_pair_max_z_sashi_count",
+    "candidate_minus_pair_max_z_score",
+    "candidate_minus_pair_max_z_second_count",
+    "candidate_minus_pair_max_z_third_count",
+    "candidate_minus_pair_max_z_top2_rate",
+    "candidate_minus_pair_max_z_top3_rate",
+    "candidate_minus_pair_max_z_win_rate",
+    "candidate_minus_pair_mean_line_attack_sum_z",
+    "candidate_minus_pair_mean_line_b_sum_z",
+    "candidate_minus_pair_mean_line_max_score_z",
+    "candidate_minus_pair_mean_line_mean_score_z",
+    "candidate_minus_pair_mean_line_pos",
+    "candidate_minus_pair_mean_line_pos1",
+    "candidate_minus_pair_mean_line_pos2",
+    "candidate_minus_pair_mean_line_pos3p",
+    "candidate_minus_pair_mean_line_size",
+    "candidate_minus_pair_mean_style_both",
+    "candidate_minus_pair_mean_style_chase",
+    "candidate_minus_pair_mean_style_escape",
+    "candidate_minus_pair_mean_z_b_count",
+    "candidate_minus_pair_mean_z_first_count",
+    "candidate_minus_pair_mean_z_makuri_count",
+    "candidate_minus_pair_mean_z_mark_count",
+    "candidate_minus_pair_mean_z_nige_count",
+    "candidate_minus_pair_mean_z_outside_count",
+    "candidate_minus_pair_mean_z_s_count",
+    "candidate_minus_pair_mean_z_sashi_count",
+    "candidate_minus_pair_mean_z_score",
+    "candidate_minus_pair_mean_z_second_count",
+    "candidate_minus_pair_mean_z_third_count",
+    "candidate_minus_pair_mean_z_top2_rate",
+    "candidate_minus_pair_mean_z_top3_rate",
+    "candidate_minus_pair_mean_z_win_rate",
+    "candidate_same_line_count",
+    "candidate_style_both",
+    "candidate_style_chase",
+    "candidate_style_escape",
+    "candidate_z_b_count",
+    "candidate_z_first_count",
+    "candidate_z_makuri_count",
+    "candidate_z_mark_count",
+    "candidate_z_nige_count",
+    "candidate_z_outside_count",
+    "candidate_z_s_count",
+    "candidate_z_sashi_count",
+    "candidate_z_score",
+    "candidate_z_second_count",
+    "candidate_z_third_count",
+    "candidate_z_top2_rate",
+    "candidate_z_top3_rate",
+    "candidate_z_win_rate",
+    "pair_adjacent_same_line",
+    "pair_attack_plus_mark_sum",
+    "pair_both_line_front",
+    "pair_both_top2_line_position",
+    "pair_chaser_mark_max",
+    "pair_different_line",
+    "pair_front_attack_max",
+    "pair_line_attack_sum_z_absdiff",
+    "pair_line_attack_sum_z_max",
+    "pair_line_attack_sum_z_min",
+    "pair_line_attack_sum_z_sum",
+    "pair_line_b_sum_z_absdiff",
+    "pair_line_b_sum_z_max",
+    "pair_line_b_sum_z_min",
+    "pair_line_b_sum_z_sum",
+    "pair_line_max_score_z_absdiff",
+    "pair_line_max_score_z_max",
+    "pair_line_max_score_z_min",
+    "pair_line_max_score_z_sum",
+    "pair_line_mean_score_z_absdiff",
+    "pair_line_mean_score_z_max",
+    "pair_line_mean_score_z_min",
+    "pair_line_mean_score_z_sum",
+    "pair_line_pos_absdiff",
+    "pair_line_pos_distance",
+    "pair_line_pos_max",
+    "pair_line_pos_min",
+    "pair_line_pos_sum",
+    "pair_line_size_absdiff",
+    "pair_line_size_max",
+    "pair_line_size_min",
+    "pair_line_size_sum",
+    "pair_one_front",
+    "pair_one_front_one_second",
+    "pair_one_second",
+    "pair_same_line",
+    "pair_same_line_candidate_other",
+    "pair_same_line_candidate_same",
+    "pair_score_plus_top2_sum",
+    "pair_z_b_count_absdiff",
+    "pair_z_b_count_max",
+    "pair_z_b_count_min",
+    "pair_z_b_count_sum",
+    "pair_z_first_count_absdiff",
+    "pair_z_first_count_max",
+    "pair_z_first_count_min",
+    "pair_z_first_count_sum",
+    "pair_z_makuri_count_absdiff",
+    "pair_z_makuri_count_max",
+    "pair_z_makuri_count_min",
+    "pair_z_makuri_count_sum",
+    "pair_z_mark_count_absdiff",
+    "pair_z_mark_count_max",
+    "pair_z_mark_count_min",
+    "pair_z_mark_count_sum",
+    "pair_z_nige_count_absdiff",
+    "pair_z_nige_count_max",
+    "pair_z_nige_count_min",
+    "pair_z_nige_count_sum",
+    "pair_z_outside_count_absdiff",
+    "pair_z_outside_count_max",
+    "pair_z_outside_count_min",
+    "pair_z_outside_count_sum",
+    "pair_z_sashi_count_absdiff",
+    "pair_z_sashi_count_max",
+    "pair_z_sashi_count_min",
+    "pair_z_sashi_count_sum",
+    "pair_z_score_absdiff",
+    "pair_z_score_max",
+    "pair_z_score_min",
+    "pair_z_score_sum",
+    "pair_z_second_count_absdiff",
+    "pair_z_second_count_max",
+    "pair_z_second_count_min",
+    "pair_z_second_count_sum",
+    "pair_z_third_count_absdiff",
+    "pair_z_third_count_max",
+    "pair_z_third_count_min",
+    "pair_z_third_count_sum",
+    "pair_z_top2_rate_absdiff",
+    "pair_z_top2_rate_max",
+    "pair_z_top2_rate_min",
+    "pair_z_top2_rate_sum",
+    "pair_z_top3_rate_absdiff",
+    "pair_z_top3_rate_max",
+    "pair_z_top3_rate_min",
+    "pair_z_top3_rate_sum",
+    "pair_z_win_rate_absdiff",
+    "pair_z_win_rate_max",
+    "pair_z_win_rate_min",
+    "pair_z_win_rate_sum",
+    "race_type_一般",
+    "race_type_予選",
+    "race_type_決勝",
+    "race_type_準決勝",
+    "race_type_特選",
+    "race_type_選抜",
+    "triple_adjacent_same_line_pair_count",
+    "triple_all_different_lines",
+    "triple_all_same_line",
+    "triple_contains_same_line_positions_1_2",
+    "triple_distinct_line_count",
+    "triple_distinct_lines",
+    "triple_exactly_two_same_line",
+    "triple_line_attack_sum_z_max",
+    "triple_line_attack_sum_z_mean",
+    "triple_line_attack_sum_z_min",
+    "triple_line_attack_sum_z_std",
+    "triple_line_b_sum_z_max",
+    "triple_line_b_sum_z_mean",
+    "triple_line_b_sum_z_min",
+    "triple_line_b_sum_z_std",
+    "triple_line_front_count",
+    "triple_line_max_score_z_max",
+    "triple_line_max_score_z_mean",
+    "triple_line_max_score_z_min",
+    "triple_line_max_score_z_std",
+    "triple_line_mean_score_z_max",
+    "triple_line_mean_score_z_mean",
+    "triple_line_mean_score_z_min",
+    "triple_line_mean_score_z_std",
+    "triple_line_pos1_max",
+    "triple_line_pos1_mean",
+    "triple_line_pos1_min",
+    "triple_line_pos1_std",
+    "triple_line_pos2_max",
+    "triple_line_pos2_mean",
+    "triple_line_pos2_min",
+    "triple_line_pos2_std",
+    "triple_line_pos3p_max",
+    "triple_line_pos3p_mean",
+    "triple_line_pos3p_min",
+    "triple_line_pos3p_std",
+    "triple_line_pos_max",
+    "triple_line_pos_mean",
+    "triple_line_pos_min",
+    "triple_line_pos_std",
+    "triple_line_second_count",
+    "triple_line_size_max",
+    "triple_line_size_mean",
+    "triple_line_size_min",
+    "triple_line_size_std",
+    "triple_line_third_or_later_count",
+    "triple_max_same_line_members",
+    "triple_same_line_pair_count",
+    "triple_style_both_max",
+    "triple_style_both_mean",
+    "triple_style_both_min",
+    "triple_style_both_std",
+    "triple_style_chase_max",
+    "triple_style_chase_mean",
+    "triple_style_chase_min",
+    "triple_style_chase_std",
+    "triple_style_escape_max",
+    "triple_style_escape_mean",
+    "triple_style_escape_min",
+    "triple_style_escape_std",
+    "triple_z_b_count_max",
+    "triple_z_b_count_mean",
+    "triple_z_b_count_min",
+    "triple_z_b_count_std",
+    "triple_z_first_count_max",
+    "triple_z_first_count_mean",
+    "triple_z_first_count_min",
+    "triple_z_first_count_std",
+    "triple_z_makuri_count_max",
+    "triple_z_makuri_count_mean",
+    "triple_z_makuri_count_min",
+    "triple_z_makuri_count_std",
+    "triple_z_mark_count_max",
+    "triple_z_mark_count_mean",
+    "triple_z_mark_count_min",
+    "triple_z_mark_count_std",
+    "triple_z_nige_count_max",
+    "triple_z_nige_count_mean",
+    "triple_z_nige_count_min",
+    "triple_z_nige_count_std",
+    "triple_z_outside_count_max",
+    "triple_z_outside_count_mean",
+    "triple_z_outside_count_min",
+    "triple_z_outside_count_std",
+    "triple_z_s_count_max",
+    "triple_z_s_count_mean",
+    "triple_z_s_count_min",
+    "triple_z_s_count_std",
+    "triple_z_sashi_count_max",
+    "triple_z_sashi_count_mean",
+    "triple_z_sashi_count_min",
+    "triple_z_sashi_count_std",
+    "triple_z_score_max",
+    "triple_z_score_mean",
+    "triple_z_score_min",
+    "triple_z_score_std",
+    "triple_z_second_count_max",
+    "triple_z_second_count_mean",
+    "triple_z_second_count_min",
+    "triple_z_second_count_std",
+    "triple_z_third_count_max",
+    "triple_z_third_count_mean",
+    "triple_z_third_count_min",
+    "triple_z_third_count_std",
+    "triple_z_top2_rate_max",
+    "triple_z_top2_rate_mean",
+    "triple_z_top2_rate_min",
+    "triple_z_top2_rate_std",
+    "triple_z_top3_rate_max",
+    "triple_z_top3_rate_mean",
+    "triple_z_top3_rate_min",
+    "triple_z_top3_rate_std",
+    "triple_z_win_rate_max",
+    "triple_z_win_rate_mean",
+    "triple_z_win_rate_min",
+    "triple_z_win_rate_std"
+  ],
+  "historical_policy_walk_forward": [
+    {
+      "stage": {
+        "name": "policy_2024q4",
+        "train": [
+          "2024-01-01",
+          "2024-06-30"
+        ],
+        "calibration": [
+          "2024-07-01",
+          "2024-09-30"
+        ],
+        "test": [
+          "2024-10-01",
+          "2024-12-31"
+        ]
+      },
+      "train_races": 2412,
+      "selected_policy": {
+        "kind": "ratio",
+        "rel3": 0.84,
+        "rel4": null
+      },
+      "calibration_metrics": {
+        "races": 1185,
+        "third_capture": 0.5071729957805907,
+        "avg_third_candidates": 2.837130801687764,
+        "two_candidate_rate": 0.16286919831223629,
+        "three_candidate_rate": 0.8371308016877637,
+        "four_candidate_rate": 0.0
+      },
+      "test_metrics": {
+        "races": 1178,
+        "third_capture": 0.5373514431239389,
+        "avg_third_candidates": 2.8149405772495757,
+        "two_candidate_rate": 0.18505942275042445,
+        "three_candidate_rate": 0.8149405772495756,
+        "four_candidate_rate": 0.0
+      }
+    },
+    {
+      "stage": {
+        "name": "policy_2025q2",
+        "train": [
+          "2024-01-01",
+          "2024-12-31"
+        ],
+        "calibration": [
+          "2025-01-01",
+          "2025-03-31"
+        ],
+        "test": [
+          "2025-04-01",
+          "2025-06-30"
+        ]
+      },
+      "train_races": 4775,
+      "selected_policy": {
+        "kind": "ratio",
+        "rel3": 0.84,
+        "rel4": null
+      },
+      "calibration_metrics": {
+        "races": 1187,
+        "third_capture": 0.4928390901432182,
+        "avg_third_candidates": 2.8129738837405225,
+        "two_candidate_rate": 0.18702611625947768,
+        "three_candidate_rate": 0.8129738837405224,
+        "four_candidate_rate": 0.0
+      },
+      "test_metrics": {
+        "races": 1149,
+        "third_capture": 0.5317667536988686,
+        "avg_third_candidates": 2.7789382071366404,
+        "two_candidate_rate": 0.22106179286335945,
+        "three_candidate_rate": 0.7789382071366405,
+        "four_candidate_rate": 0.0
+      }
+    },
+    {
+      "stage": {
+        "name": "policy_2025q4",
+        "train": [
+          "2024-01-01",
+          "2025-06-30"
+        ],
+        "calibration": [
+          "2025-07-01",
+          "2025-10-26"
+        ],
+        "test": [
+          "2025-10-27",
+          "2025-12-28"
+        ]
+      },
+      "train_races": 7111,
+      "selected_policy": {
+        "kind": "ratio",
+        "rel3": 0.82,
+        "rel4": null
+      },
+      "calibration_metrics": {
+        "races": 1539,
+        "third_capture": 0.5373619233268356,
+        "avg_third_candidates": 2.8219623131903835,
+        "two_candidate_rate": 0.17803768680961662,
+        "three_candidate_rate": 0.8219623131903834,
+        "four_candidate_rate": 0.0
+      },
+      "test_metrics": {
+        "races": 891,
+        "third_capture": 0.5263748597081931,
+        "avg_third_candidates": 2.8417508417508417,
+        "two_candidate_rate": 0.15824915824915825,
+        "three_candidate_rate": 0.8417508417508418,
+        "four_candidate_rate": 0.0
+      }
+    }
+  ],
+  "final_calibration": {
+    "period": [
+      "2025-10-27",
+      "2025-12-28"
+    ],
+    "split": [
+      [
+        "2025-10-27",
+        "2025-11-30"
+      ],
+      [
+        "2025-12-01",
+        "2025-12-28"
+      ]
+    ],
+    "participant_races": 206,
+    "selected_policy": {
+      "kind": "ratio",
+      "rel3": 0.82,
+      "rel4": null
+    },
+    "selected_metrics": {
+      "races": 206,
+      "third_capture": 0.5776699029126213,
+      "avg_third_candidates": 2.825242718446602,
+      "two_candidate_rate": 0.17475728155339806,
+      "three_candidate_rate": 0.8252427184466019,
+      "four_candidate_rate": 0.0,
+      "first_capture": 0.7135922330097088,
+      "second_capture": 0.5922330097087378,
+      "complete_board_capture": 0.3106796116504854,
+      "third_given_first_second": 0.6956521739130435,
+      "avg_first_candidates": 2,
+      "avg_second_candidates": 2.3009708737864076,
+      "avg_board_cells": 7.12621359223301
+    }
+  },
+  "reopened_2026_h1_diagnostic": {
+    "period": [
+      "2025-12-29",
+      "2026-06-28"
+    ],
+    "note": "Not a fresh future test: v32-v34 aggregate results were already observed before v35.",
+    "metrics": {
+      "races": 511,
+      "third_capture": 0.5440313111545988,
+      "avg_third_candidates": 2.8062622309197653,
+      "two_candidate_rate": 0.19373776908023482,
+      "three_candidate_rate": 0.8062622309197651,
+      "four_candidate_rate": 0.0,
+      "first_capture": 0.7123287671232876,
+      "second_capture": 0.5909980430528375,
+      "complete_board_capture": 0.273972602739726,
+      "third_given_first_second": 0.639269406392694,
+      "avg_first_candidates": 1.9980430528375734,
+      "avg_second_candidates": 2.344422700587084,
+      "avg_board_cells": 7.148727984344423
+    },
+    "monthly": [
+      {
+        "month": "2025-12",
+        "races": 7,
+        "third_capture": 0.7142857142857143,
+        "avg_third_candidates": 2.857142857142857,
+        "two_candidate_rate": 0.14285714285714285,
+        "three_candidate_rate": 0.8571428571428571,
+        "four_candidate_rate": 0.0,
+        "first_capture": 0.8571428571428571,
+        "second_capture": 0.7142857142857143,
+        "complete_board_capture": 0.42857142857142855,
+        "third_given_first_second": 0.75,
+        "avg_first_candidates": 2,
+        "avg_second_candidates": 2.4285714285714284,
+        "avg_board_cells": 7.285714285714286
+      },
+      {
+        "month": "2026-01",
+        "races": 82,
+        "third_capture": 0.5609756097560976,
+        "avg_third_candidates": 2.841463414634146,
+        "two_candidate_rate": 0.15853658536585366,
+        "three_candidate_rate": 0.8414634146341463,
+        "four_candidate_rate": 0.0,
+        "first_capture": 0.7560975609756098,
+        "second_capture": 0.5609756097560976,
+        "complete_board_capture": 0.3048780487804878,
+        "third_given_first_second": 0.625,
+        "avg_first_candidates": 2,
+        "avg_second_candidates": 2.3292682926829267,
+        "avg_board_cells": 7.170731707317073
+      },
+      {
+        "month": "2026-02",
+        "races": 99,
+        "third_capture": 0.5959595959595959,
+        "avg_third_candidates": 2.8282828282828283,
+        "two_candidate_rate": 0.1717171717171717,
+        "three_candidate_rate": 0.8282828282828283,
+        "four_candidate_rate": 0.0,
+        "first_capture": 0.7676767676767676,
+        "second_capture": 0.6464646464646465,
+        "complete_board_capture": 0.26262626262626265,
+        "third_given_first_second": 0.5652173913043478,
+        "avg_first_candidates": 2,
+        "avg_second_candidates": 2.3737373737373737,
+        "avg_board_cells": 7.202020202020202
+      },
+      {
+        "month": "2026-03",
+        "races": 88,
+        "third_capture": 0.5113636363636364,
+        "avg_third_candidates": 2.7613636363636362,
+        "two_candidate_rate": 0.23863636363636365,
+        "three_candidate_rate": 0.7613636363636364,
+        "four_candidate_rate": 0.0,
+        "first_capture": 0.7272727272727273,
+        "second_capture": 0.5795454545454546,
+        "complete_board_capture": 0.2840909090909091,
+        "third_given_first_second": 0.6578947368421053,
+        "avg_first_candidates": 1.9886363636363635,
+        "avg_second_candidates": 2.3181818181818183,
+        "avg_board_cells": 7.068181818181818
+      },
+      {
+        "month": "2026-04",
+        "races": 103,
+        "third_capture": 0.5825242718446602,
+        "avg_third_candidates": 2.8155339805825244,
+        "two_candidate_rate": 0.18446601941747573,
+        "three_candidate_rate": 0.8155339805825242,
+        "four_candidate_rate": 0.0,
+        "first_capture": 0.6601941747572816,
+        "second_capture": 0.6407766990291263,
+        "complete_board_capture": 0.27184466019417475,
+        "third_given_first_second": 0.6666666666666666,
+        "avg_first_candidates": 2,
+        "avg_second_candidates": 2.378640776699029,
+        "avg_board_cells": 7.194174757281553
+      },
+      {
+        "month": "2026-05",
+        "races": 80,
+        "third_capture": 0.4625,
+        "avg_third_candidates": 2.825,
+        "two_candidate_rate": 0.175,
+        "three_candidate_rate": 0.825,
+        "four_candidate_rate": 0.0,
+        "first_capture": 0.7125,
+        "second_capture": 0.5125,
+        "complete_board_capture": 0.275,
+        "third_given_first_second": 0.6875,
+        "avg_first_candidates": 2,
+        "avg_second_candidates": 2.2875,
+        "avg_board_cells": 7.1125
+      },
+      {
+        "month": "2026-06",
+        "races": 52,
+        "third_capture": 0.5,
+        "avg_third_candidates": 2.730769230769231,
+        "two_candidate_rate": 0.2692307692307692,
+        "three_candidate_rate": 0.7307692307692307,
+        "four_candidate_rate": 0.0,
+        "first_capture": 0.5961538461538461,
+        "second_capture": 0.5576923076923077,
+        "complete_board_capture": 0.21153846153846154,
+        "third_given_first_second": 0.6470588235294118,
+        "avg_first_candidates": 2,
+        "avg_second_candidates": 2.3653846153846154,
+        "avg_board_cells": 7.096153846153846
+      }
+    ]
+  },
+  "references": {
+    "v23": {
+      "third_capture": 0.5303326810176126,
+      "complete_capture": 0.2974559686888454,
+      "avg_third_candidates": 2.847358121330724,
+      "third_given_first_second": 0.7037037037037037
+    }
+  },
+  "acceptance": {
+    "historical_pass": true,
+    "diagnostic_pass": false,
+    "ready_for_true_future": false
+  },
+  "future_lock": {
+    "third_training_period": [
+      "2024-01-01",
+      "2025-10-26"
+    ],
+    "v31": {
+      "v31_training_period": [
+        "2025-07-01",
+        "2025-10-26"
+      ],
+      "v31_training_races": 1539,
+      "participant_context_counts": {
+        "calibration": 206,
+        "diagnostic": 511
+      },
+      "pair_variant": "blind_d2a",
+      "pair_params": {
+        "depth": 2,
+        "leaf": 18,
+        "l2": 1.5,
+        "lr": 0.045,
+        "iters": 190
+      },
+      "second_rule": {
+        "base": 2,
+        "rel3": 0.65,
+        "min3": 0.3
+      }
+    },
+    "true_future_period": [
+      "2026-07-06",
+      "2026-08-30"
+    ]
+  },
+  "guards": {
+    "odds_or_popularity_used": false,
+    "random_shuffle": false,
+    "v21_changed": false,
+    "v31_parameters_changed": false,
+    "v21_or_v31_used_as_candidate_filter": false,
+    "future_block_loaded": false
+  }
+}

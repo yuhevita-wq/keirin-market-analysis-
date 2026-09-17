@@ -1,0 +1,431 @@
+{
+  "algorithm": "keirin_shogi_v33_coherent_top3_boundary",
+  "status": "development_failed_not_frozen",
+  "concept": "For each unordered Top3 set T, normalize the frozen-v31 probabilities of T's three internal Top2 pairs. The member excluded from an internal pair receives that pair's conditional third-boundary mass. Marginalize over T.",
+  "formula": "P3(i)=sum_{T contains i} PTop3(T) * PTop2(T\\{i})^alpha / sum_{j in T} PTop2(T\\{j})^alpha",
+  "top3_variant_fixed_from_v32_pre_holdout_development": {
+    "name": "d2_mild",
+    "depth": 2,
+    "leaf": 34,
+    "l2": 2.0,
+    "lr": 0.045,
+    "iters": 210,
+    "positive_mass": 0.16
+  },
+  "pair_core": {
+    "variant": "v31 blind_d2a",
+    "params": {
+      "depth": 2,
+      "leaf": 18,
+      "l2": 1.5,
+      "lr": 0.045,
+      "iters": 190
+    }
+  },
+  "historical_walk_forward": [
+    {
+      "stage": {
+        "name": "stage1_2024q4",
+        "train": [
+          "2024-01-01",
+          "2024-06-30"
+        ],
+        "calibration": [
+          "2024-07-01",
+          "2024-09-30"
+        ],
+        "test": [
+          "2024-10-01",
+          "2024-12-31"
+        ]
+      },
+      "train_races": 2412,
+      "pair_train_races": 2412,
+      "selected_policy": {
+        "alpha": 4.0,
+        "cum2": 0.45,
+        "cum3": null
+      },
+      "calibration_metrics": {
+        "races": 1185,
+        "third_capture": 0.42953586497890295,
+        "avg_third_candidates": 2.8227848101265822,
+        "two_candidate_rate": 0.17721518987341772,
+        "three_candidate_rate": 0.8227848101265823,
+        "four_candidate_rate": 0.0
+      },
+      "test_metrics": {
+        "races": 1178,
+        "third_capture": 0.4685908319185059,
+        "avg_third_candidates": 2.8421052631578947,
+        "two_candidate_rate": 0.15789473684210525,
+        "three_candidate_rate": 0.8421052631578947,
+        "four_candidate_rate": 0.0
+      },
+      "calibration_top20": [
+        {
+          "alpha": 4.0,
+          "cum2": 0.45,
+          "cum3": null,
+          "objective": 0.32132077361477857,
+          "cal_a": {
+            "races": 592,
+            "third_capture": 0.4577702702702703,
+            "avg_third_candidates": 2.8125,
+            "two_candidate_rate": 0.1875,
+            "three_candidate_rate": 0.8125,
+            "four_candidate_rate": 0.0
+          },
+          "cal_b": {
+            "races": 593,
+            "third_capture": 0.40134907251264756,
+            "avg_third_candidates": 2.833052276559865,
+            "two_candidate_rate": 0.16694772344013492,
+            "three_candidate_rate": 0.8330522765598651,
+            "four_candidate_rate": 0.0
+          },
+          "cal_full": {
+            "races": 1185,
+            "third_capture": 0.42953586497890295,
+            "avg_third_candidates": 2.8227848101265822,
+            "two_candidate_rate": 0.17721518987341772,
+            "three_candidate_rate": 0.8227848101265823,
+            "four_candidate_rate": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "stage": {
+        "name": "stage2_2025q2",
+        "train": [
+          "2024-01-01",
+          "2024-12-31"
+        ],
+        "calibration": [
+          "2025-01-01",
+          "2025-03-31"
+        ],
+        "test": [
+          "2025-04-01",
+          "2025-06-30"
+        ]
+      },
+      "train_races": 4775,
+      "pair_train_races": 4775,
+      "selected_policy": {
+        "alpha": 4.0,
+        "cum2": 0.45,
+        "cum3": null
+      },
+      "calibration_metrics": {
+        "races": 1187,
+        "third_capture": 0.42881213142375735,
+        "avg_third_candidates": 2.724515585509688,
+        "two_candidate_rate": 0.2754844144903117,
+        "three_candidate_rate": 0.7245155855096883,
+        "four_candidate_rate": 0.0
+      },
+      "test_metrics": {
+        "races": 1149,
+        "third_capture": 0.43429068755439515,
+        "avg_third_candidates": 2.752828546562228,
+        "two_candidate_rate": 0.24717145343777197,
+        "three_candidate_rate": 0.752828546562228,
+        "four_candidate_rate": 0.0
+      },
+      "calibration_top20": [
+        {
+          "alpha": 4.0,
+          "cum2": 0.45,
+          "cum3": null,
+          "objective": 0.33420148107278647,
+          "cal_a": {
+            "races": 593,
+            "third_capture": 0.40472175379426645,
+            "avg_third_candidates": 2.715008431703204,
+            "two_candidate_rate": 0.28499156829679595,
+            "three_candidate_rate": 0.715008431703204,
+            "four_candidate_rate": 0.0
+          },
+          "cal_b": {
+            "races": 594,
+            "third_capture": 0.45286195286195285,
+            "avg_third_candidates": 2.734006734006734,
+            "two_candidate_rate": 0.265993265993266,
+            "three_candidate_rate": 0.734006734006734,
+            "four_candidate_rate": 0.0
+          },
+          "cal_full": {
+            "races": 1187,
+            "third_capture": 0.42881213142375735,
+            "avg_third_candidates": 2.724515585509688,
+            "two_candidate_rate": 0.2754844144903117,
+            "three_candidate_rate": 0.7245155855096883,
+            "four_candidate_rate": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "stage": {
+        "name": "stage3_2025q4",
+        "train": [
+          "2024-01-01",
+          "2025-06-30"
+        ],
+        "calibration": [
+          "2025-07-01",
+          "2025-10-26"
+        ],
+        "test": [
+          "2025-10-27",
+          "2025-12-28"
+        ]
+      },
+      "train_races": 7111,
+      "pair_train_races": 7111,
+      "selected_policy": {
+        "alpha": 4.0,
+        "cum2": 0.45,
+        "cum3": null
+      },
+      "calibration_metrics": {
+        "races": 1539,
+        "third_capture": 0.42105263157894735,
+        "avg_third_candidates": 2.711500974658869,
+        "two_candidate_rate": 0.2884990253411306,
+        "three_candidate_rate": 0.7115009746588694,
+        "four_candidate_rate": 0.0
+      },
+      "test_metrics": {
+        "races": 891,
+        "third_capture": 0.42536475869809204,
+        "avg_third_candidates": 2.7519640852974185,
+        "two_candidate_rate": 0.24803591470258138,
+        "three_candidate_rate": 0.7519640852974186,
+        "four_candidate_rate": 0.0
+      },
+      "calibration_top20": [
+        {
+          "alpha": 4.0,
+          "cum2": 0.45,
+          "cum3": null,
+          "objective": 0.3405848433854731,
+          "cal_a": {
+            "races": 769,
+            "third_capture": 0.41092327698309494,
+            "avg_third_candidates": 2.7256176853055916,
+            "two_candidate_rate": 0.2743823146944083,
+            "three_candidate_rate": 0.7256176853055917,
+            "four_candidate_rate": 0.0
+          },
+          "cal_b": {
+            "races": 770,
+            "third_capture": 0.43116883116883115,
+            "avg_third_candidates": 2.6974025974025975,
+            "two_candidate_rate": 0.3025974025974026,
+            "three_candidate_rate": 0.6974025974025974,
+            "four_candidate_rate": 0.0
+          },
+          "cal_full": {
+            "races": 1539,
+            "third_capture": 0.42105263157894735,
+            "avg_third_candidates": 2.711500974658869,
+            "two_candidate_rate": 0.2884990253411306,
+            "three_candidate_rate": 0.7115009746588694,
+            "four_candidate_rate": 0.0
+          }
+        }
+      ]
+    }
+  ],
+  "historical_reproducibility_rule": {
+    "minimum_stage_third_capture": 0.5303326810176126,
+    "maximum_stage_avg_candidates": 2.847358121330724
+  },
+  "historical_reproducible": false,
+  "reopened_v32_holdout_diagnostic": {
+    "stage": {
+      "name": "reopened_v32_holdout_diagnostic",
+      "train": [
+        "2024-01-01",
+        "2025-10-26"
+      ],
+      "calibration": [
+        "2025-10-27",
+        "2025-12-28"
+      ],
+      "test": [
+        "2025-12-29",
+        "2026-06-28"
+      ]
+    },
+    "train_races": 8650,
+    "pair_train_races": 1539,
+    "selected_policy": {
+      "alpha": 4.0,
+      "cum2": 0.45,
+      "cum3": null
+    },
+    "calibration_metrics": {
+      "races": 891,
+      "third_capture": 0.43658810325476993,
+      "avg_third_candidates": 2.8013468013468015,
+      "two_candidate_rate": 0.19865319865319866,
+      "three_candidate_rate": 0.8013468013468014,
+      "four_candidate_rate": 0.0
+    },
+    "test_metrics": {
+      "races": 2342,
+      "third_capture": 0.4269854824935952,
+      "avg_third_candidates": 2.786934244235696,
+      "two_candidate_rate": 0.213065755764304,
+      "three_candidate_rate": 0.786934244235696,
+      "four_candidate_rate": 0.0
+    },
+    "calibration_top20": [
+      {
+        "alpha": 4.0,
+        "cum2": 0.45,
+        "cum3": null,
+        "objective": 0.3455366023706495,
+        "cal_a": {
+          "races": 445,
+          "third_capture": 0.4247191011235955,
+          "avg_third_candidates": 2.8224719101123594,
+          "two_candidate_rate": 0.17752808988764046,
+          "three_candidate_rate": 0.8224719101123595,
+          "four_candidate_rate": 0.0
+        },
+        "cal_b": {
+          "races": 446,
+          "third_capture": 0.4484304932735426,
+          "avg_third_candidates": 2.780269058295964,
+          "two_candidate_rate": 0.21973094170403587,
+          "three_candidate_rate": 0.7802690582959642,
+          "four_candidate_rate": 0.0
+        },
+        "cal_full": {
+          "races": 891,
+          "third_capture": 0.43658810325476993,
+          "avg_third_candidates": 2.8013468013468015,
+          "two_candidate_rate": 0.19865319865319866,
+          "three_candidate_rate": 0.8013468013468014,
+          "four_candidate_rate": 0.0
+        }
+      },
+      {
+        "alpha": 0.0,
+        "cum2": 0.45,
+        "cum3": null,
+        "objective": 0.3361252902323425,
+        "cal_a": {
+          "races": 445,
+          "third_capture": 0.4202247191011236,
+          "avg_third_candidates": 2.856179775280899,
+          "two_candidate_rate": 0.14382022471910114,
+          "three_candidate_rate": 0.8561797752808988,
+          "four_candidate_rate": 0.0
+        },
+        "cal_b": {
+          "races": 446,
+          "third_capture": 0.4304932735426009,
+          "avg_third_candidates": 2.8340807174887894,
+          "two_candidate_rate": 0.16591928251121077,
+          "three_candidate_rate": 0.8340807174887892,
+          "four_candidate_rate": 0.0
+        },
+        "cal_full": {
+          "races": 891,
+          "third_capture": 0.42536475869809204,
+          "avg_third_candidates": 2.845117845117845,
+          "two_candidate_rate": 0.15488215488215487,
+          "three_candidate_rate": 0.8451178451178452,
+          "four_candidate_rate": 0.0
+        }
+      }
+    ],
+    "validity_note": "Development diagnostic only. v33 architecture was proposed after v32 opened this period, so these metrics are not an adoption holdout."
+  },
+  "future_lock": {
+    "top3_policy_training_period": [
+      "2024-01-01",
+      "2026-03-31"
+    ],
+    "top3_policy_training_races": 10742,
+    "v31_pair_training_races": 1539,
+    "calibration_period": [
+      "2026-04-01",
+      "2026-06-28"
+    ],
+    "calibration_split": [
+      [
+        "2026-04-01",
+        "2026-05-15"
+      ],
+      [
+        "2026-05-16",
+        "2026-06-28"
+      ]
+    ],
+    "calibration_participant_races": 235,
+    "selected_policy": {
+      "alpha": 4.0,
+      "cum2": 0.45,
+      "cum3": null
+    },
+    "selected_calibration_metrics": {
+      "races": 235,
+      "first_capture": 0.6638297872340425,
+      "second_capture": 0.5787234042553191,
+      "third_capture": 0.39574468085106385,
+      "complete_board_capture": 0.2297872340425532,
+      "third_given_first_second": 0.5934065934065934,
+      "avg_first_candidates": 2,
+      "avg_second_candidates": 2.34468085106383,
+      "avg_third_candidates": 2.8127659574468087,
+      "avg_board_cells": 7.157446808510638,
+      "two_candidate_rate": 0.18723404255319148,
+      "three_candidate_rate": 0.8127659574468085,
+      "four_candidate_rate": 0.0
+    },
+    "future_refit_period": [
+      "2024-01-01",
+      "2026-06-28"
+    ],
+    "true_future_period": [
+      "2026-07-06",
+      "2026-08-30"
+    ],
+    "v31_audit": {
+      "v31_train_races": 1539,
+      "participant_context_counts": {
+        "calibration": 206,
+        "test": 511
+      },
+      "pair_variant": "blind_d2a",
+      "pair_params": {
+        "depth": 2,
+        "leaf": 18,
+        "l2": 1.5,
+        "lr": 0.045,
+        "iters": 190
+      },
+      "second_candidate_rule": {
+        "base_count": 2,
+        "add_third_membership_min": 0.3,
+        "add_third_ratio_to_rank2_min": 0.65
+      }
+    }
+  },
+  "guards": {
+    "odds_or_popularity_used": false,
+    "random_shuffle": false,
+    "v21_changed": false,
+    "v31_changed": false,
+    "v32_2026_h1_reused_as_adoption_holdout": false,
+    "true_future_data_loaded": false,
+    "fourth_candidate_penalized": true
+  }
+}

@@ -1,0 +1,366 @@
+{
+  "algorithm": "keirin_shogi_v37_shrunk_board_third",
+  "status": "FROZEN_BEFORE_TRUE_FUTURE_TEST",
+  "concept": "Use the v35 conditional-third marginal, then apply only weak gamma=0.25 soft support to v31 pairs compatible with the frozen first/second boards.",
+  "version_reason": "v36 selected gamma=2.0 on calibration and drifted out of candidate budget. v37 fixes conservative shrinkage as a new version; v36 is not retuned.",
+  "selected_variant": {
+    "name": "cond_d2a",
+    "depth": 2,
+    "leaf": 24,
+    "l2": 1.5,
+    "lr": 0.045,
+    "iters": 190
+  },
+  "fixed_score": {
+    "mode": "candidate_cross",
+    "gamma": 0.25
+  },
+  "selected_policy": {
+    "kind": "ratio",
+    "rel3": 0.7,
+    "rel4": null
+  },
+  "calibration": {
+    "period": [
+      "2025-10-27",
+      "2025-12-28"
+    ],
+    "split": [
+      [
+        "2025-10-27",
+        "2025-11-30"
+      ],
+      [
+        "2025-12-01",
+        "2025-12-28"
+      ]
+    ],
+    "participant_races": 206,
+    "metrics": {
+      "races": 206,
+      "third_capture": 0.5145631067961165,
+      "avg_third_candidates": 2.7815533980582523,
+      "two_candidate_rate": 0.21844660194174756,
+      "three_candidate_rate": 0.7815533980582524,
+      "four_candidate_rate": 0.0,
+      "first_capture": 0.7135922330097088,
+      "second_capture": 0.5922330097087378,
+      "complete_board_capture": 0.32524271844660196,
+      "third_given_first_second": 0.7282608695652174,
+      "avg_first_candidates": 2,
+      "avg_second_candidates": 2.3009708737864076,
+      "avg_board_cells": 7.08252427184466
+    }
+  },
+  "historical_model_walk_forward": [
+    {
+      "stage": {
+        "name": "policy_2024q4",
+        "train": [
+          "2024-01-01",
+          "2024-06-30"
+        ],
+        "calibration": [
+          "2024-07-01",
+          "2024-09-30"
+        ],
+        "test": [
+          "2024-10-01",
+          "2024-12-31"
+        ]
+      },
+      "train_races": 2412,
+      "selected_policy": {
+        "kind": "ratio",
+        "rel3": 0.84,
+        "rel4": null
+      },
+      "calibration_metrics": {
+        "races": 1185,
+        "third_capture": 0.5071729957805907,
+        "avg_third_candidates": 2.837130801687764,
+        "two_candidate_rate": 0.16286919831223629,
+        "three_candidate_rate": 0.8371308016877637,
+        "four_candidate_rate": 0.0
+      },
+      "test_metrics": {
+        "races": 1178,
+        "third_capture": 0.5373514431239389,
+        "avg_third_candidates": 2.8149405772495757,
+        "two_candidate_rate": 0.18505942275042445,
+        "three_candidate_rate": 0.8149405772495756,
+        "four_candidate_rate": 0.0
+      }
+    },
+    {
+      "stage": {
+        "name": "policy_2025q2",
+        "train": [
+          "2024-01-01",
+          "2024-12-31"
+        ],
+        "calibration": [
+          "2025-01-01",
+          "2025-03-31"
+        ],
+        "test": [
+          "2025-04-01",
+          "2025-06-30"
+        ]
+      },
+      "train_races": 4775,
+      "selected_policy": {
+        "kind": "ratio",
+        "rel3": 0.84,
+        "rel4": null
+      },
+      "calibration_metrics": {
+        "races": 1187,
+        "third_capture": 0.4928390901432182,
+        "avg_third_candidates": 2.8129738837405225,
+        "two_candidate_rate": 0.18702611625947768,
+        "three_candidate_rate": 0.8129738837405224,
+        "four_candidate_rate": 0.0
+      },
+      "test_metrics": {
+        "races": 1149,
+        "third_capture": 0.5317667536988686,
+        "avg_third_candidates": 2.7789382071366404,
+        "two_candidate_rate": 0.22106179286335945,
+        "three_candidate_rate": 0.7789382071366405,
+        "four_candidate_rate": 0.0
+      }
+    },
+    {
+      "stage": {
+        "name": "policy_2025q4",
+        "train": [
+          "2024-01-01",
+          "2025-06-30"
+        ],
+        "calibration": [
+          "2025-07-01",
+          "2025-10-26"
+        ],
+        "test": [
+          "2025-10-27",
+          "2025-12-28"
+        ]
+      },
+      "train_races": 7111,
+      "selected_policy": {
+        "kind": "ratio",
+        "rel3": 0.82,
+        "rel4": null
+      },
+      "calibration_metrics": {
+        "races": 1539,
+        "third_capture": 0.5373619233268356,
+        "avg_third_candidates": 2.8219623131903835,
+        "two_candidate_rate": 0.17803768680961662,
+        "three_candidate_rate": 0.8219623131903834,
+        "four_candidate_rate": 0.0
+      },
+      "test_metrics": {
+        "races": 891,
+        "third_capture": 0.5263748597081931,
+        "avg_third_candidates": 2.8417508417508417,
+        "two_candidate_rate": 0.15824915824915825,
+        "three_candidate_rate": 0.8417508417508418,
+        "four_candidate_rate": 0.0
+      }
+    }
+  ],
+  "reopened_2026_h1_development": {
+    "period": [
+      "2025-12-29",
+      "2026-06-28"
+    ],
+    "not_future_evidence": true,
+    "metrics": {
+      "races": 511,
+      "third_capture": 0.5342465753424658,
+      "avg_third_candidates": 2.8395303326810177,
+      "two_candidate_rate": 0.16046966731898238,
+      "three_candidate_rate": 0.8395303326810176,
+      "four_candidate_rate": 0.0,
+      "first_capture": 0.7123287671232876,
+      "second_capture": 0.5909980430528375,
+      "complete_board_capture": 0.32093933463796476,
+      "third_given_first_second": 0.7488584474885844,
+      "avg_first_candidates": 1.9980430528375734,
+      "avg_second_candidates": 2.344422700587084,
+      "avg_board_cells": 7.181996086105675
+    },
+    "monthly": [
+      {
+        "month": "2025-12",
+        "races": 7,
+        "third_capture": 0.8571428571428571,
+        "avg_third_candidates": 3,
+        "two_candidate_rate": 0.0,
+        "three_candidate_rate": 1.0,
+        "four_candidate_rate": 0.0,
+        "first_capture": 0.8571428571428571,
+        "second_capture": 0.7142857142857143,
+        "complete_board_capture": 0.5714285714285714,
+        "third_given_first_second": 1.0,
+        "avg_first_candidates": 2,
+        "avg_second_candidates": 2.4285714285714284,
+        "avg_board_cells": 7.428571428571429
+      },
+      {
+        "month": "2026-01",
+        "races": 82,
+        "third_capture": 0.524390243902439,
+        "avg_third_candidates": 2.902439024390244,
+        "two_candidate_rate": 0.0975609756097561,
+        "three_candidate_rate": 0.9024390243902439,
+        "four_candidate_rate": 0.0,
+        "first_capture": 0.7560975609756098,
+        "second_capture": 0.5609756097560976,
+        "complete_board_capture": 0.36585365853658536,
+        "third_given_first_second": 0.75,
+        "avg_first_candidates": 2,
+        "avg_second_candidates": 2.3292682926829267,
+        "avg_board_cells": 7.2317073170731705
+      },
+      {
+        "month": "2026-02",
+        "races": 99,
+        "third_capture": 0.5757575757575758,
+        "avg_third_candidates": 2.8484848484848486,
+        "two_candidate_rate": 0.15151515151515152,
+        "three_candidate_rate": 0.8484848484848485,
+        "four_candidate_rate": 0.0,
+        "first_capture": 0.7676767676767676,
+        "second_capture": 0.6464646464646465,
+        "complete_board_capture": 0.3434343434343434,
+        "third_given_first_second": 0.7391304347826086,
+        "avg_first_candidates": 2,
+        "avg_second_candidates": 2.3737373737373737,
+        "avg_board_cells": 7.222222222222222
+      },
+      {
+        "month": "2026-03",
+        "races": 88,
+        "third_capture": 0.5454545454545454,
+        "avg_third_candidates": 2.8068181818181817,
+        "two_candidate_rate": 0.19318181818181818,
+        "three_candidate_rate": 0.8068181818181818,
+        "four_candidate_rate": 0.0,
+        "first_capture": 0.7272727272727273,
+        "second_capture": 0.5795454545454546,
+        "complete_board_capture": 0.3068181818181818,
+        "third_given_first_second": 0.7105263157894737,
+        "avg_first_candidates": 1.9886363636363635,
+        "avg_second_candidates": 2.3181818181818183,
+        "avg_board_cells": 7.113636363636363
+      },
+      {
+        "month": "2026-04",
+        "races": 103,
+        "third_capture": 0.5145631067961165,
+        "avg_third_candidates": 2.7572815533980584,
+        "two_candidate_rate": 0.24271844660194175,
+        "three_candidate_rate": 0.7572815533980582,
+        "four_candidate_rate": 0.0,
+        "first_capture": 0.6601941747572816,
+        "second_capture": 0.6407766990291263,
+        "complete_board_capture": 0.30097087378640774,
+        "third_given_first_second": 0.7380952380952381,
+        "avg_first_candidates": 2,
+        "avg_second_candidates": 2.378640776699029,
+        "avg_board_cells": 7.135922330097087
+      },
+      {
+        "month": "2026-05",
+        "races": 80,
+        "third_capture": 0.5,
+        "avg_third_candidates": 2.8625,
+        "two_candidate_rate": 0.1375,
+        "three_candidate_rate": 0.8625,
+        "four_candidate_rate": 0.0,
+        "first_capture": 0.7125,
+        "second_capture": 0.5125,
+        "complete_board_capture": 0.3375,
+        "third_given_first_second": 0.84375,
+        "avg_first_candidates": 2,
+        "avg_second_candidates": 2.2875,
+        "avg_board_cells": 7.15
+      },
+      {
+        "month": "2026-06",
+        "races": 52,
+        "third_capture": 0.5,
+        "avg_third_candidates": 2.8846153846153846,
+        "two_candidate_rate": 0.11538461538461539,
+        "three_candidate_rate": 0.8846153846153846,
+        "four_candidate_rate": 0.0,
+        "first_capture": 0.5961538461538461,
+        "second_capture": 0.5576923076923077,
+        "complete_board_capture": 0.21153846153846154,
+        "third_given_first_second": 0.6470588235294118,
+        "avg_first_candidates": 2,
+        "avg_second_candidates": 2.3653846153846154,
+        "avg_board_cells": 7.25
+      }
+    ]
+  },
+  "fair_baseline_v21_v31_v23third": {
+    "races": 511,
+    "third_capture": 0.5303326810176126,
+    "avg_third_candidates": 2.847358121330724,
+    "complete_board_capture": 0.3131115459882583,
+    "third_given_first_second": 0.730593607305936,
+    "note": "v23 third candidates joined by race_id to frozen v31 first/second candidates."
+  },
+  "acceptance": {
+    "historical_pass": true,
+    "development_pass": true,
+    "ready_for_true_future": true
+  },
+  "v31_audit": {
+    "v31_training_period": [
+      "2025-07-01",
+      "2025-10-26"
+    ],
+    "v31_training_races": 1539,
+    "participant_context_counts": {
+      "calibration": 206,
+      "diagnostic": 511
+    },
+    "pair_variant": "blind_d2a",
+    "pair_params": {
+      "depth": 2,
+      "leaf": 18,
+      "l2": 1.5,
+      "lr": 0.045,
+      "iters": 190
+    },
+    "second_rule": {
+      "base": 2,
+      "rel3": 0.65,
+      "min3": 0.3
+    }
+  },
+  "future_lock": {
+    "third_training_period": [
+      "2024-01-01",
+      "2025-10-26"
+    ],
+    "true_future_period": [
+      "2026-07-06",
+      "2026-08-30"
+    ],
+    "future_tuning_allowed": false
+  },
+  "guards": {
+    "odds_or_popularity_used": false,
+    "random_shuffle": false,
+    "v21_changed": false,
+    "v31_changed": false,
+    "pair_branch_removed": false,
+    "future_block_loaded": false
+  }
+}
