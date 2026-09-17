@@ -240,9 +240,8 @@ def attach_auto_boards(payload: dict[str, object], failures: list[dict[str, str]
 def main() -> int:
     session = make_session()
     now = datetime.now(JST)
-    # Current day + tomorrow. The workflow refreshes this repeatedly, keeping
-    # Pages usable without a cross-origin browser request or a public CORS proxy.
     days = [(now + timedelta(days=offset)).date() for offset in (0, 1)]
+    target_dates = {day.isoformat() for day in days}
     discovered: dict[str, str] = {}
     failures: list[dict[str, str]] = []
 
@@ -258,6 +257,8 @@ def main() -> int:
         try:
             html = fetch_html(session, source_url)
             meta, entries = parse_entries(html, race_id, source_url)
+            if str(meta.get("race_date", "")) not in target_dates:
+                continue
             line = parse_line_formation_html(html)
             attach_line(entries, line)
             races.append(
@@ -285,7 +286,6 @@ def main() -> int:
         "failures": failures[:50],
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    # The auto placer consumes this first-pass cache.
     OUT.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     attach_auto_boards(payload, failures)
     payload["failure_count"] = len(failures)
