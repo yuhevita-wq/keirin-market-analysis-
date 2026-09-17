@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>競輪将棋 - URL駒置き v37</title>
+  <title>競輪将棋 - 自動駒置き v37</title>
   <style>
     :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#222;background:#f5f5f5}
     *{box-sizing:border-box} body{margin:0;padding:24px}.wrap{max-width:1050px;margin:0 auto}
@@ -26,8 +26,8 @@
 </head>
 <body>
 <main class="wrap">
-  <h1>競輪将棋 駒置き <span class="badge">v37</span></h1>
-  <p class="note">楽天Kドリームスのレース詳細URLを貼り、出走表・ラインを読み込んで競輪将棋の盤面へつなぐ入口です。盤面アルゴリズムは 1着=v21 / 2着=v31 / 3着=v37 を維持します。</p>
+  <h1>競輪将棋 駒置き <span class="badge">v21 / v31 / v37</span></h1>
+  <p class="note">楽天Kドリームスのレース詳細URLを貼ると、出走表・ラインを取得し、固定済みアルゴリズムを機械計算して3段盤面へ配置します。LLMによるその場の推論は使いません。</p>
 
   <h2>レースURL</h2>
   <section class="panel">
@@ -37,7 +37,7 @@
       </label>
       <button class="action primary" id="generateBoard" type="button">駒配置を生成</button>
     </div>
-    <div class="source">対象: <code>keirin.kdreams.jp/*/racedetail/...</code>　オッズ・人気は読み込みません。出走表はGitHub Actionsで更新した同一オリジンキャッシュから取得します。</div>
+    <div class="source">対象: <code>keirin.kdreams.jp/*/racedetail/...</code>　対象レースのオッズ・人気・結果・払戻は読み込みません。</div>
     <div class="race-info" id="raceInfo"></div>
   </section>
 
@@ -54,9 +54,9 @@
 
   <h2>使用アルゴリズム</h2>
   <section class="algo-grid">
-    <article class="algo"><b>1着段 <span class="badge">v21</span></b>Quantile Participation。1着候補最大2人。</article>
-    <article class="algo"><b>2着段 <span class="badge">v31</span></b>unordered Top2 pair の所属質量から2着候補を生成。</article>
-    <article class="algo"><b>3着段 <span class="badge">v37</span></b>Top2-conditioned third を周辺化し、gamma=0.25で弱く再重み付け。</article>
+    <article class="algo"><b>1着段 <span class="badge">v21</span></b>Quantile Participation。直近利用可能履歴からローリング構造を機械再構築し、参加時の1着候補は最大2人。</article>
+    <article class="algo"><b>2着段 <span class="badge">v31</span></b>凍結済み blind unordered Top2 pair を21組計算し、所属質量から2着候補を生成。</article>
+    <article class="algo"><b>3着段 <span class="badge">v37</span></b>全Top2分岐の条件付き3着を周辺化し、candidate_cross gamma=0.25で弱く再重み付け。</article>
   </section>
 </main>
 <script>
@@ -78,9 +78,11 @@ function renderBoard(){
     wrap.append(label,zone);board.appendChild(wrap);
   });
 }
-function applyRace(r){
+function applyRace(r,source='自動配置'){
   state.first=[...(r.first_candidates||[])];state.second=[...(r.second_candidates||[])];state.third=[...(r.third_candidates||[])];renderBoard();
-  status.innerHTML=`<span class="ok">駒配置完了</span>　1着 ${state.first.join('・')||'なし'} / 2着 ${state.second.join('・')||'なし'} / 3着 ${state.third.join('・')||'なし'}`;
+  const score=Number.isFinite(Number(r.v21_selector_score))?` / v21 score ${(Number(r.v21_selector_score)*100).toFixed(2)}%` : '';
+  const threshold=Number.isFinite(Number(r.v21_threshold))?` ≥ ${(Number(r.v21_threshold)*100).toFixed(2)}%` : '';
+  status.innerHTML=`<span class="ok">${esc(source)}完了</span>　1着 ${state.first.join('・')||'なし'} / 2着 ${state.second.join('・')||'なし'} / 3着 ${state.third.join('・')||'なし'}${score}${threshold}`;
 }
 function validateKdreamsUrl(value){
   let u;try{u=new URL(value)}catch{throw new Error('URL形式が正しくありません')}
@@ -93,7 +95,9 @@ function raceIdFromUrl(u){const m=u.pathname.match(/\/racedetail\/(\d+)/);return
 function renderRaceInfo(r){
   const entries=(r.entries||[]).map(e=>`<tr><td>${esc(e.car_no)}</td><td class="name">${esc(e.player_name)}</td><td>${esc(e.prefecture)}</td><td>${esc(e.term)}</td><td>${esc(e.style)}</td><td>${esc(e.score)}</td><td>${esc(e.s_count)}</td><td>${esc(e.b_count)}</td><td>${esc(e.line_id)}</td><td>${esc(e.line_position)}</td></tr>`).join('');
   const line=r.predicted_line_formation?`<br>並び予想: <strong>${esc(r.predicted_line_formation)}</strong>`:'<br>並び予想: 未掲載';
-  raceInfo.innerHTML=`<strong>${esc(r.track)} ${esc(r.race_no)}R ${esc(r.race_type)}</strong><br>${esc(r.race_date)} ${esc(r.start_time)} / race_id: ${esc(r.race_id)}${line}<br><span class="source">キャッシュ更新: ${esc(liveData?.generated_at_jst||'')}</span><div class="race-card"><table><thead><tr><th>車</th><th>選手</th><th>府県</th><th>期</th><th>脚質</th><th>得点</th><th>S</th><th>B</th><th>ライン</th><th>位置</th></tr></thead><tbody>${entries}</tbody></table></div>`;
+  const grade=r.meeting_grade?` / ${esc(r.meeting_grade)}`:'';
+  const history=liveData?.board_engine?.latest_historical_state?.history_end?` / v21履歴基準 ${esc(liveData.board_engine.latest_historical_state.history_end)}`:'';
+  raceInfo.innerHTML=`<strong>${esc(r.track)} ${esc(r.race_no)}R ${esc(r.race_type)}${grade}</strong><br>${esc(r.race_date)} ${esc(r.start_time)} / race_id: ${esc(r.race_id)}${line}<br><span class="source">キャッシュ更新: ${esc(liveData?.generated_at_jst||'')}${history}</span><div class="race-card"><table><thead><tr><th>車</th><th>選手</th><th>府県</th><th>期</th><th>脚質</th><th>得点</th><th>S</th><th>B</th><th>ライン</th><th>位置</th></tr></thead><tbody>${entries}</tbody></table></div>`;
 }
 async function loadJson(path){const r=await fetch(path,{cache:'no-store'});if(!r.ok)throw new Error(`${path} HTTP ${r.status}`);return r.json()}
 async function ensureData(){
@@ -103,7 +107,7 @@ async function ensureData(){
 async function generate(){
   const btn=document.getElementById('generateBoard');
   try{
-    btn.disabled=true;status.textContent='最新の出走表キャッシュを確認しています…';raceInfo.textContent='';
+    btn.disabled=true;status.textContent='最新の出走表と自動配置キャッシュを確認しています…';raceInfo.textContent='';
     const u=validateKdreamsUrl(document.getElementById('raceUrl').value.trim());
     const raceId=raceIdFromUrl(u);if(!raceId)throw new Error('URLからrace_idを取得できませんでした');
     await ensureData();
@@ -113,10 +117,20 @@ async function generate(){
       throw new Error(`このrace_idは現在のライブ出走表キャッシュにありません。キャッシュ対象日: ${dates||'未取得'}。`);
     }
     renderRaceInfo(current);
+
+    const auto=current.auto_board;
+    if(auto){
+      if(auto.participate){applyRace(auto,'v21/v31/v37 自動配置');return}
+      state.first=[];state.second=[];state.third=[];renderBoard();
+      status.innerHTML=`<span class="warn">見送り</span>　${esc(auto.skip_reason||auto.scope_note||'v21参加判定で対象外')}。盤面は配置しません。`;
+      return;
+    }
+
     const known=boardData?.races?.find(r=>String(r.race_id)===raceId);
-    if(known){applyRace(known);return}
+    if(known){applyRace(known,'保存済みv37配置');return}
     state.first=[];state.second=[];state.third=[];renderBoard();
-    status.innerHTML='<span class="ok">出走表・ライン取得完了。</span> <span class="warn">次の未完了は、この現在レース入力を凍結v21/v31/v37へ渡す推論専用ランタイムです。</span>';
+    const engine=liveData?.board_engine?.status||'未生成';
+    status.innerHTML=`<span class="ok">出走表・ライン取得完了。</span> <span class="warn">自動配置キャッシュは現在 ${esc(engine)}。次回キャッシュ更新後に再読み込みしてください。</span>`;
   }catch(e){status.innerHTML=`<span class="error">${esc(e.message||e)}</span>`}
   finally{btn.disabled=false}
 }
