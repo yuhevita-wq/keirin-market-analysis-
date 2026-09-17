@@ -1,0 +1,25 @@
+name: Smoke Keirin Shogi 5car
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/keirin_shogi_smoke_5car.py'
+      - '.github/workflows/smoke-keirin-shogi-5car.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install package
+        run: python -m pip install -e .
+      - name: Run real KDreams five-rider smoke test
+        run: python scripts/keirin_shogi_smoke_5car.py
