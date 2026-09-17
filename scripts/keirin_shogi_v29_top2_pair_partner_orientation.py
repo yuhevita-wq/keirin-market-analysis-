@@ -23,7 +23,11 @@ OUT.mkdir(parents=True,exist_ok=True)
 # frozen v21 first-probability ratio inside that pair:
 #   P(2nd=b | pair={a,b}) ~= P_v21(first=a | a,b)
 #   P(2nd=a | pair={a,b}) ~= P_v21(first=b | a,b)
-# This keeps pair structure intact and uses v21 only after pair formation.
+# v21 is therefore used only after pair formation.
+#
+# Performance note:
+# Pair/rider rankings are cached per model+alpha and reused for all
+# threshold/maxk policies. This changes runtime only, not model logic.
 
 CAL_A_START,CAL_A_END="2025-10-27","2025-11-30"
 CAL_B_START,CAL_B_END="2025-12-01","2025-12-28"
@@ -51,7 +55,6 @@ def predict(base,vr,pm,alpha):
     prows=[]
     for (a,b),pp in zip(pairs,pairp):
         qa=pair_first_share(vr,a,b,alpha)
-        # if a is first, b is second; if b is first, a is second.
         p2[b]+=float(pp)*qa
         p2[a]+=float(pp)*(1.0-qa)
         prows.append((a,b,float(pp),float(qa)))
@@ -67,32 +70,50 @@ def choose(rank,t,maxk):
         if cum>=t:break
     return out
 
-def evaluate(ds,pm,alpha,t,maxk):
-    logs=[]
+def precompute(ds,pm,alpha):
+    rows=[]
     for rid,dt,base,order,vr in ds:
         if not vr.get("v21_participate"):continue
         rank,pairs=predict(base,vr,pm,alpha)
-        c=choose(rank,t,maxk)
         f,s=order[:2]
         fc=list(map(v25.ino,vr["candidates"]))
         relation="same_line" if base[f]["line_id"]==base[s]["line_id"] else "different_line"
         truepair=frozenset((f,s))
         prank=next((i+1 for i,(a,b,pp,qa) in enumerate(pairs) if frozenset((a,b))==truepair),None)
-        logs.append({
+        rows.append({
           "race_id":rid,"race_date":dt,
           "actual_first":f,"actual_second":s,
           "first_candidates":fc,
           "first_hit":int(f in fc),
           "second_in_first_candidates":int(s in fc),
           "relation":relation,
-          "second_candidates":c,
-          "second_hit":int(s in c),
-          "complete_top2_hit":int(f in fc and s in c),
           "second_rank":next((i+1 for i,(n,p) in enumerate(rank) if n==s),None),
           "pair_rank":prank,
-          "second_candidate_count":len(c),
+          "rank":rank,
           "top_pairs":[{"a":a,"b":b,"pair_prob":pp,"p_a_first_within_pair":qa} for a,b,pp,qa in pairs[:5]],
-          "second_ranking":[{"no":n,"prob":p} for n,p in rank],
+        })
+    return rows
+
+def apply_policy(pre,t,maxk):
+    logs=[]
+    for r in pre:
+        c=choose(r["rank"],t,maxk)
+        s=r["actual_second"]
+        logs.append({
+          "race_id":r["race_id"],"race_date":r["race_date"],
+          "actual_first":r["actual_first"],"actual_second":s,
+          "first_candidates":r["first_candidates"],
+          "first_hit":r["first_hit"],
+          "second_in_first_candidates":r["second_in_first_candidates"],
+          "relation":r["relation"],
+          "second_candidates":c,
+          "second_hit":int(s in c),
+          "complete_top2_hit":int(r["first_hit"] and s in c),
+          "second_rank":r["second_rank"],
+          "pair_rank":r["pair_rank"],
+          "second_candidate_count":len(c),
+          "top_pairs":r["top_pairs"],
+          "second_ranking":[{"no":n,"prob":p} for n,p in r["rank"]],
         })
     return logs
 
@@ -133,8 +154,6 @@ def month_metrics(logs):
     return out
 
 def stability_objective(ma,mb,mfull):
-    # Selection is driven by stability across two chronological calibration blocks.
-    # Hard outside races are diagnostic only; they do not dominate the objective.
     min_sgf=min(ma["second_given_first_capture"],mb["second_given_first_capture"])
     min_complete=min(ma["complete_top2_capture"],mb["complete_top2_capture"])
     min_second=min(ma["second_capture"],mb["second_capture"])
@@ -160,8 +179,6 @@ def main():
 
     train=v25.make_dataset(vrows,eb,rb,v25.TRAIN_START,v25.TRAIN_END,False)
     cal=v25.make_dataset(vrows,eb,rb,v25.CAL_START,v25.CAL_END,False)
-    cal_a=v25.make_dataset(vrows,eb,rb,CAL_A_START,CAL_A_END,False)
-    cal_b=v25.make_dataset(vrows,eb,rb,CAL_B_START,CAL_B_END,False)
     test=v25.make_dataset(vrows,eb,rb,v25.TEST_START,v25.TEST_END,False)
 
     pair_variants=[
@@ -172,20 +189,25 @@ def main():
     ]
 
     models={v["name"]:v26.fit_pair_model(train,v["p"]) for v in pair_variants}
+    cache={}
     grid=[]
+
     for name,pm in models.items():
         for alpha in (.50,.75,1.00,1.25,1.50,2.00):
+            pre=precompute(cal,pm,alpha)
+            cache[(name,alpha)]=pre
+            pre_a=[x for x in pre if CAL_A_START<=x["race_date"]<=CAL_A_END]
+            pre_b=[x for x in pre if CAL_B_START<=x["race_date"]<=CAL_B_END]
             for t in (.38,.42,.46,.50,.54,.58,.62):
                 for maxk in (2,3):
-                    la=evaluate(cal_a,pm,alpha,t,maxk); ma=metrics(la)
-                    lb=evaluate(cal_b,pm,alpha,t,maxk); mb=metrics(lb)
-                    lf=evaluate(cal,pm,alpha,t,maxk); mf=metrics(lf)
+                    la=apply_policy(pre_a,t,maxk);ma=metrics(la)
+                    lb=apply_policy(pre_b,t,maxk);mb=metrics(lb)
+                    lf=apply_policy(pre,t,maxk);mf=metrics(lf)
                     if not ma or not mb or not mf:continue
                     if mf["avg_second_candidates"]>2.10:continue
-                    obj=stability_objective(ma,mb,mf)
                     grid.append({
                       "variant":name,"alpha":alpha,"threshold":t,"maxk":maxk,
-                      "objective":obj,
+                      "objective":stability_objective(ma,mb,mf),
                       "cal_a":ma,"cal_b":mb,"cal_full":mf
                     })
 
@@ -198,13 +220,13 @@ def main():
 
     best=grid[0]
     pm=models[best["variant"]]
-    test_logs=evaluate(test,pm,best["alpha"],best["threshold"],best["maxk"])
+    test_pre=precompute(test,pm,best["alpha"])
+    test_logs=apply_policy(test_pre,best["threshold"],best["maxk"])
     tm=metrics(test_logs)
 
     baselines={
       "v23_conditional":{
         "second_capture":0.5342465753424658,
-        "complete_top2_capture":0.0,
         "second_given_first_capture":0.5934065934065934,
         "avg_second_candidates":2.0332681017612524,
       },
