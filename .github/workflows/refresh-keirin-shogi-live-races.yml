@@ -1,0 +1,45 @@
+name: Refresh Keirin Shogi Live Races
+
+on:
+  schedule:
+    - cron: '17 */2 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/keirin_shogi_live_race_cache.py'
+      - 'src/keirin_market_analysis/s_yosen_2025.py'
+      - 'src/keirin_market_analysis/line_formation_2025.py'
+      - '.github/workflows/refresh-keirin-shogi-live-races.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: keirin-shogi-live-race-cache
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install package
+        run: python -m pip install -e .
+      - name: Build current race-card cache
+        run: python scripts/keirin_shogi_live_race_cache.py
+      - name: Commit refreshed cache
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/keirin-shogi/live-race-data.json
+          if git diff --cached --quiet; then
+            echo "No live race cache changes."
+          else
+            git commit -m "docs: refresh keirin shogi live race cache"
+            git pull --rebase origin main
+            git push
+          fi
