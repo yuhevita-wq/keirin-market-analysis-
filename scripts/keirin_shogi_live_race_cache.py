@@ -3,14 +3,17 @@ from __future__ import annotations
 
 """Build a same-origin cache of current KDreams race cards for Keirin Shogi.
 
-This is an ingestion-only step. It deliberately does not read odds, popularity,
-results, payouts, or historical race datasets. Existing KDreams HTML parsers are
-reused where possible so the GitHub Pages frontend never has to fetch KDreams
-cross-origin.
+The fetch stage reads race cards and published line forecasts only. It does not
+read target-race odds, popularity, results or payouts. After the cache is
+written, the deterministic v21/v31/v37 engine is run and its board result is
+embedded back into the same JSON consumed by GitHub Pages.
 """
 
 import json
 import re
+import subprocess
+import sys
+import unicodedata
 from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.parse import urljoin, urlsplit, urlunsplit
@@ -30,6 +33,8 @@ from keirin_market_analysis.s_yosen_2025 import (
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs/keirin-shogi/live-race-data.json"
+BOARD_OUT = ROOT / "docs/keirin-shogi/live-board-data.json"
+AUTO_PLACE = ROOT / "scripts/keirin_shogi_v37_auto_place.py"
 KDREAMS_DAILY = "https://keirin.kdreams.jp/kaisai/{year:04d}/{month:02d}/{day:02d}/"
 JST = ZoneInfo("Asia/Tokyo")
 
@@ -56,7 +61,7 @@ def discover_races(html: str, daily_url: str) -> dict[str, str]:
 
 def parse_race_type(text: str) -> str:
     patterns = (
-        r"[ＳＳSＡAＬL]級\s*(?:初日特選|特選|選抜|予選|準決勝|一般|決勝)",
+        r"[ＳＳSＡAＬL]級\s*(?:初日特選|初特選|特選|選抜|予選|準決勝|一般|決勝)",
         r"(?:ガールズ|チャレンジ)\s*(?:予選|一般|準決勝|選抜|決勝)",
         r"(?:特予選|特一般|準決勝|特選|一般|決勝)",
     )
@@ -64,6 +69,22 @@ def parse_race_type(text: str) -> str:
         match = re.search(pattern, text)
         if match:
             return normalize_text(match.group(0))
+    return ""
+
+
+def parse_meeting_grade(text: str) -> str:
+    value = unicodedata.normalize("NFKC", text).upper()
+    compact = re.sub(r"\s+", "", value)
+    checks = (
+        (r"G(?:III|3)(?![A-Z])", "G3"),
+        (r"G(?:II|2)(?![A-Z])", "G2"),
+        (r"G(?:I|1)(?![A-Z])", "G1"),
+        (r"F(?:II|2)(?![A-Z])", "F2"),
+        (r"F(?:I|1)(?![A-Z])", "F1"),
+    )
+    for pattern, grade in checks:
+        if re.search(pattern, compact):
+            return grade
     return ""
 
 
@@ -82,6 +103,7 @@ def parse_meta(soup: BeautifulSoup, race_id: str, source_url: str) -> dict[str, 
         "race_id": race_id,
         "race_date": race_date,
         "track": track_match.group(1) if track_match else "",
+        "meeting_grade": parse_meeting_grade(f"{title} {text}"),
         "race_no": int(race_id[-4:]),
         "race_type": parse_race_type(text),
         "start_time": start_match.group(1) if start_match else "",
@@ -172,6 +194,49 @@ def attach_line(entries: list[dict[str, object]], line: dict[str, object]) -> No
         )
 
 
+def attach_auto_boards(payload: dict[str, object], failures: list[dict[str, str]]) -> None:
+    result = subprocess.run(
+        [sys.executable, str(AUTO_PLACE)],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    board_payload = None
+    if BOARD_OUT.exists():
+        try:
+            board_payload = json.loads(BOARD_OUT.read_text(encoding="utf-8"))
+        except Exception as exc:
+            failures.append(
+                {"stage": "auto_place_read", "url": "", "error": f"{type(exc).__name__}: {exc}"}
+            )
+    if not isinstance(board_payload, dict):
+        failures.append(
+            {
+                "stage": "auto_place",
+                "url": "",
+                "error": (result.stderr or result.stdout or f"exit {result.returncode}")[-1000:],
+            }
+        )
+        payload["board_engine"] = {"status": "failed", "exit_code": result.returncode}
+        return
+
+    by_id = {str(row.get("race_id", "")): row for row in board_payload.get("races", [])}
+    for race in payload.get("races", []):
+        board = by_id.get(str(race.get("race_id", "")))
+        if board is not None:
+            race["auto_board"] = board
+    payload["board_engine"] = {
+        "status": "ok" if result.returncode == 0 else "partial",
+        "engine": board_payload.get("engine", ""),
+        "mode": board_payload.get("mode", ""),
+        "latest_historical_state": board_payload.get("latest_historical_state", {}),
+        "guards": board_payload.get("guards", {}),
+        "race_count": board_payload.get("race_count", 0),
+        "failure_count": board_payload.get("failure_count", 0),
+    }
+
+
 def main() -> int:
     session = make_session()
     now = datetime.now(JST)
@@ -209,10 +274,10 @@ def main() -> int:
 
     races.sort(key=lambda row: (str(row.get("race_date", "")), str(row.get("track", "")), int(row.get("race_no", 0))))
     payload = {
-        "schema_version": 1,
+        "schema_version": 2,
         "generated_at_jst": now.isoformat(),
         "source": "Rakuten KDreams race card + published line forecast",
-        "runtime_inputs": "current race card and line only; no odds, popularity, results, payouts, or historical race rows",
+        "runtime_inputs": "current race card and line only; no target-race odds, popularity, results or payouts",
         "covered_dates": [day.isoformat() for day in days],
         "race_count": len(races),
         "failure_count": len(failures),
@@ -220,8 +285,23 @@ def main() -> int:
         "failures": failures[:50],
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
+    # The auto placer consumes this first-pass cache.
     OUT.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    print(json.dumps({"out": str(OUT), "race_count": len(races), "failure_count": len(failures)}, ensure_ascii=False))
+    attach_auto_boards(payload, failures)
+    payload["failure_count"] = len(failures)
+    payload["failures"] = failures[:50]
+    OUT.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    print(
+        json.dumps(
+            {
+                "out": str(OUT),
+                "race_count": len(races),
+                "failure_count": len(failures),
+                "board_engine": payload.get("board_engine", {}).get("status", "missing"),
+            },
+            ensure_ascii=False,
+        )
+    )
     return 0 if races else 2
 
 
