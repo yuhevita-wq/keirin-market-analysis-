@@ -1,0 +1,32 @@
+name: Keirin Shogi v30 Top2 Pair Conservative Substitution
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/keirin-shogi-v30-top2-pair-conservative-substitution.yml'
+      - 'scripts/keirin_shogi_v30_top2_pair_conservative_substitution.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run-v30:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python -m pip install -q scikit-learn
+      - run: python scripts/keirin_shogi_v30_top2_pair_conservative_substitution.py
+      - name: Commit generated results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/keirin_shogi/v30_top2_pair_conservative_substitution
+          if git diff --cached --quiet; then
+            echo "No result changes."
+          else
+            git commit -m "results: keirin shogi v30 top2 pair conservative substitution"
+            git pull --rebase origin main
+            git push
+          fi
