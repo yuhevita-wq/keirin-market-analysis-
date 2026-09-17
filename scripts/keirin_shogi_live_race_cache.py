@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-"""Build a same-origin cache of current KDreams race cards for Keirin Shogi.
+"""Build a same-origin KDreams race-card cache for Keirin Shogi.
 
 The fetch stage reads race cards and published line forecasts only. It does not
-read target-race odds, popularity, results or payouts. After the cache is
-written, the deterministic v21/v31/v37 engine is run and its board result is
-embedded back into the same JSON consumed by GitHub Pages.
+read target-race odds, popularity, results or payouts. Previously fetched race
+cards are retained so finished races remain available for deterministic board
+placement after their race day has passed.
 """
 
 import json
@@ -194,6 +194,17 @@ def attach_line(entries: list[dict[str, object]], line: dict[str, object]) -> No
         )
 
 
+def previous_races() -> list[dict[str, object]]:
+    if not OUT.exists():
+        return []
+    try:
+        payload = json.loads(OUT.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    races = payload.get("races", []) if isinstance(payload, dict) else []
+    return [row for row in races if isinstance(row, dict) and row.get("race_id")]
+
+
 def attach_auto_boards(payload: dict[str, object], failures: list[dict[str, str]]) -> None:
     result = subprocess.run(
         [sys.executable, str(AUTO_PLACE)],
@@ -245,6 +256,8 @@ def main() -> int:
     discovered: dict[str, str] = {}
     failures: list[dict[str, str]] = []
 
+    retained = previous_races()
+
     for day in days:
         daily_url = KDREAMS_DAILY.format(year=day.year, month=day.month, day=day.day)
         try:
@@ -252,7 +265,7 @@ def main() -> int:
         except Exception as exc:
             failures.append({"stage": "daily", "url": daily_url, "error": f"{type(exc).__name__}: {exc}"})
 
-    races: list[dict[str, object]] = []
+    fresh_races: list[dict[str, object]] = []
     for race_id, source_url in sorted(discovered.items()):
         try:
             html = fetch_html(session, source_url)
@@ -261,7 +274,7 @@ def main() -> int:
                 continue
             line = parse_line_formation_html(html)
             attach_line(entries, line)
-            races.append(
+            fresh_races.append(
                 {
                     **meta,
                     "line_status": line.get("status", ""),
@@ -273,14 +286,24 @@ def main() -> int:
         except Exception as exc:
             failures.append({"stage": "race", "url": source_url, "race_id": race_id, "error": f"{type(exc).__name__}: {exc}"})
 
+    # New fetches replace the same race_id, while older finished races remain.
+    merged = {str(row.get("race_id", "")): row for row in retained if row.get("race_id")}
+    for row in fresh_races:
+        merged[str(row.get("race_id", ""))] = row
+    races = list(merged.values())
     races.sort(key=lambda row: (str(row.get("race_date", "")), str(row.get("track", "")), int(row.get("race_no", 0))))
+    covered_dates = sorted({str(row.get("race_date", "")) for row in races if row.get("race_date")})
+
     payload = {
-        "schema_version": 2,
+        "schema_version": 3,
         "generated_at_jst": now.isoformat(),
         "source": "Rakuten KDreams race card + published line forecast",
-        "runtime_inputs": "current race card and line only; no target-race odds, popularity, results or payouts",
-        "covered_dates": [day.isoformat() for day in days],
+        "runtime_inputs": "race card and line only; no target-race odds, popularity, results or payouts",
+        "active_fetch_dates": [day.isoformat() for day in days],
+        "covered_dates": covered_dates,
+        "retains_finished_races": True,
         "race_count": len(races),
+        "fresh_race_count": len(fresh_races),
         "failure_count": len(failures),
         "races": races,
         "failures": failures[:50],
@@ -296,6 +319,8 @@ def main() -> int:
             {
                 "out": str(OUT),
                 "race_count": len(races),
+                "fresh_race_count": len(fresh_races),
+                "retained_race_count": max(0, len(races) - len(fresh_races)),
                 "failure_count": len(failures),
                 "board_engine": payload.get("board_engine", {}).get("status", "missing"),
             },
