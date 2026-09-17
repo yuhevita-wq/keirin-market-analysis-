@@ -37,7 +37,7 @@
       </label>
       <button class="action primary" id="generateBoard" type="button">駒配置を生成</button>
     </div>
-    <div class="source">対象: <code>keirin.kdreams.jp/*/racedetail/...</code>　対象レースのオッズ・人気・結果・払戻は読み込みません。</div>
+    <div class="source">対象: <code>keirin.kdreams.jp/*/racedetail/...</code>　7車立てなら級別・開催グレード・発走済み/未発走を問わず配置対象。対象レースのオッズ・人気・結果・払戻は読み込みません。</div>
     <div class="race-info" id="raceInfo"></div>
   </section>
 
@@ -65,7 +65,7 @@ const state={first:[],second:[],third:[]};
 let selectedPiece=null, boardData=null, liveData=null;
 const board=document.getElementById('board'), status=document.getElementById('status'), raceInfo=document.getElementById('raceInfo');
 
-function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[c]))}
 function renderBoard(){
   board.innerHTML='';
   rows.forEach(row=>{
@@ -99,10 +99,16 @@ function renderRaceInfo(r){
   const history=liveData?.board_engine?.latest_historical_state?.history_end?` / v21履歴基準 ${esc(liveData.board_engine.latest_historical_state.history_end)}`:'';
   raceInfo.innerHTML=`<strong>${esc(r.track)} ${esc(r.race_no)}R ${esc(r.race_type)}${grade}</strong><br>${esc(r.race_date)} ${esc(r.start_time)} / race_id: ${esc(r.race_id)}${line}<br><span class="source">キャッシュ更新: ${esc(liveData?.generated_at_jst||'')}${history}</span><div class="race-card"><table><thead><tr><th>車</th><th>選手</th><th>府県</th><th>期</th><th>脚質</th><th>得点</th><th>S</th><th>B</th><th>ライン</th><th>位置</th></tr></thead><tbody>${entries}</tbody></table></div>`;
 }
-async function loadJson(path){const r=await fetch(path,{cache:'no-store'});if(!r.ok)throw new Error(`${path} HTTP ${r.status}`);return r.json()}
+async function loadJson(path){const sep=path.includes('?')?'&':'?';const r=await fetch(`${path}${sep}_=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw new Error(`${path} HTTP ${r.status}`);return r.json()}
 async function ensureData(){
-  if(!liveData)liveData=await loadJson('live-race-data.json');
+  // Always refresh live data. A page kept open must not keep an old S級/F1-only auto_board in memory.
+  liveData=await loadJson('live-race-data.json');
   if(!boardData){try{boardData=await loadJson('v37-board-data.json')}catch(_e){boardData={races:[]}}}
+}
+function isLegacyScopeDecision(auto,current){
+  if(!auto || (current?.entries||[]).length!==7)return false;
+  const reason=String(auto.skip_reason||auto.scope_note||'');
+  return reason.includes('S級ではない') || reason.includes('Ｓ級ではない') || reason.includes('F1ではない') || reason.includes('F1確認不可') || reason.includes('7車F1 S級対象');
 }
 async function generate(){
   const btn=document.getElementById('generateBoard');
@@ -114,12 +120,13 @@ async function generate(){
     const current=liveData?.races?.find(r=>String(r.race_id)===raceId);
     if(!current){
       const dates=(liveData?.covered_dates||[]).join(' / ');
-      throw new Error(`このrace_idは現在のライブ出走表キャッシュにありません。キャッシュ対象日: ${dates||'未取得'}。`);
+      throw new Error(`このrace_idは出走表キャッシュにありません。キャッシュ対象日: ${dates||'未取得'}。`);
     }
     renderRaceInfo(current);
 
     const auto=current.auto_board;
-    if(auto){
+    const staleLegacyScope=isLegacyScopeDecision(auto,current);
+    if(auto && !staleLegacyScope){
       if(auto.participate){applyRace(auto,'v21/v31/v37 自動配置');return}
       state.first=[];state.second=[];state.third=[];renderBoard();
       status.innerHTML=`<span class="warn">見送り</span>　${esc(auto.skip_reason||auto.scope_note||'v21参加判定で対象外')}。盤面は配置しません。`;
@@ -129,8 +136,12 @@ async function generate(){
     const known=boardData?.races?.find(r=>String(r.race_id)===raceId);
     if(known){applyRace(known,'保存済みv37配置');return}
     state.first=[];state.second=[];state.third=[];renderBoard();
+    if(staleLegacyScope){
+      status.innerHTML='<span class="warn">旧S級/F1限定キャッシュを検出したため無効化しました。</span> 現行エンジンは7車なら級別・開催グレード・発走済み/未発走を問わず対象です。最新の自動配置キャッシュを再取得しています。';
+      return;
+    }
     const engine=liveData?.board_engine?.status||'未生成';
-    status.innerHTML=`<span class="ok">出走表・ライン取得完了。</span> <span class="warn">自動配置キャッシュは現在 ${esc(engine)}。次回キャッシュ更新後に再読み込みしてください。</span>`;
+    status.innerHTML=`<span class="ok">出走表・ライン取得完了。</span> <span class="warn">自動配置キャッシュは現在 ${esc(engine)}。配置データが未生成です。</span>`;
   }catch(e){status.innerHTML=`<span class="error">${esc(e.message||e)}</span>`}
   finally{btn.disabled=false}
 }
