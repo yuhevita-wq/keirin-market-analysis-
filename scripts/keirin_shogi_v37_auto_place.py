@@ -272,13 +272,7 @@ def target_scope(race) -> tuple[bool, str]:
     entries = race.get("entries", [])
     if len(entries) != 7:
         return False, "7車立てではない"
-    race_type = str(race.get("race_type", ""))
-    if "Ｓ級" not in race_type and "S級" not in race_type:
-        return False, "S級ではない"
-    grade = str(race.get("meeting_grade", "")).strip()
-    if grade != "F1":
-        return False, f"F1確認不可 ({grade or '未取得'})"
-    return True, "7車F1 S級対象"
+    return True, "7車なら級別・開催グレード・発走済み/未発走を問わず配置対象"
 
 
 def place_one(race, v21_state, pair_model, third_model, feature_names, freeze):
