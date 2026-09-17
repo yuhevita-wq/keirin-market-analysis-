@@ -1,0 +1,56 @@
+{
+  "model": "keirin_shogi_v31_top2_membership_second",
+  "phase": "Phase A",
+  "status": "FROZEN_BEFORE_TRUE_FUTURE_TEST",
+  "frozen_on": "2026-09-17",
+  "source_script_commit": "5b3dd32c73be0d109076086db0d722cee380fb81",
+  "calibration_result_commit": "4db5487afbc51cc5ad3d09981b8f3f33dd2c58a7",
+  "first_core": {
+    "version": "v21",
+    "policy": "frozen",
+    "max_candidate_count": 2,
+    "target_fraction": 0.25,
+    "lookback_weeks_for_score_quantile": 4
+  },
+  "second_core": {
+    "pair_architecture": "v26 blind unordered Top2 pair posterior",
+    "pair_variant": "blind_d2a",
+    "pair_params": {
+      "depth": 2,
+      "leaf": 18,
+      "l2": 1.5,
+      "lr": 0.045,
+      "iters": 190,
+      "random_state": 26
+    },
+    "orientation_used": false,
+    "row2_mapping": "rider Top2-membership mass = sum of pair posterior over all pairs containing rider",
+    "candidate_rule": {
+      "base_count": 2,
+      "add_third_when": "membership_rank3 >= 0.30 AND membership_rank3/membership_rank2 >= 0.65",
+      "max_count": 3
+    }
+  },
+  "calibration_period": [
+    "2025-10-27",
+    "2025-12-28"
+  ],
+  "retrospective_test_period": [
+    "2025-12-29",
+    "2026-06-28"
+  ],
+  "retrospective_metrics": {
+    "races": 511,
+    "second_capture": 0.5909980430528375,
+    "complete_top2_capture": 0.42857142857142855,
+    "avg_second_candidates": 2.340508806262231,
+    "three_candidate_rate": 0.3405088062622309,
+    "second_given_first_capture": 0.6016483516483516
+  },
+  "guards": {
+    "odds_used": false,
+    "post_2026_06_data_seen_before_freeze": false,
+    "future_tuning_allowed": false,
+    "future_rule": "Open post-2026-06-30 F1 S-class only after this freeze commit; report result without parameter adjustment."
+  }
+}
