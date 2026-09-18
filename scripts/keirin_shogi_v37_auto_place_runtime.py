@@ -17,14 +17,20 @@ import importlib.util
 import json
 import math
 import platform
+import sys
 from pathlib import Path
 
 import sklearn
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE_ENGINE = ROOT / "scripts/keirin_shogi_v37_auto_place.py"
+NINECAR_ENGINE = ROOT / "scripts/keirin_shogi_ninecar_v3.py"
+NINECAR_MODEL = ROOT / "results/keirin_shogi/ninecar_v3/model.joblib"
 TEMP_LIVE = ROOT / "docs/keirin-shogi/.live-race-data-runtime.json"
 BOARD_POLICY = "v21_raw_candidates_through_v31_v37_v1"
+NINECAR_POLICY = "ninecar_v3_direct_second_joint504_fixed7"
+NINECAR_GRADES = {"G1", "G2", "G3"}
+NINECAR_CLASSES = {"SS", "S1", "S2"}
 REQUIRED_NUMERIC_FIELDS = (
     "score",
     "win_rate",
@@ -49,6 +55,15 @@ def load_base_engine():
     spec = importlib.util.spec_from_file_location("keirin_shogi_v37_auto_place_base", BASE_ENGINE)
     module = importlib.util.module_from_spec(spec)
     assert spec.loader is not None
+    spec.loader.exec_module(module)
+    return module
+
+
+def load_ninecar_engine():
+    spec = importlib.util.spec_from_file_location("keirin_shogi_ninecar_v3_runtime", NINECAR_ENGINE)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    sys.modules[spec.name] = module
     spec.loader.exec_module(module)
     return module
 
@@ -86,6 +101,80 @@ def runtime_scope(race) -> tuple[bool, str]:
     if count < 3:
         return False, "3着候補を構成できる車数に満たない"
     return True, f"{count}車立て。級別・開催グレード・発走済み/未発走を問わず配置計算対象"
+
+
+def is_ninecar_v3_target(race: dict[str, object]) -> bool:
+    entries = race.get("entries", [])
+    if not isinstance(entries, list) or len(entries) != 9:
+        return False
+    if str(race.get("meeting_grade", "")).strip().upper() not in NINECAR_GRADES:
+        return False
+    try:
+        cars = {int(float(row.get("car_no", ""))) for row in entries if isinstance(row, dict)}
+    except (TypeError, ValueError):
+        return False
+    if cars != set(range(1, 10)):
+        return False
+    for row in entries:
+        if not isinstance(row, dict):
+            return False
+        if str(row.get("class", "")).strip().upper() not in NINECAR_CLASSES:
+            return False
+        try:
+            if float(row.get("line_id", 0)) <= 0 or float(row.get("line_position", 0)) <= 0:
+                return False
+        except (TypeError, ValueError):
+            return False
+    return True
+
+
+def runtime_place_ninecar(ninecar_engine, race: dict[str, object]) -> dict[str, object]:
+    common = {
+        "race_id": str(race.get("race_id", "")),
+        "race_date": race.get("race_date", ""),
+        "track": race.get("track", ""),
+        "race_no": race.get("race_no", ""),
+        "race_type": race.get("race_type", ""),
+        "scope_ok": True,
+        "scope_note": "9車S級G1/G2/G3。ninecar v3を暫定採用して配置",
+        "board_policy": NINECAR_POLICY,
+        "versions": {"ninecar": NINECAR_POLICY},
+        "provisional_adoption": True,
+        "adoption_note": "9車専用v3 暫定採用",
+    }
+    try:
+        validate_race_input(race)
+        if not NINECAR_MODEL.exists():
+            raise FileNotFoundError(f"ninecar v3 model not found: {NINECAR_MODEL}")
+        result = ninecar_engine.predict_live(race, model_path=NINECAR_MODEL)
+        rider_numbers = set(range(1, 10))
+        for key in ("first_candidates", "second_candidates", "third_candidates"):
+            validate_candidates([int(no) for no in result.get(key, [])], rider_numbers, key)
+        for key in ("first_ranking", "second_ranking", "third_ranking"):
+            validate_distribution(
+                result.get(key, []),
+                value_key="probability",
+                expected_count=9,
+                label=f"ninecar v3 {key}",
+            )
+        merged = {**common, **result}
+        merged["scope_ok"] = True
+        merged["scope_note"] = common["scope_note"]
+        merged["provisional_adoption"] = True
+        merged["adoption_note"] = common["adoption_note"]
+        return merged
+    except Exception as exc:
+        return {
+            **common,
+            "board_generated": False,
+            "participate": False,
+            "first_candidates": [],
+            "second_candidates": [],
+            "third_candidates": [],
+            "failure_stage": "ninecar_v3_prediction",
+            "error": f"{type(exc).__name__}: {exc}",
+            "skip_reason": "9車v3盤面生成失敗",
+        }
 
 
 def failure_result(common: dict[str, object], stage: str, exc: Exception) -> dict[str, object]:
@@ -147,7 +236,7 @@ def validate_candidates(candidates: list[int], rider_numbers: set[int], label: s
         raise ValueError(f"{label} contains duplicate or unknown riders: {candidates}")
 
 
-def runtime_place_one(engine, race, v21_state, pair_model, third_model, feature_names, freeze):
+def runtime_place_one(engine, ninecar_engine, race, v21_state, pair_model, third_model, feature_names, freeze):
     """Generate the board regardless of the v21 participation decision.
 
     This intentionally changes only runtime wiring. The frozen v21 score,
@@ -181,6 +270,9 @@ def runtime_place_one(engine, race, v21_state, pair_model, third_model, feature_
             "third_candidates": [],
             "skip_reason": scope_note,
         }
+
+    if is_ninecar_v3_target(race):
+        return runtime_place_ninecar(ninecar_engine, race)
 
     try:
         validate_race_input(race)
@@ -315,6 +407,7 @@ def runtime_place_one(engine, race, v21_state, pair_model, third_model, feature_
 
 def main() -> int:
     engine = load_base_engine()
+    ninecar_engine = load_ninecar_engine()
     original_live = engine.LIVE
     payload = json.loads(original_live.read_text(encoding="utf-8"))
     expected_state = payload.get("board_engine", {}).get("latest_historical_state", {})
@@ -328,6 +421,7 @@ def main() -> int:
     engine.target_scope = runtime_scope
     engine.place_one = lambda race, v21_state, pair_model, third_model, feature_names, freeze: runtime_place_one(
         engine,
+        ninecar_engine,
         race,
         v21_state,
         pair_model,
