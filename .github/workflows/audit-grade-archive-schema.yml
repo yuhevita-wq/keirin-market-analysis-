@@ -1,0 +1,42 @@
+name: Audit Grade Race Archive Schema
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/audit-grade-archive-schema.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect archive members and CSV headers
+        run: |
+          python - <<'PY'
+          import csv, io, json, zipfile
+          from pathlib import Path
+
+          archives = [
+              Path('data/grade_races/g1g2/g1-g2-2025-non-girls.zip'),
+              Path('data/grade_races/g3/2025/g3-2025-q1.zip'),
+              Path('data/grade_races/g3/2026_h1/g3-2026-q1-non-girls.zip'),
+          ]
+          for path in archives:
+              print(f'ARCHIVE {path}')
+              with zipfile.ZipFile(path) as z:
+                  names = z.namelist()
+                  print('MEMBERS', json.dumps(names, ensure_ascii=False))
+                  for name in names:
+                      if not name.lower().endswith(('.csv','.json','.jsonl')):
+                          continue
+                      print(f'FILE {name}')
+                      raw = z.read(name)
+                      text = raw.decode('utf-8-sig', errors='replace')
+                      lines = text.splitlines()
+                      print('HEAD', json.dumps(lines[:3], ensure_ascii=False))
+          PY
