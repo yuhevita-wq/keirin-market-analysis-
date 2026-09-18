@@ -30,6 +30,7 @@ def load_base():
     spec = importlib.util.spec_from_file_location("keirin_shogi_ninecar_v2_base", BASE_PATH)
     module = importlib.util.module_from_spec(spec)
     assert spec.loader is not None
+    sys.modules[spec.name] = module
     spec.loader.exec_module(module)
     return module
 
