@@ -645,6 +645,84 @@
       "p90": 0.2658043785287204
     }
   },
+  "rank_conditioned_outcomes": {
+    "true_triple": {
+      "top1": {
+        "n": 78,
+        "full_capture": 1.0,
+        "full_miss_count": 0
+      },
+      "top3": {
+        "n": 146,
+        "full_capture": 0.7191780821917808,
+        "full_miss_count": 41
+      },
+      "top5": {
+        "n": 198,
+        "full_capture": 0.6313131313131313,
+        "full_miss_count": 73
+      },
+      "top10": {
+        "n": 289,
+        "full_capture": 0.4982698961937716,
+        "full_miss_count": 145
+      },
+      "top20": {
+        "n": 387,
+        "full_capture": 0.3979328165374677,
+        "full_miss_count": 233
+      },
+      "top50": {
+        "n": 563,
+        "full_capture": 0.28596802841918295,
+        "full_miss_count": 402
+      }
+    },
+    "true_pair": {
+      "top1": {
+        "n": 188,
+        "first_second_both_capture": 0.9202127659574468,
+        "full_capture": 0.6276595744680851
+      },
+      "top3": {
+        "n": 352,
+        "first_second_both_capture": 0.6221590909090909,
+        "full_capture": 0.39488636363636365
+      },
+      "top5": {
+        "n": 439,
+        "first_second_both_capture": 0.5694760820045558,
+        "full_capture": 0.35079726651480636
+      },
+      "top10": {
+        "n": 585,
+        "first_second_both_capture": 0.4598290598290598,
+        "full_capture": 0.27350427350427353
+      },
+      "top20": {
+        "n": 757,
+        "first_second_both_capture": 0.3619550858652576,
+        "full_capture": 0.21400264200792601
+      }
+    },
+    "third_given_true_pair": {
+      "top1": {
+        "n": 320,
+        "third_capture": 0.50625,
+        "full_capture": 0.28125
+      },
+      "top2": {
+        "n": 505,
+        "third_capture": 0.5287128712871287,
+        "full_capture": 0.26534653465346536
+      },
+      "top3": {
+        "n": 669,
+        "third_capture": 0.47533632286995514,
+        "full_capture": 0.22122571001494767
+      }
+    }
+  },
   "greedy_board_losses": {
     "first": {
       "actual_within_marginal_top_row_size": 500,
@@ -660,6 +738,32 @@
       "actual_within_marginal_top_row_size": 416,
       "omitted_by_greedy_board": 146,
       "omission_rate_given_marginally_coverable": 0.35096153846153844
+    }
+  },
+  "counterfactual_boarding": {
+    "greedy7": {
+      "first": 0.5175345377258236,
+      "second": 0.4314558979808714,
+      "third": 0.4218916046758767,
+      "full": 0.17321997874601489
+    },
+    "marginal_topk_same_row_sizes": {
+      "first": 0.5313496280552603,
+      "second": 0.5132837407013815,
+      "third": 0.44208289054197664,
+      "full": 0.14558979808714134
+    },
+    "greedy8": {
+      "first": 0.5611052072263549,
+      "second": 0.4962805526036132,
+      "third": 0.48459086078639746,
+      "full": 0.2199787460148778
+    },
+    "greedy9": {
+      "first": 0.5908607863974495,
+      "second": 0.5557917109458024,
+      "third": 0.5143464399574921,
+      "full": 0.255047821466525
     }
   },
   "participation_score_deciles": [
@@ -964,6 +1068,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          3,
+          5
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        true,
+        true
+      ],
+      "marginal_same_size_full_hit": true,
+      "greedy8_hits": [
+        true,
+        true,
+        true
+      ],
+      "greedy8_full_hit": true,
+      "greedy9_hits": [
+        true,
+        true,
+        true
+      ],
+      "greedy9_full_hit": true,
       "board_mass": 0.13292340437388003,
       "participation_score": 0.671596352961596,
       "participate": true,
@@ -1034,6 +1171,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          7,
+          9
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          5
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        true,
+        true
+      ],
+      "marginal_same_size_full_hit": true,
+      "greedy8_hits": [
+        true,
+        false,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        true,
+        false,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.13003879241584446,
       "participation_score": 0.542869841767165,
       "participate": true,
@@ -1104,6 +1274,39 @@
         true
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          3,
+          7,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        true,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        true,
+        true,
+        true
+      ],
+      "greedy8_full_hit": true,
+      "greedy9_hits": [
+        true,
+        true,
+        true
+      ],
+      "greedy9_full_hit": true,
       "board_mass": 0.1289162696814053,
       "participation_score": 0.6978305515926425,
       "participate": true,
@@ -1174,6 +1377,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          5,
+          9
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        true,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        true,
+        true,
+        true
+      ],
+      "greedy8_full_hit": true,
+      "greedy9_hits": [
+        true,
+        true,
+        true
+      ],
+      "greedy9_full_hit": true,
       "board_mass": 0.12869781322805612,
       "participation_score": 0.6732229376429736,
       "participate": true,
@@ -1244,6 +1480,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          2,
+          5
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        true,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        false,
+        true,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        false,
+        true,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.12687909773425365,
       "participation_score": 0.6699238972437759,
       "participate": true,
@@ -1314,6 +1583,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          5
+        ],
+        [
+          2,
+          5,
+          9
+        ],
+        [
+          2,
+          3,
+          7
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        true,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        false,
+        true,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        false,
+        true,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.12452988392653724,
       "participation_score": 0.5626872434800322,
       "participate": true,
@@ -1384,6 +1686,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1
+        ],
+        [
+          1,
+          7,
+          9
+        ],
+        [
+          3,
+          7,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        false,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        false,
+        true,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        false,
+        true,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.12300681155980799,
       "participation_score": 0.6283256008489423,
       "participate": true,
@@ -1454,6 +1789,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          1,
+          3,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        false,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        false,
+        false,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        false,
+        false,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.12224973766839368,
       "participation_score": 0.6835156333790152,
       "participate": true,
@@ -1524,6 +1892,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          3,
+          7
+        ],
+        [
+          5,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        false,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        true,
+        false,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        true,
+        false,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.12211102881875859,
       "participation_score": 0.666543004962167,
       "participate": true,
@@ -1594,6 +1995,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1
+        ],
+        [
+          1,
+          2,
+          5
+        ],
+        [
+          2,
+          3,
+          5
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        false,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        true,
+        false,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        true,
+        false,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.12054556345041606,
       "participation_score": 0.6280696075774633,
       "participate": true,
@@ -1664,6 +2098,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          3,
+          9
+        ],
+        [
+          1,
+          3,
+          9
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        false,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        true,
+        true,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        true,
+        true,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.11999680782670231,
       "participation_score": 0.6620102253133194,
       "participate": true,
@@ -1734,6 +2201,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          5,
+          7
+        ],
+        [
+          5,
+          7,
+          9
+        ],
+        [
+          1,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        true,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        true,
+        true,
+        true
+      ],
+      "greedy8_full_hit": true,
+      "greedy9_hits": [
+        true,
+        true,
+        true
+      ],
+      "greedy9_full_hit": true,
       "board_mass": 0.11953167267790098,
       "participation_score": 0.6627199764618109,
       "participate": true,
@@ -1804,6 +2304,39 @@
         true
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1
+        ],
+        [
+          1,
+          7,
+          9
+        ],
+        [
+          5,
+          7,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        false,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        false,
+        false,
+        true
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        false,
+        false,
+        true
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.11946056564632326,
       "participation_score": 0.48478761394315484,
       "participate": true,
@@ -1874,6 +2407,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1
+        ],
+        [
+          1,
+          2,
+          9
+        ],
+        [
+          3,
+          7,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        true,
+        true
+      ],
+      "marginal_same_size_full_hit": true,
+      "greedy8_hits": [
+        true,
+        true,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        true,
+        true,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.11871842799804459,
       "participation_score": 0.5528805439378378,
       "participate": true,
@@ -1944,6 +2510,39 @@
         true
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          3,
+          7
+        ],
+        [
+          5,
+          7
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        false,
+        true
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        false,
+        true,
+        true
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        false,
+        true,
+        true
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.11767402052161942,
       "participation_score": 0.6641958032371282,
       "participate": true,
@@ -2014,6 +2613,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          2
+        ],
+        [
+          2,
+          7,
+          9
+        ],
+        [
+          3,
+          5,
+          7
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        false,
+        true
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        true,
+        true,
+        true
+      ],
+      "greedy8_full_hit": true,
+      "greedy9_hits": [
+        true,
+        true,
+        true
+      ],
+      "greedy9_full_hit": true,
       "board_mass": 0.11759999752220368,
       "participation_score": 0.5584808359122224,
       "participate": true,
@@ -2084,6 +2716,39 @@
         true
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          5,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        true,
+        true
+      ],
+      "marginal_same_size_full_hit": true,
+      "greedy8_hits": [
+        true,
+        false,
+        true
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        true,
+        true,
+        true
+      ],
+      "greedy9_full_hit": true,
       "board_mass": 0.11667147987727486,
       "participation_score": 0.5252566050270097,
       "participate": true,
@@ -2154,6 +2819,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1
+        ],
+        [
+          1,
+          5,
+          9
+        ],
+        [
+          2,
+          3,
+          5
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        false,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        true,
+        true,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        true,
+        true,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.11614591385156489,
       "participation_score": 0.5734665746886762,
       "participate": true,
@@ -2224,6 +2922,39 @@
         true
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          3,
+          7
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          1,
+          4,
+          5
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        false,
+        true
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        false,
+        false,
+        true
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        false,
+        false,
+        true
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.11611861478596697,
       "participation_score": 0.5273942557478111,
       "participate": true,
@@ -2294,6 +3025,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          7
+        ],
+        [
+          3,
+          7,
+          9
+        ],
+        [
+          1,
+          3,
+          5
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        true,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        false,
+        false,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        false,
+        false,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.11609005804408395,
       "participation_score": 0.5697251504623378,
       "participate": true,
@@ -2364,6 +3128,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          7
+        ],
+        [
+          1,
+          7,
+          9
+        ],
+        [
+          1,
+          4,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        false,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        false,
+        false,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        false,
+        false,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.11594710939921443,
       "participation_score": 0.622898410294823,
       "participate": true,
@@ -2434,6 +3231,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          2,
+          7
+        ],
+        [
+          5,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        true,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        true,
+        true,
+        true
+      ],
+      "greedy8_full_hit": true,
+      "greedy9_hits": [
+        true,
+        true,
+        true
+      ],
+      "greedy9_full_hit": true,
       "board_mass": 0.11477219005770703,
       "participation_score": 0.658251706301798,
       "participate": true,
@@ -2504,6 +3334,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          5
+        ],
+        [
+          2,
+          5,
+          9
+        ],
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        false,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        true,
+        true,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        true,
+        true,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.11445971114554682,
       "participation_score": 0.5535119873214357,
       "participate": true,
@@ -2574,6 +3437,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          3,
+          9
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        true,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        true,
+        true,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        true,
+        true,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.11422912490891714,
       "participation_score": 0.6534604843028323,
       "participate": true,
@@ -2644,6 +3540,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          7
+        ],
+        [
+          2,
+          3,
+          9
+        ],
+        [
+          1,
+          3,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        true,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        false,
+        true,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        false,
+        true,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.11412073084892446,
       "participation_score": 0.5358152718201389,
       "participate": true,
@@ -2714,6 +3643,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          7,
+          9
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        false,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        true,
+        false,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        true,
+        false,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.11410015348932463,
       "participation_score": 0.650981738240392,
       "participate": true,
@@ -2784,6 +3746,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          5
+        ],
+        [
+          1,
+          5,
+          9
+        ],
+        [
+          2,
+          4,
+          7
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        true,
+        true
+      ],
+      "marginal_same_size_full_hit": true,
+      "greedy8_hits": [
+        true,
+        true,
+        true
+      ],
+      "greedy8_full_hit": true,
+      "greedy9_hits": [
+        true,
+        true,
+        true
+      ],
+      "greedy9_full_hit": true,
       "board_mass": 0.11325725779322712,
       "participation_score": 0.5646848584384574,
       "participate": true,
@@ -2854,6 +3849,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          3,
+          7
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          5,
+          7,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        true,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        true,
+        true,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        true,
+        true,
+        true
+      ],
+      "greedy9_full_hit": true,
       "board_mass": 0.11247744881340885,
       "participation_score": 0.6611787177859683,
       "participate": true,
@@ -2924,6 +3952,39 @@
         true
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          7
+        ],
+        [
+          5,
+          7,
+          9
+        ],
+        [
+          2,
+          3,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        false,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        false,
+        false,
+        true
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        false,
+        false,
+        true
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.11239672920652484,
       "participation_score": 0.5998142377121872,
       "participate": true,
@@ -2994,6 +4055,39 @@
         true
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1
+        ],
+        [
+          1,
+          4,
+          7
+        ],
+        [
+          5,
+          7,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        true,
+        true
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        false,
+        true,
+        true
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        false,
+        true,
+        true
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.11201219848178756,
       "participation_score": 0.6088227341613546,
       "participate": true,
@@ -3064,6 +4158,39 @@
         true
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1,
+          5
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          2,
+          7,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        true,
+        true
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        false,
+        true,
+        true
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        false,
+        true,
+        true
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.1117793811959151,
       "participation_score": 0.6783951993861133,
       "participate": true,
@@ -3134,6 +4261,39 @@
         true
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          3,
+          7
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        true,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        true,
+        true,
+        true
+      ],
+      "greedy8_full_hit": true,
+      "greedy9_hits": [
+        true,
+        true,
+        true
+      ],
+      "greedy9_full_hit": true,
       "board_mass": 0.11175643390948932,
       "participation_score": 0.6781822796322348,
       "participate": true,
@@ -3204,6 +4364,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          7
+        ],
+        [
+          1,
+          2,
+          7
+        ],
+        [
+          1,
+          3,
+          4
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        true,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        false,
+        true,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        false,
+        true,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.11138077299336739,
       "participation_score": 0.6251716157320367,
       "participate": true,
@@ -3274,6 +4467,39 @@
         true
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          9
+        ],
+        [
+          2,
+          5,
+          9
+        ],
+        [
+          1,
+          2,
+          5
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        true,
+        true
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        false,
+        true,
+        true
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        false,
+        true,
+        true
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.11031490947217838,
       "participation_score": 0.5608614876570037,
       "participate": true,
@@ -3344,6 +4570,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          3,
+          5,
+          7
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        false,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        false,
+        true,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        false,
+        true,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.11026196751776335,
       "participation_score": 0.6499433101848634,
       "participate": true,
@@ -3414,6 +4673,39 @@
         true
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          2,
+          9
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          1,
+          3,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        false,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        true,
+        false,
+        true
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        true,
+        false,
+        true
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.11013842084618891,
       "participation_score": 0.5263818237446536,
       "participate": true,
@@ -3484,6 +4776,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1,
+          7
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          2,
+          5,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        false,
+        true
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        false,
+        false,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        false,
+        false,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.11001568106616136,
       "participation_score": 0.6633540233498935,
       "participate": true,
@@ -3554,6 +4879,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1
+        ],
+        [
+          1,
+          7,
+          9
+        ],
+        [
+          4,
+          7,
+          9
+        ]
+      ],
+      "marginal_same_size_hits": [
+        true,
+        false,
+        true
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        true,
+        false,
+        true
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        true,
+        false,
+        true
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.10953804479511076,
       "participation_score": 0.6167958889868527,
       "participate": true,
@@ -3624,6 +4982,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          3,
+          7
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        false,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        false,
+        true,
+        true
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        true,
+        true,
+        true
+      ],
+      "greedy9_full_hit": true,
       "board_mass": 0.10912898790106554,
       "participation_score": 0.6640897249754666,
       "participate": true,
@@ -3694,6 +5085,39 @@
         false
       ],
       "full_hit": false,
+      "marginal_same_size_board": [
+        [
+          5
+        ],
+        [
+          1,
+          2,
+          5
+        ],
+        [
+          2,
+          4,
+          7
+        ]
+      ],
+      "marginal_same_size_hits": [
+        false,
+        false,
+        false
+      ],
+      "marginal_same_size_full_hit": false,
+      "greedy8_hits": [
+        false,
+        false,
+        false
+      ],
+      "greedy8_full_hit": false,
+      "greedy9_hits": [
+        false,
+        false,
+        false
+      ],
+      "greedy9_full_hit": false,
       "board_mass": 0.10908184081350972,
       "participation_score": 0.5703676186382071,
       "participate": true,
