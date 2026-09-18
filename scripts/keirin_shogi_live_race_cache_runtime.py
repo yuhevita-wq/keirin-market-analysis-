@@ -141,8 +141,18 @@ def main() -> int:
                 ensure_ascii=False,
             )
         )
-    if engine and engine.get("status") != "ok":
-        return 1
+    # Per-race placement failures are already preserved as explicit failure
+    # rows and rendered as errors by the web UI. Do not discard the other
+    # successfully refreshed races just because one race is incomplete.
+    # Fail only when the board engine itself is unusable or a race has no
+    # corresponding board row at all.
+    if engine:
+        status = str(engine.get("status", "missing"))
+        missing = int(engine.get("missing_auto_board_count", 0) or 0)
+        placed = int(engine.get("placed_race_count", 0) or 0)
+        inputs = int(engine.get("input_race_count", 0) or 0)
+        if status == "failed" or missing > 0 or placed < inputs:
+            return 1
     return result
 
 
