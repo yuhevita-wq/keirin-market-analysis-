@@ -130,6 +130,14 @@ def parse_entries(html: str, race_id: str, source_url: str) -> tuple[dict[str, o
         home = rider_cell.select_one("span.home")
         profile = normalize_text(home.get_text(" ", strip=True)) if home else ""
         full_rider_text = normalize_text(rider_cell.get_text(" ", strip=True))
+        # A withdrawn rider remains visible in the KDreams table but is
+        # intentionally absent from the published line formation. Treat that
+        # as a reduced field, never invent a line_id for the withdrawn rider.
+        if "欠車" in full_rider_text or "欠場" in full_rider_text:
+            withdrawn = meta.setdefault("withdrawn_car_numbers", [])
+            if isinstance(withdrawn, list):
+                withdrawn.append(car_no)
+            continue
         player_name = full_rider_text
         if profile and full_rider_text.endswith(profile):
             player_name = normalize_text(full_rider_text[: -len(profile)])
@@ -170,8 +178,8 @@ def parse_entries(html: str, race_id: str, source_url: str) -> tuple[dict[str, o
         )
 
     entries = [dict(row) for _, row in sorted({int(row["car_no"]): row for row in entries}.items())]
-    if len(entries) < 5:
-        raise RuntimeError(f"too few entrants ({len(entries)})")
+    if len(entries) < 3:
+        raise RuntimeError(f"too few active entrants ({len(entries)})")
     meta["entry_count"] = len(entries)
     return meta, entries
 
