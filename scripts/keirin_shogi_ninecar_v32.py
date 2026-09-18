@@ -192,31 +192,57 @@ def choose_rules(scored):
             best_soft = (key, st)
     soft_threshold = float(best_soft[1] if best_soft else np.quantile(soft_scores, 0.90))
 
-    # Dominant = large rider-only first gap AND strong line concentration AND low collapse.
+    # Dominant is intentionally strict. "Best rider" is not enough:
+    # large p1 gap + concentrated strong line + high state-model WIN score
+    # + low collapse risk. Select by Wilson lower bound so a tiny lucky group
+    # cannot masquerade as an overwhelming favourite.
     gap_vals = np.asarray([r["features"]["strong_p1_gap"] for r in scored])
     line_vals = np.asarray([r["features"]["strong_line_mass"] for r in scored])
+    win_vals = np.asarray([r["state_probs"]["WIN"] for r in scored])
     best_dom = None
-    for qg in (0.70, 0.80, 0.90):
-        for ql in (0.60, 0.70, 0.80):
-            gt = float(np.quantile(gap_vals, qg))
-            lt = float(np.quantile(line_vals, ql))
-            sel = [r for r in scored if r["features"]["strong_p1_gap"] >= gt and r["features"]["strong_line_mass"] >= lt and r["state_probs"]["COLLAPSE"] < collapse_threshold]
-            if len(sel) < max(50, int(0.05 * len(scored))):
-                continue
-            win = float(np.mean([r["state"] == 0 for r in sel]))
-            key = (win, len(sel))
-            if best_dom is None or key > best_dom[0]:
-                best_dom = (key, gt, lt, win, len(sel))
+    z = 1.96
+    for qg in (0.75, 0.80, 0.85, 0.90, 0.95):
+        for ql in (0.65, 0.70, 0.80, 0.90):
+            for qw in (0.65, 0.70, 0.80, 0.90):
+                gt = float(np.quantile(gap_vals, qg))
+                lt = float(np.quantile(line_vals, ql))
+                wt = float(np.quantile(win_vals, qw))
+                sel = [
+                    r for r in scored
+                    if r["features"]["strong_p1_gap"] >= gt
+                    and r["features"]["strong_line_mass"] >= lt
+                    and r["state_probs"]["WIN"] >= wt
+                    and r["state_probs"]["COLLAPSE"] < collapse_threshold
+                ]
+                if len(sel) < max(30, int(0.03 * len(scored))):
+                    continue
+                wins = sum(r["state"] == 0 for r in sel)
+                n = len(sel)
+                win = wins / n
+                denom = 1 + z*z/n
+                centre = win + z*z/(2*n)
+                lower = (centre - z*np.sqrt(win*(1-win)/n + z*z/(4*n*n))) / denom
+                key = (lower, win, n)
+                if best_dom is None or key > best_dom[0]:
+                    best_dom = (key, gt, lt, wt, win, n, float(lower))
     if best_dom is None:
-        best_dom = ((0,0), float(np.quantile(gap_vals,0.9)), float(np.quantile(line_vals,0.8)), 0.0, 0)
+        best_dom = (
+            (0,0,0),
+            float(np.quantile(gap_vals,0.95)),
+            float(np.quantile(line_vals,0.90)),
+            float(np.quantile(win_vals,0.90)),
+            0.0, 0, 0.0
+        )
 
     return {
         "collapse_threshold": collapse_threshold,
         "soft_threshold": soft_threshold,
         "dominant_p1_gap_threshold": float(best_dom[1]),
         "dominant_line_mass_threshold": float(best_dom[2]),
-        "dominant_training_win_rate": float(best_dom[3]),
-        "dominant_training_n": int(best_dom[4]),
+        "dominant_win_score_threshold": float(best_dom[3]),
+        "dominant_training_win_rate": float(best_dom[4]),
+        "dominant_training_n": int(best_dom[5]),
+        "dominant_training_wilson_lower": float(best_dom[6]),
     }
 
 
@@ -239,6 +265,7 @@ def apply_overlay(r, rules):
     dominant = (
         r["features"]["strong_p1_gap"] >= rules["dominant_p1_gap_threshold"]
         and r["features"]["strong_line_mass"] >= rules["dominant_line_mass_threshold"]
+        and r["state_probs"]["WIN"] >= rules["dominant_win_score_threshold"]
         and collapse < rules["collapse_threshold"]
     )
     action = "BASE"
