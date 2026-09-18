@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "model": "ninecar_v32_strong_state_overlay",
+  "rules": {
+    "2024_to_2025": {
+      "collapse_threshold": 0.4071131016517678,
+      "soft_threshold": 0.43336408113099006,
+      "dominant_p1_gap_threshold": 0.05495557738213294,
+      "dominant_line_mass_threshold": 0.3954963960146909,
+      "dominant_training_win_rate": 0.6410256410256411,
+      "dominant_training_n": 117
+    },
+    "2025_to_2026": {
+      "collapse_threshold": 0.4059975390411512,
+      "soft_threshold": 0.4589569599685602,
+      "dominant_p1_gap_threshold": 0.07163940826854345,
+      "dominant_line_mass_threshold": 0.4182221286023151,
+      "dominant_training_win_rate": 0.5798319327731093,
+      "dominant_training_n": 119
+    },
+    "production_after_2026_h1": {
+      "collapse_threshold": 0.4136383854245585,
+      "soft_threshold": 0.4732378000050808,
+      "dominant_p1_gap_threshold": 0.056187686675438414,
+      "dominant_line_mass_threshold": 0.4247768920051459,
+      "dominant_training_win_rate": 0.4868421052631579,
+      "dominant_training_n": 76
+    }
+  },
+  "evaluation": {
+    "2025_forward": {
+      "n": 2201,
+      "first_capture": 0.5206724216265334,
+      "second_capture": 0.4093593820990459,
+      "third_capture": 0.42208087233075875,
+      "full_capture": 0.17401181281235803,
+      "participation_rate": 0.7464788732394366,
+      "participant_full_capture": 0.19659160073037127,
+      "participant_first_capture": 0.548995739500913,
+      "participant_second_capture": 0.44004869141813757,
+      "dominant_n": 277,
+      "dominant_rate": 0.1258518855065879,
+      "dominant_actual_win_rate": 0.5451263537906137,
+      "dominant_first_capture": 0.5703971119133574,
+      "soft_action_n": 184,
+      "soft_action_rate": 0.08359836437982734,
+      "soft_action_second_capture": 0.5163043478260869,
+      "soft_action_full_capture": 0.1793478260869565
+    },
+    "2026_h1_forward": {
+      "n": 941,
+      "first_capture": 0.5175345377258236,
+      "second_capture": 0.4442082890541977,
+      "third_capture": 0.4218916046758767,
+      "full_capture": 0.1742826780021254,
+      "participation_rate": 0.8182784272051009,
+      "participant_full_capture": 0.19220779220779222,
+      "participant_first_capture": 0.5337662337662338,
+      "participant_second_capture": 0.4662337662337662,
+      "dominant_n": 51,
+      "dominant_rate": 0.05419766206163656,
+      "dominant_actual_win_rate": 0.49019607843137253,
+      "dominant_first_capture": 0.49019607843137253,
+      "soft_action_n": 90,
+      "soft_action_rate": 0.09564293304994687,
+      "soft_action_second_capture": 0.5444444444444444,
+      "soft_action_full_capture": 0.16666666666666666
+    }
+  },
+  "reference_v3_2026": {
+    "first_capture": 0.5175345377258236,
+    "second_capture": 0.4314558979808714,
+    "third_capture": 0.4218916046758767,
+    "full_capture": 0.17321997874601489,
+    "participation_rate": 0.822529224229543,
+    "participant_full_capture": 0.1847545219638243
+  },
+  "guards": {
+    "odds_used": false,
+    "popularity_used": false,
+    "payout_used": false,
+    "results_used_at_inference": false,
+    "dominant_rider_never_demoted_from_first": true,
+    "soft_fail_keeps_first_and_adds_second": true,
+    "collapse_only_drives_skip": true
+  }
+}
