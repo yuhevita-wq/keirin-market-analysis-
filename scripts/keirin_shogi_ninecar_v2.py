@@ -308,12 +308,25 @@ def predict_joint(race: Race, models, alpha: float):
         pair_raw = pair_raw * np.asarray([p1[a - 1] ** alpha for a, _ in pairs])
     ppair = normalize(pair_raw)
 
+    # Score all 504 conditional third hypotheses in one batch. This is
+    # mathematically identical to 72 small predict_proba calls but much faster.
+    third_meta = []
+    third_x = []
+    for pair_index, (a, b) in enumerate(pairs):
+        for c in range(1, 10):
+            if c in (a, b):
+                continue
+            third_meta.append((pair_index, a, b, c))
+            third_x.append(third_vec(race, a, b, c, base))
+    third_raw = models["third"].predict_proba(np.asarray(third_x))[:, 1]
+
     joint = []
-    for (a, b), pab in zip(pairs, ppair):
+    offset = 0
+    for pair_index, ((a, b), pab) in enumerate(zip(pairs, ppair)):
         cs = [c for c in range(1, 10) if c not in (a, b)]
-        tx = np.asarray([third_vec(race, a, b, c, base) for c in cs])
-        t_raw = models["third"].predict_proba(tx)[:, 1]
-        pt = normalize(t_raw)
+        raw = third_raw[offset:offset + len(cs)]
+        offset += len(cs)
+        pt = normalize(raw)
         for c, pc in zip(cs, pt):
             joint.append((a, b, c, float(pab * pc)))
     total = sum(x[3] for x in joint)
