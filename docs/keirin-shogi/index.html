@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>競輪将棋 - 自動駒置き v37 / 9車v3</title>
+  <title>競輪将棋 - 自動駒置き v37 / 9車v3.2</title>
   <style>
     :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#222;background:#f5f5f5}
     *{box-sizing:border-box} body{margin:0;padding:24px}.wrap{max-width:1050px;margin:0 auto}
@@ -26,8 +26,8 @@
 </head>
 <body>
 <main class="wrap">
-  <h1>競輪将棋 駒置き <span class="badge">v21 / v31 / v37 + 9車v3</span></h1>
-  <p class="note">楽天Kドリームスのレース詳細URLを貼ると、出走表・ラインを取得し、固定済みアルゴリズムを機械計算して3段盤面へ配置します。9車S級G1/G2/G3は専用v3を暫定採用し、それ以外はv21→v31→v37を使用します。LLMによるその場の推論は使いません。</p>
+  <h1>競輪将棋 駒置き <span class="badge">v21 / v31 / v37 + 9車v3.2</span></h1>
+  <p class="note">楽天Kドリームスのレース詳細URLを貼ると、出走表・ラインを取得し、固定済みアルゴリズムを機械計算して3段盤面へ配置します。9車S級G1/G2/G3は専用v3.2を使用し、COLLAPSE高リスクは見送り、勝ち切れない強者は1着に残したまま2着へ重複、圧倒的強者は1着段を維持します。それ以外はv21→v31→v37を使用します。LLMによるその場の推論は使いません。</p>
 
   <h2>レースURL</h2>
   <section class="panel">
@@ -37,7 +37,7 @@
       </label>
       <button class="action primary" id="generateBoard" type="button">駒配置を生成</button>
     </div>
-    <div class="source">対象: <code>keirin.kdreams.jp/*/racedetail/...</code>　9車S級G1/G2/G3は専用v3を暫定採用。それ以外の取得可能レースは現行v21→v31→v37で配置します。v21参加判定は参加/見送りの表示だけに使い、見送りでも盤面は生成します。対象レースのオッズ・人気・結果・払戻は読み込みません。</div>
+    <div class="source">対象: <code>keirin.kdreams.jp/*/racedetail/...</code>　9車S級G1/G2/G3は専用v3.2を使用。それ以外の取得可能レースは現行v21→v31→v37で配置します。v21参加判定は参加/見送りの表示だけに使い、見送りでも盤面は生成します。対象レースのオッズ・人気・結果・払戻は読み込みません。</div>
     <div class="race-info" id="raceInfo"></div>
   </section>
 
@@ -57,14 +57,14 @@
     <article class="algo"><b>1着段 <span class="badge">v21</span></b>凍結済みv21の1着候補と参加判定を別々に使用。見送りでも1着候補は盤面へ置き、参加判定だけを別表示します。</article>
     <article class="algo"><b>2着段 <span class="badge">v31</span></b>凍結済み blind unordered Top2 pair。出走n車から全C(n,2)組を計算し、所属質量から2着候補を生成（7車なら21組）。</article>
     <article class="algo"><b>3着段 <span class="badge">v37</span></b>全Top2分岐の条件付き3着を周辺化し、candidate_cross gamma=0.25で弱く再重み付け。モデル学習元は7車F1 S級のまま固定。</article>
-    <article class="algo"><b>9車専用 <span class="badge">v3 暫定</span></b>9車S級G1/G2/G3では順序付き72ペア×条件付き3着=504仮説を計算し、直接2着priorを合成した7駒固定盤面を使用します。</article>
+    <article class="algo"><b>9車専用 <span class="badge">v3.2</span></b>504仮説の基礎盤面に強者状態補正を追加。COLLAPSE高リスクは見送り、SOFT_FAILは強者を1着に残したまま2着へ重複。1着差・ライン総強度・勝ち切りスコアがすべて上位10%の圧倒的強者は1着段を明示的に維持します。</article>
   </section>
 </main>
 <script>
 const rows=[{key:'first',label:'1着'},{key:'second',label:'2着'},{key:'third',label:'3着'}];
 const state={first:[],second:[],third:[]};
 let selectedPiece=null, liveData=null;
-const acceptedBoardPolicies=new Set(['v21_raw_candidates_through_v31_v37_v1','ninecar_v3_direct_second_joint504_fixed7']);
+const acceptedBoardPolicies=new Set(['v21_raw_candidates_through_v31_v37_v1','ninecar_v3_direct_second_joint504_fixed7','ninecar_v32_strong_state_overlay']);
 const board=document.getElementById('board'), status=document.getElementById('status'), raceInfo=document.getElementById('raceInfo');
 
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
@@ -82,17 +82,21 @@ function renderBoard(){
 }
 function applyRace(r,source='自動配置'){
   state.first=[...(r.first_candidates||[])];state.second=[...(r.second_candidates||[])];state.third=[...(r.third_candidates||[])];renderBoard();
-  const isNinecar=r.board_policy==='ninecar_v3_direct_second_joint504_fixed7';
-  const scoreRaw=isNinecar?r.participation_score:r.v21_selector_score;
-  const thresholdRaw=isNinecar?r.participation_threshold:r.v21_threshold;
-  const scoreLabel=isNinecar?'v3 score':'v21 score';
+  const isV32=r.board_policy==='ninecar_v32_strong_state_overlay';
+  const isV3=r.board_policy==='ninecar_v3_direct_second_joint504_fixed7';
+  const scoreRaw=isV32?r.strong_state_probabilities?.COLLAPSE:(isV3?r.participation_score:r.v21_selector_score);
+  const thresholdRaw=isV32?r.collapse_threshold:(isV3?r.participation_threshold:r.v21_threshold);
+  const scoreLabel=isV32?'COLLAPSE':(isV3?'v3 score':'v21 score');
   const score=Number.isFinite(Number(scoreRaw))?` / ${scoreLabel} ${(Number(scoreRaw)*100).toFixed(2)}%` : '';
   const scoreValue=Number(scoreRaw), thresholdValue=Number(thresholdRaw);
-  const comparison=Number.isFinite(scoreValue)&&Number.isFinite(thresholdValue)?(scoreValue>=thresholdValue?' ≥ ':' < '):'';
+  const comparison=Number.isFinite(scoreValue)&&Number.isFinite(thresholdValue)
+    ?(isV32?(scoreValue<thresholdValue?' < ':' ≥ '):(scoreValue>=thresholdValue?' ≥ ':' < '))
+    :'';
   const threshold=Number.isFinite(thresholdValue)?`${comparison}${(thresholdValue*100).toFixed(2)}%` : '';
   const decision=r.participate?'<span class="ok">参加</span>':'<span class="warn">見送り</span>';
   const reason=!r.participate&&r.skip_reason?`　${esc(r.skip_reason)}`:'';
-  status.innerHTML=`<span class="ok">${esc(source)}完了</span>　参加判定: ${decision}${reason}<br>盤面　1着 ${state.first.join('・')||'なし'} / 2着 ${state.second.join('・')||'なし'} / 3着 ${state.third.join('・')||'なし'}${score}${threshold}`;
+  const action=isV32&&r.overlay_action?`<br>9車補正: ${esc(r.overlay_action)} / 強者 ${esc(r.strong_rider??'')} ${r.dominant_strong?'（圧倒的強者・1着維持）':''}`:'';
+  status.innerHTML=`<span class="ok">${esc(source)}完了</span>　参加判定: ${decision}${reason}<br>盤面　1着 ${state.first.join('・')||'なし'} / 2着 ${state.second.join('・')||'なし'} / 3着 ${state.third.join('・')||'なし'}${score}${threshold}${action}`;
 }
 function validateKdreamsUrl(value){
   let u;try{u=new URL(value)}catch{throw new Error('URL形式が正しくありません')}
@@ -154,7 +158,7 @@ async function generate(){
         status.innerHTML=`<span class="error">${label}</span>　${esc(invalid)}`;
         return;
       }
-      const source=auto.board_policy==='ninecar_v3_direct_second_joint504_fixed7'?'9車v3 暫定自動配置':'v21/v31/v37 自動配置';
+      const source=auto.board_policy==='ninecar_v32_strong_state_overlay'?'9車v3.2 自動配置':(auto.board_policy==='ninecar_v3_direct_second_joint504_fixed7'?'9車v3 旧自動配置':'v21/v31/v37 自動配置');
       applyRace(auto,source);
       return;
     }
