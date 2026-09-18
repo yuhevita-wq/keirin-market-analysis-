@@ -1,0 +1,660 @@
+{
+  "schema_version": 1,
+  "model": "ninecar_v3_direct_second_joint504_fixed7",
+  "eligible_races_by_year": {
+    "2021": 418,
+    "2022": 422,
+    "2023": 456,
+    "2024": 2211,
+    "2025": 2201,
+    "2026": 941
+  },
+  "training_rules": {
+    "target": "9-rider S-class G1/G2/G3",
+    "odds_used": false,
+    "popularity_used": false,
+    "target_result_used_at_inference": false,
+    "ordered_pair_hypotheses": 72,
+    "ordered_triple_hypotheses": 504,
+    "board_piece_budget": 7,
+    "second_direct_prior": true
+  },
+  "selected": {
+    "alpha": 1.0,
+    "beta": 0.5,
+    "board_policy": {
+      "type": "greedy",
+      "budget": 7
+    },
+    "configuration_search_top20": [
+      {
+        "alpha": 1.0,
+        "beta": 0.5,
+        "board_policy": {
+          "type": "greedy",
+          "budget": 7
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.5099457504520796,
+          "second_capture": 0.3924050632911392,
+          "third_capture": 0.40596745027124775,
+          "full_board_capture": 0.15099457504520797,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 183,
+          "special_cross_line_second_capture": 0.39344262295081966,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      },
+      {
+        "alpha": 1.0,
+        "beta": 1.0,
+        "board_policy": {
+          "type": "greedy",
+          "budget": 7
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.49547920433996384,
+          "second_capture": 0.3860759493670886,
+          "third_capture": 0.42224231464737794,
+          "full_board_capture": 0.14828209764918626,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 180,
+          "special_cross_line_second_capture": 0.4111111111111111,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      },
+      {
+        "alpha": 0.7,
+        "beta": 1.0,
+        "board_policy": {
+          "type": "greedy",
+          "budget": 7
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.4656419529837251,
+          "second_capture": 0.3679927667269439,
+          "third_capture": 0.43037974683544306,
+          "full_board_capture": 0.14556962025316456,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 167,
+          "special_cross_line_second_capture": 0.39520958083832336,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      },
+      {
+        "alpha": 1.0,
+        "beta": 0.0,
+        "board_policy": {
+          "type": "greedy",
+          "budget": 7
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.5144665461121157,
+          "second_capture": 0.38426763110307416,
+          "third_capture": 0.3969258589511754,
+          "full_board_capture": 0.14466546112115733,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 193,
+          "special_cross_line_second_capture": 0.38860103626943004,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      },
+      {
+        "alpha": 0.7,
+        "beta": 0.5,
+        "board_policy": {
+          "type": "greedy",
+          "budget": 7
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.4891500904159132,
+          "second_capture": 0.379746835443038,
+          "third_capture": 0.4050632911392405,
+          "full_board_capture": 0.1437613019891501,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 171,
+          "special_cross_line_second_capture": 0.3742690058479532,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      },
+      {
+        "alpha": 1.0,
+        "beta": 1.5,
+        "board_policy": {
+          "type": "greedy",
+          "budget": 7
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.4638336347197107,
+          "second_capture": 0.3679927667269439,
+          "third_capture": 0.43309222423146476,
+          "full_board_capture": 0.14285714285714285,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 168,
+          "special_cross_line_second_capture": 0.39285714285714285,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      },
+      {
+        "alpha": 0.35,
+        "beta": 1.0,
+        "board_policy": {
+          "type": "greedy",
+          "budget": 7
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.43670886075949367,
+          "second_capture": 0.3508137432188065,
+          "third_capture": 0.4358047016274864,
+          "full_board_capture": 0.1301989150090416,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 149,
+          "special_cross_line_second_capture": 0.3959731543624161,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      },
+      {
+        "alpha": 1.0,
+        "beta": 1.5,
+        "board_policy": {
+          "type": "marginal",
+          "sizes": [
+            2,
+            2,
+            3
+          ]
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.5886075949367089,
+          "second_capture": 0.38788426763110306,
+          "third_capture": 0.45840867992766726,
+          "full_board_capture": 0.10669077757685352,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 202,
+          "special_cross_line_second_capture": 0.19306930693069307,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      },
+      {
+        "alpha": 1.0,
+        "beta": 1.5,
+        "board_policy": {
+          "type": "marginal",
+          "sizes": [
+            2,
+            3,
+            2
+          ]
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.5886075949367089,
+          "second_capture": 0.5226039783001808,
+          "third_capture": 0.3191681735985534,
+          "full_board_capture": 0.10488245931283906,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 202,
+          "special_cross_line_second_capture": 0.3613861386138614,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      },
+      {
+        "alpha": 1.0,
+        "beta": 1.0,
+        "board_policy": {
+          "type": "marginal",
+          "sizes": [
+            2,
+            2,
+            3
+          ]
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.5877034358047016,
+          "second_capture": 0.38788426763110306,
+          "third_capture": 0.45298372513562385,
+          "full_board_capture": 0.10397830018083183,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 199,
+          "special_cross_line_second_capture": 0.19597989949748743,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      },
+      {
+        "alpha": 1.0,
+        "beta": 1.0,
+        "board_policy": {
+          "type": "marginal",
+          "sizes": [
+            2,
+            3,
+            2
+          ]
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.5877034358047016,
+          "second_capture": 0.5325497287522604,
+          "third_capture": 0.3092224231464738,
+          "full_board_capture": 0.10307414104882459,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 199,
+          "special_cross_line_second_capture": 0.3768844221105528,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      },
+      {
+        "alpha": 1.0,
+        "beta": 0.5,
+        "board_policy": {
+          "type": "marginal",
+          "sizes": [
+            2,
+            3,
+            2
+          ]
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.5849909584086799,
+          "second_capture": 0.538878842676311,
+          "third_capture": 0.3010849909584087,
+          "full_board_capture": 0.09674502712477397,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 199,
+          "special_cross_line_second_capture": 0.38190954773869346,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      },
+      {
+        "alpha": 1.0,
+        "beta": 1.5,
+        "board_policy": {
+          "type": "marginal",
+          "sizes": [
+            3,
+            2,
+            2
+          ]
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.7160940325497287,
+          "second_capture": 0.38788426763110306,
+          "third_capture": 0.3191681735985534,
+          "full_board_capture": 0.09584086799276673,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 176,
+          "special_cross_line_second_capture": 0.1875,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      },
+      {
+        "alpha": 0.7,
+        "beta": 1.0,
+        "board_policy": {
+          "type": "marginal",
+          "sizes": [
+            2,
+            3,
+            2
+          ]
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.581374321880651,
+          "second_capture": 0.530741410488246,
+          "third_capture": 0.29927667269439423,
+          "full_board_capture": 0.09403254972875226,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 200,
+          "special_cross_line_second_capture": 0.375,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      },
+      {
+        "alpha": 1.0,
+        "beta": 0.5,
+        "board_policy": {
+          "type": "marginal",
+          "sizes": [
+            2,
+            2,
+            3
+          ]
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.5849909584086799,
+          "second_capture": 0.38788426763110306,
+          "third_capture": 0.4484629294755877,
+          "full_board_capture": 0.09403254972875226,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 199,
+          "special_cross_line_second_capture": 0.22613065326633167,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      },
+      {
+        "alpha": 0.7,
+        "beta": 1.0,
+        "board_policy": {
+          "type": "marginal",
+          "sizes": [
+            2,
+            2,
+            3
+          ]
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.581374321880651,
+          "second_capture": 0.38698010849909587,
+          "third_capture": 0.45027124773960214,
+          "full_board_capture": 0.09312839059674503,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 200,
+          "special_cross_line_second_capture": 0.175,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      },
+      {
+        "alpha": 1.0,
+        "beta": 1.0,
+        "board_policy": {
+          "type": "marginal",
+          "sizes": [
+            3,
+            2,
+            2
+          ]
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.7142857142857143,
+          "second_capture": 0.38788426763110306,
+          "third_capture": 0.3092224231464738,
+          "full_board_capture": 0.0922242314647378,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 177,
+          "special_cross_line_second_capture": 0.1807909604519774,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      },
+      {
+        "alpha": 1.0,
+        "beta": 1.5,
+        "board_policy": {
+          "type": "marginal",
+          "sizes": [
+            1,
+            3,
+            3
+          ]
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.3562386980108499,
+          "second_capture": 0.5226039783001808,
+          "third_capture": 0.45840867992766726,
+          "full_board_capture": 0.08951175406871609,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 153,
+          "special_cross_line_second_capture": 0.39215686274509803,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      },
+      {
+        "alpha": 1.0,
+        "beta": 0.0,
+        "board_policy": {
+          "type": "marginal",
+          "sizes": [
+            2,
+            2,
+            3
+          ]
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.5840867992766727,
+          "second_capture": 0.36256781193490056,
+          "third_capture": 0.445750452079566,
+          "full_board_capture": 0.08951175406871609,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 200,
+          "special_cross_line_second_capture": 0.28,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      },
+      {
+        "alpha": 0.35,
+        "beta": 1.0,
+        "board_policy": {
+          "type": "marginal",
+          "sizes": [
+            2,
+            2,
+            3
+          ]
+        },
+        "metrics": {
+          "races": 1106,
+          "first_capture": 0.5741410488245932,
+          "second_capture": 0.3833634719710669,
+          "third_capture": 0.4358047016274864,
+          "full_board_capture": 0.08951175406871609,
+          "avg_pieces": 7.0,
+          "special_cross_line_second_cases": 198,
+          "special_cross_line_second_capture": 0.1919191919191919,
+          "participants": 0,
+          "participation_rate": 0.0,
+          "participant_full_board_capture": null
+        }
+      }
+    ],
+    "participation_threshold": 0.4847538491238556
+  },
+  "evaluation": {
+    "2024_configuration_period": {
+      "ALL": {
+        "races": 2211,
+        "first_capture": 0.4993215739484396,
+        "second_capture": 0.37991858887381275,
+        "third_capture": 0.40479421076436,
+        "full_board_capture": 0.1420171867933062,
+        "avg_pieces": 7.0,
+        "special_cross_line_second_cases": 355,
+        "special_cross_line_second_capture": 0.3971830985915493,
+        "participants": 1188,
+        "participation_rate": 0.5373134328358209,
+        "participant_full_board_capture": 0.1691919191919192
+      },
+      "G1": {
+        "races": 338,
+        "first_capture": 0.4556213017751479,
+        "second_capture": 0.3165680473372781,
+        "third_capture": 0.41124260355029585,
+        "full_board_capture": 0.13609467455621302,
+        "avg_pieces": 7.0,
+        "special_cross_line_second_cases": 58,
+        "special_cross_line_second_capture": 0.3275862068965517,
+        "participants": 77,
+        "participation_rate": 0.22781065088757396,
+        "participant_full_board_capture": 0.2077922077922078
+      },
+      "G2": {
+        "races": 121,
+        "first_capture": 0.4214876033057851,
+        "second_capture": 0.3305785123966942,
+        "third_capture": 0.39669421487603307,
+        "full_board_capture": 0.09090909090909091,
+        "avg_pieces": 7.0,
+        "special_cross_line_second_cases": 26,
+        "special_cross_line_second_capture": 0.38461538461538464,
+        "participants": 26,
+        "participation_rate": 0.21487603305785125,
+        "participant_full_board_capture": 0.07692307692307693
+      },
+      "G3": {
+        "races": 1752,
+        "first_capture": 0.5131278538812786,
+        "second_capture": 0.3955479452054795,
+        "third_capture": 0.4041095890410959,
+        "full_board_capture": 0.146689497716895,
+        "avg_pieces": 7.0,
+        "special_cross_line_second_cases": 271,
+        "special_cross_line_second_capture": 0.4132841328413284,
+        "participants": 1085,
+        "participation_rate": 0.6192922374429224,
+        "participant_full_board_capture": 0.16866359447004609
+      }
+    },
+    "2025_forward": {
+      "ALL": {
+        "races": 2201,
+        "first_capture": 0.5206724216265334,
+        "second_capture": 0.3975465697410268,
+        "third_capture": 0.42208087233075875,
+        "full_board_capture": 0.17401181281235803,
+        "avg_pieces": 7.0,
+        "special_cross_line_second_cases": 435,
+        "special_cross_line_second_capture": 0.36091954022988504,
+        "participants": 1551,
+        "participation_rate": 0.704679691049523,
+        "participant_full_board_capture": 0.19664732430689877
+      },
+      "G1": {
+        "races": 342,
+        "first_capture": 0.43859649122807015,
+        "second_capture": 0.3508771929824561,
+        "third_capture": 0.40058479532163743,
+        "full_board_capture": 0.11695906432748537,
+        "avg_pieces": 7.0,
+        "special_cross_line_second_cases": 73,
+        "special_cross_line_second_capture": 0.3561643835616438,
+        "participants": 102,
+        "participation_rate": 0.2982456140350877,
+        "participant_full_board_capture": 0.11764705882352941
+      },
+      "G2": {
+        "races": 137,
+        "first_capture": 0.4744525547445255,
+        "second_capture": 0.3722627737226277,
+        "third_capture": 0.44525547445255476,
+        "full_board_capture": 0.17518248175182483,
+        "avg_pieces": 7.0,
+        "special_cross_line_second_cases": 31,
+        "special_cross_line_second_capture": 0.2903225806451613,
+        "participants": 31,
+        "participation_rate": 0.22627737226277372,
+        "participant_full_board_capture": 0.1935483870967742
+      },
+      "G3": {
+        "races": 1722,
+        "first_capture": 0.540650406504065,
+        "second_capture": 0.4088269454123113,
+        "third_capture": 0.4245063879210221,
+        "full_board_capture": 0.18524970963995355,
+        "avg_pieces": 7.0,
+        "special_cross_line_second_cases": 331,
+        "special_cross_line_second_capture": 0.3685800604229607,
+        "participants": 1418,
+        "participation_rate": 0.8234610917537747,
+        "participant_full_board_capture": 0.20239774330042312
+      }
+    },
+    "2026_h1_forward": {
+      "ALL": {
+        "races": 941,
+        "first_capture": 0.5175345377258236,
+        "second_capture": 0.4314558979808714,
+        "third_capture": 0.4218916046758767,
+        "full_board_capture": 0.17321997874601489,
+        "avg_pieces": 7.0,
+        "special_cross_line_second_cases": 157,
+        "special_cross_line_second_capture": 0.37579617834394907,
+        "participants": 774,
+        "participation_rate": 0.822529224229543,
+        "participant_full_board_capture": 0.1847545219638243
+      },
+      "G3": {
+        "races": 941,
+        "first_capture": 0.5175345377258236,
+        "second_capture": 0.4314558979808714,
+        "third_capture": 0.4218916046758767,
+        "full_board_capture": 0.17321997874601489,
+        "avg_pieces": 7.0,
+        "special_cross_line_second_cases": 157,
+        "special_cross_line_second_capture": 0.37579617834394907,
+        "participants": 774,
+        "participation_rate": 0.822529224229543,
+        "participant_full_board_capture": 0.1847545219638243
+      }
+    }
+  },
+  "production_gate": {
+    "full_board_reference": 0.228,
+    "max_avg_pieces": 7.57,
+    "min_special_cross_line_second": 0.099,
+    "full_board_pass": false,
+    "pieces_pass": true,
+    "cross_line_pass": true,
+    "eligible": false
+  },
+  "reference_metrics": {
+    "old_v21_v31_v37_2026_g3_common923_full_board": 0.228,
+    "old_v21_v31_v37_2026_g3_common923_avg_pieces": 7.57,
+    "ninecar_v1_2026_g3_special_cross_line_second_capture": 0.099,
+    "ninecar_v2_2026_g3_full_board": 0.20191285866099895,
+    "ninecar_v2_2026_g3_special_cross_line_second_capture": 0.3532934131736527
+  },
+  "production_bundle_trained_through": "2026-06-30"
+}
