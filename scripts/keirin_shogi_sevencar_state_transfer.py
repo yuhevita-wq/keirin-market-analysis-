@@ -309,18 +309,34 @@ def main():
     sf=score(fut_rows,m2,n2)
     fut_eval=eval_block(sf,rule2)
 
-    # Production candidate after Aug: all historical participant labels are now prior.
+    # Freeze the exact pre-future model/rules that were validated on Jul-Aug.
+    # Production uses only the v37 third-row append action; v21/v31 stay unchanged.
+    validated_bundle={
+        "model":m2,
+        "feature_names":n2,
+        "rules":rule2,
+        "model_name":"sevencar_v37_softfail_third_append",
+        "model_trained_through":"2026-03-31",
+        "rules_tuned_through":"2026-06-28",
+        "true_future_validated_through":"2026-08-30",
+        "policy":{
+            "v21":"unchanged",
+            "v31":"unchanged",
+            "v37":"if SOFT_FAIL >= threshold and COLLAPSE < cap, append strong rider to row3 without removing existing riders"
+        }
+    }
+    import joblib
+    joblib.dump(validated_bundle,OUT/"validated_model.joblib",compress=3)
+
+    # Keep the fully-refit bundle as research-only; it is not the production runtime model.
     prod_train=[*cal_rows,*h1_rows,*fut_rows]
     mp,npnames=fit_state(prod_train)
     sp=score(fut_rows,mp,npnames)
     prod_rules=choose_rules(sp)["rules"]
-
-    bundle={"model":mp,"feature_names":npnames,"rules":prod_rules,
-            "model_name":"sevencar_v21_v31_v37_state_transfer",
-            "trained_through":"2026-08-30",
-            "policy":{"collapse":"extra v21 participant filter","soft":"keep row1 and duplicate strong into row2","third":"only adopt if true-future SECOND_THIRD beats SECOND"}}
-    import joblib
-    joblib.dump(bundle,OUT/"model.joblib",compress=3)
+    research_bundle={"model":mp,"feature_names":npnames,"rules":prod_rules,
+            "model_name":"sevencar_state_transfer_research_refit",
+            "trained_through":"2026-08-30"}
+    joblib.dump(research_bundle,OUT/"model.joblib",compress=3)
 
     report={
       "study":"sevencar_transfer_from_ninecar",
