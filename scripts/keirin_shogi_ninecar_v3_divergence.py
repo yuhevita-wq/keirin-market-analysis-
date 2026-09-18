@@ -107,8 +107,20 @@ def main():
     part_threshold = float(bundle["participation_threshold"])
 
     rows = []
+    blend_diag = {(float(a), float(b)): [] for a, b in v3.BLENDS}
     for race in eval2026:
         comp = v3.probability_components(race, models)
+        for ba, bb in v3.BLENDS:
+            bj = v3.joint_from_components(comp, float(ba), float(bb))
+            br, _bm = v2.greedy_board(bj, 7)
+            bh = v2.captured(race, br)
+            em0 = entry_map(race)
+            same0 = v2.ino(em0[race.order[0]].get("line_id")) == v2.ino(em0[race.order[1]].get("line_id"))
+            blend_diag[(float(ba), float(bb))].append({
+                "hits": bh,
+                "full": bool(all(bh)),
+                "same": same0,
+            })
         joint = v3.joint_from_components(comp, alpha, beta)
         board, mass = v3.apply_board(joint, policy)
         hits = v2.captured(race, board)
@@ -298,6 +310,22 @@ def main():
             "full_capture": float(np.mean([r["full_hit"] for r in group])) if group else None,
         }
 
+    blend_forward = []
+    for (ba, bb), vals0 in blend_diag.items():
+        sameg = [x for x in vals0 if x["same"]]
+        diffg = [x for x in vals0 if not x["same"]]
+        blend_forward.append({
+            "alpha": ba,
+            "beta": bb,
+            "first_capture": float(np.mean([x["hits"][0] for x in vals0])),
+            "second_capture": float(np.mean([x["hits"][1] for x in vals0])),
+            "third_capture": float(np.mean([x["hits"][2] for x in vals0])),
+            "full_capture": float(np.mean([x["full"] for x in vals0])),
+            "same_line_full": float(np.mean([x["full"] for x in sameg])) if sameg else None,
+            "different_line_full": float(np.mean([x["full"] for x in diffg])) if diffg else None,
+        })
+    blend_forward.sort(key=lambda x: x["full_capture"], reverse=True)
+
     report = {
         "model": "ninecar_v3_direct_second_joint504_fixed7",
         "period": "2026 H1 forward",
@@ -316,6 +344,7 @@ def main():
         "row_size_patterns": dict(sorted(size_patterns.items())),
         "actual_rank_summary": actual_rank_summary,
         "actual_probability_summary": actual_prob_summary,
+        "blend_forward_diagnostic_2026": blend_forward,
         "rank_conditioned_outcomes": rank_conditioned,
         "greedy_board_losses": greedy_losses,
         "counterfactual_boarding": {
