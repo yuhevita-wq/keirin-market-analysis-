@@ -1,0 +1,139 @@
+{
+  "study": "sevencar_transfer_from_ninecar",
+  "data": {
+    "calibration_rows": 206,
+    "h1_rows": 511,
+    "true_future_rows": 153
+  },
+  "rules": {
+    "h1_forward": {
+      "collapse_threshold": 0.9049693524412736,
+      "soft_threshold": 0.6687765946791098,
+      "soft_collapse_max": 0.15313193286530366
+    },
+    "true_future": {
+      "collapse_threshold": 0.3976282075847845,
+      "soft_threshold": 0.4988517433007883,
+      "soft_collapse_max": 0.3976282075847845
+    },
+    "production_after_2026_08_30": {
+      "collapse_threshold": 0.38242221181036573,
+      "soft_threshold": 0.4675135378916825,
+      "soft_collapse_max": 0.3374319493751391
+    }
+  },
+  "evaluation": {
+    "2026_h1_forward": {
+      "BASE": {
+        "races": 511,
+        "participation_rate": 0.9412915851272016,
+        "first_capture": 0.7123287671232876,
+        "second_capture": 0.5909980430528375,
+        "third_capture": 0.5342465753424658,
+        "full_capture": 0.32093933463796476,
+        "participant_full_capture": 0.32432432432432434,
+        "participant_first_capture": 0.7193347193347194,
+        "participant_second_capture": 0.5925155925155925,
+        "participant_third_capture": 0.5363825363825364,
+        "soft_action_n": 0
+      },
+      "SECOND": {
+        "races": 511,
+        "participation_rate": 0.9412915851272016,
+        "first_capture": 0.7123287671232876,
+        "second_capture": 0.5909980430528375,
+        "third_capture": 0.5342465753424658,
+        "full_capture": 0.32093933463796476,
+        "participant_full_capture": 0.32432432432432434,
+        "participant_first_capture": 0.7193347193347194,
+        "participant_second_capture": 0.5925155925155925,
+        "participant_third_capture": 0.5363825363825364,
+        "soft_action_n": 71
+      },
+      "SECOND_THIRD": {
+        "races": 511,
+        "participation_rate": 0.9412915851272016,
+        "first_capture": 0.7123287671232876,
+        "second_capture": 0.5909980430528375,
+        "third_capture": 0.5342465753424658,
+        "full_capture": 0.3131115459882583,
+        "participant_full_capture": 0.316008316008316,
+        "participant_first_capture": 0.7193347193347194,
+        "participant_second_capture": 0.5925155925155925,
+        "participant_third_capture": 0.5363825363825364,
+        "soft_action_n": 71
+      },
+      "DOMINANT_DIAGNOSTIC": {
+        "n": 27,
+        "actual_win_rate": 0.5555555555555556,
+        "actual_top3_rate": 0.9259259259259259
+      }
+    },
+    "2026_07_08_true_future": {
+      "BASE": {
+        "races": 153,
+        "participation_rate": 0.6928104575163399,
+        "first_capture": 0.673202614379085,
+        "second_capture": 0.6078431372549019,
+        "third_capture": 0.5228758169934641,
+        "full_capture": 0.3202614379084967,
+        "participant_full_capture": 0.32075471698113206,
+        "participant_first_capture": 0.6509433962264151,
+        "participant_second_capture": 0.5943396226415094,
+        "participant_third_capture": 0.5377358490566038,
+        "soft_action_n": 0
+      },
+      "SECOND": {
+        "races": 153,
+        "participation_rate": 0.6928104575163399,
+        "first_capture": 0.673202614379085,
+        "second_capture": 0.6078431372549019,
+        "third_capture": 0.5228758169934641,
+        "full_capture": 0.3202614379084967,
+        "participant_full_capture": 0.32075471698113206,
+        "participant_first_capture": 0.6509433962264151,
+        "participant_second_capture": 0.5943396226415094,
+        "participant_third_capture": 0.5377358490566038,
+        "soft_action_n": 19
+      },
+      "SECOND_THIRD": {
+        "races": 153,
+        "participation_rate": 0.6928104575163399,
+        "first_capture": 0.673202614379085,
+        "second_capture": 0.6078431372549019,
+        "third_capture": 0.5359477124183006,
+        "full_capture": 0.3202614379084967,
+        "participant_full_capture": 0.32075471698113206,
+        "participant_first_capture": 0.6509433962264151,
+        "participant_second_capture": 0.5943396226415094,
+        "participant_third_capture": 0.5566037735849056,
+        "soft_action_n": 19
+      },
+      "DOMINANT_DIAGNOSTIC": {
+        "n": 7,
+        "actual_win_rate": 0.2857142857142857,
+        "actual_top3_rate": 1.0
+      }
+    }
+  },
+  "references": {
+    "v37_h1": {
+      "full": 0.32093933463796476,
+      "first": 0.7123287671232876,
+      "second": 0.5909980430528375,
+      "third": 0.5342465753424658
+    },
+    "v37_true_future": {
+      "full": 0.3202614379084967,
+      "first": 0.673202614379085,
+      "second": 0.6078431372549019,
+      "third": 0.5228758169934641
+    }
+  },
+  "guards": {
+    "odds_used": false,
+    "popularity_used": false,
+    "payout_used": false,
+    "true_future_used_for_pre_future_rules": false
+  }
+}
