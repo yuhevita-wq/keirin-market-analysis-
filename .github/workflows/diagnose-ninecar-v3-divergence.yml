@@ -1,0 +1,42 @@
+name: Diagnose Ninecar V3 Divergence
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/keirin_shogi_ninecar_v3_divergence.py'
+      - '.github/workflows/diagnose-ninecar-v3-divergence.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: diagnose-ninecar-v3-divergence
+  cancel-in-progress: true
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install package
+        run: python -m pip install -e .
+      - name: Run divergence study
+        run: python scripts/keirin_shogi_ninecar_v3_divergence.py
+      - name: Commit diagnostic result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/keirin_shogi/ninecar_v3/divergence_2026_h1.json
+          if git diff --cached --quiet; then
+            echo "No diagnostic changes."
+          else
+            git commit -m "research: save nine-car v3 divergence study"
+            git pull --rebase origin main
+            git push
+          fi
