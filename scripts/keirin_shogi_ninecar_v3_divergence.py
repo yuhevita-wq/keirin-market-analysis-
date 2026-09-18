@@ -140,6 +140,17 @@ def main():
         participation_score = float(part_model.predict_proba(feat.reshape(1, -1))[0, 1])
 
         em = entry_map(race)
+        marginal_board = []
+        for probs, size in zip((p1, p2, p3), [len(x) for x in board]):
+            selected = sorted(probs, key=lambda n: (-probs[n], n))[:size]
+            marginal_board.append(tuple(sorted(selected)))
+        marginal_board = tuple(marginal_board)
+        marginal_hits = v2.captured(race, marginal_board)
+        greedy8, _mass8 = v2.greedy_board(joint, 8)
+        greedy9, _mass9 = v2.greedy_board(joint, 9)
+        hits8 = v2.captured(race, greedy8)
+        hits9 = v2.captured(race, greedy9)
+
         row = {
             "race_id": race.race_id,
             "race_date": race.race_date,
@@ -150,6 +161,13 @@ def main():
             "row_sizes": [len(x) for x in board],
             "hits": [bool(x) for x in hits],
             "full_hit": bool(all(hits)),
+            "marginal_same_size_board": [list(x) for x in marginal_board],
+            "marginal_same_size_hits": [bool(x) for x in marginal_hits],
+            "marginal_same_size_full_hit": bool(all(marginal_hits)),
+            "greedy8_hits": [bool(x) for x in hits8],
+            "greedy8_full_hit": bool(all(hits8)),
+            "greedy9_hits": [bool(x) for x in hits9],
+            "greedy9_full_hit": bool(all(hits9)),
             "board_mass": float(mass),
             "participation_score": participation_score,
             "participate": participation_score >= part_threshold,
@@ -276,6 +294,32 @@ def main():
         "actual_rank_summary": actual_rank_summary,
         "actual_probability_summary": actual_prob_summary,
         "greedy_board_losses": greedy_losses,
+        "counterfactual_boarding": {
+            "greedy7": {
+                "first": float(np.mean([r["hits"][0] for r in rows])),
+                "second": float(np.mean([r["hits"][1] for r in rows])),
+                "third": float(np.mean([r["hits"][2] for r in rows])),
+                "full": float(np.mean([r["full_hit"] for r in rows])),
+            },
+            "marginal_topk_same_row_sizes": {
+                "first": float(np.mean([r["marginal_same_size_hits"][0] for r in rows])),
+                "second": float(np.mean([r["marginal_same_size_hits"][1] for r in rows])),
+                "third": float(np.mean([r["marginal_same_size_hits"][2] for r in rows])),
+                "full": float(np.mean([r["marginal_same_size_full_hit"] for r in rows])),
+            },
+            "greedy8": {
+                "first": float(np.mean([r["greedy8_hits"][0] for r in rows])),
+                "second": float(np.mean([r["greedy8_hits"][1] for r in rows])),
+                "third": float(np.mean([r["greedy8_hits"][2] for r in rows])),
+                "full": float(np.mean([r["greedy8_full_hit"] for r in rows])),
+            },
+            "greedy9": {
+                "first": float(np.mean([r["greedy9_hits"][0] for r in rows])),
+                "second": float(np.mean([r["greedy9_hits"][1] for r in rows])),
+                "third": float(np.mean([r["greedy9_hits"][2] for r in rows])),
+                "full": float(np.mean([r["greedy9_full_hit"] for r in rows])),
+            },
+        },
         "participation_score_deciles": decile_table(rows, "participation_score"),
         "board_mass_deciles": decile_table(rows, "board_mass"),
         "by_first_second_line_relation": by_line_relation,
