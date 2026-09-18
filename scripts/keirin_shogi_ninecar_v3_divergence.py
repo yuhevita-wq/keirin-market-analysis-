@@ -275,6 +275,29 @@ def main():
         key=lambda r: (-r["board_mass"], -r["participation_score"]),
     )[:40]
 
+    rank_conditioned = {"true_triple": {}, "true_pair": {}, "third_given_true_pair": {}}
+    for k in (1, 3, 5, 10, 20, 50):
+        group = [r for r in rows if r["actual_ranks"]["true_ordered_triple"] <= k]
+        rank_conditioned["true_triple"][f"top{k}"] = {
+            "n": len(group),
+            "full_capture": float(np.mean([r["full_hit"] for r in group])) if group else None,
+            "full_miss_count": int(sum(not r["full_hit"] for r in group)),
+        }
+    for k in (1, 3, 5, 10, 20):
+        group = [r for r in rows if r["actual_ranks"]["true_ordered_pair"] <= k]
+        rank_conditioned["true_pair"][f"top{k}"] = {
+            "n": len(group),
+            "first_second_both_capture": float(np.mean([r["hits"][0] and r["hits"][1] for r in group])) if group else None,
+            "full_capture": float(np.mean([r["full_hit"] for r in group])) if group else None,
+        }
+    for k in (1, 2, 3):
+        group = [r for r in rows if r["actual_ranks"]["third_given_true_pair"] <= k]
+        rank_conditioned["third_given_true_pair"][f"top{k}"] = {
+            "n": len(group),
+            "third_capture": float(np.mean([r["hits"][2] for r in group])) if group else None,
+            "full_capture": float(np.mean([r["full_hit"] for r in group])) if group else None,
+        }
+
     report = {
         "model": "ninecar_v3_direct_second_joint504_fixed7",
         "period": "2026 H1 forward",
@@ -293,6 +316,7 @@ def main():
         "row_size_patterns": dict(sorted(size_patterns.items())),
         "actual_rank_summary": actual_rank_summary,
         "actual_probability_summary": actual_prob_summary,
+        "rank_conditioned_outcomes": rank_conditioned,
         "greedy_board_losses": greedy_losses,
         "counterfactual_boarding": {
             "greedy7": {
