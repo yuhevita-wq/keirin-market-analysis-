@@ -170,12 +170,13 @@ def evaluate_actor(model,feature_names,rows):
         ranked=[r for _,r in sorted(zip(scores,group),key=lambda x:(-x[0],x[1]["candidate"]))]
         actual=group[0]["actual"]
         pos=next(i+1 for i,r in enumerate(ranked) if r["candidate"]==actual)
-        naive=min(group,key=lambda r:r["baseline_rank"])["candidate"]
+        naive_ranked=sorted(group,key=lambda r:(r["baseline_rank"],r["candidate"]))
+        naive_pos=next(i+1 for i,r in enumerate(naive_ranked) if r["candidate"]==actual)
         reversal.append({
             "race_id":rid,
             "actual":actual,
             "actor_rank":pos,
-            "naive_rank4_hit":int(naive==actual),
+            "naive_rank":naive_pos,
         })
     n=len(reversal)
     return {
@@ -183,8 +184,14 @@ def evaluate_actor(model,feature_names,rows):
         "actor_top1_capture":float(np.mean([x["actor_rank"]<=1 for x in reversal])) if n else None,
         "actor_top2_capture":float(np.mean([x["actor_rank"]<=2 for x in reversal])) if n else None,
         "actor_top3_capture":float(np.mean([x["actor_rank"]<=3 for x in reversal])) if n else None,
-        "naive_baseline_rank4_capture":float(np.mean([x["naive_rank4_hit"] for x in reversal])) if n else None,
+        "naive_top1_capture":float(np.mean([x["naive_rank"]<=1 for x in reversal])) if n else None,
+        "naive_top2_capture":float(np.mean([x["naive_rank"]<=2 for x in reversal])) if n else None,
+        "naive_top3_capture":float(np.mean([x["naive_rank"]<=3 for x in reversal])) if n else None,
+        "actor_minus_naive_top1":float(np.mean([x["actor_rank"]<=1 for x in reversal])-np.mean([x["naive_rank"]<=1 for x in reversal])) if n else None,
+        "actor_minus_naive_top2":float(np.mean([x["actor_rank"]<=2 for x in reversal])-np.mean([x["naive_rank"]<=2 for x in reversal])) if n else None,
+        "actor_minus_naive_top3":float(np.mean([x["actor_rank"]<=3 for x in reversal])-np.mean([x["naive_rank"]<=3 for x in reversal])) if n else None,
         "mean_actor_rank":float(np.mean([x["actor_rank"] for x in reversal])) if n else None,
+        "mean_naive_rank":float(np.mean([x["naive_rank"] for x in reversal])) if n else None,
         "rank_distribution":{str(k):int(sum(x["actor_rank"]==k for x in reversal)) for k in range(1,7)},
     }
 
