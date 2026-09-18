@@ -201,6 +201,7 @@ def replace_lowest(cands,strong,ranking,key):
 def apply_variant(row,rules,variant):
     log=row["log"]; strong=row["strong"]; p=row["probs"]
     first=list(map(int,log["first_candidates"])); second=list(map(int,log["second_candidates"])); third=list(map(int,log["third_candidates"]))
+    base_cells=len(first)+len(second)+len(third)
     participate=p["COLLAPSE"] < rules["collapse_threshold"]
     action="BASE"
     if participate and p["SOFT_FAIL"]>=rules["soft_threshold"] and p["COLLAPSE"]<rules["soft_collapse_max"]:
@@ -210,11 +211,18 @@ def apply_variant(row,rules,variant):
         if variant=="SECOND_THIRD":
             third=replace_lowest(third,strong,log["third_ranking"],"probability")
             action="SOFT_SECOND_THIRD"
+        if variant=="SECOND_THIRD_APPEND":
+            if strong not in second:
+                second.append(strong); second=sorted(set(second))
+            if strong not in third:
+                third.append(strong); third=sorted(set(third))
+            action="SOFT_SECOND_THIRD_APPEND"
     a1,a2,a3=map(int,row["race"]["order"][:3])
     return {
         "participate":participate,"action":action,"first":first,"second":second,"third":third,
         "first_hit":int(a1 in first),"second_hit":int(a2 in second),"third_hit":int(a3 in third),
-        "full":int(a1 in first and a2 in second and a3 in third),"state":row["state"],"strong":strong
+        "full":int(a1 in first and a2 in second and a3 in third),"state":row["state"],"strong":strong,
+        "cells":len(first)+len(second)+len(third),"added_cells":len(first)+len(second)+len(third)-base_cells
     }
 
 def choose_rules(scored):
@@ -246,7 +254,7 @@ def choose_rules(scored):
 
 def eval_block(scored,rules):
     out={}
-    for variant in ("BASE","SECOND","SECOND_THIRD"):
+    for variant in ("BASE","SECOND","SECOND_THIRD","SECOND_THIRD_APPEND"):
         vals=[apply_variant(r,rules,variant) for r in scored]
         keep=[x for x in vals if x["participate"]]
         out[variant]={
@@ -260,6 +268,8 @@ def eval_block(scored,rules):
             "participant_second_capture":float(np.mean([x["second_hit"] for x in keep])) if keep else None,
             "participant_third_capture":float(np.mean([x["third_hit"] for x in keep])) if keep else None,
             "soft_action_n":sum(x["action"]!="BASE" for x in vals),
+            "avg_board_cells":float(np.mean([x["cells"] for x in vals])),
+            "avg_added_cells":float(np.mean([x["added_cells"] for x in vals])),
         }
     # Dominant diagnostic only: high WIN score + strongest raw-score rank1 + strong line advantage.
     wins=np.asarray([r["probs"]["WIN"] for r in scored])
