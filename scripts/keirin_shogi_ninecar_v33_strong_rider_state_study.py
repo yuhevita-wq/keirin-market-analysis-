@@ -371,6 +371,20 @@ def choose_thresholds(scored):
     return best[1], grid[:20]
 
 
+def base_board_metrics(rows):
+    vals = []
+    for r in rows:
+        board, _ = v2.greedy_board(r["joint"], 7)
+        hits = v2.captured(r["race"], board)
+        vals.append(hits)
+    return {
+        "first_capture": float(np.mean([x[0] for x in vals])) if vals else None,
+        "second_capture": float(np.mean([x[1] for x in vals])) if vals else None,
+        "third_capture": float(np.mean([x[2] for x in vals])) if vals else None,
+        "full_capture": float(np.mean([all(x) for x in vals])) if vals else None,
+    }
+
+
 def collapse_cut_table(scored):
     order = sorted(scored, key=lambda r: r["state_probs"]["COLLAPSE"], reverse=True)
     out = []
@@ -382,10 +396,12 @@ def collapse_cut_table(scored):
             "cut_fraction": frac,
             "cut_n": n,
             "cut_actual_collapse_rate": float(np.mean([r["state"] == 2 for r in cut])),
+            "cut_board": base_board_metrics(cut),
             "keep_n": len(keep),
             "keep_actual_collapse_rate": float(np.mean([r["state"] == 2 for r in keep])),
             "keep_win_rate": float(np.mean([r["state"] == 0 for r in keep])),
             "keep_soft_fail_rate": float(np.mean([r["state"] == 1 for r in keep])),
+            "keep_board": base_board_metrics(keep),
         })
     return out
 
