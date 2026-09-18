@@ -160,7 +160,7 @@ def runtime_place_ninecar(ninecar_engine, race: dict[str, object]) -> dict[str, 
         merged = {**common, **result}
         merged["scope_ok"] = True
         merged["scope_note"] = common["scope_note"]
-        merged["provisional_adoption"] = True
+        merged["provisional_adoption"] = False
         merged["adoption_note"] = common["adoption_note"]
         return merged
     except Exception as exc:
