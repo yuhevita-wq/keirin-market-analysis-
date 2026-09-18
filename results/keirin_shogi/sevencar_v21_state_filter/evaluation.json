@@ -1,0 +1,82 @@
+{
+  "study": "sevencar_v21_state_filter_full_oos",
+  "counts": {
+    "train": 1539,
+    "cal": 891,
+    "h1": 2342,
+    "future_participants": 153
+  },
+  "rules": {
+    "h1_forward": {
+      "threshold": 0.2757996264223523,
+      "keep_rate": 0.6990291262135923,
+      "candidate_capture": 0.7361111111111112,
+      "top1_hit": 0.4652777777777778,
+      "collapse_rate": 0.13194444444444445
+    },
+    "true_future": {
+      "threshold": 0.29291792500328695,
+      "keep_rate": 0.6976744186046512,
+      "candidate_capture": 0.7333333333333333,
+      "top1_hit": 0.4,
+      "collapse_rate": 0.16666666666666666
+    },
+    "production": {
+      "threshold": 0.33925463616028934,
+      "keep_rate": 0.7973856209150327,
+      "candidate_capture": 0.7049180327868853,
+      "top1_hit": 0.4016393442622951,
+      "collapse_rate": 0.1721311475409836
+    }
+  },
+  "evaluation": {
+    "2026_h1": {
+      "base": {
+        "n": 511,
+        "candidate_capture": 0.7123287671232876,
+        "top1_hit": 0.40117416829745595,
+        "collapse_rate": 0.21135029354207435
+      },
+      "keep": {
+        "n": 327,
+        "candidate_capture": 0.7614678899082569,
+        "top1_hit": 0.42813455657492355,
+        "collapse_rate": 0.1529051987767584
+      },
+      "cut": {
+        "n": 184,
+        "candidate_capture": 0.625,
+        "top1_hit": 0.3532608695652174,
+        "collapse_rate": 0.31521739130434784
+      },
+      "keep_fraction_of_v21": 0.639921722113503
+    },
+    "2026_07_08_true_future": {
+      "base": {
+        "n": 153,
+        "candidate_capture": 0.673202614379085,
+        "top1_hit": 0.3790849673202614,
+        "collapse_rate": 0.19607843137254902
+      },
+      "keep": {
+        "n": 87,
+        "candidate_capture": 0.6666666666666666,
+        "top1_hit": 0.367816091954023,
+        "collapse_rate": 0.16091954022988506
+      },
+      "cut": {
+        "n": 66,
+        "candidate_capture": 0.6818181818181818,
+        "top1_hit": 0.3939393939393939,
+        "collapse_rate": 0.24242424242424243
+      },
+      "keep_fraction_of_v21": 0.5686274509803921
+    }
+  },
+  "guards": {
+    "odds_used": false,
+    "popularity_used": false,
+    "payout_used": false,
+    "future_used_for_prefuture_rule": false
+  }
+}
