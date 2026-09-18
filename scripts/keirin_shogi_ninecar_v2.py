@@ -343,7 +343,7 @@ def greedy_board(joint, budget: int):
     rows = [set([best[0]]), set([best[1]]), set([best[2]])]
     while sum(len(r) for r in rows) < budget:
         current = board_mass(joint, rows)
-        best_gain, best_move = -1.0, None
+        best_key, best_move = None, None
         for ri in range(3):
             for no in range(1, 10):
                 if no in rows[ri]:
@@ -352,8 +352,8 @@ def greedy_board(joint, budget: int):
                 trial[ri].add(no)
                 gain = board_mass(joint, trial) - current
                 key = (gain, -ri, -no)
-                if best_move is None or key > best_gain:
-                    best_gain = key
+                if best_key is None or key > best_key:
+                    best_key = key
                     best_move = (ri, no)
         if best_move is None:
             break
