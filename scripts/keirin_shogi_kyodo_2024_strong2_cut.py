@@ -99,10 +99,21 @@ def main():
         if h4_pair is not None:
             cut_h4.discard(h4_pair)
 
+        # H5: remove exactly one more surviving pair after H4,
+        # again the highest remaining joint co-top3 probability pair.
+        h5_pair=max(
+            cut_h4,
+            key=lambda p:(pair_probs.get(p,0.0),-p[0],-p[1]),
+            default=None,
+        )
+        cut_h5=set(cut_h4)
+        if h5_pair is not None:
+            cut_h5.discard(h5_pair)
+
         def pay(ts):
             hp=sorted(set(ts)&set(paid))
             return sum(paid[p] for p in hp),hp
-        bp,bh=pay(base); cp,ch=pay(cut); xp,xh=pay(cut_both); hp,hh=pay(cut_h3); qp,qh=pay(cut_h4)
+        bp,bh=pay(base); cp,ch=pay(cut); xp,xh=pay(cut_both); hp,hh=pay(cut_h3); qp,qh=pay(cut_h4); vp,vh=pay(cut_h5)
         rows.append({
             "race_id":race.race_id,"date":race.race_date,"race_type":race.race_type,
             "result":list(race.order),"board":[list(x) for x in board],
@@ -128,6 +139,11 @@ def main():
             "h4_pair_was_winner":bool(h4_pair in paid) if h4_pair else False,
             "h4_pair_payout_yen":paid.get(h4_pair,0) if h4_pair else 0,
             "h4_tickets":len(cut_h4),"h4_payout":qp,"h4_hits":[list(x) for x in qh],
+            "h5_pair":list(h5_pair) if h5_pair else None,
+            "h5_pair_prob":pair_probs.get(h5_pair,0.0) if h5_pair else None,
+            "h5_pair_was_winner":bool(h5_pair in paid) if h5_pair else False,
+            "h5_pair_payout_yen":paid.get(h5_pair,0) if h5_pair else 0,
+            "h5_tickets":len(cut_h5),"h5_payout":vp,"h5_hits":[list(x) for x in vh],
         })
     report={
         "study":"2024 Kyodo days1-2 board wide minus strongest-two pair",
@@ -145,6 +161,7 @@ def main():
         "strong2_plus_strongline_cut":summarize(rows,"both"),
         "h3_highest_remaining_pair_cut":summarize(rows,"h3"),
         "h4_second_remaining_pair_cut":summarize(rows,"h4"),
+        "h5_third_remaining_pair_cut":summarize(rows,"h5"),
         "cut_effect":{
             "strong2_candidate_cut_races":sum(r["cut_pair_was_candidate"] for r in rows),
             "strong2_winning_cut_pair_races":sum(r["cut_pair_was_winner"] for r in rows),
@@ -164,11 +181,15 @@ def main():
             "h4_winning_cut_pair_races":sum(r["h4_pair_was_winner"] for r in rows),
             "h4_removed_stake_yen":sum(r["h3_tickets"]-r["h4_tickets"] for r in rows)*100,
             "h4_removed_winning_payout_yen":sum(r["h3_payout"]-r["h4_payout"] for r in rows),
+            "h5_cut_races":sum(r["h5_pair"] is not None for r in rows),
+            "h5_winning_cut_pair_races":sum(r["h5_pair_was_winner"] for r in rows),
+            "h5_removed_stake_yen":sum(r["h4_tickets"]-r["h5_tickets"] for r in rows)*100,
+            "h5_removed_winning_payout_yen":sum(r["h4_payout"]-r["h5_payout"] for r in rows),
         },
         "races":rows,
     }
     OUT.parent.mkdir(parents=True,exist_ok=True)
     OUT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    print(json.dumps({k:report[k] for k in ("baseline","strong2_cut","strong2_plus_strongline_cut","h3_highest_remaining_pair_cut","h4_second_remaining_pair_cut","cut_effect")},ensure_ascii=False,indent=2))
+    print(json.dumps({k:report[k] for k in ("baseline","strong2_cut","strong2_plus_strongline_cut","h3_highest_remaining_pair_cut","h4_second_remaining_pair_cut","h5_third_remaining_pair_cut","cut_effect")},ensure_ascii=False,indent=2))
 
 if __name__=="__main__": main()
