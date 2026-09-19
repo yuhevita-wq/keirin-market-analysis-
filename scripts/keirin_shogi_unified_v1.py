@@ -554,6 +554,7 @@ def main() -> int:
                 "board_count": sum(bool(row.get("board_generated")) for row in output),
                 "participant_count": sum(bool(row.get("participate")) for row in output),
                 "failure_count": len(failures),
+                "failure_samples": failures[:5],
                 "engine": payload["engine"],
             },
             ensure_ascii=False,
