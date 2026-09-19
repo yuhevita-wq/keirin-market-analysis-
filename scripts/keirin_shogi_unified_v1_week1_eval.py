@@ -4,6 +4,7 @@ from __future__ import annotations
 import importlib.util
 import json
 from collections import defaultdict
+import csv
 from datetime import date, timedelta
 from pathlib import Path
 from statistics import mean
@@ -79,6 +80,21 @@ def valid_board_orders(first, second, third):
     )
 
 
+def load_trifecta_payouts():
+    path = ROOT / "data/2026_future_block1/s_class_f1_20260701_20260830/payouts.csv"
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    out = {}
+    for row in rows:
+        if row.get("ticket_type") != "3連単":
+            continue
+        if row.get("status") != "ok":
+            continue
+        key = (str(row.get("race_id", "")), str(row.get("combination", "")))
+        out[key] = int(float(row.get("payout_yen") or 0))
+    return out
+
+
 def main():
     state, races, entries_by, results_by = as_of_state(WEEK_START)
     race_by = {row["race_id"]: row for row in races}
@@ -86,6 +102,7 @@ def main():
 
     pair_model = u.build_pair_model()
     third_model, feature_names, freeze = u.build_third_model()
+    trifecta_payouts = load_trifecta_payouts()
 
     logs = []
     for race_id in test_ids:
@@ -113,6 +130,11 @@ def main():
         second_hit = actual[1] in pred["second_candidates"]
         third_hit = actual[2] in pred["third_candidates"]
 
+        combination = "-".join(map(str, actual))
+        payout_yen = trifecta_payouts.get((race_id, combination))
+        if payout_yen is None:
+            raise RuntimeError(f"missing trifecta payout for {race_id} {combination}")
+
         logs.append(
             {
                 "race_id": race_id,
@@ -133,6 +155,7 @@ def main():
                     pred["second_candidates"],
                     pred["third_candidates"],
                 ),
+                "trifecta_payout_yen": payout_yen,
                 "top_order": top_orders[0],
             }
         )
@@ -141,6 +164,42 @@ def main():
         raise RuntimeError("no complete-result races in evaluation week")
 
     n = len(logs)
+    return_tests = {}
+    for k in (1, 3, 5, 10, 20):
+        stake = n * k * 100
+        hits = [
+            x for x in logs
+            if x["actual_order_rank_top20"] is not None
+            and x["actual_order_rank_top20"] <= k
+        ]
+        payout = sum(x["trifecta_payout_yen"] for x in hits)
+        return_tests[f"top{k}"] = {
+            "ticket_rule": f"joint top {k} exact orders, 100 yen each",
+            "races": n,
+            "tickets": n * k,
+            "stake_yen": stake,
+            "hit_count": len(hits),
+            "hit_rate": len(hits) / n,
+            "payout_yen": payout,
+            "profit_yen": payout - stake,
+            "return_rate": payout / stake if stake else 0.0,
+        }
+
+    board_stake = sum(x["valid_board_orders"] for x in logs) * 100
+    board_hits = [x for x in logs if x["complete_board_hit"]]
+    board_payout = sum(x["trifecta_payout_yen"] for x in board_hits)
+    return_tests["board_all"] = {
+        "ticket_rule": "all valid exact orders implied by board, 100 yen each",
+        "races": n,
+        "tickets": sum(x["valid_board_orders"] for x in logs),
+        "stake_yen": board_stake,
+        "hit_count": len(board_hits),
+        "hit_rate": len(board_hits) / n,
+        "payout_yen": board_payout,
+        "profit_yen": board_payout - board_stake,
+        "return_rate": board_payout / board_stake if board_stake else 0.0,
+    }
+
     summary = {
         "algorithm": "keirin_shogi_unified_v1",
         "evaluation_week": [WEEK_START.isoformat(), WEEK_END.isoformat()],
@@ -170,6 +229,7 @@ def main():
         "avg_second_candidates": mean(len(x["second_candidates"]) for x in logs),
         "avg_third_candidates": mean(len(x["third_candidates"]) for x in logs),
         "avg_valid_board_orders": mean(x["valid_board_orders"] for x in logs),
+        "return_tests": return_tests,
         "guards": {
             "odds_used": False,
             "popularity_used": False,
