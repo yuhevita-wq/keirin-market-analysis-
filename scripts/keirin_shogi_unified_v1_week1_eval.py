@@ -88,7 +88,7 @@ def load_trifecta_payouts():
     for row in rows:
         if row.get("ticket_type") != "3連単":
             continue
-        if row.get("status") != "ok":
+        if row.get("status") != "paid":
             continue
         key = (str(row.get("race_id", "")), str(row.get("combination", "")))
         out[key] = int(float(row.get("payout_yen") or 0))
