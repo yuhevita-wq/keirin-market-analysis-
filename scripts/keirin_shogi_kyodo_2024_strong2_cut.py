@@ -110,6 +110,49 @@ def main():
         if h5_pair is not None:
             cut_h5.discard(h5_pair)
 
+        # H7: "most expected lead line" public-bias cut from the H4 state.
+        # Define the line mechanically from PRE-RACE entry data only.
+        # Compare line leaders (line_position == 1) lexicographically by:
+        #   1) B count desc
+        #   2) nige_count desc
+        #   3) line_size desc
+        #   4) score desc
+        #   5) car_no asc (deterministic tie-break)
+        # Then cut exactly leader + line_position 2 if that wide pair still
+        # survives after H4. Do NOT fall through to the next line.
+        entries_by_no={int(e["car_no"]):e for e in race.entries}
+        leaders=[
+            e for e in race.entries
+            if int(float(e.get("line_position") or 0))==1
+            and int(float(e.get("line_id") or 0))>0
+        ]
+        def lead_bias_key(e):
+            return (
+                float(e.get("b_count") or 0),
+                float(e.get("nige_count") or 0),
+                float(e.get("line_size") or 0),
+                float(e.get("score") or 0),
+                -int(float(e.get("car_no") or 0)),
+            )
+        h7_leader=max(leaders,key=lead_bias_key,default=None)
+        h7_pair=None
+        h7_line_id=None
+        if h7_leader is not None:
+            h7_line_id=int(float(h7_leader.get("line_id") or 0))
+            leader_no=int(float(h7_leader.get("car_no") or 0))
+            second=next((
+                e for e in race.entries
+                if int(float(e.get("line_id") or 0))==h7_line_id
+                and int(float(e.get("line_position") or 0))==2
+            ),None)
+            if second is not None:
+                second_no=int(float(second.get("car_no") or 0))
+                h7_pair=tuple(sorted((leader_no,second_no)))
+        cut_h7=set(cut_h4)
+        h7_pair_was_candidate=bool(h7_pair in cut_h4) if h7_pair else False
+        if h7_pair_was_candidate:
+            cut_h7.discard(h7_pair)
+
         # H6: redundancy peeling from the H4 state.
         # For each surviving wide pair, compute how much joint504 probability
         # mass would become completely uncovered if that single pair were removed.
@@ -142,7 +185,7 @@ def main():
         def pay(ts):
             hp=sorted(set(ts)&set(paid))
             return sum(paid[p] for p in hp),hp
-        bp,bh=pay(base); cp,ch=pay(cut); xp,xh=pay(cut_both); hp,hh=pay(cut_h3); qp,qh=pay(cut_h4); vp,vh=pay(cut_h5); rp,rh=pay(cut_h6)
+        bp,bh=pay(base); cp,ch=pay(cut); xp,xh=pay(cut_both); hp,hh=pay(cut_h3); qp,qh=pay(cut_h4); vp,vh=pay(cut_h5); rp,rh=pay(cut_h6); sp,sh=pay(cut_h7)
         rows.append({
             "race_id":race.race_id,"date":race.race_date,"race_type":race.race_type,
             "result":list(race.order),"board":[list(x) for x in board],
@@ -179,6 +222,17 @@ def main():
             "h6_pair_was_winner":bool(h6_pair in paid) if h6_pair else False,
             "h6_pair_payout_yen":paid.get(h6_pair,0) if h6_pair else 0,
             "h6_tickets":len(cut_h6),"h6_payout":rp,"h6_hits":[list(x) for x in rh],
+            "h7_line_id":h7_line_id,
+            "h7_leader":int(float(h7_leader.get("car_no") or 0)) if h7_leader else None,
+            "h7_leader_b_count":float(h7_leader.get("b_count") or 0) if h7_leader else None,
+            "h7_leader_nige_count":float(h7_leader.get("nige_count") or 0) if h7_leader else None,
+            "h7_line_size":float(h7_leader.get("line_size") or 0) if h7_leader else None,
+            "h7_leader_score":float(h7_leader.get("score") or 0) if h7_leader else None,
+            "h7_pair":list(h7_pair) if h7_pair else None,
+            "h7_pair_was_candidate":h7_pair_was_candidate,
+            "h7_pair_was_winner":bool(h7_pair in paid) if h7_pair else False,
+            "h7_pair_payout_yen":paid.get(h7_pair,0) if h7_pair else 0,
+            "h7_tickets":len(cut_h7),"h7_payout":sp,"h7_hits":[list(x) for x in sh],
         })
     report={
         "study":"2024 Kyodo days1-2 board wide minus strongest-two pair",
@@ -198,6 +252,7 @@ def main():
         "h4_second_remaining_pair_cut":summarize(rows,"h4"),
         "h5_third_remaining_pair_cut":summarize(rows,"h5"),
         "h6_redundancy_cut_from_h4":summarize(rows,"h6"),
+        "h7_expected_lead_line_front_pair_cut_from_h4":summarize(rows,"h7"),
         "cut_effect":{
             "strong2_candidate_cut_races":sum(r["cut_pair_was_candidate"] for r in rows),
             "strong2_winning_cut_pair_races":sum(r["cut_pair_was_winner"] for r in rows),
@@ -225,11 +280,15 @@ def main():
             "h6_winning_cut_pair_races":sum(r["h6_pair_was_winner"] for r in rows),
             "h6_removed_stake_yen":sum(r["h4_tickets"]-r["h6_tickets"] for r in rows)*100,
             "h6_removed_winning_payout_yen":sum(r["h4_payout"]-r["h6_payout"] for r in rows),
+            "h7_candidate_cut_races":sum(r["h7_pair_was_candidate"] for r in rows),
+            "h7_winning_cut_pair_races":sum(r["h7_pair_was_candidate"] and r["h7_pair_was_winner"] for r in rows),
+            "h7_removed_stake_yen":sum(r["h4_tickets"]-r["h7_tickets"] for r in rows)*100,
+            "h7_removed_winning_payout_yen":sum(r["h4_payout"]-r["h7_payout"] for r in rows),
         },
         "races":rows,
     }
     OUT.parent.mkdir(parents=True,exist_ok=True)
     OUT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    print(json.dumps({k:report[k] for k in ("baseline","strong2_cut","strong2_plus_strongline_cut","h3_highest_remaining_pair_cut","h4_second_remaining_pair_cut","h5_third_remaining_pair_cut","h6_redundancy_cut_from_h4","cut_effect")},ensure_ascii=False,indent=2))
+    print(json.dumps({k:report[k] for k in ("baseline","strong2_cut","strong2_plus_strongline_cut","h3_highest_remaining_pair_cut","h4_second_remaining_pair_cut","h5_third_remaining_pair_cut","h6_redundancy_cut_from_h4","h7_expected_lead_line_front_pair_cut_from_h4","cut_effect")},ensure_ascii=False,indent=2))
 
 if __name__=="__main__": main()
