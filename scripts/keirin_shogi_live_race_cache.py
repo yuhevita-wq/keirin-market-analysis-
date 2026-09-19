@@ -90,20 +90,21 @@ def parse_race_type(text: str) -> str:
 
 
 def parse_meeting_grade(text: str) -> str:
-    """Return the first supported meeting grade appearing on the page.
+    """Return the meeting grade from a meeting-header text scope.
 
-    Do not prefer G3/G2/G1 by hard-coded order: a G2 race page can contain
-    navigation text mentioning G3 later in the document.
+    Global KDreams navigation can mention several grades. The caller narrows
+    the text to the meeting header; within that scope the event's own grade is
+    the last grade token before the date-program section.
     """
     value = unicodedata.normalize("NFKC", text).upper()
     compact = re.sub(r"\s+", "", value)
     pattern = re.compile(
         r"G(?:III|II|I|3|2|1)(?![A-Z])|F(?:II|I|2|1)(?![A-Z])"
     )
-    match = pattern.search(compact)
-    if not match:
+    matches = list(pattern.finditer(compact))
+    if not matches:
         return ""
-    token = match.group(0)
+    token = matches[-1].group(0)
     mapping = {
         "GIII": "G3",
         "G3": "G3",
@@ -130,11 +131,15 @@ def parse_meta(soup: BeautifulSoup, race_id: str, source_url: str) -> dict[str, 
     if date_match:
         y, m, d = map(int, date_match.groups())
         race_date = f"{y:04d}-{m:02d}-{d:02d}"
+    # KDreams puts the current meeting heading before the "開催日：" program
+    # block. Restrict grade parsing to that header so global/navigation grade
+    # labels cannot override the current meeting.
+    meeting_header_text = re.split(r"開催日\s*[：:]", text, maxsplit=1)[0]
     return {
         "race_id": race_id,
         "race_date": race_date,
         "track": track_match.group(1) if track_match else "",
-        "meeting_grade": parse_meeting_grade(text),
+        "meeting_grade": parse_meeting_grade(meeting_header_text),
         "race_no": int(race_id[-4:]),
         # The HTML title identifies the target race and is much less polluted
         # by links to neighbouring races. Fall back to body text only when the
