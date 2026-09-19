@@ -1,0 +1,8388 @@
+{
+  "study": "2023 Kyodo days1-2 fixed H1-H4 plus provisional H5 cumulative relation cut",
+  "dates": [
+    "2023-09-15",
+    "2023-09-16"
+  ],
+  "definition": {
+    "h_order": "H1 -> H2 -> H3 -> H4 -> provisional H5; removed pairs never re-enter",
+    "provisional_h5_history_relation": "After H1-H4, count how many ACTUAL H1-H4 cut-center pairs each rider belonged to. For each H4-surviving wide pair, relation_score is the sum of its two riders' touch counts. Cut highest relation_score first until 5 remain; ties cut higher pre-race joint co-top3 probability first.",
+    "provisional_h5": "PRIOR FAILED COMPARISON ONLY: From H4 survivors, choose two unordered 3-rider joint504 scenarios sharing two riders.",
+    "board": "v3.2 forward board, calibrated only on prior data",
+    "base_tickets": "all unique wide pairs among riders appearing anywhere on the 7-piece board",
+    "strongest_two": "top two riders by model top3 inclusion probability = P1+P2+P3 from joint504",
+    "cut": "remove exactly that strongest-two wide pair if it exists in base tickets",
+    "stake": "100 yen per remaining pair",
+    "odds_used": false,
+    "popularity_used": false
+  },
+  "calibration_rows": 422,
+  "baseline": {
+    "races": 19,
+    "tickets": 321,
+    "stake_yen": 32100,
+    "payout_yen": 21490,
+    "profit_yen": -10610,
+    "roi_pct": 66.94704049844236,
+    "hit_races": 17,
+    "hit_rate_pct": 89.47368421052632,
+    "avg_tickets": 16.894736842105264
+  },
+  "strong2_cut": {
+    "races": 19,
+    "tickets": 303,
+    "stake_yen": 30300,
+    "payout_yen": 19740,
+    "profit_yen": -10560,
+    "roi_pct": 65.14851485148515,
+    "hit_races": 15,
+    "hit_rate_pct": 78.94736842105263,
+    "avg_tickets": 15.947368421052632
+  },
+  "strong2_plus_strongline_cut": {
+    "races": 19,
+    "tickets": 290,
+    "stake_yen": 29000,
+    "payout_yen": 18380,
+    "profit_yen": -10620,
+    "roi_pct": 63.37931034482759,
+    "hit_races": 15,
+    "hit_rate_pct": 78.94736842105263,
+    "avg_tickets": 15.263157894736842
+  },
+  "h3_highest_remaining_pair_cut": {
+    "races": 19,
+    "tickets": 271,
+    "stake_yen": 27100,
+    "payout_yen": 16510,
+    "profit_yen": -10590,
+    "roi_pct": 60.92250922509225,
+    "hit_races": 13,
+    "hit_rate_pct": 68.42105263157895,
+    "avg_tickets": 14.263157894736842
+  },
+  "h4_second_remaining_pair_cut": {
+    "races": 19,
+    "tickets": 252,
+    "stake_yen": 25200,
+    "payout_yen": 15080,
+    "profit_yen": -10120,
+    "roi_pct": 59.84126984126984,
+    "hit_races": 13,
+    "hit_rate_pct": 68.42105263157895,
+    "avg_tickets": 13.263157894736842
+  },
+  "provisional_h5_history_relation_cut": {
+    "races": 19,
+    "tickets": 95,
+    "stake_yen": 9500,
+    "payout_yen": 4520,
+    "profit_yen": -4980,
+    "roi_pct": 47.578947368421055,
+    "hit_races": 5,
+    "hit_rate_pct": 26.31578947368421,
+    "avg_tickets": 5.0
+  },
+  "provisional_h5_two_overlapping_scenarios": {
+    "races": 19,
+    "tickets": 95,
+    "stake_yen": 9500,
+    "payout_yen": 7420,
+    "profit_yen": -2080,
+    "roi_pct": 78.10526315789474,
+    "hit_races": 11,
+    "hit_rate_pct": 57.89473684210526,
+    "avg_tickets": 5.0
+  },
+  "h5_third_remaining_pair_cut": {
+    "races": 19,
+    "tickets": 233,
+    "stake_yen": 23300,
+    "payout_yen": 13400,
+    "profit_yen": -9900,
+    "roi_pct": 57.51072961373391,
+    "hit_races": 12,
+    "hit_rate_pct": 63.1578947368421,
+    "avg_tickets": 12.263157894736842
+  },
+  "h6_redundancy_cut_from_h4": {
+    "races": 19,
+    "tickets": 233,
+    "stake_yen": 23300,
+    "payout_yen": 15080,
+    "profit_yen": -8220,
+    "roi_pct": 64.72103004291846,
+    "hit_races": 13,
+    "hit_rate_pct": 68.42105263157895,
+    "avg_tickets": 12.263157894736842
+  },
+  "h7_expected_lead_line_front_pair_cut_from_h4": {
+    "races": 19,
+    "tickets": 249,
+    "stake_yen": 24900,
+    "payout_yen": 13930,
+    "profit_yen": -10970,
+    "roi_pct": 55.94377510040161,
+    "hit_races": 13,
+    "hit_rate_pct": 68.42105263157895,
+    "avg_tickets": 13.105263157894736
+  },
+  "h8_third_place_bias_cut_from_h4": {
+    "races": 19,
+    "tickets": 245,
+    "stake_yen": 24500,
+    "payout_yen": 15080,
+    "profit_yen": -9420,
+    "roi_pct": 61.55102040816327,
+    "hit_races": 13,
+    "hit_rate_pct": 68.42105263157895,
+    "avg_tickets": 12.894736842105264
+  },
+  "h9a_line_third_position_cut_from_h4": {
+    "races": 19,
+    "tickets": 247,
+    "stake_yen": 24700,
+    "payout_yen": 15080,
+    "profit_yen": -9620,
+    "roi_pct": 61.05263157894737,
+    "hit_races": 13,
+    "hit_rate_pct": 68.42105263157895,
+    "avg_tickets": 13.0
+  },
+  "h9b_mark_rider_third_bias_cut_from_h4": {
+    "races": 19,
+    "tickets": 241,
+    "stake_yen": 24100,
+    "payout_yen": 13930,
+    "profit_yen": -10170,
+    "roi_pct": 57.80082987551867,
+    "hit_races": 13,
+    "hit_rate_pct": 68.42105263157895,
+    "avg_tickets": 12.68421052631579
+  },
+  "h9c_favourite_plus_otherline_third_bias_cut_from_h4": {
+    "races": 19,
+    "tickets": 243,
+    "stake_yen": 24300,
+    "payout_yen": 15080,
+    "profit_yen": -9220,
+    "roi_pct": 62.05761316872428,
+    "hit_races": 13,
+    "hit_rate_pct": 68.42105263157895,
+    "avg_tickets": 12.789473684210526
+  },
+  "adopted_h5": {
+    "races": 19,
+    "tickets": 243,
+    "stake_yen": 24300,
+    "payout_yen": 15080,
+    "profit_yen": -9220,
+    "roi_pct": 62.05761316872428,
+    "hit_races": 13,
+    "hit_rate_pct": 68.42105263157895,
+    "avg_tickets": 12.789473684210526
+  },
+  "h6_explanation_ease_cut_from_adopted_h5": {
+    "races": 19,
+    "tickets": 224,
+    "stake_yen": 22400,
+    "payout_yen": 14570,
+    "profit_yen": -7830,
+    "roi_pct": 65.04464285714286,
+    "hit_races": 13,
+    "hit_rate_pct": 68.42105263157895,
+    "avg_tickets": 11.789473684210526
+  },
+  "provisional_h5_history_effect": {
+    "candidate_races": 19,
+    "winning_races": 5,
+    "total_selected_tickets": 95,
+    "h4_to_h5_removed_tickets": 157,
+    "removed_winning_payout_yen": 10560
+  },
+  "provisional_h5_effect": {
+    "candidate_races": 19,
+    "no_valid_two_scenario_races": 0,
+    "winning_races": 11,
+    "total_selected_tickets": 95,
+    "h4_to_h5_removed_tickets": 157
+  },
+  "cut_effect": {
+    "strong2_candidate_cut_races": 18,
+    "strong2_winning_cut_pair_races": 8,
+    "strong2_removed_stake_yen": 1800,
+    "strong2_removed_winning_payout_yen": 1750,
+    "strongline_cut_races": 13,
+    "strongline_winning_cut_pair_races": 6,
+    "both_removed_stake_yen": 3100,
+    "both_removed_winning_payout_yen": 3110,
+    "h3_cut_races": 19,
+    "h3_winning_cut_pair_races": 5,
+    "h3_removed_stake_yen": 1900,
+    "h3_removed_winning_payout_yen": 1870,
+    "h4_cut_races": 19,
+    "h4_winning_cut_pair_races": 2,
+    "h4_removed_stake_yen": 1900,
+    "h4_removed_winning_payout_yen": 1430,
+    "h5_cut_races": 19,
+    "h5_winning_cut_pair_races": 5,
+    "h5_removed_stake_yen": 1900,
+    "h5_removed_winning_payout_yen": 1680,
+    "h6_cut_races": 19,
+    "h6_winning_cut_pair_races": 0,
+    "h6_removed_stake_yen": 1900,
+    "h6_removed_winning_payout_yen": 0,
+    "h7_candidate_cut_races": 3,
+    "h7_winning_cut_pair_races": 1,
+    "h7_removed_stake_yen": 300,
+    "h7_removed_winning_payout_yen": 1150,
+    "h8_candidate_cut_races": 7,
+    "h8_winning_cut_pair_races": 0,
+    "h8_removed_stake_yen": 700,
+    "h8_removed_winning_payout_yen": 0,
+    "h9a_candidate_cut_races": 5,
+    "h9a_winning_cut_pair_races": 0,
+    "h9a_removed_stake_yen": 500,
+    "h9a_removed_winning_payout_yen": 0,
+    "h9b_candidate_cut_races": 11,
+    "h9b_winning_cut_pair_races": 1,
+    "h9b_removed_stake_yen": 1100,
+    "h9b_removed_winning_payout_yen": 1150,
+    "h9c_candidate_cut_races": 9,
+    "h9c_winning_cut_pair_races": 0,
+    "h9c_removed_stake_yen": 900,
+    "h9c_removed_winning_payout_yen": 0,
+    "h6e_cut_races": 19,
+    "h6e_winning_cut_pair_races": 2,
+    "h6e_removed_stake_yen": 1900,
+    "h6e_removed_winning_payout_yen": 510
+  },
+  "races": [
+    {
+      "race_id": "1220230915010001",
+      "date": "2023-09-15",
+      "race_type": "Ｓ級一次予選",
+      "result": [
+        3,
+        9,
+        1
+      ],
+      "board": [
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          2,
+          5
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "strongest_two": [
+        9,
+        1
+      ],
+      "strongest_two_top3_prob": [
+        0.5276292057099432,
+        0.5145438457158105
+      ],
+      "cut_pair": [
+        1,
+        9
+      ],
+      "cut_pair_was_candidate": true,
+      "cut_pair_was_winner": true,
+      "cut_pair_payout_yen": 230,
+      "strongest_line_pair": [
+        3,
+        9
+      ],
+      "strongest_line_pair_prob": 0.1912349553754089,
+      "strongest_line_pair_was_winner": true,
+      "strongest_line_pair_payout_yen": 150,
+      "base_tickets": 15,
+      "base_payout": 760,
+      "base_hits": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      "cut_tickets": 14,
+      "cut_payout": 530,
+      "cut_hits": [
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      "both_tickets": 13,
+      "both_payout": 380,
+      "both_hits": [
+        [
+          1,
+          3
+        ]
+      ],
+      "h3_pair": [
+        1,
+        3
+      ],
+      "h3_pair_prob": 0.1607444038994849,
+      "h3_pair_was_winner": true,
+      "h3_pair_payout_yen": 380,
+      "h3_tickets": 12,
+      "h3_payout": 0,
+      "h3_hits": [],
+      "h4_pair": [
+        5,
+        9
+      ],
+      "h4_pair_prob": 0.1310083980943557,
+      "h4_pair_was_winner": false,
+      "h4_pair_payout_yen": 0,
+      "h4_tickets": 11,
+      "h4_payout": 0,
+      "h4_hits": [],
+      "history_h5_centers": [
+        {
+          "stage": "H1",
+          "pair": [
+            1,
+            9
+          ]
+        },
+        {
+          "stage": "H2",
+          "pair": [
+            3,
+            9
+          ]
+        },
+        {
+          "stage": "H3",
+          "pair": [
+            1,
+            3
+          ]
+        },
+        {
+          "stage": "H4",
+          "pair": [
+            5,
+            9
+          ]
+        }
+      ],
+      "history_h5_rider_touch": {
+        "1": 2,
+        "2": 0,
+        "3": 2,
+        "4": 0,
+        "5": 1,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 3
+      },
+      "history_h5_relation_scores": {
+        "1-2": 2,
+        "1-5": 3,
+        "1-7": 2,
+        "2-3": 2,
+        "2-5": 1,
+        "2-7": 0,
+        "2-9": 3,
+        "3-5": 3,
+        "3-7": 2,
+        "5-7": 1,
+        "7-9": 3
+      },
+      "history_h5_removed": [
+        [
+          1,
+          5
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "history_h5_tickets_list": [
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          5,
+          7
+        ]
+      ],
+      "history_h5_tickets": 5,
+      "history_h5_payout": 0,
+      "history_h5_hits": [],
+      "provisional_h5_scenario1": [
+        1,
+        5,
+        7
+      ],
+      "provisional_h5_scenario2": [
+        1,
+        2,
+        5
+      ],
+      "provisional_h5_scenario1_mass": 0.024863740866904262,
+      "provisional_h5_scenario2_mass": 0.014609009798679837,
+      "provisional_h5_joint_mass_sum": 0.0394727506655841,
+      "provisional_h5_tickets_list": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          5,
+          7
+        ]
+      ],
+      "provisional_h5_tickets": 5,
+      "provisional_h5_payout": 0,
+      "provisional_h5_hits": [],
+      "h5_pair": [
+        1,
+        5
+      ],
+      "h5_pair_prob": 0.12833089098841893,
+      "h5_pair_was_winner": false,
+      "h5_pair_payout_yen": 0,
+      "h5_tickets": 10,
+      "h5_payout": 0,
+      "h5_hits": [],
+      "h6_pair": [
+        2,
+        7
+      ],
+      "h6_unique_mass_loss": 0.009761506387644742,
+      "h6_pair_prob": 0.053277112383641516,
+      "h6_pair_was_winner": false,
+      "h6_pair_payout_yen": 0,
+      "h6_tickets": 10,
+      "h6_payout": 0,
+      "h6_hits": [],
+      "h7_line_id": 3,
+      "h7_leader": 6,
+      "h7_leader_b_count": 17.0,
+      "h7_leader_nige_count": 3.0,
+      "h7_line_size": 3.0,
+      "h7_leader_score": 105.33,
+      "h7_pair": [
+        6,
+        9
+      ],
+      "h7_pair_was_candidate": false,
+      "h7_pair_was_winner": false,
+      "h7_pair_payout_yen": 0,
+      "h7_tickets": 11,
+      "h7_payout": 0,
+      "h7_hits": [],
+      "h8_third_rider": 6,
+      "h8_third_bias": 0.044353255904274455,
+      "h8_p1": 0.07416060525542606,
+      "h8_p2": 0.055602630990615506,
+      "h8_p3": 0.11851386115970051,
+      "h8_anchor": 9,
+      "h8_anchor_top3_prob": 0.5276292057099432,
+      "h8_pair": [
+        6,
+        9
+      ],
+      "h8_pair_was_candidate": false,
+      "h8_pair_was_winner": false,
+      "h8_pair_payout_yen": 0,
+      "h8_tickets": 11,
+      "h8_payout": 0,
+      "h8_hits": [],
+      "h9a_third_rider": 3,
+      "h9a_anchor": 9,
+      "h9a_pair": [
+        3,
+        9
+      ],
+      "h9a_pair_was_candidate": false,
+      "h9a_pair_was_winner": true,
+      "h9a_pair_payout_yen": 150,
+      "h9a_tickets": 11,
+      "h9a_payout": 0,
+      "h9a_hits": [],
+      "h9b_third_rider": 7,
+      "h9b_anchor": 5,
+      "h9b_pair": [
+        5,
+        7
+      ],
+      "h9b_pair_was_candidate": true,
+      "h9b_pair_was_winner": false,
+      "h9b_pair_payout_yen": 0,
+      "h9b_tickets": 10,
+      "h9b_payout": 0,
+      "h9b_hits": [],
+      "h9c_third_rider": 7,
+      "h9c_anchor": 9,
+      "h9c_pair": [
+        7,
+        9
+      ],
+      "h9c_pair_was_candidate": true,
+      "h9c_pair_was_winner": false,
+      "h9c_pair_payout_yen": 0,
+      "h9c_tickets": 10,
+      "h9c_payout": 0,
+      "h9c_hits": [],
+      "adopted_h5_tickets": 10,
+      "adopted_h5_payout": 0,
+      "adopted_h5_hits": [],
+      "h6_explanation_pair": [
+        1,
+        7
+      ],
+      "h6_explanation_score": 5,
+      "h6_explanation_features": {
+        "same_line": false,
+        "contains_top3_inclusion": true,
+        "contains_row1": true,
+        "contains_row3_positive_third_bias": true,
+        "contains_top3_score": true,
+        "adjacent_line_positions": false,
+        "both_multirow": false,
+        "clean_p1_p3_role_split": true
+      },
+      "h6_explanation_pair_prob": 0.12428746073375872,
+      "h6_explanation_pair_was_winner": false,
+      "h6_explanation_pair_payout_yen": 0,
+      "h6e_tickets": 9,
+      "h6e_payout": 0,
+      "h6e_hits": []
+    },
+    {
+      "race_id": "1220230915010002",
+      "date": "2023-09-15",
+      "race_type": "Ｓ級一次予選",
+      "result": [
+        6,
+        8,
+        5
+      ],
+      "board": [
+        [
+          2
+        ],
+        [
+          1,
+          3,
+          7
+        ],
+        [
+          4,
+          5,
+          9
+        ]
+      ],
+      "strongest_two": [
+        2,
+        1
+      ],
+      "strongest_two_top3_prob": [
+        0.5533396679449221,
+        0.4377577846822378
+      ],
+      "cut_pair": [
+        1,
+        2
+      ],
+      "cut_pair_was_candidate": true,
+      "cut_pair_was_winner": false,
+      "cut_pair_payout_yen": 0,
+      "strongest_line_pair": [
+        1,
+        9
+      ],
+      "strongest_line_pair_prob": 0.15188174892282777,
+      "strongest_line_pair_was_winner": false,
+      "strongest_line_pair_payout_yen": 0,
+      "base_tickets": 21,
+      "base_payout": 0,
+      "base_hits": [],
+      "cut_tickets": 20,
+      "cut_payout": 0,
+      "cut_hits": [],
+      "both_tickets": 19,
+      "both_payout": 0,
+      "both_hits": [],
+      "h3_pair": [
+        2,
+        5
+      ],
+      "h3_pair_prob": 0.17335187515640782,
+      "h3_pair_was_winner": false,
+      "h3_pair_payout_yen": 0,
+      "h3_tickets": 18,
+      "h3_payout": 0,
+      "h3_hits": [],
+      "h4_pair": [
+        2,
+        3
+      ],
+      "h4_pair_prob": 0.1571521142988972,
+      "h4_pair_was_winner": false,
+      "h4_pair_payout_yen": 0,
+      "h4_tickets": 17,
+      "h4_payout": 0,
+      "h4_hits": [],
+      "history_h5_centers": [
+        {
+          "stage": "H1",
+          "pair": [
+            1,
+            2
+          ]
+        },
+        {
+          "stage": "H2",
+          "pair": [
+            1,
+            9
+          ]
+        },
+        {
+          "stage": "H3",
+          "pair": [
+            2,
+            5
+          ]
+        },
+        {
+          "stage": "H4",
+          "pair": [
+            2,
+            3
+          ]
+        }
+      ],
+      "history_h5_rider_touch": {
+        "1": 2,
+        "2": 3,
+        "3": 1,
+        "4": 0,
+        "5": 1,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 1
+      },
+      "history_h5_relation_scores": {
+        "1-3": 3,
+        "1-4": 2,
+        "1-5": 3,
+        "1-7": 2,
+        "2-4": 3,
+        "2-7": 3,
+        "2-9": 4,
+        "3-4": 1,
+        "3-5": 2,
+        "3-7": 1,
+        "3-9": 2,
+        "4-5": 1,
+        "4-7": 0,
+        "4-9": 1,
+        "5-7": 1,
+        "5-9": 2,
+        "7-9": 1
+      },
+      "history_h5_removed": [
+        [
+          2,
+          9
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          9
+        ]
+      ],
+      "history_h5_tickets_list": [
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "history_h5_tickets": 5,
+      "history_h5_payout": 0,
+      "history_h5_hits": [],
+      "provisional_h5_scenario1": [
+        2,
+        7,
+        9
+      ],
+      "provisional_h5_scenario2": [
+        2,
+        4,
+        9
+      ],
+      "provisional_h5_scenario1_mass": 0.018413836000311764,
+      "provisional_h5_scenario2_mass": 0.01663208866070871,
+      "provisional_h5_joint_mass_sum": 0.035045924661020474,
+      "provisional_h5_tickets_list": [
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "provisional_h5_tickets": 5,
+      "provisional_h5_payout": 0,
+      "provisional_h5_hits": [],
+      "h5_pair": [
+        2,
+        9
+      ],
+      "h5_pair_prob": 0.15229856101176936,
+      "h5_pair_was_winner": false,
+      "h5_pair_payout_yen": 0,
+      "h5_tickets": 16,
+      "h5_payout": 0,
+      "h5_hits": [],
+      "h6_pair": [
+        4,
+        7
+      ],
+      "h6_unique_mass_loss": 0.0034663428505132873,
+      "h6_pair_prob": 0.03445980102897573,
+      "h6_pair_was_winner": false,
+      "h6_pair_payout_yen": 0,
+      "h6_tickets": 16,
+      "h6_payout": 0,
+      "h6_hits": [],
+      "h7_line_id": 4,
+      "h7_leader": 6,
+      "h7_leader_b_count": 21.0,
+      "h7_leader_nige_count": 9.0,
+      "h7_line_size": 3.0,
+      "h7_leader_score": 100.88,
+      "h7_pair": [
+        6,
+        8
+      ],
+      "h7_pair_was_candidate": false,
+      "h7_pair_was_winner": true,
+      "h7_pair_payout_yen": 910,
+      "h7_tickets": 17,
+      "h7_payout": 0,
+      "h7_hits": [],
+      "h8_third_rider": 8,
+      "h8_third_bias": 0.04810335681964498,
+      "h8_p1": 0.07105989128057434,
+      "h8_p2": 0.057491998192675475,
+      "h8_p3": 0.11916324810021932,
+      "h8_anchor": 2,
+      "h8_anchor_top3_prob": 0.5533396679449221,
+      "h8_pair": [
+        2,
+        8
+      ],
+      "h8_pair_was_candidate": false,
+      "h8_pair_was_winner": false,
+      "h8_pair_payout_yen": 0,
+      "h8_tickets": 17,
+      "h8_payout": 0,
+      "h8_hits": [],
+      "h9a_third_rider": 5,
+      "h9a_anchor": 8,
+      "h9a_pair": [
+        5,
+        8
+      ],
+      "h9a_pair_was_candidate": false,
+      "h9a_pair_was_winner": true,
+      "h9a_pair_payout_yen": 400,
+      "h9a_tickets": 17,
+      "h9a_payout": 0,
+      "h9a_hits": [],
+      "h9b_third_rider": 7,
+      "h9b_anchor": 1,
+      "h9b_pair": [
+        1,
+        7
+      ],
+      "h9b_pair_was_candidate": true,
+      "h9b_pair_was_winner": false,
+      "h9b_pair_payout_yen": 0,
+      "h9b_tickets": 16,
+      "h9b_payout": 0,
+      "h9b_hits": [],
+      "h9c_third_rider": 8,
+      "h9c_anchor": 2,
+      "h9c_pair": [
+        2,
+        8
+      ],
+      "h9c_pair_was_candidate": false,
+      "h9c_pair_was_winner": false,
+      "h9c_pair_payout_yen": 0,
+      "h9c_tickets": 17,
+      "h9c_payout": 0,
+      "h9c_hits": [],
+      "adopted_h5_tickets": 17,
+      "adopted_h5_payout": 0,
+      "adopted_h5_hits": [],
+      "h6_explanation_pair": [
+        2,
+        9
+      ],
+      "h6_explanation_score": 5,
+      "h6_explanation_features": {
+        "same_line": false,
+        "contains_top3_inclusion": true,
+        "contains_row1": true,
+        "contains_row3_positive_third_bias": true,
+        "contains_top3_score": true,
+        "adjacent_line_positions": false,
+        "both_multirow": false,
+        "clean_p1_p3_role_split": true
+      },
+      "h6_explanation_pair_prob": 0.15229856101176936,
+      "h6_explanation_pair_was_winner": false,
+      "h6_explanation_pair_payout_yen": 0,
+      "h6e_tickets": 16,
+      "h6e_payout": 0,
+      "h6e_hits": []
+    },
+    {
+      "race_id": "1220230915010003",
+      "date": "2023-09-15",
+      "race_type": "Ｓ級一次予選",
+      "result": [
+        5,
+        2,
+        1
+      ],
+      "board": [
+        [
+          3,
+          9
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          2,
+          5,
+          7
+        ]
+      ],
+      "strongest_two": [
+        3,
+        9
+      ],
+      "strongest_two_top3_prob": [
+        0.6016482856556594,
+        0.4443909717457186
+      ],
+      "cut_pair": [
+        3,
+        9
+      ],
+      "cut_pair_was_candidate": true,
+      "cut_pair_was_winner": false,
+      "cut_pair_payout_yen": 0,
+      "strongest_line_pair": [
+        2,
+        3
+      ],
+      "strongest_line_pair_prob": 0.2266328909610104,
+      "strongest_line_pair_was_winner": false,
+      "strongest_line_pair_payout_yen": 0,
+      "base_tickets": 15,
+      "base_payout": 3960,
+      "base_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "cut_tickets": 14,
+      "cut_payout": 3960,
+      "cut_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "both_tickets": 13,
+      "both_payout": 3960,
+      "both_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "h3_pair": [
+        1,
+        3
+      ],
+      "h3_pair_prob": 0.20374822984791296,
+      "h3_pair_was_winner": false,
+      "h3_pair_payout_yen": 0,
+      "h3_tickets": 12,
+      "h3_payout": 3960,
+      "h3_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "h4_pair": [
+        3,
+        5
+      ],
+      "h4_pair_prob": 0.17954553691609387,
+      "h4_pair_was_winner": false,
+      "h4_pair_payout_yen": 0,
+      "h4_tickets": 11,
+      "h4_payout": 3960,
+      "h4_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "history_h5_centers": [
+        {
+          "stage": "H1",
+          "pair": [
+            3,
+            9
+          ]
+        },
+        {
+          "stage": "H2",
+          "pair": [
+            2,
+            3
+          ]
+        },
+        {
+          "stage": "H3",
+          "pair": [
+            1,
+            3
+          ]
+        },
+        {
+          "stage": "H4",
+          "pair": [
+            3,
+            5
+          ]
+        }
+      ],
+      "history_h5_rider_touch": {
+        "1": 1,
+        "2": 1,
+        "3": 4,
+        "4": 0,
+        "5": 1,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 1
+      },
+      "history_h5_relation_scores": {
+        "1-2": 2,
+        "1-5": 2,
+        "1-7": 1,
+        "1-9": 2,
+        "2-5": 2,
+        "2-7": 1,
+        "2-9": 2,
+        "3-7": 4,
+        "5-7": 1,
+        "5-9": 2,
+        "7-9": 1
+      },
+      "history_h5_removed": [
+        [
+          3,
+          7
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "history_h5_tickets_list": [
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "history_h5_tickets": 5,
+      "history_h5_payout": 1480,
+      "history_h5_hits": [
+        [
+          2,
+          5
+        ]
+      ],
+      "provisional_h5_scenario1": [
+        1,
+        7,
+        9
+      ],
+      "provisional_h5_scenario2": [
+        1,
+        5,
+        9
+      ],
+      "provisional_h5_scenario1_mass": 0.027884191033353878,
+      "provisional_h5_scenario2_mass": 0.025373461244796197,
+      "provisional_h5_joint_mass_sum": 0.053257652278150075,
+      "provisional_h5_tickets_list": [
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "provisional_h5_tickets": 5,
+      "provisional_h5_payout": 1650,
+      "provisional_h5_hits": [
+        [
+          1,
+          5
+        ]
+      ],
+      "h5_pair": [
+        1,
+        9
+      ],
+      "h5_pair_prob": 0.15367408254497558,
+      "h5_pair_was_winner": false,
+      "h5_pair_payout_yen": 0,
+      "h5_tickets": 10,
+      "h5_payout": 3960,
+      "h5_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "h6_pair": [
+        5,
+        7
+      ],
+      "h6_unique_mass_loss": 0.00956547807877974,
+      "h6_pair_prob": 0.06286787614186562,
+      "h6_pair_was_winner": false,
+      "h6_pair_payout_yen": 0,
+      "h6_tickets": 10,
+      "h6_payout": 3960,
+      "h6_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "h7_line_id": 3,
+      "h7_leader": 4,
+      "h7_leader_b_count": 18.0,
+      "h7_leader_nige_count": 9.0,
+      "h7_line_size": 1.0,
+      "h7_leader_score": 104.68,
+      "h7_pair": null,
+      "h7_pair_was_candidate": false,
+      "h7_pair_was_winner": false,
+      "h7_pair_payout_yen": 0,
+      "h7_tickets": 11,
+      "h7_payout": 3960,
+      "h7_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "h8_third_rider": 4,
+      "h8_third_bias": 0.03239591994365188,
+      "h8_p1": 0.021518333855291064,
+      "h8_p2": 0.04600253532661717,
+      "h8_p3": 0.07839845527026905,
+      "h8_anchor": 3,
+      "h8_anchor_top3_prob": 0.6016482856556594,
+      "h8_pair": [
+        3,
+        4
+      ],
+      "h8_pair_was_candidate": false,
+      "h8_pair_was_winner": false,
+      "h8_pair_payout_yen": 0,
+      "h8_tickets": 11,
+      "h8_payout": 3960,
+      "h8_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "h9a_third_rider": 8,
+      "h9a_anchor": 3,
+      "h9a_pair": [
+        3,
+        8
+      ],
+      "h9a_pair_was_candidate": false,
+      "h9a_pair_was_winner": false,
+      "h9a_pair_payout_yen": 0,
+      "h9a_tickets": 11,
+      "h9a_payout": 3960,
+      "h9a_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "h9b_third_rider": 7,
+      "h9b_anchor": 1,
+      "h9b_pair": [
+        1,
+        7
+      ],
+      "h9b_pair_was_candidate": true,
+      "h9b_pair_was_winner": false,
+      "h9b_pair_payout_yen": 0,
+      "h9b_tickets": 10,
+      "h9b_payout": 3960,
+      "h9b_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "h9c_third_rider": 4,
+      "h9c_anchor": 3,
+      "h9c_pair": [
+        3,
+        4
+      ],
+      "h9c_pair_was_candidate": false,
+      "h9c_pair_was_winner": false,
+      "h9c_pair_payout_yen": 0,
+      "h9c_tickets": 11,
+      "h9c_payout": 3960,
+      "h9c_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "adopted_h5_tickets": 11,
+      "adopted_h5_payout": 3960,
+      "adopted_h5_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "h6_explanation_pair": [
+        1,
+        7
+      ],
+      "h6_explanation_score": 6,
+      "h6_explanation_features": {
+        "same_line": true,
+        "contains_top3_inclusion": true,
+        "contains_row1": false,
+        "contains_row3_positive_third_bias": true,
+        "contains_top3_score": true,
+        "adjacent_line_positions": true,
+        "both_multirow": false,
+        "clean_p1_p3_role_split": true
+      },
+      "h6_explanation_pair_prob": 0.11136226887786789,
+      "h6_explanation_pair_was_winner": false,
+      "h6_explanation_pair_payout_yen": 0,
+      "h6e_tickets": 10,
+      "h6e_payout": 3960,
+      "h6e_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ]
+      ]
+    },
+    {
+      "race_id": "1220230915010004",
+      "date": "2023-09-15",
+      "race_type": "Ｓ級一次予選",
+      "result": [
+        7,
+        8,
+        4
+      ],
+      "board": [
+        [
+          1,
+          7
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          2,
+          3,
+          5
+        ]
+      ],
+      "strongest_two": [
+        1,
+        7
+      ],
+      "strongest_two_top3_prob": [
+        0.5965335885125906,
+        0.4725237239290652
+      ],
+      "cut_pair": [
+        1,
+        7
+      ],
+      "cut_pair_was_candidate": true,
+      "cut_pair_was_winner": false,
+      "cut_pair_payout_yen": 0,
+      "strongest_line_pair": [
+        1,
+        9
+      ],
+      "strongest_line_pair_prob": 0.25398617597766443,
+      "strongest_line_pair_was_winner": false,
+      "strongest_line_pair_payout_yen": 0,
+      "base_tickets": 15,
+      "base_payout": 0,
+      "base_hits": [],
+      "cut_tickets": 14,
+      "cut_payout": 0,
+      "cut_hits": [],
+      "both_tickets": 13,
+      "both_payout": 0,
+      "both_hits": [],
+      "h3_pair": [
+        1,
+        2
+      ],
+      "h3_pair_prob": 0.18191746019372299,
+      "h3_pair_was_winner": false,
+      "h3_pair_payout_yen": 0,
+      "h3_tickets": 12,
+      "h3_payout": 0,
+      "h3_hits": [],
+      "h4_pair": [
+        7,
+        9
+      ],
+      "h4_pair_prob": 0.16198941930156655,
+      "h4_pair_was_winner": false,
+      "h4_pair_payout_yen": 0,
+      "h4_tickets": 11,
+      "h4_payout": 0,
+      "h4_hits": [],
+      "history_h5_centers": [
+        {
+          "stage": "H1",
+          "pair": [
+            1,
+            7
+          ]
+        },
+        {
+          "stage": "H2",
+          "pair": [
+            1,
+            9
+          ]
+        },
+        {
+          "stage": "H3",
+          "pair": [
+            1,
+            2
+          ]
+        },
+        {
+          "stage": "H4",
+          "pair": [
+            7,
+            9
+          ]
+        }
+      ],
+      "history_h5_rider_touch": {
+        "1": 3,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 2,
+        "8": 0,
+        "9": 2
+      },
+      "history_h5_relation_scores": {
+        "1-3": 3,
+        "1-5": 3,
+        "2-3": 1,
+        "2-5": 1,
+        "2-7": 3,
+        "2-9": 3,
+        "3-5": 0,
+        "3-7": 2,
+        "3-9": 2,
+        "5-7": 2,
+        "5-9": 2
+      },
+      "history_h5_removed": [
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "history_h5_tickets_list": [
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          5,
+          7
+        ]
+      ],
+      "history_h5_tickets": 5,
+      "history_h5_payout": 0,
+      "history_h5_hits": [],
+      "provisional_h5_scenario1": [
+        2,
+        3,
+        7
+      ],
+      "provisional_h5_scenario2": [
+        2,
+        3,
+        9
+      ],
+      "provisional_h5_scenario1_mass": 0.020443025800775866,
+      "provisional_h5_scenario2_mass": 0.014794258224856752,
+      "provisional_h5_joint_mass_sum": 0.035237284025632615,
+      "provisional_h5_tickets_list": [
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      "provisional_h5_tickets": 5,
+      "provisional_h5_payout": 0,
+      "provisional_h5_hits": [],
+      "h5_pair": [
+        1,
+        5
+      ],
+      "h5_pair_prob": 0.14999061133133923,
+      "h5_pair_was_winner": false,
+      "h5_pair_payout_yen": 0,
+      "h5_tickets": 10,
+      "h5_payout": 0,
+      "h5_hits": [],
+      "h6_pair": [
+        3,
+        5
+      ],
+      "h6_unique_mass_loss": 0.00534049562811028,
+      "h6_pair_prob": 0.047683220593161824,
+      "h6_pair_was_winner": false,
+      "h6_pair_payout_yen": 0,
+      "h6_tickets": 10,
+      "h6_payout": 0,
+      "h6_hits": [],
+      "h7_line_id": 4,
+      "h7_leader": 7,
+      "h7_leader_b_count": 8.0,
+      "h7_leader_nige_count": 4.0,
+      "h7_line_size": 2.0,
+      "h7_leader_score": 108.26,
+      "h7_pair": [
+        4,
+        7
+      ],
+      "h7_pair_was_candidate": false,
+      "h7_pair_was_winner": true,
+      "h7_pair_payout_yen": 320,
+      "h7_tickets": 11,
+      "h7_payout": 0,
+      "h7_hits": [],
+      "h8_third_rider": 8,
+      "h8_third_bias": 0.04837453139693572,
+      "h8_p1": 0.02899378580077318,
+      "h8_p2": 0.04484033780548069,
+      "h8_p3": 0.09321486920241641,
+      "h8_anchor": 1,
+      "h8_anchor_top3_prob": 0.5965335885125906,
+      "h8_pair": [
+        1,
+        8
+      ],
+      "h8_pair_was_candidate": false,
+      "h8_pair_was_winner": false,
+      "h8_pair_payout_yen": 0,
+      "h8_tickets": 11,
+      "h8_payout": 0,
+      "h8_hits": [],
+      "h9a_third_rider": 5,
+      "h9a_anchor": 1,
+      "h9a_pair": [
+        1,
+        5
+      ],
+      "h9a_pair_was_candidate": true,
+      "h9a_pair_was_winner": false,
+      "h9a_pair_payout_yen": 0,
+      "h9a_tickets": 10,
+      "h9a_payout": 0,
+      "h9a_hits": [],
+      "h9b_third_rider": 5,
+      "h9b_anchor": 9,
+      "h9b_pair": [
+        5,
+        9
+      ],
+      "h9b_pair_was_candidate": true,
+      "h9b_pair_was_winner": false,
+      "h9b_pair_payout_yen": 0,
+      "h9b_tickets": 10,
+      "h9b_payout": 0,
+      "h9b_hits": [],
+      "h9c_third_rider": 8,
+      "h9c_anchor": 1,
+      "h9c_pair": [
+        1,
+        8
+      ],
+      "h9c_pair_was_candidate": false,
+      "h9c_pair_was_winner": false,
+      "h9c_pair_payout_yen": 0,
+      "h9c_tickets": 11,
+      "h9c_payout": 0,
+      "h9c_hits": [],
+      "adopted_h5_tickets": 11,
+      "adopted_h5_payout": 0,
+      "adopted_h5_hits": [],
+      "h6_explanation_pair": [
+        1,
+        5
+      ],
+      "h6_explanation_score": 6,
+      "h6_explanation_features": {
+        "same_line": true,
+        "contains_top3_inclusion": true,
+        "contains_row1": true,
+        "contains_row3_positive_third_bias": true,
+        "contains_top3_score": true,
+        "adjacent_line_positions": false,
+        "both_multirow": false,
+        "clean_p1_p3_role_split": true
+      },
+      "h6_explanation_pair_prob": 0.14999061133133923,
+      "h6_explanation_pair_was_winner": false,
+      "h6_explanation_pair_payout_yen": 0,
+      "h6e_tickets": 10,
+      "h6e_payout": 0,
+      "h6e_hits": []
+    },
+    {
+      "race_id": "1220230915010005",
+      "date": "2023-09-15",
+      "race_type": "Ｓ級一次予選",
+      "result": [
+        1,
+        2,
+        7
+      ],
+      "board": [
+        [
+          5
+        ],
+        [
+          1,
+          2,
+          9
+        ],
+        [
+          1,
+          4,
+          7
+        ]
+      ],
+      "strongest_two": [
+        2,
+        5
+      ],
+      "strongest_two_top3_prob": [
+        0.5674241579577164,
+        0.5463466517209968
+      ],
+      "cut_pair": [
+        2,
+        5
+      ],
+      "cut_pair_was_candidate": true,
+      "cut_pair_was_winner": false,
+      "cut_pair_payout_yen": 0,
+      "strongest_line_pair": [
+        2,
+        7
+      ],
+      "strongest_line_pair_prob": 0.237880202419292,
+      "strongest_line_pair_was_winner": true,
+      "strongest_line_pair_payout_yen": 230,
+      "base_tickets": 15,
+      "base_payout": 1190,
+      "base_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          7
+        ]
+      ],
+      "cut_tickets": 14,
+      "cut_payout": 1190,
+      "cut_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          7
+        ]
+      ],
+      "both_tickets": 13,
+      "both_payout": 960,
+      "both_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          7
+        ]
+      ],
+      "h3_pair": [
+        5,
+        7
+      ],
+      "h3_pair_prob": 0.19699312806058092,
+      "h3_pair_was_winner": false,
+      "h3_pair_payout_yen": 0,
+      "h3_tickets": 12,
+      "h3_payout": 960,
+      "h3_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          7
+        ]
+      ],
+      "h4_pair": [
+        1,
+        5
+      ],
+      "h4_pair_prob": 0.18137016158094943,
+      "h4_pair_was_winner": false,
+      "h4_pair_payout_yen": 0,
+      "h4_tickets": 11,
+      "h4_payout": 960,
+      "h4_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          7
+        ]
+      ],
+      "history_h5_centers": [
+        {
+          "stage": "H1",
+          "pair": [
+            2,
+            5
+          ]
+        },
+        {
+          "stage": "H2",
+          "pair": [
+            2,
+            7
+          ]
+        },
+        {
+          "stage": "H3",
+          "pair": [
+            5,
+            7
+          ]
+        },
+        {
+          "stage": "H4",
+          "pair": [
+            1,
+            5
+          ]
+        }
+      ],
+      "history_h5_rider_touch": {
+        "1": 1,
+        "2": 2,
+        "3": 0,
+        "4": 0,
+        "5": 3,
+        "6": 0,
+        "7": 2,
+        "8": 0,
+        "9": 0
+      },
+      "history_h5_relation_scores": {
+        "1-2": 3,
+        "1-4": 1,
+        "1-7": 3,
+        "1-9": 1,
+        "2-4": 2,
+        "2-9": 2,
+        "4-5": 3,
+        "4-7": 2,
+        "4-9": 0,
+        "5-9": 3,
+        "7-9": 2
+      },
+      "history_h5_removed": [
+        [
+          1,
+          2
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "history_h5_tickets_list": [
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "history_h5_tickets": 5,
+      "history_h5_payout": 0,
+      "history_h5_hits": [],
+      "provisional_h5_scenario1": [
+        1,
+        2,
+        4
+      ],
+      "provisional_h5_scenario2": [
+        1,
+        2,
+        9
+      ],
+      "provisional_h5_scenario1_mass": 0.016538344502928477,
+      "provisional_h5_scenario2_mass": 0.014209029838808278,
+      "provisional_h5_joint_mass_sum": 0.030747374341736754,
+      "provisional_h5_tickets_list": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          9
+        ]
+      ],
+      "provisional_h5_tickets": 5,
+      "provisional_h5_payout": 410,
+      "provisional_h5_hits": [
+        [
+          1,
+          2
+        ]
+      ],
+      "h5_pair": [
+        1,
+        2
+      ],
+      "h5_pair_prob": 0.15234514512968278,
+      "h5_pair_was_winner": true,
+      "h5_pair_payout_yen": 410,
+      "h5_tickets": 10,
+      "h5_payout": 550,
+      "h5_hits": [
+        [
+          1,
+          7
+        ]
+      ],
+      "h6_pair": [
+        1,
+        4
+      ],
+      "h6_unique_mass_loss": 0.0044964431070372655,
+      "h6_pair_prob": 0.04992184901337364,
+      "h6_pair_was_winner": false,
+      "h6_pair_payout_yen": 0,
+      "h6_tickets": 10,
+      "h6_payout": 960,
+      "h6_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          7
+        ]
+      ],
+      "h7_line_id": 4,
+      "h7_leader": 3,
+      "h7_leader_b_count": 11.0,
+      "h7_leader_nige_count": 5.0,
+      "h7_line_size": 2.0,
+      "h7_leader_score": 105.93,
+      "h7_pair": [
+        3,
+        8
+      ],
+      "h7_pair_was_candidate": false,
+      "h7_pair_was_winner": false,
+      "h7_pair_payout_yen": 0,
+      "h7_tickets": 11,
+      "h7_payout": 960,
+      "h7_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          7
+        ]
+      ],
+      "h8_third_rider": 8,
+      "h8_third_bias": 0.05810038756910194,
+      "h8_p1": 0.040601876136462225,
+      "h8_p2": 0.061309111476852994,
+      "h8_p3": 0.11940949904595494,
+      "h8_anchor": 2,
+      "h8_anchor_top3_prob": 0.5674241579577164,
+      "h8_pair": [
+        2,
+        8
+      ],
+      "h8_pair_was_candidate": false,
+      "h8_pair_was_winner": false,
+      "h8_pair_payout_yen": 0,
+      "h8_tickets": 11,
+      "h8_payout": 960,
+      "h8_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          7
+        ]
+      ],
+      "h9a_third_rider": 4,
+      "h9a_anchor": 2,
+      "h9a_pair": [
+        2,
+        4
+      ],
+      "h9a_pair_was_candidate": true,
+      "h9a_pair_was_winner": false,
+      "h9a_pair_payout_yen": 0,
+      "h9a_tickets": 10,
+      "h9a_payout": 960,
+      "h9a_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          7
+        ]
+      ],
+      "h9b_third_rider": 1,
+      "h9b_anchor": 5,
+      "h9b_pair": [
+        1,
+        5
+      ],
+      "h9b_pair_was_candidate": false,
+      "h9b_pair_was_winner": false,
+      "h9b_pair_payout_yen": 0,
+      "h9b_tickets": 11,
+      "h9b_payout": 960,
+      "h9b_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          7
+        ]
+      ],
+      "h9c_third_rider": 8,
+      "h9c_anchor": 2,
+      "h9c_pair": [
+        2,
+        8
+      ],
+      "h9c_pair_was_candidate": false,
+      "h9c_pair_was_winner": false,
+      "h9c_pair_payout_yen": 0,
+      "h9c_tickets": 11,
+      "h9c_payout": 960,
+      "h9c_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          7
+        ]
+      ],
+      "adopted_h5_tickets": 11,
+      "adopted_h5_payout": 960,
+      "adopted_h5_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          7
+        ]
+      ],
+      "h6_explanation_pair": [
+        4,
+        7
+      ],
+      "h6_explanation_score": 6,
+      "h6_explanation_features": {
+        "same_line": true,
+        "contains_top3_inclusion": true,
+        "contains_row1": false,
+        "contains_row3_positive_third_bias": true,
+        "contains_top3_score": true,
+        "adjacent_line_positions": true,
+        "both_multirow": false,
+        "clean_p1_p3_role_split": true
+      },
+      "h6_explanation_pair_prob": 0.09025679950045733,
+      "h6_explanation_pair_was_winner": false,
+      "h6_explanation_pair_payout_yen": 0,
+      "h6e_tickets": 10,
+      "h6e_payout": 960,
+      "h6e_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          7
+        ]
+      ]
+    },
+    {
+      "race_id": "1220230915010007",
+      "date": "2023-09-15",
+      "race_type": "Ｓ級一次予選",
+      "result": [
+        9,
+        4,
+        1
+      ],
+      "board": [
+        [
+          9
+        ],
+        [
+          1,
+          3,
+          9
+        ],
+        [
+          5,
+          7,
+          8
+        ]
+      ],
+      "strongest_two": [
+        9,
+        1
+      ],
+      "strongest_two_top3_prob": [
+        0.5432684614263547,
+        0.5196653732521141
+      ],
+      "cut_pair": [
+        1,
+        9
+      ],
+      "cut_pair_was_candidate": true,
+      "cut_pair_was_winner": true,
+      "cut_pair_payout_yen": 300,
+      "strongest_line_pair": [
+        1,
+        9
+      ],
+      "strongest_line_pair_prob": 0.24390173441071145,
+      "strongest_line_pair_was_winner": true,
+      "strongest_line_pair_payout_yen": 300,
+      "base_tickets": 15,
+      "base_payout": 300,
+      "base_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "cut_tickets": 14,
+      "cut_payout": 0,
+      "cut_hits": [],
+      "both_tickets": 14,
+      "both_payout": 0,
+      "both_hits": [],
+      "h3_pair": [
+        5,
+        9
+      ],
+      "h3_pair_prob": 0.17693210515059976,
+      "h3_pair_was_winner": false,
+      "h3_pair_payout_yen": 0,
+      "h3_tickets": 13,
+      "h3_payout": 0,
+      "h3_hits": [],
+      "h4_pair": [
+        1,
+        5
+      ],
+      "h4_pair_prob": 0.1656275487950625,
+      "h4_pair_was_winner": false,
+      "h4_pair_payout_yen": 0,
+      "h4_tickets": 12,
+      "h4_payout": 0,
+      "h4_hits": [],
+      "history_h5_centers": [
+        {
+          "stage": "H1",
+          "pair": [
+            1,
+            9
+          ]
+        },
+        {
+          "stage": "H3",
+          "pair": [
+            5,
+            9
+          ]
+        },
+        {
+          "stage": "H4",
+          "pair": [
+            1,
+            5
+          ]
+        }
+      ],
+      "history_h5_rider_touch": {
+        "1": 2,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 2,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 2
+      },
+      "history_h5_relation_scores": {
+        "1-3": 2,
+        "1-7": 2,
+        "1-8": 2,
+        "3-5": 2,
+        "3-7": 0,
+        "3-8": 0,
+        "3-9": 2,
+        "5-7": 2,
+        "5-8": 2,
+        "7-8": 0,
+        "7-9": 2,
+        "8-9": 2
+      },
+      "history_h5_removed": [
+        [
+          3,
+          9
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "history_h5_tickets_list": [
+        [
+          1,
+          8
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          7,
+          8
+        ]
+      ],
+      "history_h5_tickets": 5,
+      "history_h5_payout": 0,
+      "history_h5_hits": [],
+      "provisional_h5_scenario1": [
+        3,
+        5,
+        7
+      ],
+      "provisional_h5_scenario2": [
+        3,
+        7,
+        9
+      ],
+      "provisional_h5_scenario1_mass": 0.02046743242088079,
+      "provisional_h5_scenario2_mass": 0.01927014633564619,
+      "provisional_h5_joint_mass_sum": 0.039737578756526976,
+      "provisional_h5_tickets_list": [
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "provisional_h5_tickets": 5,
+      "provisional_h5_payout": 0,
+      "provisional_h5_hits": [],
+      "h5_pair": [
+        3,
+        9
+      ],
+      "h5_pair_prob": 0.15863090566725935,
+      "h5_pair_was_winner": false,
+      "h5_pair_payout_yen": 0,
+      "h5_tickets": 11,
+      "h5_payout": 0,
+      "h5_hits": [],
+      "h6_pair": [
+        7,
+        8
+      ],
+      "h6_unique_mass_loss": 0.004022405480706153,
+      "h6_pair_prob": 0.028598571211850353,
+      "h6_pair_was_winner": false,
+      "h6_pair_payout_yen": 0,
+      "h6_tickets": 11,
+      "h6_payout": 0,
+      "h6_hits": [],
+      "h7_line_id": 3,
+      "h7_leader": 5,
+      "h7_leader_b_count": 24.0,
+      "h7_leader_nige_count": 18.0,
+      "h7_line_size": 3.0,
+      "h7_leader_score": 112.84,
+      "h7_pair": [
+        3,
+        5
+      ],
+      "h7_pair_was_candidate": true,
+      "h7_pair_was_winner": false,
+      "h7_pair_payout_yen": 0,
+      "h7_tickets": 11,
+      "h7_payout": 0,
+      "h7_hits": [],
+      "h8_third_rider": 8,
+      "h8_third_bias": 0.07838419653825288,
+      "h8_p1": 0.008478276476263773,
+      "h8_p2": 0.04749994603232516,
+      "h8_p3": 0.12588414257057803,
+      "h8_anchor": 9,
+      "h8_anchor_top3_prob": 0.5432684614263547,
+      "h8_pair": [
+        8,
+        9
+      ],
+      "h8_pair_was_candidate": true,
+      "h8_pair_was_winner": false,
+      "h8_pair_payout_yen": 0,
+      "h8_tickets": 11,
+      "h8_payout": 0,
+      "h8_hits": [],
+      "h9a_third_rider": 1,
+      "h9a_anchor": 9,
+      "h9a_pair": [
+        1,
+        9
+      ],
+      "h9a_pair_was_candidate": false,
+      "h9a_pair_was_winner": true,
+      "h9a_pair_payout_yen": 300,
+      "h9a_tickets": 12,
+      "h9a_payout": 0,
+      "h9a_hits": [],
+      "h9b_third_rider": 8,
+      "h9b_anchor": 3,
+      "h9b_pair": [
+        3,
+        8
+      ],
+      "h9b_pair_was_candidate": true,
+      "h9b_pair_was_winner": false,
+      "h9b_pair_payout_yen": 0,
+      "h9b_tickets": 11,
+      "h9b_payout": 0,
+      "h9b_hits": [],
+      "h9c_third_rider": 8,
+      "h9c_anchor": 9,
+      "h9c_pair": [
+        8,
+        9
+      ],
+      "h9c_pair_was_candidate": true,
+      "h9c_pair_was_winner": false,
+      "h9c_pair_payout_yen": 0,
+      "h9c_tickets": 11,
+      "h9c_payout": 0,
+      "h9c_hits": [],
+      "adopted_h5_tickets": 11,
+      "adopted_h5_payout": 0,
+      "adopted_h5_hits": [],
+      "h6_explanation_pair": [
+        7,
+        9
+      ],
+      "h6_explanation_score": 5,
+      "h6_explanation_features": {
+        "same_line": false,
+        "contains_top3_inclusion": true,
+        "contains_row1": true,
+        "contains_row3_positive_third_bias": true,
+        "contains_top3_score": true,
+        "adjacent_line_positions": false,
+        "both_multirow": false,
+        "clean_p1_p3_role_split": true
+      },
+      "h6_explanation_pair_prob": 0.12650946078688224,
+      "h6_explanation_pair_was_winner": false,
+      "h6_explanation_pair_payout_yen": 0,
+      "h6e_tickets": 10,
+      "h6e_payout": 0,
+      "h6e_hits": []
+    },
+    {
+      "race_id": "1220230915010008",
+      "date": "2023-09-15",
+      "race_type": "Ｓ級一次予選",
+      "result": [
+        3,
+        1,
+        7
+      ],
+      "board": [
+        [
+          3
+        ],
+        [
+          1,
+          5,
+          9
+        ],
+        [
+          2,
+          5,
+          7
+        ]
+      ],
+      "strongest_two": [
+        3,
+        1
+      ],
+      "strongest_two_top3_prob": [
+        0.5278503150412794,
+        0.5242703017962607
+      ],
+      "cut_pair": [
+        1,
+        3
+      ],
+      "cut_pair_was_candidate": true,
+      "cut_pair_was_winner": true,
+      "cut_pair_payout_yen": 170,
+      "strongest_line_pair": [
+        3,
+        9
+      ],
+      "strongest_line_pair_prob": 0.0913372754931504,
+      "strongest_line_pair_was_winner": false,
+      "strongest_line_pair_payout_yen": 0,
+      "base_tickets": 15,
+      "base_payout": 1000,
+      "base_hits": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "cut_tickets": 14,
+      "cut_payout": 830,
+      "cut_hits": [
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "both_tickets": 13,
+      "both_payout": 830,
+      "both_hits": [
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "h3_pair": [
+        2,
+        3
+      ],
+      "h3_pair_prob": 0.2071601378404008,
+      "h3_pair_was_winner": false,
+      "h3_pair_payout_yen": 0,
+      "h3_tickets": 12,
+      "h3_payout": 830,
+      "h3_hits": [
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "h4_pair": [
+        1,
+        2
+      ],
+      "h4_pair_prob": 0.19893090168709754,
+      "h4_pair_was_winner": false,
+      "h4_pair_payout_yen": 0,
+      "h4_tickets": 11,
+      "h4_payout": 830,
+      "h4_hits": [
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "history_h5_centers": [
+        {
+          "stage": "H1",
+          "pair": [
+            1,
+            3
+          ]
+        },
+        {
+          "stage": "H2",
+          "pair": [
+            3,
+            9
+          ]
+        },
+        {
+          "stage": "H3",
+          "pair": [
+            2,
+            3
+          ]
+        },
+        {
+          "stage": "H4",
+          "pair": [
+            1,
+            2
+          ]
+        }
+      ],
+      "history_h5_rider_touch": {
+        "1": 2,
+        "2": 2,
+        "3": 3,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 1
+      },
+      "history_h5_relation_scores": {
+        "1-5": 2,
+        "1-7": 2,
+        "1-9": 3,
+        "2-5": 2,
+        "2-7": 2,
+        "2-9": 3,
+        "3-5": 3,
+        "3-7": 3,
+        "5-7": 0,
+        "5-9": 1,
+        "7-9": 1
+      },
+      "history_h5_removed": [
+        [
+          3,
+          7
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "history_h5_tickets_list": [
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "history_h5_tickets": 5,
+      "history_h5_payout": 0,
+      "history_h5_hits": [],
+      "provisional_h5_scenario1": [
+        3,
+        5,
+        7
+      ],
+      "provisional_h5_scenario2": [
+        1,
+        5,
+        7
+      ],
+      "provisional_h5_scenario1_mass": 0.024974325083377987,
+      "provisional_h5_scenario2_mass": 0.021028065702617903,
+      "provisional_h5_joint_mass_sum": 0.04600239078599589,
+      "provisional_h5_tickets_list": [
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          5,
+          7
+        ]
+      ],
+      "provisional_h5_tickets": 5,
+      "provisional_h5_payout": 830,
+      "provisional_h5_hits": [
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "h5_pair": [
+        3,
+        7
+      ],
+      "h5_pair_prob": 0.1549818494736205,
+      "h5_pair_was_winner": true,
+      "h5_pair_payout_yen": 380,
+      "h5_tickets": 10,
+      "h5_payout": 450,
+      "h5_hits": [
+        [
+          1,
+          7
+        ]
+      ],
+      "h6_pair": [
+        5,
+        9
+      ],
+      "h6_unique_mass_loss": 0.003249325607231547,
+      "h6_pair_prob": 0.032822089214953665,
+      "h6_pair_was_winner": false,
+      "h6_pair_payout_yen": 0,
+      "h6_tickets": 10,
+      "h6_payout": 830,
+      "h6_hits": [
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "h7_line_id": 3,
+      "h7_leader": 9,
+      "h7_leader_b_count": 18.0,
+      "h7_leader_nige_count": 6.0,
+      "h7_line_size": 2.0,
+      "h7_leader_score": 106.06,
+      "h7_pair": [
+        3,
+        9
+      ],
+      "h7_pair_was_candidate": false,
+      "h7_pair_was_winner": false,
+      "h7_pair_payout_yen": 0,
+      "h7_tickets": 11,
+      "h7_payout": 830,
+      "h7_hits": [
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "h8_third_rider": 4,
+      "h8_third_bias": 0.046610151146496664,
+      "h8_p1": 0.019100642192183697,
+      "h8_p2": 0.07169535722320354,
+      "h8_p3": 0.1183055083697002,
+      "h8_anchor": 3,
+      "h8_anchor_top3_prob": 0.5278503150412794,
+      "h8_pair": [
+        3,
+        4
+      ],
+      "h8_pair_was_candidate": false,
+      "h8_pair_was_winner": false,
+      "h8_pair_payout_yen": 0,
+      "h8_tickets": 11,
+      "h8_payout": 830,
+      "h8_hits": [
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "h9a_third_rider": 4,
+      "h9a_anchor": 1,
+      "h9a_pair": [
+        1,
+        4
+      ],
+      "h9a_pair_was_candidate": false,
+      "h9a_pair_was_winner": false,
+      "h9a_pair_payout_yen": 0,
+      "h9a_tickets": 11,
+      "h9a_payout": 830,
+      "h9a_hits": [
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "h9b_third_rider": 7,
+      "h9b_anchor": null,
+      "h9b_pair": null,
+      "h9b_pair_was_candidate": false,
+      "h9b_pair_was_winner": false,
+      "h9b_pair_payout_yen": 0,
+      "h9b_tickets": 11,
+      "h9b_payout": 830,
+      "h9b_hits": [
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "h9c_third_rider": 4,
+      "h9c_anchor": 3,
+      "h9c_pair": [
+        3,
+        4
+      ],
+      "h9c_pair_was_candidate": false,
+      "h9c_pair_was_winner": false,
+      "h9c_pair_payout_yen": 0,
+      "h9c_tickets": 11,
+      "h9c_payout": 830,
+      "h9c_hits": [
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "adopted_h5_tickets": 11,
+      "adopted_h5_payout": 830,
+      "adopted_h5_hits": [
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "h6_explanation_pair": [
+        3,
+        7
+      ],
+      "h6_explanation_score": 5,
+      "h6_explanation_features": {
+        "same_line": false,
+        "contains_top3_inclusion": true,
+        "contains_row1": true,
+        "contains_row3_positive_third_bias": true,
+        "contains_top3_score": true,
+        "adjacent_line_positions": false,
+        "both_multirow": false,
+        "clean_p1_p3_role_split": true
+      },
+      "h6_explanation_pair_prob": 0.1549818494736205,
+      "h6_explanation_pair_was_winner": true,
+      "h6_explanation_pair_payout_yen": 380,
+      "h6e_tickets": 10,
+      "h6e_payout": 450,
+      "h6e_hits": [
+        [
+          1,
+          7
+        ]
+      ]
+    },
+    {
+      "race_id": "1220230915010009",
+      "date": "2023-09-15",
+      "race_type": "Ｓ級一次予選",
+      "result": [
+        7,
+        3,
+        1
+      ],
+      "board": [
+        [
+          7
+        ],
+        [
+          1,
+          3,
+          5
+        ],
+        [
+          4,
+          8,
+          9
+        ]
+      ],
+      "strongest_two": [
+        7,
+        1
+      ],
+      "strongest_two_top3_prob": [
+        0.6849938448672451,
+        0.3700566683447541
+      ],
+      "cut_pair": [
+        1,
+        7
+      ],
+      "cut_pair_was_candidate": true,
+      "cut_pair_was_winner": true,
+      "cut_pair_payout_yen": 110,
+      "strongest_line_pair": [
+        1,
+        7
+      ],
+      "strongest_line_pair_prob": 0.24326778312322347,
+      "strongest_line_pair_was_winner": true,
+      "strongest_line_pair_payout_yen": 110,
+      "base_tickets": 21,
+      "base_payout": 1080,
+      "base_hits": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "cut_tickets": 20,
+      "cut_payout": 970,
+      "cut_hits": [
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "both_tickets": 20,
+      "both_payout": 970,
+      "both_hits": [
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "h3_pair": [
+        4,
+        7
+      ],
+      "h3_pair_prob": 0.19003035921309333,
+      "h3_pair_was_winner": false,
+      "h3_pair_payout_yen": 0,
+      "h3_tickets": 19,
+      "h3_payout": 970,
+      "h3_hits": [
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "h4_pair": [
+        3,
+        7
+      ],
+      "h4_pair_prob": 0.18631203473690452,
+      "h4_pair_was_winner": true,
+      "h4_pair_payout_yen": 460,
+      "h4_tickets": 18,
+      "h4_payout": 510,
+      "h4_hits": [
+        [
+          1,
+          3
+        ]
+      ],
+      "history_h5_centers": [
+        {
+          "stage": "H1",
+          "pair": [
+            1,
+            7
+          ]
+        },
+        {
+          "stage": "H3",
+          "pair": [
+            4,
+            7
+          ]
+        },
+        {
+          "stage": "H4",
+          "pair": [
+            3,
+            7
+          ]
+        }
+      ],
+      "history_h5_rider_touch": {
+        "1": 1,
+        "2": 0,
+        "3": 1,
+        "4": 1,
+        "5": 0,
+        "6": 0,
+        "7": 3,
+        "8": 0,
+        "9": 0
+      },
+      "history_h5_relation_scores": {
+        "1-3": 2,
+        "1-4": 2,
+        "1-5": 1,
+        "1-8": 1,
+        "1-9": 1,
+        "3-4": 2,
+        "3-5": 1,
+        "3-8": 1,
+        "3-9": 1,
+        "4-5": 1,
+        "4-8": 1,
+        "4-9": 1,
+        "5-7": 3,
+        "5-8": 0,
+        "5-9": 0,
+        "7-8": 3,
+        "7-9": 3,
+        "8-9": 0
+      },
+      "history_h5_removed": [
+        [
+          7,
+          9
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          4,
+          8
+        ]
+      ],
+      "history_h5_tickets_list": [
+        [
+          4,
+          5
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "history_h5_tickets": 5,
+      "history_h5_payout": 0,
+      "history_h5_hits": [],
+      "provisional_h5_scenario1": [
+        5,
+        7,
+        9
+      ],
+      "provisional_h5_scenario2": [
+        3,
+        5,
+        9
+      ],
+      "provisional_h5_scenario1_mass": 0.033330495694976224,
+      "provisional_h5_scenario2_mass": 0.03120565384412342,
+      "provisional_h5_joint_mass_sum": 0.06453614953909964,
+      "provisional_h5_tickets_list": [
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "provisional_h5_tickets": 5,
+      "provisional_h5_payout": 0,
+      "provisional_h5_hits": [],
+      "h5_pair": [
+        7,
+        9
+      ],
+      "h5_pair_prob": 0.18423507382191276,
+      "h5_pair_was_winner": false,
+      "h5_pair_payout_yen": 0,
+      "h5_tickets": 17,
+      "h5_payout": 510,
+      "h5_hits": [
+        [
+          1,
+          3
+        ]
+      ],
+      "h6_pair": [
+        4,
+        5
+      ],
+      "h6_unique_mass_loss": 0.004053991347640139,
+      "h6_pair_prob": 0.047433832214206946,
+      "h6_pair_was_winner": false,
+      "h6_pair_payout_yen": 0,
+      "h6_tickets": 17,
+      "h6_payout": 510,
+      "h6_hits": [
+        [
+          1,
+          3
+        ]
+      ],
+      "h7_line_id": 4,
+      "h7_leader": 6,
+      "h7_leader_b_count": 13.0,
+      "h7_leader_nige_count": 5.0,
+      "h7_line_size": 1.0,
+      "h7_leader_score": 102.06,
+      "h7_pair": null,
+      "h7_pair_was_candidate": false,
+      "h7_pair_was_winner": false,
+      "h7_pair_payout_yen": 0,
+      "h7_tickets": 18,
+      "h7_payout": 510,
+      "h7_hits": [
+        [
+          1,
+          3
+        ]
+      ],
+      "h8_third_rider": 4,
+      "h8_third_bias": 0.07674513192236282,
+      "h8_p1": 0.024420236341552555,
+      "h8_p2": 0.08900248410034844,
+      "h8_p3": 0.16574761602271126,
+      "h8_anchor": 7,
+      "h8_anchor_top3_prob": 0.6849938448672451,
+      "h8_pair": [
+        4,
+        7
+      ],
+      "h8_pair_was_candidate": false,
+      "h8_pair_was_winner": false,
+      "h8_pair_payout_yen": 0,
+      "h8_tickets": 18,
+      "h8_payout": 510,
+      "h8_hits": [
+        [
+          1,
+          3
+        ]
+      ],
+      "h9a_third_rider": 1,
+      "h9a_anchor": 7,
+      "h9a_pair": [
+        1,
+        7
+      ],
+      "h9a_pair_was_candidate": false,
+      "h9a_pair_was_winner": true,
+      "h9a_pair_payout_yen": 110,
+      "h9a_tickets": 18,
+      "h9a_payout": 510,
+      "h9a_hits": [
+        [
+          1,
+          3
+        ]
+      ],
+      "h9b_third_rider": 4,
+      "h9b_anchor": 1,
+      "h9b_pair": [
+        1,
+        4
+      ],
+      "h9b_pair_was_candidate": true,
+      "h9b_pair_was_winner": false,
+      "h9b_pair_payout_yen": 0,
+      "h9b_tickets": 17,
+      "h9b_payout": 510,
+      "h9b_hits": [
+        [
+          1,
+          3
+        ]
+      ],
+      "h9c_third_rider": 6,
+      "h9c_anchor": 7,
+      "h9c_pair": [
+        6,
+        7
+      ],
+      "h9c_pair_was_candidate": false,
+      "h9c_pair_was_winner": false,
+      "h9c_pair_payout_yen": 0,
+      "h9c_tickets": 18,
+      "h9c_payout": 510,
+      "h9c_hits": [
+        [
+          1,
+          3
+        ]
+      ],
+      "adopted_h5_tickets": 18,
+      "adopted_h5_payout": 510,
+      "adopted_h5_hits": [
+        [
+          1,
+          3
+        ]
+      ],
+      "h6_explanation_pair": [
+        7,
+        8
+      ],
+      "h6_explanation_score": 7,
+      "h6_explanation_features": {
+        "same_line": true,
+        "contains_top3_inclusion": true,
+        "contains_row1": true,
+        "contains_row3_positive_third_bias": true,
+        "contains_top3_score": true,
+        "adjacent_line_positions": true,
+        "both_multirow": false,
+        "clean_p1_p3_role_split": true
+      },
+      "h6_explanation_pair_prob": 0.1660694176207741,
+      "h6_explanation_pair_was_winner": false,
+      "h6_explanation_pair_payout_yen": 0,
+      "h6e_tickets": 17,
+      "h6e_payout": 510,
+      "h6e_hits": [
+        [
+          1,
+          3
+        ]
+      ]
+    },
+    {
+      "race_id": "1220230915010010",
+      "date": "2023-09-15",
+      "race_type": "Ｓ級一次予選",
+      "result": [
+        7,
+        3,
+        2
+      ],
+      "board": [
+        [
+          6,
+          7
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          5,
+          8
+        ]
+      ],
+      "strongest_two": [
+        3,
+        7
+      ],
+      "strongest_two_top3_prob": [
+        0.5781405182594503,
+        0.5152021430608194
+      ],
+      "cut_pair": [
+        3,
+        7
+      ],
+      "cut_pair_was_candidate": true,
+      "cut_pair_was_winner": true,
+      "cut_pair_payout_yen": 160,
+      "strongest_line_pair": [
+        2,
+        7
+      ],
+      "strongest_line_pair_prob": 0.16923476534722545,
+      "strongest_line_pair_was_winner": true,
+      "strongest_line_pair_payout_yen": 260,
+      "base_tickets": 21,
+      "base_payout": 850,
+      "base_hits": [
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "cut_tickets": 20,
+      "cut_payout": 690,
+      "cut_hits": [
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          7
+        ]
+      ],
+      "both_tickets": 19,
+      "both_payout": 430,
+      "both_hits": [
+        [
+          2,
+          3
+        ]
+      ],
+      "h3_pair": [
+        3,
+        6
+      ],
+      "h3_pair_prob": 0.16546358970929934,
+      "h3_pair_was_winner": false,
+      "h3_pair_payout_yen": 0,
+      "h3_tickets": 18,
+      "h3_payout": 430,
+      "h3_hits": [
+        [
+          2,
+          3
+        ]
+      ],
+      "h4_pair": [
+        3,
+        5
+      ],
+      "h4_pair_prob": 0.15472569811842268,
+      "h4_pair_was_winner": false,
+      "h4_pair_payout_yen": 0,
+      "h4_tickets": 17,
+      "h4_payout": 430,
+      "h4_hits": [
+        [
+          2,
+          3
+        ]
+      ],
+      "history_h5_centers": [
+        {
+          "stage": "H1",
+          "pair": [
+            3,
+            7
+          ]
+        },
+        {
+          "stage": "H2",
+          "pair": [
+            2,
+            7
+          ]
+        },
+        {
+          "stage": "H3",
+          "pair": [
+            3,
+            6
+          ]
+        },
+        {
+          "stage": "H4",
+          "pair": [
+            3,
+            5
+          ]
+        }
+      ],
+      "history_h5_rider_touch": {
+        "1": 0,
+        "2": 1,
+        "3": 3,
+        "4": 0,
+        "5": 1,
+        "6": 1,
+        "7": 2,
+        "8": 0,
+        "9": 0
+      },
+      "history_h5_relation_scores": {
+        "1-2": 1,
+        "1-3": 3,
+        "1-5": 1,
+        "1-6": 1,
+        "1-7": 2,
+        "1-8": 0,
+        "2-3": 4,
+        "2-5": 2,
+        "2-6": 2,
+        "2-8": 1,
+        "3-8": 3,
+        "5-6": 2,
+        "5-7": 3,
+        "5-8": 1,
+        "6-7": 3,
+        "6-8": 1,
+        "7-8": 2
+      },
+      "history_h5_removed": [
+        [
+          2,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "history_h5_tickets_list": [
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          6,
+          8
+        ]
+      ],
+      "history_h5_tickets": 5,
+      "history_h5_payout": 0,
+      "history_h5_hits": [],
+      "provisional_h5_scenario1": [
+        2,
+        3,
+        8
+      ],
+      "provisional_h5_scenario2": [
+        1,
+        2,
+        3
+      ],
+      "provisional_h5_scenario1_mass": 0.01811890230155079,
+      "provisional_h5_scenario2_mass": 0.015540775084289936,
+      "provisional_h5_joint_mass_sum": 0.033659677385840726,
+      "provisional_h5_tickets_list": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          3,
+          8
+        ]
+      ],
+      "provisional_h5_tickets": 5,
+      "provisional_h5_payout": 430,
+      "provisional_h5_hits": [
+        [
+          2,
+          3
+        ]
+      ],
+      "h5_pair": [
+        2,
+        3
+      ],
+      "h5_pair_prob": 0.1530311528014476,
+      "h5_pair_was_winner": true,
+      "h5_pair_payout_yen": 430,
+      "h5_tickets": 16,
+      "h5_payout": 0,
+      "h5_hits": [],
+      "h6_pair": [
+        5,
+        8
+      ],
+      "h6_unique_mass_loss": 0.0020597954056147676,
+      "h6_pair_prob": 0.02811752725546694,
+      "h6_pair_was_winner": false,
+      "h6_pair_payout_yen": 0,
+      "h6_tickets": 16,
+      "h6_payout": 430,
+      "h6_hits": [
+        [
+          2,
+          3
+        ]
+      ],
+      "h7_line_id": 3,
+      "h7_leader": 7,
+      "h7_leader_b_count": 23.0,
+      "h7_leader_nige_count": 9.0,
+      "h7_line_size": 3.0,
+      "h7_leader_score": 114.87,
+      "h7_pair": [
+        2,
+        7
+      ],
+      "h7_pair_was_candidate": false,
+      "h7_pair_was_winner": true,
+      "h7_pair_payout_yen": 260,
+      "h7_tickets": 17,
+      "h7_payout": 430,
+      "h7_hits": [
+        [
+          2,
+          3
+        ]
+      ],
+      "h8_third_rider": 5,
+      "h8_third_bias": 0.05380895644609518,
+      "h8_p1": 0.03851498940684028,
+      "h8_p2": 0.08456090201307784,
+      "h8_p3": 0.13836985845917302,
+      "h8_anchor": 3,
+      "h8_anchor_top3_prob": 0.5781405182594503,
+      "h8_pair": [
+        3,
+        5
+      ],
+      "h8_pair_was_candidate": false,
+      "h8_pair_was_winner": false,
+      "h8_pair_payout_yen": 0,
+      "h8_tickets": 17,
+      "h8_payout": 430,
+      "h8_hits": [
+        [
+          2,
+          3
+        ]
+      ],
+      "h9a_third_rider": 5,
+      "h9a_anchor": 3,
+      "h9a_pair": [
+        3,
+        5
+      ],
+      "h9a_pair_was_candidate": false,
+      "h9a_pair_was_winner": false,
+      "h9a_pair_payout_yen": 0,
+      "h9a_tickets": 17,
+      "h9a_payout": 430,
+      "h9a_hits": [
+        [
+          2,
+          3
+        ]
+      ],
+      "h9b_third_rider": 8,
+      "h9b_anchor": 2,
+      "h9b_pair": [
+        2,
+        8
+      ],
+      "h9b_pair_was_candidate": true,
+      "h9b_pair_was_winner": false,
+      "h9b_pair_payout_yen": 0,
+      "h9b_tickets": 16,
+      "h9b_payout": 430,
+      "h9b_hits": [
+        [
+          2,
+          3
+        ]
+      ],
+      "h9c_third_rider": 8,
+      "h9c_anchor": 3,
+      "h9c_pair": [
+        3,
+        8
+      ],
+      "h9c_pair_was_candidate": true,
+      "h9c_pair_was_winner": false,
+      "h9c_pair_payout_yen": 0,
+      "h9c_tickets": 16,
+      "h9c_payout": 430,
+      "h9c_hits": [
+        [
+          2,
+          3
+        ]
+      ],
+      "adopted_h5_tickets": 16,
+      "adopted_h5_payout": 430,
+      "adopted_h5_hits": [
+        [
+          2,
+          3
+        ]
+      ],
+      "h6_explanation_pair": [
+        7,
+        8
+      ],
+      "h6_explanation_score": 6,
+      "h6_explanation_features": {
+        "same_line": true,
+        "contains_top3_inclusion": true,
+        "contains_row1": true,
+        "contains_row3_positive_third_bias": true,
+        "contains_top3_score": true,
+        "adjacent_line_positions": false,
+        "both_multirow": false,
+        "clean_p1_p3_role_split": true
+      },
+      "h6_explanation_pair_prob": 0.1136237960465029,
+      "h6_explanation_pair_was_winner": false,
+      "h6_explanation_pair_payout_yen": 0,
+      "h6e_tickets": 15,
+      "h6e_payout": 430,
+      "h6e_hits": [
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "race_id": "1220230915010012",
+      "date": "2023-09-15",
+      "race_type": "Ｓ級一次予選",
+      "result": [
+        8,
+        3,
+        5
+      ],
+      "board": [
+        [
+          1
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          3,
+          4,
+          5,
+          9
+        ]
+      ],
+      "strongest_two": [
+        1,
+        7
+      ],
+      "strongest_two_top3_prob": [
+        0.5879131913713761,
+        0.45778467122832145
+      ],
+      "cut_pair": [
+        1,
+        7
+      ],
+      "cut_pair_was_candidate": true,
+      "cut_pair_was_winner": false,
+      "cut_pair_payout_yen": 0,
+      "strongest_line_pair": [
+        1,
+        7
+      ],
+      "strongest_line_pair_prob": 0.23721863928717343,
+      "strongest_line_pair_was_winner": false,
+      "strongest_line_pair_payout_yen": 0,
+      "base_tickets": 21,
+      "base_payout": 790,
+      "base_hits": [
+        [
+          3,
+          5
+        ]
+      ],
+      "cut_tickets": 20,
+      "cut_payout": 790,
+      "cut_hits": [
+        [
+          3,
+          5
+        ]
+      ],
+      "both_tickets": 20,
+      "both_payout": 790,
+      "both_hits": [
+        [
+          3,
+          5
+        ]
+      ],
+      "h3_pair": [
+        1,
+        2
+      ],
+      "h3_pair_prob": 0.18486707865451216,
+      "h3_pair_was_winner": false,
+      "h3_pair_payout_yen": 0,
+      "h3_tickets": 19,
+      "h3_payout": 790,
+      "h3_hits": [
+        [
+          3,
+          5
+        ]
+      ],
+      "h4_pair": [
+        1,
+        4
+      ],
+      "h4_pair_prob": 0.17653044991733677,
+      "h4_pair_was_winner": false,
+      "h4_pair_payout_yen": 0,
+      "h4_tickets": 18,
+      "h4_payout": 790,
+      "h4_hits": [
+        [
+          3,
+          5
+        ]
+      ],
+      "history_h5_centers": [
+        {
+          "stage": "H1",
+          "pair": [
+            1,
+            7
+          ]
+        },
+        {
+          "stage": "H3",
+          "pair": [
+            1,
+            2
+          ]
+        },
+        {
+          "stage": "H4",
+          "pair": [
+            1,
+            4
+          ]
+        }
+      ],
+      "history_h5_rider_touch": {
+        "1": 3,
+        "2": 1,
+        "3": 0,
+        "4": 1,
+        "5": 0,
+        "6": 0,
+        "7": 1,
+        "8": 0,
+        "9": 0
+      },
+      "history_h5_relation_scores": {
+        "1-3": 3,
+        "1-5": 3,
+        "1-9": 3,
+        "2-3": 1,
+        "2-4": 2,
+        "2-5": 1,
+        "2-7": 2,
+        "2-9": 1,
+        "3-4": 1,
+        "3-5": 0,
+        "3-7": 1,
+        "3-9": 0,
+        "4-5": 1,
+        "4-7": 2,
+        "4-9": 1,
+        "5-7": 1,
+        "5-9": 0,
+        "7-9": 1
+      },
+      "history_h5_removed": [
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "history_h5_tickets_list": [
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          5,
+          9
+        ]
+      ],
+      "history_h5_tickets": 5,
+      "history_h5_payout": 790,
+      "history_h5_hits": [
+        [
+          3,
+          5
+        ]
+      ],
+      "provisional_h5_scenario1": [
+        2,
+        7,
+        9
+      ],
+      "provisional_h5_scenario2": [
+        2,
+        5,
+        9
+      ],
+      "provisional_h5_scenario1_mass": 0.027504348511740488,
+      "provisional_h5_scenario2_mass": 0.021179907026854246,
+      "provisional_h5_joint_mass_sum": 0.048684255538594734,
+      "provisional_h5_tickets_list": [
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "provisional_h5_tickets": 5,
+      "provisional_h5_payout": 0,
+      "provisional_h5_hits": [],
+      "h5_pair": [
+        1,
+        9
+      ],
+      "h5_pair_prob": 0.16934413408303142,
+      "h5_pair_was_winner": false,
+      "h5_pair_payout_yen": 0,
+      "h5_tickets": 17,
+      "h5_payout": 790,
+      "h5_hits": [
+        [
+          3,
+          5
+        ]
+      ],
+      "h6_pair": [
+        3,
+        4
+      ],
+      "h6_unique_mass_loss": 0.0026416874999517902,
+      "h6_pair_prob": 0.039139661994051826,
+      "h6_pair_was_winner": false,
+      "h6_pair_payout_yen": 0,
+      "h6_tickets": 17,
+      "h6_payout": 790,
+      "h6_hits": [
+        [
+          3,
+          5
+        ]
+      ],
+      "h7_line_id": 5,
+      "h7_leader": 8,
+      "h7_leader_b_count": 11.0,
+      "h7_leader_nige_count": 6.0,
+      "h7_line_size": 2.0,
+      "h7_leader_score": 106.21,
+      "h7_pair": [
+        3,
+        8
+      ],
+      "h7_pair_was_candidate": false,
+      "h7_pair_was_winner": true,
+      "h7_pair_payout_yen": 2830,
+      "h7_tickets": 18,
+      "h7_payout": 790,
+      "h7_hits": [
+        [
+          3,
+          5
+        ]
+      ],
+      "h8_third_rider": 3,
+      "h8_third_bias": 0.08102897726542657,
+      "h8_p1": 0.005117838781012714,
+      "h8_p2": 0.06772109290520886,
+      "h8_p3": 0.14875007017063543,
+      "h8_anchor": 1,
+      "h8_anchor_top3_prob": 0.5879131913713761,
+      "h8_pair": [
+        1,
+        3
+      ],
+      "h8_pair_was_candidate": true,
+      "h8_pair_was_winner": false,
+      "h8_pair_payout_yen": 0,
+      "h8_tickets": 17,
+      "h8_payout": 790,
+      "h8_hits": [
+        [
+          3,
+          5
+        ]
+      ],
+      "h9a_third_rider": 4,
+      "h9a_anchor": 1,
+      "h9a_pair": [
+        1,
+        4
+      ],
+      "h9a_pair_was_candidate": false,
+      "h9a_pair_was_winner": false,
+      "h9a_pair_payout_yen": 0,
+      "h9a_tickets": 18,
+      "h9a_payout": 790,
+      "h9a_hits": [
+        [
+          3,
+          5
+        ]
+      ],
+      "h9b_third_rider": 3,
+      "h9b_anchor": 8,
+      "h9b_pair": [
+        3,
+        8
+      ],
+      "h9b_pair_was_candidate": false,
+      "h9b_pair_was_winner": true,
+      "h9b_pair_payout_yen": 2830,
+      "h9b_tickets": 18,
+      "h9b_payout": 790,
+      "h9b_hits": [
+        [
+          3,
+          5
+        ]
+      ],
+      "h9c_third_rider": 3,
+      "h9c_anchor": 1,
+      "h9c_pair": [
+        1,
+        3
+      ],
+      "h9c_pair_was_candidate": true,
+      "h9c_pair_was_winner": false,
+      "h9c_pair_payout_yen": 0,
+      "h9c_tickets": 17,
+      "h9c_payout": 790,
+      "h9c_hits": [
+        [
+          3,
+          5
+        ]
+      ],
+      "adopted_h5_tickets": 17,
+      "adopted_h5_payout": 790,
+      "adopted_h5_hits": [
+        [
+          3,
+          5
+        ]
+      ],
+      "h6_explanation_pair": [
+        1,
+        5
+      ],
+      "h6_explanation_score": 5,
+      "h6_explanation_features": {
+        "same_line": false,
+        "contains_top3_inclusion": true,
+        "contains_row1": true,
+        "contains_row3_positive_third_bias": true,
+        "contains_top3_score": true,
+        "adjacent_line_positions": false,
+        "both_multirow": false,
+        "clean_p1_p3_role_split": true
+      },
+      "h6_explanation_pair_prob": 0.15319964691598417,
+      "h6_explanation_pair_was_winner": false,
+      "h6_explanation_pair_payout_yen": 0,
+      "h6e_tickets": 16,
+      "h6e_payout": 790,
+      "h6e_hits": [
+        [
+          3,
+          5
+        ]
+      ]
+    },
+    {
+      "race_id": "1220230915020002",
+      "date": "2023-09-16",
+      "race_type": "Ｓ級特一般",
+      "result": [
+        7,
+        6,
+        1
+      ],
+      "board": [
+        [
+          1
+        ],
+        [
+          5,
+          7,
+          9
+        ],
+        [
+          2,
+          3,
+          5
+        ]
+      ],
+      "strongest_two": [
+        1,
+        7
+      ],
+      "strongest_two_top3_prob": [
+        0.5723279455504375,
+        0.4074566684326791
+      ],
+      "cut_pair": [
+        1,
+        7
+      ],
+      "cut_pair_was_candidate": true,
+      "cut_pair_was_winner": true,
+      "cut_pair_payout_yen": 370,
+      "strongest_line_pair": [
+        1,
+        7
+      ],
+      "strongest_line_pair_prob": 0.22355443565350458,
+      "strongest_line_pair_was_winner": true,
+      "strongest_line_pair_payout_yen": 370,
+      "base_tickets": 15,
+      "base_payout": 370,
+      "base_hits": [
+        [
+          1,
+          7
+        ]
+      ],
+      "cut_tickets": 14,
+      "cut_payout": 0,
+      "cut_hits": [],
+      "both_tickets": 14,
+      "both_payout": 0,
+      "both_hits": [],
+      "h3_pair": [
+        1,
+        3
+      ],
+      "h3_pair_prob": 0.19393779515696566,
+      "h3_pair_was_winner": false,
+      "h3_pair_payout_yen": 0,
+      "h3_tickets": 13,
+      "h3_payout": 0,
+      "h3_hits": [],
+      "h4_pair": [
+        1,
+        9
+      ],
+      "h4_pair_prob": 0.16842527030581342,
+      "h4_pair_was_winner": false,
+      "h4_pair_payout_yen": 0,
+      "h4_tickets": 12,
+      "h4_payout": 0,
+      "h4_hits": [],
+      "history_h5_centers": [
+        {
+          "stage": "H1",
+          "pair": [
+            1,
+            7
+          ]
+        },
+        {
+          "stage": "H3",
+          "pair": [
+            1,
+            3
+          ]
+        },
+        {
+          "stage": "H4",
+          "pair": [
+            1,
+            9
+          ]
+        }
+      ],
+      "history_h5_rider_touch": {
+        "1": 3,
+        "2": 0,
+        "3": 1,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 1,
+        "8": 0,
+        "9": 1
+      },
+      "history_h5_relation_scores": {
+        "1-2": 3,
+        "1-5": 3,
+        "2-3": 1,
+        "2-5": 0,
+        "2-7": 1,
+        "2-9": 1,
+        "3-5": 1,
+        "3-7": 2,
+        "3-9": 2,
+        "5-7": 1,
+        "5-9": 1,
+        "7-9": 2
+      },
+      "history_h5_removed": [
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          5,
+          7
+        ]
+      ],
+      "history_h5_tickets_list": [
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          5,
+          9
+        ]
+      ],
+      "history_h5_tickets": 5,
+      "history_h5_payout": 0,
+      "history_h5_hits": [],
+      "provisional_h5_scenario1": [
+        3,
+        5,
+        7
+      ],
+      "provisional_h5_scenario2": [
+        3,
+        5,
+        9
+      ],
+      "provisional_h5_scenario1_mass": 0.022848261704541142,
+      "provisional_h5_scenario2_mass": 0.01859557551247579,
+      "provisional_h5_joint_mass_sum": 0.04144383721701693,
+      "provisional_h5_tickets_list": [
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          5,
+          9
+        ]
+      ],
+      "provisional_h5_tickets": 5,
+      "provisional_h5_payout": 0,
+      "provisional_h5_hits": [],
+      "h5_pair": [
+        1,
+        5
+      ],
+      "h5_pair_prob": 0.16083249667233412,
+      "h5_pair_was_winner": false,
+      "h5_pair_payout_yen": 0,
+      "h5_tickets": 11,
+      "h5_payout": 0,
+      "h5_hits": [],
+      "h6_pair": [
+        2,
+        5
+      ],
+      "h6_unique_mass_loss": 0.013321124981382774,
+      "h6_pair_prob": 0.05421195067531982,
+      "h6_pair_was_winner": false,
+      "h6_pair_payout_yen": 0,
+      "h6_tickets": 11,
+      "h6_payout": 0,
+      "h6_hits": [],
+      "h7_line_id": 4,
+      "h7_leader": 4,
+      "h7_leader_b_count": 18.0,
+      "h7_leader_nige_count": 9.0,
+      "h7_line_size": 3.0,
+      "h7_leader_score": 104.68,
+      "h7_pair": [
+        4,
+        9
+      ],
+      "h7_pair_was_candidate": false,
+      "h7_pair_was_winner": false,
+      "h7_pair_payout_yen": 0,
+      "h7_tickets": 12,
+      "h7_payout": 0,
+      "h7_hits": [],
+      "h8_third_rider": 2,
+      "h8_third_bias": 0.03819349912741117,
+      "h8_p1": 0.07749710624415732,
+      "h8_p2": 0.04775532951150445,
+      "h8_p3": 0.11569060537156849,
+      "h8_anchor": 1,
+      "h8_anchor_top3_prob": 0.5723279455504375,
+      "h8_pair": [
+        1,
+        2
+      ],
+      "h8_pair_was_candidate": true,
+      "h8_pair_was_winner": false,
+      "h8_pair_payout_yen": 0,
+      "h8_tickets": 11,
+      "h8_payout": 0,
+      "h8_hits": [],
+      "h9a_third_rider": 6,
+      "h9a_anchor": 9,
+      "h9a_pair": [
+        6,
+        9
+      ],
+      "h9a_pair_was_candidate": false,
+      "h9a_pair_was_winner": false,
+      "h9a_pair_payout_yen": 0,
+      "h9a_tickets": 12,
+      "h9a_payout": 0,
+      "h9a_hits": [],
+      "h9b_third_rider": 5,
+      "h9b_anchor": 3,
+      "h9b_pair": [
+        3,
+        5
+      ],
+      "h9b_pair_was_candidate": true,
+      "h9b_pair_was_winner": false,
+      "h9b_pair_payout_yen": 0,
+      "h9b_tickets": 11,
+      "h9b_payout": 0,
+      "h9b_hits": [],
+      "h9c_third_rider": 2,
+      "h9c_anchor": 1,
+      "h9c_pair": [
+        1,
+        2
+      ],
+      "h9c_pair_was_candidate": true,
+      "h9c_pair_was_winner": false,
+      "h9c_pair_payout_yen": 0,
+      "h9c_tickets": 11,
+      "h9c_payout": 0,
+      "h9c_hits": [],
+      "adopted_h5_tickets": 11,
+      "adopted_h5_payout": 0,
+      "adopted_h5_hits": [],
+      "h6_explanation_pair": [
+        3,
+        5
+      ],
+      "h6_explanation_score": 4,
+      "h6_explanation_features": {
+        "same_line": true,
+        "contains_top3_inclusion": true,
+        "contains_row1": false,
+        "contains_row3_positive_third_bias": false,
+        "contains_top3_score": true,
+        "adjacent_line_positions": true,
+        "both_multirow": false,
+        "clean_p1_p3_role_split": false
+      },
+      "h6_explanation_pair_prob": 0.13104657886720672,
+      "h6_explanation_pair_was_winner": false,
+      "h6_explanation_pair_payout_yen": 0,
+      "h6e_tickets": 10,
+      "h6e_payout": 0,
+      "h6e_hits": []
+    },
+    {
+      "race_id": "1220230915020003",
+      "date": "2023-09-16",
+      "race_type": "Ｓ級特一般",
+      "result": [
+        3,
+        4,
+        7
+      ],
+      "board": [
+        [
+          1
+        ],
+        [
+          2,
+          3,
+          7
+        ],
+        [
+          4,
+          5,
+          9
+        ]
+      ],
+      "strongest_two": [
+        1,
+        7
+      ],
+      "strongest_two_top3_prob": [
+        0.6237280013023205,
+        0.4532809348406046
+      ],
+      "cut_pair": [
+        1,
+        7
+      ],
+      "cut_pair_was_candidate": true,
+      "cut_pair_was_winner": false,
+      "cut_pair_payout_yen": 0,
+      "strongest_line_pair": [
+        1,
+        7
+      ],
+      "strongest_line_pair_prob": 0.26150744327495534,
+      "strongest_line_pair_was_winner": false,
+      "strongest_line_pair_payout_yen": 0,
+      "base_tickets": 21,
+      "base_payout": 3550,
+      "base_hits": [
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "cut_tickets": 20,
+      "cut_payout": 3550,
+      "cut_hits": [
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "both_tickets": 20,
+      "both_payout": 3550,
+      "both_hits": [
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "h3_pair": [
+        1,
+        9
+      ],
+      "h3_pair_prob": 0.22482137131062754,
+      "h3_pair_was_winner": false,
+      "h3_pair_payout_yen": 0,
+      "h3_tickets": 19,
+      "h3_payout": 3550,
+      "h3_hits": [
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "h4_pair": [
+        1,
+        2
+      ],
+      "h4_pair_prob": 0.16588748774573467,
+      "h4_pair_was_winner": false,
+      "h4_pair_payout_yen": 0,
+      "h4_tickets": 18,
+      "h4_payout": 3550,
+      "h4_hits": [
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "history_h5_centers": [
+        {
+          "stage": "H1",
+          "pair": [
+            1,
+            7
+          ]
+        },
+        {
+          "stage": "H3",
+          "pair": [
+            1,
+            9
+          ]
+        },
+        {
+          "stage": "H4",
+          "pair": [
+            1,
+            2
+          ]
+        }
+      ],
+      "history_h5_rider_touch": {
+        "1": 3,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 1,
+        "8": 0,
+        "9": 1
+      },
+      "history_h5_relation_scores": {
+        "1-3": 3,
+        "1-4": 3,
+        "1-5": 3,
+        "2-3": 1,
+        "2-4": 1,
+        "2-5": 1,
+        "2-7": 2,
+        "2-9": 2,
+        "3-4": 0,
+        "3-5": 0,
+        "3-7": 1,
+        "3-9": 1,
+        "4-5": 0,
+        "4-7": 1,
+        "4-9": 1,
+        "5-7": 1,
+        "5-9": 1,
+        "7-9": 2
+      },
+      "history_h5_removed": [
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "history_h5_tickets_list": [
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "history_h5_tickets": 5,
+      "history_h5_payout": 1150,
+      "history_h5_hits": [
+        [
+          3,
+          4
+        ]
+      ],
+      "provisional_h5_scenario1": [
+        1,
+        3,
+        4
+      ],
+      "provisional_h5_scenario2": [
+        1,
+        3,
+        5
+      ],
+      "provisional_h5_scenario1_mass": 0.018500249613176936,
+      "provisional_h5_scenario2_mass": 0.014641605913209467,
+      "provisional_h5_joint_mass_sum": 0.033141855526386405,
+      "provisional_h5_tickets_list": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "provisional_h5_tickets": 5,
+      "provisional_h5_payout": 1150,
+      "provisional_h5_hits": [
+        [
+          3,
+          4
+        ]
+      ],
+      "h5_pair": [
+        7,
+        9
+      ],
+      "h5_pair_prob": 0.14956576432953378,
+      "h5_pair_was_winner": false,
+      "h5_pair_payout_yen": 0,
+      "h5_tickets": 17,
+      "h5_payout": 3550,
+      "h5_hits": [
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "h6_pair": [
+        3,
+        9
+      ],
+      "h6_unique_mass_loss": 0.005887474216086108,
+      "h6_pair_prob": 0.05122432833679899,
+      "h6_pair_was_winner": false,
+      "h6_pair_payout_yen": 0,
+      "h6_tickets": 17,
+      "h6_payout": 3550,
+      "h6_hits": [
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "h7_line_id": 3,
+      "h7_leader": 3,
+      "h7_leader_b_count": 15.0,
+      "h7_leader_nige_count": 6.0,
+      "h7_line_size": 2.0,
+      "h7_leader_score": 104.84,
+      "h7_pair": [
+        3,
+        4
+      ],
+      "h7_pair_was_candidate": true,
+      "h7_pair_was_winner": true,
+      "h7_pair_payout_yen": 1150,
+      "h7_tickets": 17,
+      "h7_payout": 2400,
+      "h7_hits": [
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "h8_third_rider": 4,
+      "h8_third_bias": 0.032092423577469456,
+      "h8_p1": 0.03218211787181581,
+      "h8_p2": 0.0882798081420094,
+      "h8_p3": 0.12037223171947886,
+      "h8_anchor": 1,
+      "h8_anchor_top3_prob": 0.6237280013023205,
+      "h8_pair": [
+        1,
+        4
+      ],
+      "h8_pair_was_candidate": true,
+      "h8_pair_was_winner": false,
+      "h8_pair_payout_yen": 0,
+      "h8_tickets": 17,
+      "h8_payout": 3550,
+      "h8_hits": [
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "h9a_third_rider": 9,
+      "h9a_anchor": 1,
+      "h9a_pair": [
+        1,
+        9
+      ],
+      "h9a_pair_was_candidate": false,
+      "h9a_pair_was_winner": false,
+      "h9a_pair_payout_yen": 0,
+      "h9a_tickets": 18,
+      "h9a_payout": 3550,
+      "h9a_hits": [
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "h9b_third_rider": 4,
+      "h9b_anchor": 3,
+      "h9b_pair": [
+        3,
+        4
+      ],
+      "h9b_pair_was_candidate": true,
+      "h9b_pair_was_winner": true,
+      "h9b_pair_payout_yen": 1150,
+      "h9b_tickets": 17,
+      "h9b_payout": 2400,
+      "h9b_hits": [
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "h9c_third_rider": 4,
+      "h9c_anchor": 1,
+      "h9c_pair": [
+        1,
+        4
+      ],
+      "h9c_pair_was_candidate": true,
+      "h9c_pair_was_winner": false,
+      "h9c_pair_payout_yen": 0,
+      "h9c_tickets": 17,
+      "h9c_payout": 3550,
+      "h9c_hits": [
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "adopted_h5_tickets": 17,
+      "adopted_h5_payout": 3550,
+      "adopted_h5_hits": [
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "h6_explanation_pair": [
+        7,
+        9
+      ],
+      "h6_explanation_score": 5,
+      "h6_explanation_features": {
+        "same_line": true,
+        "contains_top3_inclusion": true,
+        "contains_row1": false,
+        "contains_row3_positive_third_bias": true,
+        "contains_top3_score": true,
+        "adjacent_line_positions": true,
+        "both_multirow": false,
+        "clean_p1_p3_role_split": false
+      },
+      "h6_explanation_pair_prob": 0.14956576432953378,
+      "h6_explanation_pair_was_winner": false,
+      "h6_explanation_pair_payout_yen": 0,
+      "h6e_tickets": 16,
+      "h6e_payout": 3550,
+      "h6e_hits": [
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          7
+        ]
+      ]
+    },
+    {
+      "race_id": "1220230915020004",
+      "date": "2023-09-16",
+      "race_type": "Ｓ級特一般",
+      "result": [
+        9,
+        7,
+        1
+      ],
+      "board": [
+        [
+          2,
+          7
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          2,
+          3,
+          8
+        ]
+      ],
+      "strongest_two": [
+        7,
+        1
+      ],
+      "strongest_two_top3_prob": [
+        0.5527308641367956,
+        0.45462190896594973
+      ],
+      "cut_pair": [
+        1,
+        7
+      ],
+      "cut_pair_was_candidate": true,
+      "cut_pair_was_winner": true,
+      "cut_pair_payout_yen": 230,
+      "strongest_line_pair": [
+        1,
+        7
+      ],
+      "strongest_line_pair_prob": 0.23610622053399094,
+      "strongest_line_pair_was_winner": true,
+      "strongest_line_pair_payout_yen": 230,
+      "base_tickets": 15,
+      "base_payout": 980,
+      "base_hits": [
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "cut_tickets": 14,
+      "cut_payout": 750,
+      "cut_hits": [
+        [
+          1,
+          9
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "both_tickets": 14,
+      "both_payout": 750,
+      "both_hits": [
+        [
+          1,
+          9
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "h3_pair": [
+        7,
+        9
+      ],
+      "h3_pair_prob": 0.1951474737754432,
+      "h3_pair_was_winner": true,
+      "h3_pair_payout_yen": 510,
+      "h3_tickets": 13,
+      "h3_payout": 240,
+      "h3_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h4_pair": [
+        2,
+        7
+      ],
+      "h4_pair_prob": 0.18963310477414638,
+      "h4_pair_was_winner": false,
+      "h4_pair_payout_yen": 0,
+      "h4_tickets": 12,
+      "h4_payout": 240,
+      "h4_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "history_h5_centers": [
+        {
+          "stage": "H1",
+          "pair": [
+            1,
+            7
+          ]
+        },
+        {
+          "stage": "H3",
+          "pair": [
+            7,
+            9
+          ]
+        },
+        {
+          "stage": "H4",
+          "pair": [
+            2,
+            7
+          ]
+        }
+      ],
+      "history_h5_rider_touch": {
+        "1": 1,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 3,
+        "8": 0,
+        "9": 1
+      },
+      "history_h5_relation_scores": {
+        "1-2": 2,
+        "1-3": 1,
+        "1-8": 1,
+        "1-9": 2,
+        "2-3": 1,
+        "2-8": 1,
+        "2-9": 2,
+        "3-7": 3,
+        "3-8": 0,
+        "3-9": 1,
+        "7-8": 3,
+        "8-9": 1
+      },
+      "history_h5_removed": [
+        [
+          3,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      "history_h5_tickets_list": [
+        [
+          1,
+          8
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "history_h5_tickets": 5,
+      "history_h5_payout": 0,
+      "history_h5_hits": [],
+      "provisional_h5_scenario1": [
+        1,
+        2,
+        9
+      ],
+      "provisional_h5_scenario2": [
+        2,
+        3,
+        9
+      ],
+      "provisional_h5_scenario1_mass": 0.03880550038029368,
+      "provisional_h5_scenario2_mass": 0.029610126026817285,
+      "provisional_h5_joint_mass_sum": 0.06841562640711096,
+      "provisional_h5_tickets_list": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      "provisional_h5_tickets": 5,
+      "provisional_h5_payout": 240,
+      "provisional_h5_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h5_pair": [
+        2,
+        9
+      ],
+      "h5_pair_prob": 0.1825570119245289,
+      "h5_pair_was_winner": false,
+      "h5_pair_payout_yen": 0,
+      "h5_tickets": 11,
+      "h5_payout": 240,
+      "h5_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h6_pair": [
+        3,
+        8
+      ],
+      "h6_unique_mass_loss": 0.004300788533711896,
+      "h6_pair_prob": 0.03024698011579544,
+      "h6_pair_was_winner": false,
+      "h6_pair_payout_yen": 0,
+      "h6_tickets": 11,
+      "h6_payout": 240,
+      "h6_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h7_line_id": 4,
+      "h7_leader": 4,
+      "h7_leader_b_count": 13.0,
+      "h7_leader_nige_count": 5.0,
+      "h7_line_size": 2.0,
+      "h7_leader_score": 102.06,
+      "h7_pair": [
+        4,
+        6
+      ],
+      "h7_pair_was_candidate": false,
+      "h7_pair_was_winner": false,
+      "h7_pair_payout_yen": 0,
+      "h7_tickets": 12,
+      "h7_payout": 240,
+      "h7_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h8_third_rider": 8,
+      "h8_third_bias": 0.049596504643012275,
+      "h8_p1": 0.004936572621749656,
+      "h8_p2": 0.04928929353120869,
+      "h8_p3": 0.09888579817422097,
+      "h8_anchor": 7,
+      "h8_anchor_top3_prob": 0.5527308641367956,
+      "h8_pair": [
+        7,
+        8
+      ],
+      "h8_pair_was_candidate": true,
+      "h8_pair_was_winner": false,
+      "h8_pair_payout_yen": 0,
+      "h8_tickets": 11,
+      "h8_payout": 240,
+      "h8_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h9a_third_rider": 8,
+      "h9a_anchor": 7,
+      "h9a_pair": [
+        7,
+        8
+      ],
+      "h9a_pair_was_candidate": true,
+      "h9a_pair_was_winner": false,
+      "h9a_pair_payout_yen": 0,
+      "h9a_tickets": 11,
+      "h9a_payout": 240,
+      "h9a_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h9b_third_rider": 8,
+      "h9b_anchor": 1,
+      "h9b_pair": [
+        1,
+        8
+      ],
+      "h9b_pair_was_candidate": true,
+      "h9b_pair_was_winner": false,
+      "h9b_pair_payout_yen": 0,
+      "h9b_tickets": 11,
+      "h9b_payout": 240,
+      "h9b_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h9c_third_rider": 4,
+      "h9c_anchor": 7,
+      "h9c_pair": [
+        4,
+        7
+      ],
+      "h9c_pair_was_candidate": false,
+      "h9c_pair_was_winner": false,
+      "h9c_pair_payout_yen": 0,
+      "h9c_tickets": 12,
+      "h9c_payout": 240,
+      "h9c_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "adopted_h5_tickets": 12,
+      "adopted_h5_payout": 240,
+      "adopted_h5_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h6_explanation_pair": [
+        7,
+        8
+      ],
+      "h6_explanation_score": 6,
+      "h6_explanation_features": {
+        "same_line": true,
+        "contains_top3_inclusion": true,
+        "contains_row1": true,
+        "contains_row3_positive_third_bias": true,
+        "contains_top3_score": true,
+        "adjacent_line_positions": false,
+        "both_multirow": false,
+        "clean_p1_p3_role_split": true
+      },
+      "h6_explanation_pair_prob": 0.08010613728802454,
+      "h6_explanation_pair_was_winner": false,
+      "h6_explanation_pair_payout_yen": 0,
+      "h6e_tickets": 11,
+      "h6e_payout": 240,
+      "h6e_hits": [
+        [
+          1,
+          9
+        ]
+      ]
+    },
+    {
+      "race_id": "1220230915020005",
+      "date": "2023-09-16",
+      "race_type": "Ｓ級特一般",
+      "result": [
+        1,
+        5,
+        2
+      ],
+      "board": [
+        [
+          5
+        ],
+        [
+          1,
+          3,
+          7
+        ],
+        [
+          2,
+          3,
+          9
+        ]
+      ],
+      "strongest_two": [
+        5,
+        7
+      ],
+      "strongest_two_top3_prob": [
+        0.5417000185148348,
+        0.507355621039057
+      ],
+      "cut_pair": [
+        5,
+        7
+      ],
+      "cut_pair_was_candidate": true,
+      "cut_pair_was_winner": false,
+      "cut_pair_payout_yen": 0,
+      "strongest_line_pair": [
+        2,
+        7
+      ],
+      "strongest_line_pair_prob": 0.18509789788339073,
+      "strongest_line_pair_was_winner": false,
+      "strongest_line_pair_payout_yen": 0,
+      "base_tickets": 15,
+      "base_payout": 820,
+      "base_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "cut_tickets": 14,
+      "cut_payout": 820,
+      "cut_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "both_tickets": 13,
+      "both_payout": 820,
+      "both_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "h3_pair": [
+        2,
+        5
+      ],
+      "h3_pair_prob": 0.17621178332802312,
+      "h3_pair_was_winner": true,
+      "h3_pair_payout_yen": 200,
+      "h3_tickets": 12,
+      "h3_payout": 620,
+      "h3_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "h4_pair": [
+        3,
+        5
+      ],
+      "h4_pair_prob": 0.15730713272092342,
+      "h4_pair_was_winner": false,
+      "h4_pair_payout_yen": 0,
+      "h4_tickets": 11,
+      "h4_payout": 620,
+      "h4_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "history_h5_centers": [
+        {
+          "stage": "H1",
+          "pair": [
+            5,
+            7
+          ]
+        },
+        {
+          "stage": "H2",
+          "pair": [
+            2,
+            7
+          ]
+        },
+        {
+          "stage": "H3",
+          "pair": [
+            2,
+            5
+          ]
+        },
+        {
+          "stage": "H4",
+          "pair": [
+            3,
+            5
+          ]
+        }
+      ],
+      "history_h5_rider_touch": {
+        "1": 0,
+        "2": 2,
+        "3": 1,
+        "4": 0,
+        "5": 3,
+        "6": 0,
+        "7": 2,
+        "8": 0,
+        "9": 0
+      },
+      "history_h5_relation_scores": {
+        "1-2": 2,
+        "1-3": 1,
+        "1-5": 3,
+        "1-7": 2,
+        "1-9": 0,
+        "2-3": 3,
+        "2-9": 2,
+        "3-7": 3,
+        "3-9": 1,
+        "5-9": 3,
+        "7-9": 2
+      },
+      "history_h5_removed": [
+        [
+          1,
+          5
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          1,
+          7
+        ]
+      ],
+      "history_h5_tickets_list": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      "history_h5_tickets": 5,
+      "history_h5_payout": 490,
+      "history_h5_hits": [
+        [
+          1,
+          2
+        ]
+      ],
+      "provisional_h5_scenario1": [
+        1,
+        5,
+        9
+      ],
+      "provisional_h5_scenario2": [
+        1,
+        7,
+        9
+      ],
+      "provisional_h5_scenario1_mass": 0.021883397236183558,
+      "provisional_h5_scenario2_mass": 0.011149846329806984,
+      "provisional_h5_joint_mass_sum": 0.03303324356599054,
+      "provisional_h5_tickets_list": [
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "provisional_h5_tickets": 5,
+      "provisional_h5_payout": 130,
+      "provisional_h5_hits": [
+        [
+          1,
+          5
+        ]
+      ],
+      "h5_pair": [
+        1,
+        5
+      ],
+      "h5_pair_prob": 0.1488404157839104,
+      "h5_pair_was_winner": true,
+      "h5_pair_payout_yen": 130,
+      "h5_tickets": 10,
+      "h5_payout": 490,
+      "h5_hits": [
+        [
+          1,
+          2
+        ]
+      ],
+      "h6_pair": [
+        1,
+        9
+      ],
+      "h6_unique_mass_loss": 0.009550633820323357,
+      "h6_pair_prob": 0.055117646959334514,
+      "h6_pair_was_winner": false,
+      "h6_pair_payout_yen": 0,
+      "h6_tickets": 10,
+      "h6_payout": 620,
+      "h6_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "h7_line_id": 2,
+      "h7_leader": 4,
+      "h7_leader_b_count": 17.0,
+      "h7_leader_nige_count": 3.0,
+      "h7_line_size": 2.0,
+      "h7_leader_score": 105.33,
+      "h7_pair": [
+        4,
+        9
+      ],
+      "h7_pair_was_candidate": false,
+      "h7_pair_was_winner": false,
+      "h7_pair_payout_yen": 0,
+      "h7_tickets": 11,
+      "h7_payout": 620,
+      "h7_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "h8_third_rider": 4,
+      "h8_third_bias": 0.06660317649156562,
+      "h8_p1": 0.037713034923420506,
+      "h8_p2": 0.05167892720599146,
+      "h8_p3": 0.11828210369755708,
+      "h8_anchor": 5,
+      "h8_anchor_top3_prob": 0.5417000185148348,
+      "h8_pair": [
+        4,
+        5
+      ],
+      "h8_pair_was_candidate": false,
+      "h8_pair_was_winner": false,
+      "h8_pair_payout_yen": 0,
+      "h8_tickets": 11,
+      "h8_payout": 620,
+      "h8_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "h9a_third_rider": 8,
+      "h9a_anchor": 7,
+      "h9a_pair": [
+        7,
+        8
+      ],
+      "h9a_pair_was_candidate": false,
+      "h9a_pair_was_winner": false,
+      "h9a_pair_payout_yen": 0,
+      "h9a_tickets": 11,
+      "h9a_payout": 620,
+      "h9a_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "h9b_third_rider": 8,
+      "h9b_anchor": 2,
+      "h9b_pair": [
+        2,
+        8
+      ],
+      "h9b_pair_was_candidate": false,
+      "h9b_pair_was_winner": false,
+      "h9b_pair_payout_yen": 0,
+      "h9b_tickets": 11,
+      "h9b_payout": 620,
+      "h9b_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "h9c_third_rider": 4,
+      "h9c_anchor": 5,
+      "h9c_pair": [
+        4,
+        5
+      ],
+      "h9c_pair_was_candidate": false,
+      "h9c_pair_was_winner": false,
+      "h9c_pair_payout_yen": 0,
+      "h9c_tickets": 11,
+      "h9c_payout": 620,
+      "h9c_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "adopted_h5_tickets": 11,
+      "adopted_h5_payout": 620,
+      "adopted_h5_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "h6_explanation_pair": [
+        1,
+        5
+      ],
+      "h6_explanation_score": 5,
+      "h6_explanation_features": {
+        "same_line": true,
+        "contains_top3_inclusion": true,
+        "contains_row1": true,
+        "contains_row3_positive_third_bias": false,
+        "contains_top3_score": true,
+        "adjacent_line_positions": true,
+        "both_multirow": false,
+        "clean_p1_p3_role_split": false
+      },
+      "h6_explanation_pair_prob": 0.1488404157839104,
+      "h6_explanation_pair_was_winner": true,
+      "h6_explanation_pair_payout_yen": 130,
+      "h6e_tickets": 10,
+      "h6e_payout": 490,
+      "h6e_hits": [
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "race_id": "1220230915020006",
+      "date": "2023-09-16",
+      "race_type": "Ｓ級二次予選Ｂ",
+      "result": [
+        8,
+        3,
+        9
+      ],
+      "board": [
+        [
+          7,
+          8
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          1,
+          2,
+          9
+        ]
+      ],
+      "strongest_two": [
+        7,
+        3
+      ],
+      "strongest_two_top3_prob": [
+        0.5498835348798271,
+        0.5182132153623763
+      ],
+      "cut_pair": [
+        3,
+        7
+      ],
+      "cut_pair_was_candidate": true,
+      "cut_pair_was_winner": false,
+      "cut_pair_payout_yen": 0,
+      "strongest_line_pair": [
+        3,
+        8
+      ],
+      "strongest_line_pair_prob": 0.17415773806291948,
+      "strongest_line_pair_was_winner": true,
+      "strongest_line_pair_payout_yen": 170,
+      "base_tickets": 15,
+      "base_payout": 1110,
+      "base_hits": [
+        [
+          3,
+          8
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "cut_tickets": 14,
+      "cut_payout": 1110,
+      "cut_hits": [
+        [
+          3,
+          8
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "both_tickets": 13,
+      "both_payout": 940,
+      "both_hits": [
+        [
+          3,
+          9
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "h3_pair": [
+        1,
+        7
+      ],
+      "h3_pair_prob": 0.16555561451192422,
+      "h3_pair_was_winner": false,
+      "h3_pair_payout_yen": 0,
+      "h3_tickets": 12,
+      "h3_payout": 940,
+      "h3_hits": [
+        [
+          3,
+          9
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "h4_pair": [
+        7,
+        8
+      ],
+      "h4_pair_prob": 0.13304636952545684,
+      "h4_pair_was_winner": false,
+      "h4_pair_payout_yen": 0,
+      "h4_tickets": 11,
+      "h4_payout": 940,
+      "h4_hits": [
+        [
+          3,
+          9
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "history_h5_centers": [
+        {
+          "stage": "H1",
+          "pair": [
+            3,
+            7
+          ]
+        },
+        {
+          "stage": "H2",
+          "pair": [
+            3,
+            8
+          ]
+        },
+        {
+          "stage": "H3",
+          "pair": [
+            1,
+            7
+          ]
+        },
+        {
+          "stage": "H4",
+          "pair": [
+            7,
+            8
+          ]
+        }
+      ],
+      "history_h5_rider_touch": {
+        "1": 1,
+        "2": 0,
+        "3": 2,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 3,
+        "8": 2,
+        "9": 0
+      },
+      "history_h5_relation_scores": {
+        "1-2": 1,
+        "1-3": 3,
+        "1-8": 3,
+        "1-9": 1,
+        "2-3": 2,
+        "2-7": 3,
+        "2-8": 2,
+        "2-9": 0,
+        "3-9": 2,
+        "7-9": 3,
+        "8-9": 2
+      },
+      "history_h5_removed": [
+        [
+          1,
+          3
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "history_h5_tickets_list": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "history_h5_tickets": 5,
+      "history_h5_payout": 610,
+      "history_h5_hits": [
+        [
+          8,
+          9
+        ]
+      ],
+      "provisional_h5_scenario1": [
+        2,
+        3,
+        9
+      ],
+      "provisional_h5_scenario2": [
+        2,
+        7,
+        9
+      ],
+      "provisional_h5_scenario1_mass": 0.0105906091511688,
+      "provisional_h5_scenario2_mass": 0.01000667338150637,
+      "provisional_h5_joint_mass_sum": 0.02059728253267517,
+      "provisional_h5_tickets_list": [
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "provisional_h5_tickets": 5,
+      "provisional_h5_payout": 330,
+      "provisional_h5_hits": [
+        [
+          3,
+          9
+        ]
+      ],
+      "h5_pair": [
+        3,
+        9
+      ],
+      "h5_pair_prob": 0.11312909846225776,
+      "h5_pair_was_winner": true,
+      "h5_pair_payout_yen": 330,
+      "h5_tickets": 10,
+      "h5_payout": 610,
+      "h5_hits": [
+        [
+          8,
+          9
+        ]
+      ],
+      "h6_pair": [
+        1,
+        9
+      ],
+      "h6_unique_mass_loss": 0.006403888338895013,
+      "h6_pair_prob": 0.04013402967137926,
+      "h6_pair_was_winner": false,
+      "h6_pair_payout_yen": 0,
+      "h6_tickets": 10,
+      "h6_payout": 940,
+      "h6_hits": [
+        [
+          3,
+          9
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "h7_line_id": 3,
+      "h7_leader": 6,
+      "h7_leader_b_count": 8.0,
+      "h7_leader_nige_count": 2.0,
+      "h7_line_size": 3.0,
+      "h7_leader_score": 104.03,
+      "h7_pair": [
+        6,
+        8
+      ],
+      "h7_pair_was_candidate": false,
+      "h7_pair_was_winner": false,
+      "h7_pair_payout_yen": 0,
+      "h7_tickets": 11,
+      "h7_payout": 940,
+      "h7_hits": [
+        [
+          3,
+          9
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "h8_third_rider": 2,
+      "h8_third_bias": 0.03959256130565948,
+      "h8_p1": 0.03577266642879682,
+      "h8_p2": 0.08975835253803117,
+      "h8_p3": 0.12935091384369066,
+      "h8_anchor": 7,
+      "h8_anchor_top3_prob": 0.5498835348798271,
+      "h8_pair": [
+        2,
+        7
+      ],
+      "h8_pair_was_candidate": true,
+      "h8_pair_was_winner": false,
+      "h8_pair_payout_yen": 0,
+      "h8_tickets": 10,
+      "h8_payout": 940,
+      "h8_hits": [
+        [
+          3,
+          9
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "h9a_third_rider": 1,
+      "h9a_anchor": 7,
+      "h9a_pair": [
+        1,
+        7
+      ],
+      "h9a_pair_was_candidate": false,
+      "h9a_pair_was_winner": false,
+      "h9a_pair_payout_yen": 0,
+      "h9a_tickets": 11,
+      "h9a_payout": 940,
+      "h9a_hits": [
+        [
+          3,
+          9
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "h9b_third_rider": 1,
+      "h9b_anchor": 7,
+      "h9b_pair": [
+        1,
+        7
+      ],
+      "h9b_pair_was_candidate": false,
+      "h9b_pair_was_winner": false,
+      "h9b_pair_payout_yen": 0,
+      "h9b_tickets": 11,
+      "h9b_payout": 940,
+      "h9b_hits": [
+        [
+          3,
+          9
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "h9c_third_rider": 2,
+      "h9c_anchor": 7,
+      "h9c_pair": [
+        2,
+        7
+      ],
+      "h9c_pair_was_candidate": true,
+      "h9c_pair_was_winner": false,
+      "h9c_pair_payout_yen": 0,
+      "h9c_tickets": 10,
+      "h9c_payout": 940,
+      "h9c_hits": [
+        [
+          3,
+          9
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "adopted_h5_tickets": 10,
+      "adopted_h5_payout": 940,
+      "adopted_h5_hits": [
+        [
+          3,
+          9
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "h6_explanation_pair": [
+        7,
+        9
+      ],
+      "h6_explanation_score": 5,
+      "h6_explanation_features": {
+        "same_line": false,
+        "contains_top3_inclusion": true,
+        "contains_row1": true,
+        "contains_row3_positive_third_bias": true,
+        "contains_top3_score": true,
+        "adjacent_line_positions": false,
+        "both_multirow": false,
+        "clean_p1_p3_role_split": true
+      },
+      "h6_explanation_pair_prob": 0.1100360553123717,
+      "h6_explanation_pair_was_winner": false,
+      "h6_explanation_pair_payout_yen": 0,
+      "h6e_tickets": 9,
+      "h6e_payout": 940,
+      "h6e_hits": [
+        [
+          3,
+          9
+        ],
+        [
+          8,
+          9
+        ]
+      ]
+    },
+    {
+      "race_id": "1220230915020008",
+      "date": "2023-09-16",
+      "race_type": "Ｓ級二次予選Ｂ",
+      "result": [
+        9,
+        2,
+        1
+      ],
+      "board": [
+        [
+          2
+        ],
+        [
+          2,
+          4,
+          9
+        ],
+        [
+          1,
+          6,
+          7
+        ]
+      ],
+      "strongest_two": [
+        2,
+        5
+      ],
+      "strongest_two_top3_prob": [
+        0.576568472579846,
+        0.43100495175944864
+      ],
+      "cut_pair": [
+        2,
+        5
+      ],
+      "cut_pair_was_candidate": false,
+      "cut_pair_was_winner": false,
+      "cut_pair_payout_yen": 0,
+      "strongest_line_pair": [
+        2,
+        9
+      ],
+      "strongest_line_pair_prob": 0.21355183341094258,
+      "strongest_line_pair_was_winner": true,
+      "strongest_line_pair_payout_yen": 310,
+      "base_tickets": 15,
+      "base_payout": 1820,
+      "base_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          2,
+          9
+        ]
+      ],
+      "cut_tickets": 15,
+      "cut_payout": 1820,
+      "cut_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          2,
+          9
+        ]
+      ],
+      "both_tickets": 14,
+      "both_payout": 1510,
+      "both_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          9
+        ]
+      ],
+      "h3_pair": [
+        2,
+        7
+      ],
+      "h3_pair_prob": 0.16594926559080317,
+      "h3_pair_was_winner": false,
+      "h3_pair_payout_yen": 0,
+      "h3_tickets": 13,
+      "h3_payout": 1510,
+      "h3_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          9
+        ]
+      ],
+      "h4_pair": [
+        1,
+        2
+      ],
+      "h4_pair_prob": 0.1490637063977706,
+      "h4_pair_was_winner": true,
+      "h4_pair_payout_yen": 970,
+      "h4_tickets": 12,
+      "h4_payout": 540,
+      "h4_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "history_h5_centers": [
+        {
+          "stage": "H2",
+          "pair": [
+            2,
+            9
+          ]
+        },
+        {
+          "stage": "H3",
+          "pair": [
+            2,
+            7
+          ]
+        },
+        {
+          "stage": "H4",
+          "pair": [
+            1,
+            2
+          ]
+        }
+      ],
+      "history_h5_rider_touch": {
+        "1": 1,
+        "2": 3,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 1,
+        "8": 0,
+        "9": 1
+      },
+      "history_h5_relation_scores": {
+        "1-4": 1,
+        "1-6": 1,
+        "1-7": 2,
+        "1-9": 2,
+        "2-4": 3,
+        "2-6": 3,
+        "4-6": 0,
+        "4-7": 1,
+        "4-9": 1,
+        "6-7": 1,
+        "6-9": 1,
+        "7-9": 2
+      },
+      "history_h5_removed": [
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          4,
+          9
+        ]
+      ],
+      "history_h5_tickets_list": [
+        [
+          1,
+          6
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          6,
+          9
+        ]
+      ],
+      "history_h5_tickets": 5,
+      "history_h5_payout": 0,
+      "history_h5_hits": [],
+      "provisional_h5_scenario1": [
+        1,
+        4,
+        9
+      ],
+      "provisional_h5_scenario2": [
+        1,
+        4,
+        7
+      ],
+      "provisional_h5_scenario1_mass": 0.014966962078602125,
+      "provisional_h5_scenario2_mass": 0.01661734853708223,
+      "provisional_h5_joint_mass_sum": 0.031584310615684355,
+      "provisional_h5_tickets_list": [
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          4,
+          9
+        ]
+      ],
+      "provisional_h5_tickets": 5,
+      "provisional_h5_payout": 540,
+      "provisional_h5_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h5_pair": [
+        2,
+        4
+      ],
+      "h5_pair_prob": 0.14127054963642113,
+      "h5_pair_was_winner": false,
+      "h5_pair_payout_yen": 0,
+      "h5_tickets": 11,
+      "h5_payout": 540,
+      "h5_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h6_pair": [
+        4,
+        6
+      ],
+      "h6_unique_mass_loss": 0.006291938221093151,
+      "h6_pair_prob": 0.03427947658678301,
+      "h6_pair_was_winner": false,
+      "h6_pair_payout_yen": 0,
+      "h6_tickets": 11,
+      "h6_payout": 540,
+      "h6_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h7_line_id": 3,
+      "h7_leader": 2,
+      "h7_leader_b_count": 5.0,
+      "h7_leader_nige_count": 3.0,
+      "h7_line_size": 3.0,
+      "h7_leader_score": 111.56,
+      "h7_pair": [
+        2,
+        9
+      ],
+      "h7_pair_was_candidate": false,
+      "h7_pair_was_winner": true,
+      "h7_pair_payout_yen": 310,
+      "h7_tickets": 12,
+      "h7_payout": 540,
+      "h7_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h8_third_rider": 8,
+      "h8_third_bias": 0.061928241568031527,
+      "h8_p1": 0.030895192583964868,
+      "h8_p2": 0.046245298792361035,
+      "h8_p3": 0.10817354036039256,
+      "h8_anchor": 2,
+      "h8_anchor_top3_prob": 0.576568472579846,
+      "h8_pair": [
+        2,
+        8
+      ],
+      "h8_pair_was_candidate": false,
+      "h8_pair_was_winner": false,
+      "h8_pair_payout_yen": 0,
+      "h8_tickets": 12,
+      "h8_payout": 540,
+      "h8_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h9a_third_rider": 6,
+      "h9a_anchor": 2,
+      "h9a_pair": [
+        2,
+        6
+      ],
+      "h9a_pair_was_candidate": true,
+      "h9a_pair_was_winner": false,
+      "h9a_pair_payout_yen": 0,
+      "h9a_tickets": 11,
+      "h9a_payout": 540,
+      "h9a_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h9b_third_rider": 6,
+      "h9b_anchor": 9,
+      "h9b_pair": [
+        6,
+        9
+      ],
+      "h9b_pair_was_candidate": true,
+      "h9b_pair_was_winner": false,
+      "h9b_pair_payout_yen": 0,
+      "h9b_tickets": 11,
+      "h9b_payout": 540,
+      "h9b_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h9c_third_rider": 8,
+      "h9c_anchor": 2,
+      "h9c_pair": [
+        2,
+        8
+      ],
+      "h9c_pair_was_candidate": false,
+      "h9c_pair_was_winner": false,
+      "h9c_pair_payout_yen": 0,
+      "h9c_tickets": 12,
+      "h9c_payout": 540,
+      "h9c_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "adopted_h5_tickets": 12,
+      "adopted_h5_payout": 540,
+      "adopted_h5_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h6_explanation_pair": [
+        2,
+        6
+      ],
+      "h6_explanation_score": 6,
+      "h6_explanation_features": {
+        "same_line": true,
+        "contains_top3_inclusion": true,
+        "contains_row1": true,
+        "contains_row3_positive_third_bias": true,
+        "contains_top3_score": true,
+        "adjacent_line_positions": false,
+        "both_multirow": false,
+        "clean_p1_p3_role_split": true
+      },
+      "h6_explanation_pair_prob": 0.11406907661719642,
+      "h6_explanation_pair_was_winner": false,
+      "h6_explanation_pair_payout_yen": 0,
+      "h6e_tickets": 11,
+      "h6e_payout": 540,
+      "h6e_hits": [
+        [
+          1,
+          9
+        ]
+      ]
+    },
+    {
+      "race_id": "1220230915020010",
+      "date": "2023-09-16",
+      "race_type": "Ｓ級二次予選Ａ",
+      "result": [
+        1,
+        2,
+        9
+      ],
+      "board": [
+        [
+          1,
+          2
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          1,
+          4,
+          9
+        ]
+      ],
+      "strongest_two": [
+        2,
+        1
+      ],
+      "strongest_two_top3_prob": [
+        0.5057804790358817,
+        0.44451498223024233
+      ],
+      "cut_pair": [
+        1,
+        2
+      ],
+      "cut_pair_was_candidate": true,
+      "cut_pair_was_winner": true,
+      "cut_pair_payout_yen": 180,
+      "strongest_line_pair": [
+        1,
+        7
+      ],
+      "strongest_line_pair_prob": 0.12300648678706048,
+      "strongest_line_pair_was_winner": false,
+      "strongest_line_pair_payout_yen": 0,
+      "base_tickets": 15,
+      "base_payout": 1070,
+      "base_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          2,
+          9
+        ]
+      ],
+      "cut_tickets": 14,
+      "cut_payout": 890,
+      "cut_hits": [
+        [
+          1,
+          9
+        ],
+        [
+          2,
+          9
+        ]
+      ],
+      "both_tickets": 13,
+      "both_payout": 890,
+      "both_hits": [
+        [
+          1,
+          9
+        ],
+        [
+          2,
+          9
+        ]
+      ],
+      "h3_pair": [
+        2,
+        9
+      ],
+      "h3_pair_prob": 0.14646696902236173,
+      "h3_pair_was_winner": true,
+      "h3_pair_payout_yen": 450,
+      "h3_tickets": 12,
+      "h3_payout": 440,
+      "h3_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h4_pair": [
+        2,
+        5
+      ],
+      "h4_pair_prob": 0.13869021437983747,
+      "h4_pair_was_winner": false,
+      "h4_pair_payout_yen": 0,
+      "h4_tickets": 11,
+      "h4_payout": 440,
+      "h4_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "history_h5_centers": [
+        {
+          "stage": "H1",
+          "pair": [
+            1,
+            2
+          ]
+        },
+        {
+          "stage": "H2",
+          "pair": [
+            1,
+            7
+          ]
+        },
+        {
+          "stage": "H3",
+          "pair": [
+            2,
+            9
+          ]
+        },
+        {
+          "stage": "H4",
+          "pair": [
+            2,
+            5
+          ]
+        }
+      ],
+      "history_h5_rider_touch": {
+        "1": 2,
+        "2": 3,
+        "3": 0,
+        "4": 0,
+        "5": 1,
+        "6": 0,
+        "7": 1,
+        "8": 0,
+        "9": 1
+      },
+      "history_h5_relation_scores": {
+        "1-4": 2,
+        "1-5": 3,
+        "1-9": 3,
+        "2-4": 3,
+        "2-7": 4,
+        "4-5": 1,
+        "4-7": 1,
+        "4-9": 1,
+        "5-7": 2,
+        "5-9": 2,
+        "7-9": 2
+      },
+      "history_h5_removed": [
+        [
+          2,
+          7
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "history_h5_tickets_list": [
+        [
+          4,
+          5
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "history_h5_tickets": 5,
+      "history_h5_payout": 0,
+      "history_h5_hits": [],
+      "provisional_h5_scenario1": [
+        1,
+        5,
+        9
+      ],
+      "provisional_h5_scenario2": [
+        4,
+        5,
+        9
+      ],
+      "provisional_h5_scenario1_mass": 0.025427404298004525,
+      "provisional_h5_scenario2_mass": 0.013041653625822252,
+      "provisional_h5_joint_mass_sum": 0.03846905792382678,
+      "provisional_h5_tickets_list": [
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          5,
+          9
+        ]
+      ],
+      "provisional_h5_tickets": 5,
+      "provisional_h5_payout": 440,
+      "provisional_h5_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h5_pair": [
+        2,
+        7
+      ],
+      "h5_pair_prob": 0.12648648598488416,
+      "h5_pair_was_winner": false,
+      "h5_pair_payout_yen": 0,
+      "h5_tickets": 10,
+      "h5_payout": 440,
+      "h5_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h6_pair": [
+        4,
+        7
+      ],
+      "h6_unique_mass_loss": 0.013056390974089862,
+      "h6_pair_prob": 0.047866409098915486,
+      "h6_pair_was_winner": false,
+      "h6_pair_payout_yen": 0,
+      "h6_tickets": 10,
+      "h6_payout": 440,
+      "h6_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h7_line_id": 1,
+      "h7_leader": 1,
+      "h7_leader_b_count": 23.0,
+      "h7_leader_nige_count": 9.0,
+      "h7_line_size": 3.0,
+      "h7_leader_score": 114.87,
+      "h7_pair": [
+        1,
+        7
+      ],
+      "h7_pair_was_candidate": false,
+      "h7_pair_was_winner": false,
+      "h7_pair_payout_yen": 0,
+      "h7_tickets": 11,
+      "h7_payout": 440,
+      "h7_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h8_third_rider": 6,
+      "h8_third_bias": 0.07877347489374062,
+      "h8_p1": 0.009653982462448314,
+      "h8_p2": 0.04768082705822399,
+      "h8_p3": 0.1264543019519646,
+      "h8_anchor": 2,
+      "h8_anchor_top3_prob": 0.5057804790358817,
+      "h8_pair": [
+        2,
+        6
+      ],
+      "h8_pair_was_candidate": false,
+      "h8_pair_was_winner": false,
+      "h8_pair_payout_yen": 0,
+      "h8_tickets": 11,
+      "h8_payout": 440,
+      "h8_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h9a_third_rider": 6,
+      "h9a_anchor": 3,
+      "h9a_pair": [
+        3,
+        6
+      ],
+      "h9a_pair_was_candidate": false,
+      "h9a_pair_was_winner": false,
+      "h9a_pair_payout_yen": 0,
+      "h9a_tickets": 11,
+      "h9a_payout": 440,
+      "h9a_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h9b_third_rider": 7,
+      "h9b_anchor": 1,
+      "h9b_pair": [
+        1,
+        7
+      ],
+      "h9b_pair_was_candidate": false,
+      "h9b_pair_was_winner": false,
+      "h9b_pair_payout_yen": 0,
+      "h9b_tickets": 11,
+      "h9b_payout": 440,
+      "h9b_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h9c_third_rider": 6,
+      "h9c_anchor": 2,
+      "h9c_pair": [
+        2,
+        6
+      ],
+      "h9c_pair_was_candidate": false,
+      "h9c_pair_was_winner": false,
+      "h9c_pair_payout_yen": 0,
+      "h9c_tickets": 11,
+      "h9c_payout": 440,
+      "h9c_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "adopted_h5_tickets": 11,
+      "adopted_h5_payout": 440,
+      "adopted_h5_hits": [
+        [
+          1,
+          9
+        ]
+      ],
+      "h6_explanation_pair": [
+        2,
+        7
+      ],
+      "h6_explanation_score": 4,
+      "h6_explanation_features": {
+        "same_line": false,
+        "contains_top3_inclusion": true,
+        "contains_row1": true,
+        "contains_row3_positive_third_bias": false,
+        "contains_top3_score": true,
+        "adjacent_line_positions": false,
+        "both_multirow": false,
+        "clean_p1_p3_role_split": true
+      },
+      "h6_explanation_pair_prob": 0.12648648598488416,
+      "h6_explanation_pair_was_winner": false,
+      "h6_explanation_pair_payout_yen": 0,
+      "h6e_tickets": 10,
+      "h6e_payout": 440,
+      "h6e_hits": [
+        [
+          1,
+          9
+        ]
+      ]
+    },
+    {
+      "race_id": "1220230915020011",
+      "date": "2023-09-16",
+      "race_type": "Ｓ級二次予選Ａ",
+      "result": [
+        3,
+        1,
+        2
+      ],
+      "board": [
+        [
+          7,
+          9
+        ],
+        [
+          2,
+          3,
+          7
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "strongest_two": [
+        9,
+        2
+      ],
+      "strongest_two_top3_prob": [
+        0.5355435617927081,
+        0.44061859066969866
+      ],
+      "cut_pair": [
+        2,
+        9
+      ],
+      "cut_pair_was_candidate": true,
+      "cut_pair_was_winner": false,
+      "cut_pair_payout_yen": 0,
+      "strongest_line_pair": [
+        1,
+        3
+      ],
+      "strongest_line_pair_prob": 0.16989159557381606,
+      "strongest_line_pair_was_winner": true,
+      "strongest_line_pair_payout_yen": 240,
+      "base_tickets": 15,
+      "base_payout": 1510,
+      "base_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "cut_tickets": 14,
+      "cut_payout": 1510,
+      "cut_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "both_tickets": 13,
+      "both_payout": 1270,
+      "both_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "h3_pair": [
+        1,
+        9
+      ],
+      "h3_pair_prob": 0.18332080821543636,
+      "h3_pair_was_winner": false,
+      "h3_pair_payout_yen": 0,
+      "h3_tickets": 12,
+      "h3_payout": 1270,
+      "h3_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "h4_pair": [
+        3,
+        9
+      ],
+      "h4_pair_prob": 0.18278653293758546,
+      "h4_pair_was_winner": false,
+      "h4_pair_payout_yen": 0,
+      "h4_tickets": 11,
+      "h4_payout": 1270,
+      "h4_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "history_h5_centers": [
+        {
+          "stage": "H1",
+          "pair": [
+            2,
+            9
+          ]
+        },
+        {
+          "stage": "H2",
+          "pair": [
+            1,
+            3
+          ]
+        },
+        {
+          "stage": "H3",
+          "pair": [
+            1,
+            9
+          ]
+        },
+        {
+          "stage": "H4",
+          "pair": [
+            3,
+            9
+          ]
+        }
+      ],
+      "history_h5_rider_touch": {
+        "1": 2,
+        "2": 1,
+        "3": 2,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 3
+      },
+      "history_h5_relation_scores": {
+        "1-2": 3,
+        "1-5": 2,
+        "1-7": 2,
+        "2-3": 3,
+        "2-5": 1,
+        "2-7": 1,
+        "3-5": 2,
+        "3-7": 2,
+        "5-7": 0,
+        "5-9": 3,
+        "7-9": 3
+      },
+      "history_h5_removed": [
+        [
+          7,
+          9
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          1,
+          7
+        ]
+      ],
+      "history_h5_tickets_list": [
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          5,
+          7
+        ]
+      ],
+      "history_h5_tickets": 5,
+      "history_h5_payout": 0,
+      "history_h5_hits": [],
+      "provisional_h5_scenario1": [
+        1,
+        2,
+        7
+      ],
+      "provisional_h5_scenario2": [
+        2,
+        3,
+        7
+      ],
+      "provisional_h5_scenario1_mass": 0.024114686685675575,
+      "provisional_h5_scenario2_mass": 0.025387577406178165,
+      "provisional_h5_joint_mass_sum": 0.04950226409185374,
+      "provisional_h5_tickets_list": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "provisional_h5_tickets": 5,
+      "provisional_h5_payout": 1270,
+      "provisional_h5_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "h5_pair": [
+        7,
+        9
+      ],
+      "h5_pair_prob": 0.16522187010818976,
+      "h5_pair_was_winner": false,
+      "h5_pair_payout_yen": 0,
+      "h5_tickets": 10,
+      "h5_payout": 1270,
+      "h5_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "h6_pair": [
+        3,
+        5
+      ],
+      "h6_unique_mass_loss": 0.012479401098212915,
+      "h6_pair_prob": 0.09399281949095382,
+      "h6_pair_was_winner": false,
+      "h6_pair_payout_yen": 0,
+      "h6_tickets": 10,
+      "h6_payout": 1270,
+      "h6_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "h7_line_id": 1,
+      "h7_leader": 1,
+      "h7_leader_b_count": 17.0,
+      "h7_leader_nige_count": 8.0,
+      "h7_line_size": 2.0,
+      "h7_leader_score": 113.65,
+      "h7_pair": [
+        1,
+        3
+      ],
+      "h7_pair_was_candidate": false,
+      "h7_pair_was_winner": true,
+      "h7_pair_payout_yen": 240,
+      "h7_tickets": 11,
+      "h7_payout": 1270,
+      "h7_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "h8_third_rider": 5,
+      "h8_third_bias": 0.051091375142897216,
+      "h8_p1": 0.019564116989774626,
+      "h8_p2": 0.11616580085743736,
+      "h8_p3": 0.16725717600033457,
+      "h8_anchor": 9,
+      "h8_anchor_top3_prob": 0.5355435617927081,
+      "h8_pair": [
+        5,
+        9
+      ],
+      "h8_pair_was_candidate": true,
+      "h8_pair_was_winner": false,
+      "h8_pair_payout_yen": 0,
+      "h8_tickets": 10,
+      "h8_payout": 1270,
+      "h8_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "h9a_third_rider": null,
+      "h9a_anchor": null,
+      "h9a_pair": null,
+      "h9a_pair_was_candidate": false,
+      "h9a_pair_was_winner": false,
+      "h9a_pair_payout_yen": 0,
+      "h9a_tickets": 11,
+      "h9a_payout": 1270,
+      "h9a_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "h9b_third_rider": 5,
+      "h9b_anchor": 8,
+      "h9b_pair": [
+        5,
+        8
+      ],
+      "h9b_pair_was_candidate": false,
+      "h9b_pair_was_winner": false,
+      "h9b_pair_payout_yen": 0,
+      "h9b_tickets": 11,
+      "h9b_payout": 1270,
+      "h9b_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "h9c_third_rider": 5,
+      "h9c_anchor": 9,
+      "h9c_pair": [
+        5,
+        9
+      ],
+      "h9c_pair_was_candidate": true,
+      "h9c_pair_was_winner": false,
+      "h9c_pair_payout_yen": 0,
+      "h9c_tickets": 10,
+      "h9c_payout": 1270,
+      "h9c_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "adopted_h5_tickets": 10,
+      "adopted_h5_payout": 1270,
+      "adopted_h5_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "h6_explanation_pair": [
+        5,
+        7
+      ],
+      "h6_explanation_score": 4,
+      "h6_explanation_features": {
+        "same_line": false,
+        "contains_top3_inclusion": false,
+        "contains_row1": true,
+        "contains_row3_positive_third_bias": true,
+        "contains_top3_score": true,
+        "adjacent_line_positions": false,
+        "both_multirow": false,
+        "clean_p1_p3_role_split": true
+      },
+      "h6_explanation_pair_prob": 0.09018571057458005,
+      "h6_explanation_pair_was_winner": false,
+      "h6_explanation_pair_payout_yen": 0,
+      "h6e_tickets": 9,
+      "h6e_payout": 1270,
+      "h6e_hits": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "race_id": "1220230915020012",
+      "date": "2023-09-16",
+      "race_type": "Ｓ級二次予選Ａ",
+      "result": [
+        7,
+        9,
+        6
+      ],
+      "board": [
+        [
+          3,
+          9
+        ],
+        [
+          1,
+          4,
+          5
+        ],
+        [
+          2,
+          7
+        ]
+      ],
+      "strongest_two": [
+        9,
+        3
+      ],
+      "strongest_two_top3_prob": [
+        0.5470343224619524,
+        0.3813842057343984
+      ],
+      "cut_pair": [
+        3,
+        9
+      ],
+      "cut_pair_was_candidate": true,
+      "cut_pair_was_winner": false,
+      "cut_pair_payout_yen": 0,
+      "strongest_line_pair": [
+        1,
+        9
+      ],
+      "strongest_line_pair_prob": 0.1919598667876698,
+      "strongest_line_pair_was_winner": false,
+      "strongest_line_pair_payout_yen": 0,
+      "base_tickets": 21,
+      "base_payout": 330,
+      "base_hits": [
+        [
+          7,
+          9
+        ]
+      ],
+      "cut_tickets": 20,
+      "cut_payout": 330,
+      "cut_hits": [
+        [
+          7,
+          9
+        ]
+      ],
+      "both_tickets": 19,
+      "both_payout": 330,
+      "both_hits": [
+        [
+          7,
+          9
+        ]
+      ],
+      "h3_pair": [
+        7,
+        9
+      ],
+      "h3_pair_prob": 0.1657013603292275,
+      "h3_pair_was_winner": true,
+      "h3_pair_payout_yen": 330,
+      "h3_tickets": 18,
+      "h3_payout": 0,
+      "h3_hits": [],
+      "h4_pair": [
+        5,
+        9
+      ],
+      "h4_pair_prob": 0.15745308600106445,
+      "h4_pair_was_winner": false,
+      "h4_pair_payout_yen": 0,
+      "h4_tickets": 17,
+      "h4_payout": 0,
+      "h4_hits": [],
+      "history_h5_centers": [
+        {
+          "stage": "H1",
+          "pair": [
+            3,
+            9
+          ]
+        },
+        {
+          "stage": "H2",
+          "pair": [
+            1,
+            9
+          ]
+        },
+        {
+          "stage": "H3",
+          "pair": [
+            7,
+            9
+          ]
+        },
+        {
+          "stage": "H4",
+          "pair": [
+            5,
+            9
+          ]
+        }
+      ],
+      "history_h5_rider_touch": {
+        "1": 1,
+        "2": 0,
+        "3": 1,
+        "4": 0,
+        "5": 1,
+        "6": 0,
+        "7": 1,
+        "8": 0,
+        "9": 4
+      },
+      "history_h5_relation_scores": {
+        "1-2": 1,
+        "1-3": 2,
+        "1-4": 1,
+        "1-5": 2,
+        "1-7": 2,
+        "2-3": 1,
+        "2-4": 0,
+        "2-5": 1,
+        "2-7": 1,
+        "2-9": 4,
+        "3-4": 1,
+        "3-5": 2,
+        "3-7": 2,
+        "4-5": 1,
+        "4-7": 1,
+        "4-9": 4,
+        "5-7": 2
+      },
+      "history_h5_removed": [
+        [
+          2,
+          9
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "history_h5_tickets_list": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "history_h5_tickets": 5,
+      "history_h5_payout": 0,
+      "history_h5_hits": [],
+      "provisional_h5_scenario1": [
+        2,
+        3,
+        4
+      ],
+      "provisional_h5_scenario2": [
+        2,
+        4,
+        9
+      ],
+      "provisional_h5_scenario1_mass": 0.024807703250059685,
+      "provisional_h5_scenario2_mass": 0.021843863443720357,
+      "provisional_h5_joint_mass_sum": 0.04665156669378004,
+      "provisional_h5_tickets_list": [
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          9
+        ]
+      ],
+      "provisional_h5_tickets": 5,
+      "provisional_h5_payout": 0,
+      "provisional_h5_hits": [],
+      "h5_pair": [
+        5,
+        7
+      ],
+      "h5_pair_prob": 0.1302611810088838,
+      "h5_pair_was_winner": false,
+      "h5_pair_payout_yen": 0,
+      "h5_tickets": 16,
+      "h5_payout": 0,
+      "h5_hits": [],
+      "h6_pair": [
+        1,
+        2
+      ],
+      "h6_unique_mass_loss": 0.0067259896622408,
+      "h6_pair_prob": 0.07293140504851581,
+      "h6_pair_was_winner": false,
+      "h6_pair_payout_yen": 0,
+      "h6_tickets": 16,
+      "h6_payout": 0,
+      "h6_hits": [],
+      "h7_line_id": 1,
+      "h7_leader": 3,
+      "h7_leader_b_count": 22.0,
+      "h7_leader_nige_count": 11.0,
+      "h7_line_size": 3.0,
+      "h7_leader_score": 115.23,
+      "h7_pair": [
+        3,
+        4
+      ],
+      "h7_pair_was_candidate": true,
+      "h7_pair_was_winner": false,
+      "h7_pair_payout_yen": 0,
+      "h7_tickets": 16,
+      "h7_payout": 0,
+      "h7_hits": [],
+      "h8_third_rider": 6,
+      "h8_third_bias": 0.054761528514941295,
+      "h8_p1": 0.00891351757757688,
+      "h8_p2": 0.04370739454356468,
+      "h8_p3": 0.09846892305850598,
+      "h8_anchor": 9,
+      "h8_anchor_top3_prob": 0.5470343224619524,
+      "h8_pair": [
+        6,
+        9
+      ],
+      "h8_pair_was_candidate": false,
+      "h8_pair_was_winner": true,
+      "h8_pair_payout_yen": 3210,
+      "h8_tickets": 17,
+      "h8_payout": 0,
+      "h8_hits": [],
+      "h9a_third_rider": 5,
+      "h9a_anchor": 7,
+      "h9a_pair": [
+        5,
+        7
+      ],
+      "h9a_pair_was_candidate": true,
+      "h9a_pair_was_winner": false,
+      "h9a_pair_payout_yen": 0,
+      "h9a_tickets": 16,
+      "h9a_payout": 0,
+      "h9a_hits": [],
+      "h9b_third_rider": 6,
+      "h9b_anchor": 1,
+      "h9b_pair": [
+        1,
+        6
+      ],
+      "h9b_pair_was_candidate": false,
+      "h9b_pair_was_winner": false,
+      "h9b_pair_payout_yen": 0,
+      "h9b_tickets": 17,
+      "h9b_payout": 0,
+      "h9b_hits": [],
+      "h9c_third_rider": 2,
+      "h9c_anchor": 9,
+      "h9c_pair": [
+        2,
+        9
+      ],
+      "h9c_pair_was_candidate": true,
+      "h9c_pair_was_winner": false,
+      "h9c_pair_payout_yen": 0,
+      "h9c_tickets": 16,
+      "h9c_payout": 0,
+      "h9c_hits": [],
+      "adopted_h5_tickets": 16,
+      "adopted_h5_payout": 0,
+      "adopted_h5_hits": [],
+      "h6_explanation_pair": [
+        2,
+        3
+      ],
+      "h6_explanation_score": 6,
+      "h6_explanation_features": {
+        "same_line": true,
+        "contains_top3_inclusion": true,
+        "contains_row1": true,
+        "contains_row3_positive_third_bias": true,
+        "contains_top3_score": true,
+        "adjacent_line_positions": false,
+        "both_multirow": false,
+        "clean_p1_p3_role_split": true
+      },
+      "h6_explanation_pair_prob": 0.10304298507083037,
+      "h6_explanation_pair_was_winner": false,
+      "h6_explanation_pair_payout_yen": 0,
+      "h6e_tickets": 15,
+      "h6e_payout": 0,
+      "h6e_hits": []
+    }
+  ]
+}
