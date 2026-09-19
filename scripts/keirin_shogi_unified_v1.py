@@ -320,7 +320,14 @@ def choose_top2_plus_ratio(ranking, rel3: float):
 
 def unified_joint(race, state, pair_model, third_model, feature_names):
     first = first_signal(race, state)
-    base = v32.enrich_base(race.get("entries", []))
+
+    # Live cache may serialize line_id as an integer, while the historical
+    # feature builder expects a string and calls .strip().
+    normalized_entries = [
+        {**row, "line_id": str(row.get("line_id") or "")}
+        for row in race.get("entries", [])
+    ]
+    base = v32.enrich_base(normalized_entries)
 
     pair_vr = {
         "p1_map": first["p1_map"],
