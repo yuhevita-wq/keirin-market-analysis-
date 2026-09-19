@@ -1,0 +1,43 @@
+name: Normal Board 2024 Week1 Odds Dutching
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/keirin_shogi_normal_2024_week1_odds_dutching.py'
+      - '.github/workflows/normal-board-2024-week1-odds-dutching.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install package
+        run: python -m pip install -e .
+      - name: Materialize frozen pre-v38 normal runtime
+        run: git show 2bd26e8aaa4508936882e6f09925889f32c4c0b9:scripts/keirin_shogi_v37_auto_place_runtime.py > scripts/.normal_v37_runtime_snapshot.py
+      - name: Run 5000-yen odds dutching
+        run: python scripts/keirin_shogi_normal_2024_week1_odds_dutching.py
+      - name: Remove temporary runtime snapshot
+        if: always()
+        run: rm -f scripts/.normal_v37_runtime_snapshot.py
+      - name: Commit generated results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/keirin_shogi/normal_board_2024_week1_odds_dutching
+          if git diff --cached --quiet; then
+            echo "No result changes."
+          else
+            git commit -m "results: normal board 2024 week1 odds dutching"
+            git push
+          fi
