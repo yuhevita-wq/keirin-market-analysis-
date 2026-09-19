@@ -110,10 +110,40 @@ def main():
         if h5_pair is not None:
             cut_h5.discard(h5_pair)
 
+        # H6: redundancy peeling from the H4 state.
+        # For each surviving wide pair, compute how much joint504 probability
+        # mass would become completely uncovered if that single pair were removed.
+        # Remove the pair with the smallest unique coverage mass.
+        def uncovered_loss(pair, tickets):
+            loss=0.0
+            for triple, prob in r["joint"].items():
+                a,b,c=triple
+                tri_pairs={
+                    tuple(sorted((a,b))),
+                    tuple(sorted((a,c))),
+                    tuple(sorted((b,c))),
+                }
+                if pair not in tri_pairs:
+                    continue
+                others=(tri_pairs & tickets) - {pair}
+                if not others:
+                    loss += prob
+            return loss
+
+        h6_losses={p:uncovered_loss(p,cut_h4) for p in cut_h4}
+        h6_pair=min(
+            cut_h4,
+            key=lambda p:(h6_losses[p], -pair_probs.get(p,0.0), p[0], p[1]),
+            default=None,
+        )
+        cut_h6=set(cut_h4)
+        if h6_pair is not None:
+            cut_h6.discard(h6_pair)
+
         def pay(ts):
             hp=sorted(set(ts)&set(paid))
             return sum(paid[p] for p in hp),hp
-        bp,bh=pay(base); cp,ch=pay(cut); xp,xh=pay(cut_both); hp,hh=pay(cut_h3); qp,qh=pay(cut_h4); vp,vh=pay(cut_h5)
+        bp,bh=pay(base); cp,ch=pay(cut); xp,xh=pay(cut_both); hp,hh=pay(cut_h3); qp,qh=pay(cut_h4); vp,vh=pay(cut_h5); rp,rh=pay(cut_h6)
         rows.append({
             "race_id":race.race_id,"date":race.race_date,"race_type":race.race_type,
             "result":list(race.order),"board":[list(x) for x in board],
@@ -144,6 +174,12 @@ def main():
             "h5_pair_was_winner":bool(h5_pair in paid) if h5_pair else False,
             "h5_pair_payout_yen":paid.get(h5_pair,0) if h5_pair else 0,
             "h5_tickets":len(cut_h5),"h5_payout":vp,"h5_hits":[list(x) for x in vh],
+            "h6_pair":list(h6_pair) if h6_pair else None,
+            "h6_unique_mass_loss":h6_losses.get(h6_pair) if h6_pair else None,
+            "h6_pair_prob":pair_probs.get(h6_pair,0.0) if h6_pair else None,
+            "h6_pair_was_winner":bool(h6_pair in paid) if h6_pair else False,
+            "h6_pair_payout_yen":paid.get(h6_pair,0) if h6_pair else 0,
+            "h6_tickets":len(cut_h6),"h6_payout":rp,"h6_hits":[list(x) for x in rh],
         })
     report={
         "study":"2024 Kyodo days1-2 board wide minus strongest-two pair",
@@ -162,6 +198,7 @@ def main():
         "h3_highest_remaining_pair_cut":summarize(rows,"h3"),
         "h4_second_remaining_pair_cut":summarize(rows,"h4"),
         "h5_third_remaining_pair_cut":summarize(rows,"h5"),
+        "h6_redundancy_cut_from_h4":summarize(rows,"h6"),
         "cut_effect":{
             "strong2_candidate_cut_races":sum(r["cut_pair_was_candidate"] for r in rows),
             "strong2_winning_cut_pair_races":sum(r["cut_pair_was_winner"] for r in rows),
@@ -185,11 +222,15 @@ def main():
             "h5_winning_cut_pair_races":sum(r["h5_pair_was_winner"] for r in rows),
             "h5_removed_stake_yen":sum(r["h4_tickets"]-r["h5_tickets"] for r in rows)*100,
             "h5_removed_winning_payout_yen":sum(r["h4_payout"]-r["h5_payout"] for r in rows),
+            "h6_cut_races":sum(r["h6_pair"] is not None for r in rows),
+            "h6_winning_cut_pair_races":sum(r["h6_pair_was_winner"] for r in rows),
+            "h6_removed_stake_yen":sum(r["h4_tickets"]-r["h6_tickets"] for r in rows)*100,
+            "h6_removed_winning_payout_yen":sum(r["h4_payout"]-r["h6_payout"] for r in rows),
         },
         "races":rows,
     }
     OUT.parent.mkdir(parents=True,exist_ok=True)
     OUT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    print(json.dumps({k:report[k] for k in ("baseline","strong2_cut","strong2_plus_strongline_cut","h3_highest_remaining_pair_cut","h4_second_remaining_pair_cut","h5_third_remaining_pair_cut","cut_effect")},ensure_ascii=False,indent=2))
+    print(json.dumps({k:report[k] for k in ("baseline","strong2_cut","strong2_plus_strongline_cut","h3_highest_remaining_pair_cut","h4_second_remaining_pair_cut","h5_third_remaining_pair_cut","h6_redundancy_cut_from_h4","cut_effect")},ensure_ascii=False,indent=2))
 
 if __name__=="__main__": main()
