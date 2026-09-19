@@ -5,6 +5,10 @@ from __future__ import annotations
 
 Consumes the frozen JSON artifact produced by keirin_shogi_v38_king_seat_2024w1.py.
 No target-race odds, popularity, results or payouts are read here.
+
+The v21/v31/v37 board is used only as a feature generator. For seven-car races,
+v38 replaces the visible board with KING seats learned from the 29 KING outcomes
+in 2024-W1 and uses the separately learned KING gate for participate/skip.
 """
 
 import itertools
@@ -24,9 +28,11 @@ RAW_Z=[
 def ino(v):
     try:return int(float(v))
     except:return 0
+
 def num(v):
     try:return float(v)
     except:return 0.0
+
 def sigmoid(z):
     if z>=0:return 1.0/(1.0+math.exp(-z))
     ez=math.exp(z);return ez/(1.0+ez)
@@ -101,6 +107,48 @@ def combo_score(combo,placed,entries,model):
         z+=float(w)*((x-float(mu))/den)
     return sigmoid(z)
 
+def board_ticket_count(first,second,third):
+    return sum(1 for a in first for b in second for c in third if len({a,b,c})==3)
+
+def gate_feature_values(top,first,second,third):
+    ss=[float(score) for _,score in top]
+    def avg(n):
+        vals=ss[:min(n,len(ss))]
+        return mean(vals) if vals else 0.0
+    total=sum(ss) or 1.0
+    vals={
+      "max_score":ss[0] if ss else 0.0,
+      "top3_mean":avg(3),"top6_mean":avg(6),"top12_mean":avg(12),"top24_mean":avg(24),
+      "top24_min":ss[-1] if ss else 0.0,
+      "top24_std":pstdev(ss) if len(ss)>1 else 0.0,
+      "gap_1_2":(ss[0]-ss[1]) if len(ss)>1 else 0.0,
+      "gap_1_6":(ss[0]-ss[5]) if len(ss)>5 else 0.0,
+      "gap_1_24":(ss[0]-ss[-1]) if ss else 0.0,
+      "first_count":len(first)/7.0,
+      "second_count":len(second)/7.0,
+      "third_count":len(third)/7.0,
+      "board_ticket_count":board_ticket_count(first,second,third)/210.0,
+      "score_mass_top3":sum(ss[:3])/total,
+      "score_mass_top6":sum(ss[:6])/total,
+    }
+    return vals
+
+def tree_probability(tree,feature_names,values):
+    node=0
+    while True:
+        left=int(tree["children_left"][node]);right=int(tree["children_right"][node])
+        if left<0 or right<0:
+            counts=tree["value"][node]
+            total=sum(float(x) for x in counts) or 1.0
+            return float(counts[1] if len(counts)>1 else 0.0)/total
+        fi=int(tree["feature"][node])
+        if fi<0:
+            counts=tree["value"][node]
+            total=sum(float(x) for x in counts) or 1.0
+            return float(counts[1] if len(counts)>1 else 0.0)/total
+        name=feature_names[fi]
+        node=left if float(values[name])<=float(tree["threshold"][node]) else right
+
 def predict_king_seat(placed,race,model_path=MODEL):
     if len(race.get("entries",[]))!=7:
         return placed
@@ -111,17 +159,37 @@ def predict_king_seat(placed,race,model_path=MODEL):
     for combo in itertools.permutations(cars,3):
         ranked.append((combo,combo_score(combo,placed,entries,model)))
     ranked.sort(key=lambda x:(-x[1],x[0]))
-    seat_k=int(model["policy"]["seat_k"]);threshold=float(model["policy"]["threshold"])
+
+    seat_k=int(model["policy"]["seat_k"])
     top=ranked[:seat_k]
-    first=sorted({c[0] for c,_ in top});second=sorted({c[1] for c,_ in top});third=sorted({c[2] for c,_ in top})
-    score=float(top[0][1]) if top else 0.0
+    first=sorted({c[0] for c,_ in top})
+    second=sorted({c[1] for c,_ in top})
+    third=sorted({c[2] for c,_ in top})
+
+    gate=model.get("gate")
+    if not gate:
+        raise RuntimeError("v38 model has no KING participation gate")
+    gate_values=gate_feature_values(top,first,second,third)
+    gate_score=tree_probability(gate["tree"],gate["feature_names"],gate_values)
+    gate_threshold=float(gate["threshold"])
+    participate=bool(gate_score>=gate_threshold)
+
     result=dict(placed)
     result.update({
-      "board_policy":"v38_king_seat_2024w1",
-      "participate":bool(score>=threshold),
-      "first_candidates":first,"second_candidates":second,"third_candidates":third,
-      "king_score":score,"king_threshold":threshold,"king_seat_k":seat_k,
-      "king_top_tickets":[{"first":c[0],"second":c[1],"third":c[2],"score":float(s)} for c,s in top],
+      "board_policy":"v38_king_seat_gate_2024w1",
+      "participate":participate,
+      "first_candidates":first,
+      "second_candidates":second,
+      "third_candidates":third,
+      "king_score":float(top[0][1]) if top else 0.0,
+      "king_gate_score":float(gate_score),
+      "king_gate_threshold":gate_threshold,
+      "king_seat_k":seat_k,
+      "king_board_ticket_count":board_ticket_count(first,second,third),
+      "king_top_tickets":[
+        {"first":c[0],"second":c[1],"third":c[2],"score":float(s)}
+        for c,s in top
+      ],
       "king_base_board":{
         "first":list(map(int,placed.get("first_candidates",[]))),
         "second":list(map(int,placed.get("second_candidates",[]))),
@@ -130,13 +198,13 @@ def predict_king_seat(placed,race,model_path=MODEL):
       },
       "versions":{
         **dict(placed.get("versions",{})),
-        "seven_car_primary":"v38_king_seat_2024w1",
+        "seven_car_primary":"v38_king_seat_gate_2024w1",
       },
-      "adoption_note":"29 KING outcomes learned as primary seats; research-overfit v38",
-      "research_warning":"2024-01-01..01-07 intentional in-sample KING fit; future validation not yet evidence.",
+      "adoption_note":"29 KING outcomes define KING seats and KING-specific participation gate",
+      "research_warning":"2024-01-01..01-07 intentional in-sample KING fit; forward validation is separate evidence.",
     })
-    if not result["participate"]:
-        result["skip_reason"]="v38 KING適性が閾値未満"
-    else:
+    if participate:
         result.pop("skip_reason",None)
+    else:
+        result["skip_reason"]="v38 KINGゲートで見送り"
     return result
