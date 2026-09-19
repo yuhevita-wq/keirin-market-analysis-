@@ -1,0 +1,50 @@
+name: Research01 LGBM Ranker Second
+
+on:
+  push:
+    branches:
+      - research01-lgbm-ranker-second
+    paths:
+      - "scripts/research01_lgbm_ranker_second.py"
+      - ".github/workflows/research01-lgbm-ranker-second.yml"
+  workflow_dispatch:
+
+jobs:
+  run-research01:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+          python -m pip install "lightgbm>=4.5,<5"
+
+      - name: Run Research01
+        run: |
+          python scripts/research01_lgbm_ranker_second.py
+
+      - name: Print report
+        if: always()
+        run: |
+          if [ -f results/keirin_shogi/research01_lgbm_ranker_second/report.md ]; then
+            cat results/keirin_shogi/research01_lgbm_ranker_second/report.md
+          fi
+
+      - name: Upload Research01 outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: research01-lgbm-ranker-second
+          path: results/keirin_shogi/research01_lgbm_ranker_second/
+          if-no-files-found: warn
