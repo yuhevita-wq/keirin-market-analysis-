@@ -1,0 +1,17 @@
+name: 2024 Week1 Trifecta King Opportunity
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/keirin_shogi_2024_week1_payout_opportunity.py'
+      - '.github/workflows/keirin-shogi-2024-week1-payout-opportunity.yml'
+  workflow_dispatch:
+jobs:
+  count:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/keirin_shogi_2024_week1_payout_opportunity.py
