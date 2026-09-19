@@ -116,8 +116,7 @@ def main():
         # Remove the pair with the smallest unique coverage mass.
         def uncovered_loss(pair, tickets):
             loss=0.0
-            for triple, prob in r["joint"].items():
-                a,b,c=triple
+            for a,b,c,prob in r["joint"]:
                 tri_pairs={
                     tuple(sorted((a,b))),
                     tuple(sorted((a,c))),
