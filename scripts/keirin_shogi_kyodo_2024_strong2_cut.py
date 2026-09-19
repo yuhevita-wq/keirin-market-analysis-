@@ -267,6 +267,87 @@ def main():
         if h9c_candidate:
             cut_h9c.discard(h9c_pair)
 
+        # New adopted H5 = H4 + H9C ("favourite + other-line third-bias") cut.
+        adopted_h5=set(cut_h4)
+        if h9c_candidate:
+            adopted_h5.discard(h9c_pair)
+
+        # H6 candidate: "explanation ease" bias.
+        # For every pair still alive after adopted H5, count how many simple,
+        # human-friendly reasons can be attached to buying it. Cut exactly the
+        # highest-scoring pair. No odds/popularity/result fields are used.
+        #
+        # Explanation-ease components (1 point each):
+        #  1 same line
+        #  2 contains a top-3 rider by total top3 inclusion probability
+        #  3 contains a rider on board row 1
+        #  4 contains a rider on board row 3 with positive third-bias
+        #  5 contains a top-3 rider by race score
+        #  6 same-line and adjacent line positions
+        #  7 both riders appear in 2+ board rows
+        #  8 clean role split: one is P1-dominant, the other P3-dominant
+        top3_inc=set(sorted(inc,key=lambda n:(-inc[n],n))[:3])
+        score_rank=sorted(
+            [int(float(e["car_no"])) for e in race.entries],
+            key=lambda n:(-float(entries_by_no[n].get("score") or 0),n),
+        )
+        top3_score=set(score_rank[:3])
+        row1=set(board[0]); row3=set(board[2])
+        board_row_count={
+            n:sum(n in set(row) for row in board)
+            for n in range(1,10)
+        }
+        line_pos={
+            int(float(e["car_no"])):int(float(e.get("line_position") or 0))
+            for e in race.entries
+        }
+
+        def p1_dominant(n):
+            return p1m[n] > max(p2m[n],p3m[n])
+
+        def p3_dominant(n):
+            return p3m[n] > max(p1m[n],p2m[n])
+
+        def explanation_features(pair):
+            a,b=pair
+            same_line=(
+                line_of.get(a,0)>0
+                and line_of.get(a)==line_of.get(b)
+            )
+            adjacent=(
+                same_line
+                and abs(line_pos.get(a,0)-line_pos.get(b,0))==1
+            )
+            role_split=(
+                (p1_dominant(a) and p3_dominant(b))
+                or (p1_dominant(b) and p3_dominant(a))
+            )
+            feats={
+                "same_line": same_line,
+                "contains_top3_inclusion": a in top3_inc or b in top3_inc,
+                "contains_row1": a in row1 or b in row1,
+                "contains_row3_positive_third_bias": (
+                    (a in row3 and third_bias[a]>0)
+                    or (b in row3 and third_bias[b]>0)
+                ),
+                "contains_top3_score": a in top3_score or b in top3_score,
+                "adjacent_line_positions": adjacent,
+                "both_multirow": board_row_count.get(a,0)>=2 and board_row_count.get(b,0)>=2,
+                "clean_p1_p3_role_split": role_split,
+            }
+            return feats
+
+        h6e_features={p:explanation_features(p) for p in adopted_h5}
+        h6e_scores={p:sum(bool(v) for v in fs.values()) for p,fs in h6e_features.items()}
+        h6e_pair=max(
+            adopted_h5,
+            key=lambda p:(h6e_scores[p],pair_probs.get(p,0.0),-p[0],-p[1]),
+            default=None,
+        )
+        cut_h6e=set(adopted_h5)
+        if h6e_pair is not None:
+            cut_h6e.discard(h6e_pair)
+
         # H6: redundancy peeling from the H4 state.
         # For each surviving wide pair, compute how much joint504 probability
         # mass would become completely uncovered if that single pair were removed.
@@ -299,7 +380,7 @@ def main():
         def pay(ts):
             hp=sorted(set(ts)&set(paid))
             return sum(paid[p] for p in hp),hp
-        bp,bh=pay(base); cp,ch=pay(cut); xp,xh=pay(cut_both); hp,hh=pay(cut_h3); qp,qh=pay(cut_h4); vp,vh=pay(cut_h5); rp,rh=pay(cut_h6); sp,sh=pay(cut_h7); tp,th=pay(cut_h8); a9p,a9h=pay(cut_h9a); b9p,b9h=pay(cut_h9b); c9p,c9h=pay(cut_h9c)
+        bp,bh=pay(base); cp,ch=pay(cut); xp,xh=pay(cut_both); hp,hh=pay(cut_h3); qp,qh=pay(cut_h4); vp,vh=pay(cut_h5); rp,rh=pay(cut_h6); sp,sh=pay(cut_h7); tp,th=pay(cut_h8); a9p,a9h=pay(cut_h9a); b9p,b9h=pay(cut_h9b); c9p,c9h=pay(cut_h9c); ah5p,ah5h=pay(adopted_h5); e6p,e6h=pay(cut_h6e)
         rows.append({
             "race_id":race.race_id,"date":race.race_date,"race_type":race.race_type,
             "result":list(race.order),"board":[list(x) for x in board],
@@ -377,6 +458,14 @@ def main():
             "h9c_pair_was_winner":bool(h9c_pair in paid) if h9c_pair else False,
             "h9c_pair_payout_yen":paid.get(h9c_pair,0) if h9c_pair else 0,
             "h9c_tickets":len(cut_h9c),"h9c_payout":c9p,"h9c_hits":[list(x) for x in c9h],
+            "adopted_h5_tickets":len(adopted_h5),"adopted_h5_payout":ah5p,"adopted_h5_hits":[list(x) for x in ah5h],
+            "h6_explanation_pair":list(h6e_pair) if h6e_pair else None,
+            "h6_explanation_score":h6e_scores.get(h6e_pair) if h6e_pair else None,
+            "h6_explanation_features":h6e_features.get(h6e_pair) if h6e_pair else None,
+            "h6_explanation_pair_prob":pair_probs.get(h6e_pair,0.0) if h6e_pair else None,
+            "h6_explanation_pair_was_winner":bool(h6e_pair in paid) if h6e_pair else False,
+            "h6_explanation_pair_payout_yen":paid.get(h6e_pair,0) if h6e_pair else 0,
+            "h6e_tickets":len(cut_h6e),"h6e_payout":e6p,"h6e_hits":[list(x) for x in e6h],
         })
     report={
         "study":"2024 Kyodo days1-2 board wide minus strongest-two pair",
@@ -401,6 +490,8 @@ def main():
         "h9a_line_third_position_cut_from_h4":summarize(rows,"h9a"),
         "h9b_mark_rider_third_bias_cut_from_h4":summarize(rows,"h9b"),
         "h9c_favourite_plus_otherline_third_bias_cut_from_h4":summarize(rows,"h9c"),
+        "adopted_h5":summarize(rows,"adopted_h5"),
+        "h6_explanation_ease_cut_from_adopted_h5":summarize(rows,"h6e"),
         "cut_effect":{
             "strong2_candidate_cut_races":sum(r["cut_pair_was_candidate"] for r in rows),
             "strong2_winning_cut_pair_races":sum(r["cut_pair_was_winner"] for r in rows),
@@ -448,11 +539,15 @@ def main():
             "h9c_winning_cut_pair_races":sum(r["h9c_pair_was_candidate"] and r["h9c_pair_was_winner"] for r in rows),
             "h9c_removed_stake_yen":sum(r["h4_tickets"]-r["h9c_tickets"] for r in rows)*100,
             "h9c_removed_winning_payout_yen":sum(r["h4_payout"]-r["h9c_payout"] for r in rows),
+            "h6e_cut_races":sum(r["adopted_h5_tickets"]>r["h6e_tickets"] for r in rows),
+            "h6e_winning_cut_pair_races":sum(r["h6_explanation_pair_was_winner"] for r in rows),
+            "h6e_removed_stake_yen":sum(r["adopted_h5_tickets"]-r["h6e_tickets"] for r in rows)*100,
+            "h6e_removed_winning_payout_yen":sum(r["adopted_h5_payout"]-r["h6e_payout"] for r in rows),
         },
         "races":rows,
     }
     OUT.parent.mkdir(parents=True,exist_ok=True)
     OUT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    print(json.dumps({k:report[k] for k in ("baseline","strong2_cut","strong2_plus_strongline_cut","h3_highest_remaining_pair_cut","h4_second_remaining_pair_cut","h5_third_remaining_pair_cut","h6_redundancy_cut_from_h4","h7_expected_lead_line_front_pair_cut_from_h4","h8_third_place_bias_cut_from_h4","h9a_line_third_position_cut_from_h4","h9b_mark_rider_third_bias_cut_from_h4","h9c_favourite_plus_otherline_third_bias_cut_from_h4","cut_effect")},ensure_ascii=False,indent=2))
+    print(json.dumps({k:report[k] for k in ("baseline","strong2_cut","strong2_plus_strongline_cut","h3_highest_remaining_pair_cut","h4_second_remaining_pair_cut","adopted_h5","h6_explanation_ease_cut_from_adopted_h5","cut_effect")},ensure_ascii=False,indent=2))
 
 if __name__=="__main__": main()
