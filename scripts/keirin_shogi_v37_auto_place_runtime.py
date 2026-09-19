@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-"""Runtime compatibility layer for deterministic v21/v31/v37 placement.
+"""Runtime compatibility layer for Keirin Shogi live placement.
 
-The frozen training/model code remains untouched. This layer normalizes live
-KDreams input types, broadens the runtime entrance to variable rider counts,
-and keeps v21 participation separate from board generation:
-
-- v21 still decides participate / skip with its frozen selector.
-- v21 first candidates are still generated even when the selector says skip.
-- v31 and v37 continue from those candidates and probabilities.
-- therefore a v21 skip no longer blanks the three-row board.
+For seven-car races, v21/v31/v37 are retained as feature generators, then the
+v38 KING SEAT model rewrites the visible board and the KING-specific gate
+replaces v21 as the final buy/skip decision. Nine-car G1/G2/G3 keeps v3.2.
+Target-race odds, popularity, results and payouts are never read.
 """
 
 import importlib.util
@@ -28,9 +24,10 @@ NINECAR_ENGINE = ROOT / "scripts/keirin_shogi_ninecar_v32.py"
 NINECAR_MODEL = ROOT / "results/keirin_shogi/ninecar_v32/model.joblib"
 SEVENCAR_OVERLAY_ENGINE = ROOT / "scripts/keirin_shogi_sevencar_v37_overlay.py"
 SEVENCAR_OVERLAY_MODEL = ROOT / "results/keirin_shogi/sevencar_state_transfer/validated_model.joblib"
+KING_ENGINE = ROOT / "scripts/keirin_shogi_v38_king_runtime.py"
 TEMP_LIVE = ROOT / "docs/keirin-shogi/.live-race-data-runtime.json"
 BOARD_POLICY = "v21_raw_candidates_through_v31_v37_v1"
-SEVENCAR_POLICY = "v21_v31_v37_softfail_third_append_v1"
+SEVENCAR_POLICY = "v38_king_seat_gate_2024w1"
 NINECAR_POLICY = "ninecar_v32_strong_state_overlay"
 NINECAR_GRADES = {"G1", "G2", "G3"}
 NINECAR_CLASSES = {"SS", "S1", "S2"}
@@ -74,6 +71,17 @@ def load_ninecar_engine():
 def load_sevencar_overlay_engine():
     spec = importlib.util.spec_from_file_location(
         "keirin_shogi_sevencar_v37_overlay_runtime", SEVENCAR_OVERLAY_ENGINE
+    )
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def load_king_engine():
+    spec = importlib.util.spec_from_file_location(
+        "keirin_shogi_v38_king_runtime_live", KING_ENGINE
     )
     module = importlib.util.module_from_spec(spec)
     assert spec.loader is not None
@@ -250,12 +258,12 @@ def validate_candidates(candidates: list[int], rider_numbers: set[int], label: s
         raise ValueError(f"{label} contains duplicate or unknown riders: {candidates}")
 
 
-def runtime_place_one(engine, ninecar_engine, sevencar_overlay_engine, race, v21_state, pair_model, third_model, feature_names, freeze):
-    """Generate the board regardless of the v21 participation decision.
+def runtime_place_one(engine, ninecar_engine, sevencar_overlay_engine, king_engine, race, v21_state, pair_model, third_model, feature_names, freeze):
+    """Build the base board, then give seven-car races to v38 KING SEAT.
 
-    This intentionally changes only runtime wiring. The frozen v21 score,
-    threshold, candidate policy, v31 pair model and v37 third model are reused
-    exactly as provided by the base engine.
+    v21/v31/v37 remain intact as structural feature generators. For seven-car
+    races, their candidate rows are not the final output: v38 projects 24 exact
+    KING seats back onto the three board rows and its KING gate decides buy/skip.
     """
     race_id = str(race.get("race_id", ""))
     scope_ok, scope_note = runtime_scope(race)
@@ -270,12 +278,13 @@ def runtime_place_one(engine, ninecar_engine, sevencar_overlay_engine, race, v21
         "scope_note": scope_note,
         "board_policy": SEVENCAR_POLICY if is_sevencar else BOARD_POLICY,
         "versions": {
-            "participation_first": "v21_quantile_participation",
-            "second": "v31_top2_membership",
-            "third": (
+            "base_first": "v21_quantile_participation",
+            "base_second": "v31_top2_membership",
+            "base_third": (
                 "v37_shrunk_board_third+softfail_third_append"
                 if is_sevencar else "v37_shrunk_board_third"
             ),
+            **({"seven_car_primary": "v38_king_seat_gate_2024w1"} if is_sevencar else {}),
         },
     }
     if not scope_ok:
@@ -448,6 +457,28 @@ def runtime_place_one(engine, ninecar_engine, sevencar_overlay_engine, race, v21
                 "sevencar_state_validated_through": overlay.get("validated_through"),
             }
         )
+    if is_sevencar:
+        try:
+            king_result = king_engine.predict_king_seat(result, race)
+            validate_candidates(
+                [int(no) for no in king_result.get("first_candidates", [])],
+                rider_numbers,
+                "v38_first_candidates",
+            )
+            validate_candidates(
+                [int(no) for no in king_result.get("second_candidates", [])],
+                rider_numbers,
+                "v38_second_candidates",
+            )
+            validate_candidates(
+                [int(no) for no in king_result.get("third_candidates", [])],
+                rider_numbers,
+                "v38_third_candidates",
+            )
+            return king_result
+        except Exception as exc:
+            return failure_result(common, "v38_king_seat_gate", exc)
+
     if not first["participate"]:
         result["skip_reason"] = "v21参加判定で見送り（盤面は配置）"
     return result
@@ -457,6 +488,7 @@ def main() -> int:
     engine = load_base_engine()
     ninecar_engine = load_ninecar_engine()
     sevencar_overlay_engine = load_sevencar_overlay_engine()
+    king_engine = load_king_engine()
     original_live = engine.LIVE
     payload = json.loads(original_live.read_text(encoding="utf-8"))
     expected_state = payload.get("board_engine", {}).get("latest_historical_state", {})
@@ -472,6 +504,7 @@ def main() -> int:
         engine,
         ninecar_engine,
         sevencar_overlay_engine,
+        king_engine,
         race,
         v21_state,
         pair_model,
