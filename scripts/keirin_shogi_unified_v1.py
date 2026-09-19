@@ -405,10 +405,7 @@ def unified_joint(race, state, pair_model, third_model, feature_names):
     second_candidates = choose_top2_plus_ratio(second_ranking, SECOND_REL3)
     third_candidates = choose_top2_plus_ratio(third_ranking, THIRD_REL3)
 
-    participate = (
-        len(first["legacy_candidates"]) <= V21_MAX_FIRST_CANDIDATES
-        and first["selector_score"] >= first["selector_threshold"]
-    )
+    participate = True
 
     return {
         "board_generated": True,
@@ -433,16 +430,7 @@ def unified_joint(race, state, pair_model, third_model, feature_names):
             {"first": a, "second": b, "third": c, "probability": p}
             for a, b, c, p in joint[:20]
         ],
-        "legacy_participation_guard": {
-            "policy": "v21_selector_temporary_only",
-            "score": first["selector_score"],
-            "threshold": first["selector_threshold"],
-            "legacy_candidate_count": len(first["legacy_candidates"]),
-            "note": (
-                "Temporary safety gate only. Board riders come exclusively from "
-                "the unified joint-order distribution."
-            ),
-        },
+        "participation_policy": "all_in_scope",
     }
 
 
@@ -461,7 +449,7 @@ def place_one(race, state, pair_model, third_model, feature_names):
         "versions": {
             "prediction": "unified_joint_order_v1",
             "component_signals": "v21_first + v31_top2_pair + v35_conditional_third",
-            "participation_guard": "v21_temporary",
+            "participation_guard": "none",
         },
     }
     if not scope_ok:
@@ -481,11 +469,6 @@ def place_one(race, state, pair_model, third_model, feature_names):
     return {
         **common,
         **prediction,
-        **(
-            {}
-            if prediction["participate"]
-            else {"skip_reason": "暫定v21参加ガードで見送り。盤面は統合分布から生成済み"}
-        ),
     }
 
 
