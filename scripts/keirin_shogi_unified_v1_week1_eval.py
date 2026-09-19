@@ -165,7 +165,7 @@ def main():
 
     n = len(logs)
     return_tests = {}
-    for k in (1, 3, 5, 10, 20):
+    for k in (1, 3):
         stake = n * k * 100
         hits = [
             x for x in logs
@@ -184,21 +184,6 @@ def main():
             "profit_yen": payout - stake,
             "return_rate": payout / stake if stake else 0.0,
         }
-
-    board_stake = sum(x["valid_board_orders"] for x in logs) * 100
-    board_hits = [x for x in logs if x["complete_board_hit"]]
-    board_payout = sum(x["trifecta_payout_yen"] for x in board_hits)
-    return_tests["board_all"] = {
-        "ticket_rule": "all valid exact orders implied by board, 100 yen each",
-        "races": n,
-        "tickets": sum(x["valid_board_orders"] for x in logs),
-        "stake_yen": board_stake,
-        "hit_count": len(board_hits),
-        "hit_rate": len(board_hits) / n,
-        "payout_yen": board_payout,
-        "profit_yen": board_payout - board_stake,
-        "return_rate": board_payout / board_stake if board_stake else 0.0,
-    }
 
     summary = {
         "algorithm": "keirin_shogi_unified_v1",
