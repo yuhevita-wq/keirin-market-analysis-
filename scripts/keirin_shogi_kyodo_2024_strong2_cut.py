@@ -53,12 +53,33 @@ def main():
         inc=top3_inclusion(r["joint"])
         ranked=sorted(inc,key=lambda n:(-inc[n],n))
         strong_pair=tuple(sorted((ranked[0],ranked[1])))
+
+        # Strongest "筋": strongest same-line unordered pair by the model's
+        # own top3 co-survival probability from joint504. No odds/popularity.
+        pair_probs=w.joint_pair_probabilities(r["joint"])
+        line_of={int(e["car_no"]):int(float(e.get("line_id") or 0)) for e in race.entries}
+        same_line=[
+            p for p in base
+            if line_of.get(p[0],0)>0 and line_of.get(p[0])==line_of.get(p[1])
+        ]
+        strong_line_pair=max(
+            same_line,
+            key=lambda p:(pair_probs.get(p,0.0),-p[0],-p[1]),
+            default=None,
+        )
+
         cut=set(base)
         cut.discard(strong_pair)
+
+        cut_both=set(base)
+        cut_both.discard(strong_pair)
+        if strong_line_pair is not None:
+            cut_both.discard(strong_line_pair)
+
         def pay(ts):
             hp=sorted(set(ts)&set(paid))
             return sum(paid[p] for p in hp),hp
-        bp,bh=pay(base); cp,ch=pay(cut)
+        bp,bh=pay(base); cp,ch=pay(cut); xp,xh=pay(cut_both)
         rows.append({
             "race_id":race.race_id,"date":race.race_date,"race_type":race.race_type,
             "result":list(race.order),"board":[list(x) for x in board],
@@ -67,8 +88,13 @@ def main():
             "cut_pair":list(strong_pair),"cut_pair_was_candidate":strong_pair in base,
             "cut_pair_was_winner":strong_pair in paid,
             "cut_pair_payout_yen":paid.get(strong_pair,0),
+            "strongest_line_pair":list(strong_line_pair) if strong_line_pair else None,
+            "strongest_line_pair_prob":pair_probs.get(strong_line_pair,0.0) if strong_line_pair else None,
+            "strongest_line_pair_was_winner":bool(strong_line_pair in paid) if strong_line_pair else False,
+            "strongest_line_pair_payout_yen":paid.get(strong_line_pair,0) if strong_line_pair else 0,
             "base_tickets":len(base),"base_payout":bp,"base_hits":[list(x) for x in bh],
             "cut_tickets":len(cut),"cut_payout":cp,"cut_hits":[list(x) for x in ch],
+            "both_tickets":len(cut_both),"both_payout":xp,"both_hits":[list(x) for x in xh],
         })
     report={
         "study":"2024 Kyodo days1-2 board wide minus strongest-two pair",
@@ -83,16 +109,23 @@ def main():
         "calibration_rows":cal_n,
         "baseline":summarize(rows,"base"),
         "strong2_cut":summarize(rows,"cut"),
+        "strong2_plus_strongline_cut":summarize(rows,"both"),
         "cut_effect":{
-            "candidate_cut_races":sum(r["cut_pair_was_candidate"] for r in rows),
-            "winning_cut_pair_races":sum(r["cut_pair_was_winner"] for r in rows),
-            "removed_stake_yen":sum(r["base_tickets"]-r["cut_tickets"] for r in rows)*100,
-            "removed_winning_payout_yen":sum(r["cut_pair_payout_yen"] for r in rows if r["cut_pair_was_candidate"] and r["cut_pair_was_winner"]),
+            "strong2_candidate_cut_races":sum(r["cut_pair_was_candidate"] for r in rows),
+            "strong2_winning_cut_pair_races":sum(r["cut_pair_was_winner"] for r in rows),
+            "strong2_removed_stake_yen":sum(r["base_tickets"]-r["cut_tickets"] for r in rows)*100,
+            "strong2_removed_winning_payout_yen":sum(r["cut_pair_payout_yen"] for r in rows if r["cut_pair_was_candidate"] and r["cut_pair_was_winner"]),
+            "strongline_cut_races":sum(r["strongest_line_pair"] is not None and r["strongest_line_pair"]!=r["cut_pair"] for r in rows),
+            "strongline_winning_cut_pair_races":sum(r["strongest_line_pair_was_winner"] and r["strongest_line_pair"]!=r["cut_pair"] for r in rows),
+            "both_removed_stake_yen":sum(r["base_tickets"]-r["both_tickets"] for r in rows)*100,
+            "both_removed_winning_payout_yen":sum(
+                r["base_payout"]-r["both_payout"] for r in rows
+            ),
         },
         "races":rows,
     }
     OUT.parent.mkdir(parents=True,exist_ok=True)
     OUT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    print(json.dumps({k:report[k] for k in ("baseline","strong2_cut","cut_effect")},ensure_ascii=False,indent=2))
+    print(json.dumps({k:report[k] for k in ("baseline","strong2_cut","strong2_plus_strongline_cut","cut_effect")},ensure_ascii=False,indent=2))
 
 if __name__=="__main__": main()
