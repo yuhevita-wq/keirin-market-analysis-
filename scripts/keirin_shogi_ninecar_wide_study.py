@@ -172,6 +172,19 @@ def make_tickets(strategy: str, board, pair_probs):
             candidates &= cross_pairs(board)
         return {p for p in candidates if pair_probs.get(p, 0.0) >= threshold}
 
+    # "Cheap-looking cut" without odds: rank unordered wide pairs by the
+    # model's pre-race probability that both riders finish in the top three.
+    # Example rank2to5 deliberately removes the single most obvious pair.
+    m = re.fullmatch(r"(joint|cross_joint)_rank(\d+)to(\d+)", strategy)
+    if m:
+        family, lo_text, hi_text = m.groups()
+        lo, hi = int(lo_text), int(hi_text)
+        candidates = set(pair_probs)
+        if family == "cross_joint":
+            candidates &= cross_pairs(board)
+        ranked = sorted(candidates, key=lambda x: (-pair_probs.get(x, 0.0), x))
+        return set(ranked[lo - 1:hi])
+
     raise ValueError(strategy)
 
 
@@ -186,6 +199,10 @@ STRATEGIES = [
 for prefix in ("joint", "cross_joint"):
     STRATEGIES += [f"{prefix}_top{k}" for k in (1, 2, 3, 4, 5, 6, 8)]
     STRATEGIES += [f"{prefix}_q{bp}" for bp in (40, 50, 60, 70, 80, 100, 120, 150)]
+    STRATEGIES += [
+        f"{prefix}_rank{lo}to{hi}"
+        for lo, hi in ((2,4),(2,5),(2,6),(2,8),(3,5),(3,6),(3,8),(4,8))
+    ]
 
 
 def max_losing_streak(flags):
@@ -321,6 +338,103 @@ def evaluate_year(year, scored, rules, payout_map):
     }
 
 
+
+def payout_band_summary(values):
+    if not values:
+        return {"n": 0, "mean_payout": None, "median_payout": None}
+    xs = sorted(values)
+    n = len(xs)
+    med = xs[n//2] if n % 2 else (xs[n//2-1] + xs[n//2]) / 2
+    return {
+        "n": n,
+        "mean_payout": sum(xs) / n,
+        "median_payout": med,
+        "ge1000_rate": sum(x >= 1000 for x in xs) / n,
+        "ge2000_rate": sum(x >= 2000 for x in xs) / n,
+    }
+
+
+def winning_pair_price_proxy(year, scored, rules, payout_map):
+    # Post-race diagnostic only. Selection never sees payout.
+    buckets = {
+        "rank1to3": [],
+        "rank4to8": [],
+        "rank9to15": [],
+        "rank16plus": [],
+    }
+    rows = []
+    for row in scored:
+        race = row["race"]
+        paid = payout_map.get(race.race_id)
+        if not paid:
+            continue
+        board, _mass, participate, _dominant, _action = v32.apply_overlay(row, rules)
+        if not participate:
+            continue
+        pair_probs = joint_pair_probabilities(row["joint"])
+        ranked = sorted(pair_probs, key=lambda x: (-pair_probs[x], x))
+        rank_map = {pair: i + 1 for i, pair in enumerate(ranked)}
+        for pair, payout in paid.items():
+            rank = rank_map.get(pair)
+            if rank is None:
+                continue
+            if rank <= 3:
+                bucket = "rank1to3"
+            elif rank <= 8:
+                bucket = "rank4to8"
+            elif rank <= 15:
+                bucket = "rank9to15"
+            else:
+                bucket = "rank16plus"
+            buckets[bucket].append(payout)
+            rows.append({
+                "race_id": race.race_id,
+                "pair": list(pair),
+                "pair_rank": rank,
+                "pair_probability": pair_probs[pair],
+                "payout_yen": payout,
+                "bucket": bucket,
+            })
+    return {
+        "year": year,
+        "buckets": {k: payout_band_summary(v) for k, v in buckets.items()},
+        "rows_n": len(rows),
+    }
+
+
+def development_selection(year_results):
+    # Choose only on 2024. 2025 and 2026H1 are untouched validation.
+    dev = year_results[0]
+    candidates = []
+    for strategy, m in dev["strategies"].items():
+        if not m["bet_races"] or m["avg_tickets_per_bet_race"] is None:
+            continue
+        # Avoid winning by spraying the whole board: practical cap 8 pairs/race.
+        if m["avg_tickets_per_bet_race"] > 8.0:
+            continue
+        # Require some recurrence rather than one lucky hit.
+        if m["race_hit_rate_pct"] is None or m["race_hit_rate_pct"] < 20.0:
+            continue
+        candidates.append((m["roi_pct"], m["race_hit_rate_pct"], -m["avg_tickets_per_bet_race"], strategy))
+    candidates.sort(reverse=True)
+    chosen = [x[-1] for x in candidates[:5]]
+
+    out = []
+    for strategy in chosen:
+        row = {"strategy": strategy}
+        for y in year_results:
+            m = y["strategies"][strategy]
+            row[str(y["year"])] = {
+                "roi_pct": m["roi_pct"],
+                "profit_yen": m["profit_yen"],
+                "hit_rate_pct": m["race_hit_rate_pct"],
+                "avg_tickets": m["avg_tickets_per_bet_race"],
+                "top1_race_payout_share": m["top1_race_payout_share"],
+            }
+        out.append(row)
+    return out
+
+
 def compact_year(year_result):
     return {
         "year": year_result["year"],
@@ -432,6 +546,13 @@ def main():
         "years": [compact_year(y) for y in years],
         "pooled": pooled_metrics(years),
         "stable_shortlist": stable_shortlist(years),
+        "development_2024_selection_then_validation": development_selection(years),
+        "winning_pair_price_proxy": [
+            winning_pair_price_proxy(y["year"], (
+                build_forward_scored(races, y["year"])[0]
+            ), y["rules"], payouts)
+            for y in years
+        ],
     }
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -471,7 +592,9 @@ def main():
         "",
         "A strategy is not adopted merely because it leads this table. 2024/2025/2026H1 "
         "are shown separately to expose regime dependence and payout concentration. "
-        "A positive pooled ROI driven by one period or one race is treated as unstable.",
+        "The development_2024_selection_then_validation section selects only on 2024 "
+        "and treats 2025/2026H1 as untouched validation. Pair-probability rank is also "
+        "checked as a no-odds proxy for cheap/expensive-looking wide combinations.",
         "",
     ]
     OUT_MD.write_text("\n".join(lines), encoding="utf-8")
