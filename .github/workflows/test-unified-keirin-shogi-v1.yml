@@ -57,5 +57,14 @@ jobs:
               assert orders
               for row in orders:
                   assert len({row["first"], row["second"], row["third"]}) == 3
+          target = next((r for r in generated if str(r.get("race_id")) == "2120260919010006"), generated[0])
+          print("UNIFIED_BOARD_SAMPLE=" + json.dumps({
+              "race_id": target.get("race_id"),
+              "participation": target.get("participation"),
+              "first_candidates": target.get("first_candidates"),
+              "second_candidates": target.get("second_candidates"),
+              "third_candidates": target.get("third_candidates"),
+              "top_orders": target.get("top_orders", [])[:10],
+          }, ensure_ascii=False))
           print(f"validated {len(generated)} unified boards")
           PY
