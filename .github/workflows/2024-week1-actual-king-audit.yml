@@ -1,0 +1,17 @@
+name: 2024 Week1 Actual King Audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/keirin_shogi_2024_week1_actual_kings.py'
+      - '.github/workflows/2024-week1-actual-king-audit.yml'
+  workflow_dispatch:
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/keirin_shogi_2024_week1_actual_kings.py
