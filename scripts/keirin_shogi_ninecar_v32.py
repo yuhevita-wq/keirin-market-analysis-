@@ -3,7 +3,9 @@ from __future__ import annotations
 
 """Nine-car v3.2 production candidate.
 
-Overlay three mechanical rules on the current v3 joint504 board:
+Overlay mechanical state rules on a convergent joint504 board:
+0) CONVERGENCE: keep the 7 board pieces but cap the union at 6 unique riders.
+   The 7th piece must reuse a rider already present on another row.
 1) COLLAPSE filter: high risk that the baseline strongest rider finishes outside top3 -> skip.
 2) SOFT_FAIL overlay: strongest rider likely remains 2nd/3rd -> keep 1st placement, also force into 2nd row.
 3) DOMINANT protection: an overwhelmingly strong rider is never demoted from 1st row.
@@ -212,6 +214,7 @@ def choose_rules(scored):
 
 
     return {
+        "max_unique_riders": 6,
         "collapse_threshold": collapse_threshold,
         "soft_threshold": soft_threshold,
         "dominant_p1_gap_threshold": gt,
@@ -233,9 +236,76 @@ def replace_lowest(row, rider, probs):
     return tuple(sorted(row))
 
 
+def convergent_greedy_board(joint, budget=7, max_unique=6):
+    """Greedy joint-mass board with a union-size guard.
+
+    Keep the original 7-piece budget, but once six distinct riders already
+    exist on the board, the remaining placement must reuse one of them on a
+    different row. This removes the 7-unique-rider -> 21-wide-pair explosion
+    without changing 5- or 6-rider boards.
+    """
+    best = joint[0]
+    rows = [set([best[0]]), set([best[1]]), set([best[2]])]
+    while sum(len(r) for r in rows) < budget:
+        current = v2.board_mass(joint, rows)
+        union = set().union(*rows)
+        best_key, best_move = None, None
+        for ri in range(3):
+            for no in range(1, 10):
+                if no in rows[ri]:
+                    continue
+                is_new = no not in union
+                if is_new and len(union) >= max_unique:
+                    continue
+                trial = [set(x) for x in rows]
+                trial[ri].add(no)
+                gain = v2.board_mass(joint, trial) - current
+                # On exact ties, reuse an existing rider before introducing
+                # another unique rider. Raw gain remains the primary criterion.
+                key = (gain, -int(is_new), -ri, -no)
+                if best_key is None or key > best_key:
+                    best_key = key
+                    best_move = (ri, no)
+        if best_move is None:
+            break
+        rows[best_move[0]].add(best_move[1])
+    return tuple(tuple(sorted(r)) for r in rows), v2.board_mass(joint, rows)
+
+
+def enforce_unique_cap(board, joint, max_unique=6):
+    """Repair an overlay replacement if it expands the board above max_unique."""
+    rows = [set(x) for x in board]
+    while len(set().union(*rows)) > max_unique:
+        union = set().union(*rows)
+        counts = {n: sum(n in row for row in rows) for n in union}
+        best_key, best_move = None, None
+        for ri, row in enumerate(rows):
+            for victim in list(row):
+                if counts.get(victim, 0) != 1:
+                    continue
+                for replacement in union:
+                    if replacement in row or replacement == victim:
+                        continue
+                    trial = [set(x) for x in rows]
+                    trial[ri].remove(victim)
+                    trial[ri].add(replacement)
+                    mass = v2.board_mass(joint, trial)
+                    key = (mass, -ri, -victim, -replacement)
+                    if best_key is None or key > best_key:
+                        best_key = key
+                        best_move = (ri, victim, replacement)
+        if best_move is None:
+            break
+        ri, victim, replacement = best_move
+        rows[ri].remove(victim)
+        rows[ri].add(replacement)
+    return tuple(tuple(sorted(r)) for r in rows)
+
+
 def apply_overlay(r, rules):
     p1m, p2m, p3m = v2.marginals(r["joint"])
-    board, mass = v2.greedy_board(r["joint"], 7)
+    max_unique = int(rules.get("max_unique_riders", 6))
+    board, mass = convergent_greedy_board(r["joint"], 7, max_unique=max_unique)
     board = [tuple(x) for x in board]
     collapse = r["state_probs"]["COLLAPSE"]
     soft = r["state_probs"]["SOFT_FAIL"]
@@ -252,6 +322,8 @@ def apply_overlay(r, rules):
     elif soft >= rules["soft_threshold"] and collapse < rules["collapse_threshold"]:
         board[1] = replace_lowest(board[1], r["strong"], p2m)
         action = "SOFT_FAIL_ADD_SECOND"
+    board = list(enforce_unique_cap(board, r["joint"], max_unique=max_unique))
+    mass = v2.board_mass(r["joint"], board)
     participate = collapse < rules["collapse_threshold"]
     return tuple(board), mass, participate, dominant, action
 
@@ -264,6 +336,7 @@ def evaluate(scored, rules):
         vals.append({
             "hits": hits, "full": bool(all(hits)), "participate": participate,
             "dominant": dominant, "action": action, "state": r["state"],
+            "board": board,
         })
     part = [x for x in vals if x["participate"]]
     dom = [x for x in vals if x["dominant"]]
@@ -278,6 +351,10 @@ def evaluate(scored, rules):
         "participant_full_capture": float(np.mean([x["full"] for x in part])) if part else None,
         "participant_first_capture": float(np.mean([x["hits"][0] for x in part])) if part else None,
         "participant_second_capture": float(np.mean([x["hits"][1] for x in part])) if part else None,
+        "avg_unique_riders": float(np.mean([
+            len(set(x.get("board", ())[0]) | set(x.get("board", ())[1]) | set(x.get("board", ())[2]))
+            for x in vals
+        ])) if vals and vals[0].get("board") is not None else None,
         "dominant_n": len(dom),
         "dominant_rate": len(dom)/len(vals),
         "dominant_actual_win_rate": float(np.mean([x["state"] == 0 for x in dom])) if dom else None,
@@ -316,9 +393,9 @@ def rolling_eval():
         "state_model": m26,
         "state_feature_names": n26,
         "rules": rules26,
-        "model_name": "ninecar_v32_strong_state_overlay",
+        "model_name": "ninecar_v32_convergent6_state_overlay",
         "trained_through": "2026-06-30",
-        "policy_note": "collapse skip + soft-fail second duplication + dominant first protection",
+        "policy_note": "7 pieces, max 6 unique riders + collapse skip + soft-fail second duplication + dominant first protection",
     }
 
     report = {
@@ -347,6 +424,9 @@ def rolling_eval():
             "dominant_rider_never_demoted_from_first": True,
             "soft_fail_keeps_first_and_adds_second": True,
             "collapse_only_drives_skip": True,
+            "board_piece_budget": 7,
+            "max_unique_riders": 6,
+            "seven_unique_rider_boards_forbidden": True,
         },
     }
     OUT.mkdir(parents=True, exist_ok=True)
@@ -384,6 +464,9 @@ def predict_live(payload: dict, model_path: Path | None = None):
         "second_candidates": list(board[1]),
         "third_candidates": list(board[2]),
         "joint_board_mass": mass,
+        "board_unique_riders": len(set(board[0]) | set(board[1]) | set(board[2])),
+        "board_piece_count": sum(len(x) for x in board),
+        "max_unique_riders": int(bundle["rules"].get("max_unique_riders", 6)),
         "strong_rider": strong,
         "strong_state_probabilities": scored["state_probs"],
         "dominant_strong": bool(dominant),
