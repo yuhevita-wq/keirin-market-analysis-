@@ -1,0 +1,40 @@
+name: Study Seven-Car High-Payout Hypotheses
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/keirin_shogi_high_payout_hypothesis_study.py'
+      - '.github/workflows/study-sevencar-high-payout-hypotheses.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: study-sevencar-high-payout-hypotheses
+  cancel-in-progress: true
+
+jobs:
+  study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run high-payout hypothesis study
+        run: python scripts/keirin_shogi_high_payout_hypothesis_study.py
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/keirin_shogi/high_payout_hypothesis_study
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "research: save seven-car high-payout hypothesis study"
+            git pull --rebase origin main
+            git push
+          fi
