@@ -153,6 +153,41 @@ def main():
         if h7_pair_was_candidate:
             cut_h7.discard(h7_pair)
 
+        # H8: "third-place only" public-bias cut from the H4 state.
+        # Rider third-bias score = P3 - max(P1, P2).
+        # Select the rider with the largest POSITIVE third-bias score.
+        # Pair that rider with the strongest other rider by total top3 inclusion
+        # P1+P2+P3, and cut exactly that wide pair if it survives H4.
+        p1m,p2m,p3m=w.v2.marginals(r["joint"])
+        third_bias={
+            n: p3m[n] - max(p1m[n],p2m[n])
+            for n in p1m
+        }
+        h8_third_rider=max(
+            third_bias,
+            key=lambda n:(third_bias[n],p3m[n],-n),
+            default=None,
+        )
+        if h8_third_rider is not None and third_bias[h8_third_rider] <= 0:
+            h8_third_rider=None
+
+        h8_anchor=None
+        h8_pair=None
+        if h8_third_rider is not None:
+            others=[n for n in inc if n != h8_third_rider]
+            h8_anchor=max(
+                others,
+                key=lambda n:(inc[n],-n),
+                default=None,
+            )
+            if h8_anchor is not None:
+                h8_pair=tuple(sorted((h8_third_rider,h8_anchor)))
+
+        cut_h8=set(cut_h4)
+        h8_pair_was_candidate=bool(h8_pair in cut_h4) if h8_pair else False
+        if h8_pair_was_candidate:
+            cut_h8.discard(h8_pair)
+
         # H6: redundancy peeling from the H4 state.
         # For each surviving wide pair, compute how much joint504 probability
         # mass would become completely uncovered if that single pair were removed.
@@ -185,7 +220,7 @@ def main():
         def pay(ts):
             hp=sorted(set(ts)&set(paid))
             return sum(paid[p] for p in hp),hp
-        bp,bh=pay(base); cp,ch=pay(cut); xp,xh=pay(cut_both); hp,hh=pay(cut_h3); qp,qh=pay(cut_h4); vp,vh=pay(cut_h5); rp,rh=pay(cut_h6); sp,sh=pay(cut_h7)
+        bp,bh=pay(base); cp,ch=pay(cut); xp,xh=pay(cut_both); hp,hh=pay(cut_h3); qp,qh=pay(cut_h4); vp,vh=pay(cut_h5); rp,rh=pay(cut_h6); sp,sh=pay(cut_h7); tp,th=pay(cut_h8)
         rows.append({
             "race_id":race.race_id,"date":race.race_date,"race_type":race.race_type,
             "result":list(race.order),"board":[list(x) for x in board],
@@ -233,6 +268,18 @@ def main():
             "h7_pair_was_winner":bool(h7_pair in paid) if h7_pair else False,
             "h7_pair_payout_yen":paid.get(h7_pair,0) if h7_pair else 0,
             "h7_tickets":len(cut_h7),"h7_payout":sp,"h7_hits":[list(x) for x in sh],
+            "h8_third_rider":h8_third_rider,
+            "h8_third_bias":third_bias.get(h8_third_rider) if h8_third_rider is not None else None,
+            "h8_p1":p1m.get(h8_third_rider) if h8_third_rider is not None else None,
+            "h8_p2":p2m.get(h8_third_rider) if h8_third_rider is not None else None,
+            "h8_p3":p3m.get(h8_third_rider) if h8_third_rider is not None else None,
+            "h8_anchor":h8_anchor,
+            "h8_anchor_top3_prob":inc.get(h8_anchor) if h8_anchor is not None else None,
+            "h8_pair":list(h8_pair) if h8_pair else None,
+            "h8_pair_was_candidate":h8_pair_was_candidate,
+            "h8_pair_was_winner":bool(h8_pair in paid) if h8_pair else False,
+            "h8_pair_payout_yen":paid.get(h8_pair,0) if h8_pair else 0,
+            "h8_tickets":len(cut_h8),"h8_payout":tp,"h8_hits":[list(x) for x in th],
         })
     report={
         "study":"2024 Kyodo days1-2 board wide minus strongest-two pair",
@@ -253,6 +300,7 @@ def main():
         "h5_third_remaining_pair_cut":summarize(rows,"h5"),
         "h6_redundancy_cut_from_h4":summarize(rows,"h6"),
         "h7_expected_lead_line_front_pair_cut_from_h4":summarize(rows,"h7"),
+        "h8_third_place_bias_cut_from_h4":summarize(rows,"h8"),
         "cut_effect":{
             "strong2_candidate_cut_races":sum(r["cut_pair_was_candidate"] for r in rows),
             "strong2_winning_cut_pair_races":sum(r["cut_pair_was_winner"] for r in rows),
@@ -284,11 +332,15 @@ def main():
             "h7_winning_cut_pair_races":sum(r["h7_pair_was_candidate"] and r["h7_pair_was_winner"] for r in rows),
             "h7_removed_stake_yen":sum(r["h4_tickets"]-r["h7_tickets"] for r in rows)*100,
             "h7_removed_winning_payout_yen":sum(r["h4_payout"]-r["h7_payout"] for r in rows),
+            "h8_candidate_cut_races":sum(r["h8_pair_was_candidate"] for r in rows),
+            "h8_winning_cut_pair_races":sum(r["h8_pair_was_candidate"] and r["h8_pair_was_winner"] for r in rows),
+            "h8_removed_stake_yen":sum(r["h4_tickets"]-r["h8_tickets"] for r in rows)*100,
+            "h8_removed_winning_payout_yen":sum(r["h4_payout"]-r["h8_payout"] for r in rows),
         },
         "races":rows,
     }
     OUT.parent.mkdir(parents=True,exist_ok=True)
     OUT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    print(json.dumps({k:report[k] for k in ("baseline","strong2_cut","strong2_plus_strongline_cut","h3_highest_remaining_pair_cut","h4_second_remaining_pair_cut","h5_third_remaining_pair_cut","h6_redundancy_cut_from_h4","h7_expected_lead_line_front_pair_cut_from_h4","cut_effect")},ensure_ascii=False,indent=2))
+    print(json.dumps({k:report[k] for k in ("baseline","strong2_cut","strong2_plus_strongline_cut","h3_highest_remaining_pair_cut","h4_second_remaining_pair_cut","h5_third_remaining_pair_cut","h6_redundancy_cut_from_h4","h7_expected_lead_line_front_pair_cut_from_h4","h8_third_place_bias_cut_from_h4","cut_effect")},ensure_ascii=False,indent=2))
 
 if __name__=="__main__": main()
