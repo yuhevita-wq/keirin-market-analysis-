@@ -1,0 +1,78 @@
+name: test-unified-keirin-shogi-v1
+
+on:
+  push:
+    branches:
+      - unified-v1-20260919
+  pull_request:
+    paths:
+      - "scripts/keirin_shogi_unified_v1.py"
+      - "scripts/keirin_shogi_v37_auto_place.py"
+      - "docs/keirin-shogi/index.html"
+      - ".github/workflows/test-unified-keirin-shogi-v1.yml"
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile unified Python entry points
+        run: |
+          python -m py_compile scripts/keirin_shogi_unified_v1.py
+          python -m py_compile scripts/keirin_shogi_v37_auto_place.py
+      - name: Verify unified UI policy is wired
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          html = Path("docs/keirin-shogi/index.html").read_text(encoding="utf-8")
+          assert "unified_joint_order_v1" in html
+          assert "7車 統合v1" in html
+          print("unified UI wiring OK")
+          PY
+      - name: Install package
+        run: python -m pip install -e .
+      - name: Run one-week true-future evaluation
+        run: python scripts/keirin_shogi_unified_v1_week1_eval.py
+      - name: Run fixed second-week evaluation
+        run: python scripts/keirin_shogi_unified_v1_week2_eval.py
+      - name: Run fixed third-week evaluation
+        run: python scripts/keirin_shogi_unified_v1_week3_eval.py
+      - name: Run fixed fourth-week evaluation
+        run: python scripts/keirin_shogi_unified_v1_week4_eval.py
+      - name: Run unified engine against committed live cache
+        run: python scripts/keirin_shogi_v37_auto_place.py
+      - name: Validate unified output invariants
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          payload = json.loads(Path("docs/keirin-shogi/live-board-data.json").read_text(encoding="utf-8"))
+          assert payload["engine"] == "keirin_shogi_unified_v1"
+          assert payload["guards"]["board_rows_share_one_joint_distribution"] is True
+          generated = [r for r in payload["races"] if r.get("board_generated")]
+          assert generated, "No in-scope unified board was generated from committed cache"
+          for race in generated:
+              assert race["board_policy"] == "unified_joint_order_v1"
+              assert race["first_candidates"]
+              assert race["second_candidates"]
+              assert race["third_candidates"]
+              orders = race.get("top_orders", [])
+              assert orders
+              for row in orders:
+                  assert len({row["first"], row["second"], row["third"]}) == 3
+          target = next((r for r in generated if str(r.get("race_id")) == "2120260919010006"), generated[0])
+          print("UNIFIED_BOARD_SAMPLE=" + json.dumps({
+              "race_id": target.get("race_id"),
+              "participation": target.get("participation"),
+              "first_candidates": target.get("first_candidates"),
+              "second_candidates": target.get("second_candidates"),
+              "third_candidates": target.get("third_candidates"),
+              "top_orders": target.get("top_orders", [])[:10],
+          }, ensure_ascii=False))
+          print(f"validated {len(generated)} unified boards")
+          PY

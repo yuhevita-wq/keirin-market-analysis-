@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>競輪将棋 - 自動駒置き 7車v37+ / 9車v3.2</title>
+  <title>競輪将棋 - 自動駒置き 7車統合v1 / 9車v3.2</title>
   <style>
     :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#222;background:#f5f5f5}
     *{box-sizing:border-box} body{margin:0;padding:24px}.wrap{max-width:1050px;margin:0 auto}
@@ -26,8 +26,8 @@
 </head>
 <body>
 <main class="wrap">
-  <h1>競輪将棋 駒置き <span class="badge">7車 v21 / v31 / v37+ ・ 9車 v3.2</span></h1>
-  <p class="note">楽天Kドリームスのレース詳細URLを貼ると、出走表・ラインを取得し、固定済みアルゴリズムを機械計算して3段盤面へ配置します。9車S級G1/G2/G3は専用v3.2を使用し、COLLAPSE高リスクは見送り、勝ち切れない強者は1着に残したまま2着へ重複、圧倒的強者は1着段を維持します。7車はv21→v31→v37を維持し、参加レースでSOFT_FAIL条件に入った場合だけ強者を3着段へ1駒追加します。LLMによるその場の推論は使いません。</p>
+  <h1>競輪将棋 駒置き <span class="badge">7車 統合v1 ・ 9車 v3.2</span></h1>
+  <p class="note">楽天Kドリームスのレース詳細URLを貼ると、出走表・ラインを取得し、機械計算して3段盤面へ配置します。7車F1 S級は統合v1を使用し、1着・2着・3着を別モデルの候補として貼り合わせず、同じ三連単順序分布 P(1着,2着,3着) から3段を同時生成します。学習母集団外への流用を止めるため、統合v1は現時点で7車F1 S級だけを対象にします。LLMによるその場の推論、対象レースのオッズ・人気・結果・払戻は使いません。</p>
 
   <h2>レースURL</h2>
   <section class="panel">
@@ -37,7 +37,7 @@
       </label>
       <button class="action primary" id="generateBoard" type="button">駒配置を生成</button>
     </div>
-    <div class="source">対象: <code>keirin.kdreams.jp/*/racedetail/...</code>　9車S級G1/G2/G3は専用v3.2を使用。7車は現行v21→v31→v37に検証済みSOFT_FAIL 3着追加を重ね、それ以外は従来配置です。v21参加判定は参加/見送りの表示だけに使い、見送りでも盤面は生成します。対象レースのオッズ・人気・結果・払戻は読み込みません。</div>
+    <div class="source">対象: <code>keirin.kdreams.jp/*/racedetail/...</code>　7車F1 S級は統合v1を使用。盤面3段は単一の三連単順序分布の着順別周辺確率から生成します。参加/見送りは利益モデル完成まで旧v21セレクタを暫定安全ガードとして表示にだけ使用し、見送りでも統合盤面は生成します。対象レースのオッズ・人気・結果・払戻は読み込みません。</div>
     <div class="race-info" id="raceInfo"></div>
   </section>
 
@@ -54,9 +54,9 @@
 
   <h2>使用アルゴリズム</h2>
   <section class="algo-grid">
-    <article class="algo"><b>1着段 <span class="badge">v21</span></b>凍結済みv21の1着候補と参加判定を別々に使用。見送りでも1着候補は盤面へ置き、参加判定だけを別表示します。</article>
-    <article class="algo"><b>2着段 <span class="badge">v31</span></b>凍結済み blind unordered Top2 pair。出走n車から全C(n,2)組を計算し、所属質量から2着候補を生成（7車なら21組）。</article>
-    <article class="algo"><b>3着段 <span class="badge">v37+</span></b>全Top2分岐の条件付き3着を周辺化し、candidate_cross gamma=0.25で弱く再重み付け。7車の参加レースでは、真未来検証を通過したSOFT_FAIL条件時のみ強者を3着へ追加。既存候補は削除しません。</article>
+    <article class="algo"><b>7車予測 <span class="badge">統合v1</span></b>1着信号・Top2ペア信号・条件付き3着信号を先に結合し、全順序の三連単確率 P(i,j,k) を1つ生成。その同じ分布を1着・2着・3着へ周辺化して盤面を作ります。</article>
+    <article class="algo"><b>参加判定 <span class="badge">暫定</span></b>利益ベースの新参加モデルはまだ未完成です。現段階では旧v21セレクタを安全ガードとしてだけ残し、盤面候補の生成には使いません。見送りでも盤面は表示します。</article>
+    <article class="algo"><b>適用範囲 <span class="badge">固定</span></b>統合v1は7車F1 S級のみ。旧学習母集団と違うA級・F2・G戦へ同じモデルを無検証で流用しません。</article>
     <article class="algo"><b>9車専用 <span class="badge">v3.2</span></b>504仮説の基礎盤面に強者状態補正を追加。COLLAPSE高リスクは見送り、SOFT_FAILは強者を1着に残したまま2着へ重複。1着差・ライン総強度・勝ち切りスコアがすべて上位10%の圧倒的強者は1着段を明示的に維持します。</article>
   </section>
 </main>
@@ -64,7 +64,7 @@
 const rows=[{key:'first',label:'1着'},{key:'second',label:'2着'},{key:'third',label:'3着'}];
 const state={first:[],second:[],third:[]};
 let selectedPiece=null, liveData=null;
-const acceptedBoardPolicies=new Set(['v21_raw_candidates_through_v31_v37_v1','v21_v31_v37_softfail_third_append_v1','ninecar_v3_direct_second_joint504_fixed7','ninecar_v32_strong_state_overlay']);
+const acceptedBoardPolicies=new Set(['unified_joint_order_v1','v21_raw_candidates_through_v31_v37_v1','v21_v31_v37_softfail_third_append_v1','ninecar_v3_direct_second_joint504_fixed7','ninecar_v32_strong_state_overlay']);
 const board=document.getElementById('board'), status=document.getElementById('status'), raceInfo=document.getElementById('raceInfo');
 
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
@@ -159,7 +159,7 @@ async function generate(){
         status.innerHTML=`<span class="error">${label}</span>　${esc(invalid)}`;
         return;
       }
-      const source=auto.board_policy==='ninecar_v32_strong_state_overlay'?'9車v3.2 自動配置':(auto.board_policy==='v21_v31_v37_softfail_third_append_v1'?'7車v37+ 自動配置':(auto.board_policy==='ninecar_v3_direct_second_joint504_fixed7'?'9車v3 旧自動配置':'v21/v31/v37 自動配置'));
+      const source=auto.board_policy==='unified_joint_order_v1'?'7車 統合v1 自動配置':(auto.board_policy==='ninecar_v32_strong_state_overlay'?'9車v3.2 自動配置':(auto.board_policy==='v21_v31_v37_softfail_third_append_v1'?'7車v37+ 旧自動配置':(auto.board_policy==='ninecar_v3_direct_second_joint504_fixed7'?'9車v3 旧自動配置':'旧v21/v31/v37 自動配置')));
       applyRace(auto,source);
       return;
     }
