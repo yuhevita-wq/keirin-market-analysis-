@@ -99,6 +99,62 @@ def main():
         if h4_pair is not None:
             cut_h4.discard(h4_pair)
 
+        # Provisional H5: two overlapping top3 scenarios -> exactly five wide pairs.
+        # IMPORTANT: H5 is applied AFTER H1-H4. Any pair removed by H1-H4
+        # stays removed and cannot re-enter here.
+        #
+        # 1) Collapse joint504 ordered outcomes into unordered 3-rider sets.
+        # 2) Keep only 3-rider sets whose three internal wide pairs all survive H4.
+        # 3) Search every pair of such 3-rider sets sharing exactly two riders.
+        #    Their union is exactly five wide pairs.
+        # 4) Choose the pair of scenarios with maximum pre-race joint mass sum.
+        # No odds/popularity/result/payout information is used for selection.
+        from collections import defaultdict
+        h5_set_mass=defaultdict(float)
+        for a,b,c,prob in r["joint"]:
+            s=tuple(sorted((a,b,c)))
+            h5_set_mass[s] += prob
+
+        def tri_edges(s):
+            a,b,c=s
+            return {
+                tuple(sorted((a,b))),
+                tuple(sorted((a,c))),
+                tuple(sorted((b,c))),
+            }
+
+        h5_valid_sets=[
+            s for s in h5_set_mass
+            if tri_edges(s) <= cut_h4
+        ]
+        h5_best=None
+        h5_best_key=None
+        for i,s1 in enumerate(h5_valid_sets):
+            e1=tri_edges(s1)
+            for s2 in h5_valid_sets[i+1:]:
+                if len(set(s1) & set(s2)) != 2:
+                    continue
+                tickets=e1 | tri_edges(s2)
+                if len(tickets) != 5:
+                    continue
+                key=(
+                    h5_set_mass[s1] + h5_set_mass[s2],
+                    min(h5_set_mass[s1],h5_set_mass[s2]),
+                    -sum(s1),
+                    -sum(s2),
+                )
+                if h5_best_key is None or key > h5_best_key:
+                    h5_best_key=key
+                    h5_best=(s1,s2,tickets)
+
+        provisional_h5=set()
+        h5_s1=h5_s2=None
+        h5_s1_mass=h5_s2_mass=None
+        if h5_best is not None:
+            h5_s1,h5_s2,provisional_h5=h5_best
+            h5_s1_mass=h5_set_mass[h5_s1]
+            h5_s2_mass=h5_set_mass[h5_s2]
+
         # H5: remove exactly one more surviving pair after H4,
         # again the highest remaining joint co-top3 probability pair.
         h5_pair=max(
@@ -380,7 +436,7 @@ def main():
         def pay(ts):
             hp=sorted(set(ts)&set(paid))
             return sum(paid[p] for p in hp),hp
-        bp,bh=pay(base); cp,ch=pay(cut); xp,xh=pay(cut_both); hp,hh=pay(cut_h3); qp,qh=pay(cut_h4); vp,vh=pay(cut_h5); rp,rh=pay(cut_h6); sp,sh=pay(cut_h7); tp,th=pay(cut_h8); a9p,a9h=pay(cut_h9a); b9p,b9h=pay(cut_h9b); c9p,c9h=pay(cut_h9c); ah5p,ah5h=pay(adopted_h5); e6p,e6h=pay(cut_h6e)
+        bp,bh=pay(base); cp,ch=pay(cut); xp,xh=pay(cut_both); hp,hh=pay(cut_h3); qp,qh=pay(cut_h4); p5p,p5h=pay(provisional_h5); vp,vh=pay(cut_h5); rp,rh=pay(cut_h6); sp,sh=pay(cut_h7); tp,th=pay(cut_h8); a9p,a9h=pay(cut_h9a); b9p,b9h=pay(cut_h9b); c9p,c9h=pay(cut_h9c); ah5p,ah5h=pay(adopted_h5); e6p,e6h=pay(cut_h6e)
         rows.append({
             "race_id":race.race_id,"date":race.race_date,"race_type":race.race_type,
             "result":list(race.order),"board":[list(x) for x in board],
@@ -406,6 +462,15 @@ def main():
             "h4_pair_was_winner":bool(h4_pair in paid) if h4_pair else False,
             "h4_pair_payout_yen":paid.get(h4_pair,0) if h4_pair else 0,
             "h4_tickets":len(cut_h4),"h4_payout":qp,"h4_hits":[list(x) for x in qh],
+            "provisional_h5_scenario1":list(h5_s1) if h5_s1 else None,
+            "provisional_h5_scenario2":list(h5_s2) if h5_s2 else None,
+            "provisional_h5_scenario1_mass":h5_s1_mass,
+            "provisional_h5_scenario2_mass":h5_s2_mass,
+            "provisional_h5_joint_mass_sum":(h5_s1_mass+h5_s2_mass) if h5_s1_mass is not None else None,
+            "provisional_h5_tickets_list":[list(x) for x in sorted(provisional_h5)],
+            "provisional_h5_tickets":len(provisional_h5),
+            "provisional_h5_payout":p5p,
+            "provisional_h5_hits":[list(x) for x in p5h],
             "h5_pair":list(h5_pair) if h5_pair else None,
             "h5_pair_prob":pair_probs.get(h5_pair,0.0) if h5_pair else None,
             "h5_pair_was_winner":bool(h5_pair in paid) if h5_pair else False,
@@ -471,6 +536,8 @@ def main():
         "study":"2024 Kyodo days1-2 board wide minus strongest-two pair",
         "dates":[START,END],
         "definition":{
+            "h_order":"H1 -> H2 -> H3 -> H4 -> provisional H5; removed pairs never re-enter",
+            "provisional_h5":"From H4 survivors only: choose two unordered 3-rider joint504 scenarios sharing two riders, maximizing their pre-race joint-mass sum; buy the union of their internal wide pairs (exactly 5 when available).",
             "board":"v3.2 forward board, calibrated only on prior data",
             "base_tickets":"all unique wide pairs among riders appearing anywhere on the 7-piece board",
             "strongest_two":"top two riders by model top3 inclusion probability = P1+P2+P3 from joint504",
@@ -483,6 +550,7 @@ def main():
         "strong2_plus_strongline_cut":summarize(rows,"both"),
         "h3_highest_remaining_pair_cut":summarize(rows,"h3"),
         "h4_second_remaining_pair_cut":summarize(rows,"h4"),
+        "provisional_h5_two_overlapping_scenarios":summarize(rows,"provisional_h5"),
         "h5_third_remaining_pair_cut":summarize(rows,"h5"),
         "h6_redundancy_cut_from_h4":summarize(rows,"h6"),
         "h7_expected_lead_line_front_pair_cut_from_h4":summarize(rows,"h7"),
@@ -492,6 +560,13 @@ def main():
         "h9c_favourite_plus_otherline_third_bias_cut_from_h4":summarize(rows,"h9c"),
         "adopted_h5":summarize(rows,"adopted_h5"),
         "h6_explanation_ease_cut_from_adopted_h5":summarize(rows,"h6e"),
+        "provisional_h5_effect":{
+            "candidate_races":sum(r["provisional_h5_tickets"]==5 for r in rows),
+            "no_valid_two_scenario_races":sum(r["provisional_h5_tickets"]!=5 for r in rows),
+            "winning_races":sum(r["provisional_h5_payout"]>0 for r in rows),
+            "total_selected_tickets":sum(r["provisional_h5_tickets"] for r in rows),
+            "h4_to_h5_removed_tickets":sum(r["h4_tickets"]-r["provisional_h5_tickets"] for r in rows),
+        },
         "cut_effect":{
             "strong2_candidate_cut_races":sum(r["cut_pair_was_candidate"] for r in rows),
             "strong2_winning_cut_pair_races":sum(r["cut_pair_was_winner"] for r in rows),
@@ -548,6 +623,6 @@ def main():
     }
     OUT.parent.mkdir(parents=True,exist_ok=True)
     OUT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    print(json.dumps({k:report[k] for k in ("baseline","strong2_cut","strong2_plus_strongline_cut","h3_highest_remaining_pair_cut","h4_second_remaining_pair_cut","adopted_h5","h6_explanation_ease_cut_from_adopted_h5","cut_effect")},ensure_ascii=False,indent=2))
+    print(json.dumps({k:report[k] for k in ("baseline","strong2_cut","strong2_plus_strongline_cut","h3_highest_remaining_pair_cut","h4_second_remaining_pair_cut","provisional_h5_two_overlapping_scenarios","provisional_h5_effect")},ensure_ascii=False,indent=2))
 
 if __name__=="__main__": main()
