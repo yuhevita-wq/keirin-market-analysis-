@@ -1,139 +1,6182 @@
 {
-  "study": "2026 Kyodo day1 H1-H4 plus iterative history-relation H5 compression",
-  "date": "2026-09-18",
-  "calibration_rows": 2201,
-  "definition": {
-    "board": "v3.2 forward board; no odds/popularity/payout at inference",
-    "h_order": "H1 -> H2 -> H3 -> H4 -> iterative H5",
-    "h5": "Rank H4 survivors by cumulative H1-H4 rider touch score desc; tie by joint co-top3 probability desc. Remove one at a time.",
-    "checkpoints": "Evaluate the same pre-race H5 cut order at 6,5,4,3 tickets. No result-dependent stopping.",
-    "stake": "100 yen equal stake per pair"
+  "study": "2026 Kyodo day1 pre-race snapshot: H1-H4 + iterative H5 to 6/5/4/3",
+  "snapshot_commit": "47aab9aaac28872120973955814e1353b981f44f",
+  "snapshot_generated_at_jst": "2026-09-18T09:21:49.147468+09:00",
+  "prediction_model": "ninecar_v32_adaptive_convergence_state_overlay",
+  "inference_integrity": {
+    "snapshot_before_first_race": true,
+    "snapshot_time_jst": "2026-09-18T09:21:49.147468+09:00",
+    "official_grade_corrected_to": "G2",
+    "official_race_type_corrected_to": "S級一次予選",
+    "odds_used_for_selection": false,
+    "results_used_for_selection": false,
+    "payouts_used_for_selection": false
   },
+  "skipped": [
+    {
+      "race_no": 2,
+      "race_id": "4620260918010002",
+      "reason": "v32 participation skip"
+    }
+  ],
   "base": {
-    "races": 0,
-    "tickets": 0,
-    "stake_yen": 0,
-    "payout_yen": 0,
-    "profit_yen": 0,
-    "roi_pct": null,
-    "hit_races": 0,
-    "hit_rate_pct": null,
-    "multi_hit_races": 0,
-    "triple_hit_races": 0,
-    "avg_tickets": null,
-    "max_race_payout_yen": 0
+    "races": 11,
+    "tickets": 168,
+    "stake_yen": 16800,
+    "payout_yen": 11510,
+    "profit_yen": -5290,
+    "roi_pct": 68.51190476190476,
+    "hit_races": 10,
+    "hit_rate_pct": 90.9090909090909,
+    "multi_hit_races": 7,
+    "triple_hit_races": 7,
+    "avg_tickets": 15.272727272727273,
+    "max_race_payout_yen": 2870
   },
   "h1": {
-    "races": 0,
-    "tickets": 0,
-    "stake_yen": 0,
-    "payout_yen": 0,
-    "profit_yen": 0,
-    "roi_pct": null,
-    "hit_races": 0,
-    "hit_rate_pct": null,
-    "multi_hit_races": 0,
-    "triple_hit_races": 0,
-    "avg_tickets": null,
-    "max_race_payout_yen": 0
+    "races": 11,
+    "tickets": 157,
+    "stake_yen": 15700,
+    "payout_yen": 10800,
+    "profit_yen": -4900,
+    "roi_pct": 68.78980891719745,
+    "hit_races": 9,
+    "hit_rate_pct": 81.81818181818181,
+    "multi_hit_races": 7,
+    "triple_hit_races": 4,
+    "avg_tickets": 14.272727272727273,
+    "max_race_payout_yen": 2870
   },
   "h2": {
-    "races": 0,
-    "tickets": 0,
-    "stake_yen": 0,
-    "payout_yen": 0,
-    "profit_yen": 0,
-    "roi_pct": null,
-    "hit_races": 0,
-    "hit_rate_pct": null,
-    "multi_hit_races": 0,
-    "triple_hit_races": 0,
-    "avg_tickets": null,
-    "max_race_payout_yen": 0
+    "races": 11,
+    "tickets": 147,
+    "stake_yen": 14700,
+    "payout_yen": 10170,
+    "profit_yen": -4530,
+    "roi_pct": 69.18367346938776,
+    "hit_races": 8,
+    "hit_rate_pct": 72.72727272727273,
+    "multi_hit_races": 6,
+    "triple_hit_races": 3,
+    "avg_tickets": 13.363636363636363,
+    "max_race_payout_yen": 2870
   },
   "h3": {
-    "races": 0,
-    "tickets": 0,
-    "stake_yen": 0,
-    "payout_yen": 0,
-    "profit_yen": 0,
-    "roi_pct": null,
-    "hit_races": 0,
-    "hit_rate_pct": null,
-    "multi_hit_races": 0,
-    "triple_hit_races": 0,
-    "avg_tickets": null,
-    "max_race_payout_yen": 0
+    "races": 11,
+    "tickets": 136,
+    "stake_yen": 13600,
+    "payout_yen": 9480,
+    "profit_yen": -4120,
+    "roi_pct": 69.70588235294117,
+    "hit_races": 8,
+    "hit_rate_pct": 72.72727272727273,
+    "multi_hit_races": 4,
+    "triple_hit_races": 2,
+    "avg_tickets": 12.363636363636363,
+    "max_race_payout_yen": 2870
   },
   "h4": {
-    "races": 0,
-    "tickets": 0,
-    "stake_yen": 0,
-    "payout_yen": 0,
-    "profit_yen": 0,
-    "roi_pct": null,
-    "hit_races": 0,
-    "hit_rate_pct": null,
-    "multi_hit_races": 0,
-    "triple_hit_races": 0,
-    "avg_tickets": null,
-    "max_race_payout_yen": 0
+    "races": 11,
+    "tickets": 125,
+    "stake_yen": 12500,
+    "payout_yen": 7360,
+    "profit_yen": -5140,
+    "roi_pct": 58.88,
+    "hit_races": 5,
+    "hit_rate_pct": 45.45454545454545,
+    "multi_hit_races": 2,
+    "triple_hit_races": 1,
+    "avg_tickets": 11.363636363636363,
+    "max_race_payout_yen": 2870
   },
   "h5_6": {
-    "races": 0,
-    "tickets": 0,
-    "stake_yen": 0,
-    "payout_yen": 0,
-    "profit_yen": 0,
-    "roi_pct": null,
-    "hit_races": 0,
-    "hit_rate_pct": null,
-    "multi_hit_races": 0,
+    "races": 11,
+    "tickets": 66,
+    "stake_yen": 6600,
+    "payout_yen": 2410,
+    "profit_yen": -4190,
+    "roi_pct": 36.515151515151516,
+    "hit_races": 1,
+    "hit_rate_pct": 9.090909090909092,
+    "multi_hit_races": 1,
     "triple_hit_races": 0,
-    "avg_tickets": null,
-    "max_race_payout_yen": 0
+    "avg_tickets": 6.0,
+    "max_race_payout_yen": 2410
   },
   "h5_5": {
-    "races": 0,
-    "tickets": 0,
-    "stake_yen": 0,
-    "payout_yen": 0,
-    "profit_yen": 0,
-    "roi_pct": null,
-    "hit_races": 0,
-    "hit_rate_pct": null,
-    "multi_hit_races": 0,
+    "races": 11,
+    "tickets": 55,
+    "stake_yen": 5500,
+    "payout_yen": 2410,
+    "profit_yen": -3090,
+    "roi_pct": 43.81818181818182,
+    "hit_races": 1,
+    "hit_rate_pct": 9.090909090909092,
+    "multi_hit_races": 1,
     "triple_hit_races": 0,
-    "avg_tickets": null,
-    "max_race_payout_yen": 0
+    "avg_tickets": 5.0,
+    "max_race_payout_yen": 2410
   },
   "h5_4": {
-    "races": 0,
-    "tickets": 0,
-    "stake_yen": 0,
-    "payout_yen": 0,
-    "profit_yen": 0,
-    "roi_pct": null,
-    "hit_races": 0,
-    "hit_rate_pct": null,
+    "races": 11,
+    "tickets": 44,
+    "stake_yen": 4400,
+    "payout_yen": 1670,
+    "profit_yen": -2730,
+    "roi_pct": 37.95454545454545,
+    "hit_races": 1,
+    "hit_rate_pct": 9.090909090909092,
     "multi_hit_races": 0,
     "triple_hit_races": 0,
-    "avg_tickets": null,
-    "max_race_payout_yen": 0
+    "avg_tickets": 4.0,
+    "max_race_payout_yen": 1670
   },
   "h5_3": {
-    "races": 0,
-    "tickets": 0,
-    "stake_yen": 0,
-    "payout_yen": 0,
-    "profit_yen": 0,
-    "roi_pct": null,
-    "hit_races": 0,
-    "hit_rate_pct": null,
+    "races": 11,
+    "tickets": 33,
+    "stake_yen": 3300,
+    "payout_yen": 1670,
+    "profit_yen": -1630,
+    "roi_pct": 50.60606060606061,
+    "hit_races": 1,
+    "hit_rate_pct": 9.090909090909092,
     "multi_hit_races": 0,
     "triple_hit_races": 0,
-    "avg_tickets": null,
-    "max_race_payout_yen": 0
+    "avg_tickets": 3.0,
+    "max_race_payout_yen": 1670
   },
-  "races": []
+  "races": [
+    {
+      "race_no": 1,
+      "race_id": "4620260918010001",
+      "actual_order": [
+        3,
+        5,
+        4
+      ],
+      "board": [
+        [
+          3,
+          7
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          3,
+          9
+        ]
+      ],
+      "board_unique_riders": 6,
+      "board_mass": 0.07262457531035772,
+      "overlay_action": "BASE",
+      "h1_pair": [
+        3,
+        7
+      ],
+      "h2_pair": [
+        1,
+        7
+      ],
+      "h3_pair": [
+        1,
+        3
+      ],
+      "h4_pair": [
+        3,
+        4
+      ],
+      "history_touch": {
+        "1": 2,
+        "2": 0,
+        "3": 3,
+        "4": 1,
+        "5": 0,
+        "6": 0,
+        "7": 2,
+        "8": 0,
+        "9": 0
+      },
+      "h5_cut_order": [
+        [
+          4,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          2,
+          9
+        ]
+      ],
+      "base": {
+        "tickets": 15,
+        "payout": 340,
+        "hit_count": 1,
+        "hits": [
+          [
+            3,
+            4
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h1": {
+        "tickets": 14,
+        "payout": 340,
+        "hit_count": 1,
+        "hits": [
+          [
+            3,
+            4
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h2": {
+        "tickets": 13,
+        "payout": 340,
+        "hit_count": 1,
+        "hits": [
+          [
+            3,
+            4
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h3": {
+        "tickets": 12,
+        "payout": 340,
+        "hit_count": 1,
+        "hits": [
+          [
+            3,
+            4
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h4": {
+        "tickets": 11,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_6": {
+        "tickets": 6,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            4,
+            9
+          ]
+        ]
+      },
+      "h5_5": {
+        "tickets": 5,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            4,
+            9
+          ]
+        ]
+      },
+      "h5_4": {
+        "tickets": 4,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            4,
+            9
+          ]
+        ]
+      },
+      "h5_3": {
+        "tickets": 3,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            4,
+            9
+          ]
+        ]
+      }
+    },
+    {
+      "race_no": 3,
+      "race_id": "4620260918010003",
+      "actual_order": [
+        2,
+        3,
+        6
+      ],
+      "board": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          7,
+          9
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "board_unique_riders": 5,
+      "board_mass": 0.04427680082662812,
+      "overlay_action": "SOFT_FAIL_ADD_SECOND",
+      "h1_pair": [
+        2,
+        5
+      ],
+      "h2_pair": [
+        1,
+        9
+      ],
+      "h3_pair": [
+        1,
+        2
+      ],
+      "h4_pair": [
+        2,
+        9
+      ],
+      "history_touch": {
+        "1": 2,
+        "2": 3,
+        "3": 0,
+        "4": 0,
+        "5": 1,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 2
+      },
+      "h5_cut_order": [
+        [
+          1,
+          5
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          5,
+          7
+        ]
+      ],
+      "base": {
+        "tickets": 10,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h1": {
+        "tickets": 9,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h2": {
+        "tickets": 8,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h3": {
+        "tickets": 7,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h4": {
+        "tickets": 6,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_6": {
+        "tickets": 6,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_5": {
+        "tickets": 5,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_4": {
+        "tickets": 4,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_3": {
+        "tickets": 3,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            7
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      }
+    },
+    {
+      "race_no": 4,
+      "race_id": "4620260918010004",
+      "actual_order": [
+        3,
+        1,
+        5
+      ],
+      "board": [
+        [
+          3,
+          5
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          2,
+          4,
+          7
+        ]
+      ],
+      "board_unique_riders": 7,
+      "board_mass": 0.07249424306340639,
+      "overlay_action": "BASE",
+      "h1_pair": [
+        1,
+        3
+      ],
+      "h2_pair": [
+        3,
+        9
+      ],
+      "h3_pair": [
+        1,
+        5
+      ],
+      "h4_pair": [
+        3,
+        5
+      ],
+      "history_touch": {
+        "1": 2,
+        "2": 0,
+        "3": 3,
+        "4": 0,
+        "5": 2,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 1
+      },
+      "h5_cut_order": [
+        [
+          1,
+          9
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "base": {
+        "tickets": 21,
+        "payout": 710,
+        "hit_count": 3,
+        "hits": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            3,
+            5
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h1": {
+        "tickets": 20,
+        "payout": 570,
+        "hit_count": 2,
+        "hits": [
+          [
+            1,
+            5
+          ],
+          [
+            3,
+            5
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h2": {
+        "tickets": 19,
+        "payout": 570,
+        "hit_count": 2,
+        "hits": [
+          [
+            1,
+            5
+          ],
+          [
+            3,
+            5
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h3": {
+        "tickets": 18,
+        "payout": 310,
+        "hit_count": 1,
+        "hits": [
+          [
+            3,
+            5
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h4": {
+        "tickets": 17,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_6": {
+        "tickets": 6,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_5": {
+        "tickets": 5,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            9
+          ]
+        ]
+      },
+      "h5_4": {
+        "tickets": 4,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            4,
+            7
+          ]
+        ]
+      },
+      "h5_3": {
+        "tickets": 3,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            4,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "race_no": 5,
+      "race_id": "4620260918010005",
+      "actual_order": [
+        1,
+        2,
+        5
+      ],
+      "board": [
+        [
+          2,
+          7
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          7,
+          9
+        ]
+      ],
+      "board_unique_riders": 5,
+      "board_mass": 0.04064509531480177,
+      "overlay_action": "SOFT_FAIL_ADD_SECOND",
+      "h1_pair": [
+        2,
+        7
+      ],
+      "h2_pair": [
+        2,
+        5
+      ],
+      "h3_pair": [
+        2,
+        3
+      ],
+      "h4_pair": [
+        3,
+        7
+      ],
+      "history_touch": {
+        "1": 0,
+        "2": 3,
+        "3": 2,
+        "4": 0,
+        "5": 1,
+        "6": 0,
+        "7": 2,
+        "8": 0,
+        "9": 0
+      },
+      "h5_cut_order": [
+        [
+          5,
+          7
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          5,
+          9
+        ]
+      ],
+      "base": {
+        "tickets": 10,
+        "payout": 350,
+        "hit_count": 1,
+        "hits": [
+          [
+            2,
+            5
+          ]
+        ],
+        "selected_pairs": [
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h1": {
+        "tickets": 9,
+        "payout": 350,
+        "hit_count": 1,
+        "hits": [
+          [
+            2,
+            5
+          ]
+        ],
+        "selected_pairs": [
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h2": {
+        "tickets": 8,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h3": {
+        "tickets": 7,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h4": {
+        "tickets": 6,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_6": {
+        "tickets": 6,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_5": {
+        "tickets": 5,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_4": {
+        "tickets": 4,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_3": {
+        "tickets": 3,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      }
+    },
+    {
+      "race_no": 6,
+      "race_id": "4620260918010006",
+      "actual_order": [
+        7,
+        5,
+        3
+      ],
+      "board": [
+        [
+          2
+        ],
+        [
+          1,
+          3,
+          7
+        ],
+        [
+          5,
+          6,
+          9
+        ]
+      ],
+      "board_unique_riders": 7,
+      "board_mass": 0.05134064510238836,
+      "overlay_action": "BASE",
+      "h1_pair": [
+        2,
+        3
+      ],
+      "h2_pair": [
+        1,
+        9
+      ],
+      "h3_pair": [
+        2,
+        5
+      ],
+      "h4_pair": [
+        3,
+        5
+      ],
+      "history_touch": {
+        "1": 1,
+        "2": 2,
+        "3": 2,
+        "4": 0,
+        "5": 2,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 1
+      },
+      "h5_cut_order": [
+        [
+          2,
+          9
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          6,
+          9
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          6,
+          7
+        ]
+      ],
+      "base": {
+        "tickets": 21,
+        "payout": 2150,
+        "hit_count": 3,
+        "hits": [
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            5,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h1": {
+        "tickets": 20,
+        "payout": 2150,
+        "hit_count": 3,
+        "hits": [
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            5,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h2": {
+        "tickets": 19,
+        "payout": 2150,
+        "hit_count": 3,
+        "hits": [
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            5,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h3": {
+        "tickets": 18,
+        "payout": 2150,
+        "hit_count": 3,
+        "hits": [
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            5,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h4": {
+        "tickets": 17,
+        "payout": 1680,
+        "hit_count": 2,
+        "hits": [
+          [
+            3,
+            7
+          ],
+          [
+            5,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_6": {
+        "tickets": 6,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_5": {
+        "tickets": 5,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_4": {
+        "tickets": 4,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            9
+          ]
+        ]
+      },
+      "h5_3": {
+        "tickets": 3,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            6
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            9
+          ]
+        ]
+      }
+    },
+    {
+      "race_no": 7,
+      "race_id": "4620260918010007",
+      "actual_order": [
+        3,
+        7,
+        2
+      ],
+      "board": [
+        [
+          1,
+          3
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          1,
+          2,
+          7
+        ]
+      ],
+      "board_unique_riders": 6,
+      "board_mass": 0.07100655735952213,
+      "overlay_action": "BASE",
+      "h1_pair": [
+        1,
+        3
+      ],
+      "h2_pair": [
+        2,
+        9
+      ],
+      "h3_pair": [
+        3,
+        9
+      ],
+      "h4_pair": [
+        1,
+        9
+      ],
+      "history_touch": {
+        "1": 2,
+        "2": 1,
+        "3": 2,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 3
+      },
+      "h5_cut_order": [
+        [
+          2,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          5,
+          7
+        ]
+      ],
+      "base": {
+        "tickets": 15,
+        "payout": 2870,
+        "hit_count": 3,
+        "hits": [
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            3,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h1": {
+        "tickets": 14,
+        "payout": 2870,
+        "hit_count": 3,
+        "hits": [
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            3,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h2": {
+        "tickets": 13,
+        "payout": 2870,
+        "hit_count": 3,
+        "hits": [
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            3,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h3": {
+        "tickets": 12,
+        "payout": 2870,
+        "hit_count": 3,
+        "hits": [
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            3,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h4": {
+        "tickets": 11,
+        "payout": 2870,
+        "hit_count": 3,
+        "hits": [
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            3,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_6": {
+        "tickets": 6,
+        "payout": 2410,
+        "hit_count": 2,
+        "hits": [
+          [
+            2,
+            7
+          ],
+          [
+            3,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            5,
+            7
+          ]
+        ]
+      },
+      "h5_5": {
+        "tickets": 5,
+        "payout": 2410,
+        "hit_count": 2,
+        "hits": [
+          [
+            2,
+            7
+          ],
+          [
+            3,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            5,
+            7
+          ]
+        ]
+      },
+      "h5_4": {
+        "tickets": 4,
+        "payout": 1670,
+        "hit_count": 1,
+        "hits": [
+          [
+            2,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            5,
+            7
+          ]
+        ]
+      },
+      "h5_3": {
+        "tickets": 3,
+        "payout": 1670,
+        "hit_count": 1,
+        "hits": [
+          [
+            2,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            5,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "race_no": 8,
+      "race_id": "4620260918010008",
+      "actual_order": [
+        2,
+        8,
+        9
+      ],
+      "board": [
+        [
+          2
+        ],
+        [
+          1,
+          3,
+          9
+        ],
+        [
+          3,
+          5,
+          6
+        ]
+      ],
+      "board_unique_riders": 6,
+      "board_mass": 0.06781667256347967,
+      "overlay_action": "BASE",
+      "h1_pair": [
+        2,
+        9
+      ],
+      "h2_pair": [
+        5,
+        9
+      ],
+      "h3_pair": [
+        2,
+        3
+      ],
+      "h4_pair": [
+        1,
+        2
+      ],
+      "history_touch": {
+        "1": 1,
+        "2": 3,
+        "3": 1,
+        "4": 0,
+        "5": 1,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 2
+      },
+      "h5_cut_order": [
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          6,
+          9
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "base": {
+        "tickets": 15,
+        "payout": 220,
+        "hit_count": 1,
+        "hits": [
+          [
+            2,
+            9
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            6,
+            9
+          ]
+        ]
+      },
+      "h1": {
+        "tickets": 14,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            6,
+            9
+          ]
+        ]
+      },
+      "h2": {
+        "tickets": 13,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            6,
+            9
+          ]
+        ]
+      },
+      "h3": {
+        "tickets": 12,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            6,
+            9
+          ]
+        ]
+      },
+      "h4": {
+        "tickets": 11,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            6,
+            9
+          ]
+        ]
+      },
+      "h5_6": {
+        "tickets": 6,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            6,
+            9
+          ]
+        ]
+      },
+      "h5_5": {
+        "tickets": 5,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            6,
+            9
+          ]
+        ]
+      },
+      "h5_4": {
+        "tickets": 4,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            6,
+            9
+          ]
+        ]
+      },
+      "h5_3": {
+        "tickets": 3,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            5,
+            6
+          ]
+        ]
+      }
+    },
+    {
+      "race_no": 9,
+      "race_id": "4620260918010009",
+      "actual_order": [
+        2,
+        5,
+        7
+      ],
+      "board": [
+        [
+          2,
+          9
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          5,
+          9
+        ]
+      ],
+      "board_unique_riders": 6,
+      "board_mass": 0.06851295266762025,
+      "overlay_action": "BASE",
+      "h1_pair": [
+        2,
+        9
+      ],
+      "h2_pair": [
+        2,
+        7
+      ],
+      "h3_pair": [
+        1,
+        2
+      ],
+      "h4_pair": [
+        2,
+        5
+      ],
+      "history_touch": {
+        "1": 1,
+        "2": 4,
+        "3": 0,
+        "4": 0,
+        "5": 1,
+        "6": 0,
+        "7": 1,
+        "8": 0,
+        "9": 1
+      },
+      "h5_cut_order": [
+        [
+          2,
+          3
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "base": {
+        "tickets": 15,
+        "payout": 1250,
+        "hit_count": 3,
+        "hits": [
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            5,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h1": {
+        "tickets": 14,
+        "payout": 1250,
+        "hit_count": 3,
+        "hits": [
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            5,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h2": {
+        "tickets": 13,
+        "payout": 1090,
+        "hit_count": 2,
+        "hits": [
+          [
+            2,
+            5
+          ],
+          [
+            5,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h3": {
+        "tickets": 12,
+        "payout": 1090,
+        "hit_count": 2,
+        "hits": [
+          [
+            2,
+            5
+          ],
+          [
+            5,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h4": {
+        "tickets": 11,
+        "payout": 840,
+        "hit_count": 1,
+        "hits": [
+          [
+            5,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_6": {
+        "tickets": 6,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ]
+        ]
+      },
+      "h5_5": {
+        "tickets": 5,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ]
+        ]
+      },
+      "h5_4": {
+        "tickets": 4,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            3
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ]
+        ]
+      },
+      "h5_3": {
+        "tickets": 3,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            3
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "race_no": 10,
+      "race_id": "4620260918010010",
+      "actual_order": [
+        1,
+        9,
+        7
+      ],
+      "board": [
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          5,
+          7,
+          8
+        ]
+      ],
+      "board_unique_riders": 6,
+      "board_mass": 0.0837838778696543,
+      "overlay_action": "BASE",
+      "h1_pair": [
+        1,
+        7
+      ],
+      "h2_pair": [
+        1,
+        9
+      ],
+      "h3_pair": [
+        1,
+        5
+      ],
+      "h4_pair": [
+        1,
+        2
+      ],
+      "history_touch": {
+        "1": 4,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 1,
+        "6": 0,
+        "7": 1,
+        "8": 0,
+        "9": 1
+      },
+      "h5_cut_order": [
+        [
+          1,
+          8
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          5,
+          8
+        ]
+      ],
+      "base": {
+        "tickets": 15,
+        "payout": 630,
+        "hit_count": 3,
+        "hits": [
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            8
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            8
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            8
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            9
+          ],
+          [
+            8,
+            9
+          ]
+        ]
+      },
+      "h1": {
+        "tickets": 14,
+        "payout": 440,
+        "hit_count": 2,
+        "hits": [
+          [
+            1,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            8
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            8
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            8
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            9
+          ],
+          [
+            8,
+            9
+          ]
+        ]
+      },
+      "h2": {
+        "tickets": 13,
+        "payout": 320,
+        "hit_count": 1,
+        "hits": [
+          [
+            7,
+            9
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            8
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            8
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            8
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            9
+          ],
+          [
+            8,
+            9
+          ]
+        ]
+      },
+      "h3": {
+        "tickets": 12,
+        "payout": 320,
+        "hit_count": 1,
+        "hits": [
+          [
+            7,
+            9
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            8
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            8
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            8
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            9
+          ],
+          [
+            8,
+            9
+          ]
+        ]
+      },
+      "h4": {
+        "tickets": 11,
+        "payout": 320,
+        "hit_count": 1,
+        "hits": [
+          [
+            7,
+            9
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            8
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            8
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            8
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            9
+          ],
+          [
+            8,
+            9
+          ]
+        ]
+      },
+      "h5_6": {
+        "tickets": 6,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            8
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            5,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            9
+          ]
+        ]
+      },
+      "h5_5": {
+        "tickets": 5,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            8
+          ],
+          [
+            5,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            9
+          ]
+        ]
+      },
+      "h5_4": {
+        "tickets": 4,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            2,
+            8
+          ],
+          [
+            5,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            9
+          ]
+        ]
+      },
+      "h5_3": {
+        "tickets": 3,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            5,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            9
+          ]
+        ]
+      }
+    },
+    {
+      "race_no": 11,
+      "race_id": "4620260918010011",
+      "actual_order": [
+        7,
+        9,
+        5
+      ],
+      "board": [
+        [
+          9
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          4,
+          5,
+          7
+        ]
+      ],
+      "board_unique_riders": 7,
+      "board_mass": 0.0930901108308263,
+      "overlay_action": "BASE",
+      "h1_pair": [
+        3,
+        9
+      ],
+      "h2_pair": [
+        3,
+        9
+      ],
+      "h3_pair": [
+        7,
+        9
+      ],
+      "h4_pair": [
+        5,
+        9
+      ],
+      "history_touch": {
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "4": 0,
+        "5": 1,
+        "6": 0,
+        "7": 1,
+        "8": 0,
+        "9": 3
+      },
+      "h5_cut_order": [
+        [
+          2,
+          9
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "base": {
+        "tickets": 21,
+        "payout": 2400,
+        "hit_count": 3,
+        "hits": [
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h1": {
+        "tickets": 20,
+        "payout": 2400,
+        "hit_count": 3,
+        "hits": [
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h2": {
+        "tickets": 20,
+        "payout": 2400,
+        "hit_count": 3,
+        "hits": [
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h3": {
+        "tickets": 19,
+        "payout": 2120,
+        "hit_count": 2,
+        "hits": [
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ]
+        ]
+      },
+      "h4": {
+        "tickets": 18,
+        "payout": 1650,
+        "hit_count": 1,
+        "hits": [
+          [
+            5,
+            7
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            5,
+            7
+          ]
+        ]
+      },
+      "h5_6": {
+        "tickets": 6,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            7
+          ]
+        ]
+      },
+      "h5_5": {
+        "tickets": 5,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            7
+          ]
+        ]
+      },
+      "h5_4": {
+        "tickets": 4,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            4,
+            5
+          ]
+        ]
+      },
+      "h5_3": {
+        "tickets": 3,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ]
+        ]
+      }
+    },
+    {
+      "race_no": 12,
+      "race_id": "4620260918010012",
+      "actual_order": [
+        2,
+        5,
+        9
+      ],
+      "board": [
+        [
+          5,
+          9
+        ],
+        [
+          5,
+          7,
+          9
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "board_unique_riders": 5,
+      "board_mass": 0.06099670237986394,
+      "overlay_action": "SOFT_FAIL_ADD_SECOND",
+      "h1_pair": [
+        5,
+        9
+      ],
+      "h2_pair": [
+        1,
+        7
+      ],
+      "h3_pair": [
+        2,
+        5
+      ],
+      "h4_pair": [
+        2,
+        9
+      ],
+      "history_touch": {
+        "1": 1,
+        "2": 2,
+        "3": 0,
+        "4": 0,
+        "5": 2,
+        "6": 0,
+        "7": 1,
+        "8": 0,
+        "9": 2
+      },
+      "h5_cut_order": [
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          2,
+          7
+        ]
+      ],
+      "base": {
+        "tickets": 10,
+        "payout": 590,
+        "hit_count": 3,
+        "hits": [
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            5,
+            9
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h1": {
+        "tickets": 9,
+        "payout": 430,
+        "hit_count": 2,
+        "hits": [
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            9
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h2": {
+        "tickets": 8,
+        "payout": 430,
+        "hit_count": 2,
+        "hits": [
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            9
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h3": {
+        "tickets": 7,
+        "payout": 280,
+        "hit_count": 1,
+        "hits": [
+          [
+            2,
+            9
+          ]
+        ],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h4": {
+        "tickets": 6,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_6": {
+        "tickets": 6,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_5": {
+        "tickets": 5,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_4": {
+        "tickets": 4,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "h5_3": {
+        "tickets": 3,
+        "payout": 0,
+        "hit_count": 0,
+        "hits": [],
+        "selected_pairs": [
+          [
+            2,
+            7
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      }
+    }
+  ]
 }
