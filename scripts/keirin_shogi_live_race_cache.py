@@ -60,32 +60,63 @@ def discover_races(html: str, daily_url: str) -> dict[str, str]:
 
 
 def parse_race_type(text: str) -> str:
+    """Return the first race-class/stage label appearing in the supplied text.
+
+    KDreams race-detail pages contain links and summaries for many other races.
+    The old parser looped over pattern *types* first, so a later "S級予選"
+    elsewhere on the page could beat the current race's earlier "S級特一般".
+    Collect all supported matches and choose the earliest occurrence instead.
+    """
     patterns = (
-        r"[ＳＳSＡAＬL]級\s*(?:初日特選|初特選|特選|選抜|予選|準決勝|一般|決勝)",
-        r"(?:ガールズ|チャレンジ)\s*(?:予選|一般|準決勝|選抜|決勝)",
-        r"(?:特予選|特一般|準決勝|特選|一般|決勝)",
+        r"[ＳＳSＡAＬL]級\s*(?:"
+        r"初日特選|初特選|特別選抜予選|一次予選|二次予選[ＡAＢB]?|"
+        r"特予選|特一般|優秀|ドリーム|選抜|特選|予選|準決勝|一般|決勝"
+        r")",
+        r"(?:ガールズ|チャレンジ)\s*(?:"
+        r"特予選|特一般|予選|一般|準決勝|選抜|特選|決勝"
+        r")",
+        r"(?:"
+        r"初日特選|初特選|特別選抜予選|一次予選|二次予選[ＡAＢB]?|"
+        r"特予選|特一般|優秀|ドリーム|準決勝|特選|選抜|予選|一般|決勝"
+        r")",
     )
+    matches = []
     for pattern in patterns:
-        match = re.search(pattern, text)
-        if match:
-            return normalize_text(match.group(0))
-    return ""
+        matches.extend(re.finditer(pattern, text))
+    if not matches:
+        return ""
+    match = min(matches, key=lambda item: item.start())
+    return normalize_text(match.group(0))
 
 
 def parse_meeting_grade(text: str) -> str:
+    """Return the first supported meeting grade appearing on the page.
+
+    Do not prefer G3/G2/G1 by hard-coded order: a G2 race page can contain
+    navigation text mentioning G3 later in the document.
+    """
     value = unicodedata.normalize("NFKC", text).upper()
     compact = re.sub(r"\s+", "", value)
-    checks = (
-        (r"G(?:III|3)(?![A-Z])", "G3"),
-        (r"G(?:II|2)(?![A-Z])", "G2"),
-        (r"G(?:I|1)(?![A-Z])", "G1"),
-        (r"F(?:II|2)(?![A-Z])", "F2"),
-        (r"F(?:I|1)(?![A-Z])", "F1"),
+    pattern = re.compile(
+        r"G(?:III|II|I|3|2|1)(?![A-Z])|F(?:II|I|2|1)(?![A-Z])"
     )
-    for pattern, grade in checks:
-        if re.search(pattern, compact):
-            return grade
-    return ""
+    match = pattern.search(compact)
+    if not match:
+        return ""
+    token = match.group(0)
+    mapping = {
+        "GIII": "G3",
+        "G3": "G3",
+        "GII": "G2",
+        "G2": "G2",
+        "GI": "G1",
+        "G1": "G1",
+        "FII": "F2",
+        "F2": "F2",
+        "FI": "F1",
+        "F1": "F1",
+    }
+    return mapping.get(token, "")
 
 
 def parse_meta(soup: BeautifulSoup, race_id: str, source_url: str) -> dict[str, object]:
@@ -103,9 +134,12 @@ def parse_meta(soup: BeautifulSoup, race_id: str, source_url: str) -> dict[str, 
         "race_id": race_id,
         "race_date": race_date,
         "track": track_match.group(1) if track_match else "",
-        "meeting_grade": parse_meeting_grade(f"{title} {text}"),
+        "meeting_grade": parse_meeting_grade(text),
         "race_no": int(race_id[-4:]),
-        "race_type": parse_race_type(text),
+        # The HTML title identifies the target race and is much less polluted
+        # by links to neighbouring races. Fall back to body text only when the
+        # title does not expose the stage.
+        "race_type": parse_race_type(title) or parse_race_type(text),
         "start_time": start_match.group(1) if start_match else "",
         "deadline": deadline_match.group(1) if deadline_match else "",
         "source_url": source_url,
