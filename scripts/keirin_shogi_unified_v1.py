@@ -275,7 +275,15 @@ def target_scope(race) -> tuple[bool, str]:
 
 
 def first_signal(race, state):
-    race_rows = v19.v18.v17.race_rows(race.get("entries", []))
+    normalized_entries = [
+        {
+            **row,
+            "line_id": str(row.get("line_id") or ""),
+            "style": str(row.get("style") or ""),
+        }
+        for row in race.get("entries", [])
+    ]
+    race_rows = v19.v18.v17.race_rows(normalized_entries)
     ranking, model_top1s = v19.v18.predict(race_rows, state["models"])
     legacy_candidates = v19.v18.choose(
         ranking, model_top1s, state["candidate_policy"]
