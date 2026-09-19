@@ -39,6 +39,8 @@ jobs:
         run: python scripts/keirin_shogi_unified_v1_week1_eval.py
       - name: Run fixed second-week evaluation
         run: python scripts/keirin_shogi_unified_v1_week2_eval.py
+      - name: Run fixed third-week evaluation
+        run: python scripts/keirin_shogi_unified_v1_week3_eval.py
       - name: Run unified engine against committed live cache
         run: python scripts/keirin_shogi_v37_auto_place.py
       - name: Validate unified output invariants
