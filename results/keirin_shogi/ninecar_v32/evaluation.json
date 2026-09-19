@@ -1,8 +1,9 @@
 {
   "schema_version": 1,
-  "model": "ninecar_v32_strong_state_overlay",
+  "model": "ninecar_v32_convergent6_state_overlay",
   "rules": {
     "2024_to_2025": {
+      "max_unique_riders": 6,
       "collapse_threshold": 0.40711310168685827,
       "soft_threshold": 0.43336408103577195,
       "dominant_p1_gap_threshold": 0.05495557738213294,
@@ -13,6 +14,7 @@
       "dominant_rule": "top_decile_all_three"
     },
     "2025_to_2026": {
+      "max_unique_riders": 6,
       "collapse_threshold": 0.40599753903901464,
       "soft_threshold": 0.4589569599679114,
       "dominant_p1_gap_threshold": 0.07163940826854345,
@@ -23,6 +25,7 @@
       "dominant_rule": "top_decile_all_three"
     },
     "production_after_2026_h1": {
+      "max_unique_riders": 6,
       "collapse_threshold": 0.4136383854245616,
       "soft_threshold": 0.47323780000525306,
       "dominant_p1_gap_threshold": 0.07388638646725357,
@@ -36,33 +39,35 @@
   "evaluation": {
     "2025_forward": {
       "n": 2201,
-      "first_capture": 0.5206724216265334,
-      "second_capture": 0.4093593820990459,
-      "third_capture": 0.42208087233075875,
+      "first_capture": 0.5333939118582463,
+      "second_capture": 0.4084507042253521,
+      "third_capture": 0.4175374829622899,
       "full_capture": 0.17310313493866425,
       "participation_rate": 0.7464788732394366,
-      "participant_full_capture": 0.19537431527693244,
-      "participant_first_capture": 0.548995739500913,
-      "participant_second_capture": 0.44004869141813757,
+      "participant_full_capture": 0.1972002434570907,
+      "participant_first_capture": 0.5623858794887401,
+      "participant_second_capture": 0.43700547778454046,
+      "avg_unique_riders": 5.856428895956383,
       "dominant_n": 78,
       "dominant_rate": 0.03543843707405725,
       "dominant_actual_win_rate": 0.6025641025641025,
       "dominant_first_capture": 0.6025641025641025,
       "soft_action_n": 199,
       "soft_action_rate": 0.09041344843253067,
-      "soft_action_second_capture": 0.5175879396984925,
-      "soft_action_full_capture": 0.18090452261306533
+      "soft_action_second_capture": 0.49748743718592964,
+      "soft_action_full_capture": 0.1708542713567839
     },
     "2026_h1_forward": {
       "n": 941,
-      "first_capture": 0.5175345377258236,
-      "second_capture": 0.44739638682252925,
-      "third_capture": 0.4218916046758767,
-      "full_capture": 0.1742826780021254,
+      "first_capture": 0.5239107332624867,
+      "second_capture": 0.44314558979808716,
+      "third_capture": 0.4250797024442083,
+      "full_capture": 0.17747077577045697,
       "participation_rate": 0.8182784272051009,
-      "participant_full_capture": 0.19220779220779222,
-      "participant_first_capture": 0.5337662337662338,
-      "participant_second_capture": 0.4701298701298701,
+      "participant_full_capture": 0.19480519480519481,
+      "participant_first_capture": 0.5428571428571428,
+      "participant_second_capture": 0.4636363636363636,
+      "avg_unique_riders": 5.8299681190223165,
       "dominant_n": 8,
       "dominant_rate": 0.008501594048884165,
       "dominant_actual_win_rate": 0.625,
@@ -88,6 +93,9 @@
     "results_used_at_inference": false,
     "dominant_rider_never_demoted_from_first": true,
     "soft_fail_keeps_first_and_adds_second": true,
-    "collapse_only_drives_skip": true
+    "collapse_only_drives_skip": true,
+    "board_piece_budget": 7,
+    "max_unique_riders": 6,
+    "seven_unique_rider_boards_forbidden": true
   }
 }
