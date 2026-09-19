@@ -324,7 +324,11 @@ def unified_joint(race, state, pair_model, third_model, feature_names):
     # Live cache may serialize line_id as an integer, while the historical
     # feature builder expects a string and calls .strip().
     normalized_entries = [
-        {**row, "line_id": str(row.get("line_id") or "")}
+        {
+            **row,
+            "line_id": str(row.get("line_id") or ""),
+            "style": str(row.get("style") or ""),
+        }
         for row in race.get("entries", [])
     ]
     base = v32.enrich_base(normalized_entries)
