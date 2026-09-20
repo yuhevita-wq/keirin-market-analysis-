@@ -1,0 +1,37 @@
+name: Validate v42 Actionable KING
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/keirin_shogi_v42_actionable_king.py'
+      - '.github/workflows/validate-v42-actionable-king.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: validate-v42-actionable-king
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - run: python scripts/keirin_shogi_v42_actionable_king.py
+      - name: Commit result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/keirin_shogi/v42_actionable_king
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "results: save v42 actionable KING validation"
+            git pull --rebase origin main
+            git push
+          fi
