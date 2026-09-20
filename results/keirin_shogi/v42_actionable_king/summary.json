@@ -1,0 +1,478 @@
+{
+  "algorithm": "v42_actionable_king",
+  "train_period": [
+    "2024-01-01",
+    "2024-01-14"
+  ],
+  "holdout_period": [
+    "2024-01-15",
+    "2024-01-21"
+  ],
+  "holdout_used_for_tuning": false,
+  "definition": "gate predicts KING AND exact-seat rank <= k, not KING alone",
+  "hard_constraints": {
+    "max_exact_seats": 8,
+    "cartesian_betting": false,
+    "target_buy_rate_train_min": 0.1,
+    "target_buy_rate_train_max": 0.3
+  },
+  "selected": {
+    "combo_C": 0.1,
+    "alpha": 0.25,
+    "gate_C": 0.25,
+    "seat_k": 8,
+    "gate_threshold": 0.5882973641027229
+  },
+  "races": 83,
+  "buy_races": 21,
+  "skip_races": 62,
+  "buy_rate": 0.25301204819277107,
+  "verdict_counts": {
+    "SKIP": 62,
+    "BEHEADED": 19,
+    "KING": 2
+  },
+  "hits": 2,
+  "hit_rate_on_bought": 0.09523809523809523,
+  "random_expected_hits_at_same_ticket_count": 0.8,
+  "hit_lift_vs_random": 2.5,
+  "actual_king_races": 24,
+  "actionable_king_races": 3,
+  "actionable_king_gate_bought": 2,
+  "actionable_king_gate_recall": 0.6666666666666666,
+  "king_hits": 2,
+  "impudent_hits": 0,
+  "beheaded": 19,
+  "stake_yen": 16800,
+  "payout_yen": 43900,
+  "profit_yen": 27100,
+  "roi": 2.613095238095238,
+  "capped_payout_yen": 43900,
+  "capped_profit_yen": 27100,
+  "capped_roi": 2.613095238095238,
+  "largest_hit_yen": 29350,
+  "payout_without_largest_hit_yen": 14550,
+  "profit_without_largest_hit_yen": -2250,
+  "roi_without_largest_hit": 0.8660714285714286,
+  "king_details": [
+    {
+      "race_id": "1320240116030008",
+      "date": "2024-01-18",
+      "track": "いわき平競輪",
+      "race_no": 8,
+      "actual": [
+        7,
+        2,
+        6
+      ],
+      "payout_yen": 14550,
+      "buy": true,
+      "verdict": "KING",
+      "hit": true,
+      "actionable_king": true,
+      "actual_rank": 8,
+      "seat_count": 8,
+      "stake_yen": 800,
+      "return_yen": 14550,
+      "profit_yen": 13750,
+      "gate_prob": 0.5906990587015756,
+      "gate_threshold": 0.5882973641027229,
+      "seats": [
+        [
+          4,
+          7,
+          6
+        ],
+        [
+          4,
+          7,
+          3
+        ],
+        [
+          2,
+          7,
+          3
+        ],
+        [
+          2,
+          7,
+          6
+        ],
+        [
+          3,
+          4,
+          6
+        ],
+        [
+          4,
+          7,
+          1
+        ],
+        [
+          4,
+          1,
+          6
+        ],
+        [
+          7,
+          2,
+          6
+        ]
+      ]
+    },
+    {
+      "race_id": "8520240118030010",
+      "date": "2024-01-20",
+      "track": "佐世保競輪",
+      "race_no": 10,
+      "actual": [
+        7,
+        4,
+        2
+      ],
+      "payout_yen": 29350,
+      "buy": true,
+      "verdict": "KING",
+      "hit": true,
+      "actionable_king": true,
+      "actual_rank": 3,
+      "seat_count": 8,
+      "stake_yen": 800,
+      "return_yen": 29350,
+      "profit_yen": 28550,
+      "gate_prob": 0.8769840097251278,
+      "gate_threshold": 0.5882973641027229,
+      "seats": [
+        [
+          7,
+          1,
+          2
+        ],
+        [
+          7,
+          1,
+          5
+        ],
+        [
+          7,
+          4,
+          2
+        ],
+        [
+          7,
+          4,
+          5
+        ],
+        [
+          7,
+          1,
+          3
+        ],
+        [
+          3,
+          1,
+          2
+        ],
+        [
+          3,
+          4,
+          2
+        ],
+        [
+          7,
+          4,
+          3
+        ]
+      ]
+    }
+  ],
+  "actionable_missed": [
+    {
+      "race_id": "2820240117030007",
+      "date": "2024-01-19",
+      "track": "立川競輪",
+      "race_no": 7,
+      "actual": [
+        2,
+        7,
+        6
+      ],
+      "payout_yen": 21060,
+      "buy": false,
+      "verdict": "SKIP",
+      "hit": false,
+      "actionable_king": true,
+      "actual_rank": 7,
+      "seat_count": 8,
+      "stake_yen": 0,
+      "return_yen": 0,
+      "profit_yen": 0,
+      "gate_prob": 0.5312221990967821,
+      "gate_threshold": 0.5882973641027229,
+      "seats": [
+        [
+          2,
+          5,
+          6
+        ],
+        [
+          2,
+          1,
+          6
+        ],
+        [
+          6,
+          2,
+          7
+        ],
+        [
+          7,
+          2,
+          3
+        ],
+        [
+          6,
+          2,
+          3
+        ],
+        [
+          2,
+          5,
+          4
+        ],
+        [
+          2,
+          7,
+          6
+        ],
+        [
+          2,
+          3,
+          6
+        ]
+      ]
+    }
+  ],
+  "historical_selection_w1_to_w2": {
+    "combo_C": 0.1,
+    "alpha": 0.25,
+    "k": 8,
+    "gate_C": 0.25,
+    "threshold_w1": 0.6720129034772384,
+    "w2_stake": 8000,
+    "w2_return_capped": 89620,
+    "w2_profit_capped": 81620,
+    "w2_buy": 10,
+    "w2_buy_rate": 0.12345679012345678,
+    "w2_hits": 3,
+    "w2_king_hits": 3,
+    "w2_actionable_total": 3,
+    "w2_actionable_bought": 3,
+    "w2_actionable_gate_recall": 1.0,
+    "random_expected_hits": 0.38095238095238093,
+    "hit_lift_vs_random": 7.875,
+    "score": 107557.5
+  },
+  "historical_top10": [
+    {
+      "combo_C": 0.1,
+      "alpha": 0.25,
+      "k": 8,
+      "gate_C": 0.25,
+      "threshold_w1": 0.6720129034772384,
+      "w2_stake": 8000,
+      "w2_return_capped": 89620,
+      "w2_profit_capped": 81620,
+      "w2_buy": 10,
+      "w2_buy_rate": 0.12345679012345678,
+      "w2_hits": 3,
+      "w2_king_hits": 3,
+      "w2_actionable_total": 3,
+      "w2_actionable_bought": 3,
+      "w2_actionable_gate_recall": 1.0,
+      "random_expected_hits": 0.38095238095238093,
+      "hit_lift_vs_random": 7.875,
+      "score": 107557.5
+    },
+    {
+      "combo_C": 0.1,
+      "alpha": 0.45,
+      "k": 6,
+      "gate_C": 0.05,
+      "threshold_w1": 0.5945302803785598,
+      "w2_stake": 12600,
+      "w2_return_capped": 89620,
+      "w2_profit_capped": 77020,
+      "w2_buy": 21,
+      "w2_buy_rate": 0.25925925925925924,
+      "w2_hits": 3,
+      "w2_king_hits": 3,
+      "w2_actionable_total": 4,
+      "w2_actionable_bought": 3,
+      "w2_actionable_gate_recall": 0.75,
+      "random_expected_hits": 0.6,
+      "hit_lift_vs_random": 5.0,
+      "score": 102020.0
+    },
+    {
+      "combo_C": 0.1,
+      "alpha": 0.45,
+      "k": 6,
+      "gate_C": 0.1,
+      "threshold_w1": 0.5890631510304074,
+      "w2_stake": 13200,
+      "w2_return_capped": 89620,
+      "w2_profit_capped": 76420,
+      "w2_buy": 22,
+      "w2_buy_rate": 0.2716049382716049,
+      "w2_hits": 3,
+      "w2_king_hits": 3,
+      "w2_actionable_total": 4,
+      "w2_actionable_bought": 3,
+      "w2_actionable_gate_recall": 0.75,
+      "random_expected_hits": 0.6285714285714286,
+      "hit_lift_vs_random": 4.7727272727272725,
+      "score": 101306.36363636363
+    },
+    {
+      "combo_C": 0.1,
+      "alpha": 0.45,
+      "k": 6,
+      "gate_C": 0.25,
+      "threshold_w1": 0.5923524089416707,
+      "w2_stake": 13800,
+      "w2_return_capped": 89620,
+      "w2_profit_capped": 75820,
+      "w2_buy": 23,
+      "w2_buy_rate": 0.2839506172839506,
+      "w2_hits": 3,
+      "w2_king_hits": 3,
+      "w2_actionable_total": 4,
+      "w2_actionable_bought": 3,
+      "w2_actionable_gate_recall": 0.75,
+      "random_expected_hits": 0.6571428571428571,
+      "hit_lift_vs_random": 4.565217391304348,
+      "score": 100602.60869565218
+    },
+    {
+      "combo_C": 0.1,
+      "alpha": 0.45,
+      "k": 6,
+      "gate_C": 0.5,
+      "threshold_w1": 0.5905020077700709,
+      "w2_stake": 14400,
+      "w2_return_capped": 89620,
+      "w2_profit_capped": 75220,
+      "w2_buy": 24,
+      "w2_buy_rate": 0.2962962962962963,
+      "w2_hits": 3,
+      "w2_king_hits": 3,
+      "w2_actionable_total": 4,
+      "w2_actionable_bought": 3,
+      "w2_actionable_gate_recall": 0.75,
+      "random_expected_hits": 0.6857142857142857,
+      "hit_lift_vs_random": 4.375,
+      "score": 99907.5
+    },
+    {
+      "combo_C": 0.1,
+      "alpha": 0.45,
+      "k": 6,
+      "gate_C": 1.0,
+      "threshold_w1": 0.5300883684970417,
+      "w2_stake": 15600,
+      "w2_return_capped": 89620,
+      "w2_profit_capped": 74020,
+      "w2_buy": 26,
+      "w2_buy_rate": 0.32098765432098764,
+      "w2_hits": 3,
+      "w2_king_hits": 3,
+      "w2_actionable_total": 4,
+      "w2_actionable_bought": 3,
+      "w2_actionable_gate_recall": 0.75,
+      "random_expected_hits": 0.7428571428571429,
+      "hit_lift_vs_random": 4.038461538461538,
+      "score": 98539.23076923077
+    },
+    {
+      "combo_C": 0.1,
+      "alpha": 0.25,
+      "k": 8,
+      "gate_C": 0.1,
+      "threshold_w1": 0.6264523710418897,
+      "w2_stake": 16000,
+      "w2_return_capped": 89620,
+      "w2_profit_capped": 73620,
+      "w2_buy": 20,
+      "w2_buy_rate": 0.24691358024691357,
+      "w2_hits": 3,
+      "w2_king_hits": 3,
+      "w2_actionable_total": 3,
+      "w2_actionable_bought": 3,
+      "w2_actionable_gate_recall": 1.0,
+      "random_expected_hits": 0.7619047619047619,
+      "hit_lift_vs_random": 3.9375,
+      "score": 97588.75
+    },
+    {
+      "combo_C": 0.1,
+      "alpha": 0.25,
+      "k": 8,
+      "gate_C": 0.03,
+      "threshold_w1": 0.5845454474159132,
+      "w2_stake": 16800,
+      "w2_return_capped": 89620,
+      "w2_profit_capped": 72820,
+      "w2_buy": 21,
+      "w2_buy_rate": 0.25925925925925924,
+      "w2_hits": 3,
+      "w2_king_hits": 3,
+      "w2_actionable_total": 3,
+      "w2_actionable_bought": 3,
+      "w2_actionable_gate_recall": 1.0,
+      "random_expected_hits": 0.8,
+      "hit_lift_vs_random": 3.75,
+      "score": 96695.0
+    },
+    {
+      "combo_C": 0.1,
+      "alpha": 0.25,
+      "k": 8,
+      "gate_C": 0.05,
+      "threshold_w1": 0.5881963297800058,
+      "w2_stake": 16800,
+      "w2_return_capped": 89620,
+      "w2_profit_capped": 72820,
+      "w2_buy": 21,
+      "w2_buy_rate": 0.25925925925925924,
+      "w2_hits": 3,
+      "w2_king_hits": 3,
+      "w2_actionable_total": 3,
+      "w2_actionable_bought": 3,
+      "w2_actionable_gate_recall": 1.0,
+      "random_expected_hits": 0.8,
+      "hit_lift_vs_random": 3.75,
+      "score": 96695.0
+    },
+    {
+      "combo_C": 0.1,
+      "alpha": 0.45,
+      "k": 8,
+      "gate_C": 0.05,
+      "threshold_w1": 0.5945302803785598,
+      "w2_stake": 16800,
+      "w2_return_capped": 89620,
+      "w2_profit_capped": 72820,
+      "w2_buy": 21,
+      "w2_buy_rate": 0.25925925925925924,
+      "w2_hits": 3,
+      "w2_king_hits": 3,
+      "w2_actionable_total": 4,
+      "w2_actionable_bought": 3,
+      "w2_actionable_gate_recall": 0.75,
+      "random_expected_hits": 0.8,
+      "hit_lift_vs_random": 3.75,
+      "score": 96695.0
+    }
+  ]
+}
