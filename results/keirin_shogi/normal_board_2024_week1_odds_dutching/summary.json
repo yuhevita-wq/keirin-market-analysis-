@@ -1,0 +1,1519 @@
+{
+  "study": "normal_board_2024_week1_odds_dutching",
+  "period": [
+    "2024-01-01",
+    "2024-01-07"
+  ],
+  "scope": "F1 S級 7車立て",
+  "normal_algorithm_snapshot": {
+    "runtime_commit": "2bd26e8aaa4508936882e6f09925889f32c4c0b9",
+    "policy": "v21/v31/v37+ SOFT_FAIL third append, pre-v38 normal runtime"
+  },
+  "stake_rule": {
+    "per_race_yen": 5000,
+    "unit_yen": 100,
+    "method": "全盤面3連単を最低100円ずつ買い、残りを1/確定オッズ比例で配分。100円単位の丸め後、想定払戻のばらつきが小さくなるよう端数調整。",
+    "odds_source": "楽天Kドリームス 確定オッズ",
+    "warning": "確定オッズでありT-10分オッズではない。"
+  },
+  "baseline_guard": {
+    "expected_participation_races": 16,
+    "actual_participation_races": 16,
+    "expected_participation_tickets": 112,
+    "actual_participation_tickets": 112,
+    "ok": true
+  },
+  "participation_only": {
+    "races_total": 16,
+    "races_odds_complete": 16,
+    "races_odds_unresolved": 0,
+    "ticket_count": 112,
+    "stake_yen_strict_covered": 80000,
+    "return_yen_strict_covered": 43810,
+    "profit_yen_strict_covered": -36190,
+    "roi_pct_strict_covered": 54.7625,
+    "hit_races_strict_covered": 5,
+    "hit_rate_pct_strict_covered": 31.25,
+    "unresolved_races": []
+  },
+  "all_boards_reference": {
+    "races_total": 114,
+    "races_odds_complete": 111,
+    "races_odds_unresolved": 3,
+    "ticket_count": 871,
+    "stake_yen_strict_covered": 555000,
+    "return_yen_strict_covered": 463700,
+    "profit_yen_strict_covered": -91300,
+    "roi_pct_strict_covered": 83.54954954954955,
+    "hit_races_strict_covered": 32,
+    "hit_rate_pct_strict_covered": 28.82882882882883,
+    "unresolved_races": [
+      {
+        "race_id": "4420231231020007",
+        "race_date": "2024-01-01",
+        "track": "大垣競輪",
+        "race_no": 7,
+        "missing_ticket_odds": [
+          "1-3-2",
+          "1-3-4",
+          "1-3-5",
+          "3-1-2",
+          "3-1-4",
+          "3-1-5"
+        ]
+      },
+      {
+        "race_id": "8620240103010008",
+        "race_date": "2024-01-03",
+        "track": "別府競輪",
+        "race_no": 8,
+        "missing_ticket_odds": [
+          "2-7-4",
+          "2-7-5",
+          "7-2-4",
+          "7-2-5"
+        ]
+      },
+      {
+        "race_id": "7420240103010011",
+        "race_date": "2024-01-03",
+        "track": "高知競輪",
+        "race_no": 11,
+        "missing_ticket_odds": [
+          "1-4-3",
+          "1-4-7",
+          "1-5-3",
+          "1-5-4",
+          "1-5-7",
+          "5-1-3",
+          "5-1-4",
+          "5-1-7",
+          "5-4-3",
+          "5-4-7"
+        ]
+      }
+    ]
+  },
+  "failures": [
+    {
+      "race_id": "4420231231020009",
+      "stage": "results",
+      "error": "top3={2: 7, 1: 4}"
+    }
+  ],
+  "participation_races": [
+    {
+      "race_id": "2720240101010008",
+      "race_date": "2024-01-01",
+      "track": "京王閣競輪",
+      "race_no": 8,
+      "race_type": "Ｓ級予選",
+      "participate": true,
+      "board": {
+        "first": [
+          7,
+          5
+        ],
+        "second": [
+          5,
+          7,
+          2
+        ],
+        "third": [
+          1,
+          3,
+          4
+        ]
+      },
+      "ticket_count": 12,
+      "actual": [
+        5,
+        2,
+        7
+      ],
+      "official_trifecta": "5-2-7",
+      "official_payout_per_100_yen": 1000,
+      "odds_complete": true,
+      "missing_ticket_odds": [],
+      "fallback_note": "",
+      "stake_yen": 5000,
+      "return_yen": 0,
+      "profit_yen": -5000,
+      "allocations": [
+        {
+          "combination": "5-2-1",
+          "odds": 11.8,
+          "stake_yen": 900,
+          "gross_at_final_odds_yen": 10620.0,
+          "hit": false
+        },
+        {
+          "combination": "5-2-3",
+          "odds": 14.5,
+          "stake_yen": 700,
+          "gross_at_final_odds_yen": 10150.0,
+          "hit": false
+        },
+        {
+          "combination": "5-2-4",
+          "odds": 57.3,
+          "stake_yen": 200,
+          "gross_at_final_odds_yen": 11460.0,
+          "hit": false
+        },
+        {
+          "combination": "5-7-1",
+          "odds": 7.5,
+          "stake_yen": 1500,
+          "gross_at_final_odds_yen": 11250.0,
+          "hit": false
+        },
+        {
+          "combination": "5-7-3",
+          "odds": 84.2,
+          "stake_yen": 200,
+          "gross_at_final_odds_yen": 16840.0,
+          "hit": false
+        },
+        {
+          "combination": "5-7-4",
+          "odds": 54.4,
+          "stake_yen": 200,
+          "gross_at_final_odds_yen": 10880.0,
+          "hit": false
+        },
+        {
+          "combination": "7-2-1",
+          "odds": 83.9,
+          "stake_yen": 200,
+          "gross_at_final_odds_yen": 16780.0,
+          "hit": false
+        },
+        {
+          "combination": "7-2-3",
+          "odds": 227.6,
+          "stake_yen": 100,
+          "gross_at_final_odds_yen": 22760.0,
+          "hit": false
+        },
+        {
+          "combination": "7-2-4",
+          "odds": 305.9,
+          "stake_yen": 100,
+          "gross_at_final_odds_yen": 30590.0,
+          "hit": false
+        },
+        {
+          "combination": "7-5-1",
+          "odds": 17.1,
+          "stake_yen": 600,
+          "gross_at_final_odds_yen": 10260.0,
+          "hit": false
+        },
+        {
+          "combination": "7-5-3",
+          "odds": 190.9,
+          "stake_yen": 100,
+          "gross_at_final_odds_yen": 19090.0,
+          "hit": false
+        },
+        {
+          "combination": "7-5-4",
+          "odds": 97.6,
+          "stake_yen": 200,
+          "gross_at_final_odds_yen": 19520.0,
+          "hit": false
+        }
+      ]
+    },
+    {
+      "race_id": "2720240101010012",
+      "race_date": "2024-01-01",
+      "track": "京王閣競輪",
+      "race_no": 12,
+      "race_type": "Ｓ級初特選",
+      "participate": true,
+      "board": {
+        "first": [
+          5,
+          3
+        ],
+        "second": [
+          3,
+          5
+        ],
+        "third": [
+          7,
+          2
+        ]
+      },
+      "ticket_count": 4,
+      "actual": [
+        6,
+        5,
+        2
+      ],
+      "official_trifecta": "6-5-2",
+      "official_payout_per_100_yen": 37900,
+      "odds_complete": true,
+      "missing_ticket_odds": [],
+      "fallback_note": "",
+      "stake_yen": 5000,
+      "return_yen": 0,
+      "profit_yen": -5000,
+      "allocations": [
+        {
+          "combination": "3-5-2",
+          "odds": 24.1,
+          "stake_yen": 600,
+          "gross_at_final_odds_yen": 14460.0,
+          "hit": false
+        },
+        {
+          "combination": "3-5-7",
+          "odds": 4.5,
+          "stake_yen": 3300,
+          "gross_at_final_odds_yen": 14850.0,
+          "hit": false
+        },
+        {
+          "combination": "5-3-2",
+          "odds": 64.4,
+          "stake_yen": 200,
+          "gross_at_final_odds_yen": 12880.0,
+          "hit": false
+        },
+        {
+          "combination": "5-3-7",
+          "odds": 16.6,
+          "stake_yen": 900,
+          "gross_at_final_odds_yen": 14940.0,
+          "hit": false
+        }
+      ]
+    },
+    {
+      "race_id": "5620231231020006",
+      "race_date": "2024-01-01",
+      "track": "岸和田競輪",
+      "race_no": 6,
+      "race_type": "Ｓ級予選２",
+      "participate": true,
+      "board": {
+        "first": [
+          3,
+          5
+        ],
+        "second": [
+          3,
+          5
+        ],
+        "third": [
+          7,
+          4,
+          2
+        ]
+      },
+      "ticket_count": 6,
+      "actual": [
+        3,
+        5,
+        2
+      ],
+      "official_trifecta": "3-5-2",
+      "official_payout_per_100_yen": 980,
+      "odds_complete": true,
+      "missing_ticket_odds": [],
+      "fallback_note": "",
+      "stake_yen": 5000,
+      "return_yen": 6860,
+      "profit_yen": 1860,
+      "allocations": [
+        {
+          "combination": "3-5-2",
+          "odds": 9.8,
+          "stake_yen": 700,
+          "gross_at_final_odds_yen": 6860.0,
+          "hit": true
+        },
+        {
+          "combination": "3-5-4",
+          "odds": 14.3,
+          "stake_yen": 500,
+          "gross_at_final_odds_yen": 7150.0,
+          "hit": false
+        },
+        {
+          "combination": "3-5-7",
+          "odds": 4.4,
+          "stake_yen": 1500,
+          "gross_at_final_odds_yen": 6600.0,
+          "hit": false
+        },
+        {
+          "combination": "5-3-2",
+          "odds": 9.3,
+          "stake_yen": 700,
+          "gross_at_final_odds_yen": 6510.0,
+          "hit": false
+        },
+        {
+          "combination": "5-3-4",
+          "odds": 13.0,
+          "stake_yen": 500,
+          "gross_at_final_odds_yen": 6500.0,
+          "hit": false
+        },
+        {
+          "combination": "5-3-7",
+          "odds": 6.0,
+          "stake_yen": 1100,
+          "gross_at_final_odds_yen": 6600.0,
+          "hit": false
+        }
+      ]
+    },
+    {
+      "race_id": "5620231231020007",
+      "race_date": "2024-01-01",
+      "track": "岸和田競輪",
+      "race_no": 7,
+      "race_type": "Ｓ級予選２",
+      "participate": true,
+      "board": {
+        "first": [
+          5,
+          1
+        ],
+        "second": [
+          5,
+          1,
+          2
+        ],
+        "third": [
+          7,
+          4,
+          1
+        ]
+      },
+      "ticket_count": 9,
+      "actual": [
+        5,
+        2,
+        4
+      ],
+      "official_trifecta": "5-2-4",
+      "official_payout_per_100_yen": 4040,
+      "odds_complete": true,
+      "missing_ticket_odds": [],
+      "fallback_note": "",
+      "stake_yen": 5000,
+      "return_yen": 8080,
+      "profit_yen": 3080,
+      "allocations": [
+        {
+          "combination": "1-2-4",
+          "odds": 135.1,
+          "stake_yen": 100,
+          "gross_at_final_odds_yen": 13510.0,
+          "hit": false
+        },
+        {
+          "combination": "1-2-7",
+          "odds": 245.7,
+          "stake_yen": 100,
+          "gross_at_final_odds_yen": 24570.0,
+          "hit": false
+        },
+        {
+          "combination": "1-5-4",
+          "odds": 12.6,
+          "stake_yen": 600,
+          "gross_at_final_odds_yen": 7560.0,
+          "hit": false
+        },
+        {
+          "combination": "1-5-7",
+          "odds": 10.5,
+          "stake_yen": 600,
+          "gross_at_final_odds_yen": 6300.0,
+          "hit": false
+        },
+        {
+          "combination": "5-1-4",
+          "odds": 3.8,
+          "stake_yen": 1700,
+          "gross_at_final_odds_yen": 6460.0,
+          "hit": false
+        },
+        {
+          "combination": "5-1-7",
+          "odds": 4.5,
+          "stake_yen": 1400,
+          "gross_at_final_odds_yen": 6300.0,
+          "hit": false
+        },
+        {
+          "combination": "5-2-1",
+          "odds": 39.3,
+          "stake_yen": 200,
+          "gross_at_final_odds_yen": 7860.0,
+          "hit": false
+        },
+        {
+          "combination": "5-2-4",
+          "odds": 40.4,
+          "stake_yen": 200,
+          "gross_at_final_odds_yen": 8080.0,
+          "hit": true
+        },
+        {
+          "combination": "5-2-7",
+          "odds": 166.3,
+          "stake_yen": 100,
+          "gross_at_final_odds_yen": 16630.0,
+          "hit": false
+        }
+      ]
+    },
+    {
+      "race_id": "5620231231020010",
+      "race_date": "2024-01-01",
+      "track": "岸和田競輪",
+      "race_no": 10,
+      "race_type": "Ｓ級予選２",
+      "participate": true,
+      "board": {
+        "first": [
+          4,
+          5
+        ],
+        "second": [
+          4,
+          5,
+          1
+        ],
+        "third": [
+          5,
+          2,
+          3
+        ]
+      },
+      "ticket_count": 9,
+      "actual": [
+        5,
+        3,
+        7
+      ],
+      "official_trifecta": "5-3-7",
+      "official_payout_per_100_yen": 6250,
+      "odds_complete": true,
+      "missing_ticket_odds": [],
+      "fallback_note": "",
+      "stake_yen": 5000,
+      "return_yen": 0,
+      "profit_yen": -5000,
+      "allocations": [
+        {
+          "combination": "4-1-2",
+          "odds": 9.3,
+          "stake_yen": 1300,
+          "gross_at_final_odds_yen": 12090.0,
+          "hit": false
+        },
+        {
+          "combination": "4-1-3",
+          "odds": 54.9,
+          "stake_yen": 200,
+          "gross_at_final_odds_yen": 10980.0,
+          "hit": false
+        },
+        {
+          "combination": "4-1-5",
+          "odds": 6.2,
+          "stake_yen": 2000,
+          "gross_at_final_odds_yen": 12400.0,
+          "hit": false
+        },
+        {
+          "combination": "4-5-2",
+          "odds": 19.1,
+          "stake_yen": 600,
+          "gross_at_final_odds_yen": 11460.0,
+          "hit": false
+        },
+        {
+          "combination": "4-5-3",
+          "odds": 42.4,
+          "stake_yen": 300,
+          "gross_at_final_odds_yen": 12720.0,
+          "hit": false
+        },
+        {
+          "combination": "5-1-2",
+          "odds": 204.7,
+          "stake_yen": 100,
+          "gross_at_final_odds_yen": 20470.0,
+          "hit": false
+        },
+        {
+          "combination": "5-1-3",
+          "odds": 333.3,
+          "stake_yen": 100,
+          "gross_at_final_odds_yen": 33330.0,
+          "hit": false
+        },
+        {
+          "combination": "5-4-2",
+          "odds": 74.1,
+          "stake_yen": 200,
+          "gross_at_final_odds_yen": 14820.0,
+          "hit": false
+        },
+        {
+          "combination": "5-4-3",
+          "odds": 103.6,
+          "stake_yen": 200,
+          "gross_at_final_odds_yen": 20720.0,
+          "hit": false
+        }
+      ]
+    },
+    {
+      "race_id": "3520240101010011",
+      "race_date": "2024-01-01",
+      "track": "平塚競輪",
+      "race_no": 11,
+      "race_type": "Ｓ級予選１",
+      "participate": true,
+      "board": {
+        "first": [
+          2,
+          7
+        ],
+        "second": [
+          2,
+          7
+        ],
+        "third": [
+          4,
+          3,
+          1
+        ]
+      },
+      "ticket_count": 6,
+      "actual": [
+        2,
+        7,
+        6
+      ],
+      "official_trifecta": "2-7-6",
+      "official_payout_per_100_yen": 3420,
+      "odds_complete": true,
+      "missing_ticket_odds": [],
+      "fallback_note": "",
+      "stake_yen": 5000,
+      "return_yen": 0,
+      "profit_yen": -5000,
+      "allocations": [
+        {
+          "combination": "2-7-1",
+          "odds": 16.8,
+          "stake_yen": 300,
+          "gross_at_final_odds_yen": 5040.0,
+          "hit": false
+        },
+        {
+          "combination": "2-7-3",
+          "odds": 8.7,
+          "stake_yen": 600,
+          "gross_at_final_odds_yen": 5220.0,
+          "hit": false
+        },
+        {
+          "combination": "2-7-4",
+          "odds": 3.9,
+          "stake_yen": 1500,
+          "gross_at_final_odds_yen": 5850.0,
+          "hit": false
+        },
+        {
+          "combination": "7-2-1",
+          "odds": 14.2,
+          "stake_yen": 400,
+          "gross_at_final_odds_yen": 5680.0,
+          "hit": false
+        },
+        {
+          "combination": "7-2-3",
+          "odds": 6.7,
+          "stake_yen": 800,
+          "gross_at_final_odds_yen": 5360.0,
+          "hit": false
+        },
+        {
+          "combination": "7-2-4",
+          "odds": 4.1,
+          "stake_yen": 1400,
+          "gross_at_final_odds_yen": 5740.0,
+          "hit": false
+        }
+      ]
+    },
+    {
+      "race_id": "2720240101030009",
+      "race_date": "2024-01-03",
+      "track": "京王閣競輪",
+      "race_no": 9,
+      "race_type": "Ｓ級特選",
+      "participate": true,
+      "board": {
+        "first": [
+          3,
+          2
+        ],
+        "second": [
+          3,
+          2,
+          7
+        ],
+        "third": [
+          4,
+          7,
+          2
+        ]
+      },
+      "ticket_count": 7,
+      "actual": [
+        3,
+        5,
+        6
+      ],
+      "official_trifecta": "3-5-6",
+      "official_payout_per_100_yen": 8710,
+      "odds_complete": true,
+      "missing_ticket_odds": [],
+      "fallback_note": "",
+      "stake_yen": 5000,
+      "return_yen": 0,
+      "profit_yen": -5000,
+      "allocations": [
+        {
+          "combination": "2-3-4",
+          "odds": 88.1,
+          "stake_yen": 300,
+          "gross_at_final_odds_yen": 26430.0,
+          "hit": false
+        },
+        {
+          "combination": "2-3-7",
+          "odds": 23.7,
+          "stake_yen": 1000,
+          "gross_at_final_odds_yen": 23700.0,
+          "hit": false
+        },
+        {
+          "combination": "2-7-4",
+          "odds": 25.3,
+          "stake_yen": 900,
+          "gross_at_final_odds_yen": 22770.0,
+          "hit": false
+        },
+        {
+          "combination": "3-2-4",
+          "odds": 95.8,
+          "stake_yen": 300,
+          "gross_at_final_odds_yen": 28740.0,
+          "hit": false
+        },
+        {
+          "combination": "3-2-7",
+          "odds": 19.2,
+          "stake_yen": 1200,
+          "gross_at_final_odds_yen": 23040.0,
+          "hit": false
+        },
+        {
+          "combination": "3-7-2",
+          "odds": 31.0,
+          "stake_yen": 800,
+          "gross_at_final_odds_yen": 24800.0,
+          "hit": false
+        },
+        {
+          "combination": "3-7-4",
+          "odds": 56.7,
+          "stake_yen": 500,
+          "gross_at_final_odds_yen": 28350.0,
+          "hit": false
+        }
+      ]
+    },
+    {
+      "race_id": "8620240103010007",
+      "race_date": "2024-01-03",
+      "track": "別府競輪",
+      "race_no": 7,
+      "race_type": "Ｓ級予選",
+      "participate": true,
+      "board": {
+        "first": [
+          1,
+          5
+        ],
+        "second": [
+          1,
+          5
+        ],
+        "third": [
+          6,
+          3,
+          7
+        ]
+      },
+      "ticket_count": 6,
+      "actual": [
+        5,
+        1,
+        3
+      ],
+      "official_trifecta": "5-1-3",
+      "official_payout_per_100_yen": 2500,
+      "odds_complete": true,
+      "missing_ticket_odds": [],
+      "fallback_note": "",
+      "stake_yen": 5000,
+      "return_yen": 10000,
+      "profit_yen": 5000,
+      "allocations": [
+        {
+          "combination": "1-5-3",
+          "odds": 8.4,
+          "stake_yen": 1200,
+          "gross_at_final_odds_yen": 10080.0,
+          "hit": false
+        },
+        {
+          "combination": "1-5-6",
+          "odds": 5.3,
+          "stake_yen": 2000,
+          "gross_at_final_odds_yen": 10600.0,
+          "hit": false
+        },
+        {
+          "combination": "1-5-7",
+          "odds": 14.3,
+          "stake_yen": 700,
+          "gross_at_final_odds_yen": 10010.0,
+          "hit": false
+        },
+        {
+          "combination": "5-1-3",
+          "odds": 25.0,
+          "stake_yen": 400,
+          "gross_at_final_odds_yen": 10000.0,
+          "hit": true
+        },
+        {
+          "combination": "5-1-6",
+          "odds": 20.4,
+          "stake_yen": 500,
+          "gross_at_final_odds_yen": 10200.0,
+          "hit": false
+        },
+        {
+          "combination": "5-1-7",
+          "odds": 42.4,
+          "stake_yen": 200,
+          "gross_at_final_odds_yen": 8480.0,
+          "hit": false
+        }
+      ]
+    },
+    {
+      "race_id": "8620240103010009",
+      "race_date": "2024-01-03",
+      "track": "別府競輪",
+      "race_no": 9,
+      "race_type": "Ｓ級予選",
+      "participate": true,
+      "board": {
+        "first": [
+          2,
+          5
+        ],
+        "second": [
+          2,
+          5
+        ],
+        "third": [
+          7,
+          1,
+          5
+        ]
+      },
+      "ticket_count": 4,
+      "actual": [
+        6,
+        2,
+        3
+      ],
+      "official_trifecta": "6-2-3",
+      "official_payout_per_100_yen": 67660,
+      "odds_complete": true,
+      "missing_ticket_odds": [],
+      "fallback_note": "",
+      "stake_yen": 5000,
+      "return_yen": 0,
+      "profit_yen": -5000,
+      "allocations": [
+        {
+          "combination": "2-5-1",
+          "odds": 25.5,
+          "stake_yen": 700,
+          "gross_at_final_odds_yen": 17850.0,
+          "hit": false
+        },
+        {
+          "combination": "2-5-7",
+          "odds": 5.9,
+          "stake_yen": 3400,
+          "gross_at_final_odds_yen": 20060.0,
+          "hit": false
+        },
+        {
+          "combination": "5-2-1",
+          "odds": 76.5,
+          "stake_yen": 300,
+          "gross_at_final_odds_yen": 22950.0,
+          "hit": false
+        },
+        {
+          "combination": "5-2-7",
+          "odds": 30.5,
+          "stake_yen": 600,
+          "gross_at_final_odds_yen": 18300.0,
+          "hit": false
+        }
+      ]
+    },
+    {
+      "race_id": "8620240103010012",
+      "race_date": "2024-01-03",
+      "track": "別府競輪",
+      "race_no": 12,
+      "race_type": "Ｓ級初特選",
+      "participate": true,
+      "board": {
+        "first": [
+          2,
+          4
+        ],
+        "second": [
+          2,
+          4
+        ],
+        "third": [
+          1,
+          5,
+          7
+        ]
+      },
+      "ticket_count": 6,
+      "actual": [
+        2,
+        1,
+        5
+      ],
+      "official_trifecta": "2-1-5",
+      "official_payout_per_100_yen": 9960,
+      "odds_complete": true,
+      "missing_ticket_odds": [],
+      "fallback_note": "",
+      "stake_yen": 5000,
+      "return_yen": 0,
+      "profit_yen": -5000,
+      "allocations": [
+        {
+          "combination": "2-4-1",
+          "odds": 10.4,
+          "stake_yen": 1200,
+          "gross_at_final_odds_yen": 12480.0,
+          "hit": false
+        },
+        {
+          "combination": "2-4-5",
+          "odds": 13.8,
+          "stake_yen": 900,
+          "gross_at_final_odds_yen": 12420.0,
+          "hit": false
+        },
+        {
+          "combination": "2-4-7",
+          "odds": 47.2,
+          "stake_yen": 300,
+          "gross_at_final_odds_yen": 14160.0,
+          "hit": false
+        },
+        {
+          "combination": "4-2-1",
+          "odds": 8.7,
+          "stake_yen": 1500,
+          "gross_at_final_odds_yen": 13050.0,
+          "hit": false
+        },
+        {
+          "combination": "4-2-5",
+          "odds": 14.9,
+          "stake_yen": 900,
+          "gross_at_final_odds_yen": 13410.0,
+          "hit": false
+        },
+        {
+          "combination": "4-2-7",
+          "odds": 52.6,
+          "stake_yen": 200,
+          "gross_at_final_odds_yen": 10520.0,
+          "hit": false
+        }
+      ]
+    },
+    {
+      "race_id": "5620231231040011",
+      "race_date": "2024-01-03",
+      "track": "岸和田競輪",
+      "race_no": 11,
+      "race_type": "Ｓ級特選",
+      "participate": true,
+      "board": {
+        "first": [
+          5,
+          2
+        ],
+        "second": [
+          5,
+          2
+        ],
+        "third": [
+          1,
+          4,
+          3
+        ]
+      },
+      "ticket_count": 6,
+      "actual": [
+        5,
+        2,
+        3
+      ],
+      "official_trifecta": "5-2-3",
+      "official_payout_per_100_yen": 2930,
+      "odds_complete": true,
+      "missing_ticket_odds": [],
+      "fallback_note": "",
+      "stake_yen": 5000,
+      "return_yen": 11720,
+      "profit_yen": 6720,
+      "allocations": [
+        {
+          "combination": "2-5-1",
+          "odds": 12.4,
+          "stake_yen": 1100,
+          "gross_at_final_odds_yen": 13640.0,
+          "hit": false
+        },
+        {
+          "combination": "2-5-3",
+          "odds": 40.6,
+          "stake_yen": 300,
+          "gross_at_final_odds_yen": 12180.0,
+          "hit": false
+        },
+        {
+          "combination": "2-5-4",
+          "odds": 19.0,
+          "stake_yen": 700,
+          "gross_at_final_odds_yen": 13300.0,
+          "hit": false
+        },
+        {
+          "combination": "5-2-1",
+          "odds": 8.8,
+          "stake_yen": 1500,
+          "gross_at_final_odds_yen": 13200.0,
+          "hit": false
+        },
+        {
+          "combination": "5-2-3",
+          "odds": 29.3,
+          "stake_yen": 400,
+          "gross_at_final_odds_yen": 11720.0,
+          "hit": true
+        },
+        {
+          "combination": "5-2-4",
+          "odds": 12.8,
+          "stake_yen": 1000,
+          "gross_at_final_odds_yen": 12800.0,
+          "hit": false
+        }
+      ]
+    },
+    {
+      "race_id": "8620240103020009",
+      "race_date": "2024-01-04",
+      "track": "別府競輪",
+      "race_no": 9,
+      "race_type": "Ｓ級選抜",
+      "participate": true,
+      "board": {
+        "first": [
+          5,
+          1
+        ],
+        "second": [
+          5,
+          1
+        ],
+        "third": [
+          4,
+          6,
+          7
+        ]
+      },
+      "ticket_count": 6,
+      "actual": [
+        1,
+        5,
+        3
+      ],
+      "official_trifecta": "1-5-3",
+      "official_payout_per_100_yen": 2310,
+      "odds_complete": true,
+      "missing_ticket_odds": [],
+      "fallback_note": "",
+      "stake_yen": 5000,
+      "return_yen": 0,
+      "profit_yen": -5000,
+      "allocations": [
+        {
+          "combination": "1-5-4",
+          "odds": 7.4,
+          "stake_yen": 1700,
+          "gross_at_final_odds_yen": 12580.0,
+          "hit": false
+        },
+        {
+          "combination": "1-5-6",
+          "odds": 7.9,
+          "stake_yen": 1600,
+          "gross_at_final_odds_yen": 12640.0,
+          "hit": false
+        },
+        {
+          "combination": "1-5-7",
+          "odds": 28.3,
+          "stake_yen": 400,
+          "gross_at_final_odds_yen": 11320.0,
+          "hit": false
+        },
+        {
+          "combination": "5-1-4",
+          "odds": 20.5,
+          "stake_yen": 600,
+          "gross_at_final_odds_yen": 12300.0,
+          "hit": false
+        },
+        {
+          "combination": "5-1-6",
+          "odds": 25.0,
+          "stake_yen": 500,
+          "gross_at_final_odds_yen": 12500.0,
+          "hit": false
+        },
+        {
+          "combination": "5-1-7",
+          "odds": 48.4,
+          "stake_yen": 200,
+          "gross_at_final_odds_yen": 9680.0,
+          "hit": false
+        }
+      ]
+    },
+    {
+      "race_id": "3520240101040010",
+      "race_date": "2024-01-04",
+      "track": "平塚競輪",
+      "race_no": 10,
+      "race_type": "Ｓ級特選",
+      "participate": true,
+      "board": {
+        "first": [
+          3,
+          2
+        ],
+        "second": [
+          2,
+          3
+        ],
+        "third": [
+          7,
+          4,
+          1
+        ]
+      },
+      "ticket_count": 6,
+      "actual": [
+        3,
+        4,
+        7
+      ],
+      "official_trifecta": "3-4-7",
+      "official_payout_per_100_yen": 5320,
+      "odds_complete": true,
+      "missing_ticket_odds": [],
+      "fallback_note": "",
+      "stake_yen": 5000,
+      "return_yen": 0,
+      "profit_yen": -5000,
+      "allocations": [
+        {
+          "combination": "2-3-1",
+          "odds": 17.7,
+          "stake_yen": 800,
+          "gross_at_final_odds_yen": 14160.0,
+          "hit": false
+        },
+        {
+          "combination": "2-3-4",
+          "odds": 33.2,
+          "stake_yen": 400,
+          "gross_at_final_odds_yen": 13280.0,
+          "hit": false
+        },
+        {
+          "combination": "2-3-7",
+          "odds": 14.8,
+          "stake_yen": 900,
+          "gross_at_final_odds_yen": 13320.0,
+          "hit": false
+        },
+        {
+          "combination": "3-2-1",
+          "odds": 12.4,
+          "stake_yen": 1100,
+          "gross_at_final_odds_yen": 13640.0,
+          "hit": false
+        },
+        {
+          "combination": "3-2-4",
+          "odds": 24.9,
+          "stake_yen": 500,
+          "gross_at_final_odds_yen": 12450.0,
+          "hit": false
+        },
+        {
+          "combination": "3-2-7",
+          "odds": 10.8,
+          "stake_yen": 1300,
+          "gross_at_final_odds_yen": 14040.0,
+          "hit": false
+        }
+      ]
+    },
+    {
+      "race_id": "5620240107010008",
+      "race_date": "2024-01-07",
+      "track": "岸和田競輪",
+      "race_no": 8,
+      "race_type": "Ｓ級予選",
+      "participate": true,
+      "board": {
+        "first": [
+          3,
+          1
+        ],
+        "second": [
+          3,
+          1,
+          5
+        ],
+        "third": [
+          1,
+          6,
+          4
+        ]
+      },
+      "ticket_count": 9,
+      "actual": [
+        1,
+        4,
+        5
+      ],
+      "official_trifecta": "1-4-5",
+      "official_payout_per_100_yen": 5110,
+      "odds_complete": true,
+      "missing_ticket_odds": [],
+      "fallback_note": "",
+      "stake_yen": 5000,
+      "return_yen": 0,
+      "profit_yen": -5000,
+      "allocations": [
+        {
+          "combination": "1-3-4",
+          "odds": 21.3,
+          "stake_yen": 1000,
+          "gross_at_final_odds_yen": 21300.0,
+          "hit": false
+        },
+        {
+          "combination": "1-3-6",
+          "odds": 158.4,
+          "stake_yen": 100,
+          "gross_at_final_odds_yen": 15840.0,
+          "hit": false
+        },
+        {
+          "combination": "1-5-4",
+          "odds": 95.9,
+          "stake_yen": 200,
+          "gross_at_final_odds_yen": 19180.0,
+          "hit": false
+        },
+        {
+          "combination": "1-5-6",
+          "odds": 239.3,
+          "stake_yen": 100,
+          "gross_at_final_odds_yen": 23930.0,
+          "hit": false
+        },
+        {
+          "combination": "3-1-4",
+          "odds": 25.0,
+          "stake_yen": 900,
+          "gross_at_final_odds_yen": 22500.0,
+          "hit": false
+        },
+        {
+          "combination": "3-1-6",
+          "odds": 108.3,
+          "stake_yen": 200,
+          "gross_at_final_odds_yen": 21660.0,
+          "hit": false
+        },
+        {
+          "combination": "3-5-1",
+          "odds": 13.4,
+          "stake_yen": 1600,
+          "gross_at_final_odds_yen": 21440.0,
+          "hit": false
+        },
+        {
+          "combination": "3-5-4",
+          "odds": 72.0,
+          "stake_yen": 300,
+          "gross_at_final_odds_yen": 21600.0,
+          "hit": false
+        },
+        {
+          "combination": "3-5-6",
+          "odds": 36.3,
+          "stake_yen": 600,
+          "gross_at_final_odds_yen": 21780.0,
+          "hit": false
+        }
+      ]
+    },
+    {
+      "race_id": "5620240107010010",
+      "race_date": "2024-01-07",
+      "track": "岸和田競輪",
+      "race_no": 10,
+      "race_type": "Ｓ級予選",
+      "participate": true,
+      "board": {
+        "first": [
+          1,
+          7
+        ],
+        "second": [
+          1,
+          7,
+          5
+        ],
+        "third": [
+          2,
+          6,
+          5
+        ]
+      },
+      "ticket_count": 10,
+      "actual": [
+        5,
+        1,
+        6
+      ],
+      "official_trifecta": "5-1-6",
+      "official_payout_per_100_yen": 1920,
+      "odds_complete": true,
+      "missing_ticket_odds": [],
+      "fallback_note": "",
+      "stake_yen": 5000,
+      "return_yen": 0,
+      "profit_yen": -5000,
+      "allocations": [
+        {
+          "combination": "1-5-2",
+          "odds": 11.5,
+          "stake_yen": 1100,
+          "gross_at_final_odds_yen": 12650.0,
+          "hit": false
+        },
+        {
+          "combination": "1-5-6",
+          "odds": 8.9,
+          "stake_yen": 1400,
+          "gross_at_final_odds_yen": 12460.0,
+          "hit": false
+        },
+        {
+          "combination": "1-7-2",
+          "odds": 14.6,
+          "stake_yen": 800,
+          "gross_at_final_odds_yen": 11680.0,
+          "hit": false
+        },
+        {
+          "combination": "1-7-5",
+          "odds": 28.4,
+          "stake_yen": 500,
+          "gross_at_final_odds_yen": 14200.0,
+          "hit": false
+        },
+        {
+          "combination": "1-7-6",
+          "odds": 96.0,
+          "stake_yen": 200,
+          "gross_at_final_odds_yen": 19200.0,
+          "hit": false
+        },
+        {
+          "combination": "7-1-2",
+          "odds": 34.2,
+          "stake_yen": 400,
+          "gross_at_final_odds_yen": 13680.0,
+          "hit": false
+        },
+        {
+          "combination": "7-1-5",
+          "odds": 54.1,
+          "stake_yen": 300,
+          "gross_at_final_odds_yen": 16230.0,
+          "hit": false
+        },
+        {
+          "combination": "7-1-6",
+          "odds": 193.6,
+          "stake_yen": 100,
+          "gross_at_final_odds_yen": 19360.0,
+          "hit": false
+        },
+        {
+          "combination": "7-5-2",
+          "odds": 135.7,
+          "stake_yen": 100,
+          "gross_at_final_odds_yen": 13570.0,
+          "hit": false
+        },
+        {
+          "combination": "7-5-6",
+          "odds": 282.9,
+          "stake_yen": 100,
+          "gross_at_final_odds_yen": 28290.0,
+          "hit": false
+        }
+      ]
+    },
+    {
+      "race_id": "5620240107010012",
+      "race_date": "2024-01-07",
+      "track": "岸和田競輪",
+      "race_no": 12,
+      "race_type": "Ｓ級初特選",
+      "participate": true,
+      "board": {
+        "first": [
+          1,
+          2
+        ],
+        "second": [
+          1,
+          2
+        ],
+        "third": [
+          7,
+          4,
+          5
+        ]
+      },
+      "ticket_count": 6,
+      "actual": [
+        1,
+        2,
+        5
+      ],
+      "official_trifecta": "1-2-5",
+      "official_payout_per_100_yen": 650,
+      "odds_complete": true,
+      "missing_ticket_odds": [],
+      "fallback_note": "",
+      "stake_yen": 5000,
+      "return_yen": 7150,
+      "profit_yen": 2150,
+      "allocations": [
+        {
+          "combination": "1-2-4",
+          "odds": 6.1,
+          "stake_yen": 1200,
+          "gross_at_final_odds_yen": 7320.0,
+          "hit": false
+        },
+        {
+          "combination": "1-2-5",
+          "odds": 6.5,
+          "stake_yen": 1100,
+          "gross_at_final_odds_yen": 7150.0,
+          "hit": true
+        },
+        {
+          "combination": "1-2-7",
+          "odds": 13.8,
+          "stake_yen": 500,
+          "gross_at_final_odds_yen": 6900.0,
+          "hit": false
+        },
+        {
+          "combination": "2-1-4",
+          "odds": 8.4,
+          "stake_yen": 900,
+          "gross_at_final_odds_yen": 7560.0,
+          "hit": false
+        },
+        {
+          "combination": "2-1-5",
+          "odds": 8.3,
+          "stake_yen": 900,
+          "gross_at_final_odds_yen": 7470.0,
+          "hit": false
+        },
+        {
+          "combination": "2-1-7",
+          "odds": 17.5,
+          "stake_yen": 400,
+          "gross_at_final_odds_yen": 7000.0,
+          "hit": false
+        }
+      ]
+    }
+  ]
+}
