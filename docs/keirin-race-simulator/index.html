@@ -17,13 +17,52 @@
 
     body {
       min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 12px;
+      display: flex;
+      justify-content: center;
+      padding: 18px 12px 28px;
     }
 
     .stage {
       width: min(620px, 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .piece-strip {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      gap: 8px;
+      padding: 6px 2px;
+    }
+
+    .piece {
+      width: 46px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 3px solid #ffffff;
+      display: grid;
+      place-items: center;
+      justify-self: center;
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .p1 { background: #ffffff; color: #111111; }
+    .p2 { background: #171717; color: #ffffff; }
+    .p3 { background: #e53935; color: #ffffff; }
+    .p4 { background: #2878d0; color: #ffffff; }
+    .p5 { background: #f2c230; color: #111111; }
+    .p6 { background: #25a65a; color: #ffffff; }
+    .p7 { background: #e8892d; color: #111111; }
+    .p8 { background: #e889b0; color: #111111; }
+    .p9 { background: #7d53c7; color: #ffffff; }
+
+    .bank-wrap {
+      width: 100%;
     }
 
     svg {
@@ -71,79 +110,53 @@
       vector-effect: non-scaling-stroke;
     }
 
-    .piece circle {
-      stroke: #ffffff;
-      stroke-width: 3;
-      vector-effect: non-scaling-stroke;
+    @media (max-width: 520px) {
+      .stage { gap: 22px; }
+      .piece-strip { gap: 4px; }
+      .piece {
+        width: 34px;
+        border-width: 2px;
+        font-size: 16px;
+      }
     }
-
-    .piece text {
-      font-size: 19px;
-      font-weight: 900;
-      text-anchor: middle;
-      dominant-baseline: central;
-      pointer-events: none;
-    }
-
-    .p1 circle { fill: #ffffff; }
-    .p1 text   { fill: #111111; }
-    .p2 circle { fill: #171717; }
-    .p2 text   { fill: #ffffff; }
-    .p3 circle { fill: #e53935; }
-    .p3 text   { fill: #ffffff; }
-    .p4 circle { fill: #2878d0; }
-    .p4 text   { fill: #ffffff; }
-    .p5 circle { fill: #f2c230; }
-    .p5 text   { fill: #111111; }
-    .p6 circle { fill: #25a65a; }
-    .p6 text   { fill: #ffffff; }
-    .p7 circle { fill: #e8892d; }
-    .p7 text   { fill: #111111; }
-    .p8 circle { fill: #e889b0; }
-    .p8 text   { fill: #111111; }
-    .p9 circle { fill: #7d53c7; }
-    .p9 text   { fill: #ffffff; }
   </style>
 </head>
 <body>
   <main class="stage">
-    <svg viewBox="0 0 620 980" role="img" aria-label="競輪バンク">
 
-      <!-- バンク外に並べて置く駒 -->
-      <g class="piece p1" transform="translate(70 70)"><circle r="22" /><text y="1">1</text></g>
-      <g class="piece p2" transform="translate(130 70)"><circle r="22" /><text y="1">2</text></g>
-      <g class="piece p3" transform="translate(190 70)"><circle r="22" /><text y="1">3</text></g>
-      <g class="piece p4" transform="translate(250 70)"><circle r="22" /><text y="1">4</text></g>
-      <g class="piece p5" transform="translate(310 70)"><circle r="22" /><text y="1">5</text></g>
-      <g class="piece p6" transform="translate(370 70)"><circle r="22" /><text y="1">6</text></g>
-      <g class="piece p7" transform="translate(430 70)"><circle r="22" /><text y="1">7</text></g>
-      <g class="piece p8" transform="translate(490 70)"><circle r="22" /><text y="1">8</text></g>
-      <g class="piece p9" transform="translate(550 70)"><circle r="22" /><text y="1">9</text></g>
+    <!-- バンクとは完全に別の駒置き場 -->
+    <section class="piece-strip" aria-label="車番駒">
+      <div class="piece p1">1</div>
+      <div class="piece p2">2</div>
+      <div class="piece p3">3</div>
+      <div class="piece p4">4</div>
+      <div class="piece p5">5</div>
+      <div class="piece p6">6</div>
+      <div class="piece p7">7</div>
+      <div class="piece p8">8</div>
+      <div class="piece p9">9</div>
+    </section>
 
-      <!-- 走路本体 -->
-      <rect class="track" x="45" y="185" width="530" height="570" rx="235" />
+    <!-- ここから下がバンク本体 -->
+    <div class="bank-wrap">
+      <svg viewBox="0 0 620 820" role="img" aria-label="競輪バンク">
 
-      <!-- 外周オレンジ縁 -->
-      <rect class="outer-edge" x="41" y="181" width="538" height="578" rx="239" />
+        <rect class="track" x="45" y="65" width="530" height="690" rx="235" />
+        <rect class="outer-edge" x="41" y="61" width="538" height="698" rx="239" />
 
-      <!-- 白い走路ライン -->
-      <rect class="track-line" x="78" y="218" width="464" height="504" rx="202" />
-      <rect class="track-line" x="116" y="257" width="388" height="426" rx="169" />
+        <rect class="track-line" x="78" y="98" width="464" height="624" rx="202" />
+        <rect class="track-line" x="116" y="137" width="388" height="546" rx="169" />
 
-      <!-- 内側の基準ライン -->
-      <rect class="inner-guide" x="151" y="295" width="318" height="350" rx="137" />
+        <rect class="inner-guide" x="151" y="175" width="318" height="470" rx="137" />
+        <rect class="inner-zone" x="168" y="192" width="284" height="436" rx="120" />
+        <rect class="infield" x="208" y="233" width="204" height="354" rx="88" />
 
-      <!-- 内圏の赤い帯 -->
-      <rect class="inner-zone" x="168" y="312" width="284" height="316" rx="120" />
+        <line class="finish-line" x1="310" y1="65" x2="310" y2="192" />
+        <line class="finish-line" x1="310" y1="628" x2="310" y2="755" />
 
-      <!-- インフィールド -->
-      <rect class="infield" x="208" y="353" width="204" height="234" rx="88" />
+      </svg>
+    </div>
 
-      <!-- ホーム側の基準線 -->
-      <line class="finish-line" x1="310" y1="185" x2="310" y2="312" />
-      <line class="finish-line" x1="310" y1="628" x2="310" y2="755" />
-
-    </svg>
   </main>
 </body>
 </html>
