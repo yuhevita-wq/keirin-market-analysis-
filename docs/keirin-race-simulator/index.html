@@ -63,12 +63,13 @@
 
     .bank-wrap {
       width: 100%;
+      aspect-ratio: 1000 / 460;
     }
 
     svg {
       display: block;
       width: 100%;
-      height: auto;
+      height: 100%;
     }
 
     .outer-edge {
@@ -78,9 +79,7 @@
       vector-effect: non-scaling-stroke;
     }
 
-    .track {
-      fill: #6f7478;
-    }
+    .track { fill: #6f7478; }
 
     .track-line {
       fill: none;
@@ -96,13 +95,8 @@
       vector-effect: non-scaling-stroke;
     }
 
-    .inner-zone {
-      fill: #d75b78;
-    }
-
-    .infield {
-      fill: #aee637;
-    }
+    .inner-zone { fill: #d75b78; }
+    .infield { fill: #aee637; }
 
     .finish-line {
       stroke: rgba(255,255,255,.82);
@@ -124,7 +118,6 @@
 <body>
   <main class="stage">
 
-    <!-- バンクの外に置く1〜9番車 -->
     <section class="piece-strip" aria-label="車番駒">
       <div class="piece p1">1</div>
       <div class="piece p2">2</div>
@@ -137,22 +130,21 @@
       <div class="piece p9">9</div>
     </section>
 
-    <!-- 横長の競輪バンク -->
     <div class="bank-wrap">
-      <svg viewBox="0 0 1000 560" role="img" aria-label="横長の競輪バンク">
+      <svg viewBox="0 0 1000 460" role="img" aria-label="横長の競輪バンク" preserveAspectRatio="xMidYMid meet">
 
-        <rect class="track" x="85" y="75" width="830" height="410" rx="200" />
-        <rect class="outer-edge" x="81" y="71" width="838" height="418" rx="204" />
+        <rect class="track" x="70" y="60" width="860" height="340" rx="170" />
+        <rect class="outer-edge" x="66" y="56" width="868" height="348" rx="174" />
 
-        <rect class="track-line" x="120" y="108" width="760" height="344" rx="168" />
-        <rect class="track-line" x="165" y="148" width="670" height="264" rx="128" />
+        <rect class="track-line" x="110" y="92" width="780" height="276" rx="138" />
+        <rect class="track-line" x="160" y="126" width="680" height="208" rx="104" />
 
-        <rect class="inner-guide" x="210" y="185" width="580" height="190" rx="92" />
-        <rect class="inner-zone" x="230" y="201" width="540" height="158" rx="78" />
-        <rect class="infield" x="285" y="238" width="430" height="84" rx="42" />
+        <rect class="inner-guide" x="210" y="158" width="580" height="144" rx="72" />
+        <rect class="inner-zone" x="232" y="176" width="536" height="108" rx="54" />
+        <rect class="infield" x="292" y="202" width="416" height="56" rx="28" />
 
-        <line class="finish-line" x1="500" y1="75" x2="500" y2="201" />
-        <line class="finish-line" x1="500" y1="359" x2="500" y2="485" />
+        <line class="finish-line" x1="500" y1="60" x2="500" y2="176" />
+        <line class="finish-line" x1="500" y1="284" x2="500" y2="400" />
 
       </svg>
     </div>
