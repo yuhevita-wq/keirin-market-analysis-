@@ -70,6 +70,55 @@
       stroke-width: 4;
       vector-effect: non-scaling-stroke;
     }
+
+    .waiting-label {
+      fill: rgba(255,255,255,.58);
+      font-size: 16px;
+      font-weight: 700;
+      text-anchor: middle;
+      letter-spacing: .12em;
+    }
+
+    .piece circle {
+      stroke: rgba(255,255,255,.9);
+      stroke-width: 3;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .piece text {
+      font-size: 20px;
+      font-weight: 900;
+      text-anchor: middle;
+      dominant-baseline: central;
+      pointer-events: none;
+    }
+
+    .p1 circle { fill: #ffffff; }
+    .p1 text   { fill: #111111; }
+
+    .p2 circle { fill: #171717; }
+    .p2 text   { fill: #ffffff; }
+
+    .p3 circle { fill: #e53935; }
+    .p3 text   { fill: #ffffff; }
+
+    .p4 circle { fill: #2878d0; }
+    .p4 text   { fill: #ffffff; }
+
+    .p5 circle { fill: #f2c230; }
+    .p5 text   { fill: #111111; }
+
+    .p6 circle { fill: #25a65a; }
+    .p6 text   { fill: #ffffff; }
+
+    .p7 circle { fill: #e8892d; }
+    .p7 text   { fill: #111111; }
+
+    .p8 circle { fill: #e889b0; }
+    .p8 text   { fill: #111111; }
+
+    .p9 circle { fill: #7d53c7; }
+    .p9 text   { fill: #ffffff; }
   </style>
 </head>
 <body>
@@ -98,6 +147,55 @@
       <!-- ホーム側の基準線 -->
       <line class="finish-line" x1="500" y1="105" x2="500" y2="230" />
       <line class="finish-line" x1="500" y1="410" x2="500" y2="535" />
+
+      <!-- 待機場所 -->
+      <text class="waiting-label" x="500" y="443">WAITING</text>
+
+      <!-- 1〜9番車の待機駒 -->
+      <g class="piece p1" transform="translate(620 468)">
+        <circle r="22" />
+        <text y="1">1</text>
+      </g>
+
+      <g class="piece p2" transform="translate(570 468)">
+        <circle r="22" />
+        <text y="1">2</text>
+      </g>
+
+      <g class="piece p3" transform="translate(520 468)">
+        <circle r="22" />
+        <text y="1">3</text>
+      </g>
+
+      <g class="piece p4" transform="translate(470 468)">
+        <circle r="22" />
+        <text y="1">4</text>
+      </g>
+
+      <g class="piece p5" transform="translate(420 468)">
+        <circle r="22" />
+        <text y="1">5</text>
+      </g>
+
+      <g class="piece p6" transform="translate(370 468)">
+        <circle r="22" />
+        <text y="1">6</text>
+      </g>
+
+      <g class="piece p7" transform="translate(320 468)">
+        <circle r="22" />
+        <text y="1">7</text>
+      </g>
+
+      <g class="piece p8" transform="translate(270 463)">
+        <circle r="22" />
+        <text y="1">8</text>
+      </g>
+
+      <g class="piece p9" transform="translate(225 448)">
+        <circle r="22" />
+        <text y="1">9</text>
+      </g>
 
     </svg>
   </main>
