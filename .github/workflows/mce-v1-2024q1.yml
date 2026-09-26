@@ -1,0 +1,31 @@
+name: MCE v1 2024 Q1 simulation
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run frozen MCE v1 simulation
+        run: python scripts/mce_v1_2024q1.py
+
+      - name: Upload simulation results
+        uses: actions/upload-artifact@v4
+        with:
+          name: mce-v1-2024q1-results
+          path: results/mce_v1/2024_q1/
+          retention-days: 7
