@@ -1,0 +1,25 @@
+name: Validate prediction rebuild records
+
+on:
+  push:
+    paths:
+      - 'prediction-rebuild/**'
+      - '.github/workflows/validate-prediction-rebuild.yml'
+  pull_request:
+    paths:
+      - 'prediction-rebuild/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate records
+        run: python prediction-rebuild/scripts/validate_prediction_rebuild.py
