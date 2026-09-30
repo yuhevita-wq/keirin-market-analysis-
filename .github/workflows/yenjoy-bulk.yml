@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'scripts/collect_yenjoy_bulk.py'
+      - 'scripts/normalize_yenjoy_dataset.py'
       - '.github/workflows/yenjoy-bulk.yml'
   workflow_dispatch:
     inputs:
@@ -57,6 +58,12 @@ jobs:
             --delay "${{ steps.range.outputs.delay }}" \
             --output results/yenjoy_bulk \
             ${{ steps.range.outputs.limit }}
+      - name: Normalize race-level dataset
+        run: |
+          python scripts/normalize_yenjoy_dataset.py \
+            --input-dir results/yenjoy_bulk \
+            --start-month "${{ steps.range.outputs.start }}" \
+            --end-month "${{ steps.range.outputs.end }}"
       - name: Upload dataset artifact
         uses: actions/upload-artifact@v4
         with:
