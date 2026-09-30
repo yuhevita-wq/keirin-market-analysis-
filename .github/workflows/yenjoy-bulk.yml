@@ -1,0 +1,63 @@
+name: YenJoy Bulk Collector
+
+on:
+  push:
+    paths:
+      - 'scripts/collect_yenjoy_bulk.py'
+      - '.github/workflows/yenjoy-bulk.yml'
+  workflow_dispatch:
+    inputs:
+      start_month:
+        description: 'Start month (YYYYMM)'
+        required: true
+        default: '202601'
+      end_month:
+        description: 'End month (YYYYMM)'
+        required: true
+        default: '202609'
+      delay:
+        description: 'Minimum delay between requests (seconds)'
+        required: true
+        default: '0.8'
+
+permissions:
+  contents: read
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 lxml
+      - name: Resolve range
+        id: range
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "start=${{ inputs.start_month }}" >> "$GITHUB_OUTPUT"
+            echo "end=${{ inputs.end_month }}" >> "$GITHUB_OUTPUT"
+            echo "delay=${{ inputs.delay }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "start=202609" >> "$GITHUB_OUTPUT"
+            echo "end=202609" >> "$GITHUB_OUTPUT"
+            echo "delay=0.8" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Collect YenJoy tables
+        run: |
+          python scripts/collect_yenjoy_bulk.py \
+            --start-month "${{ steps.range.outputs.start }}" \
+            --end-month "${{ steps.range.outputs.end }}" \
+            --delay "${{ steps.range.outputs.delay }}" \
+            --output results/yenjoy_bulk
+      - name: Upload dataset artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: yenjoy-${{ steps.range.outputs.start }}-${{ steps.range.outputs.end }}
+          path: results/yenjoy_bulk/
+          if-no-files-found: error
+          retention-days: 30
