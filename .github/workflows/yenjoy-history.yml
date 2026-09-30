@@ -1,10 +1,21 @@
-name: YenJoy History 2024-2026
+name: YenJoy History Year
 
 on:
-  push:
-    paths:
-      - '.github/workflows/yenjoy-history.yml'
   workflow_dispatch:
+    inputs:
+      year:
+        description: 'Year to collect'
+        required: true
+        default: '2024'
+        type: choice
+        options:
+          - '2024'
+          - '2025'
+          - '2026'
+      delay:
+        description: 'Minimum delay between requests (seconds)'
+        required: true
+        default: '1.2'
 
 permissions:
   contents: read
@@ -13,100 +24,93 @@ env:
   PYTHONUNBUFFERED: '1'
 
 jobs:
-  collect-month:
-    name: collect-${{ matrix.month }}
+  collect-year:
+    name: collect-${{ inputs.year }}
     runs-on: ubuntu-latest
-    timeout-minutes: 60
-    strategy:
-      fail-fast: false
-      max-parallel: 2
-      matrix:
-        month:
-          - '202401'
-          - '202402'
-          - '202403'
-          - '202404'
-          - '202405'
-          - '202406'
-          - '202407'
-          - '202408'
-          - '202409'
-          - '202410'
-          - '202411'
-          - '202412'
-          - '202501'
-          - '202502'
-          - '202503'
-          - '202504'
-          - '202505'
-          - '202506'
-          - '202507'
-          - '202508'
-          - '202509'
-          - '202510'
-          - '202511'
-          - '202512'
-          - '202601'
-          - '202602'
-          - '202603'
-          - '202604'
-          - '202605'
-          - '202606'
-          - '202607'
-          - '202608'
-          - '202609'
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
       - name: Install dependencies
         run: pip install requests beautifulsoup4 lxml
-      - name: Collect month
+
+      - name: Resolve months
+        id: range
+        shell: bash
         run: |
-          python scripts/collect_yenjoy_bulk.py \
-            --start-month "${{ matrix.month }}" \
-            --end-month "${{ matrix.month }}" \
-            --delay 1.2 \
-            --cache-dir ".cache/yenjoy/${{ matrix.month }}" \
-            --output "results/yenjoy_${{ matrix.month }}"
-      - name: Normalize by race_id
+          if [ "${{ inputs.year }}" = "2026" ]; then
+            echo "end_month=09" >> "$GITHUB_OUTPUT"
+          else
+            echo "end_month=12" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Collect year month by month
+        shell: bash
         run: |
-          python scripts/normalize_yenjoy_dataset.py \
-            --input-dir "results/yenjoy_${{ matrix.month }}" \
-            --start-month "${{ matrix.month }}" \
-            --end-month "${{ matrix.month }}"
-      - name: Upload monthly shard
+          set +e
+          mkdir -p results/year_${{ inputs.year }}
+          : > results/year_${{ inputs.year }}/failed_months.txt
+
+          for month in $(seq -w 1 "${{ steps.range.outputs.end_month }}"); do
+            ym="${{ inputs.year }}${month}"
+            out="results/year_${{ inputs.year }}/$ym"
+            cache=".cache/yenjoy/$ym"
+
+            echo "========== $ym =========="
+            python scripts/collect_yenjoy_bulk.py \
+              --start-month "$ym" \
+              --end-month "$ym" \
+              --delay "${{ inputs.delay }}" \
+              --cache-dir "$cache" \
+              --output "$out"
+            collect_status=$?
+
+            if [ "$collect_status" -ne 0 ]; then
+              echo "$ym collect_failed" | tee -a results/year_${{ inputs.year }}/failed_months.txt
+              continue
+            fi
+
+            python scripts/normalize_yenjoy_dataset.py \
+              --input-dir "$out" \
+              --start-month "$ym" \
+              --end-month "$ym"
+            normalize_status=$?
+
+            if [ "$normalize_status" -ne 0 ]; then
+              echo "$ym normalize_failed" | tee -a results/year_${{ inputs.year }}/failed_months.txt
+            fi
+          done
+
+          exit 0
+
+      - name: Merge completed months into yearly dataset
+        shell: bash
+        run: |
+          python scripts/merge_yenjoy_history.py \
+            --input-root "results/year_${{ inputs.year }}" \
+            --output "results/year_${{ inputs.year }}/merged"
+
+      - name: Upload yearly dataset
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: yenjoy-shard-${{ matrix.month }}
-          path: results/yenjoy_${{ matrix.month }}/
+          name: yenjoy-year-${{ inputs.year }}
+          path: results/year_${{ inputs.year }}/
           if-no-files-found: error
           retention-days: 30
 
-  aggregate:
-    name: aggregate-history
-    needs: collect-month
-    if: ${{ always() }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@v4
-      - name: Download successful monthly shards
-        uses: actions/download-artifact@v4
-        with:
-          pattern: yenjoy-shard-*
-          path: shards
-          merge-multiple: false
-      - name: Merge history
+      - name: Report failed months
+        if: always()
+        shell: bash
         run: |
-          python scripts/merge_yenjoy_history.py \
-            --input-root shards \
-            --output results/yenjoy_history
-      - name: Upload consolidated history
-        uses: actions/upload-artifact@v4
-        with:
-          name: yenjoy-history-2024-2026
-          path: results/yenjoy_history/
-          if-no-files-found: error
-          retention-days: 30
+          file="results/year_${{ inputs.year }}/failed_months.txt"
+          if [ -s "$file" ]; then
+            echo "Some months failed:"
+            cat "$file"
+            exit 1
+          fi
+          echo "All requested months completed successfully."
