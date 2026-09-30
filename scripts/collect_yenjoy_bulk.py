@@ -24,6 +24,7 @@ DAY_RE = re.compile(
     r"(?:forecast(?:/compare)?|result(?:/detail)?)/"
     r"(\d{6})/(\d{2})/(\d{8})/(\d{8})(?:/\d+)?/?$"
 )
+EDITORIAL_HEADER_PREFIXES = ("本社", "取材班", "デスク")
 
 
 @dataclass(frozen=True, order=True)
@@ -62,7 +63,7 @@ class Client:
         self.session.headers.update(
             {
                 "User-Agent": (
-                    "Mozilla/5.0 (compatible; keirin-market-analysis/0.2; "
+                    "Mozilla/5.0 (compatible; keirin-market-analysis/0.3; "
                     "research collector; +https://github.com/yuhevita-wq/keirin-market-analysis-)"
                 ),
                 "Accept-Language": "ja,en;q=0.7",
@@ -99,7 +100,6 @@ class Client:
         if allow_missing and r.status_code in (404, 410):
             return None
         r.raise_for_status()
-        # YenJoy pages are UTF-8, but the HTTP header can make requests guess wrong.
         r.encoding = "utf-8"
         text = r.text
         with gzip.open(cache, "wt", encoding="utf-8") as f:
@@ -157,9 +157,15 @@ def clean_text(s: str) -> str:
 
 
 def table_record(table, idx: int) -> dict:
+    """Extract only rows/cells whose nearest table is this table, excluding nested mini-tables."""
     rows: list[list[str]] = []
     for tr in table.find_all("tr"):
-        cells = [clean_text(c.get_text(" ", strip=True)) for c in tr.find_all(["th", "td"])]
+        if tr.find_parent("table") is not table:
+            continue
+        cells = []
+        for c in tr.find_all(["th", "td"]):
+            if c.find_parent("tr") is tr and c.find_parent("table") is table:
+                cells.append(clean_text(c.get_text(" ", strip=True)))
         if cells:
             rows.append(cells)
     caption = table.find("caption")
@@ -171,10 +177,31 @@ def table_record(table, idx: int) -> dict:
     }
 
 
+def strip_editorial_columns(item: dict) -> dict:
+    rows = item.get("rows", [])
+    if not rows:
+        return item
+    header = rows[0]
+    drop = {
+        i
+        for i, label in enumerate(header)
+        if label.startswith(EDITORIAL_HEADER_PREFIXES) or "並び替え選択データ" in label
+    }
+    if not drop:
+        return item
+    cleaned = []
+    for row in rows:
+        cleaned.append([value for i, value in enumerate(row) if i not in drop])
+    item = dict(item)
+    item["rows"] = cleaned
+    item["dropped_columns"] = sorted(drop)
+    return item
+
+
 def page_meta(soup: BeautifulSoup, url: str, day: RaceDay, page_type: str) -> dict:
     title = clean_text(soup.title.get_text(" ", strip=True)) if soup.title else ""
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "source": "yenjoy",
         "page_type": page_type,
         "url": url,
@@ -188,26 +215,26 @@ def page_meta(soup: BeautifulSoup, url: str, day: RaceDay, page_type: str) -> di
 
 
 def extract_entries(html: str, url: str, day: RaceDay) -> dict:
-    """Keep structured forecast/entry comparison tables but exclude result tables."""
     soup = BeautifulSoup(html, "lxml")
     rec = page_meta(soup, url, day, "entries_compare")
     tables = []
     for i, table in enumerate(soup.find_all("table")):
+        if table.find_parent("table") is not None:
+            continue
         classes = set(table.get("class", []))
         if "result-table" in classes:
             continue
         item = table_record(table, i)
         if item["rows"]:
-            tables.append(item)
+            tables.append(strip_editorial_columns(item))
     rec["tables"] = tables
     return rec
 
 
 def extract_results(html: str, url: str, day: RaceDay) -> dict:
-    """Extract every race's finishing-order table and the following payout table."""
     soup = BeautifulSoup(html, "lxml")
     rec = page_meta(soup, url, day, "results")
-    tables = soup.find_all("table")
+    tables = [t for t in soup.find_all("table") if t.find_parent("table") is None]
     races: list[dict] = []
     race_no = 0
     for i, table in enumerate(tables):
@@ -225,7 +252,14 @@ def extract_results(html: str, url: str, day: RaceDay) -> dict:
             if candidate["rows"]:
                 payout = candidate
                 break
-        races.append({"race_no": race_no, "finish": finish, "payout": payout})
+        races.append(
+            {
+                "race_no": race_no,
+                "result_detail_url": f"{url}/detail/{race_no}",
+                "finish": finish,
+                "payout": payout,
+            }
+        )
     rec["races"] = races
     return rec
 
@@ -271,7 +305,6 @@ def collect(args: argparse.Namespace) -> dict:
     results_count = 0
     result_race_count = 0
 
-    # Stream records directly to gzip so year-scale jobs do not retain all pages in RAM.
     with gzip.open(entries_path, "wt", encoding="utf-8") as ef, gzip.open(
         results_path, "wt", encoding="utf-8"
     ) as rf:
@@ -310,7 +343,7 @@ def collect(args: argparse.Namespace) -> dict:
                 print(f"[page-error] {day.result_url}: {e!r}", flush=True)
 
     manifest = {
-        "schema_version": 2,
+        "schema_version": 3,
         "source": "yenjoy",
         "start_month": args.start_month,
         "end_month": args.end_month,
@@ -324,18 +357,19 @@ def collect(args: argparse.Namespace) -> dict:
         "page_errors": page_errors,
         "files": [entries_path.name, results_path.name],
         "note": (
-            "Structured factual table cells only. Raw HTML is cached only during the job and is not "
-            "included in the uploaded artifact. Entry/forecast tables and result/payout tables are separate."
+            "Structured entry/player data and result/payout data are stored separately. "
+            "Editorial prediction-mark columns are removed. Raw HTML stays only in the job cache."
         ),
     }
-    manifest_path = output / "manifest.json"
-    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+    (output / "manifest.json").write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
     print(json.dumps(manifest, ensure_ascii=False, indent=2), flush=True)
     return manifest
 
 
 def parse_args() -> argparse.Namespace:
-    p = argparse.ArgumentParser(description="Bulk collect factual YenJoy entry and result tables")
+    p = argparse.ArgumentParser(description="Bulk collect YenJoy entry and result tables")
     p.add_argument("--start-month", required=True, help="YYYYMM")
     p.add_argument("--end-month", required=True, help="YYYYMM")
     p.add_argument("--output", default="results/yenjoy_bulk")
