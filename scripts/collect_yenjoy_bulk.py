@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import gzip
+import hashlib
 import json
 import re
 import time
@@ -61,7 +62,7 @@ class Client:
         self.session.headers.update(
             {
                 "User-Agent": (
-                    "Mozilla/5.0 (compatible; keirin-market-analysis/0.1; "
+                    "Mozilla/5.0 (compatible; keirin-market-analysis/0.2; "
                     "research collector; +https://github.com/yuhevita-wq/keirin-market-analysis-)"
                 ),
                 "Accept-Language": "ja,en;q=0.7",
@@ -80,8 +81,6 @@ class Client:
         self.session.mount("https://", HTTPAdapter(max_retries=retry))
 
     def _cache_path(self, url: str) -> Path:
-        import hashlib
-
         h = hashlib.sha256(url.encode("utf-8")).hexdigest()
         return self.cache_dir / f"{h}.html.gz"
 
@@ -100,6 +99,8 @@ class Client:
         if allow_missing and r.status_code in (404, 410):
             return None
         r.raise_for_status()
+        # YenJoy pages are UTF-8, but the HTTP header can make requests guess wrong.
+        r.encoding = "utf-8"
         text = r.text
         with gzip.open(cache, "wt", encoding="utf-8") as f:
             f.write(text)
@@ -152,7 +153,7 @@ def discover_days(client: Client, series_url: str) -> list[RaceDay]:
 
 
 def clean_text(s: str) -> str:
-    return " ".join(s.replace("\u3000", " ").split())
+    return " ".join(s.replace("\u3000", " ").replace("\xa0", " ").split())
 
 
 def table_record(table, idx: int) -> dict:
@@ -170,21 +171,10 @@ def table_record(table, idx: int) -> dict:
     }
 
 
-def extract_page(html: str, url: str, day: RaceDay, page_type: str) -> dict:
-    soup = BeautifulSoup(html, "lxml")
+def page_meta(soup: BeautifulSoup, url: str, day: RaceDay, page_type: str) -> dict:
     title = clean_text(soup.title.get_text(" ", strip=True)) if soup.title else ""
-    headings = []
-    for tag in soup.find_all(["h1", "h2", "h3", "h4"]):
-        text = clean_text(tag.get_text(" ", strip=True))
-        if text and text not in headings:
-            headings.append(text)
-    tables = []
-    for i, table in enumerate(soup.find_all("table")):
-        rec = table_record(table, i)
-        if rec["rows"]:
-            tables.append(rec)
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "source": "yenjoy",
         "page_type": page_type,
         "url": url,
@@ -194,19 +184,54 @@ def extract_page(html: str, url: str, day: RaceDay, page_type: str) -> dict:
         "race_date": day.race_date,
         "day_id": day.day_id,
         "title": title,
-        "headings": headings[:40],
-        "tables": tables,
     }
 
 
-def write_jsonl_gz(path: Path, records: Iterable[dict]) -> int:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    count = 0
-    with gzip.open(path, "wt", encoding="utf-8") as f:
-        for rec in records:
-            f.write(json.dumps(rec, ensure_ascii=False, separators=(",", ":")) + "\n")
-            count += 1
-    return count
+def extract_entries(html: str, url: str, day: RaceDay) -> dict:
+    """Keep structured forecast/entry comparison tables but exclude result tables."""
+    soup = BeautifulSoup(html, "lxml")
+    rec = page_meta(soup, url, day, "entries_compare")
+    tables = []
+    for i, table in enumerate(soup.find_all("table")):
+        classes = set(table.get("class", []))
+        if "result-table" in classes:
+            continue
+        item = table_record(table, i)
+        if item["rows"]:
+            tables.append(item)
+    rec["tables"] = tables
+    return rec
+
+
+def extract_results(html: str, url: str, day: RaceDay) -> dict:
+    """Extract every race's finishing-order table and the following payout table."""
+    soup = BeautifulSoup(html, "lxml")
+    rec = page_meta(soup, url, day, "results")
+    tables = soup.find_all("table")
+    races: list[dict] = []
+    race_no = 0
+    for i, table in enumerate(tables):
+        classes = set(table.get("class", []))
+        if "result-table" not in classes:
+            continue
+        race_no += 1
+        finish = table_record(table, i)
+        payout = None
+        for j in range(i + 1, min(i + 4, len(tables))):
+            next_classes = set(tables[j].get("class", []))
+            if "result-table" in next_classes:
+                break
+            candidate = table_record(tables[j], j)
+            if candidate["rows"]:
+                payout = candidate
+                break
+        races.append({"race_no": race_no, "finish": finish, "payout": payout})
+    rec["races"] = races
+    return rec
+
+
+def in_requested_month(day: RaceDay, start_month: str, end_month: str) -> bool:
+    return start_month <= day.race_date[:6] <= end_month
 
 
 def collect(args: argparse.Namespace) -> dict:
@@ -230,8 +255,8 @@ def collect(args: argparse.Namespace) -> dict:
         try:
             days = discover_days(client, series_url)
             print(f"[series {i}/{len(all_series)}] {series_url} days={len(days)}", flush=True)
-            all_days.update(days)
-        except Exception as e:  # continue bulk collection and report manifest
+            all_days.update(d for d in days if in_requested_month(d, args.start_month, args.end_month))
+        except Exception as e:
             series_errors.append({"url": series_url, "error": repr(e)})
             print(f"[series-error] {series_url}: {e!r}", flush=True)
 
@@ -239,40 +264,69 @@ def collect(args: argparse.Namespace) -> dict:
     if args.max_days:
         days = days[: args.max_days]
 
-    records: list[dict] = []
+    entries_path = output / f"entries_{args.start_month}_{args.end_month}.jsonl.gz"
+    results_path = output / f"results_{args.start_month}_{args.end_month}.jsonl.gz"
     page_errors: list[dict] = []
-    for i, day in enumerate(days, 1):
-        for page_type, url in (("entries_compare", day.compare_url), ("results", day.result_url)):
-            try:
-                html = client.get(url, allow_missing=True)
-                if html is None:
-                    print(f"[missing] {url}", flush=True)
-                    continue
-                rec = extract_page(html, url, day, page_type)
-                records.append(rec)
-                print(
-                    f"[day {i}/{len(days)}] {page_type} {day.day_id} tables={len(rec['tables'])}",
-                    flush=True,
-                )
-            except Exception as e:
-                page_errors.append({"url": url, "error": repr(e)})
-                print(f"[page-error] {url}: {e!r}", flush=True)
+    entries_count = 0
+    results_count = 0
+    result_race_count = 0
 
-    data_path = output / f"yenjoy_{args.start_month}_{args.end_month}.jsonl.gz"
-    n = write_jsonl_gz(data_path, records)
+    # Stream records directly to gzip so year-scale jobs do not retain all pages in RAM.
+    with gzip.open(entries_path, "wt", encoding="utf-8") as ef, gzip.open(
+        results_path, "wt", encoding="utf-8"
+    ) as rf:
+        for i, day in enumerate(days, 1):
+            try:
+                html = client.get(day.compare_url, allow_missing=True)
+                if html is not None:
+                    rec = extract_entries(html, day.compare_url, day)
+                    ef.write(json.dumps(rec, ensure_ascii=False, separators=(",", ":")) + "\n")
+                    entries_count += 1
+                    print(
+                        f"[day {i}/{len(days)}] entries {day.day_id} tables={len(rec['tables'])}",
+                        flush=True,
+                    )
+                else:
+                    print(f"[missing] {day.compare_url}", flush=True)
+            except Exception as e:
+                page_errors.append({"url": day.compare_url, "error": repr(e)})
+                print(f"[page-error] {day.compare_url}: {e!r}", flush=True)
+
+            try:
+                html = client.get(day.result_url, allow_missing=True)
+                if html is not None:
+                    rec = extract_results(html, day.result_url, day)
+                    rf.write(json.dumps(rec, ensure_ascii=False, separators=(",", ":")) + "\n")
+                    results_count += 1
+                    result_race_count += len(rec["races"])
+                    print(
+                        f"[day {i}/{len(days)}] results {day.day_id} races={len(rec['races'])}",
+                        flush=True,
+                    )
+                else:
+                    print(f"[missing] {day.result_url}", flush=True)
+            except Exception as e:
+                page_errors.append({"url": day.result_url, "error": repr(e)})
+                print(f"[page-error] {day.result_url}: {e!r}", flush=True)
+
     manifest = {
-        "schema_version": 1,
+        "schema_version": 2,
         "source": "yenjoy",
         "start_month": args.start_month,
         "end_month": args.end_month,
         "delay_seconds": args.delay,
         "series_count": len(all_series),
         "day_count": len(days),
-        "page_count": n,
+        "entries_day_records": entries_count,
+        "results_day_records": results_count,
+        "result_race_count": result_race_count,
         "series_errors": series_errors,
         "page_errors": page_errors,
-        "data_file": data_path.name,
-        "note": "Only structured table cells/headings are stored; raw HTML is not published in the output.",
+        "files": [entries_path.name, results_path.name],
+        "note": (
+            "Structured factual table cells only. Raw HTML is cached only during the job and is not "
+            "included in the uploaded artifact. Entry/forecast tables and result/payout tables are separate."
+        ),
     }
     manifest_path = output / "manifest.json"
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -281,7 +335,7 @@ def collect(args: argparse.Namespace) -> dict:
 
 
 def parse_args() -> argparse.Namespace:
-    p = argparse.ArgumentParser(description="Bulk collect factual YenJoy race-entry/result tables")
+    p = argparse.ArgumentParser(description="Bulk collect factual YenJoy entry and result tables")
     p.add_argument("--start-month", required=True, help="YYYYMM")
     p.add_argument("--end-month", required=True, help="YYYYMM")
     p.add_argument("--output", default="results/yenjoy_bulk")
