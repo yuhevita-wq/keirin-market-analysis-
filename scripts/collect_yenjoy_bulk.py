@@ -21,10 +21,9 @@ BASE = "https://www.yen-joy.net"
 SERIES_RE = re.compile(r"^https://www\.yen-joy\.net/kaisai/race/(\d{6})/(\d{2})/(\d{8})/?$")
 DAY_RE = re.compile(
     r"^https://www\.yen-joy\.net/kaisai/race/"
-    r"(?:forecast(?:/compare)?|result(?:/detail)?)/"
+    r"(?:forecast(?:/(?:compare|line|detail))?|result(?:/detail)?)/"
     r"(\d{6})/(\d{2})/(\d{8})/(\d{8})(?:/\d+)?/?$"
 )
-EDITORIAL_HEADER_PREFIXES = ("本社", "取材班", "デスク")
 
 
 @dataclass(frozen=True, order=True)
@@ -39,9 +38,9 @@ class RaceDay:
         return f"{self.race_date}_{self.venue_code}_{self.start_date}"
 
     @property
-    def compare_url(self) -> str:
+    def line_url(self) -> str:
         return (
-            f"{BASE}/kaisai/race/forecast/compare/"
+            f"{BASE}/kaisai/race/forecast/line/"
             f"{self.ym}/{self.venue_code}/{self.start_date}/{self.race_date}"
         )
 
@@ -63,7 +62,7 @@ class Client:
         self.session.headers.update(
             {
                 "User-Agent": (
-                    "Mozilla/5.0 (compatible; keirin-market-analysis/0.3; "
+                    "Mozilla/5.0 (compatible; keirin-market-analysis/0.4; "
                     "research collector; +https://github.com/yuhevita-wq/keirin-market-analysis-)"
                 ),
                 "Accept-Language": "ja,en;q=0.7",
@@ -82,8 +81,7 @@ class Client:
         self.session.mount("https://", HTTPAdapter(max_retries=retry))
 
     def _cache_path(self, url: str) -> Path:
-        h = hashlib.sha256(url.encode("utf-8")).hexdigest()
-        return self.cache_dir / f"{h}.html.gz"
+        return self.cache_dir / f"{hashlib.sha256(url.encode('utf-8')).hexdigest()}.html.gz"
 
     def get(self, url: str, *, allow_missing: bool = False) -> str | None:
         cache = self._cache_path(url)
@@ -94,8 +92,7 @@ class Client:
         wait = self.delay - (time.monotonic() - self.last_request_at)
         if wait > 0:
             time.sleep(wait)
-
-        r = self.session.get(url, timeout=40)
+        r = self.session.get(url, timeout=60)
         self.last_request_at = time.monotonic()
         if allow_missing and r.status_code in (404, 410):
             return None
@@ -121,6 +118,14 @@ def month_iter(start_ym: str, end_ym: str) -> Iterable[str]:
             m = 1
 
 
+def clean_text(s: str) -> str:
+    return " ".join(s.replace("\u3000", " ").replace("\xa0", " ").split())
+
+
+def compact(s: str) -> str:
+    return re.sub(r"\s+", "", clean_text(s))
+
+
 def links_from_html(html: str, base_url: str) -> list[str]:
     soup = BeautifulSoup(html, "lxml")
     seen: set[str] = set()
@@ -137,8 +142,9 @@ def discover_series(client: Client, ym: str) -> list[str]:
     url = f"{BASE}/kaisai/{ym}01"
     html = client.get(url)
     assert html is not None
-    series = [u.rstrip("/") for u in links_from_html(html, url) if SERIES_RE.match(u.rstrip("/"))]
-    return sorted(set(series))
+    return sorted(
+        set(u.rstrip("/") for u in links_from_html(html, url) if SERIES_RE.match(u.rstrip("/")))
+    )
 
 
 def discover_days(client: Client, series_url: str) -> list[RaceDay]:
@@ -152,12 +158,7 @@ def discover_days(client: Client, series_url: str) -> list[RaceDay]:
     return sorted(days)
 
 
-def clean_text(s: str) -> str:
-    return " ".join(s.replace("\u3000", " ").replace("\xa0", " ").split())
-
-
 def table_record(table, idx: int) -> dict:
-    """Extract only rows/cells whose nearest table is this table, excluding nested mini-tables."""
     rows: list[list[str]] = []
     for tr in table.find_all("tr"):
         if tr.find_parent("table") is not table:
@@ -168,42 +169,87 @@ def table_record(table, idx: int) -> dict:
                 cells.append(clean_text(c.get_text(" ", strip=True)))
         if cells:
             rows.append(cells)
-    caption = table.find("caption")
-    return {
-        "index": idx,
-        "class": list(table.get("class", [])),
-        "caption": clean_text(caption.get_text(" ", strip=True)) if caption else "",
-        "rows": rows,
-    }
+    return {"index": idx, "class": list(table.get("class", [])), "rows": rows}
 
 
-def strip_editorial_columns(item: dict) -> dict:
-    rows = item.get("rows", [])
-    if not rows:
-        return item
-    header = rows[0]
-    drop = {
-        i
-        for i, label in enumerate(header)
-        if label.startswith(EDITORIAL_HEADER_PREFIXES) or "並び替え選択データ" in label
-    }
-    if not drop:
-        return item
-    cleaned = []
+def parse_int(value: str) -> int | None:
+    m = re.search(r"\d+", value or "")
+    return int(m.group()) if m else None
+
+
+def is_basic_lineup_table(rows: list[list[str]]) -> bool:
+    if len(rows) < 2:
+        return False
+    labels = [compact(r[-1]) for r in rows if r]
+    return "車" in labels and "選手名" in labels and "府県" in labels and "級班" in labels
+
+
+def extract_basic_entrants(rows: list[list[str]]) -> list[dict]:
+    by_label: dict[str, list[str]] = {}
     for row in rows:
-        cleaned.append([value for i, value in enumerate(row) if i not in drop])
-    item = dict(item)
-    item["rows"] = cleaned
-    item["dropped_columns"] = sorted(drop)
-    return item
+        if len(row) < 2:
+            continue
+        by_label[compact(row[-1])] = row[:-1]
+
+    cars = by_label.get("車", [])
+    names = by_label.get("選手名", [])
+    ages = by_label.get("年齢", [])
+    prefs = by_label.get("府県", [])
+    terms = by_label.get("期別", [])
+    classes = by_label.get("級班", [])
+    n = min(len(cars), len(names))
+    entrants: list[dict] = []
+    for i in range(n):
+        entrants.append(
+            {
+                "car_no": parse_int(cars[i]),
+                "racer": names[i],
+                "age": parse_int(ages[i]) if i < len(ages) else None,
+                "prefecture": prefs[i] if i < len(prefs) else None,
+                "term": parse_int(terms[i]) if i < len(terms) else None,
+                "class": classes[i] if i < len(classes) else None,
+            }
+        )
+    entrants.sort(key=lambda x: (x["car_no"] is None, x["car_no"] or 99))
+    return entrants
 
 
-def page_meta(soup: BeautifulSoup, url: str, day: RaceDay, page_type: str) -> dict:
+def extract_entries(html: str, url: str, day: RaceDay) -> dict:
+    soup = BeautifulSoup(html, "lxml")
+    tables = [t for t in soup.find_all("table") if t.find_parent("table") is None]
+    records = [table_record(t, i) for i, t in enumerate(tables)]
+    races: list[dict] = []
+
+    for i, item in enumerate(records):
+        rows = item["rows"]
+        if not is_basic_lineup_table(rows):
+            continue
+        race_no = len(races) + 1
+        initial_line = None
+        final_bs = None
+        for nxt in records[i + 1 : i + 3]:
+            if not nxt["rows"] or not nxt["rows"][0]:
+                continue
+            label = compact(nxt["rows"][0][0])
+            raw = nxt["rows"][0][1] if len(nxt["rows"][0]) > 1 else ""
+            if label.startswith("初周"):
+                initial_line = raw
+            elif label.startswith("最終BS"):
+                final_bs = raw
+        races.append(
+            {
+                "race_no": race_no,
+                "entrants": extract_basic_entrants(rows),
+                "initial_line_raw": initial_line,
+                "final_bs_raw": final_bs,
+            }
+        )
+
     title = clean_text(soup.title.get_text(" ", strip=True)) if soup.title else ""
     return {
-        "schema_version": 3,
+        "schema_version": 4,
         "source": "yenjoy",
-        "page_type": page_type,
+        "page_type": "entries_line",
         "url": url,
         "ym": day.ym,
         "venue_code": day.venue_code,
@@ -211,29 +257,12 @@ def page_meta(soup: BeautifulSoup, url: str, day: RaceDay, page_type: str) -> di
         "race_date": day.race_date,
         "day_id": day.day_id,
         "title": title,
+        "races": races,
     }
-
-
-def extract_entries(html: str, url: str, day: RaceDay) -> dict:
-    soup = BeautifulSoup(html, "lxml")
-    rec = page_meta(soup, url, day, "entries_compare")
-    tables = []
-    for i, table in enumerate(soup.find_all("table")):
-        if table.find_parent("table") is not None:
-            continue
-        classes = set(table.get("class", []))
-        if "result-table" in classes:
-            continue
-        item = table_record(table, i)
-        if item["rows"]:
-            tables.append(strip_editorial_columns(item))
-    rec["tables"] = tables
-    return rec
 
 
 def extract_results(html: str, url: str, day: RaceDay) -> dict:
     soup = BeautifulSoup(html, "lxml")
-    rec = page_meta(soup, url, day, "results")
     tables = [t for t in soup.find_all("table") if t.find_parent("table") is None]
     races: list[dict] = []
     race_no = 0
@@ -245,8 +274,7 @@ def extract_results(html: str, url: str, day: RaceDay) -> dict:
         finish = table_record(table, i)
         payout = None
         for j in range(i + 1, min(i + 4, len(tables))):
-            next_classes = set(tables[j].get("class", []))
-            if "result-table" in next_classes:
+            if "result-table" in set(tables[j].get("class", [])):
                 break
             candidate = table_record(tables[j], j)
             if candidate["rows"]:
@@ -260,8 +288,20 @@ def extract_results(html: str, url: str, day: RaceDay) -> dict:
                 "payout": payout,
             }
         )
-    rec["races"] = races
-    return rec
+    title = clean_text(soup.title.get_text(" ", strip=True)) if soup.title else ""
+    return {
+        "schema_version": 4,
+        "source": "yenjoy",
+        "page_type": "results",
+        "url": url,
+        "ym": day.ym,
+        "venue_code": day.venue_code,
+        "start_date": day.start_date,
+        "race_date": day.race_date,
+        "day_id": day.day_id,
+        "title": title,
+        "races": races,
+    }
 
 
 def in_requested_month(day: RaceDay, start_month: str, end_month: str) -> bool:
@@ -278,7 +318,6 @@ def collect(args: argparse.Namespace) -> dict:
         found = discover_series(client, ym)
         print(f"[month] {ym}: series={len(found)}", flush=True)
         all_series.extend(found)
-
     all_series = sorted(set(all_series))
     if args.max_series:
         all_series = all_series[: args.max_series]
@@ -301,29 +340,28 @@ def collect(args: argparse.Namespace) -> dict:
     entries_path = output / f"entries_{args.start_month}_{args.end_month}.jsonl.gz"
     results_path = output / f"results_{args.start_month}_{args.end_month}.jsonl.gz"
     page_errors: list[dict] = []
-    entries_count = 0
-    results_count = 0
-    result_race_count = 0
+    entries_count = results_count = entry_race_count = result_race_count = 0
 
     with gzip.open(entries_path, "wt", encoding="utf-8") as ef, gzip.open(
         results_path, "wt", encoding="utf-8"
     ) as rf:
         for i, day in enumerate(days, 1):
             try:
-                html = client.get(day.compare_url, allow_missing=True)
+                html = client.get(day.line_url, allow_missing=True)
                 if html is not None:
-                    rec = extract_entries(html, day.compare_url, day)
+                    rec = extract_entries(html, day.line_url, day)
                     ef.write(json.dumps(rec, ensure_ascii=False, separators=(",", ":")) + "\n")
                     entries_count += 1
+                    entry_race_count += len(rec["races"])
                     print(
-                        f"[day {i}/{len(days)}] entries {day.day_id} tables={len(rec['tables'])}",
+                        f"[day {i}/{len(days)}] entries {day.day_id} races={len(rec['races'])}",
                         flush=True,
                     )
                 else:
-                    print(f"[missing] {day.compare_url}", flush=True)
+                    print(f"[missing] {day.line_url}", flush=True)
             except Exception as e:
-                page_errors.append({"url": day.compare_url, "error": repr(e)})
-                print(f"[page-error] {day.compare_url}: {e!r}", flush=True)
+                page_errors.append({"url": day.line_url, "error": repr(e)})
+                print(f"[page-error] {day.line_url}: {e!r}", flush=True)
 
             try:
                 html = client.get(day.result_url, allow_missing=True)
@@ -343,7 +381,7 @@ def collect(args: argparse.Namespace) -> dict:
                 print(f"[page-error] {day.result_url}: {e!r}", flush=True)
 
     manifest = {
-        "schema_version": 3,
+        "schema_version": 4,
         "source": "yenjoy",
         "start_month": args.start_month,
         "end_month": args.end_month,
@@ -351,14 +389,16 @@ def collect(args: argparse.Namespace) -> dict:
         "series_count": len(all_series),
         "day_count": len(days),
         "entries_day_records": entries_count,
+        "entry_race_count": entry_race_count,
         "results_day_records": results_count,
         "result_race_count": result_race_count,
         "series_errors": series_errors,
         "page_errors": page_errors,
         "files": [entries_path.name, results_path.name],
         "note": (
-            "Structured entry/player data and result/payout data are stored separately. "
-            "Editorial prediction-mark columns are removed. Raw HTML stays only in the job cache."
+            "Entry data come from the all-race lineup page, giving complete daily fields for car number, "
+            "rider name, age, prefecture, term and class plus initial/final lineup text. "
+            "Result/payout data are stored separately. Raw HTML is not uploaded."
         ),
     }
     (output / "manifest.json").write_text(
@@ -369,12 +409,12 @@ def collect(args: argparse.Namespace) -> dict:
 
 
 def parse_args() -> argparse.Namespace:
-    p = argparse.ArgumentParser(description="Bulk collect YenJoy entry and result tables")
+    p = argparse.ArgumentParser(description="Bulk collect complete YenJoy lineups and results")
     p.add_argument("--start-month", required=True, help="YYYYMM")
     p.add_argument("--end-month", required=True, help="YYYYMM")
     p.add_argument("--output", default="results/yenjoy_bulk")
     p.add_argument("--cache-dir", default=".cache/yenjoy")
-    p.add_argument("--delay", type=float, default=0.8, help="minimum seconds between network requests")
+    p.add_argument("--delay", type=float, default=1.0, help="minimum seconds between network requests")
     p.add_argument("--max-series", type=int, default=0, help="0 = unlimited")
     p.add_argument("--max-days", type=int, default=0, help="0 = unlimited")
     return p.parse_args()
