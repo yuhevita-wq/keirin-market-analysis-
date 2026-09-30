@@ -42,10 +42,12 @@ jobs:
             echo "start=${{ inputs.start_month }}" >> "$GITHUB_OUTPUT"
             echo "end=${{ inputs.end_month }}" >> "$GITHUB_OUTPUT"
             echo "delay=${{ inputs.delay }}" >> "$GITHUB_OUTPUT"
+            echo "limit=" >> "$GITHUB_OUTPUT"
           else
             echo "start=202609" >> "$GITHUB_OUTPUT"
             echo "end=202609" >> "$GITHUB_OUTPUT"
             echo "delay=0.8" >> "$GITHUB_OUTPUT"
+            echo "limit=--max-series 3 --max-days 4" >> "$GITHUB_OUTPUT"
           fi
       - name: Collect YenJoy tables
         run: |
@@ -53,11 +55,12 @@ jobs:
             --start-month "${{ steps.range.outputs.start }}" \
             --end-month "${{ steps.range.outputs.end }}" \
             --delay "${{ steps.range.outputs.delay }}" \
-            --output results/yenjoy_bulk
+            --output results/yenjoy_bulk \
+            ${{ steps.range.outputs.limit }}
       - name: Upload dataset artifact
         uses: actions/upload-artifact@v4
         with:
-          name: yenjoy-${{ steps.range.outputs.start }}-${{ steps.range.outputs.end }}
+          name: yenjoy-${{ steps.range.outputs.start }}-${{ steps.range.outputs.end }}-${{ github.run_number }}
           path: results/yenjoy_bulk/
           if-no-files-found: error
           retention-days: 30
