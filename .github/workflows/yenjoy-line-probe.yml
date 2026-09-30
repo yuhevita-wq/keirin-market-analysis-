@@ -1,0 +1,25 @@
+name: YenJoy Line Probe
+
+on:
+  push:
+    paths:
+      - 'scripts/yenjoy_line_probe.py'
+      - '.github/workflows/yenjoy-line-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 lxml
+      - name: Probe all-race lineup page
+        run: python scripts/yenjoy_line_probe.py
