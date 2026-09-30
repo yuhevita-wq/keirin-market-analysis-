@@ -1,0 +1,112 @@
+name: YenJoy History 2024-2026
+
+on:
+  push:
+    paths:
+      - '.github/workflows/yenjoy-history.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  collect-month:
+    name: collect-${{ matrix.month }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        month:
+          - '202401'
+          - '202402'
+          - '202403'
+          - '202404'
+          - '202405'
+          - '202406'
+          - '202407'
+          - '202408'
+          - '202409'
+          - '202410'
+          - '202411'
+          - '202412'
+          - '202501'
+          - '202502'
+          - '202503'
+          - '202504'
+          - '202505'
+          - '202506'
+          - '202507'
+          - '202508'
+          - '202509'
+          - '202510'
+          - '202511'
+          - '202512'
+          - '202601'
+          - '202602'
+          - '202603'
+          - '202604'
+          - '202605'
+          - '202606'
+          - '202607'
+          - '202608'
+          - '202609'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 lxml
+      - name: Collect month
+        run: |
+          python scripts/collect_yenjoy_bulk.py \
+            --start-month "${{ matrix.month }}" \
+            --end-month "${{ matrix.month }}" \
+            --delay 1.2 \
+            --cache-dir ".cache/yenjoy/${{ matrix.month }}" \
+            --output "results/yenjoy_${{ matrix.month }}"
+      - name: Normalize by race_id
+        run: |
+          python scripts/normalize_yenjoy_dataset.py \
+            --input-dir "results/yenjoy_${{ matrix.month }}" \
+            --start-month "${{ matrix.month }}" \
+            --end-month "${{ matrix.month }}"
+      - name: Upload monthly shard
+        uses: actions/upload-artifact@v4
+        with:
+          name: yenjoy-shard-${{ matrix.month }}
+          path: results/yenjoy_${{ matrix.month }}/
+          if-no-files-found: error
+          retention-days: 30
+
+  aggregate:
+    name: aggregate-history
+    needs: collect-month
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download successful monthly shards
+        uses: actions/download-artifact@v4
+        with:
+          pattern: yenjoy-shard-*
+          path: shards
+          merge-multiple: false
+      - name: Merge history
+        run: |
+          python scripts/merge_yenjoy_history.py \
+            --input-root shards \
+            --output results/yenjoy_history
+      - name: Upload consolidated history
+        uses: actions/upload-artifact@v4
+        with:
+          name: yenjoy-history-2024-2026
+          path: results/yenjoy_history/
+          if-no-files-found: error
+          retention-days: 30
