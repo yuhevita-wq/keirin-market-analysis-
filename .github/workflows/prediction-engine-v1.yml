@@ -1,0 +1,65 @@
+name: Prediction Engine v1
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_full_2024_2025:
+        description: "Run 2024 development calibration + 2025 destruction test"
+        required: true
+        default: false
+        type: boolean
+  pull_request:
+    paths:
+      - "src/keirin_market_analysis/prediction_*.py"
+      - "tests/test_prediction_engine.py"
+      - "pyproject.toml"
+      - ".github/workflows/prediction-engine-v1.yml"
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install prediction engine
+        run: python -m pip install -e ".[prediction,dev]"
+      - name: Run prediction engine tests
+        run: pytest -q tests/test_prediction_engine.py
+      - name: Verify 2026 remains locked
+        run: keirin-prediction-engine-v1 manifest
+
+  develop-and-test:
+    if: github.event_name == 'workflow_dispatch' && inputs.run_full_2024_2025 == true
+    needs: unit-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install prediction engine
+        run: python -m pip install -e ".[prediction]"
+      - name: Run 2024 development and 2025 destruction test
+        run: >-
+          keirin-prediction-engine-v1 develop-and-test
+          --root .
+          --out artifacts/prediction_engine_v1
+      - name: Confirm no 2026 validation output exists
+        shell: bash
+        run: |
+          if find artifacts/prediction_engine_v1 -type f -iname '*2026*' | grep -q .; then
+            echo 'Unexpected 2026 output: sealed validation must remain unopened.'
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prediction-engine-v1-2024dev-2025test
+          path: artifacts/prediction_engine_v1/
+          if-no-files-found: error
+          retention-days: 30

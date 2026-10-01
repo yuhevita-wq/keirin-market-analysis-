@@ -1,0 +1,43 @@
+name: Prediction Engine Q4 Safe Gate
+
+on:
+  push:
+    branches:
+      - feature/prediction-engine-v1
+    paths:
+      - "scripts/run_prediction_q4_safe.py"
+      - ".github/workflows/prediction-q4-safe.yml"
+  workflow_dispatch:
+
+jobs:
+  q4-safe-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install prediction engine
+        run: python -m pip install -e ".[prediction]"
+      - name: Run 2024 Q4 validation only
+        run: python scripts/run_prediction_q4_safe.py
+      - name: Prove 2025 and 2026 stayed unopened
+        shell: bash
+        run: |
+          test -f artifacts/prediction_engine_v1_q4_safe/q4_safe_summary.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = json.loads(Path('artifacts/prediction_engine_v1_q4_safe/q4_safe_summary.json').read_text(encoding='utf-8'))
+          assert p['2025_status'] == 'NOT_OPENED'
+          assert p['2026_status'] == 'NOT_OPENED'
+          print('2025/2026 sealed: OK')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prediction-engine-v1-q4-safe
+          path: artifacts/prediction_engine_v1_q4_safe/
+          if-no-files-found: error
+          retention-days: 30
