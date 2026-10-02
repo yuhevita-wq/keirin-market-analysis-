@@ -1,0 +1,34 @@
+name: G3 Day3 Reality
+
+on:
+  push:
+    branches:
+      - analysis/g3-day3-reality
+    paths:
+      - 'scripts/inventory_g3_archives.py'
+      - '.github/workflows/g3-day3-reality.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: analysis/g3-day3-reality
+      - name: Inventory G3 archives
+        run: python scripts/inventory_g3_archives.py
+      - name: Commit inventory
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/g3_day3_reality/
+          if git diff --cached --quiet; then
+            echo 'No changes'
+          else
+            git commit -m 'analysis: inventory G3 archives [skip ci]'
+            git push origin HEAD:analysis/g3-day3-reality
+          fi
