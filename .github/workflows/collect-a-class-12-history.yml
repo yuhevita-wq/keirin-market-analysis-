@@ -1,0 +1,181 @@
+name: Collect A1-A2 history 2023-2026
+
+on:
+  workflow_dispatch:
+    inputs:
+      with_final_odds:
+        description: "Also collect final trifecta/trio odds (much heavier)"
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include:
+          - label: "2023_h1"
+            start_date: "2023-01-01"
+            end_date: "2023-06-30"
+            out_dir: "data/a_class_12/2023_h1"
+          - label: "2023_h2"
+            start_date: "2023-07-01"
+            end_date: "2023-12-31"
+            out_dir: "data/a_class_12/2023_h2"
+          - label: "2024_h1"
+            start_date: "2024-01-01"
+            end_date: "2024-06-30"
+            out_dir: "data/a_class_12/2024_h1"
+          - label: "2024_h2"
+            start_date: "2024-07-01"
+            end_date: "2024-12-31"
+            out_dir: "data/a_class_12/2024_h2"
+          - label: "2025_h1"
+            start_date: "2025-01-01"
+            end_date: "2025-06-30"
+            out_dir: "data/a_class_12/2025_h1"
+          - label: "2025_h2"
+            start_date: "2025-07-01"
+            end_date: "2025-12-31"
+            out_dir: "data/a_class_12/2025_h2"
+          - label: "2026_h1"
+            start_date: "2026-01-01"
+            end_date: "2026-06-30"
+            out_dir: "data/a_class_12/2026_h1"
+          - label: "2026_h2_to_1002"
+            start_date: "2026-07-01"
+            end_date: "2026-10-02"
+            out_dir: "data/a_class_12/2026_h2_to_1002"
+
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    name: Collect ${{ matrix.label }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install
+        run: python -m pip install -e '.[scrape]'
+
+      - name: Collect A1/A2 race cards
+        run: |
+          python -m keirin_market_analysis.a_class_12 \
+            --start-date "${{ matrix.start_date }}" \
+            --end-date "${{ matrix.end_date }}" \
+            --out-dir "${{ matrix.out_dir }}" \
+            --sleep 0.20
+
+      - name: Validate base collection
+        run: |
+          OUT_DIR="${{ matrix.out_dir }}" python - <<'PY'
+          import csv, json, os, unicodedata
+          from pathlib import Path
+
+          p = Path(os.environ['OUT_DIR'])
+          s = json.loads((p / 'summary.json').read_text(encoding='utf-8'))
+          races = list(csv.DictReader((p / 'races.csv').open(encoding='utf-8-sig')))
+          entries = list(csv.DictReader((p / 'entries.csv').open(encoding='utf-8-sig')))
+          failures = list(csv.DictReader((p / 'failures.csv').open(encoding='utf-8-sig')))
+
+          def cls(v):
+              return ''.join(unicodedata.normalize('NFKC', v).upper().split())
+
+          assert s['parsed_a1_a2_races'] == len(races) and len(races) > 0, s
+          assert s['entry_rows'] == len(entries) and len(entries) > 0, s
+          assert s['failures'] == 0 and not failures, failures[:20]
+          assert all(r['race_type'].startswith('Ａ級') for r in races)
+          assert all(e['race_type'].startswith('Ａ級') for e in entries)
+          assert all(cls(e['class']) in {'A1', 'A2'} for e in entries)
+          race_ids = {r['race_id'] for r in races}
+          assert race_ids == {e['race_id'] for e in entries}
+          print(json.dumps(s, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Enrich KDreams predicted line formation
+        run: |
+          python -m keirin_market_analysis.line_formation_2025 \
+            --data-dir "${{ matrix.out_dir }}" \
+            --sleep 0.20
+
+      - name: Extract results and payouts
+        run: |
+          python -m keirin_market_analysis.results_payouts_2025 \
+            --data-dir "${{ matrix.out_dir }}" \
+            --sleep 0.20
+
+      - name: Validate results and payouts
+        run: |
+          OUT_DIR="${{ matrix.out_dir }}" python - <<'PY'
+          import csv, json, os
+          from pathlib import Path
+
+          p = Path(os.environ['OUT_DIR'])
+          races = list(csv.DictReader((p / 'races.csv').open(encoding='utf-8-sig')))
+          s = json.loads((p / 'result_summary.json').read_text(encoding='utf-8'))
+          failures = list(csv.DictReader((p / 'result_failures.csv').open(encoding='utf-8-sig')))
+
+          assert s['race_count'] == len(races) and len(races) > 0, s
+          assert s['complete_result_races'] == len(races), s
+          assert s['complete_payout_races'] == len(races), s
+          assert s['parse_failures'] == 0 and not failures, failures[:20]
+          print(json.dumps(s, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Collect historical final trifecta and trio odds
+        if: ${{ inputs.with_final_odds }}
+        run: |
+          python -m keirin_market_analysis.historical_final_odds \
+            --data-dir "${{ matrix.out_dir }}" \
+            --workers 2 \
+            --sleep 0.20
+
+      - name: Validate final odds
+        if: ${{ inputs.with_final_odds }}
+        run: |
+          OUT_DIR="${{ matrix.out_dir }}" python - <<'PY'
+          import csv, json, os
+          from pathlib import Path
+
+          p = Path(os.environ['OUT_DIR'])
+          races = list(csv.DictReader((p / 'races.csv').open(encoding='utf-8-sig')))
+          s = json.loads((p / 'odds_summary.json').read_text(encoding='utf-8'))
+          assert s['race_count_attempted'] == len(races), (s, len(races))
+          assert s['complete_races'] + s['failed_races'] == len(races), s
+          assert s['coverage_rate'] >= 0.95, s
+          print(json.dumps(s, ensure_ascii=False, indent=2))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: a-class-12-${{ matrix.label }}
+          retention-days: 7
+          path: ${{ matrix.out_dir }}
+
+      - name: Commit dataset
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "${{ matrix.out_dir }}"
+          if git diff --cached --quiet; then
+            echo "No dataset changes to commit"
+          else
+            git commit -m "data: add A1/A2 ${{ matrix.label }} dataset"
+            for i in 1 2 3 4 5; do
+              git pull --rebase origin main && git push origin HEAD:main && break
+              if [ "$i" = "5" ]; then exit 1; fi
+              sleep $((i*5))
+            done
+          fi
