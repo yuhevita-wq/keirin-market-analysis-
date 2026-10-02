@@ -8,6 +8,10 @@ on:
         required: true
         type: boolean
         default: false
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/collect-a-class-12-history.yml"
 
 permissions:
   contents: write
