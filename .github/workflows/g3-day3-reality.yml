@@ -8,6 +8,7 @@ on:
       - 'scripts/inventory_g3_archives.py'
       - 'scripts/analyze_g3_day3_reality.py'
       - 'scripts/drilldown_g3_day3_reality.py'
+      - 'scripts/analyze_g3_day3_offmain.py'
       - '.github/workflows/g3-day3-reality.yml'
   workflow_dispatch:
 
@@ -27,6 +28,8 @@ jobs:
         run: python scripts/analyze_g3_day3_reality.py
       - name: Drill down market and race-type effects
         run: python scripts/drilldown_g3_day3_reality.py
+      - name: Analyze off-mainline winners
+        run: python scripts/analyze_g3_day3_offmain.py
       - name: Commit analysis outputs
         run: |
           git config user.name github-actions[bot]
