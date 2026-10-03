@@ -1,0 +1,35 @@
+name: G3 Semifinal Feature Screen
+
+on:
+  push:
+    branches:
+      - analysis/g3-day3-reality
+    paths:
+      - 'scripts/analyze_g3_semifinal_feature_screen.py'
+      - '.github/workflows/g3-semifinal-feature-screen.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: analysis/g3-day3-reality
+      - name: Screen semifinal features
+        run: python scripts/analyze_g3_semifinal_feature_screen.py
+      - name: Commit output
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/g3_day3_reality/semifinal_feature_screen.md
+          if git diff --cached --quiet; then
+            echo 'No changes'
+          else
+            git commit -m 'analysis: semifinal feature screen output [skip ci]'
+            git pull --rebase origin analysis/g3-day3-reality
+            git push origin HEAD:analysis/g3-day3-reality
+          fi
