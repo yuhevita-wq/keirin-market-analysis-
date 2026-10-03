@@ -110,3 +110,5 @@ def main():
         md.append('')
     OUT.mkdir(parents=True,exist_ok=True); (OUT/'nonmain_rank_detail.md').write_text('\n'.join(md)+'\n',encoding='utf-8'); print('\n'.join(md))
 if __name__=='__main__':main()
+
+# workflow trigger
