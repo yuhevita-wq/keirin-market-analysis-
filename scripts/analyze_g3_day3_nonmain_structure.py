@@ -56,8 +56,7 @@ def main():
             for x in read(z,'payouts.csv'):P[x['race_id']].append(x)
             for x in read(z,'trio_final_odds.csv'):O[x['race_id']][x.get('combination','')]=x
 
-    split={'train':lambda y:y<=2024,'test':lambda y:y>=2025}
-    out={k:{'n':0,'main_survivors':Counter(),'one_main_outside_shape':Counter(),'zero_main_shape':Counter(),'outside_roles':Counter(),'outside_units':Counter(),'market':defaultdict(float),'actual':Counter()} for k in split}
+    out={k:{'n':0,'main_survivors':Counter(),'one_main_outside_shape':Counter(),'zero_main_shape':Counter(),'outside_roles':Counter(),'outside_units':Counter(),'market':defaultdict(float),'actual':Counter()} for k in ('train','test')}
 
     def rider_meta(car, es, by, line_rank):
         e=next(x for x in es if int(x['car_no'])==car)
@@ -97,12 +96,11 @@ def main():
         return len(mains), sh, units, roles
 
     for race in races.values():
-        rid=race['race_id'];
+        rid=race['race_id']
         if not day3(rid): continue
-        try:y=int(rid[:4])
+        try:y=int(race.get('race_date','9999')[:4])
         except: continue
         key='train' if y<=2024 else 'test'
-        if key not in out: continue
         es=E[rid]; win=paid(P[rid]); od=O[rid]
         if not win or not od: continue
         by,ranked=lines(es)
@@ -121,14 +119,12 @@ def main():
         for u in units:d['outside_units'][u]+=1
         for r in roles:d['outside_roles'][r]+=1
         d['actual'][sh]+=1
-        # structural market mass for each shape
         for combo,p in mp.items():
-            try:cms,csh,_,_=shape_for(combo,A,B,es,by,line_rank)
+            try:_,csh,_,_=shape_for(combo,A,B,es,by,line_rank)
             except:continue
-            if csh==sh: pass
             d['market'][csh]+=p
 
-    md=['# G3三日目 本命以外ゼロベース再分析','', '本命A-Bだけ固定。2番手ラインを特別扱いせず、外側をライン順位・単騎・同一ユニット/異ユニットで分解。','']
+    md=['# G3三日目 本命以外ゼロベース再分析','', '本命A-Bだけ固定。2番手ラインを特別扱いせず、外側をライン順位・単騎・同一ユニット/異ユニットで分解。train=2022-2024 / test=2025-2026H1','']
     jout={}
     for key,d in out.items():
         n=d['n']; md.append(f'## {key}: {n}R')
