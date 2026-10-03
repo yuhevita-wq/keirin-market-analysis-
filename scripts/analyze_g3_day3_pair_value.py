@@ -32,7 +32,7 @@ def i(v):
 def day3(rid):
     return len(rid)==16 and rid.isdigit() and rid[10:12]=='03'
 
-def lines(es):
+def rank_lines(es):
     by=defaultdict(list)
     for e in es:
         if e.get('line_id','').isdigit() and e.get('line_position','').isdigit():by[int(e['line_id'])].append(e)
@@ -78,7 +78,7 @@ def main():
     for race in races.values():
         rid=race['race_id']
         if not day3(rid):continue
-        lr=lines(E[rid])
+        lr=rank_lines(E[rid])
         if len(lr)<2:continue
         m=lr[0][2]; q=lr[1][2]
         A,B=int(m[0]['car_no']),int(m[1]['car_no']); C,D=int(q[0]['car_no']),int(q[1]['car_no'])
@@ -101,22 +101,21 @@ def main():
                 rec[label].append({'pos':pos,'car':x,'combo':c,'odds':odds,'hit':int(c==win),'ret':pay if c==win else 0})
         per.append(rec)
 
-    lines=['# G3三日目 AB/CD固定ペア 候補順位と価格','']
-    # Slot-level value
+    md=['# G3三日目 AB/CD固定ペア 候補順位と価格','']
     for label,maxp in [('AB',4),('CD',5)]:
-        lines.append(f'## {label} 市場候補順位ごとの1点成績')
+        md.append(f'## {label} 市場候補順位ごとの1点成績')
         for pos in range(1,maxp+1):
             for split in ('train','test'):
                 ts=[t for r in per if r['split']==split for t in r[label] if t['pos']==pos]
                 s=summarize_tickets(ts)
-                lines.append(f"- {label}候補{pos} {split}: {s['tickets']}券 hit {s['hit_rate']:.1%} ROI {s['roi']:.1%} 中央odds {s['median_odds']:.1f}")
-        lines.append('')
+                med=s['median_odds'] if s['median_odds'] is not None else 0
+                md.append(f"- {label}候補{pos} {split}: {s['tickets']}券 hit {s['hit_rate']:.1%} ROI {s['roi']:.1%} 中央odds {med:.1f}")
+        md.append('')
 
-    # Formation + minimum-odds filters. AB k 2/3, CD k 2/3/4; combined too.
     floors=[0,5,7,10,12,15,20,25,30]
     configs=[('AB2','AB',2),('AB3','AB',3),('CD2','CD',2),('CD3','CD',3),('CD4','CD',4)]
     summaries={}
-    lines.append('## 固定ペア別 オッズ下限')
+    md.append('## 固定ペア別 オッズ下限')
     for name,label,k in configs:
         summaries[name]={}
         for floor in floors:
@@ -129,10 +128,10 @@ def main():
             for split in ('train','test'):
                 ss=summarize_races([x for x in seg if x['split']==split]);summaries[name][floor][split]=ss
                 vals.append(f"{split} {ss['races']}R {ss['avg_points']:.1f}点 hit {ss['hit_rate']:.1%} ROI {ss['roi']:.1%}")
-            lines.append(f"- {name} odds>={floor}: "+' / '.join(vals))
-        lines.append('')
+            md.append(f"- {name} odds>={floor}: "+' / '.join(vals))
+        md.append('')
 
-    lines.append('## AB + CD 同時運用')
+    md.append('## AB + CD 同時運用')
     combos=[('AB2+CD3',2,3),('AB3+CD3',3,3),('AB2+CD2',2,2),('AB3+CD2',3,2)]
     combined={}
     for name,ka,kc in combos:
@@ -144,17 +143,16 @@ def main():
                 for r in per:
                     if r['split']!=split:continue
                     ts=[t for t in r['AB'] if t['pos']<=ka and t['odds']>=floor]+[t for t in r['CD'] if t['pos']<=kc and t['odds']>=floor]
-                    # Distinct trio tickets only.
                     uniq={t['combo']:t for t in ts}
                     if uniq:rr.append({'tickets':list(uniq.values())})
                 s=summarize_races(rr);combined[name][floor][split]=s
             tr=combined[name][floor]['train'];te=combined[name][floor]['test']
-            lines.append(f"- {name} odds>={floor}: train {tr['avg_points']:.1f}点 hit {tr['hit_rate']:.1%} ROI {tr['roi']:.1%} / test {te['avg_points']:.1f}点 hit {te['hit_rate']:.1%} ROI {te['roi']:.1%}")
-        lines.append('')
+            md.append(f"- {name} odds>={floor}: train {tr['avg_points']:.1f}点 hit {tr['hit_rate']:.1%} ROI {tr['roi']:.1%} / test {te['avg_points']:.1f}点 hit {te['hit_rate']:.1%} ROI {te['roi']:.1%}")
+        md.append('')
 
     out={'summaries':summaries,'combined':combined,'floors':floors}
     (OUT/'pair_value.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    (OUT/'pair_value.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
-    print('\n'.join(lines))
+    (OUT/'pair_value.md').write_text('\n'.join(md)+'\n',encoding='utf-8')
+    print('\n'.join(md))
 
 if __name__=='__main__':main()
