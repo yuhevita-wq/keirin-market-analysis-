@@ -9,6 +9,7 @@ on:
       - 'scripts/analyze_g3_day3_reality.py'
       - 'scripts/drilldown_g3_day3_reality.py'
       - 'scripts/analyze_g3_day3_offmain.py'
+      - 'scripts/simulate_g3_day3_trio_formations.py'
       - '.github/workflows/g3-day3-reality.yml'
   workflow_dispatch:
 
@@ -30,6 +31,8 @@ jobs:
         run: python scripts/drilldown_g3_day3_reality.py
       - name: Analyze off-mainline winners
         run: python scripts/analyze_g3_day3_offmain.py
+      - name: Backtest trio formations
+        run: python scripts/simulate_g3_day3_trio_formations.py
       - name: Commit analysis outputs
         run: |
           git config user.name github-actions[bot]
