@@ -1,0 +1,49 @@
+# G3三日目 entries 個体特徴量監査
+
+- rows: 19988
+
+## columns
+- race_id: nonempty 19988/19988 (100.0%) sample=2820220104030001
+- race_date: nonempty 19988/19988 (100.0%) sample=2022-01-06
+- track: nonempty 19988/19988 (100.0%) sample=立川競輪
+- meeting_grade: nonempty 19988/19988 (100.0%) sample=G3
+- race_no: nonempty 19988/19988 (100.0%) sample=1
+- race_type: nonempty 19988/19988 (100.0%) sample=Ｓ級一般
+- start_time: nonempty 19988/19988 (100.0%) sample=10:55
+- deadline: nonempty 19988/19988 (100.0%) sample=10:50
+- source_url: nonempty 19988/19988 (100.0%) sample=https://keirin.kdreams.jp/tachikawa/racedetail/2820220104030001/?pageType=result
+- captured_at_utc: nonempty 19988/19988 (100.0%) sample=2026-09-02T13:24:39.188193+00:00
+- car_no: nonempty 19988/19988 (100.0%) sample=1
+- player_name: nonempty 19988/19988 (100.0%) sample=鷲田 佳史
+- player_profile: nonempty 19988/19988 (100.0%) sample=福 井/38/88
+- prefecture: nonempty 19988/19988 (100.0%) sample=福井
+- age: nonempty 19988/19988 (100.0%) sample=38
+- term: nonempty 19988/19988 (100.0%) sample=88
+- class: nonempty 19988/19988 (100.0%) sample=S1
+- style: nonempty 19988/19988 (100.0%) sample=追
+- gear: nonempty 19988/19988 (100.0%) sample=3.93
+- score: nonempty 19988/19988 (100.0%) sample=106.00
+- s_count: nonempty 19988/19988 (100.0%) sample=3
+- b_count: nonempty 19988/19988 (100.0%) sample=0
+- nige_count: nonempty 19988/19988 (100.0%) sample=0
+- makuri_count: nonempty 19988/19988 (100.0%) sample=1
+- sashi_count: nonempty 19988/19988 (100.0%) sample=1
+- mark_count: nonempty 19988/19988 (100.0%) sample=3
+- first_count: nonempty 19988/19988 (100.0%) sample=1
+- second_count: nonempty 19988/19988 (100.0%) sample=4
+- third_count: nonempty 19988/19988 (100.0%) sample=1
+- outside_count: nonempty 19988/19988 (100.0%) sample=14
+- win_rate: nonempty 19988/19988 (100.0%) sample=5.0
+- top2_rate: nonempty 19988/19988 (100.0%) sample=25.0
+- top3_rate: nonempty 19988/19988 (100.0%) sample=30.0
+- prediction_mark: nonempty 13741/19988 (68.7%) sample=○
+- evaluation: nonempty 19988/19988 (100.0%) sample=3
+- raw_row_json: nonempty 19988/19988 (100.0%) sample={"cells": ["○", "", "3", "1", "1", "鷲田 佳史 福 井/38/88", "S1", "追", "3.93", "106.00", "3", "0", "0", "1", "1", "3", "1", "4", "1", "14", "5.0", "25.0", "30.0"], "row_class": ["n1"]}
+- predicted_line_formation: nonempty 19988/19988 (100.0%) sample=1-4/2-5-3/6
+- line_status: nonempty 19988/19988 (100.0%) sample=published
+- line_provider: nonempty 19988/19988 (100.0%) sample=アオケイ
+- line_source: nonempty 19988/19988 (100.0%) sample=楽天Kドリームス 並び予想
+- line_id: nonempty 19988/19988 (100.0%) sample=1
+- line_position: nonempty 19988/19988 (100.0%) sample=1
+- line_size: nonempty 19988/19988 (100.0%) sample=2
+- line_role: nonempty 19988/19988 (100.0%) sample=イン待
