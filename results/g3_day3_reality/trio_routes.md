@@ -1,0 +1,77 @@
+# G3三日目 3連複 二系統ルーティング
+
+対象 2277R / train 2022-24=1486R / test 2025-26=791R
+
+## 本命ABC 1点
+- all: train 977R ROI 103.4% hit 17.2% / test 493R ROI 98.1% hit 17.6%
+- main3: train 977R ROI 103.4% hit 17.2% / test 493R ROI 98.1% hit 17.6%
+- abc_rank<=3: train 687R ROI 110.9% hit 22.0% / test 365R ROI 101.3% hit 21.1%
+- abc_rank<=5: train 802R ROI 106.3% hit 19.7% / test 421R ROI 113.9% hit 20.4%
+- abc_rank>5: train 175R ROI 90.5% hit 5.7% / test 72R ROI 5.6% hit 1.4%
+- abc_odds<=15: train 789R ROI 109.2% hit 20.2% / test 411R ROI 108.6% hit 20.4%
+- abc_odds>15: train 188R ROI 79.4% hit 4.8% / test 82R ROI 45.0% hit 3.7%
+- weakB: train 189R ROI 97.8% hit 17.5% / test 96R ROI 92.2% hit 19.8%
+- weakB_or_main2: train 189R ROI 97.8% hit 17.5% / test 96R ROI 92.2% hit 19.8%
+- weakB_and_gap<=5: train 111R ROI 113.3% hit 18.0% / test 49R ROI 83.1% hit 16.3%
+- abc_rank>5_and_gap<=5: train 113R ROI 104.2% hit 5.3% / test 51R ROI 0.0% hit 0.0%
+- abc_rank>5_and_weakB: train 30R ROI 61.3% hit 3.3% / test 14R ROI 28.6% hit 7.1%
+- strongA: train 161R ROI 66.3% hit 16.1% / test 92R ROI 58.2% hit 13.0%
+- strongA_rank<=5: train 135R ROI 70.3% hit 18.5% / test 80R ROI 66.9% hit 15.0%
+
+## 外型
+- all × O4_ABDE_box: train 1482R 4.0点 ROI 64.8% hit 21.7% off率 48.9% / test 791R 4.0点 ROI 79.7% hit 19.7% off率 51.2%
+- all × O4_DE_pair_plus_top4: train 1482R 4.0点 ROI 73.0% hit 13.8% off率 48.9% / test 791R 4.0点 ROI 87.8% hit 13.9% off率 51.2%
+- all × O_cross_DE_AB_plus2: train 1482R 12.0点 ROI 54.3% hit 32.0% off率 48.9% / test 791R 12.0点 ROI 63.3% hit 31.0% off率 51.2%
+- all × O9_DE_ABDE_plus1: train 1482R 9.0点 ROI 58.2% hit 31.0% off率 48.9% / test 791R 9.0点 ROI 69.5% hit 29.7% off率 51.2%
+- main3 × O4_ABDE_box: train 974R 4.0点 ROI 62.4% hit 20.9% off率 43.8% / test 493R 4.0点 ROI 78.1% hit 18.5% off率 45.0%
+- main3 × O4_DE_pair_plus_top4: train 974R 4.0点 ROI 71.6% hit 12.4% off率 43.8% / test 493R 4.0点 ROI 80.3% hit 14.0% off率 45.0%
+- main3 × O_cross_DE_AB_plus2: train 974R 12.0点 ROI 50.8% hit 31.2% off率 43.8% / test 493R 12.0点 ROI 72.9% hit 31.0% off率 45.0%
+- main3 × O9_DE_ABDE_plus1: train 974R 9.0点 ROI 56.1% hit 29.6% off率 43.8% / test 493R 9.0点 ROI 77.1% hit 29.2% off率 45.0%
+- abc_rank<=3 × O4_ABDE_box: train 685R 4.0点 ROI 67.2% hit 20.7% off率 38.7% / test 365R 4.0点 ROI 88.9% hit 19.5% off率 40.3%
+- abc_rank<=3 × O4_DE_pair_plus_top4: train 685R 4.0点 ROI 77.0% hit 10.7% off率 38.7% / test 365R 4.0点 ROI 89.6% hit 13.4% off率 40.3%
+- abc_rank<=3 × O_cross_DE_AB_plus2: train 685R 12.0点 ROI 51.2% hit 28.8% off率 38.7% / test 365R 12.0点 ROI 81.0% hit 32.6% off率 40.3%
+- abc_rank<=3 × O9_DE_ABDE_plus1: train 685R 9.0点 ROI 59.4% hit 27.2% off率 38.7% / test 365R 9.0点 ROI 87.5% hit 29.9% off率 40.3%
+- abc_rank<=5 × O4_ABDE_box: train 800R 4.0点 ROI 65.8% hit 21.8% off率 40.0% / test 421R 4.0点 ROI 80.8% hit 18.5% off率 42.0%
+- abc_rank<=5 × O4_DE_pair_plus_top4: train 800R 4.0点 ROI 74.5% hit 11.6% off率 40.0% / test 421R 4.0点 ROI 84.7% hit 13.5% off率 42.0%
+- abc_rank<=5 × O_cross_DE_AB_plus2: train 800R 12.0点 ROI 50.0% hit 30.5% off率 40.0% / test 421R 12.0点 ROI 75.8% hit 31.4% off率 42.0%
+- abc_rank<=5 × O9_DE_ABDE_plus1: train 800R 9.0点 ROI 58.1% hit 28.6% off率 40.0% / test 421R 9.0点 ROI 83.0% hit 29.2% off率 42.0%
+- abc_rank>5 × O4_ABDE_box: train 682R 4.0点 ROI 63.6% hit 21.6% off率 59.4% / test 370R 4.0点 ROI 78.5% hit 21.1% off率 61.6%
+- abc_rank>5 × O4_DE_pair_plus_top4: train 682R 4.0点 ROI 71.3% hit 16.3% off率 59.4% / test 370R 4.0点 ROI 91.2% hit 14.3% off率 61.6%
+- abc_rank>5 × O_cross_DE_AB_plus2: train 682R 11.9点 ROI 59.3% hit 33.7% off率 59.4% / test 370R 12.0点 ROI 49.1% hit 30.5% off率 61.6%
+- abc_rank>5 × O9_DE_ABDE_plus1: train 682R 9.0点 ROI 58.3% hit 33.9% off率 59.4% / test 370R 9.0点 ROI 54.2% hit 30.3% off率 61.6%
+- abc_odds<=15 × O4_ABDE_box: train 786R 4.0点 ROI 65.5% hit 21.2% off率 39.4% / test 411R 4.0点 ROI 82.8% hit 19.0% off率 41.6%
+- abc_odds<=15 × O4_DE_pair_plus_top4: train 786R 4.0点 ROI 74.3% hit 11.5% off率 39.4% / test 411R 4.0点 ROI 85.2% hit 13.6% off率 41.6%
+- abc_odds<=15 × O_cross_DE_AB_plus2: train 786R 12.0点 ROI 50.1% hit 30.3% off率 39.4% / test 411R 12.0点 ROI 79.4% hit 32.1% off率 41.6%
+- abc_odds<=15 × O9_DE_ABDE_plus1: train 786R 9.0点 ROI 58.1% hit 28.6% off率 39.4% / test 411R 9.0点 ROI 83.7% hit 29.4% off率 41.6%
+- abc_odds>15 × O4_ABDE_box: train 696R 4.0点 ROI 64.0% hit 22.1% off率 59.6% / test 380R 4.0点 ROI 76.4% hit 20.5% off率 61.6%
+- abc_odds>15 × O4_DE_pair_plus_top4: train 696R 4.0点 ROI 71.6% hit 16.4% off率 59.6% / test 380R 4.0点 ROI 90.5% hit 14.2% off率 61.6%
+- abc_odds>15 × O_cross_DE_AB_plus2: train 696R 11.9点 ROI 59.0% hit 33.9% off率 59.6% / test 380R 12.0点 ROI 45.9% hit 29.7% off率 61.6%
+- abc_odds>15 × O9_DE_ABDE_plus1: train 696R 9.0点 ROI 58.3% hit 33.8% off率 59.6% / test 380R 9.0点 ROI 54.1% hit 30.0% off率 61.6%
+- weakB × O4_ABDE_box: train 317R 4.0点 ROI 65.8% hit 21.1% off率 47.9% / test 189R 4.0点 ROI 88.4% hit 20.6% off率 57.7%
+- weakB × O4_DE_pair_plus_top4: train 317R 4.0点 ROI 93.7% hit 16.4% off率 47.9% / test 189R 4.0点 ROI 99.8% hit 14.8% off率 57.7%
+- weakB × O_cross_DE_AB_plus2: train 317R 11.9点 ROI 62.4% hit 33.1% off率 47.9% / test 189R 12.0点 ROI 72.5% hit 30.7% off率 57.7%
+- weakB × O9_DE_ABDE_plus1: train 317R 9.0点 ROI 65.4% hit 33.1% off率 47.9% / test 189R 9.0点 ROI 64.4% hit 28.6% off率 57.7%
+- weakB_or_main2 × O4_ABDE_box: train 694R 4.0点 ROI 64.9% hit 22.2% off率 54.9% / test 394R 4.0点 ROI 84.7% hit 21.6% off率 59.4%
+- weakB_or_main2 × O4_DE_pair_plus_top4: train 694R 4.0点 ROI 79.3% hit 16.3% off率 54.9% / test 394R 4.0点 ROI 94.2% hit 14.2% off率 59.4%
+- weakB_or_main2 × O_cross_DE_AB_plus2: train 694R 11.9点 ROI 58.6% hit 32.9% off率 54.9% / test 394R 12.0点 ROI 56.5% hit 31.0% off率 59.4%
+- weakB_or_main2 × O9_DE_ABDE_plus1: train 694R 9.0点 ROI 61.1% hit 33.0% off率 54.9% / test 394R 9.0点 ROI 56.7% hit 29.4% off率 59.4%
+- weakB_and_gap<=5 × O4_ABDE_box: train 200R 4.0点 ROI 67.9% hit 19.0% off率 49.0% / test 106R 4.0点 ROI 39.6% hit 15.1% off率 67.0%
+- weakB_and_gap<=5 × O4_DE_pair_plus_top4: train 200R 4.0点 ROI 82.2% hit 17.0% off率 49.0% / test 106R 4.0点 ROI 70.0% hit 12.3% off率 67.0%
+- weakB_and_gap<=5 × O_cross_DE_AB_plus2: train 200R 11.9点 ROI 76.7% hit 34.5% off率 49.0% / test 106R 12.0点 ROI 59.5% hit 27.4% off率 67.0%
+- weakB_and_gap<=5 × O9_DE_ABDE_plus1: train 200R 9.0点 ROI 65.5% hit 32.0% off率 49.0% / test 106R 9.0点 ROI 58.2% hit 25.5% off率 67.0%
+- abc_rank>5_and_gap<=5 × O4_ABDE_box: train 416R 4.0点 ROI 69.5% hit 20.2% off率 64.4% / test 207R 4.0点 ROI 60.5% hit 16.4% off率 71.0%
+- abc_rank>5_and_gap<=5 × O4_DE_pair_plus_top4: train 416R 4.0点 ROI 79.8% hit 19.2% off率 64.4% / test 207R 4.0点 ROI 77.4% hit 15.0% off率 71.0%
+- abc_rank>5_and_gap<=5 × O_cross_DE_AB_plus2: train 416R 11.9点 ROI 63.0% hit 32.2% off率 64.4% / test 207R 12.0点 ROI 48.0% hit 27.1% off率 71.0%
+- abc_rank>5_and_gap<=5 × O9_DE_ABDE_plus1: train 416R 9.0点 ROI 60.7% hit 33.2% off率 64.4% / test 207R 9.0点 ROI 48.1% hit 26.1% off率 71.0%
+- abc_rank>5_and_weakB × O4_ABDE_box: train 160R 4.0点 ROI 76.3% hit 21.9% off率 55.0% / test 107R 4.0点 ROI 74.7% hit 18.7% off率 65.4%
+- abc_rank>5_and_weakB × O4_DE_pair_plus_top4: train 160R 4.0点 ROI 89.7% hit 16.9% off率 55.0% / test 107R 4.0点 ROI 114.4% hit 15.9% off率 65.4%
+- abc_rank>5_and_weakB × O_cross_DE_AB_plus2: train 160R 11.8点 ROI 82.2% hit 38.1% off率 55.0% / test 107R 12.0点 ROI 63.1% hit 29.0% off率 65.4%
+- abc_rank>5_and_weakB × O9_DE_ABDE_plus1: train 160R 9.0点 ROI 75.2% hit 38.8% off率 55.0% / test 107R 9.0点 ROI 64.7% hit 29.0% off率 65.4%
+- strongA × O4_ABDE_box: train 161R 4.0点 ROI 69.3% hit 26.7% off率 36.0% / test 92R 4.0点 ROI 68.9% hit 18.5% off率 39.1%
+- strongA × O4_DE_pair_plus_top4: train 161R 4.0点 ROI 51.4% hit 8.1% off率 36.0% / test 92R 4.0点 ROI 61.1% hit 10.9% off率 39.1%
+- strongA × O_cross_DE_AB_plus2: train 161R 12.0点 ROI 41.8% hit 36.0% off率 36.0% / test 92R 12.0点 ROI 68.5% hit 31.5% off率 39.1%
+- strongA × O9_DE_ABDE_plus1: train 161R 9.0点 ROI 49.1% hit 32.3% off率 36.0% / test 92R 9.0点 ROI 85.5% hit 30.4% off率 39.1%
+- strongA_rank<=5 × O4_ABDE_box: train 135R 4.0点 ROI 72.9% hit 28.1% off率 31.9% / test 80R 4.0点 ROI 69.4% hit 18.8% off率 38.8%
+- strongA_rank<=5 × O4_DE_pair_plus_top4: train 135R 4.0点 ROI 40.4% hit 7.4% off率 31.9% / test 80R 4.0点 ROI 64.8% hit 11.2% off率 38.8%
+- strongA_rank<=5 × O_cross_DE_AB_plus2: train 135R 12.0点 ROI 42.3% hit 36.3% off率 31.9% / test 80R 12.0点 ROI 73.5% hit 31.2% off率 38.8%
+- strongA_rank<=5 × O9_DE_ABDE_plus1: train 135R 9.0点 ROI 51.9% hit 33.3% off率 31.9% / test 80R 9.0点 ROI 93.0% hit 31.2% off率 38.8%
