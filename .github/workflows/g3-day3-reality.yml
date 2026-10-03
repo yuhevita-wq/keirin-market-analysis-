@@ -11,6 +11,7 @@ on:
       - 'scripts/analyze_g3_day3_offmain.py'
       - 'scripts/simulate_g3_day3_trio_formations.py'
       - 'scripts/select_g3_day3_trio_routes.py'
+      - 'scripts/refine_g3_day3_outside_trio.py'
       - '.github/workflows/g3-day3-reality.yml'
   workflow_dispatch:
 
@@ -36,6 +37,8 @@ jobs:
         run: python scripts/simulate_g3_day3_trio_formations.py
       - name: Validate two trio routes
         run: python scripts/select_g3_day3_trio_routes.py
+      - name: Refine outsider trio value
+        run: python scripts/refine_g3_day3_outside_trio.py
       - name: Commit analysis outputs
         run: |
           git config user.name github-actions[bot]
