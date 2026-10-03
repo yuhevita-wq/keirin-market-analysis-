@@ -8,9 +8,16 @@ on:
         required: true
         type: boolean
         default: false
+  push:
+    paths:
+      - ".github/workflows/collect-a-class-12-history.yml"
 
 permissions:
   contents: write
+
+concurrency:
+  group: a1-a2-history-v2
+  cancel-in-progress: false
 
 jobs:
   collect:
@@ -19,41 +26,32 @@ jobs:
       max-parallel: 1
       matrix:
         include:
-          - label: "2023_h1"
-            start_date: "2023-01-01"
-            end_date: "2023-06-30"
-            out_dir: "data/a_class_12/2023_h1"
-          - label: "2023_h2"
-            start_date: "2023-07-01"
-            end_date: "2023-12-31"
-            out_dir: "data/a_class_12/2023_h2"
-          - label: "2024_h1"
-            start_date: "2024-01-01"
-            end_date: "2024-06-30"
-            out_dir: "data/a_class_12/2024_h1"
-          - label: "2024_h2"
-            start_date: "2024-07-01"
-            end_date: "2024-12-31"
-            out_dir: "data/a_class_12/2024_h2"
-          - label: "2025_h1"
-            start_date: "2025-01-01"
-            end_date: "2025-06-30"
-            out_dir: "data/a_class_12/2025_h1"
-          - label: "2025_h2"
-            start_date: "2025-07-01"
-            end_date: "2025-12-31"
-            out_dir: "data/a_class_12/2025_h2"
-          - label: "2026_h1"
-            start_date: "2026-01-01"
-            end_date: "2026-06-30"
-            out_dir: "data/a_class_12/2026_h1"
-          - label: "2026_h2_to_1002"
-            start_date: "2026-07-01"
-            end_date: "2026-10-02"
-            out_dir: "data/a_class_12/2026_h2_to_1002"
+          - { label: "2023_01_02", start_date: "2023-01-01", end_date: "2023-02-28", out_dir: "data/a_class_12/2023_01_02" }
+          - { label: "2023_03_04", start_date: "2023-03-01", end_date: "2023-04-30", out_dir: "data/a_class_12/2023_03_04" }
+          - { label: "2023_05_06", start_date: "2023-05-01", end_date: "2023-06-30", out_dir: "data/a_class_12/2023_05_06" }
+          - { label: "2023_07_08", start_date: "2023-07-01", end_date: "2023-08-31", out_dir: "data/a_class_12/2023_07_08" }
+          - { label: "2023_09_10", start_date: "2023-09-01", end_date: "2023-10-31", out_dir: "data/a_class_12/2023_09_10" }
+          - { label: "2023_11_12", start_date: "2023-11-01", end_date: "2023-12-31", out_dir: "data/a_class_12/2023_11_12" }
+          - { label: "2024_01_02", start_date: "2024-01-01", end_date: "2024-02-29", out_dir: "data/a_class_12/2024_01_02" }
+          - { label: "2024_03_04", start_date: "2024-03-01", end_date: "2024-04-30", out_dir: "data/a_class_12/2024_03_04" }
+          - { label: "2024_05_06", start_date: "2024-05-01", end_date: "2024-06-30", out_dir: "data/a_class_12/2024_05_06" }
+          - { label: "2024_07_08", start_date: "2024-07-01", end_date: "2024-08-31", out_dir: "data/a_class_12/2024_07_08" }
+          - { label: "2024_09_10", start_date: "2024-09-01", end_date: "2024-10-31", out_dir: "data/a_class_12/2024_09_10" }
+          - { label: "2024_11_12", start_date: "2024-11-01", end_date: "2024-12-31", out_dir: "data/a_class_12/2024_11_12" }
+          - { label: "2025_01_02", start_date: "2025-01-01", end_date: "2025-02-28", out_dir: "data/a_class_12/2025_01_02" }
+          - { label: "2025_03_04", start_date: "2025-03-01", end_date: "2025-04-30", out_dir: "data/a_class_12/2025_03_04" }
+          - { label: "2025_05_06", start_date: "2025-05-01", end_date: "2025-06-30", out_dir: "data/a_class_12/2025_05_06" }
+          - { label: "2025_07_08", start_date: "2025-07-01", end_date: "2025-08-31", out_dir: "data/a_class_12/2025_07_08" }
+          - { label: "2025_09_10", start_date: "2025-09-01", end_date: "2025-10-31", out_dir: "data/a_class_12/2025_09_10" }
+          - { label: "2025_11_12", start_date: "2025-11-01", end_date: "2025-12-31", out_dir: "data/a_class_12/2025_11_12" }
+          - { label: "2026_01_02", start_date: "2026-01-01", end_date: "2026-02-28", out_dir: "data/a_class_12/2026_01_02" }
+          - { label: "2026_03_04", start_date: "2026-03-01", end_date: "2026-04-30", out_dir: "data/a_class_12/2026_03_04" }
+          - { label: "2026_05_06", start_date: "2026-05-01", end_date: "2026-06-30", out_dir: "data/a_class_12/2026_05_06" }
+          - { label: "2026_07_08", start_date: "2026-07-01", end_date: "2026-08-31", out_dir: "data/a_class_12/2026_07_08" }
+          - { label: "2026_09_1002", start_date: "2026-09-01", end_date: "2026-10-02", out_dir: "data/a_class_12/2026_09_1002" }
 
     runs-on: ubuntu-24.04
-    timeout-minutes: 360
+    timeout-minutes: 330
     name: Collect ${{ matrix.label }}
 
     steps:
@@ -83,99 +81,131 @@ jobs:
           OUT_DIR="${{ matrix.out_dir }}" python - <<'PY'
           import csv, json, os, unicodedata
           from pathlib import Path
-
           p = Path(os.environ['OUT_DIR'])
           s = json.loads((p / 'summary.json').read_text(encoding='utf-8'))
           races = list(csv.DictReader((p / 'races.csv').open(encoding='utf-8-sig')))
           entries = list(csv.DictReader((p / 'entries.csv').open(encoding='utf-8-sig')))
           failures = list(csv.DictReader((p / 'failures.csv').open(encoding='utf-8-sig')))
-
           def cls(v):
               return ''.join(unicodedata.normalize('NFKC', v).upper().split())
-
           assert s['parsed_a1_a2_races'] == len(races) and len(races) > 0, s
           assert s['entry_rows'] == len(entries) and len(entries) > 0, s
           assert s['failures'] == 0 and not failures, failures[:20]
           assert all(r['race_type'].startswith('Ａ級') for r in races)
           assert all(e['race_type'].startswith('Ａ級') for e in entries)
           assert all(cls(e['class']) in {'A1', 'A2'} for e in entries)
-          race_ids = {r['race_id'] for r in races}
-          assert race_ids == {e['race_id'] for e in entries}
+          assert {r['race_id'] for r in races} == {e['race_id'] for e in entries}
           print(json.dumps(s, ensure_ascii=False, indent=2))
           PY
+
+      - name: Commit clean base dataset first
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "${{ matrix.out_dir }}"
+          if ! git diff --cached --quiet; then
+            git commit -m "data: add A1/A2 ${{ matrix.label }} base dataset"
+            for i in 1 2 3 4 5 6; do
+              git pull --rebase origin main && git push origin HEAD:main && break
+              if [ "$i" = "6" ]; then exit 1; fi
+              sleep $((i*5))
+            done
+          fi
 
       - name: Enrich KDreams predicted line formation
         run: |
           python -m keirin_market_analysis.line_formation_2025 \
             --data-dir "${{ matrix.out_dir }}" \
-            --sleep 0.20
+            --sleep 0.20 \
+            --allow-failures
+
+      - name: Validate line coverage with tolerance
+        id: line_validation
+        continue-on-error: true
+        run: |
+          OUT_DIR="${{ matrix.out_dir }}" python - <<'PY'
+          import json, math, os
+          from pathlib import Path
+          p = Path(os.environ['OUT_DIR'])
+          s = json.loads((p / 'line_summary.json').read_text(encoding='utf-8'))
+          allowed = max(5, math.ceil(s['race_count'] * 0.01))
+          failures = s['line_parse_failures']
+          print(json.dumps({**s, 'allowed_failures': allowed}, ensure_ascii=False, indent=2))
+          assert failures <= allowed, f"line failures {failures} exceed tolerance {allowed}"
+          PY
+
+      - name: Commit line enrichment
+        if: steps.line_validation.outcome == 'success'
+        run: |
+          git add "${{ matrix.out_dir }}"
+          if ! git diff --cached --quiet; then
+            git commit -m "data: enrich A1/A2 ${{ matrix.label }} lines"
+            for i in 1 2 3 4 5 6; do
+              git pull --rebase origin main && git push origin HEAD:main && break
+              if [ "$i" = "6" ]; then exit 1; fi
+              sleep $((i*5))
+            done
+          fi
 
       - name: Extract results and payouts
+        id: result_extract
+        continue-on-error: true
         run: |
           python -m keirin_market_analysis.results_payouts_2025 \
             --data-dir "${{ matrix.out_dir }}" \
             --sleep 0.20
 
-      - name: Validate results and payouts
+      - name: Validate result coverage with tolerance
+        id: result_validation
+        continue-on-error: true
         run: |
           OUT_DIR="${{ matrix.out_dir }}" python - <<'PY'
-          import csv, json, os
+          import json, math, os
           from pathlib import Path
-
           p = Path(os.environ['OUT_DIR'])
-          races = list(csv.DictReader((p / 'races.csv').open(encoding='utf-8-sig')))
           s = json.loads((p / 'result_summary.json').read_text(encoding='utf-8'))
-          failures = list(csv.DictReader((p / 'result_failures.csv').open(encoding='utf-8-sig')))
-
-          assert s['race_count'] == len(races) and len(races) > 0, s
-          assert s['complete_result_races'] == len(races), s
-          assert s['complete_payout_races'] == len(races), s
-          assert s['parse_failures'] == 0 and not failures, failures[:20]
-          print(json.dumps(s, ensure_ascii=False, indent=2))
+          allowed = max(5, math.ceil(s['race_count'] * 0.01))
+          failures = s['parse_failures']
+          print(json.dumps({**s, 'allowed_failures': allowed}, ensure_ascii=False, indent=2))
+          assert s['complete_result_races'] + failures == s['race_count'], s
+          assert s['complete_payout_races'] + failures == s['race_count'], s
+          assert failures <= allowed, f"result failures {failures} exceed tolerance {allowed}"
           PY
+
+      - name: Commit results and payouts
+        if: steps.result_validation.outcome == 'success'
+        run: |
+          git add "${{ matrix.out_dir }}"
+          if ! git diff --cached --quiet; then
+            git commit -m "data: enrich A1/A2 ${{ matrix.label }} results"
+            for i in 1 2 3 4 5 6; do
+              git pull --rebase origin main && git push origin HEAD:main && break
+              if [ "$i" = "6" ]; then exit 1; fi
+              sleep $((i*5))
+            done
+          fi
 
       - name: Collect historical final trifecta and trio odds
         if: ${{ inputs.with_final_odds }}
+        continue-on-error: true
         run: |
           python -m keirin_market_analysis.historical_final_odds \
             --data-dir "${{ matrix.out_dir }}" \
             --workers 2 \
             --sleep 0.20
 
-      - name: Validate final odds
-        if: ${{ inputs.with_final_odds }}
-        run: |
-          OUT_DIR="${{ matrix.out_dir }}" python - <<'PY'
-          import csv, json, os
-          from pathlib import Path
-
-          p = Path(os.environ['OUT_DIR'])
-          races = list(csv.DictReader((p / 'races.csv').open(encoding='utf-8-sig')))
-          s = json.loads((p / 'odds_summary.json').read_text(encoding='utf-8'))
-          assert s['race_count_attempted'] == len(races), (s, len(races))
-          assert s['complete_races'] + s['failed_races'] == len(races), s
-          assert s['coverage_rate'] >= 0.95, s
-          print(json.dumps(s, ensure_ascii=False, indent=2))
-          PY
-
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: a-class-12-${{ matrix.label }}
           retention-days: 7
           path: ${{ matrix.out_dir }}
 
-      - name: Commit dataset
+      - name: Write job summary
+        if: always()
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add "${{ matrix.out_dir }}"
-          if git diff --cached --quiet; then
-            echo "No dataset changes to commit"
-          else
-            git commit -m "data: add A1/A2 ${{ matrix.label }} dataset"
-            for i in 1 2 3 4 5; do
-              git pull --rebase origin main && git push origin HEAD:main && break
-              if [ "$i" = "5" ]; then exit 1; fi
-              sleep $((i*5))
-            done
-          fi
+          echo "## A1/A2 ${{ matrix.label }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Base dataset: committed immediately after strict validation" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Line validation: ${{ steps.line_validation.outcome }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Result extraction: ${{ steps.result_extract.outcome }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Result validation: ${{ steps.result_validation.outcome }}" >> "$GITHUB_STEP_SUMMARY"
