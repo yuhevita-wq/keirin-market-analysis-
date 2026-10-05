@@ -9,6 +9,7 @@ from collections import Counter
 from dataclasses import dataclass
 from datetime import date, datetime, timezone
 from pathlib import Path
+from urllib.parse import urlsplit, urlunsplit
 
 from bs4 import BeautifulSoup
 
@@ -36,6 +37,20 @@ def normalize_class(value: object) -> str:
 
 def is_a1_a2_class(value: object) -> bool:
     return normalize_class(value) in {"A1", "A2"}
+
+
+def racecard_detail_url(daily_url: str, href: str) -> str:
+    """Return a KDreams racedetail URL that still exposes the full race-card table.
+
+    KDreams result pages stopped carrying the entrant/rating table from around
+    July 2024. The odds-flavoured racedetail page still contains the race label,
+    full entrant table, and line forecast, so it is the stable detail source for
+    the historical A1/A2 collector. Downstream result collection rewrites the
+    pageType explicitly and is therefore unaffected by this source URL choice.
+    """
+    result_url = base.canonical_race_url(daily_url, href)
+    parts = urlsplit(result_url)
+    return urlunsplit((parts.scheme, parts.netloc, parts.path, "pageType=odds", ""))
 
 
 def discover_meeting_grades_from_daily_html(html: str) -> dict[str, str]:
@@ -88,7 +103,7 @@ def discover_a_class_from_daily_html(
                 if href is None:
                     continue
 
-                url = base.canonical_race_url(daily_url, href)
+                url = racecard_detail_url(daily_url, href)
                 match = re.search(r"/racedetail/(\d{16})/", url)
                 race_no = int(match.group(1)[-4:]) if match else target_index + 1
                 found[url] = AClass12RaceRef(
