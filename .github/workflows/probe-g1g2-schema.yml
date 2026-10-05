@@ -14,10 +14,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            data/grade_races/g1g2
+          sparse-checkout-cone-mode: true
       - name: Print archive structure and headers only
         shell: python
         run: |
-          import csv, io, json, zipfile
+          import csv, json, zipfile
           from pathlib import Path
 
           base = Path('data/grade_races/g1g2')
