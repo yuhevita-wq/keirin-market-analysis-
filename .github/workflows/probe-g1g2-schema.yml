@@ -19,46 +19,32 @@ jobs:
           sparse-checkout: |
             data/grade_races/g1g2
           sparse-checkout-cone-mode: true
-      - name: Print archive structure and headers only
+      - name: Print raw entry JSON keys only
         shell: python
         run: |
-          import csv, json, zipfile
+          import csv, io, json, zipfile
           from pathlib import Path
 
-          base = Path('data/grade_races/g1g2')
-          for zp in sorted(base.glob('g1-g2-20*.zip')):
-              print(f'=== {zp.name} ===')
-              with zipfile.ZipFile(zp) as z:
-                  names = z.namelist()
-                  print('MEMBER_COUNT', len(names))
-                  for name in names[:120]:
-                      print('MEMBER', name)
-                  for name in names:
-                      low = name.lower()
-                      if low.endswith(('.csv', '.tsv')):
-                          raw = z.read(name)
-                          text = None
-                          for enc in ('utf-8-sig','utf-8','cp932','shift_jis'):
-                              try:
-                                  text = raw.decode(enc)
-                                  break
-                              except UnicodeDecodeError:
-                                  pass
-                          if text is None:
-                              continue
-                          first = text.splitlines()[0] if text.splitlines() else ''
-                          delim = '\t' if low.endswith('.tsv') else ','
-                          try:
-                              header = next(csv.reader([first], delimiter=delim))
-                          except Exception:
-                              header = [first[:500]]
-                          print('HEADER', name, json.dumps(header, ensure_ascii=False))
-                      elif low.endswith('.json'):
-                          try:
-                              obj = json.loads(z.read(name).decode('utf-8-sig'))
-                          except Exception:
-                              continue
-                          if isinstance(obj, dict):
-                              print('JSON_KEYS', name, json.dumps(list(obj.keys()), ensure_ascii=False))
-                          elif isinstance(obj, list) and obj and isinstance(obj[0], dict):
-                              print('JSON_LIST_KEYS', name, json.dumps(list(obj[0].keys()), ensure_ascii=False))
+          zp = Path('data/grade_races/g1g2/g1-g2-2021-non-girls-corrected.zip')
+          with zipfile.ZipFile(zp) as z:
+              text = z.read('entries.csv').decode('utf-8-sig')
+              row = next(csv.DictReader(io.StringIO(text)))
+              raw = row.get('raw_row_json') or ''
+              try:
+                  obj = json.loads(raw)
+              except Exception as e:
+                  print('RAW_NOT_JSON', type(e).__name__)
+                  raise SystemExit
+
+              def describe(value, path='root', depth=0):
+                  if depth > 4:
+                      return
+                  if isinstance(value, dict):
+                      print('DICT_KEYS', path, json.dumps(list(value.keys()), ensure_ascii=False))
+                      for k, v in value.items():
+                          describe(v, f'{path}.{k}', depth + 1)
+                  elif isinstance(value, list):
+                      print('LIST', path, 'len=', len(value), 'item_type=', type(value[0]).__name__ if value else 'empty')
+                      if value:
+                          describe(value[0], f'{path}[0]', depth + 1)
+              describe(obj)
