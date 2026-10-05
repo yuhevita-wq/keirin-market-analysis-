@@ -1,0 +1,59 @@
+name: Probe G1G2 archive schema
+
+on:
+  push:
+    paths:
+      - '.github/workflows/probe-g1g2-schema.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Print archive structure and headers only
+        shell: python
+        run: |
+          import csv, io, json, zipfile
+          from pathlib import Path
+
+          base = Path('data/grade_races/g1g2')
+          for zp in sorted(base.glob('g1-g2-20*.zip')):
+              print(f'=== {zp.name} ===')
+              with zipfile.ZipFile(zp) as z:
+                  names = z.namelist()
+                  print('MEMBER_COUNT', len(names))
+                  for name in names[:120]:
+                      print('MEMBER', name)
+                  for name in names:
+                      low = name.lower()
+                      if low.endswith(('.csv', '.tsv')):
+                          raw = z.read(name)
+                          text = None
+                          for enc in ('utf-8-sig','utf-8','cp932','shift_jis'):
+                              try:
+                                  text = raw.decode(enc)
+                                  break
+                              except UnicodeDecodeError:
+                                  pass
+                          if text is None:
+                              continue
+                          first = text.splitlines()[0] if text.splitlines() else ''
+                          delim = '\t' if low.endswith('.tsv') else ','
+                          try:
+                              header = next(csv.reader([first], delimiter=delim))
+                          except Exception:
+                              header = [first[:500]]
+                          print('HEADER', name, json.dumps(header, ensure_ascii=False))
+                      elif low.endswith('.json'):
+                          try:
+                              obj = json.loads(z.read(name).decode('utf-8-sig'))
+                          except Exception:
+                              continue
+                          if isinstance(obj, dict):
+                              print('JSON_KEYS', name, json.dumps(list(obj.keys()), ensure_ascii=False))
+                          elif isinstance(obj, list) and obj and isinstance(obj[0], dict):
+                              print('JSON_LIST_KEYS', name, json.dumps(list(obj[0].keys()), ensure_ascii=False))
