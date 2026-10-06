@@ -1,0 +1,262 @@
+name: Build Kaninomiya Day2 Exam Cards
+
+on:
+  push:
+    paths:
+      - '.github/workflows/build-kaninomiya-day2-exam-cards.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            data/grade_races/g1g2
+            data/exam_cards
+          sparse-checkout-cone-mode: true
+
+      - name: Build sanitized second-day cards
+        shell: python
+        run: |
+          import csv
+          import hashlib
+          import io
+          import json
+          import unicodedata
+          import zipfile
+          from collections import defaultdict
+          from datetime import date, timedelta
+          from pathlib import Path
+
+          SOURCE = Path('data/grade_races/g1g2')
+          OUT = Path('data/exam_cards/kaninomiya_world_championship/day2')
+          OUT.mkdir(parents=True, exist_ok=True)
+
+          YEARS = range(2021, 2026)
+
+          SOURCE_FIELDS = [
+              'race_id','race_date','track','meeting_grade','race_no','race_type','start_time',
+              'car_no','player_name','prefecture','age','term','class','style','gear','score',
+              's_count','b_count','nige_count','makuri_count','sashi_count','mark_count',
+              'first_count','second_count','third_count','outside_count',
+              'win_rate','top2_rate','top3_rate',
+              'predicted_line_formation','line_status','line_id','line_position','line_size','line_role'
+          ]
+
+          OUTPUT_FIELDS = [
+              'race_id','race_date','track','meeting_grade','race_no','race_type','start_time',
+              'car_no','player_name','prefecture','age','term','class','style','gear','score',
+              's_count','b_count','nige_count','makuri_count','sashi_count','mark_count',
+              'first_count','second_count','third_count','outside_count',
+              'win_rate','top2_rate','top3_rate',
+              'line_formation','line_status','line_id','line_position','line_size','line_role'
+          ]
+
+          FORBIDDEN_KEYS = {
+              'prediction_mark','evaluation','raw_row_json','source_url','captured_at_utc','deadline',
+              'finish_position','finish_text','margin','last200','winning_method','sb','result_comment',
+              'result_source_url','result_source','ticket_type','bet_code','combination','payout_yen',
+              'popularity','odds','market_rank','total_votes','odds_as_of','odds_phase','odds_source',
+              'odds_source_url'
+          }
+
+          def norm_grade(value):
+              s = unicodedata.normalize('NFKC', value or '').upper().strip()
+              s = s.replace('Ⅰ','I').replace('ⅰ','I')
+              return s
+
+          def is_g1(value):
+              s = norm_grade(value).replace(' ', '')
+              return s in {'G1','GI'} or s.startswith('G1') or s.startswith('GI')
+
+          def read_entries(zp):
+              with zipfile.ZipFile(zp) as z:
+                  raw = z.read('entries.csv')
+              text = None
+              for enc in ('utf-8-sig','utf-8','cp932','shift_jis'):
+                  try:
+                      text = raw.decode(enc)
+                      break
+                  except UnicodeDecodeError:
+                      pass
+              if text is None:
+                  raise RuntimeError(f'cannot decode entries.csv in {zp}')
+              return list(csv.DictReader(io.StringIO(text)))
+
+          def parse_iso(d):
+              return date.fromisoformat(d)
+
+          def detect_second_day(rows, year):
+              october_g1 = [r for r in rows if r.get('race_date','').startswith(f'{year}-10-') and is_g1(r.get('meeting_grade'))]
+              if not october_g1:
+                  raise RuntimeError(f'{year}: no October G1 rows')
+
+              race_nos_by_date = defaultdict(set)
+              tracks_by_date = defaultdict(set)
+              for r in october_g1:
+                  race_nos_by_date[r['race_date']].add(r.get('race_no',''))
+                  tracks_by_date[r['race_date']].add(r.get('track',''))
+
+              full_dates = sorted(parse_iso(d) for d, nos in race_nos_by_date.items() if len(nos) == 12)
+              starts = []
+              for d in full_dates:
+                  seq = [d + timedelta(days=i) for i in range(4)]
+                  if all(x in full_dates for x in seq):
+                      starts.append(d)
+
+              # Only the first date of each four-day-or-longer run is a valid start.
+              starts = [d for d in starts if d - timedelta(days=1) not in full_dates]
+              if len(starts) != 1:
+                  detail = {d: len(nos) for d, nos in sorted(race_nos_by_date.items())}
+                  raise RuntimeError(f'{year}: expected exactly one 4-day October G1 block, found {starts}; day counts={detail}')
+
+              target = (starts[0] + timedelta(days=1)).isoformat()
+              selected = [r for r in october_g1 if r['race_date'] == target]
+              race_nos = {r.get('race_no','') for r in selected}
+              tracks = {r.get('track','') for r in selected}
+              if len(race_nos) != 12:
+                  raise RuntimeError(f'{year}: second day has {len(race_nos)} races, expected 12')
+              if len(tracks) != 1:
+                  raise RuntimeError(f'{year}: second day has multiple tracks: {tracks}')
+              return target, next(iter(tracks)), selected
+
+          def sanitize(row):
+              missing = [k for k in SOURCE_FIELDS if k not in row]
+              if missing:
+                  raise RuntimeError(f'missing expected entry columns: {missing}')
+              out = {k: row.get(k,'') for k in SOURCE_FIELDS}
+              out['line_formation'] = out.pop('predicted_line_formation')
+              if set(out) != set(OUTPUT_FIELDS):
+                  raise RuntimeError('output field mismatch')
+              if set(out) & FORBIDDEN_KEYS:
+                  raise RuntimeError(f'forbidden keys leaked: {set(out) & FORBIDDEN_KEYS}')
+              return out
+
+          manifest = {
+              'dataset': 'kaninomiya_world_championship_day2_blind_exam_cards',
+              'event_name_ja': '寬仁親王牌・世界選手権記念トーナメント',
+              'day': 2,
+              'years': [],
+              'selection_rule': 'For each year, detect the unique four-day October G1 block with 12 races per day and use its second day.',
+              'allowed_columns': OUTPUT_FIELDS,
+              'explicitly_excluded': sorted(FORBIDDEN_KEYS),
+              'notes': 'Race-card-only dataset for blind past-exam use. No odds, popularity, results, payouts, prediction marks, evaluation text, source URLs, capture timestamps, or raw HTML row JSON.'
+          }
+
+          for year in YEARS:
+              matches = sorted(SOURCE.glob(f'g1-g2-{year}-non-girls*.zip'))
+              if len(matches) != 1:
+                  raise RuntimeError(f'{year}: expected one source archive, found {[m.name for m in matches]}')
+              zp = matches[0]
+              rows = read_entries(zp)
+              target_date, track, selected = detect_second_day(rows, year)
+              clean = [sanitize(r) for r in selected]
+              clean.sort(key=lambda r: (int(r['race_no']), int(r['car_no'])))
+
+              race_groups = defaultdict(list)
+              for r in clean:
+                  race_groups[int(r['race_no'])].append(r)
+              if sorted(race_groups) != list(range(1,13)):
+                  raise RuntimeError(f'{year}: race numbers are not 1..12')
+
+              csv_path = OUT / f'{year}.csv'
+              with csv_path.open('w', encoding='utf-8-sig', newline='') as f:
+                  w = csv.DictWriter(f, fieldnames=OUTPUT_FIELDS)
+                  w.writeheader()
+                  w.writerows(clean)
+
+              json_obj = {
+                  'event_name_ja': '寬仁親王牌・世界選手権記念トーナメント',
+                  'year': year,
+                  'day': 2,
+                  'race_date': target_date,
+                  'track': track,
+                  'race_count': 12,
+                  'entry_count': len(clean),
+                  'races': []
+              }
+              for race_no in range(1,13):
+                  entries = race_groups[race_no]
+                  first = entries[0]
+                  json_obj['races'].append({
+                      'race_no': race_no,
+                      'race_type': first['race_type'],
+                      'start_time': first['start_time'],
+                      'line_formation': first['line_formation'],
+                      'entries': entries
+                  })
+
+              json_path = OUT / f'{year}.json'
+              json_path.write_text(json.dumps(json_obj, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+              sha256 = hashlib.sha256(zp.read_bytes()).hexdigest()
+              manifest['years'].append({
+                  'year': year,
+                  'race_date': target_date,
+                  'track': track,
+                  'race_count': 12,
+                  'entry_count': len(clean),
+                  'source_archive': str(zp),
+                  'source_archive_sha256': sha256,
+                  'csv': str(csv_path),
+                  'json': str(json_path)
+              })
+              print(f'{year}: {target_date} {track} races=12 entries={len(clean)}')
+
+          # Structural leak check: all output JSON keys must be from a closed allow-list.
+          allowed_json_keys = set(OUTPUT_FIELDS) | {
+              'event_name_ja','year','day','race_date','track','race_count','entry_count','races','race_no','race_type','start_time','line_formation','entries'
+          }
+          def walk_keys(obj):
+              if isinstance(obj, dict):
+                  for k,v in obj.items():
+                      yield k
+                      yield from walk_keys(v)
+              elif isinstance(obj, list):
+                  for v in obj:
+                      yield from walk_keys(v)
+          for year in YEARS:
+              obj = json.loads((OUT / f'{year}.json').read_text(encoding='utf-8'))
+              bad = set(walk_keys(obj)) - allowed_json_keys
+              forbidden = set(walk_keys(obj)) & FORBIDDEN_KEYS
+              if bad or forbidden:
+                  raise RuntimeError(f'{year}: JSON key leak bad={bad}, forbidden={forbidden}')
+
+          (OUT / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          (OUT / 'README.md').write_text(
+              '# 寬仁親王牌・世界選手権記念トーナメント 2日目 過去問用出走表\n\n'
+              '2021年から2025年までの2日目全12Rを、既存G1/G2アーカイブの `entries.csv` から抽出した盲検用データです。\n\n'
+              '## 入っているもの\n'
+              '- レース日、競輪場、レース番号、レース種別、発走時刻\n'
+              '- 車番、選手名、府県、年齢、期別、級班、脚質、ギヤ、競走得点\n'
+              '- S/B、逃・捲・差・マーク回数、1/2/3着・着外回数、勝率・2連対率・3連対率\n'
+              '- 出走表取得時点のライン情報（並び、ラインID、位置、役割等）\n\n'
+              '## 入れていないもの\n'
+              '- オッズ、人気、投票数\n'
+              '- 着順、結果、上がり、決まり手、結果コメント\n'
+              '- 払戻、的中組合せ\n'
+              '- 予想印、評価文\n'
+              '- 元URL、取得時刻、raw HTML行JSON\n\n'
+              '対象日は、各年10月のG1から「12R開催が4日連続するブロック」を一意に検出し、その2日目だけを採用します。一意に決まらない場合は生成を失敗させます。\n',
+              encoding='utf-8'
+          )
+
+      - name: Commit generated blind dataset
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add --sparse data/exam_cards/kaninomiya_world_championship/day2
+          if git diff --cached --quiet; then
+            echo 'No dataset changes to commit.'
+            exit 0
+          fi
+          git commit -m 'data: add 2021-2025 Kaninomiya day2 blind race cards'
+          git push origin HEAD:main
