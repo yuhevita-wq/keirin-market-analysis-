@@ -187,10 +187,15 @@ def cell_text(cells: list[Tag], index: int) -> str:
     return normalize_text(cells[index].get_text(" ", strip=True))
 
 
-def extract_entries(html: str, ref: RaceRef) -> tuple[dict[str, object], list[dict[str, object]]]:
+def extract_entries(
+    html: str,
+    ref: RaceRef,
+    *,
+    require_target_label: bool = True,
+) -> tuple[dict[str, object], list[dict[str, object]]]:
     soup = BeautifulSoup(html, "lxml")
     page_text = normalize_text(soup.get_text(" ", strip=True))
-    if TARGET_RACE_TYPE not in page_text:
+    if require_target_label and TARGET_RACE_TYPE not in page_text:
         raise CollectorError(f"target label missing from race page: {ref.url}")
 
     meta = extract_race_meta(soup, ref)
