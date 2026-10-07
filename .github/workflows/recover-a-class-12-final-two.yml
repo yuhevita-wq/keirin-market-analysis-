@@ -2,12 +2,16 @@ name: Recover A1-A2 final two windows
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/recover-a-class-12-final-two.yml"
 
 permissions:
   contents: write
 
 concurrency:
-  group: a1-a2-final-two
+  group: a1-a2-final-two-v2
   cancel-in-progress: false
 
 jobs:
@@ -22,7 +26,7 @@ jobs:
 
     runs-on: ubuntu-24.04
     timeout-minutes: 330
-    name: Recover final \${{ matrix.label }}
+    name: Recover final ${{ matrix.label }}
 
     steps:
       - uses: actions/checkout@v4
@@ -41,14 +45,14 @@ jobs:
       - name: Collect A1/A2 race cards
         run: |
           python -m keirin_market_analysis.a_class_12 \
-            --start-date "\${{ matrix.start_date }}" \
-            --end-date "\${{ matrix.end_date }}" \
-            --out-dir "\${{ matrix.out_dir }}" \
+            --start-date "${{ matrix.start_date }}" \
+            --end-date "${{ matrix.end_date }}" \
+            --out-dir "${{ matrix.out_dir }}" \
             --sleep 0.20
 
       - name: Validate base collection
         run: |
-          OUT_DIR="\${{ matrix.out_dir }}" python - <<'PY'
+          OUT_DIR="${{ matrix.out_dir }}" python - <<'PY'
           import csv, json, os, unicodedata
           from pathlib import Path
           p = Path(os.environ['OUT_DIR'])
@@ -73,9 +77,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add "\${{ matrix.out_dir }}"
+          git add "${{ matrix.out_dir }}"
           if ! git diff --cached --quiet; then
-            git commit -m "data: complete A1/A2 \${{ matrix.label }} base dataset"
+            git commit -m "data: complete A1/A2 ${{ matrix.label }} base dataset"
             for i in 1 2 3 4 5 6; do
               git pull --rebase origin main && git push origin HEAD:main && break
               if [ "$i" = "6" ]; then exit 1; fi
@@ -86,7 +90,7 @@ jobs:
       - name: Enrich KDreams predicted line formation
         run: |
           python -m keirin_market_analysis.line_formation_2025 \
-            --data-dir "\${{ matrix.out_dir }}" \
+            --data-dir "${{ matrix.out_dir }}" \
             --sleep 0.20 \
             --allow-failures
 
@@ -94,7 +98,7 @@ jobs:
         id: line_validation
         continue-on-error: true
         run: |
-          OUT_DIR="\${{ matrix.out_dir }}" python - <<'PY'
+          OUT_DIR="${{ matrix.out_dir }}" python - <<'PY'
           import json, math, os
           from pathlib import Path
           p = Path(os.environ['OUT_DIR'])
@@ -107,9 +111,9 @@ jobs:
       - name: Commit line enrichment
         if: steps.line_validation.outcome == 'success'
         run: |
-          git add "\${{ matrix.out_dir }}"
+          git add "${{ matrix.out_dir }}"
           if ! git diff --cached --quiet; then
-            git commit -m "data: complete A1/A2 \${{ matrix.label }} lines"
+            git commit -m "data: complete A1/A2 ${{ matrix.label }} lines"
             for i in 1 2 3 4 5 6; do
               git pull --rebase origin main && git push origin HEAD:main && break
               if [ "$i" = "6" ]; then exit 1; fi
@@ -122,14 +126,14 @@ jobs:
         continue-on-error: true
         run: |
           python -m keirin_market_analysis.results_payouts_2025 \
-            --data-dir "\${{ matrix.out_dir }}" \
+            --data-dir "${{ matrix.out_dir }}" \
             --sleep 0.20
 
       - name: Validate result coverage
         id: result_validation
         continue-on-error: true
         run: |
-          OUT_DIR="\${{ matrix.out_dir }}" python - <<'PY'
+          OUT_DIR="${{ matrix.out_dir }}" python - <<'PY'
           import json, math, os
           from pathlib import Path
           p = Path(os.environ['OUT_DIR'])
@@ -145,9 +149,9 @@ jobs:
       - name: Commit results and payouts
         if: steps.result_validation.outcome == 'success'
         run: |
-          git add "\${{ matrix.out_dir }}"
+          git add "${{ matrix.out_dir }}"
           if ! git diff --cached --quiet; then
-            git commit -m "data: complete A1/A2 \${{ matrix.label }} results"
+            git commit -m "data: complete A1/A2 ${{ matrix.label }} results"
             for i in 1 2 3 4 5 6; do
               git pull --rebase origin main && git push origin HEAD:main && break
               if [ "$i" = "6" ]; then exit 1; fi
@@ -158,6 +162,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: a-class-12-final-\${{ matrix.label }}
+          name: a-class-12-final-${{ matrix.label }}
           retention-days: 7
-          path: \${{ matrix.out_dir }}
+          path: ${{ matrix.out_dir }}
