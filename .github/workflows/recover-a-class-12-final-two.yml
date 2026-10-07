@@ -1,0 +1,167 @@
+name: Recover A1-A2 final two windows
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/recover-a-class-12-final-two.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: a1-a2-final-two
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include:
+          - { label: "2024_07_08", start_date: "2024-07-01", end_date: "2024-08-31", out_dir: "data/a_class_12/2024_07_08" }
+          - { label: "2025_01_02", start_date: "2025-01-01", end_date: "2025-02-28", out_dir: "data/a_class_12/2025_01_02" }
+
+    runs-on: ubuntu-24.04
+    timeout-minutes: 330
+    name: Recover final \${{ matrix.label }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install
+        run: python -m pip install -e '.[scrape]'
+
+      - name: Collect A1/A2 race cards
+        run: |
+          python -m keirin_market_analysis.a_class_12 \
+            --start-date "\${{ matrix.start_date }}" \
+            --end-date "\${{ matrix.end_date }}" \
+            --out-dir "\${{ matrix.out_dir }}" \
+            --sleep 0.20
+
+      - name: Validate base collection
+        run: |
+          OUT_DIR="\${{ matrix.out_dir }}" python - <<'PY'
+          import csv, json, os, unicodedata
+          from pathlib import Path
+          p = Path(os.environ['OUT_DIR'])
+          s = json.loads((p / 'summary.json').read_text(encoding='utf-8'))
+          races = list(csv.DictReader((p / 'races.csv').open(encoding='utf-8-sig')))
+          entries = list(csv.DictReader((p / 'entries.csv').open(encoding='utf-8-sig')))
+          failures = list(csv.DictReader((p / 'failures.csv').open(encoding='utf-8-sig')))
+          def cls(v):
+              return ''.join(unicodedata.normalize('NFKC', v).upper().split())
+          assert s['parsed_a1_a2_races'] == len(races) and len(races) > 0, s
+          assert s['entry_rows'] == len(entries) and len(entries) > 0, s
+          assert s['failures'] == 0 and not failures, failures[:20]
+          assert all(r['race_type'].startswith('Ａ級') for r in races)
+          assert all(e['race_type'].startswith('Ａ級') for e in entries)
+          assert all(cls(e['class']) in {'A1', 'A2'} for e in entries)
+          assert {r['race_id'] for r in races} == {e['race_id'] for e in entries}
+          assert all('pageType=odds' in r['source_url'] for r in races)
+          print(json.dumps(s, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Commit clean base dataset
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "\${{ matrix.out_dir }}"
+          if ! git diff --cached --quiet; then
+            git commit -m "data: complete A1/A2 \${{ matrix.label }} base dataset"
+            for i in 1 2 3 4 5 6; do
+              git pull --rebase origin main && git push origin HEAD:main && break
+              if [ "$i" = "6" ]; then exit 1; fi
+              sleep $((i*5))
+            done
+          fi
+
+      - name: Enrich KDreams predicted line formation
+        run: |
+          python -m keirin_market_analysis.line_formation_2025 \
+            --data-dir "\${{ matrix.out_dir }}" \
+            --sleep 0.20 \
+            --allow-failures
+
+      - name: Validate line coverage
+        id: line_validation
+        continue-on-error: true
+        run: |
+          OUT_DIR="\${{ matrix.out_dir }}" python - <<'PY'
+          import json, math, os
+          from pathlib import Path
+          p = Path(os.environ['OUT_DIR'])
+          s = json.loads((p / 'line_summary.json').read_text(encoding='utf-8'))
+          allowed = max(5, math.ceil(s['race_count'] * 0.01))
+          assert s['line_parse_failures'] <= allowed, (s, allowed)
+          print(json.dumps({**s, 'allowed_failures': allowed}, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Commit line enrichment
+        if: steps.line_validation.outcome == 'success'
+        run: |
+          git add "\${{ matrix.out_dir }}"
+          if ! git diff --cached --quiet; then
+            git commit -m "data: complete A1/A2 \${{ matrix.label }} lines"
+            for i in 1 2 3 4 5 6; do
+              git pull --rebase origin main && git push origin HEAD:main && break
+              if [ "$i" = "6" ]; then exit 1; fi
+              sleep $((i*5))
+            done
+          fi
+
+      - name: Extract results and payouts
+        id: result_extract
+        continue-on-error: true
+        run: |
+          python -m keirin_market_analysis.results_payouts_2025 \
+            --data-dir "\${{ matrix.out_dir }}" \
+            --sleep 0.20
+
+      - name: Validate result coverage
+        id: result_validation
+        continue-on-error: true
+        run: |
+          OUT_DIR="\${{ matrix.out_dir }}" python - <<'PY'
+          import json, math, os
+          from pathlib import Path
+          p = Path(os.environ['OUT_DIR'])
+          s = json.loads((p / 'result_summary.json').read_text(encoding='utf-8'))
+          allowed = max(5, math.ceil(s['race_count'] * 0.01))
+          failures = s['parse_failures']
+          assert s['complete_result_races'] + failures == s['race_count'], s
+          assert s['complete_payout_races'] + failures == s['race_count'], s
+          assert failures <= allowed, (s, allowed)
+          print(json.dumps({**s, 'allowed_failures': allowed}, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Commit results and payouts
+        if: steps.result_validation.outcome == 'success'
+        run: |
+          git add "\${{ matrix.out_dir }}"
+          if ! git diff --cached --quiet; then
+            git commit -m "data: complete A1/A2 \${{ matrix.label }} results"
+            for i in 1 2 3 4 5 6; do
+              git pull --rebase origin main && git push origin HEAD:main && break
+              if [ "$i" = "6" ]; then exit 1; fi
+              sleep $((i*5))
+            done
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: a-class-12-final-\${{ matrix.label }}
+          retention-days: 7
+          path: \${{ matrix.out_dir }}
