@@ -124,7 +124,11 @@ def extract_entries_for_ref(html: str, ref: AClass12RaceRef):
         race_no=ref.race_no,
         url=ref.url,
     )
-    return base.extract_entries(html, frozen_ref)
+    # Some historical KDreams odds pages omit the race-type label even though the
+    # full entrant table is present. Daily discovery already fixed the race type,
+    # and the collector independently verifies every entrant is A1/A2, so do not
+    # reject an otherwise valid card solely because that duplicated label is absent.
+    return base.extract_entries(html, frozen_ref, require_target_label=False)
 
 
 def collect(start: date, end: date, out_dir: Path, sleep_seconds: float) -> dict[str, object]:
