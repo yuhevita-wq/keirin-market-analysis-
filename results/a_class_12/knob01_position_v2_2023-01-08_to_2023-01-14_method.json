@@ -1,0 +1,60 @@
+{
+  "name": "knob01_position_structure_v2",
+  "week": "2023-01-08 to 2023-01-14",
+  "training_window": "2023-01-01 to 2023-01-07",
+  "test_window": "2023-01-08 to 2023-01-14",
+  "test_races": 230,
+  "test_entries": 1591,
+  "train_races": 287,
+  "model_idea": "Blind position-only benchmark: race forecast line structure, line seat 1/2/3/4/solo, line size, and number of lines. NO rider performance score, win rate, B/S, style, rider identity, odds, race outcome, or race payout are used in V2 predictions.",
+  "model": "Empirical event frequencies from previous week, hierarchical smoothing (global to role alpha20, role to role+line_size alpha45, then to role+line_size+line_count_band alpha65). Triplet score = P(first of a) * P(second of b) * P(third of c) * same-line first/second odds factor learned from previous week, clipped 0.7 to 1.4. Choose three highest-rated distinct ordered triples, no results access before predictions fixed.",
+  "pair_coefficients": {
+    "observed": 162,
+    "expected": 87.86290164588377,
+    "total": 284,
+    "observed_share": 0.5704225352112676,
+    "model_share": 0.3093764142460696,
+    "raw_ratio": 2.96421286842765,
+    "applied_ratio": 1.4
+  },
+  "role_training_counts": {
+    "p1": {
+      "n": 681,
+      "one": 146,
+      "two": 102,
+      "three": 82
+    },
+    "p2": {
+      "n": 681,
+      "one": 118,
+      "two": 133,
+      "three": 103
+    },
+    "p3": {
+      "n": 333,
+      "one": 12,
+      "two": 32,
+      "three": 74
+    },
+    "solo": {
+      "n": 184,
+      "one": 12,
+      "two": 16,
+      "three": 25
+    },
+    "p4": {
+      "n": 31,
+      "one": 2,
+      "two": 1,
+      "three": 3
+    }
+  },
+  "limitations": [
+    "Forecast lines are predictions, not confirmed 4th turn geometry.",
+    "This cannot measure actual vehicle gaps, fatigue, open running lanes, or per-rider skill; tests structural starting seat effects only.",
+    "Position roles in historical results may correlate with skill and race dynamics despite omission of ability indicators.",
+    "Three equally weighted tickets are a research benchmark, not a recommended betting scheme."
+  ],
+  "no_next_week_results_consulted": true,
+  "control": "v1 coefficients copied unchanged from original first-week calculation."
+}
