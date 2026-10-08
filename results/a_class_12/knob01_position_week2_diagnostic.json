@@ -1,0 +1,58 @@
+{
+  "title": "第1のつまみ: ゴール前の位置的優位 v1/v2 同条件比較",
+  "period": "2023-01-08～2023-01-14",
+  "races": 230,
+  "tickets_per_race": 3,
+  "stake_yen_per_ticket": 100,
+  "definitions": {
+    "same_line_ticket": "買い目の1・2着が、事前の並び予想で同じラインに属すること",
+    "same_line_actual": "実際の1・2着が、事前の並び予想で同じラインに属すること",
+    "composition_correct": "三連単予想3点のいずれかで、1～3着の3人が順不同で一致すること"
+  },
+  "comparison": {
+    "v1": {
+      "bets": 690,
+      "same_line_bets": 585,
+      "same_line_bet_rate": 0.8478260869565217,
+      "paid_races": 19,
+      "spend": 69000,
+      "return": 71400,
+      "profit": 2400,
+      "roi_percent": 103.47826086956522,
+      "composition_correct_races": 38,
+      "composition_correct_but_order_wrong_races": 19,
+      "first_two_order_correct_races": 73,
+      "first_order_correct_races": 111,
+      "paid_10000plus_races": 1
+    },
+    "v2": {
+      "bets": 690,
+      "same_line_bets": 679,
+      "same_line_bet_rate": 0.9840579710144928,
+      "paid_races": 36,
+      "spend": 69000,
+      "return": 47010,
+      "profit": -21990,
+      "roi_percent": 68.13043478260869,
+      "composition_correct_races": 81,
+      "composition_correct_but_order_wrong_races": 45,
+      "first_two_order_correct_races": 53,
+      "first_order_correct_races": 90,
+      "paid_10000plus_races": 0
+    }
+  },
+  "observed": {
+    "same_line_first_second": 149,
+    "first_second_samples": 230,
+    "same_line_rate": 0.6478260869565218,
+    "different_line_first_second": 81,
+    "races_with_trifecta_payout_10000plus": 58,
+    "races_with_trifecta_payout_30000plus": 17
+  },
+  "finding": "v2's conditional position-structure model matches winner-member sets more often but over-concentrates on original same-line 1st/2nd ordering (98.4% of tickets vs 64.8% actual outcomes), and does not cover cross-line first-second outcomes or payouts >=10,000 yen.",
+  "caveat": "Line forecast is not a 4th-turn location; observed historical cohort position may still contain selection bias. Do not interpret rank selection as actual spatial tracking.",
+  "next_v3_research_question": "Under which structural circumstances do predicted lines persist to final two positions versus split? Model multiple credible space-use scenarios and test ex ante ranking without introducing arbitrary fixed same-line/cross-line quotas; evaluate on a new untouched period.",
+  "source_prediction_v2": "results/a_class_12/knob01_position_v2_2023-01-08_to_2023-01-14.csv",
+  "source_prediction_v1": "results/a_class_12/knob01_position_v1_control_2023-01-08_to_2023-01-14.csv",
+  "source_grading": "results/a_class_12/knob01_position_week2_grade_detail.csv"
+}
