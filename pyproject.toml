@@ -22,10 +22,16 @@ scrape = [
   "lxml>=5.2",
   "requests>=2.32",
 ]
+prediction = [
+  "numpy>=2.0",
+  "pandas>=2.2",
+  "scikit-learn>=1.5",
+]
 
 [project.scripts]
 keirin-market-analysis = "keirin_market_analysis.cli:main"
 keirin-collect-s-yosen-2025 = "keirin_market_analysis.s_yosen_2025:main"
+keirin-prediction-engine-v1 = "keirin_market_analysis.prediction_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
