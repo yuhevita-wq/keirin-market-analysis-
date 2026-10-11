@@ -1,0 +1,1770 @@
+{
+  "id": "trio_line_composition_s_yosen_2023_2025_v1",
+  "status": "FROZEN_EMPIRICAL_BASELINE_V1",
+  "created_on": "2026-10-12",
+  "scope": "全国S級予選の7車・3ライン構成（3車1本＋2車2本）。小倉限定ではない。",
+  "input_sources": [
+    "data/2023/s_class_yosen/{races,entries,payouts}.csv",
+    "data/2024/s_class_yosen/{races,entries,payouts}.csv",
+    "data/2025/s_class_yosen/{races,entries,payouts}.csv"
+  ],
+  "definitions": {
+    "eligible": "race.entry_count=7; all seven entries available with line_id, line_position and competition score; exactly three distinct lines with sizes 3,2,2; unique strength ranking; paid trio (3連複) combination with three distinct eligible riders.",
+    "strength": "各ラインの先頭（line_position=1）と番手（line_position=2）の競走得点scoreの合計。高い順に強（H）、中（M）、弱（L）。",
+    "ties": "2ラインの先頭+番手の競走得点合計が同点なら、そのレースは対象から除外。",
+    "event": "3連複の確定3人を、事前のライン所属に対応させる。着順は問わず、（強ラインの人数）-（中ラインの人数）-（弱ラインの人数）とする。",
+    "probability": "同じ母集団に属するレースの該当件数 / 母集団の全件数",
+    "line_size_shape": "強-中-弱の順に元のライン人数を表示。強ラインが必ず3車とは限らない。"
+  },
+  "eligibility_audit": {
+    "source_races": 4420,
+    "excluded": {
+      "non_7_rider": 126,
+      "non_3_2_2_line_shape": 1276,
+      "equal_pair_score_tie": 3
+    },
+    "eligible_races": 3015,
+    "by_year": {
+      "2023": {
+        "source_races": 1495,
+        "excluded": {
+          "non_7_rider": 50,
+          "non_3_2_2_line_shape": 414,
+          "equal_pair_score_tie": 2
+        },
+        "eligible_races": 1029
+      },
+      "2024": {
+        "source_races": 1461,
+        "excluded": {
+          "non_7_rider": 51,
+          "non_3_2_2_line_shape": 440,
+          "equal_pair_score_tie": 0
+        },
+        "eligible_races": 970
+      },
+      "2025": {
+        "source_races": 1464,
+        "excluded": {
+          "non_7_rider": 25,
+          "non_3_2_2_line_shape": 422,
+          "equal_pair_score_tie": 1
+        },
+        "eligible_races": 1016
+      }
+    }
+  },
+  "aggregate": {
+    "races": 3015,
+    "patterns": [
+      {
+        "pattern": "2-1-0",
+        "finishers_by_strength": [
+          2,
+          1,
+          0
+        ],
+        "count": 878,
+        "empirical_probability": 0.29121061
+      },
+      {
+        "pattern": "3-0-0",
+        "finishers_by_strength": [
+          3,
+          0,
+          0
+        ],
+        "count": 517,
+        "empirical_probability": 0.17147595
+      },
+      {
+        "pattern": "1-2-0",
+        "finishers_by_strength": [
+          1,
+          2,
+          0
+        ],
+        "count": 450,
+        "empirical_probability": 0.14925373
+      },
+      {
+        "pattern": "2-0-1",
+        "finishers_by_strength": [
+          2,
+          0,
+          1
+        ],
+        "count": 430,
+        "empirical_probability": 0.14262023
+      },
+      {
+        "pattern": "1-1-1",
+        "finishers_by_strength": [
+          1,
+          1,
+          1
+        ],
+        "count": 277,
+        "empirical_probability": 0.09187396
+      },
+      {
+        "pattern": "1-0-2",
+        "finishers_by_strength": [
+          1,
+          0,
+          2
+        ],
+        "count": 162,
+        "empirical_probability": 0.05373134
+      },
+      {
+        "pattern": "0-2-1",
+        "finishers_by_strength": [
+          0,
+          2,
+          1
+        ],
+        "count": 125,
+        "empirical_probability": 0.04145937
+      },
+      {
+        "pattern": "0-1-2",
+        "finishers_by_strength": [
+          0,
+          1,
+          2
+        ],
+        "count": 82,
+        "empirical_probability": 0.02719735
+      },
+      {
+        "pattern": "0-3-0",
+        "finishers_by_strength": [
+          0,
+          3,
+          0
+        ],
+        "count": 72,
+        "empirical_probability": 0.0238806
+      },
+      {
+        "pattern": "0-0-3",
+        "finishers_by_strength": [
+          0,
+          0,
+          3
+        ],
+        "count": 22,
+        "empirical_probability": 0.00729685
+      }
+    ]
+  },
+  "by_year": {
+    "2023": {
+      "races": 1029,
+      "patterns": [
+        {
+          "pattern": "2-1-0",
+          "finishers_by_strength": [
+            2,
+            1,
+            0
+          ],
+          "count": 296,
+          "empirical_probability": 0.28765792
+        },
+        {
+          "pattern": "3-0-0",
+          "finishers_by_strength": [
+            3,
+            0,
+            0
+          ],
+          "count": 153,
+          "empirical_probability": 0.14868805
+        },
+        {
+          "pattern": "1-2-0",
+          "finishers_by_strength": [
+            1,
+            2,
+            0
+          ],
+          "count": 176,
+          "empirical_probability": 0.17103984
+        },
+        {
+          "pattern": "2-0-1",
+          "finishers_by_strength": [
+            2,
+            0,
+            1
+          ],
+          "count": 161,
+          "empirical_probability": 0.15646259
+        },
+        {
+          "pattern": "1-1-1",
+          "finishers_by_strength": [
+            1,
+            1,
+            1
+          ],
+          "count": 101,
+          "empirical_probability": 0.09815355
+        },
+        {
+          "pattern": "1-0-2",
+          "finishers_by_strength": [
+            1,
+            0,
+            2
+          ],
+          "count": 53,
+          "empirical_probability": 0.05150632
+        },
+        {
+          "pattern": "0-2-1",
+          "finishers_by_strength": [
+            0,
+            2,
+            1
+          ],
+          "count": 38,
+          "empirical_probability": 0.03692906
+        },
+        {
+          "pattern": "0-1-2",
+          "finishers_by_strength": [
+            0,
+            1,
+            2
+          ],
+          "count": 28,
+          "empirical_probability": 0.02721088
+        },
+        {
+          "pattern": "0-3-0",
+          "finishers_by_strength": [
+            0,
+            3,
+            0
+          ],
+          "count": 19,
+          "empirical_probability": 0.01846453
+        },
+        {
+          "pattern": "0-0-3",
+          "finishers_by_strength": [
+            0,
+            0,
+            3
+          ],
+          "count": 4,
+          "empirical_probability": 0.00388727
+        }
+      ],
+      "line_size_shape_counts": {
+        "3-2-2": 624,
+        "2-2-3": 136,
+        "2-3-2": 269
+      }
+    },
+    "2024": {
+      "races": 970,
+      "patterns": [
+        {
+          "pattern": "2-1-0",
+          "finishers_by_strength": [
+            2,
+            1,
+            0
+          ],
+          "count": 292,
+          "empirical_probability": 0.30103093
+        },
+        {
+          "pattern": "3-0-0",
+          "finishers_by_strength": [
+            3,
+            0,
+            0
+          ],
+          "count": 181,
+          "empirical_probability": 0.18659794
+        },
+        {
+          "pattern": "1-2-0",
+          "finishers_by_strength": [
+            1,
+            2,
+            0
+          ],
+          "count": 123,
+          "empirical_probability": 0.12680412
+        },
+        {
+          "pattern": "2-0-1",
+          "finishers_by_strength": [
+            2,
+            0,
+            1
+          ],
+          "count": 133,
+          "empirical_probability": 0.1371134
+        },
+        {
+          "pattern": "1-1-1",
+          "finishers_by_strength": [
+            1,
+            1,
+            1
+          ],
+          "count": 84,
+          "empirical_probability": 0.08659794
+        },
+        {
+          "pattern": "1-0-2",
+          "finishers_by_strength": [
+            1,
+            0,
+            2
+          ],
+          "count": 54,
+          "empirical_probability": 0.0556701
+        },
+        {
+          "pattern": "0-2-1",
+          "finishers_by_strength": [
+            0,
+            2,
+            1
+          ],
+          "count": 42,
+          "empirical_probability": 0.04329897
+        },
+        {
+          "pattern": "0-1-2",
+          "finishers_by_strength": [
+            0,
+            1,
+            2
+          ],
+          "count": 23,
+          "empirical_probability": 0.02371134
+        },
+        {
+          "pattern": "0-3-0",
+          "finishers_by_strength": [
+            0,
+            3,
+            0
+          ],
+          "count": 26,
+          "empirical_probability": 0.02680412
+        },
+        {
+          "pattern": "0-0-3",
+          "finishers_by_strength": [
+            0,
+            0,
+            3
+          ],
+          "count": 12,
+          "empirical_probability": 0.01237113
+        }
+      ],
+      "line_size_shape_counts": {
+        "3-2-2": 578,
+        "2-2-3": 134,
+        "2-3-2": 258
+      }
+    },
+    "2025": {
+      "races": 1016,
+      "patterns": [
+        {
+          "pattern": "2-1-0",
+          "finishers_by_strength": [
+            2,
+            1,
+            0
+          ],
+          "count": 290,
+          "empirical_probability": 0.28543307
+        },
+        {
+          "pattern": "3-0-0",
+          "finishers_by_strength": [
+            3,
+            0,
+            0
+          ],
+          "count": 183,
+          "empirical_probability": 0.18011811
+        },
+        {
+          "pattern": "1-2-0",
+          "finishers_by_strength": [
+            1,
+            2,
+            0
+          ],
+          "count": 151,
+          "empirical_probability": 0.14862205
+        },
+        {
+          "pattern": "2-0-1",
+          "finishers_by_strength": [
+            2,
+            0,
+            1
+          ],
+          "count": 136,
+          "empirical_probability": 0.13385827
+        },
+        {
+          "pattern": "1-1-1",
+          "finishers_by_strength": [
+            1,
+            1,
+            1
+          ],
+          "count": 92,
+          "empirical_probability": 0.09055118
+        },
+        {
+          "pattern": "1-0-2",
+          "finishers_by_strength": [
+            1,
+            0,
+            2
+          ],
+          "count": 55,
+          "empirical_probability": 0.05413386
+        },
+        {
+          "pattern": "0-2-1",
+          "finishers_by_strength": [
+            0,
+            2,
+            1
+          ],
+          "count": 45,
+          "empirical_probability": 0.04429134
+        },
+        {
+          "pattern": "0-1-2",
+          "finishers_by_strength": [
+            0,
+            1,
+            2
+          ],
+          "count": 31,
+          "empirical_probability": 0.03051181
+        },
+        {
+          "pattern": "0-3-0",
+          "finishers_by_strength": [
+            0,
+            3,
+            0
+          ],
+          "count": 27,
+          "empirical_probability": 0.0265748
+        },
+        {
+          "pattern": "0-0-3",
+          "finishers_by_strength": [
+            0,
+            0,
+            3
+          ],
+          "count": 6,
+          "empirical_probability": 0.00590551
+        }
+      ],
+      "line_size_shape_counts": {
+        "3-2-2": 642,
+        "2-2-3": 126,
+        "2-3-2": 248
+      }
+    }
+  },
+  "by_line_size_shape": {
+    "3-2-2": {
+      "races": 1844,
+      "patterns": [
+        {
+          "pattern": "2-1-0",
+          "finishers_by_strength": [
+            2,
+            1,
+            0
+          ],
+          "count": 528,
+          "empirical_probability": 0.28633406
+        },
+        {
+          "pattern": "3-0-0",
+          "finishers_by_strength": [
+            3,
+            0,
+            0
+          ],
+          "count": 517,
+          "empirical_probability": 0.28036876
+        },
+        {
+          "pattern": "1-2-0",
+          "finishers_by_strength": [
+            1,
+            2,
+            0
+          ],
+          "count": 215,
+          "empirical_probability": 0.11659436
+        },
+        {
+          "pattern": "2-0-1",
+          "finishers_by_strength": [
+            2,
+            0,
+            1
+          ],
+          "count": 267,
+          "empirical_probability": 0.14479393
+        },
+        {
+          "pattern": "1-1-1",
+          "finishers_by_strength": [
+            1,
+            1,
+            1
+          ],
+          "count": 154,
+          "empirical_probability": 0.0835141
+        },
+        {
+          "pattern": "1-0-2",
+          "finishers_by_strength": [
+            1,
+            0,
+            2
+          ],
+          "count": 80,
+          "empirical_probability": 0.04338395
+        },
+        {
+          "pattern": "0-2-1",
+          "finishers_by_strength": [
+            0,
+            2,
+            1
+          ],
+          "count": 53,
+          "empirical_probability": 0.02874187
+        },
+        {
+          "pattern": "0-1-2",
+          "finishers_by_strength": [
+            0,
+            1,
+            2
+          ],
+          "count": 30,
+          "empirical_probability": 0.01626898
+        },
+        {
+          "pattern": "0-3-0",
+          "finishers_by_strength": [
+            0,
+            3,
+            0
+          ],
+          "count": 0,
+          "empirical_probability": 0
+        },
+        {
+          "pattern": "0-0-3",
+          "finishers_by_strength": [
+            0,
+            0,
+            3
+          ],
+          "count": 0,
+          "empirical_probability": 0
+        }
+      ],
+      "by_year": {
+        "2023": {
+          "races": 624,
+          "patterns": [
+            {
+              "pattern": "2-1-0",
+              "finishers_by_strength": [
+                2,
+                1,
+                0
+              ],
+              "count": 173,
+              "empirical_probability": 0.27724359
+            },
+            {
+              "pattern": "3-0-0",
+              "finishers_by_strength": [
+                3,
+                0,
+                0
+              ],
+              "count": 153,
+              "empirical_probability": 0.24519231
+            },
+            {
+              "pattern": "1-2-0",
+              "finishers_by_strength": [
+                1,
+                2,
+                0
+              ],
+              "count": 88,
+              "empirical_probability": 0.14102564
+            },
+            {
+              "pattern": "2-0-1",
+              "finishers_by_strength": [
+                2,
+                0,
+                1
+              ],
+              "count": 91,
+              "empirical_probability": 0.14583333
+            },
+            {
+              "pattern": "1-1-1",
+              "finishers_by_strength": [
+                1,
+                1,
+                1
+              ],
+              "count": 58,
+              "empirical_probability": 0.09294872
+            },
+            {
+              "pattern": "1-0-2",
+              "finishers_by_strength": [
+                1,
+                0,
+                2
+              ],
+              "count": 31,
+              "empirical_probability": 0.04967949
+            },
+            {
+              "pattern": "0-2-1",
+              "finishers_by_strength": [
+                0,
+                2,
+                1
+              ],
+              "count": 19,
+              "empirical_probability": 0.03044872
+            },
+            {
+              "pattern": "0-1-2",
+              "finishers_by_strength": [
+                0,
+                1,
+                2
+              ],
+              "count": 11,
+              "empirical_probability": 0.01762821
+            },
+            {
+              "pattern": "0-3-0",
+              "finishers_by_strength": [
+                0,
+                3,
+                0
+              ],
+              "count": 0,
+              "empirical_probability": 0
+            },
+            {
+              "pattern": "0-0-3",
+              "finishers_by_strength": [
+                0,
+                0,
+                3
+              ],
+              "count": 0,
+              "empirical_probability": 0
+            }
+          ]
+        },
+        "2024": {
+          "races": 578,
+          "patterns": [
+            {
+              "pattern": "2-1-0",
+              "finishers_by_strength": [
+                2,
+                1,
+                0
+              ],
+              "count": 171,
+              "empirical_probability": 0.29584775
+            },
+            {
+              "pattern": "3-0-0",
+              "finishers_by_strength": [
+                3,
+                0,
+                0
+              ],
+              "count": 181,
+              "empirical_probability": 0.31314879
+            },
+            {
+              "pattern": "1-2-0",
+              "finishers_by_strength": [
+                1,
+                2,
+                0
+              ],
+              "count": 53,
+              "empirical_probability": 0.0916955
+            },
+            {
+              "pattern": "2-0-1",
+              "finishers_by_strength": [
+                2,
+                0,
+                1
+              ],
+              "count": 80,
+              "empirical_probability": 0.1384083
+            },
+            {
+              "pattern": "1-1-1",
+              "finishers_by_strength": [
+                1,
+                1,
+                1
+              ],
+              "count": 42,
+              "empirical_probability": 0.07266436
+            },
+            {
+              "pattern": "1-0-2",
+              "finishers_by_strength": [
+                1,
+                0,
+                2
+              ],
+              "count": 28,
+              "empirical_probability": 0.04844291
+            },
+            {
+              "pattern": "0-2-1",
+              "finishers_by_strength": [
+                0,
+                2,
+                1
+              ],
+              "count": 18,
+              "empirical_probability": 0.03114187
+            },
+            {
+              "pattern": "0-1-2",
+              "finishers_by_strength": [
+                0,
+                1,
+                2
+              ],
+              "count": 5,
+              "empirical_probability": 0.00865052
+            },
+            {
+              "pattern": "0-3-0",
+              "finishers_by_strength": [
+                0,
+                3,
+                0
+              ],
+              "count": 0,
+              "empirical_probability": 0
+            },
+            {
+              "pattern": "0-0-3",
+              "finishers_by_strength": [
+                0,
+                0,
+                3
+              ],
+              "count": 0,
+              "empirical_probability": 0
+            }
+          ]
+        },
+        "2025": {
+          "races": 642,
+          "patterns": [
+            {
+              "pattern": "2-1-0",
+              "finishers_by_strength": [
+                2,
+                1,
+                0
+              ],
+              "count": 184,
+              "empirical_probability": 0.28660436
+            },
+            {
+              "pattern": "3-0-0",
+              "finishers_by_strength": [
+                3,
+                0,
+                0
+              ],
+              "count": 183,
+              "empirical_probability": 0.28504673
+            },
+            {
+              "pattern": "1-2-0",
+              "finishers_by_strength": [
+                1,
+                2,
+                0
+              ],
+              "count": 74,
+              "empirical_probability": 0.1152648
+            },
+            {
+              "pattern": "2-0-1",
+              "finishers_by_strength": [
+                2,
+                0,
+                1
+              ],
+              "count": 96,
+              "empirical_probability": 0.14953271
+            },
+            {
+              "pattern": "1-1-1",
+              "finishers_by_strength": [
+                1,
+                1,
+                1
+              ],
+              "count": 54,
+              "empirical_probability": 0.08411215
+            },
+            {
+              "pattern": "1-0-2",
+              "finishers_by_strength": [
+                1,
+                0,
+                2
+              ],
+              "count": 21,
+              "empirical_probability": 0.03271028
+            },
+            {
+              "pattern": "0-2-1",
+              "finishers_by_strength": [
+                0,
+                2,
+                1
+              ],
+              "count": 16,
+              "empirical_probability": 0.02492212
+            },
+            {
+              "pattern": "0-1-2",
+              "finishers_by_strength": [
+                0,
+                1,
+                2
+              ],
+              "count": 14,
+              "empirical_probability": 0.02180685
+            },
+            {
+              "pattern": "0-3-0",
+              "finishers_by_strength": [
+                0,
+                3,
+                0
+              ],
+              "count": 0,
+              "empirical_probability": 0
+            },
+            {
+              "pattern": "0-0-3",
+              "finishers_by_strength": [
+                0,
+                0,
+                3
+              ],
+              "count": 0,
+              "empirical_probability": 0
+            }
+          ]
+        }
+      }
+    },
+    "2-3-2": {
+      "races": 775,
+      "patterns": [
+        {
+          "pattern": "2-1-0",
+          "finishers_by_strength": [
+            2,
+            1,
+            0
+          ],
+          "count": 249,
+          "empirical_probability": 0.32129032
+        },
+        {
+          "pattern": "3-0-0",
+          "finishers_by_strength": [
+            3,
+            0,
+            0
+          ],
+          "count": 0,
+          "empirical_probability": 0
+        },
+        {
+          "pattern": "1-2-0",
+          "finishers_by_strength": [
+            1,
+            2,
+            0
+          ],
+          "count": 184,
+          "empirical_probability": 0.23741935
+        },
+        {
+          "pattern": "2-0-1",
+          "finishers_by_strength": [
+            2,
+            0,
+            1
+          ],
+          "count": 93,
+          "empirical_probability": 0.12
+        },
+        {
+          "pattern": "1-1-1",
+          "finishers_by_strength": [
+            1,
+            1,
+            1
+          ],
+          "count": 76,
+          "empirical_probability": 0.09806452
+        },
+        {
+          "pattern": "1-0-2",
+          "finishers_by_strength": [
+            1,
+            0,
+            2
+          ],
+          "count": 28,
+          "empirical_probability": 0.03612903
+        },
+        {
+          "pattern": "0-2-1",
+          "finishers_by_strength": [
+            0,
+            2,
+            1
+          ],
+          "count": 46,
+          "empirical_probability": 0.05935484
+        },
+        {
+          "pattern": "0-1-2",
+          "finishers_by_strength": [
+            0,
+            1,
+            2
+          ],
+          "count": 27,
+          "empirical_probability": 0.03483871
+        },
+        {
+          "pattern": "0-3-0",
+          "finishers_by_strength": [
+            0,
+            3,
+            0
+          ],
+          "count": 72,
+          "empirical_probability": 0.09290323
+        },
+        {
+          "pattern": "0-0-3",
+          "finishers_by_strength": [
+            0,
+            0,
+            3
+          ],
+          "count": 0,
+          "empirical_probability": 0
+        }
+      ],
+      "by_year": {
+        "2023": {
+          "races": 269,
+          "patterns": [
+            {
+              "pattern": "2-1-0",
+              "finishers_by_strength": [
+                2,
+                1,
+                0
+              ],
+              "count": 86,
+              "empirical_probability": 0.3197026
+            },
+            {
+              "pattern": "3-0-0",
+              "finishers_by_strength": [
+                3,
+                0,
+                0
+              ],
+              "count": 0,
+              "empirical_probability": 0
+            },
+            {
+              "pattern": "1-2-0",
+              "finishers_by_strength": [
+                1,
+                2,
+                0
+              ],
+              "count": 70,
+              "empirical_probability": 0.26022305
+            },
+            {
+              "pattern": "2-0-1",
+              "finishers_by_strength": [
+                2,
+                0,
+                1
+              ],
+              "count": 38,
+              "empirical_probability": 0.14126394
+            },
+            {
+              "pattern": "1-1-1",
+              "finishers_by_strength": [
+                1,
+                1,
+                1
+              ],
+              "count": 24,
+              "empirical_probability": 0.08921933
+            },
+            {
+              "pattern": "1-0-2",
+              "finishers_by_strength": [
+                1,
+                0,
+                2
+              ],
+              "count": 9,
+              "empirical_probability": 0.03345725
+            },
+            {
+              "pattern": "0-2-1",
+              "finishers_by_strength": [
+                0,
+                2,
+                1
+              ],
+              "count": 14,
+              "empirical_probability": 0.05204461
+            },
+            {
+              "pattern": "0-1-2",
+              "finishers_by_strength": [
+                0,
+                1,
+                2
+              ],
+              "count": 9,
+              "empirical_probability": 0.03345725
+            },
+            {
+              "pattern": "0-3-0",
+              "finishers_by_strength": [
+                0,
+                3,
+                0
+              ],
+              "count": 19,
+              "empirical_probability": 0.07063197
+            },
+            {
+              "pattern": "0-0-3",
+              "finishers_by_strength": [
+                0,
+                0,
+                3
+              ],
+              "count": 0,
+              "empirical_probability": 0
+            }
+          ]
+        },
+        "2024": {
+          "races": 258,
+          "patterns": [
+            {
+              "pattern": "2-1-0",
+              "finishers_by_strength": [
+                2,
+                1,
+                0
+              ],
+              "count": 85,
+              "empirical_probability": 0.32945736
+            },
+            {
+              "pattern": "3-0-0",
+              "finishers_by_strength": [
+                3,
+                0,
+                0
+              ],
+              "count": 0,
+              "empirical_probability": 0
+            },
+            {
+              "pattern": "1-2-0",
+              "finishers_by_strength": [
+                1,
+                2,
+                0
+              ],
+              "count": 54,
+              "empirical_probability": 0.20930233
+            },
+            {
+              "pattern": "2-0-1",
+              "finishers_by_strength": [
+                2,
+                0,
+                1
+              ],
+              "count": 33,
+              "empirical_probability": 0.12790698
+            },
+            {
+              "pattern": "1-1-1",
+              "finishers_by_strength": [
+                1,
+                1,
+                1
+              ],
+              "count": 28,
+              "empirical_probability": 0.10852713
+            },
+            {
+              "pattern": "1-0-2",
+              "finishers_by_strength": [
+                1,
+                0,
+                2
+              ],
+              "count": 9,
+              "empirical_probability": 0.03488372
+            },
+            {
+              "pattern": "0-2-1",
+              "finishers_by_strength": [
+                0,
+                2,
+                1
+              ],
+              "count": 14,
+              "empirical_probability": 0.05426357
+            },
+            {
+              "pattern": "0-1-2",
+              "finishers_by_strength": [
+                0,
+                1,
+                2
+              ],
+              "count": 9,
+              "empirical_probability": 0.03488372
+            },
+            {
+              "pattern": "0-3-0",
+              "finishers_by_strength": [
+                0,
+                3,
+                0
+              ],
+              "count": 26,
+              "empirical_probability": 0.10077519
+            },
+            {
+              "pattern": "0-0-3",
+              "finishers_by_strength": [
+                0,
+                0,
+                3
+              ],
+              "count": 0,
+              "empirical_probability": 0
+            }
+          ]
+        },
+        "2025": {
+          "races": 248,
+          "patterns": [
+            {
+              "pattern": "2-1-0",
+              "finishers_by_strength": [
+                2,
+                1,
+                0
+              ],
+              "count": 78,
+              "empirical_probability": 0.31451613
+            },
+            {
+              "pattern": "3-0-0",
+              "finishers_by_strength": [
+                3,
+                0,
+                0
+              ],
+              "count": 0,
+              "empirical_probability": 0
+            },
+            {
+              "pattern": "1-2-0",
+              "finishers_by_strength": [
+                1,
+                2,
+                0
+              ],
+              "count": 60,
+              "empirical_probability": 0.24193548
+            },
+            {
+              "pattern": "2-0-1",
+              "finishers_by_strength": [
+                2,
+                0,
+                1
+              ],
+              "count": 22,
+              "empirical_probability": 0.08870968
+            },
+            {
+              "pattern": "1-1-1",
+              "finishers_by_strength": [
+                1,
+                1,
+                1
+              ],
+              "count": 24,
+              "empirical_probability": 0.09677419
+            },
+            {
+              "pattern": "1-0-2",
+              "finishers_by_strength": [
+                1,
+                0,
+                2
+              ],
+              "count": 10,
+              "empirical_probability": 0.04032258
+            },
+            {
+              "pattern": "0-2-1",
+              "finishers_by_strength": [
+                0,
+                2,
+                1
+              ],
+              "count": 18,
+              "empirical_probability": 0.07258065
+            },
+            {
+              "pattern": "0-1-2",
+              "finishers_by_strength": [
+                0,
+                1,
+                2
+              ],
+              "count": 9,
+              "empirical_probability": 0.03629032
+            },
+            {
+              "pattern": "0-3-0",
+              "finishers_by_strength": [
+                0,
+                3,
+                0
+              ],
+              "count": 27,
+              "empirical_probability": 0.10887097
+            },
+            {
+              "pattern": "0-0-3",
+              "finishers_by_strength": [
+                0,
+                0,
+                3
+              ],
+              "count": 0,
+              "empirical_probability": 0
+            }
+          ]
+        }
+      }
+    },
+    "2-2-3": {
+      "races": 396,
+      "patterns": [
+        {
+          "pattern": "2-1-0",
+          "finishers_by_strength": [
+            2,
+            1,
+            0
+          ],
+          "count": 101,
+          "empirical_probability": 0.25505051
+        },
+        {
+          "pattern": "3-0-0",
+          "finishers_by_strength": [
+            3,
+            0,
+            0
+          ],
+          "count": 0,
+          "empirical_probability": 0
+        },
+        {
+          "pattern": "1-2-0",
+          "finishers_by_strength": [
+            1,
+            2,
+            0
+          ],
+          "count": 51,
+          "empirical_probability": 0.12878788
+        },
+        {
+          "pattern": "2-0-1",
+          "finishers_by_strength": [
+            2,
+            0,
+            1
+          ],
+          "count": 70,
+          "empirical_probability": 0.17676768
+        },
+        {
+          "pattern": "1-1-1",
+          "finishers_by_strength": [
+            1,
+            1,
+            1
+          ],
+          "count": 47,
+          "empirical_probability": 0.11868687
+        },
+        {
+          "pattern": "1-0-2",
+          "finishers_by_strength": [
+            1,
+            0,
+            2
+          ],
+          "count": 54,
+          "empirical_probability": 0.13636364
+        },
+        {
+          "pattern": "0-2-1",
+          "finishers_by_strength": [
+            0,
+            2,
+            1
+          ],
+          "count": 26,
+          "empirical_probability": 0.06565657
+        },
+        {
+          "pattern": "0-1-2",
+          "finishers_by_strength": [
+            0,
+            1,
+            2
+          ],
+          "count": 25,
+          "empirical_probability": 0.06313131
+        },
+        {
+          "pattern": "0-3-0",
+          "finishers_by_strength": [
+            0,
+            3,
+            0
+          ],
+          "count": 0,
+          "empirical_probability": 0
+        },
+        {
+          "pattern": "0-0-3",
+          "finishers_by_strength": [
+            0,
+            0,
+            3
+          ],
+          "count": 22,
+          "empirical_probability": 0.05555556
+        }
+      ],
+      "by_year": {
+        "2023": {
+          "races": 136,
+          "patterns": [
+            {
+              "pattern": "2-1-0",
+              "finishers_by_strength": [
+                2,
+                1,
+                0
+              ],
+              "count": 37,
+              "empirical_probability": 0.27205882
+            },
+            {
+              "pattern": "3-0-0",
+              "finishers_by_strength": [
+                3,
+                0,
+                0
+              ],
+              "count": 0,
+              "empirical_probability": 0
+            },
+            {
+              "pattern": "1-2-0",
+              "finishers_by_strength": [
+                1,
+                2,
+                0
+              ],
+              "count": 18,
+              "empirical_probability": 0.13235294
+            },
+            {
+              "pattern": "2-0-1",
+              "finishers_by_strength": [
+                2,
+                0,
+                1
+              ],
+              "count": 32,
+              "empirical_probability": 0.23529412
+            },
+            {
+              "pattern": "1-1-1",
+              "finishers_by_strength": [
+                1,
+                1,
+                1
+              ],
+              "count": 19,
+              "empirical_probability": 0.13970588
+            },
+            {
+              "pattern": "1-0-2",
+              "finishers_by_strength": [
+                1,
+                0,
+                2
+              ],
+              "count": 13,
+              "empirical_probability": 0.09558824
+            },
+            {
+              "pattern": "0-2-1",
+              "finishers_by_strength": [
+                0,
+                2,
+                1
+              ],
+              "count": 5,
+              "empirical_probability": 0.03676471
+            },
+            {
+              "pattern": "0-1-2",
+              "finishers_by_strength": [
+                0,
+                1,
+                2
+              ],
+              "count": 8,
+              "empirical_probability": 0.05882353
+            },
+            {
+              "pattern": "0-3-0",
+              "finishers_by_strength": [
+                0,
+                3,
+                0
+              ],
+              "count": 0,
+              "empirical_probability": 0
+            },
+            {
+              "pattern": "0-0-3",
+              "finishers_by_strength": [
+                0,
+                0,
+                3
+              ],
+              "count": 4,
+              "empirical_probability": 0.02941176
+            }
+          ]
+        },
+        "2024": {
+          "races": 134,
+          "patterns": [
+            {
+              "pattern": "2-1-0",
+              "finishers_by_strength": [
+                2,
+                1,
+                0
+              ],
+              "count": 36,
+              "empirical_probability": 0.26865672
+            },
+            {
+              "pattern": "3-0-0",
+              "finishers_by_strength": [
+                3,
+                0,
+                0
+              ],
+              "count": 0,
+              "empirical_probability": 0
+            },
+            {
+              "pattern": "1-2-0",
+              "finishers_by_strength": [
+                1,
+                2,
+                0
+              ],
+              "count": 16,
+              "empirical_probability": 0.11940299
+            },
+            {
+              "pattern": "2-0-1",
+              "finishers_by_strength": [
+                2,
+                0,
+                1
+              ],
+              "count": 20,
+              "empirical_probability": 0.14925373
+            },
+            {
+              "pattern": "1-1-1",
+              "finishers_by_strength": [
+                1,
+                1,
+                1
+              ],
+              "count": 14,
+              "empirical_probability": 0.10447761
+            },
+            {
+              "pattern": "1-0-2",
+              "finishers_by_strength": [
+                1,
+                0,
+                2
+              ],
+              "count": 17,
+              "empirical_probability": 0.12686567
+            },
+            {
+              "pattern": "0-2-1",
+              "finishers_by_strength": [
+                0,
+                2,
+                1
+              ],
+              "count": 10,
+              "empirical_probability": 0.07462687
+            },
+            {
+              "pattern": "0-1-2",
+              "finishers_by_strength": [
+                0,
+                1,
+                2
+              ],
+              "count": 9,
+              "empirical_probability": 0.06716418
+            },
+            {
+              "pattern": "0-3-0",
+              "finishers_by_strength": [
+                0,
+                3,
+                0
+              ],
+              "count": 0,
+              "empirical_probability": 0
+            },
+            {
+              "pattern": "0-0-3",
+              "finishers_by_strength": [
+                0,
+                0,
+                3
+              ],
+              "count": 12,
+              "empirical_probability": 0.08955224
+            }
+          ]
+        },
+        "2025": {
+          "races": 126,
+          "patterns": [
+            {
+              "pattern": "2-1-0",
+              "finishers_by_strength": [
+                2,
+                1,
+                0
+              ],
+              "count": 28,
+              "empirical_probability": 0.22222222
+            },
+            {
+              "pattern": "3-0-0",
+              "finishers_by_strength": [
+                3,
+                0,
+                0
+              ],
+              "count": 0,
+              "empirical_probability": 0
+            },
+            {
+              "pattern": "1-2-0",
+              "finishers_by_strength": [
+                1,
+                2,
+                0
+              ],
+              "count": 17,
+              "empirical_probability": 0.13492063
+            },
+            {
+              "pattern": "2-0-1",
+              "finishers_by_strength": [
+                2,
+                0,
+                1
+              ],
+              "count": 18,
+              "empirical_probability": 0.14285714
+            },
+            {
+              "pattern": "1-1-1",
+              "finishers_by_strength": [
+                1,
+                1,
+                1
+              ],
+              "count": 14,
+              "empirical_probability": 0.11111111
+            },
+            {
+              "pattern": "1-0-2",
+              "finishers_by_strength": [
+                1,
+                0,
+                2
+              ],
+              "count": 24,
+              "empirical_probability": 0.19047619
+            },
+            {
+              "pattern": "0-2-1",
+              "finishers_by_strength": [
+                0,
+                2,
+                1
+              ],
+              "count": 11,
+              "empirical_probability": 0.08730159
+            },
+            {
+              "pattern": "0-1-2",
+              "finishers_by_strength": [
+                0,
+                1,
+                2
+              ],
+              "count": 8,
+              "empirical_probability": 0.06349206
+            },
+            {
+              "pattern": "0-3-0",
+              "finishers_by_strength": [
+                0,
+                3,
+                0
+              ],
+              "count": 0,
+              "empirical_probability": 0
+            },
+            {
+              "pattern": "0-0-3",
+              "finishers_by_strength": [
+                0,
+                0,
+                3
+              ],
+              "count": 6,
+              "empirical_probability": 0.04761905
+            }
+          ]
+        }
+      }
+    }
+  },
+  "usage_rules": [
+    "今後の比較・拡張ではこのv1数値を上書きせず、対象や条件を追加した版は別ファイル名で保存する。",
+    "個々の買い目の的中確率ではない。ライン人数構成の母集団における実測頻度である。",
+    "構成ごとに個別の3連複組合せ数が異なるため、この値を一枚の車券の的中確率に直接流用しない。",
+    "2026年データはこの集計に使っていない。別途、時系列の検証が必要。",
+    "3-2-2でも最強ラインが3車・中間ラインが3車・最弱ラインが3車の場合を区別して使う。",
+    "オッズ・払戻金を用いた確率調整はしていない。収益性は未検証。"
+  ]
+}
