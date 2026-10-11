@@ -1,0 +1,107 @@
+{
+  "id": "trio_line_parts_v2_2026_h1_validation",
+  "status": "FOLLOWING_PERIOD_DESCRIPTIVE_AUDIT_NOT_A_BLIND_PROFITABILITY_TEST",
+  "checked_on": "2026-10-12",
+  "reference": "data/probabilities/trio_line_parts_s_yosen_2023_2025_v2.json",
+  "source": "data/2026_h1/s_class_yosen/{races,entries,payouts}.csv",
+  "description": "v2で固定したルールを2026年上半期の全国S級予選にそのまま適用。確定3連複からライン内の位置を算出。事前のオッズや個別選手特徴量で予測した結果ではない。",
+  "source_races": 738,
+  "eligible_races": 495,
+  "exclusions": {
+    "non_7_rider": 24,
+    "non_3_2_2_line_shape": 219
+  },
+  "positional_patterns": [
+    {
+      "pattern": "1-1-1",
+      "count": 10,
+      "empirical_probability": 0.02020202,
+      "reference_2023_2025_count": 38,
+      "reference_empirical_probability": 0.01260365,
+      "difference_percentage_points": 0.76
+    },
+    {
+      "pattern": "1-1-2",
+      "count": 165,
+      "empirical_probability": 0.33333333,
+      "reference_2023_2025_count": 1033,
+      "reference_empirical_probability": 0.34262023,
+      "difference_percentage_points": -0.929
+    },
+    {
+      "pattern": "1-1-3",
+      "count": 8,
+      "empirical_probability": 0.01616162,
+      "reference_2023_2025_count": 55,
+      "reference_empirical_probability": 0.01824212,
+      "difference_percentage_points": -0.208
+    },
+    {
+      "pattern": "1-2-2",
+      "count": 172,
+      "empirical_probability": 0.34747475,
+      "reference_2023_2025_count": 973,
+      "reference_empirical_probability": 0.32271973,
+      "difference_percentage_points": 2.476
+    },
+    {
+      "pattern": "1-2-3",
+      "count": 121,
+      "empirical_probability": 0.24444444,
+      "reference_2023_2025_count": 795,
+      "reference_empirical_probability": 0.26368159,
+      "difference_percentage_points": -1.924
+    },
+    {
+      "pattern": "2-2-2",
+      "count": 5,
+      "empirical_probability": 0.01010101,
+      "reference_2023_2025_count": 37,
+      "reference_empirical_probability": 0.01227197,
+      "difference_percentage_points": -0.217
+    },
+    {
+      "pattern": "2-2-3",
+      "count": 14,
+      "empirical_probability": 0.02828283,
+      "reference_2023_2025_count": 84,
+      "reference_empirical_probability": 0.0278607,
+      "difference_percentage_points": 0.042
+    }
+  ],
+  "by_line_size_shape": {
+    "3-2-2": {
+      "races": 295,
+      "top_exact_ticket": "H1+H2+H3",
+      "top_ticket_hits": 71,
+      "reference_2023_2025_races": 1844,
+      "reference_hits": 517,
+      "empirical_probability": 0.24067797,
+      "reference_probability": 0.28036876
+    },
+    "2-3-2": {
+      "races": 137,
+      "top_exact_ticket": "H1+H2+M2",
+      "top_ticket_hits": 23,
+      "reference_2023_2025_races": 775,
+      "reference_hits": 130,
+      "empirical_probability": 0.16788321,
+      "reference_probability": 0.16774194
+    },
+    "2-2-3": {
+      "races": 63,
+      "top_exact_ticket": "H1+H2+M1",
+      "top_ticket_hits": 7,
+      "reference_2023_2025_races": 396,
+      "reference_hits": 60,
+      "empirical_probability": 0.11111111,
+      "reference_probability": 0.15151515
+    }
+  },
+  "limitations": [
+    "2026年上半期を固定基準の集計対象から切り離して結果比較したもの。2026年のレース結果が他研究で未閲覧だったという意味での完全盲検は保証できない。",
+    "比較は全体位置構成と各形の代表的な1点のみ。35点それぞれの十分な検証を意味しない。",
+    "データ源の並び予想は事後にアーカイブされたため、リアルタイムで同一の並びを得られたかの監査ではない。",
+    "オッズ・期待値・購買優位は全く検証していない。"
+  ]
+}
