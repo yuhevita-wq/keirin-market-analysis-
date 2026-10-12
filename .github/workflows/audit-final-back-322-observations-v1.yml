@@ -1,0 +1,28 @@
+name: Audit S-yosen 3-2-2 final-back observations
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "src/keirin_market_analysis/audit_final_back_322_observations_v1.py"
+      - "data/observations/final_back_s_yosen_322_2023_2026h1_v1.csv"
+      - "data/probabilities/final_back_s_yosen_322_observed_v1.json"
+      - ".github/workflows/audit-final-back-322-observations-v1.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install project
+        run: python -m pip install -e .
+      - name: Verify individual B labels and conditional trio totals against source
+        run: python -m keirin_market_analysis.audit_final_back_322_observations_v1
