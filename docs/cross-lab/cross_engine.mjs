@@ -8,7 +8,7 @@
  * - Race points and B alone NEVER produce a recommended pair.
  * - No invented "probabilities" or value/EV without calibration and odds.
  */
-export const ENGINE_VERSION = "cross-interaction-v1";
+export const ENGINE_VERSION = "cross-comparison-v2";
 const own = (obj, key) => Object.prototype.hasOwnProperty.call(obj || {}, key);
 const numeric = value => value === null || value === undefined || value === "" ? null :
   (Number.isFinite(Number(value)) && Number(value) >= 0 ? Number(value) : null);
@@ -174,7 +174,17 @@ function interactionEvidence(x,y,race) {
     }
   }
   if (px.pos > 2 || py.pos > 2) veto.push("3番手以降の1・2着は追加根拠が必要");
-  if (px.pos === 2 && py.pos === 2) veto.push("異線番手同士。切替・コース根拠が未取得");
+  if (px.pos === 2 && py.pos === 2) {
+    // A role is not a reason to delete a legal CROSS. Inspect both lines.
+    const signal = r => has(r,"sashi") || has(r,"mark");
+    if (signal(x) && signal(y) &&
+        (has(frontX,"nige") || has(frontX,"makuri")) &&
+        (has(frontY,"nige") || has(frontY,"makuri"))) {
+      cases.push({key:"BOTH_BANTE_RETENTION",label:x.no+"・"+y.no+"の異線番手残存・切替",
+        evidence:[frontX.no+"・"+frontY.no+"の自力実績",x.no+"・"+y.no+"の差し／追走実績"]});
+    }
+    veto.push("番手同士は両先頭の消耗・切替・コースを比較。役割だけで優遇しない");
+  }
   if (!cases.length) veto.push("異線2人の同時残りを裏付ける決まり手の組合せが未成立");
   return {cases,veto,lacking:[...lacking]};
 }
@@ -207,12 +217,13 @@ export function analyzeCross(input, {limit=24}={}) {
   for(let i=0;i<race.lines.length;i++)for(let j=i+1;j<race.lines.length;j++){
     const a=race.lines[i], b=race.lines[j];
     if(a.length<2 || b.length<2)continue;
-    for(const firstA of a)for(const firstB of b)
-    for(const thirdA of a.filter(no=>no!==firstA))
-    for(const thirdB of b.filter(no=>no!==firstB)){
+    // Core: each line's front and bante. Actual third rider stays auxiliary.
+    for(const firstA of a.slice(0,2))for(const firstB of b.slice(0,2))
+    for(const thirdA of a.slice(0,2).filter(no=>no!==firstA))
+    for(const thirdB of b.slice(0,2).filter(no=>no!==firstB)){
       evaluated++;
       const proof = interactionEvidence(race.riders.get(firstA),race.riders.get(firstB),race);
-      if(!proof.cases.length)continue; // never substitute highest-ranked riders
+      // No hard gate: a legal type with weak evidence must remain inspectable.
       const risks=outsideRisks(race,new Set([firstA,firstB,thirdA,thirdB]));
       const tickets=crossTickets(firstA,firstB,thirdA,thirdB);
       const serious=risks.filter(s=>s.includes("3車ライン全滅"));
@@ -221,33 +232,34 @@ export function analyzeCross(input, {limit=24}={}) {
         warnings:[...proof.veto,...risks],needsVerification:serious.length>0,
         // Sorting describes quality of identified MECHANISMS, not rider merit.
         mechanismCount:proof.cases.length,exclusionCount:risks.length,
+        evidenceStatus:proof.cases.length ? "SUPPORTED_HYPOTHESIS" : "UNRESOLVED",
+        observations:[firstA,firstB,thirdA,thirdB].map(no=>{
+          const r=race.riders.get(no);return {no,position:race.position.get(no).pos,
+            b:r.b,nige:r.nige,makuri:r.makuri,sashi:r.sashi,mark:r.mark};
+        }),
         signature:tickets.map(t=>t.join("-")).join("|")});
     }
   }
   const unique=[...new Map(found.map(x=>[x.signature,x])).values()];
-  unique.sort((a,b)=>b.mechanismCount-a.mechanismCount ||
-    a.exclusionCount-b.exclusionCount ||
-    a.signature.localeCompare(b.signature, "en", {numeric:true}));
+  // Enumeration order is not a strength ranking or a default main choice.
   const top=unique.slice(0,Math.max(1,limit));
-  const leading=top[0];
-  const tied=leading ? unique.filter(c=>c.mechanismCount===leading.mechanismCount &&
-    c.exclusionCount===leading.exclusionCount) : [];
+  const supported=unique.filter(c=>c.cases.length>0);
+  const tied=unique;
   const incomplete=race.entries.filter(e=>["nige","makuri","sashi","mark"]
     .some(k=>e[k]===null)).map(e=>e.no);
   return {
     version:ENGINE_VERSION,race:{track:race.track,race_no:race.race_no,
       race_type:race.race_type,meeting_grade:race.meeting_grade,lines:race.lines},
-    status:unique.length === 0 ? "NO_EVIDENCE" :
-      (tied.length > 1 ? "MULTIPLE_CANDIDATES" : "CONDITIONAL_CANDIDATE"),
-    recommended:unique.length && tied.length===1 && !leading.needsVerification &&
-      incomplete.length===0 ? leading : null,
-    candidates:top,evaluated,qualified:unique.length,ties:tied.length,
+    status:supported.length === 0 ? "NO_EVIDENCE" : "COMPARISON_REQUIRED",
+    recommended:null,
+    candidates:top,evaluated,qualified:unique.length,supported:supported.length,ties:tied.length,
     incompleteCars:incomplete,
     notes:[
       "強い順の並べ替え・得点加点・基本4点の3着再選定は行いません（補助は別判定）",
       "成立メカニズムの条件照合であり、的中確率や期待回収率ではありません",
       incomplete.length ? "決まり手欠損："+incomplete.join("・")+"番。欠損時は確定推奨しません" : "",
-      tied.length>1 ? "同評価のクロスが"+tied.length+"組。画面上の主採用は暫定であり、優位の証明ではありません" : ""
+      "列挙順・根拠件数・警告件数を採用順位に変換しません。主採用には比較記録が必要"
     ].filter(Boolean)
   };
 }
+

@@ -80,7 +80,7 @@ test("front + opposing makuri requires actual winning-method evidence",()=>{
   assert.ok(result.candidates.some(x=>x.firstPair.join("-")==="1-3"));
   race.entries[2].makuri=0;
   result=analyzeCross(race);
-  assert.ok(!result.candidates.some(x=>x.firstPair.join("-")==="1-3"));
+  assert.equal(result.candidates.find(x=>x.firstPair.join("-")==="1-3").cases.length,0);
 });
 
 test("explicitly cleared methods remain unknown even when old cache aliases exist",()=>{
@@ -89,3 +89,4 @@ test("explicitly cleared methods remain unknown even when old cache aliases exis
   race.entries[0].nige=null;
   assert.equal(normalizeRace(race).riders.get(1).nige,null);
 });
+

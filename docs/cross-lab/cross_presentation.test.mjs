@@ -22,16 +22,16 @@ const example = (lines,firstPair,remaining) => ({
   ]
 });
 
-test("select exactly one labelled main from multiple candidates; never label ties as proven",()=>{
+test("main requires a comparison record, never the first candidate or warning count",()=>{
   const candidates=[
-    {...example([1,2],[4,6],[5,7]),mechanismCount:1,exclusionCount:3,needsVerification:true},
-    {...example([0,1],[2,4],[1,5]),mechanismCount:1,exclusionCount:3,needsVerification:false}
+    {...example([1,2],[4,6],[5,7]),signature:"a",mechanismCount:99,exclusionCount:0},
+    {...example([0,1],[2,4],[1,5]),signature:"b",mechanismCount:0,exclusionCount:99}
   ];
-  const result=selectMainCross({candidates,ties:2,incompleteCars:[]});
-  assert.equal(result.main,candidates[0]);
-  assert.equal(result.provisional,true);
-  assert.match(result.reason,/同評価2組/);
-  assert.equal(selectMainCross({candidates:[],ties:0}).main,null);
+  const result={candidates,ties:2,incompleteCars:[]};
+  assert.equal(selectMainCross(result).main,null);
+  const record={signature:"b",interaction:"interaction",alternativeCross:"other cross",sameLine:"same line",outside:"outside"};
+  assert.equal(selectMainCross(result,record).main,candidates[1]);
+  assert.throws(()=>selectMainCross(result,{...record,outside:""}));
 });
 
 test("bante in the 3-line CROSS's first pair adds actual third-position rider",()=>{
@@ -78,3 +78,4 @@ test("cross not involving a 3-line bante and not 2x2 has no arbitrary auxiliary"
   const out=buildAuxiliaryThirds(example([0,1],[1,4],[2,5]),race);
   assert.deepEqual(out.thirds,[]);
 });
+

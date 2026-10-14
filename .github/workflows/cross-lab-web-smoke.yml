@@ -16,7 +16,7 @@ jobs:
         run: |
           set -euo pipefail
           BASE="https://yuhevita-wq.github.io/keirin-market-analysis-/cross-lab"
-          RELEASE="cross-lab-main-aux-thirds-20261014-v2"
+          RELEASE="cross-lab-comparison-v2-20261014"
           echo "Checking $BASE"
           for attempt in $(seq 1 45); do
             marker=$(curl -fsSL --max-time 10 "$BASE/release.txt" 2>/dev/null || true)
@@ -42,7 +42,13 @@ jobs:
           grep -Fq '（）付き3着補助' index.html
           grep -Fq 'export function analyzeCross' cross_engine.mjs
           grep -Fq 'export function renderHorizontalLineReference' horizontal_line_reference.mjs
-          grep -Fq 'export function selectMainCross' cross_presentation.mjs
+          curl -fsSL --max-time 30 "$BASE/cross_comparison.mjs" -o cross_comparison.mjs
+          grep -Fq 'resolveDecision as selectMainCross' cross_presentation.mjs
+          grep -Fq 'export function compareJointForecast' cross_comparison.mjs
+          curl -fsSL --max-time 30 "$BASE/market_model.mjs" -o market_model.mjs
+          curl -fsSL --max-time 30 "$BASE/market_model_frozen.json" -o market_model_frozen.json
+          grep -Fq 'export function predictMarket' market_model.mjs
+          grep -Fq '2025-12-31' market_model_frozen.json
           grep -Fq 'export function buildAuxiliaryThirds' cross_presentation.mjs
           mime=$(curl -sSIL --max-time 20 "$BASE/cross_engine.mjs" | tr -d '\r' | grep -i '^content-type:' | tail -1)
           echo "$mime"
@@ -51,3 +57,4 @@ jobs:
             exit 1
           fi
           echo "LIVE WEB ASSETS VERIFIED"
+

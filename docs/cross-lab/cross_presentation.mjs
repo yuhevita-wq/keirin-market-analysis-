@@ -8,21 +8,7 @@ import { normalizeRace } from "./cross_engine.mjs";
 const positive = (r, key) => Number.isFinite(r?.[key]) && r[key] > 0;
 const uniqueTickets = tickets => [...new Map(tickets.map(t => [t.join("-"),t])).values()];
 
-export function selectMainCross(result) {
-  const main = result?.candidates?.[0] ?? null;
-  if (!main) return {main:null, label:"選定なし", provisional:false,
-    reason:"クロス成立根拠に該当する候補がないため、無根拠な1組は選ばない"};
-  const provisional = result.ties > 1 || Boolean(main.needsVerification) ||
-    Boolean(result.incompleteCars?.length);
-  const reason = [
-    "成立メカニズム"+main.mechanismCount+"件・選外反証"+main.exclusionCount+"件を比較",
-    result.ties > 1 ? "同評価"+result.ties+"組のため順位は仮置き（確率上の優位は未証明）" : "",
-    main.needsVerification ? "選外3車ライン全滅などの反証条件が残る" : "",
-    result.incompleteCars?.length ? "決まり手欠損あり" : ""
-  ].filter(Boolean).join("。");
-  return {main,label:provisional?"主採用（暫定）":"主採用（条件付き）",
-    provisional, reason};
-}
+export {resolveDecision as selectMainCross} from './cross_comparison.mjs';
 
 function thirdEntryEvidence(race, line, position) {
   const rider = race.riders.get(line[position]);
@@ -101,3 +87,4 @@ export function buildAuxiliaryThirds(candidate, input) {
     coreTickets:candidate.tickets
   };
 }
+
