@@ -1,0 +1,47 @@
+name: CROSS LAB web smoke
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/cross-lab/**"
+      - ".github/workflows/cross-lab-web-smoke.yml"
+  workflow_dispatch:
+jobs:
+  web-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Check published HTML, module scripts and release marker
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="https://yuhevita-wq.github.io/keirin-market-analysis-/cross-lab"
+          RELEASE="cross-lab-interaction-web-20261014-v1"
+          echo "Checking $BASE"
+          for attempt in $(seq 1 45); do
+            marker=$(curl -fsSL --max-time 10 "$BASE/release.txt" 2>/dev/null || true)
+            if [[ "$marker" == "$RELEASE" ]]; then
+              echo "Release marker is live."
+              break
+            fi
+            if [[ "$attempt" -eq 45 ]]; then
+              echo "Release marker was not published" >&2
+              exit 1
+            fi
+            sleep 8
+          done
+          curl -fsSL --max-time 30 "$BASE/" -o index.html
+          curl -fsSL --max-time 30 "$BASE/cross_engine.mjs" -o cross_engine.mjs
+          curl -fsSL --max-time 30 "$BASE/horizontal_line_reference.mjs" -o horizontal_line_reference.mjs
+          grep -Fq '<title>CROSS LAB' index.html
+          grep -Fq 'from "./cross_engine.mjs"' index.html
+          grep -Fq 'from "./horizontal_line_reference.mjs"' index.html
+          grep -Fq 'export function analyzeCross' cross_engine.mjs
+          grep -Fq 'export function renderHorizontalLineReference' horizontal_line_reference.mjs
+          mime=$(curl -sSIL --max-time 20 "$BASE/cross_engine.mjs" | tr -d '\r' | grep -i '^content-type:' | tail -1)
+          echo "$mime"
+          if ! echo "$mime" | grep -Eiq 'javascript|ecmascript'; then
+            echo "Incorrect JS module MIME type" >&2
+            exit 1
+          fi
+          echo "LIVE WEB ASSETS VERIFIED"
