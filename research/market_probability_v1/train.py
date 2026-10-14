@@ -462,7 +462,7 @@ def main():
         report = train(args.root, args.out, args.model)
         print(json.dumps({"races": report["valid_races_by_year"],
                           "2025": report["evaluations"]["2025_out_of_time"],
-                          "2026": report["evaluations"]["2026_h1_out_of_time"]},
+                          "2026": report["evaluations"]["2026_h1_out_of_time_not_untouched"]},
                           ensure_ascii=False, indent=2), flush=True)
 
 
