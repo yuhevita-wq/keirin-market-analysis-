@@ -16,7 +16,7 @@ jobs:
         run: |
           set -euo pipefail
           BASE="https://yuhevita-wq.github.io/keirin-market-analysis-/cross-lab"
-          RELEASE="cross-lab-interaction-web-20261014-v1"
+          RELEASE="cross-lab-main-aux-thirds-20261014-v2"
           echo "Checking $BASE"
           for attempt in $(seq 1 45); do
             marker=$(curl -fsSL --max-time 10 "$BASE/release.txt" 2>/dev/null || true)
@@ -33,11 +33,17 @@ jobs:
           curl -fsSL --max-time 30 "$BASE/" -o index.html
           curl -fsSL --max-time 30 "$BASE/cross_engine.mjs" -o cross_engine.mjs
           curl -fsSL --max-time 30 "$BASE/horizontal_line_reference.mjs" -o horizontal_line_reference.mjs
+          curl -fsSL --max-time 30 "$BASE/cross_presentation.mjs" -o cross_presentation.mjs
           grep -Fq '<title>CROSS LAB' index.html
           grep -Fq 'from "./cross_engine.mjs"' index.html
           grep -Fq 'from "./horizontal_line_reference.mjs"' index.html
+          grep -Fq 'from "./cross_presentation.mjs"' index.html
+          grep -Fq '【主採用】' index.html
+          grep -Fq '（）付き3着補助' index.html
           grep -Fq 'export function analyzeCross' cross_engine.mjs
           grep -Fq 'export function renderHorizontalLineReference' horizontal_line_reference.mjs
+          grep -Fq 'export function selectMainCross' cross_presentation.mjs
+          grep -Fq 'export function buildAuxiliaryThirds' cross_presentation.mjs
           mime=$(curl -sSIL --max-time 20 "$BASE/cross_engine.mjs" | tr -d '\r' | grep -i '^content-type:' | tail -1)
           echo "$mime"
           if ! echo "$mime" | grep -Eiq 'javascript|ecmascript'; then
