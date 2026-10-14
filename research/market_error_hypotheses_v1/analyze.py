@@ -59,7 +59,7 @@ def shape3(v,line):
     if not line or any(c not in line for c in v):return "unknown"
     hist={}
     for car in v:hist[line[car]]=hist.get(line[car],0)+1
-    return {1:"three_lines",2:"two_lines",3:"same_line"}[len(hist)]
+    return {1:"same_line",2:"two_lines",3:"three_lines"}[len(hist)]
 
 def oddsval(r):
     if r.get("odds_status")!="available":return None
