@@ -16,7 +16,7 @@ jobs:
         run: |
           set -euo pipefail
           BASE="https://yuhevita-wq.github.io/keirin-market-analysis-/cross-lab"
-          RELEASE="cross-lab-comparison-v2-20261014"
+          RELEASE="cross-lab-conditional-v3-20261014"
           echo "Checking $BASE"
           for attempt in $(seq 1 45); do
             marker=$(curl -fsSL --max-time 10 "$BASE/release.txt" 2>/dev/null || true)
@@ -56,5 +56,9 @@ jobs:
             echo "Incorrect JS module MIME type" >&2
             exit 1
           fi
+          curl -fsSL --max-time 30 "$BASE/joint_model.mjs" -o joint_model.mjs
+          curl -fsSL --max-time 30 "$BASE/joint_model_frozen.json" -o joint_model_frozen.json
+          grep -Fq "export function predictJoint" joint_model.mjs
+          node -e 'const m=require("./joint_model_frozen.json");if(!m.models.A||!m.models.S||m.trainThrough!=="2024-12-31")process.exit(1)'
           echo "LIVE WEB ASSETS VERIFIED"
 

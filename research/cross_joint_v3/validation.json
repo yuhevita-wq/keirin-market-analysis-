@@ -1,0 +1,622 @@
+{
+  "protocol": {
+    "version": "conditional-pair-v3",
+    "trainThrough": "2024-12-31",
+    "regularization": 0.01,
+    "scope": "A1/A2 and S trained separately; 7-car races; incidents excluded",
+    "features": "joint_model.mjs featurePack; pair 53 / third 29",
+    "sampling": "SHA256(race_id), train cap 12000/class, eval cap 6000/class/period; no post-holdout tuning"
+  },
+  "classes": {
+    "A": {
+      "eligible": 37007,
+      "excluded": {
+        "invalid_card_or_incident": 2705,
+        "finish": 250,
+        "lines": 6
+      },
+      "trainRaces": 12000,
+      "trainDateRange": [
+        "2023-01-01",
+        "2024-12-31"
+      ],
+      "holdouts": {
+        "2025": {
+          "eligible": 10510,
+          "evaluated": 6000,
+          "pairNLL": 2.798182423908568,
+          "baselinePairNLL": 2.804289184433243,
+          "thirdConditionalNLL": 1.3607458917536814,
+          "jointNLL": 4.15892831566225,
+          "baselineJointNLL": 4.165035076186925,
+          "joint": {
+            "races": 6000,
+            "selected": 5854,
+            "hits": 387,
+            "coreCrossActual": 1197,
+            "hitsOnCoreCross": 387,
+            "priced": 5854,
+            "stake": 2341600,
+            "payout": 1614710,
+            "predictedHits": 378.7808043615252,
+            "ties": 0,
+            "bins": [
+              {
+                "n": 5130,
+                "predicted": 287.15229136385034,
+                "hits": 292
+              },
+              {
+                "n": 710,
+                "predicted": 88.51353045971796,
+                "hits": 93
+              },
+              {
+                "n": 14,
+                "predicted": 3.1149825379577054,
+                "hits": 2
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              }
+            ],
+            "hitRate": 0.06610864366245302,
+            "returnRatio": 0.6895755039289375,
+            "coreCrossCaptureRate": 0.3233082706766917,
+            "meanPredictedHit": 0.06470461297600362
+          },
+          "additiveBaseline": {
+            "races": 6000,
+            "selected": 5854,
+            "hits": 384,
+            "coreCrossActual": 1197,
+            "hitsOnCoreCross": 384,
+            "priced": 5854,
+            "stake": 2341600,
+            "payout": 1585570,
+            "predictedHits": 376.9813982384203,
+            "ties": 0,
+            "bins": [
+              {
+                "n": 5144,
+                "predicted": 288.2772496373494,
+                "hits": 296
+              },
+              {
+                "n": 700,
+                "predicted": 86.53039188553048,
+                "hits": 86
+              },
+              {
+                "n": 10,
+                "predicted": 2.1737567155410478,
+                "hits": 2
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              }
+            ],
+            "hitRate": 0.06559617355654254,
+            "returnRatio": 0.6771310215237445,
+            "coreCrossCaptureRate": 0.3208020050125313,
+            "meanPredictedHit": 0.06439723236050911
+          }
+        },
+        "2026_h1": {
+          "eligible": 5034,
+          "evaluated": 5034,
+          "pairNLL": 2.8135751248053715,
+          "baselinePairNLL": 2.818208667690913,
+          "thirdConditionalNLL": 1.3705831590167248,
+          "jointNLL": 4.1841582838220965,
+          "baselineJointNLL": 4.188791826707638,
+          "joint": {
+            "races": 5034,
+            "selected": 4866,
+            "hits": 322,
+            "coreCrossActual": 1011,
+            "hitsOnCoreCross": 322,
+            "priced": 4866,
+            "stake": 1946400,
+            "payout": 1241620,
+            "predictedHits": 324.97488405835753,
+            "ties": 0,
+            "bins": [
+              {
+                "n": 4190,
+                "predicted": 238.1574483102268,
+                "hits": 231
+              },
+              {
+                "n": 651,
+                "predicted": 81.20216486332762,
+                "hits": 83
+              },
+              {
+                "n": 25,
+                "predicted": 5.61527088480371,
+                "hits": 8
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              }
+            ],
+            "hitRate": 0.06617344841759146,
+            "returnRatio": 0.6379058775174682,
+            "coreCrossCaptureRate": 0.31849653808110784,
+            "meanPredictedHit": 0.06678480971195182
+          },
+          "additiveBaseline": {
+            "races": 5034,
+            "selected": 4866,
+            "hits": 326,
+            "coreCrossActual": 1011,
+            "hitsOnCoreCross": 326,
+            "priced": 4866,
+            "stake": 1946400,
+            "payout": 1278720,
+            "predictedHits": 323.9773904471767,
+            "ties": 0,
+            "bins": [
+              {
+                "n": 4231,
+                "predicted": 242.45080630242325,
+                "hits": 240
+              },
+              {
+                "n": 612,
+                "predicted": 76.4459202093935,
+                "hits": 79
+              },
+              {
+                "n": 23,
+                "predicted": 5.080663935359268,
+                "hits": 7
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              }
+            ],
+            "hitRate": 0.06699547883271681,
+            "returnRatio": 0.6569667077681874,
+            "coreCrossCaptureRate": 0.32245301681503463,
+            "meanPredictedHit": 0.06657981719013084
+          }
+        }
+      }
+    },
+    "S": {
+      "eligible": 14345,
+      "excluded": {
+        "invalid_card_or_incident": 1144,
+        "finish": 129,
+        "lines": 1
+      },
+      "trainRaces": 7723,
+      "trainDateRange": [
+        "2023-04-01",
+        "2024-12-31"
+      ],
+      "holdouts": {
+        "2025": {
+          "eligible": 4465,
+          "evaluated": 4465,
+          "pairNLL": 2.9312759098432513,
+          "baselinePairNLL": 2.9358641056603307,
+          "thirdConditionalNLL": 1.3818080122984484,
+          "jointNLL": 4.3130839221417,
+          "baselineJointNLL": 4.317672117958779,
+          "joint": {
+            "races": 4465,
+            "selected": 4424,
+            "hits": 258,
+            "coreCrossActual": 878,
+            "hitsOnCoreCross": 258,
+            "priced": 4424,
+            "stake": 1769600,
+            "payout": 1134020,
+            "predictedHits": 244.3594188198929,
+            "ties": 0,
+            "bins": [
+              {
+                "n": 4180,
+                "predicted": 214.93437569888238,
+                "hits": 222
+              },
+              {
+                "n": 244,
+                "predicted": 29.425043121010315,
+                "hits": 36
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              }
+            ],
+            "hitRate": 0.05831826401446655,
+            "returnRatio": 0.6408340867992767,
+            "coreCrossCaptureRate": 0.2938496583143508,
+            "meanPredictedHit": 0.05523495000449659
+          },
+          "additiveBaseline": {
+            "races": 4465,
+            "selected": 4424,
+            "hits": 251,
+            "coreCrossActual": 878,
+            "hitsOnCoreCross": 251,
+            "priced": 4424,
+            "stake": 1769600,
+            "payout": 1146230,
+            "predictedHits": 240.6466131425997,
+            "ties": 0,
+            "bins": [
+              {
+                "n": 4211,
+                "predicted": 215.62484704755914,
+                "hits": 219
+              },
+              {
+                "n": 213,
+                "predicted": 25.02176609504052,
+                "hits": 32
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              }
+            ],
+            "hitRate": 0.05673598553345389,
+            "returnRatio": 0.6477339511754069,
+            "coreCrossCaptureRate": 0.285876993166287,
+            "meanPredictedHit": 0.05439570821487335
+          }
+        },
+        "2026_h1": {
+          "eligible": 2157,
+          "evaluated": 2157,
+          "pairNLL": 2.974353513871222,
+          "baselinePairNLL": 2.9806925208159156,
+          "thirdConditionalNLL": 1.4135180343935134,
+          "jointNLL": 4.3878715482647355,
+          "baselineJointNLL": 4.394210555209429,
+          "joint": {
+            "races": 2157,
+            "selected": 2139,
+            "hits": 134,
+            "coreCrossActual": 427,
+            "hitsOnCoreCross": 134,
+            "priced": 2139,
+            "stake": 855600,
+            "payout": 617150,
+            "predictedHits": 120.24665631537273,
+            "ties": 0,
+            "bins": [
+              {
+                "n": 2017,
+                "predicted": 105.09121899037734,
+                "hits": 115
+              },
+              {
+                "n": 120,
+                "predicted": 14.746910214732514,
+                "hits": 19
+              },
+              {
+                "n": 2,
+                "predicted": 0.4085271102630441,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              }
+            ],
+            "hitRate": 0.06264609630668537,
+            "returnRatio": 0.7213066853669939,
+            "coreCrossCaptureRate": 0.31381733021077285,
+            "meanPredictedHit": 0.056216295612609976
+          },
+          "additiveBaseline": {
+            "races": 2157,
+            "selected": 2139,
+            "hits": 136,
+            "coreCrossActual": 427,
+            "hitsOnCoreCross": 136,
+            "priced": 2139,
+            "stake": 855600,
+            "payout": 619230,
+            "predictedHits": 118.48356999000056,
+            "ties": 0,
+            "bins": [
+              {
+                "n": 2034,
+                "predicted": 105.90249104829977,
+                "hits": 121
+              },
+              {
+                "n": 104,
+                "predicted": 12.378566349424096,
+                "hits": 15
+              },
+              {
+                "n": 1,
+                "predicted": 0.20251259227664087,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              },
+              {
+                "n": 0,
+                "predicted": 0,
+                "hits": 0
+              }
+            ],
+            "hitRate": 0.06358111266947171,
+            "returnRatio": 0.7237377279102384,
+            "coreCrossCaptureRate": 0.3185011709601874,
+            "meanPredictedHit": 0.055392038330996055
+          }
+        }
+      }
+    }
+  }
+}
