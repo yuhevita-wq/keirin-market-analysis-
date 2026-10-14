@@ -36,7 +36,18 @@ jobs:
           assert j['counted_races']>10000, j['counted_races']
           assert all(j['year'][str(y)]['races']>1000 for y in (2023,2024,2025,2026))
           assert sum(j['year'][str(y)]['races'] for y in (2023,2024,2025,2026))==j['counted_races']
-          print('VALIDATED',j['counted_races'])
+          for y in ('2023','2024','2025','2026'):
+              nr=j['line_by_year'][y]['3-2-2']['races']
+              c=j['composition_within_line'][y]['3-2-2']
+              assert c['same_line']['tickets']==nr, (y,'3-2-2 same-line',c['same_line']['tickets'],nr)
+              assert c['three_lines']['tickets']==12*nr, (y,'3-2-2 third-line',c['three_lines']['tickets'],nr)
+              assert c['two_lines']['tickets']==22*nr
+              nm=j['line_by_year'][y]['2-2-2-1']['races']
+              c=j['composition_within_line'][y]['2-2-2-1']
+              assert c['same_line']['tickets']==0, (y,'2-2-2-1 impossible same-line')
+              assert c['two_lines']['tickets']==15*nm
+              assert c['three_lines']['tickets']==20*nm
+          print('VALIDATED',j['counted_races'],'including membership-invariance tests')
           PY
       - name: Publish research audit
         run: |
