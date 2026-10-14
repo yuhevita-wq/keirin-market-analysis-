@@ -24,7 +24,7 @@ td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 .cross{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;max-width:320px;margin:12px auto;gap:8px;text-align:center}
 .cross .edge{font-weight:800;font-size:24px}.cross .middle{font-size:30px;color:#3053a0}
 .candidate{border:1px solid #dce2ed;padding:14px;border-radius:10px;margin:12px 0}
-.candidate h3{margin:0 0 7px;font-size:17px}.stat{display:flex;gap:12px;flex-wrap:wrap}
+.candidate h3{margin:0 0 7px;font-size:17px}.candidate.main{border:2px solid #275c9d;background:#f8fbff}.main-choice{border-left:4px solid #275c9d;background:#eef4fc;padding:12px;margin:12px 0}.aux{padding:8px 0;border-top:1px dashed #b4c6dd;margin-top:10px}.aux .tag{background:#fff1de}.stat{display:flex;gap:12px;flex-wrap:wrap}
 .tag{background:#eef2f9;border-radius:5px;padding:3px 7px;font-size:12px}
 .tickets{font-size:18px;letter-spacing:1px;font-weight:800;margin:10px 0}
 .warn{color:#9a4c1c}.gate{font-weight:750;padding:12px;background:#eef2f9;border-radius:8px}
@@ -59,12 +59,13 @@ td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 <h2>クロスの定義（固定）</h2>
 <div class="cross"><div class="edge">A1 ─ A2</div><div class="middle">×</div><div class="edge">B1 ─ B2</div></div>
 <p style="text-align:center"><strong>A1-B1-A2 / A1-B1-B2 / B1-A1-A2 / B1-A1-B2</strong></p>
-<p class="muted">1・2着は異線A1・B1の表裏。3着は選んだ4車のうち残りA2・B2。機械的な3着の再選抜は行いません。過去の3–2–2特例拡張はこの基本4点から独立して扱います。</p>
+<p class="muted">1・2着は異線A1・B1の表裏。3着は選んだ4車のうち残りA2・B2。機械的な3着の再選抜は行いません。3車ライン番手が1・2着なら3番手を、2車ライン同士のクロスなら選外3車ラインから根拠のある1車を、3着補助として（）表示します。補助は基本4点に無断で混ぜません。</p>
 <p class="muted">この判定器は検証中の構造仮説で、的中率・回収率・過小評価を実証した予測モデルではありません。異線着順率の過去統計は候補4点の確率ではありません。</p>
 </section>
 </main>
 <script type="module">
 import {normalizeRace,parseLines,analyzeCross} from "./cross_engine.mjs";
+import {selectMainCross,buildAuxiliaryThirds} from "./cross_presentation.mjs";
 import {buildHorizontalLineReference,renderHorizontalLineReference} from "./horizontal_line_reference.mjs";
 const byId=id=>document.getElementById(id);
 const escapeHtml=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -120,19 +121,32 @@ function parseOdds(){
   }
   return prices;
 }
-function drawCandidate(item,i,odds){
+function drawCandidate(item,i,odds,race,isMain){
   const [a,b]=item.firstPair,[c,d]=item.remaining;
+  const aux=buildAuxiliaryThirds(item,race);
   const rows=item.tickets.map(t=>{
     const key=t.join("-");
     return '<span class="tag">'+key+(odds[key]===undefined?"":" / "+odds[key]+"倍")+"</span>";
   }).join(" ");
+  const extraRows=aux.additionalTickets.map(t=>{
+    const key=t.join("-");
+    return '<span class="tag">（'+key+'）'+(odds[key]===undefined?"":" / "+odds[key]+"倍")+"</span>";
+  }).join(" ");
   const reasons=item.cases.map(x=>'<li>'+escapeHtml(x.label)+"（"+escapeHtml(x.evidence.join("、"))+"）</li>").join("");
   const risks=item.warnings.map(x=>'<li class="warn">'+escapeHtml(x)+"</li>").join("");
   const horizontal=String(a)+"-"+String(c)+" / "+String(c)+"-"+String(a)+" ・ "+String(b)+"-"+String(d)+" / "+String(d)+"-"+String(b);
-  return '<article class="candidate"><h3>候補'+(i+1)+': '+a+"・"+b+"の異線1/2着</h3>"+
+  const auxiliaryNotes=aux.explanations.map(s=>'<li>'+escapeHtml(s)+'</li>').join("");
+  return '<article class="candidate'+(isMain?' main':'')+'"><h3>'+(isMain?'【主採用】':'比較候補'+(i+1)+'：')+' '+a+"・"+b+"の異線1/2着</h3>"+
     '<div class="cross"><div class="edge">'+a+" ─ "+c+'</div><div class="middle">×</div><div class="edge">'+b+" ─ "+d+"</div></div>"+
-    '<div class="tickets">'+String(a)+String(b)+"－"+String(a)+String(b)+"－"+String(c)+String(d)+"</div>"+
-    '<div class="stat">'+rows+"</div><p><b>成立根拠</b></p><ul>"+reasons+"</ul>"+
+    '<div class="tickets">'+String(a)+String(b)+"－"+String(a)+String(b)+"－"+String(c)+String(d)+
+      aux.thirds.map(n=>"（"+n+"）").join("")+"</div>"+
+    '<p><b>基本クロス4点</b></p><div class="stat">'+rows+"</div>"+
+    (aux.thirds.length?'<div class="aux"><b>（）付き3着補助：'+aux.thirds.join("・")+
+      '番</b>（基本4点とは別扱い）'+
+      (extraRows?'<div class="stat">'+extraRows+'</div>':'<p class="muted">この3着は基本4点にも含まれています。重複追加なし。</p>')+
+      '</div>':'')+
+    (auxiliaryNotes?'<p class="muted">補助選定理由</p><ul>'+auxiliaryNotes+"</ul>":"")+
+    '<p><b>成立根拠</b></p><ul>'+reasons+"</ul>"+
     (risks?'<p><b>反証・着外条件</b></p><ul>'+risks+"</ul>":"")+
     '<p class="muted">横棒参考（同ライン1・2着）：'+horizontal+"</p></article>";
 }
@@ -141,11 +155,10 @@ function analyze(){
   try{
     const race=gatheredRace(),odds=parseOdds();
     const result=analyzeCross(race,{limit:12});
+    const selection=selectMainCross(result);
     const lineLabel=result.race.lines.map(l=>l.join("-")).join(" / ");
     const incomplete=result.incompleteCars.length;
-    const state = result.status==="NO_EVIDENCE" ? "判定保留：異線同時残りの成立根拠がない" :
-      result.status==="MULTIPLE_CANDIDATES" ? "複数候補：1組へ強制決定しない" :
-      result.recommended ? "条件付き候補を1組抽出（確率・期待値ではない）" : "条件付き候補あり／推奨は保留";
+    const state = selection.main ? selection.label+"：比較候補も表示（的中確率・利益優位ではない）" : "判定保留：異線同時残りの成立根拠がない";
     const cls=byId("classSelect").value;
     const baseline=(cls==="A" || cls==="S") && result.race.lines.length===3 &&
       [...result.race.lines.map(l=>l.length)].sort().join()==="2,2,3" ?
@@ -154,17 +167,24 @@ function analyze(){
       escapeHtml(lineLabel)+" / 評価した4車構成 "+result.evaluated+" / 条件該当 "+result.qualified+"</p>";
     if(baseline)html+='<p class="info">過去の'+cls+'級3–2–2で1・2着が異線だった比率：'+baseline+
       '（全異線決着の頻度。特定のクロス4点の確率ではありません）</p>';
-    html+=result.notes.map(n=>'<p class="muted">'+escapeHtml(n)+"</p>").join("");
+    if(selection.main){
+      const m=selection.main, aux=buildAuxiliaryThirds(m,race);
+      html+='<div class="main-choice"><b>'+escapeHtml(selection.label)+'：'+
+        m.firstPair.join("")+'－'+m.firstPair.join("")+'－'+m.remaining.join("")+
+        aux.thirds.map(n=>"（"+n+"）").join("")+'</b>'+
+        '<p>'+escapeHtml(selection.reason)+'</p></div>';
+    }
+    html+=result.notes.filter(n=>!n.includes("無理に1組へ固定しません")).map(n=>'<p class="muted">'+escapeHtml(n)+"</p>").join("");
     if(incomplete)html+='<div class="alert">決まり手が欠損している選手がいます。強い順で穴埋めせず、推奨を保留します。入力済みの範囲で示すのは検証候補です。</div>';
     if(!Object.keys(odds).length)html+='<p class="alert">オッズ未取得。高配当・割安・回収率については判定できません。</p>';
-    if(result.candidates.length)html+=result.candidates.map((r,i)=>drawCandidate(r,i,odds)).join("");
+    if(result.candidates.length)html+=result.candidates.map((r,i)=>drawCandidate(r,i,odds,race,r===selection.main)).join("");
     if(result.candidates.length)html+='<section id="horizontalRef"><h3>横棒ライン筋（参考）</h3></section>';
     else html+='<p>成立条件に該当するクロスが見つかりません。強い選手を任意に4人選んで代用しません。</p>';
     if(result.qualified>result.candidates.length)html+='<p class="muted">他 '+(result.qualified-result.candidates.length)+'候補は省略。上位表示は成立条件数・選外ライン条件に基づきます。</p>';
     container.className="";container.innerHTML=html;
     if(result.candidates.length){
       const horizontal=buildHorizontalLineReference({
-        lines:result.race.lines,selectedLineIndexes:result.candidates[0].lines,odds
+        lines:result.race.lines,selectedLineIndexes:selection.main.lines,odds
       });
       renderHorizontalLineReference(byId("horizontalRef"),horizontal);
     }
