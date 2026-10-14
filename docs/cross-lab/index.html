@@ -65,6 +65,7 @@ td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 </main>
 <script type="module">
 import {normalizeRace,parseLines,analyzeCross} from "./cross_engine.mjs";
+import {buildHorizontalLineReference,renderHorizontalLineReference} from "./horizontal_line_reference.mjs";
 const byId=id=>document.getElementById(id);
 const escapeHtml=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 let loaded=null, current=null;
@@ -157,9 +158,16 @@ function analyze(){
     if(incomplete)html+='<div class="alert">決まり手が欠損している選手がいます。強い順で穴埋めせず、推奨を保留します。入力済みの範囲で示すのは検証候補です。</div>';
     if(!Object.keys(odds).length)html+='<p class="alert">オッズ未取得。高配当・割安・回収率については判定できません。</p>';
     if(result.candidates.length)html+=result.candidates.map((r,i)=>drawCandidate(r,i,odds)).join("");
+    if(result.candidates.length)html+='<section id="horizontalRef"><h3>横棒ライン筋（参考）</h3></section>';
     else html+='<p>成立条件に該当するクロスが見つかりません。強い選手を任意に4人選んで代用しません。</p>';
     if(result.qualified>result.candidates.length)html+='<p class="muted">他 '+(result.qualified-result.candidates.length)+'候補は省略。上位表示は成立条件数・選外ライン条件に基づきます。</p>';
     container.className="";container.innerHTML=html;
+    if(result.candidates.length){
+      const horizontal=buildHorizontalLineReference({
+        lines:result.race.lines,selectedLineIndexes:result.candidates[0].lines,odds
+      });
+      renderHorizontalLineReference(byId("horizontalRef"),horizontal);
+    }
   }catch(e){container.className="alert";container.textContent=e.message||String(e)}
 }
 async function load(){
