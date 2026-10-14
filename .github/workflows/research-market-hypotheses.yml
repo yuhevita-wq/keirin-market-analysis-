@@ -1,0 +1,48 @@
+name: Research market mispricing hypotheses 2023-2026
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/market_error_hypotheses_v1/**'
+      - '.github/workflows/research-market-hypotheses.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: research-market-hypotheses-v1
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compute seven-rider market mispricing diagnostics
+        run: python research/market_error_hypotheses_v1/analyze.py
+      - name: Structural validation
+        run: |
+          python - <<'PY'
+          import json
+          j=json.load(open('data/audits/market_mispricing_hypotheses_2023_2026.json',encoding='utf-8'))
+          assert j['counted_races']>10000, j['counted_races']
+          assert all(j['year'][str(y)]['races']>1000 for y in (2023,2024,2025,2026))
+          assert sum(j['year'][str(y)]['races'] for y in (2023,2024,2025,2026))==j['counted_races']
+          print('VALIDATED',j['counted_races'])
+          PY
+      - name: Publish research audit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/market_mispricing_hypotheses_2023_2026.json
+          git commit -m 'research: publish market mispricing hypotheses diagnostic' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
