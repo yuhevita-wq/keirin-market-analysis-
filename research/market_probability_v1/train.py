@@ -332,7 +332,7 @@ def metrics(pack, theta):
     # Descriptive selection only: one max-xEV ticket per race, archived final odds.
     if theta is not None:
         ev = p * odds
-        ev[np.arange(n)[:, None], np.arange(MAX_COMBOS)[None, :] >= length[:, None]] = -1
+        ev[np.arange(MAX_COMBOS)[None, :] >= length[:, None]] = -1
         pick = np.argmax(ev, axis=1)
         for t in (1.05, 1.10, 1.20):
             chosen = ev[idx, pick] >= t
