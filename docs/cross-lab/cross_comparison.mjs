@@ -1,6 +1,6 @@
 /** Exact ticket aggregation and explicit decision records. No fitted coefficients. */
 import {normalizeRace} from './cross_engine.mjs';
-import {jointDiagnostics} from './joint_model.mjs';
+import {jointDiagnostics,pairCompetition} from './joint_model.mjs';
 
 export function allOutcomes(input) {
   const race=normalizeRace(input), cars=race.entries.map(e=>e.no), out=[];
@@ -54,7 +54,7 @@ export function compareJointForecast(input, candidates, forecast, odds={}, {obje
   const rows=candidates.map(c=>{
     const market=ticketMarket(c,odds), ks=c.tickets.map(t=>t.join('-'));
     return {signature:c.signature,hitProbability:ks.reduce((s,k)=>s+p[k],0),
-      directions:jointDiagnostics(c,forecast),
+      directions:jointDiagnostics(c,forecast),competition:pairCompetition(c,forecast,input),
       returnRatio:market.complete?ks.reduce((s,k)=>s+p[k]*odds[k],0)/ks.length:null};
   });
   const metric=objective==='EXPECTED_RETURN'?'returnRatio':'hitProbability';
@@ -63,25 +63,28 @@ export function compareJointForecast(input, candidates, forecast, odds={}, {obje
   const complete=ranked.length===candidates.length && candidates.length>0;
   const tie=complete && ranked.length>1 && Math.abs(ranked[0][metric]-ranked[1][metric])<=1e-12;
   return {source,mass,rows,complete,objective,priceComplete:rows.every(r=>r.returnRatio!==null),
-    selectedSignature:complete&&!tie?ranked[0].signature:null,
+    // Argmax answers "which candidate ranks first", never "should adopt".
+    rankedSignature:complete&&!tie?ranked[0].signature:null,
+    selectedSignature:null,
+    selectionStatus:'COMPARISON_ONLY',
     reason:!complete?'全候補の基本4点オッズが不足':tie?'モデル基準で同値':objective==='EXPECTED_RETURN'?'入力モデル基準の4点等額期待回収を比較':'入力モデル基準の基本4点の合計的中確率を比較（利益順位ではない）',
     note:'入力モデルの較正・収益性をこの計算器は証明しません。市場重みを予測確率で代用しません'};
 }
 
 export function resolveDecision(result, decision=null, comparison=null) {
-  if(comparison?.selectedSignature) {
-    const main=result.candidates.find(c=>c.signature===comparison.selectedSignature);
-    if(!main)throw Error('モデル選定候補が比較集合にない');
-    return {main,label:'主採用（入力モデル基準）',provisional:true,
-      reason:comparison.reason+'。'+comparison.note};
-  }
   if(!decision)return {main:null,label:'主採用未決定',provisional:false,
-    reason:'全型を列挙しました。車番順・根拠件数を採用理由にせず、比較記録から1型を選定してください'};
+    reason:'候補内のモデル順位だけでは主採用にしません。表裏それぞれの同時残存・2着競合と筋・別クロス・選外車を比較してください'};
   const main=result.candidates.find(c=>c.signature===decision.signature);
   if(!main)throw Error('採用クロスが候補集合に存在しません');
   for(const k of ['interaction','alternativeCross','sameLine','outside'])
     if(typeof decision[k]!=='string'||!decision[k].trim())
       throw Error('採用理由・別クロス比較・筋比較・選外車の反証をすべて記入してください');
+  const directions=decision.directions;
+  if(!Array.isArray(directions)||directions.length!==2||
+      !main.firstPair.every((first,i)=>directions.some(d=>d.first===first&&
+        d.second===main.firstPair[1-i]&&['coexistence','secondCompetition'].every(k=>
+          typeof d[k]==='string'&&d[k].trim()))))
+    throw Error('表裏それぞれに、勝つ走りで相手が2着に残る理由と、同線番手を含む2着競合の比較が必要です');
   return {main,label:'主採用（分析者の比較判断）',provisional:true,
     reason:[decision.interaction,decision.alternativeCross,decision.sameLine,decision.outside].join('。'),
     record:{...decision}};

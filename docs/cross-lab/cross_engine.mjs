@@ -8,7 +8,7 @@
  * - Race points and B alone NEVER produce a recommended pair.
  * - No invented "probabilities" or value/EV without calibration and odds.
  */
-export const ENGINE_VERSION = "cross-conditional-v3";
+export const ENGINE_VERSION = "cross-competition-audit-v3.1";
 const own = (obj, key) => Object.prototype.hasOwnProperty.call(obj || {}, key);
 const numeric = value => value === null || value === undefined || value === "" ? null :
   (Number.isFinite(Number(value)) && Number(value) >= 0 ? Number(value) : null);
@@ -262,4 +262,3 @@ export function analyzeCross(input, {limit=24}={}) {
     ].filter(Boolean)
   };
 }
-

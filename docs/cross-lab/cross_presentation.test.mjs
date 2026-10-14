@@ -29,7 +29,7 @@ test("main requires a comparison record, never the first candidate or warning co
   ];
   const result={candidates,ties:2,incompleteCars:[]};
   assert.equal(selectMainCross(result).main,null);
-  const record={signature:"b",interaction:"interaction",alternativeCross:"other cross",sameLine:"same line",outside:"outside"};
+  const record={signature:"b",interaction:"interaction",alternativeCross:"other cross",sameLine:"same line",outside:"outside",directions:[{first:2,second:4,coexistence:"2 wins, 4 survives",secondCompetition:"compare 1 and 5"},{first:4,second:2,coexistence:"4 wins, 2 survives",secondCompetition:"compare 1 and 5"}]};
   assert.equal(selectMainCross(result,record).main,candidates[1]);
   assert.throws(()=>selectMainCross(result,{...record,outside:""}));
 });
@@ -78,4 +78,3 @@ test("cross not involving a 3-line bante and not 2x2 has no arbitrary auxiliary"
   const out=buildAuxiliaryThirds(example([0,1],[1,4],[2,5]),race);
   assert.deepEqual(out.thirds,[]);
 });
-

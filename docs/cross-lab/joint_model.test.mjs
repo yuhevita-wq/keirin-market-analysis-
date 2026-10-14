@@ -48,12 +48,12 @@ test('A/S coefficient sets stay separate, missing or zero-score fields fail, rac
   r.entries[0].score=90;r.entries[0].mark=null;assert.throws(()=>predictJoint(r,m),/不足/);
 });
 
-test('probability comparison has a main choice without odds; expected return still requires every price',()=>{
+test('probability rank never becomes main choice; expected return still requires every price',()=>{
   const r=card(),result=analyzeCross(r,{limit:1000}),f=predictJoint(r,blank()),selected=result.candidates[0];
   for(const key of Object.keys(f.probabilities))f.probabilities[key]=0;
   selected.tickets.forEach(t=>f.probabilities[t.join('-')]=0.25);
   const c=compareJointForecast(r,result.candidates,f,{}, {objective:'HIT_PROBABILITY'});
-  assert.equal(c.selectedSignature,selected.signature);assert.equal(c.priceComplete,false);
+  assert.equal(c.rankedSignature,selected.signature);assert.equal(c.selectedSignature,null);assert.equal(c.priceComplete,false);
   assert.equal(compareJointForecast(r,result.candidates,f,{}).selectedSignature,null);
   assert.ok(c.rows[0].directions.every(d=>d.secondGivenFirst===1&&d.coreThirdGivenPair===1));
 });

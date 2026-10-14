@@ -77,9 +77,9 @@ test('forecast chooses maximal four-point equal-stake return; partial prices nev
   const chosen=result.candidates.at(-1), odds=Object.fromEntries(outcomes.map(t=>[t.join('-'),2]));
   chosen.tickets.forEach(t=>odds[t.join('-')]=100);
   const comparison=compareJointForecast(race,result.candidates,f,odds);
-  assert.equal(comparison.selectedSignature,chosen.signature);
+  assert.equal(comparison.rankedSignature,chosen.signature);assert.equal(comparison.selectedSignature,null);
   assert.ok(Math.abs(comparison.rows.find(x=>x.signature===chosen.signature).returnRatio-100/210)<1e-10);
-  assert.equal(resolveDecision(result,null,comparison).main,chosen);
+  assert.equal(resolveDecision(result,null,comparison).main,null);
   delete odds[result.candidates[0].tickets[0].join('-')];
   assert.equal(compareJointForecast(race,result.candidates,f,odds).selectedSignature,null);
 });

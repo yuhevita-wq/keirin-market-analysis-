@@ -66,9 +66,22 @@ export function predictJoint(input,bundle){
     const rest=cars.filter(c=>c!==a&&c!==b),thirdP=softmax(thirdFeatures[i].map(x=>dot(x,model.third)));
     rest.forEach((c,j)=>probabilities[[a,b,c].join('-')]=pairP[i]*thirdP[j]);
   });
+  // The separately fitted additive model is a diagnostic control, not a new
+  // forecast or a counterfactual race. It exposes strength-driven rankings.
+  let additiveControl=null;
+  if(Array.isArray(model.baselinePair)&&model.baselinePair.length===pairFeatures[0].length&&
+     model.baselinePair.every(Number.isFinite)){
+    const bp=softmax(pairFeatures.map(x=>dot(x,model.baselinePair)));
+    const q={};pairs.forEach(([a,b],i)=>{
+      const rest=cars.filter(c=>c!==a&&c!==b),tp=softmax(thirdFeatures[i].map(x=>dot(x,model.third)));
+      rest.forEach((c,j)=>q[[a,b,c].join('-')]=bp[i]*tp[j]);
+    });
+    additiveControl={probabilities:q,description:'同じ学習条件の相互作用なしモデル。因果効果ではない'};
+  }
   return {raceId:race.race_id,source:{id:JOINT_VERSION+'_'+cls,trainThrough:bundle.trainThrough,
     scope:cls+'級・7車',status:'EXPERIMENTAL',selectionObjective:'HIT_PROBABILITY',
-    caveat:'過去データで学習した同時入着モデル。収益性は未実証'},probabilities};
+    decisionUse:'COMPARISON_ONLY',
+    caveat:'過去データで学習した同時入着モデル。順位1位を採用の根拠にしない'},probabilities,additiveControl};
 }
 
 /** All quantities share one complete race distribution; never P(A wins)*P(B wins). */
@@ -77,12 +90,46 @@ export function jointDiagnostics(candidate,forecast){
   const p=forecast.probabilities,heads=candidate.firstPair,thirds=new Set(candidate.remaining);
   return heads.map((a,index)=>{
     const b=heads[1-index];let winner=0,pair=0,core=0;
+    const seconds=new Map();
     for(const [key,v] of Object.entries(p)){
       const [i,j,k]=key.split('-').map(Number);
-      if(i===a){winner+=v;if(j===b){pair+=v;if(thirds.has(k))core+=v;}}
+      if(i===a){winner+=v;seconds.set(j,(seconds.get(j)||0)+v);
+        if(j===b){pair+=v;if(thirds.has(k))core+=v;}}
     }
     return {first:a,second:b,winProbability:winner,orderedPairProbability:pair,
       secondGivenFirst:winner>0?pair/winner:null,coreThirdGivenPair:pair>0?core/pair:null,
-      coreProbability:core};
+      coreProbability:core,
+      secondAlternatives:[...seconds].map(([no,probability])=>({no,
+        orderedPairProbability:probability,conditionalProbability:winner>0?probability/winner:null,
+        isCrossPartner:no===b})).sort((x,y)=>y.orderedPairProbability-x.orderedPairProbability),
+      // Strict comparisons avoid car-number tie breaking.
+      partnerSecondRank:1+[...seconds].filter(([no,v])=>no!==b&&v>pair+1e-12).length};
   });
+}
+
+/** Mutually exclusive finish events, not the sum/product of two win chances. */
+export function pairCompetition(candidate,forecast,input){
+  if(!forecast)return null;
+  const r=normalizeRace(input),heads=new Set(candidate.firstPair),p=forecast.probabilities;
+  let eitherWins=0,bothTopTwo=0,exactlyOneTopTwo=0,neitherTopTwo=0;
+  for(const [key,v] of Object.entries(p)){
+    const [a,b]=key.split('-').map(Number),count=+heads.has(a)+ +heads.has(b);
+    if(heads.has(a))eitherWins+=v;
+    if(count===2)bothTopTwo+=v;else if(count===1)exactlyOneTopTwo+=v;else neitherTopTwo+=v;
+  }
+  const directions=jointDiagnostics(candidate,forecast).map(d=>({...d,
+    secondAlternatives:d.secondAlternatives.map(s=>({...s,
+      sameLineAsWinner:r.position.get(s.no).line===r.position.get(d.first).line})),
+    ownLineSecondGivenFirst:d.secondAlternatives.filter(s=>
+      r.position.get(s.no).line===r.position.get(d.first).line)
+      .reduce((sum,s)=>sum+s.conditionalProbability,0)}));
+  const keys=candidate.tickets.map(t=>t.join('-'));
+  const additive=forecast.additiveControl?.probabilities;
+  const additiveCoreProbability=additive&&keys.every(k=>Number.isFinite(additive[k]))?
+    keys.reduce((sum,k)=>sum+additive[k],0):null;
+  const coreProbability=keys.reduce((sum,k)=>sum+(p[k]??0),0);
+  return {eitherWins,bothTopTwo,exactlyOneTopTwo,neitherTopTwo,directions,
+    coreProbability,additiveCoreProbability,
+    interactionDelta:additiveCoreProbability===null?null:coreProbability-additiveCoreProbability,
+    interpretation:'モデル内の比較。相互作用差分は因果効果・成立証明ではない'};
 }
