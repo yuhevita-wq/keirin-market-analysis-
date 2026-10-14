@@ -17,15 +17,15 @@
 - 全件オッズのない場合は該当オッズを「—」にして市場内重みを表示しない。
 - 全件オッズのある場合のみ、逆オッズ総和で正規化した参考**市場内重み**を表示する。これはレース結果に基づく的中率・実確率ではない。
 - **買い目の自動追加なし、資金配分の変更なし、クロス経路の採点・選択を変更しない。**
-- 3-2-2の2車×2車クロスの3着候補+1の処理（\`322_22_third_expansion.mjs\`）とは独立。
+- 3-2-2の2車×2車クロスの3着候補+1の処理（`322_22_third_expansion.mjs`）とは独立。
 
 ## 既存サイトへの組み込み例
 
 既存CROSS LABのデータオブジェクト名は本リポジトリにはないため、
-以下の \`race.lines\`、\`chosenTwoLineIndices\`、\`race.trifectaOdds\` は**説明用プレースホルダ**。
+以下の `race.lines`、`chosenTwoLineIndices`、`race.trifectaOdds` は**説明用プレースホルダ**。
 実際のサイトのソース内で使っているデータに合わせて接続すること。
 
-\`\`\`js
+```js
 import {
   buildHorizontalLineReference,
   renderHorizontalLineReference,
@@ -41,10 +41,10 @@ const reference = buildHorizontalLineReference({
 renderHorizontalLineReference(
   document.getElementById("line-reference"), reference
 );
-\`\`\`
+```
 
-テスト：\`node --test docs/cross-lab/horizontal_line_reference.test.mjs\`
+テスト：`node --test docs/cross-lab/horizontal_line_reference.test.mjs`
 
 **公開状態**：本コードはGitHubの独立モジュール。ChatGPT Site
-\`https://keirin-cross-lab.kuwawa01.chatgpt.site\` への直接の編集・公開は未実施。
+`https://keirin-cross-lab.kuwawa01.chatgpt.site` への直接の編集・公開は未実施。
 サイトの編集権限ある環境で統合して再公開が必要。
