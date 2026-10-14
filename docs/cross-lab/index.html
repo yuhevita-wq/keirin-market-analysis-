@@ -130,7 +130,7 @@ function drawCandidate(item,i,odds){
   const horizontal=String(a)+"-"+String(c)+" / "+String(c)+"-"+String(a)+" ・ "+String(b)+"-"+String(d)+" / "+String(d)+"-"+String(b);
   return '<article class="candidate"><h3>候補'+(i+1)+': '+a+"・"+b+"の異線1/2着</h3>"+
     '<div class="cross"><div class="edge">'+a+" ─ "+c+'</div><div class="middle">×</div><div class="edge">'+b+" ─ "+d+"</div></div>"+
-    '<div class="tickets">'+a+b+"－"+a+b+"－"+c+d+"</div>"+
+    '<div class="tickets">'+String(a)+String(b)+"－"+String(a)+String(b)+"－"+String(c)+String(d)+"</div>"+
     '<div class="stat">'+rows+"</div><p><b>成立根拠</b></p><ul>"+reasons+"</ul>"+
     (risks?'<p><b>反証・着外条件</b></p><ul>'+risks+"</ul>":"")+
     '<p class="muted">横棒参考（同ライン1・2着）：'+horizontal+"</p></article>";
