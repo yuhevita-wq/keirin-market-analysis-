@@ -1,0 +1,318 @@
+{
+  "status": "ARCHIVAL_FINAL_ODDS_MODEL_RESEARCH_NOT_EXECUTABLE",
+  "scope": "S-class races with full trifecta markets and archived race cards",
+  "odds_phase": "final",
+  "source_folders": [
+    "data/2023/s_class_f1_all_parts/2023_q2",
+    "data/2023/s_class_f1_all_parts/2023_q3",
+    "data/2023/s_class_f1_all_parts/2023_q4",
+    "data/2024/s_class_f1_all_parts/2024_q1",
+    "data/2024/s_class_f1_all_parts/2024_q2",
+    "data/2024/s_class_f1_all_parts/2024_q3",
+    "data/2024/s_class_f1_all_parts/2024_q4",
+    "data/2025/s_class_f1_all_parts/2025_q1",
+    "data/2025/s_class_f1_all_parts/2025_q2",
+    "data/2025/s_class_f1_all_parts/2025_q3",
+    "data/2025/s_class_f1_all_parts/2025_q4",
+    "data/2026_h1/s_class_f1_all",
+    "data/2023/s_class_yosen",
+    "data/2024/s_class_yosen",
+    "data/2025/s_class_yosen",
+    "data/2026_h1/s_class_yosen"
+  ],
+  "join_counts": {
+    "loaded": 16833,
+    "duplicate_skipped": 4608,
+    "incomplete_skipped": 238
+  },
+  "valid_races_by_year": {
+    "2023": 4182,
+    "2024": 5067,
+    "2025": 5061,
+    "2026": 2523
+  },
+  "training": {
+    "2023": "fit and lambda selection via 2024 validation",
+    "2024": "validation used to select regularization",
+    "2025": "out-of-time evaluation, trained 2023-2024",
+    "2026_h1": "out-of-time evaluation, trained 2023-2025"
+  },
+  "lambda_tuning_2024": [
+    {
+      "lambda": 0.005,
+      "2024_validation_logloss": 4.131549835205078
+    },
+    {
+      "lambda": 0.02,
+      "2024_validation_logloss": 4.13067626953125
+    },
+    {
+      "lambda": 0.08,
+      "2024_validation_logloss": 4.130857944488525
+    },
+    {
+      "lambda": 0.3,
+      "2024_validation_logloss": 4.132262229919434
+    }
+  ],
+  "selected_lambda": 0.02,
+  "evaluations": {
+    "2024_tuning_not_independent": {
+      "market": {
+        "races": 5067,
+        "logloss": 4.138575553894043,
+        "brier": 0.9615942239761353,
+        "top1_pct": 10.874284586540359
+      },
+      "power_only": {
+        "races": 5067,
+        "logloss": 4.1375813484191895,
+        "brier": 0.9615770578384399,
+        "top1_pct": 10.874284586540359,
+        "max_ev_1.05": {
+          "races_bet": 0,
+          "wins": 0,
+          "roi_pct_final_odds_only": null
+        },
+        "max_ev_1.10": {
+          "races_bet": 0,
+          "wins": 0,
+          "roi_pct_final_odds_only": null
+        },
+        "max_ev_1.20": {
+          "races_bet": 0,
+          "wins": 0,
+          "roi_pct_final_odds_only": null
+        }
+      },
+      "corrected": {
+        "races": 5067,
+        "logloss": 4.13067626953125,
+        "brier": 0.961000919342041,
+        "top1_pct": 11.09137556739688,
+        "max_ev_1.05": {
+          "races_bet": 3046,
+          "wins": 34,
+          "roi_pct_final_odds_only": 81.75311724136162
+        },
+        "max_ev_1.10": {
+          "races_bet": 2152,
+          "wins": 22,
+          "roi_pct_final_odds_only": 66.39405998598687
+        },
+        "max_ev_1.20": {
+          "races_bet": 888,
+          "wins": 9,
+          "roi_pct_final_odds_only": 72.11711299312007
+        }
+      },
+      "corrected_vs_market": {
+        "mean_logloss_gain": 0.007899175398051739,
+        "standard_error": 0.0022368505597114563,
+        "approx_95pct_ci": [
+          0.0035149483010172844,
+          0.012283402495086193
+        ]
+      },
+      "corrected_vs_power_only": {
+        "mean_logloss_gain": 0.0069050719030201435,
+        "standard_error": 0.0021931175142526627,
+        "approx_95pct_ci": [
+          0.0026065614074468613,
+          0.011203582398593426
+        ]
+      },
+      "beats_both_by_logloss": true
+    },
+    "2025_out_of_time": {
+      "market": {
+        "races": 5061,
+        "logloss": 4.152646541595459,
+        "brier": 0.9627993702888489,
+        "top1_pct": 10.511756569847856
+      },
+      "power_only": {
+        "races": 5061,
+        "logloss": 4.151573657989502,
+        "brier": 0.9628388285636902,
+        "top1_pct": 10.511756569847856,
+        "max_ev_1.05": {
+          "races_bet": 0,
+          "wins": 0,
+          "roi_pct_final_odds_only": null
+        },
+        "max_ev_1.10": {
+          "races_bet": 0,
+          "wins": 0,
+          "roi_pct_final_odds_only": null
+        },
+        "max_ev_1.20": {
+          "races_bet": 0,
+          "wins": 0,
+          "roi_pct_final_odds_only": null
+        }
+      },
+      "corrected": {
+        "races": 5061,
+        "logloss": 4.147222995758057,
+        "brier": 0.9624937176704407,
+        "top1_pct": 10.511756569847856,
+        "max_ev_1.05": {
+          "races_bet": 2263,
+          "wins": 28,
+          "roi_pct_final_odds_only": 112.71763362033252
+        },
+        "max_ev_1.10": {
+          "races_bet": 1434,
+          "wins": 15,
+          "roi_pct_final_odds_only": 132.94979930755318
+        },
+        "max_ev_1.20": {
+          "races_bet": 431,
+          "wins": 3,
+          "roi_pct_final_odds_only": 144.29234905198666
+        }
+      },
+      "corrected_vs_market": {
+        "mean_logloss_gain": 0.005423122085630894,
+        "standard_error": 0.0020595043897628784,
+        "approx_95pct_ci": [
+          0.001386493444442749,
+          0.009459750726819038
+        ]
+      },
+      "corrected_vs_power_only": {
+        "mean_logloss_gain": 0.004350253846496344,
+        "standard_error": 0.002003908157348633,
+        "approx_95pct_ci": [
+          0.0004225936718285084,
+          0.008277913555502892
+        ]
+      },
+      "beats_both_by_logloss": true
+    },
+    "2026_h1_out_of_time_not_untouched": {
+      "market": {
+        "races": 2523,
+        "logloss": 4.190309524536133,
+        "brier": 0.9640495181083679,
+        "top1_pct": 10.46373365041617
+      },
+      "power_only": {
+        "races": 2523,
+        "logloss": 4.189499378204346,
+        "brier": 0.9639680981636047,
+        "top1_pct": 10.46373365041617,
+        "max_ev_1.05": {
+          "races_bet": 0,
+          "wins": 0,
+          "roi_pct_final_odds_only": null
+        },
+        "max_ev_1.10": {
+          "races_bet": 0,
+          "wins": 0,
+          "roi_pct_final_odds_only": null
+        },
+        "max_ev_1.20": {
+          "races_bet": 0,
+          "wins": 0,
+          "roi_pct_final_odds_only": null
+        }
+      },
+      "corrected": {
+        "races": 2523,
+        "logloss": 4.17894172668457,
+        "brier": 0.9634267091751099,
+        "top1_pct": 10.384462940943322,
+        "max_ev_1.05": {
+          "races_bet": 693,
+          "wins": 5,
+          "roi_pct_final_odds_only": 79.87012987012987
+        },
+        "max_ev_1.10": {
+          "races_bet": 373,
+          "wins": 3,
+          "roi_pct_final_odds_only": 93.64610932787366
+        },
+        "max_ev_1.20": {
+          "races_bet": 78,
+          "wins": 1,
+          "roi_pct_final_odds_only": 27.820513798640324
+        }
+      },
+      "corrected_vs_market": {
+        "mean_logloss_gain": 0.011367770843207836,
+        "standard_error": 0.002570033073425293,
+        "approx_95pct_ci": [
+          0.006330505944788456,
+          0.01640503481030464
+        ]
+      },
+      "corrected_vs_power_only": {
+        "mean_logloss_gain": 0.010557730682194233,
+        "standard_error": 0.0025017487350851297,
+        "approx_95pct_ci": [
+          0.005654303357005119,
+          0.015461158007383347
+        ]
+      },
+      "beats_both_by_logloss": true
+    }
+  },
+  "limitations": [
+    "Final odds are only known after betting closes: EV figures are not executable backtests.",
+    "Archived race cards were collected retrospectively; source-time field fidelity is not independently verified.",
+    "2024 is model-selection data; 2025/2026 analyses of this project have been seen previously.",
+    "Payout impact, bet-size price impact, real-time betting odds and uncertainty in odds movement are missing.",
+    "A-grade, G1/G2/G3 outcomes without full trifecta odds cannot be used for this market-anchored fit.",
+    "A positive logloss gain does not establish profitable live betting."
+  ],
+  "model": "p(order) = normalized_inverse_final_trifecta_odds(order) * exp(X_order * theta) / race_normalizer",
+  "features": [
+    "market_logprob_div5",
+    "trifecta_vs_trio_logratio",
+    "score_place1",
+    "win_rate_place1",
+    "top3_rate_place1",
+    "b_count_place1",
+    "nige_count_place1",
+    "makuri_count_place1",
+    "sashi_count_place1",
+    "mark_count_place1",
+    "age_place1",
+    "style_nige_place1",
+    "style_ryo_place1",
+    "score_place2",
+    "win_rate_place2",
+    "top3_rate_place2",
+    "b_count_place2",
+    "nige_count_place2",
+    "makuri_count_place2",
+    "sashi_count_place2",
+    "mark_count_place2",
+    "age_place2",
+    "style_nige_place2",
+    "style_ryo_place2",
+    "score_place3",
+    "win_rate_place3",
+    "top3_rate_place3",
+    "b_count_place3",
+    "nige_count_place3",
+    "makuri_count_place3",
+    "sashi_count_place3",
+    "mark_count_place3",
+    "age_place3",
+    "style_nige_place3",
+    "style_ryo_place3",
+    "same_12",
+    "same_23",
+    "same_13",
+    "all_same",
+    "leader_1",
+    "leader_2",
+    "leader_3",
+    "line_size_1",
+    "line_size_2",
+    "line_size_3"
+  ]
+}
