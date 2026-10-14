@@ -73,17 +73,18 @@ def init():
             "return_units":0.0,"sum_logloss_trio":0.0,"sum_logloss_tri3":0.0,
             "sum_logloss_gain_sq":0.0}
 def put(agg,win,odds,qtrio,qtri3,entire=False):
-    agg["tickets"]+=1
-    agg["wins"]+=int(win)
-    agg["expected_trio"]+=qtrio
-    agg["expected_tri3"]+=qtri3
-    if win:agg["return_units"]+=odds
     if entire:
         gain=math.log(qtri3/qtrio)
         agg["races"]+=1
         agg["sum_logloss_trio"]-=math.log(qtrio)
         agg["sum_logloss_tri3"]-=math.log(qtri3)
         agg["sum_logloss_gain_sq"]+=gain*gain
+        return
+    agg["tickets"]+=1
+    agg["wins"]+=int(win)
+    agg["expected_trio"]+=qtrio
+    agg["expected_tri3"]+=qtri3
+    if win:agg["return_units"]+=odds
 
 def summary(a):
     count=a["tickets"]
