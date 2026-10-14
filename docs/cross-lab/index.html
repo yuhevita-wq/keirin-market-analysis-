@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CROSS LAB | 異線成立条件判定</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;color:#181b23;background:#f3f5f9}
+*{box-sizing:border-box}body{margin:0;padding:20px}.wrap{max-width:1140px;margin:0 auto}
+h1{font-size:28px;margin:4px 0 8px}h2{font-size:19px;margin:0 0 14px}
+p{line-height:1.7}.sub,.muted,small{color:#626c7d}.sub{margin:0 0 22px}
+section,.panel{background:white;border:1px solid #dfe4ed;border-radius:12px;padding:18px;margin:14px 0}
+label{display:block;font-weight:650;font-size:13px;margin:10px 0 6px}
+input,textarea{width:100%;border:1px solid #c9d1df;border-radius:7px;background:white;padding:10px;font:inherit;color:inherit}
+textarea{resize:vertical;min-height:72px}.row{display:flex;gap:10px;align-items:end}.row>.grow{flex:1}
+button{border:0;border-radius:8px;padding:12px 16px;background:#203c73;color:white;font-weight:750;cursor:pointer}
+button.alt{background:#e9eef7;color:#1c396a}button:disabled{opacity:.5;cursor:not-allowed}
+.tablewrap{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:660px}
+th,td{border-bottom:1px solid #e7eaf0;padding:8px 5px;text-align:center;font-size:13px}
+th{background:#f6f8fc}th:first-child,td:first-child{text-align:left}
+td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
+.info{background:#f5f7fa;padding:12px;border-radius:8px;margin:10px 0}
+.alert{background:#fff3ec;border-left:3px solid #be692e;padding:12px;line-height:1.7}
+.ok{background:#f0f7f2;border-left:3px solid #3c8a56;padding:12px}
+.cross{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;max-width:320px;margin:12px auto;gap:8px;text-align:center}
+.cross .edge{font-weight:800;font-size:24px}.cross .middle{font-size:30px;color:#3053a0}
+.candidate{border:1px solid #dce2ed;padding:14px;border-radius:10px;margin:12px 0}
+.candidate h3{margin:0 0 7px;font-size:17px}.stat{display:flex;gap:12px;flex-wrap:wrap}
+.tag{background:#eef2f9;border-radius:5px;padding:3px 7px;font-size:12px}
+.tickets{font-size:18px;letter-spacing:1px;font-weight:800;margin:10px 0}
+.warn{color:#9a4c1c}.gate{font-weight:750;padding:12px;background:#eef2f9;border-radius:8px}
+@media(max-width:650px){body{padding:10px}section{padding:12px}.row{flex-wrap:wrap}.row>button{width:100%}}
+</style>
+</head>
+<body><main class="wrap">
+<h1>CROSS LAB <small>構造判定版</small></h1>
+<p class="sub">強い選手を並べる機能は使用しません。異なる2ラインの選手が1・2着を分け合う<span style="font-weight:700">具体的な成立条件</span>を点検し、残る2車を3着に配置します。</p>
+<section>
+<h2>① 出走表を指定</h2>
+<label for="raceUrl">楽天Kドリームス レース詳細URL（キャッシュ収録分のみ対応）</label>
+<div class="row"><div class="grow"><input id="raceUrl" type="url" placeholder="https://keirin.kdreams.jp/.../racedetail/XXXXXXXX/"></div><button id="load">出走表を読み込む</button></div>
+<p class="muted">URL自体を外部サイトに送信しません。既存の競輪将棋が収集した出走表キャッシュから該当 race_id を照合します。未収録の場合は手入力を利用してください。</p>
+<label for="lineText">ライン並び（空欄時は読込データの並び。手入力可）</label>
+<input id="lineText" type="text" placeholder="例：1-2-3 / 4-5 / 6-7">
+<div class="row"><div class="grow"><label for="classSelect">級</label><select id="classSelect" style="border:1px solid #c9d1df;border-radius:7px;padding:10px;width:100%"><option value="unknown">不明</option><option value="A">A級1・2班</option><option value="S">S級</option></select></div><button id="manual" class="alt">並びから選手欄を作る</button></div>
+<div id="loadStatus" class="info" role="status">出走表未読込。ラインの手入力からも分析できます。</div>
+</section>
+<section>
+<h2>② 全選手の決まり手・Bを点検</h2>
+<p class="muted">欠損を0と見なしません。得点順位で代用しません。決まり手は対象となる勝ち方の件数を入力してください。未取得のままなら判定を保留します。</p>
+<div class="tablewrap"><table><thead><tr><th>車番 / 選手 / 位置</th><th>B</th><th>逃</th><th>捲</th><th>差</th><th>マ</th></tr></thead><tbody id="riders"><tr><td colspan="6">上のURLまたは並びを入力</td></tr></tbody></table></div>
+<label for="odds">3連単オッズ（任意。1行に「1-3-2=24.6」の形式。確率への換算はしません）</label>
+<textarea id="odds" rows="2" placeholder="1-3-2=24.6&#10;1-3-4=35.2"></textarea>
+<div class="row" style="justify-content:flex-end"><button id="analyze">成立条件からクロスを判定</button></div>
+</section>
+<section id="results">
+<h2>③ クロス判定</h2><div id="analysis" class="info">分析待ち</div>
+</section>
+<section>
+<h2>クロスの定義（固定）</h2>
+<div class="cross"><div class="edge">A1 ─ A2</div><div class="middle">×</div><div class="edge">B1 ─ B2</div></div>
+<p style="text-align:center"><strong>A1-B1-A2 / A1-B1-B2 / B1-A1-A2 / B1-A1-B2</strong></p>
+<p class="muted">1・2着は異線A1・B1の表裏。3着は選んだ4車のうち残りA2・B2。機械的な3着の再選抜は行いません。過去の3–2–2特例拡張はこの基本4点から独立して扱います。</p>
+<p class="muted">この判定器は検証中の構造仮説で、的中率・回収率・過小評価を実証した予測モデルではありません。異線着順率の過去統計は候補4点の確率ではありません。</p>
+</section>
+</main>
+<script type="module">
+import {normalizeRace,parseLines,analyzeCross} from "./cross_engine.mjs";
+const byId=id=>document.getElementById(id);
+const escapeHtml=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let loaded=null, current=null;
+const updateStatus=(message,error=false)=>{byId("loadStatus").className=error?"alert":"info";byId("loadStatus").textContent=message};
+const stats=["b","nige","makuri","sashi","mark"];
+function initialize(race){
+  current=normalizeRace(race);
+  const positions=new Map();
+  current.lines.forEach((line,i)=>line.forEach((no,j)=>positions.set(no,["A","B","C","D","E"][i]+(j+1))));
+  byId("lineText").value=current.lines.map(l=>l.join("-")).join(" / ");
+  const cls=String(current.race_type+" "+current.meeting_grade);
+  if(/[SsＳｓ]級/.test(cls))byId("classSelect").value="S";
+  else if(/[AaＡａ]級/.test(cls))byId("classSelect").value="A";
+  const rows=current.entries.sort((a,b)=>a.no-b.no).map(e=>{
+    const cell=k=>'<td><input type="number" min="0" step="1" data-car="'+e.no+'" data-stat="'+k+'" value="'+(e[k]===null?"":e[k])+'" aria-label="'+e.no+'番 '+k+'"></td>';
+    return '<tr><td><b>'+e.no+'</b> '+escapeHtml(e.name||"")+" <small>"+escapeHtml(positions.get(e.no))+"</small></td>"+stats.map(cell).join("")+"</tr>";
+  });
+  byId("riders").innerHTML=rows.join("");
+}
+function buildManual(){
+  const lines=parseLines(byId("lineText").value);
+  const entries=lines.flat().map(car_no=>({car_no,player_name:"",b_count:null}));
+  loaded={entries,lines,race_type:byId("classSelect").value+"級"};
+  initialize(loaded);updateStatus("ラインを構築。全選手の決まり手・Bを入力できます");
+}
+function gatheredRace(){
+  if(!current)throw new Error("最初に出走表URLかライン並びを入力してください");
+  const lines=parseLines(byId("lineText").value,current.entries.map(e=>e.no));
+  const entries=current.entries.map(e=>{
+    const copy={...e};
+    for(const k of stats){
+      const inp=document.querySelector('input[data-car="'+e.no+'"][data-stat="'+k+'"]');
+      const value=inp?.value?.trim();
+      if(value === "" || value === undefined) copy[k]=null;
+      else {
+        const n=Number(value);
+        if(!Number.isInteger(n) || n<0)throw new Error(e.no+"番 "+k+" は0以上の整数を入力");
+        copy[k]=n;
+      }
+    }
+    return copy;
+  });
+  return {...loaded,entries,lines,race_type:loaded?.race_type || byId("classSelect").value+"級"};
+}
+function parseOdds(){
+  const prices={};
+  for(const row of byId("odds").value.split(/\n/).map(s=>s.trim()).filter(Boolean)){
+    const m=row.match(/^(\d+)\s*[-－]\s*(\d+)\s*[-－]\s*(\d+)\s*[:=：]\s*(\d+(?:\.\d+)?)\s*(?:倍)?$/);
+    if(!m)throw new Error("オッズ形式が不正："+row);
+    const value=Number(m[4]);if(value<=0)throw new Error("オッズは正数："+row);
+    prices[[m[1],m[2],m[3]].join("-")]=value;
+  }
+  return prices;
+}
+function drawCandidate(item,i,odds){
+  const [a,b]=item.firstPair,[c,d]=item.remaining;
+  const rows=item.tickets.map(t=>{
+    const key=t.join("-");
+    return '<span class="tag">'+key+(odds[key]===undefined?"":" / "+odds[key]+"倍")+"</span>";
+  }).join(" ");
+  const reasons=item.cases.map(x=>'<li>'+escapeHtml(x.label)+"（"+escapeHtml(x.evidence.join("、"))+"）</li>").join("");
+  const risks=item.warnings.map(x=>'<li class="warn">'+escapeHtml(x)+"</li>").join("");
+  const horizontal=String(a)+"-"+String(c)+" / "+String(c)+"-"+String(a)+" ・ "+String(b)+"-"+String(d)+" / "+String(d)+"-"+String(b);
+  return '<article class="candidate"><h3>候補'+(i+1)+': '+a+"・"+b+"の異線1/2着</h3>"+
+    '<div class="cross"><div class="edge">'+a+" ─ "+c+'</div><div class="middle">×</div><div class="edge">'+b+" ─ "+d+"</div></div>"+
+    '<div class="tickets">'+a+b+"－"+a+b+"－"+c+d+"</div>"+
+    '<div class="stat">'+rows+"</div><p><b>成立根拠</b></p><ul>"+reasons+"</ul>"+
+    (risks?'<p><b>反証・着外条件</b></p><ul>'+risks+"</ul>":"")+
+    '<p class="muted">横棒参考（同ライン1・2着）：'+horizontal+"</p></article>";
+}
+function analyze(){
+  const container=byId("analysis");
+  try{
+    const race=gatheredRace(),odds=parseOdds();
+    const result=analyzeCross(race,{limit:12});
+    const lineLabel=result.race.lines.map(l=>l.join("-")).join(" / ");
+    const incomplete=result.incompleteCars.length;
+    const state = result.status==="NO_EVIDENCE" ? "判定保留：異線同時残りの成立根拠がない" :
+      result.status==="MULTIPLE_CANDIDATES" ? "複数候補：1組へ強制決定しない" :
+      result.recommended ? "条件付き候補を1組抽出（確率・期待値ではない）" : "条件付き候補あり／推奨は保留";
+    const cls=byId("classSelect").value;
+    const baseline=(cls==="A" || cls==="S") && result.race.lines.length===3 &&
+      [...result.race.lines.map(l=>l.length)].sort().join()==="2,2,3" ?
+      (cls==="A"?"43.2%":"43.4%") : null;
+    let html='<div class="gate">'+escapeHtml(state)+'</div><p class="muted">並び: '+
+      escapeHtml(lineLabel)+" / 評価した4車構成 "+result.evaluated+" / 条件該当 "+result.qualified+"</p>";
+    if(baseline)html+='<p class="info">過去の'+cls+'級3–2–2で1・2着が異線だった比率：'+baseline+
+      '（全異線決着の頻度。特定のクロス4点の確率ではありません）</p>';
+    html+=result.notes.map(n=>'<p class="muted">'+escapeHtml(n)+"</p>").join("");
+    if(incomplete)html+='<div class="alert">決まり手が欠損している選手がいます。強い順で穴埋めせず、推奨を保留します。入力済みの範囲で示すのは検証候補です。</div>';
+    if(!Object.keys(odds).length)html+='<p class="alert">オッズ未取得。高配当・割安・回収率については判定できません。</p>';
+    if(result.candidates.length)html+=result.candidates.map((r,i)=>drawCandidate(r,i,odds)).join("");
+    else html+='<p>成立条件に該当するクロスが見つかりません。強い選手を任意に4人選んで代用しません。</p>';
+    if(result.qualified>result.candidates.length)html+='<p class="muted">他 '+(result.qualified-result.candidates.length)+'候補は省略。上位表示は成立条件数・選外ライン条件に基づきます。</p>';
+    container.className="";container.innerHTML=html;
+  }catch(e){container.className="alert";container.textContent=e.message||String(e)}
+}
+async function load(){
+  const url=byId("raceUrl").value.trim();
+  try{
+    const parsed=new URL(url);
+    if(parsed.protocol!=="https:" || !/(^|\.)keirin\.kdreams\.jp$/.test(parsed.hostname))throw Error("楽天KドリームスのHTTPS URLが必要です");
+    const match=parsed.pathname.match(/\/racedetail\/(\d+)/);
+    if(!match)throw Error("race_idを含むracedetail URLが必要です");
+    const response=await fetch("../keirin-shogi/live-race-data.json",{cache:"no-store"});
+    if(!response.ok)throw Error("出走表キャッシュの取得に失敗："+response.status);
+    const cache=await response.json();
+    const race=cache.races?.find(r=>String(r.race_id)===match[1]);
+    if(!race)throw Error("このrace_idはキャッシュ未収録。収録日："+(cache.covered_dates||[]).join("、")+"。手入力を利用してください");
+    loaded=race;initialize(race);
+    updateStatus((race.track||"")+" "+(race.race_no||"")+"Rを読み込み。級・ライン・決まり手を確認して判定してください。");
+  }catch(e){updateStatus(e.message||String(e),true)}
+}
+byId("load").addEventListener("click",load);
+byId("manual").addEventListener("click",()=>{try{buildManual()}catch(e){updateStatus(e.message,true)}});
+byId("analyze").addEventListener("click",analyze);
+byId("raceUrl").addEventListener("keydown",e=>{if(e.key==="Enter")load()});
+</script></body></html>
