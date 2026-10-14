@@ -194,6 +194,8 @@ def runner():
                 for k in (("evbin",year,ev_bin(ex)),
                           ("evbin_all",ev_bin(ex)),
                           ("ticket_shape",year,kind),
+                          ("composition_within_line",year,shape,kind) if shape in ("3-2-2","2-2-2-1") else ("ignore",),
+                          ("composition_within_line_ev",year,shape,kind,ev_bin(ex)) if shape in ("3-2-2","2-2-2-1") else ("ignore",),
                           ("shape_ev",year,shape,ev_bin(ex)) if shape in ("3-2-2","2-2-2-1") else ("ignore",),
                           ("popular_ev",year,"top10" if popularity[s]<=10 else "other",ev_bin(ex))):
                     if k[0]=="ignore":continue
@@ -254,6 +256,8 @@ def runner():
                         for y in ("2023","2024","2025","2026")},
         "ticket_shape_by_year":{y:{key[2]:summary(v) for key,v in data.items() if key[0]=="ticket_shape" and key[1]==y}
                         for y in ("2023","2024","2025","2026")},
+        "composition_within_line":{y:{shape:{kind:summary(data[("composition_within_line",y,shape,kind)]) for kind in ("same_line","two_lines","three_lines") } for shape in ("3-2-2","2-2-2-1")} for y in ("2023","2024","2025","2026")},
+        "composition_xev_by_shape":{y:{shape:{kind:{b:summary(data[("composition_within_line_ev",y,shape,kind,b)]) for b in ("0.85_1.00","1.00_1.05","1.05_1.10","1.10_1.25","ge_1.25")} for kind in ("same_line","two_lines","three_lines") } for shape in ("3-2-2","2-2-2-1")} for y in ("2023","2024","2025","2026")},
         "single_pick_thresholds":{y:{p:{t:summary(data[("selector",y,p,t)]) for t in ("1.0","1.05","1.1","1.2") }
                          for p in ("all","top10")} for y in ("2023","2024","2025","2026")},
         "single_pick_by_line":{y:{key[2]+"_"+key[3]+"_"+key[4]:summary(v)
