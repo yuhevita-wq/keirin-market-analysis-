@@ -16,6 +16,8 @@ const carNum = value => Number(value);
 const distinct = values => new Set(values).size === values.length;
 
 export function readKimarite(entry, kind) {
+  // An explicit edit, including null (unknown), overrides stale source aliases.
+  if (own(entry,kind)) return numeric(entry[kind]);
   const aliases = {
     nige:["nige","nige_count","escape_count","kimarite_nige"],
     makuri:["makuri","makuri_count","kimarite_makuri"],
