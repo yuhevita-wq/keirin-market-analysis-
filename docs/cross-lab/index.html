@@ -32,7 +32,7 @@ td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 </style>
 </head>
 <body><main class="wrap">
-<h1>CROSS LAB <small>比較・採用記録 v2</small></h1>
+<h1>CROSS LAB <small>条件付き同時入着 v3</small></h1>
 <p class="sub">強い選手を並べる機能は使用しません。異なる2ラインの全クロス型を比較し、採用理由を記録します。基本4点の3着は、選んだ4車の残り2車です。</p>
 <section>
 <h2>① 出走表を指定</h2>
@@ -58,9 +58,11 @@ td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 <label for="sameLine">横棒のライン筋で決まる可能性との比較</label><textarea id="sameLine" rows="2"></textarea>
 <label for="outside">選外車・選外ラインの入着に対する反証</label><textarea id="outside" rows="2"></textarea>
 </details>
-<details open><summary>S級F1の自動選定（検証用市場モデル）</summary>
-<label><input type="checkbox" id="useMarketModel" checked style="width:auto">既存の学習済み係数で自動比較する</label>
-<p class="muted">3連単・3連複の全オッズと全選手の入力が必要です。今日の結果で係数を変更していません。A級は非対応です。</p>
+<details open><summary>A級・S級の同時入着比較</summary>
+<label for="autoModel">自動モデル</label><select id="autoModel"><option value="joint">A級1・2班／S級：同時入着v3（7車）</option><option value="market">S級F1：既存市場補正モデル</option></select>
+<label for="comparisonObjective">採用基準</label><select id="comparisonObjective"><option value="HIT_PROBABILITY">基本4点の合計的中確率</option><option value="EXPECTED_RETURN">基本4点の等額期待回収（全候補オッズ必須）</option></select>
+<label><input type="checkbox" id="useMarketModel" checked style="width:auto">学習済みモデルで全クロス型を自動比較する</label>
+<p class="muted">同時入着v3はA級とS級を別々に学習。2023～2024年で学習し、2025年・2026年上半期で検証。今日の結果は学習に使いません。的中確率の比較はオッズ不要。市場補正モデルを選ぶ場合はS級F1と全オッズが必要です。</p>
 <label for="meetingGrade">開催区分</label><select id="meetingGrade"><option value="">未確認</option><option value="F1">F1</option><option value="F2">F2</option><option value="G">G1～G3</option></select>
 <label for="trioOdds">3連複全オッズ（1行に「1=2=3=24.6」）</label><textarea id="trioOdds" rows="3"></textarea>
 </details>
@@ -85,6 +87,7 @@ td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 import {normalizeRace,parseLines,analyzeCross} from "./cross_engine.mjs";
 import {compareJointForecast,ticketMarket} from "./cross_comparison.mjs";
 import {predictMarket} from "./market_model.mjs";
+import {predictJoint,jointDiagnostics} from "./joint_model.mjs";
 import {selectMainCross,buildAuxiliaryThirds} from "./cross_presentation.mjs";
 import {buildHorizontalLineReference,renderHorizontalLineReference} from "./horizontal_line_reference.mjs";
 const byId=id=>document.getElementById(id);
@@ -92,7 +95,7 @@ const escapeHtml=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;"
 let loaded=null, current=null, lastRecord=null;
 const updateStatus=(message,error=false)=>{byId("loadStatus").className=error?"alert":"info";byId("loadStatus").textContent=message};
 const stats=["b","nige","makuri","sashi","mark","score","age","win_rate","top3_rate"];
-let frozenModel=null;
+let frozenModel=null,jointModel=null,activeForecast=null;
 function initialize(race){
   current=normalizeRace(race);
   const positions=new Map();
@@ -106,10 +109,10 @@ function initialize(race){
     return '<tr><td><b>'+e.no+'</b> '+escapeHtml(e.name||"")+" <small>"+escapeHtml(positions.get(e.no))+"</small></td>"+stats.map(cell).join("")+'<td><select data-car="'+e.no+'" data-style><option value="">未取得</option>'+['逃','両','追'].map(v=>'<option '+(e.style===v?'selected':'')+'>'+v+'</option>').join('')+'</select></td></tr>' ;
   });
   byId("riders").innerHTML=rows.join("");
-  for(const id of ["primaryCross","interaction","alternativeCross","sameLine","outside","forecast","trioOdds"])
+  for(const id of ["primaryCross","interaction","alternativeCross","sameLine","outside","forecast","trioOdds","odds"])
     byId(id).value="";
   byId("meetingGrade").value=/[ＦF]1|Ｆ１/.test(String(race.meeting_grade))?'F1':'';
-  lastRecord=null;
+  lastRecord=null;activeForecast=null;
   byId("analysis").textContent="分析待ち";
 }
 function buildManual(){
@@ -151,6 +154,9 @@ function parseOdds(){
 }
 function drawCandidate(item,i,odds,race,isMain){
   const [a,b]=item.firstPair,[c,d]=item.remaining;
+  const directions=jointDiagnostics(item,activeForecast);
+  const pct=x=>x===null?"未評価":(x*100).toFixed(2)+"%";
+  const conditional=directions?'<div class="info"><b>同じレース内での条件付き比較</b>'+directions.map(d=>'<p>'+d.first+'が1着のとき、'+d.second+'が2着：'+pct(d.secondGivenFirst)+' ／ この順序で1・2着：'+pct(d.orderedPairProbability)+' ／ その2人が揃ったとき残る2車が3着：'+pct(d.coreThirdGivenPair)+'</p>').join("")+'</div>':"";
   const aux=buildAuxiliaryThirds(item,race);
   const rows=item.tickets.map(t=>{
     const key=t.join("-");
@@ -176,7 +182,7 @@ function drawCandidate(item,i,odds,race,isMain){
       (extraRows?'<div class="stat">'+extraRows+'</div>':'<p class="muted">この3着は基本4点にも含まれています。重複追加なし。</p>')+
       '</div>':'')+
     (auxiliaryNotes?'<p class="muted">補助選定理由</p><ul>'+auxiliaryNotes+"</ul>":"")+
-    '<p><b>成立仮説（件数で順位付けしない）</b></p><ul>'+reasons+"</ul>"+
+    conditional+'<p><b>決まり手の観測（同時入着の証明ではない）</b></p><ul>'+reasons+"</ul>"+
     (!item.cases.length?'<p class="warn">この型の決まり手根拠は未解決。候補から消さず比較する。</p>':'')+
     (risks?'<p><b>反証・着外条件</b></p><ul>'+risks+"</ul>":"")+
     '<p class="muted">横棒参考（同ライン1・2着）：'+horizontal+"</p></article>";
@@ -190,6 +196,12 @@ async function analyze(){
     let forecast=rawForecast?JSON.parse(rawForecast):null, modelMessage='';
     if(!forecast && byId("useMarketModel").checked && !byId("primaryCross").value.trim()){
       try{
+        if(byId("autoModel").value==="joint"){
+          if(!jointModel){const response=await fetch("./joint_model_frozen.json");if(!response.ok)throw Error("同時入着モデルを取得できません");jointModel=await response.json();}
+          forecast=predictJoint(race,jointModel);
+          const cls=/[ＳS]級/.test(race.race_type)?"S":"A", v=jointModel.models[cls].validationSummary?.["2026_h1"];
+          if(v)modelMessage="検証中：2026年上半期の全参加回収率 "+(v.returnRatio*100).toFixed(1)+"%（基本4点・最高的中確率選定）。利益優位は未実証です。";
+        }else{
         const trio={};
         for(const row of byId("trioOdds").value.split(/\n/).map(s=>s.trim()).filter(Boolean)){
           const m=row.match(/^([1-9])=([1-9])=([1-9])=(\d+(?:\.\d+)?)$/);
@@ -199,9 +211,12 @@ async function analyze(){
         }
         if(!frozenModel){const response=await fetch('./market_model_frozen.json');if(!response.ok)throw Error('学習済み係数を取得できません');frozenModel=await response.json();}
         forecast=predictMarket(race,odds,trio,frozenModel);
+        }
       }catch(e){modelMessage=e.message;}
     }
-    const comparison=compareJointForecast(race,result.candidates,forecast,odds);
+    activeForecast=forecast;
+    const objective=byId("comparisonObjective").value;
+    const comparison=compareJointForecast(race,result.candidates,forecast,odds,{objective});
     let decision=null;
     const form=byId("primaryCross").value.trim().replace(/[－ー−–—]/g,"-");
     if(form){
@@ -218,7 +233,7 @@ async function analyze(){
     if(decision && comparison?.selectedSignature)throw Error("分析者判断とモデル判断は別々に記録してください");
     const selection=selectMainCross(result,decision,comparison);
     lastRecord={version:result.version,recordedAt:new Date().toISOString(),input:race,odds,decision,
-      forecast,selection:{signature:selection.main?.signature??null,reason:selection.reason,label:selection.label}};
+      forecast,objective,selection:{signature:selection.main?.signature??null,reason:selection.reason,label:selection.label}};
     const lineLabel=result.race.lines.map(l=>l.join("-")).join(" / ");
     const incomplete=result.incompleteCars.length;
     const state = selection.main ? selection.label+"：採用1型と比較候補" : selection.label+"：全型比較、採用判断待ち";
@@ -235,8 +250,8 @@ async function analyze(){
       if(comparison){
         const row=comparison.rows.find(x=>x.signature===m.signature);
         html+='<p class="info">入力モデル基準：基本4点の推定的中率 '+(row.hitProbability*100).toFixed(2)+
-          '% ／ 等額期待回収率 '+(row.returnRatio*100).toFixed(1)+'%'+
-          (row.returnRatio<=1?'（損益分岐以下）':'')+'。性能の独立検証は別途必要です。</p>';
+          '% ／ 等額期待回収率 '+(row.returnRatio===null?'オッズ未取得':(row.returnRatio*100).toFixed(1)+'%')+
+          (row.returnRatio!==null&&row.returnRatio<=1?'（損益分岐以下）':'')+'。較正と利益優位は別に評価してください。</p>';
       }
       html+='<div class="main-choice"><b>'+escapeHtml(selection.label)+'：'+
         m.firstPair.join("")+'－'+m.firstPair.join("")+'－'+m.remaining.join("")+
@@ -250,7 +265,7 @@ async function analyze(){
       '% ／ 基本役割外 '+(100*comparison.mass.OUTSIDE_CORE_ROLE).toFixed(1)+'%。'+escapeHtml(comparison.reason)+'</p>';
     html+=result.notes.filter(n=>!n.includes("無理に1組へ固定しません")).map(n=>'<p class="muted">'+escapeHtml(n)+"</p>").join("");
     if(incomplete)html+='<div class="alert">決まり手が欠損している選手がいます。強い順で穴埋めせず、推奨を保留します。入力済みの範囲で示すのは検証候補です。</div>';
-    if(!Object.keys(odds).length)html+='<p class="alert">オッズ未取得。高配当・割安・回収率については判定できません。</p>';
+    if(!Object.keys(odds).length)html+='<p class="alert">オッズ未取得。主採用は合計的中確率の比較です。高配当・割安・回収率は未評価です。</p>';
     if(result.candidates.length)html+=result.candidates.map((r,i)=>drawCandidate(r,i,odds,race,r===selection.main)).join("");
     if(result.candidates.length)html+='<section id="horizontalRef"><h3>横棒ライン筋（参考）</h3></section>';
     else html+='<p>成立条件に該当するクロスが見つかりません。強い選手を任意に4人選んで代用しません。</p>';

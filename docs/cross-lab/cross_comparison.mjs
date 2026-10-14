@@ -1,5 +1,6 @@
 /** Exact ticket aggregation and explicit decision records. No fitted coefficients. */
 import {normalizeRace} from './cross_engine.mjs';
+import {jointDiagnostics} from './joint_model.mjs';
 
 export function allOutcomes(input) {
   const race=normalizeRace(input), cars=race.entries.map(e=>e.no), out=[];
@@ -32,8 +33,9 @@ export function ticketMarket(candidate, odds={}) {
     inverseOddsSum:valid?prices.reduce((s,o)=>s+1/o,0):null};
 }
 
-export function compareJointForecast(input, candidates, forecast, odds={}) {
+export function compareJointForecast(input, candidates, forecast, odds={}, {objective='EXPECTED_RETURN'}={}) {
   if(!forecast)return null;
+  if(!['EXPECTED_RETURN','HIT_PROBABILITY'].includes(objective))throw Error('比較目的が不正');
   const race=normalizeRace(input), expected=allOutcomes(input).map(t=>t.join('-'));
   const p=forecast.probabilities, source=forecast.source;
   if(!p || !source?.id || !source?.trainThrough || !forecast.raceId ||
@@ -52,15 +54,17 @@ export function compareJointForecast(input, candidates, forecast, odds={}) {
   const rows=candidates.map(c=>{
     const market=ticketMarket(c,odds), ks=c.tickets.map(t=>t.join('-'));
     return {signature:c.signature,hitProbability:ks.reduce((s,k)=>s+p[k],0),
+      directions:jointDiagnostics(c,forecast),
       returnRatio:market.complete?ks.reduce((s,k)=>s+p[k]*odds[k],0)/ks.length:null};
   });
-  const ranked=rows.filter(r=>r.returnRatio!==null).sort((a,b)=>b.returnRatio-a.returnRatio);
+  const metric=objective==='EXPECTED_RETURN'?'returnRatio':'hitProbability';
+  const ranked=rows.filter(r=>r[metric]!==null).sort((a,b)=>b[metric]-a[metric]);
   // Partial candidate prices can reverse the choice: never optimize only priced subset.
   const complete=ranked.length===candidates.length && candidates.length>0;
-  const tie=complete && ranked.length>1 && Math.abs(ranked[0].returnRatio-ranked[1].returnRatio)<=1e-12;
-  return {source,mass,rows,complete,
+  const tie=complete && ranked.length>1 && Math.abs(ranked[0][metric]-ranked[1][metric])<=1e-12;
+  return {source,mass,rows,complete,objective,priceComplete:rows.every(r=>r.returnRatio!==null),
     selectedSignature:complete&&!tie?ranked[0].signature:null,
-    reason:!complete?'全候補の基本4点オッズが不足':tie?'モデル基準で同値':'入力モデル基準の4点等額期待回収を比較',
+    reason:!complete?'全候補の基本4点オッズが不足':tie?'モデル基準で同値':objective==='EXPECTED_RETURN'?'入力モデル基準の4点等額期待回収を比較':'入力モデル基準の基本4点の合計的中確率を比較（利益順位ではない）',
     note:'入力モデルの較正・収益性をこの計算器は証明しません。市場重みを予測確率で代用しません'};
 }
 
