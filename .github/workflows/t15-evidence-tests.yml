@@ -1,0 +1,45 @@
+name: T15 pre-deadline evidence gate tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/market_probability_v1/t15_*.py'
+      - '.github/workflows/t15-evidence-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  evidence-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: python -m pip install 'numpy>=1.26' 'scipy>=1.13' 'beautifulsoup4>=4.12' 'lxml>=5.2' 'requests>=2.32'
+      - name: Live-snapshot timing and decision guards
+        run: python research/market_probability_v1/t15_decision.py --self-test
+      - name: Reject final odds and parse update timestamps
+        run: |
+          PYTHONPATH=src python - <<'PY'
+          import sys
+          sys.path.insert(0,'research/market_probability_v1')
+          from bs4 import BeautifulSoup
+          from t15_capture import market_status
+          from datetime import datetime
+          text='<div class="odds_header"><div class="status">発売票数 10,000 2026/10/14 18:00現在</div><div class="status">dummy</div><div class="status">発売票数 2000 2026/10/14 18:00現在</div></div>'
+          times=market_status(BeautifulSoup(text,'lxml'))
+          assert set(times)=={'3連単','3連複'}
+          assert times['3連単'].endswith('+09:00')
+          try:
+              market_status(BeautifulSoup(text.replace('発売票数 10,000','確定オッズ 発売票数 10,000'),'lxml'))
+              raise AssertionError('must reject final odds')
+          except ValueError:
+              pass
+          print('T15 HEADER TEST PASS')
+          PY
