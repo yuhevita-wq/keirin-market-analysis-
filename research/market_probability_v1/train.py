@@ -59,7 +59,7 @@ def sources(root: Path):
     for year in (2023, 2024, 2025):
         dirs.append(root / f"data/{year}/s_class_yosen")
     dirs.append(root / "data/2026_h1/s_class_yosen")
-    return [d for d in dirs if d.is_dir() and (d / "races.csv").exists()]
+    return [d for d in dirs if d.is_dir() and all((d / name).exists() for name in ("races.csv", "entries.csv", "results.csv")) and bool(odds_path(d))]
 
 
 def odds_path(folder):
