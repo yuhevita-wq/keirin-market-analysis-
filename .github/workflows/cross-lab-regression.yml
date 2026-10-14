@@ -1,0 +1,20 @@
+name: CROSS LAB regression
+on:
+  push:
+    paths:
+      - "docs/cross-lab/**"
+      - ".github/workflows/cross-lab-regression.yml"
+  pull_request:
+    paths:
+      - "docs/cross-lab/**"
+      - ".github/workflows/cross-lab-regression.yml"
+jobs:
+  core:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Test CROSS 4-ticket and interaction logic
+        run: node --test docs/cross-lab/cross_engine.test.mjs
