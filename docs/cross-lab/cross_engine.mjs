@@ -155,6 +155,22 @@ function interactionEvidence(x,y,race) {
         evidence:[String(frontY.no)+"の先行力",String(y.no)+"の差し",String(x.no)+"の捲り"]});
     }
   }
+  // The other line may launch a makuri while its bante closes onto the lead-line.
+  // Sashi is required because both 1st/2nd orders must remain plausible.
+  if (px.pos === 1 && py.pos === 2) {
+    if (req([x,"b"],[x,"nige"],[frontY,"makuri"],[y,"sashi"]) &&
+      has(x,"b",2) && has(x,"nige") && has(frontY,"makuri") && has(y,"sashi")) {
+      cases.push({key:"A_LEAD_B_MAKURI_BANTE",label:String(x.no)+"先行 × "+String(y.no)+"別線捲り番手",
+        evidence:[String(x.no)+"の先行",String(frontY.no)+"の捲り",String(y.no)+"の差し"]});
+    }
+  }
+  if (py.pos === 1 && px.pos === 2) {
+    if (req([y,"b"],[y,"nige"],[frontX,"makuri"],[x,"sashi"]) &&
+      has(y,"b",2) && has(y,"nige") && has(frontX,"makuri") && has(x,"sashi")) {
+      cases.push({key:"B_LEAD_A_MAKURI_BANTE",label:String(y.no)+"先行 × "+String(x.no)+"別線捲り番手",
+        evidence:[String(y.no)+"の先行",String(frontX.no)+"の捲り",String(x.no)+"の差し"]});
+    }
+  }
   if (px.pos > 2 || py.pos > 2) veto.push("3番手以降の1・2着は追加根拠が必要");
   if (px.pos === 2 && py.pos === 2) veto.push("異線番手同士。切替・コース根拠が未取得");
   if (!cases.length) veto.push("異線2人の同時残りを裏付ける決まり手の組合せが未成立");
@@ -170,6 +186,13 @@ function outsideRisks(race, chosen) {
   }
   if (excludedLines.some(line=>line.length === 2)) {
     issues.push("別の2車ライン2人とも着外が必要");
+  }
+  // Rivals left outside the four tickets are examined individually, not just counted.
+  for (const r of missing) {
+    if (has(r,"b",3) && has(r,"nige"))
+      issues.push("選外"+r.no+"番にB/逃げ実績。ラインを消せる根拠が別途必要");
+    if (has(r,"makuri"))
+      issues.push("選外"+r.no+"番に捲り実績。別線への侵入リスク");
   }
   if (missing.length >= 3) issues.push("選外"+String(missing.length)+"人が全員着外になる必要");
   return issues;
