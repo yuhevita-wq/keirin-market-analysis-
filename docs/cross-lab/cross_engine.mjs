@@ -184,7 +184,7 @@ function outsideRisks(race, chosen) {
   const excludedLines = race.lines.filter(line=>line.every(no=>!chosen.has(no)));
   const issues = [];
   if (excludedLines.some(line=>line.length >= 3)) {
-    issues.push("3車ライン全滅が必要。3-2-2の2車×2車クロスでは特に厳しい");
+    issues.push("基本4点では3車ライン全滅が必要。3-2-2の2車×2車クロスでは特に厳しい（（）付き補助では緩和）");
   }
   if (excludedLines.some(line=>line.length === 2)) {
     issues.push("別の2車ライン2人とも着外が必要");
@@ -244,10 +244,10 @@ export function analyzeCross(input, {limit=24}={}) {
     candidates:top,evaluated,qualified:unique.length,ties:tied.length,
     incompleteCars:incomplete,
     notes:[
-      "強い順の並べ替え・得点加点・3着別選定は行いません",
+      "強い順の並べ替え・得点加点・基本4点の3着再選定は行いません（補助は別判定）",
       "成立メカニズムの条件照合であり、的中確率や期待回収率ではありません",
       incomplete.length ? "決まり手欠損："+incomplete.join("・")+"番。欠損時は確定推奨しません" : "",
-      tied.length>1 ? "同評価のクロスが"+tied.length+"組。無理に1組へ固定しません" : ""
+      tied.length>1 ? "同評価のクロスが"+tied.length+"組。画面上の主採用は暫定であり、優位の証明ではありません" : ""
     ].filter(Boolean)
   };
 }
