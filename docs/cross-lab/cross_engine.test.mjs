@@ -82,3 +82,10 @@ test("front + opposing makuri requires actual winning-method evidence",()=>{
   result=analyzeCross(race);
   assert.ok(!result.candidates.some(x=>x.firstPair.join("-")==="1-3"));
 });
+
+test("explicitly cleared methods remain unknown even when old cache aliases exist",()=>{
+  const race=example();
+  race.entries[0].nige_count=5;
+  race.entries[0].nige=null;
+  assert.equal(normalizeRace(race).riders.get(1).nige,null);
+});
