@@ -51,7 +51,13 @@ def checked_live(snapshot, age_seconds=MAX_AGE_SECONDS):
         raise ValueError("REFUSED: only odds_phase=live is accepted, not final odds")
     race = snapshot["race"]
     deadline = timestamp(race["deadline_jst"])
-    cutoff = deadline - timedelta(minutes=15)
+    reference = race.get("t15_reference", "race_start")
+    if reference not in ("race_start", "sales_deadline"):
+        raise ValueError("t15_reference must be race_start or sales_deadline")
+    base = timestamp(race["start_jst"]) if reference == "race_start" else deadline
+    cutoff = base - timedelta(minutes=15)
+    if cutoff >= deadline:
+        raise ValueError("T-15 cutoff is not before betting deadline")
     captured = timestamp(snapshot["captured_at_jst"])
     market_times = snapshot.get("market_as_of_jst")
     if not isinstance(market_times, dict) or set(market_times) != {"3連単", "3連複"}:
@@ -159,6 +165,7 @@ def calculate(snapshot, model, min_edge=0.15, odds_haircut=0.15, max_candidates=
         "race_id": race.get("race_id"),
         "track": race.get("track"),
         "decision_cutoff_jst": cutoff.astimezone(JST).isoformat(),
+        "t15_reference": race.get("t15_reference", "race_start"),
         "odds_as_of_jst": snapshot["market_as_of_jst"],
         "captured_at_jst": snapshot["captured_at_jst"],
         "market_sample_size": len(orders),
@@ -194,6 +201,7 @@ def self_test():
     stamp = (cutoff - timedelta(seconds=30)).isoformat()
     obj = {
         "race": {"race_id": "synthetic", "track": "TEST", "deadline_jst": deadline.isoformat(),
+                 "t15_reference": "sales_deadline",
                  "card_as_of_jst": (cutoff - timedelta(minutes=4)).isoformat(),
                  "predicted_line_formation": "1-2-3/4-5/6-7"},
         "entries": cards, "odds_phase": "live",
