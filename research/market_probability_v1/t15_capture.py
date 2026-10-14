@@ -94,8 +94,14 @@ def main():
     p.add_argument("--html", type=Path, help="offline HTML source for parser checks only")
     args = p.parse_args()
     request = json.loads(args.race_card.read_text(encoding="utf-8"))
-    deadline = timestamp(request["race"]["deadline_jst"])
-    cutoff = deadline - timedelta(minutes=15)
+    race = request["race"]
+    deadline = timestamp(race["deadline_jst"])
+    reference = race.get("t15_reference", "race_start")
+    if reference not in ("race_start", "sales_deadline"):
+        raise ValueError("invalid T15 reference")
+    cutoff = (timestamp(race["start_jst"]) if reference == "race_start" else deadline) - timedelta(minutes=15)
+    if cutoff >= deadline:
+        raise ValueError("T15 point falls after the sales deadline")
     clock_before = datetime.now(timezone.utc)
     if args.html is None and clock_before > cutoff:
         raise SystemExit("REFUSED: already after the decision cutoff")
