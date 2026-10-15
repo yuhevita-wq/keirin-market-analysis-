@@ -214,7 +214,9 @@ def generic_grid(rs, width):
                     record_map(quote,(one,two),parsed)
             if len(seen_rows) == width:
                 break
-        if len(seen_rows) != width:
+        # Triangular 2車複・2枠複 omit the entire all-empty first row.
+        # Their exact required combination keys are enforced by parse_all.
+        if not seen_rows or not quote:
             continue
         return quote
     return None
