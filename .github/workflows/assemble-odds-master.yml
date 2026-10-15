@@ -1,0 +1,60 @@
+name: Assemble one complete odds-and-race-types file
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/assemble-odds-master.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: assemble-odds-master-single
+  cancel-in-progress: false
+
+jobs:
+  assemble:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Load existing validated year partitions
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+      - name: Concatenate all years into one portable gzip archive
+        run: |
+          set -euo pipefail
+          test -f data/odds_only/odds_2021.jsonl.gz
+          test -f data/odds_only/odds_2026.jsonl.gz
+          cat data/odds_only/odds_20??.jsonl.gz > data/odds_only/odds_all.jsonl.gz
+          python - <<'PY'
+          import gzip,json
+          from pathlib import Path
+          path=Path('data/odds_only/odds_all.jsonl.gz')
+          count=0
+          with gzip.open(path,'rt',encoding='utf-8') as f:
+              for line in f:
+                  row=json.loads(line)
+                  assert set(row)=={'race_id','race_type','odds'}
+                  count+=1
+          assert count>=20000,count
+          assert path.stat().st_size<95_000_000,'Repository file size threshold exceeded'
+          print('ODDS_ONLY_COMBINED_VERIFIED',count,path.stat().st_size)
+          PY
+      - name: Publish single combined dataset
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -f data/odds_only/odds_all.jsonl.gz
+          if git diff --cached --quiet; then
+            echo 'Combined data unchanged'
+            exit 0
+          fi
+          git commit -m 'data: add one complete non-girls odds and race-type-only file'
+          git pull --rebase origin main
+          git push origin HEAD:main
