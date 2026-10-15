@@ -48,12 +48,13 @@ def market_fixture(n):
 
 
 def test_complete():
-    for n in (7,9):
+    for n in (5,6,7,9):
         race_id="7320240704010001"
         rows=parse_all(market_fixture(n),race_id)
         kinds=expected(n)
         assert len(rows)==sum(map(len,kinds.values()))
-        assert len(rows)==(329 if n==7 else 783)
+        assert len(rows)==sum(map(len,kinds.values()))
+        assert len(rows)==(110 if n==5 else 200 if n==6 else 329 if n==7 else 783)
         assert {r[1] for r in rows}==set(kinds)
         for kind,choices in kinds.items():
             got={tuple(map(int,r[2].split("-"))) for r in rows if r[1]==kind}
