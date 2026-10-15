@@ -67,7 +67,7 @@ def test_gates():
 
 
 def synthetic_markets(n=7):
-    weights = {(a,b,c): 1.3**a * 1.5**b * 1.6**c
+    weights = {(a,b,c): 1.03**a * 1.05**b * 1.02**c
                for a,b,c in itertools.permutations(range(1,n+1),3)}
     total=sum(weights.values())
     probs3={k: v/total for k,v in weights.items()}
