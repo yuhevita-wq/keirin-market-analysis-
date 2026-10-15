@@ -7,7 +7,7 @@ on:
       - research/odds_universe_v1/backfill.py
       - .github/workflows/backfill-odds-universe.yml
   schedule:
-    - cron: '26 2 * * *'
+    - cron: '26 1,7,13,19 * * *'
   workflow_dispatch:
     inputs:
       mode:
@@ -65,7 +65,7 @@ jobs:
             python research/odds_universe_v1/backfill.py --source data/a_class_12/2025_01_02 --offset 6 --limit 6 --workers 2 --sleep 0.6 --tag followup-A12
             python research/odds_universe_v1/backfill.py --source data/a3_challenge/2025_01_02 --offset 6 --limit 6 --workers 2 --sleep 0.6 --tag followup-A3
           elif [[ "$EVENT" == "push" ]]; then
-            python research/odds_universe_v1/backfill.py --auto --limit 160 --workers 2 --sleep 0.6 --tag startup-broad-backfill
+            python research/odds_universe_v1/backfill.py --auto --limit 320 --workers 2 --sleep 0.6 --tag startup-broad-backfill
           elif [[ "$EVENT" == "schedule" ]]; then
             python research/odds_universe_v1/backfill.py --auto --limit 400 --workers 2 --sleep 0.6 --tag recurring-gap-backfill
           elif [[ "$MODE" == "auto" ]]; then
