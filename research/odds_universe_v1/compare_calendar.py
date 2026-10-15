@@ -8,7 +8,7 @@ import csv,gzip,io,json,zipfile
 from collections import Counter
 from datetime import datetime,timezone
 from pathlib import Path
-from scope import in_scope
+from scope import in_scope,girls_race
 ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/"data/audits/nationwide_census_vs_saved.json"
 
@@ -52,11 +52,20 @@ def report():
         with gzip.open(path,"rt",encoding="utf-8",newline="") as f:
             rows=list(csv.DictReader(f))
         good=0;missing=0
+        ignored_girls=0
+        unknown_labels=0
+        eligible_rows=0
         diff=[]
         for row in rows:
             rid=row["race_id"]
             if not in_scope(row.get("race_date")):
                 continue
+            if girls_race(row.get("race_type")):
+                ignored_girls+=1
+                continue
+            if not row.get("race_type"):
+                unknown_labels+=1
+            eligible_rows+=1
             if rid in covered and covered[rid]!=row["race_date"]:
                 raise ValueError("census race ID assigned conflicting event date")
             covered[rid]=row["race_date"]
@@ -65,7 +74,10 @@ def report():
                 missing+=1
                 diff.append(row)
         sources.append({"census_file":str(path.relative_to(ROOT)),
-                        "calendar_race_ids":len(rows),
+                        "calendar_race_ids":eligible_rows,
+                        "girls_race_ids_excluded":ignored_girls,
+                        "race_type_unlabeled":unknown_labels,
+                        "calendar_raw_link_count":len(rows),
                         "already_in_saved_archive":good,
                         "race_ids_absent_in_saved_archive":missing,
                         "unarchived_races":diff})
@@ -79,7 +91,9 @@ def report():
                "census_unique_race_ids":len(covered),
                "census_found_in_existing_archives":len(set(known)&set(covered)),
                "census_missing_from_existing_archives":len(set(covered)-set(known)),
-               "date_conflicts":len(mismatch)}
+               "date_conflicts":len(mismatch),
+               "census_race_type_unlabeled":sum(x["race_type_unlabeled"] for x in sources),
+               "census_girls_excluded":sum(x["girls_race_ids_excluded"] for x in sources)}
     result={"status":"NATIONWIDE_PUBLIC_CALENDAR_VS_SAVED_RACE_ID_GAPS",
             "generated_at_utc":datetime.now(timezone.utc).isoformat(),
             "summary":aggregate,"date_conflict_examples":mismatch[:100],
