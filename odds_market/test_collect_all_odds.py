@@ -45,10 +45,10 @@ def market_fixture(n):
         if kind.startswith("2waku") and n!=9:
             continue
         result.append(grid(kind,n))
-    result.append("<table>")
+    result.append("<div class=odds_table><table>")
     for a,b,c in itertools.combinations(range(1,n+1),3):
         result.append(f"<tr><td>1</td><td>{a}={b}={c}</td><td>88.8</td></tr>")
-    result.append("</table></body>")
+    result.append("</table></div><table class=refund_table><tr><td>1</td><td>1=2=3</td><td>99999.9</td></tr></table></body>")
     return "".join(result)
 
 
