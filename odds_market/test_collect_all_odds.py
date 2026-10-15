@@ -21,7 +21,8 @@ def grid(kind, n):
             else:
                 valid = a>b
             value = "5.4～8.2" if kind=="wide" else "42.2"
-            s.append(f"<td>{value if valid else ''}</td>")
+            placeholder="--" if kind in ("2shafuku","2wakufuku") else ""
+            s.append(f"<td>{value if valid else placeholder}</td>")
         s.append("</tr>")
     s.append("</table>")
     return "".join(s)
