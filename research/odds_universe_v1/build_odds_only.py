@@ -230,15 +230,19 @@ def consolidate_source(db, source, races, entries, trifecta, trio, summary):
             continue
         payload = json.dumps(record, ensure_ascii=False, separators=(",", ":"), sort_keys=False)
         fingerprint = hashlib.sha256(payload.encode("utf-8")).hexdigest()
-        old = db.execute("SELECT checksum,race_type,source FROM races WHERE race_id=?", (rid,)).fetchone()
+        old = db.execute("SELECT checksum,race_type,source,payload FROM races WHERE race_id=?", (rid,)).fetchone()
         if old is not None:
             summary["duplicate_race"] += 1
             if old[0] != fingerprint:
-                summary["conflicting_duplicate"] += 1
-                if len(summary["conflict_examples"]) < 25:
-                    summary["conflict_examples"].append({"race_id": rid,
-                        "first_source": old[2], "new_source": source,
-                        "first_race_type": old[1], "new_race_type": record["race_type"]})
+                original = json.loads(old[3])
+                if original["odds"] == record["odds"]:
+                    summary["duplicate_type_label_variation"] += 1
+                else:
+                    summary["conflicting_duplicate_odds"] += 1
+                    if len(summary["conflict_examples"]) < 25:
+                        summary["conflict_examples"].append({"race_id": rid,
+                            "first_source": old[2], "new_source": source,
+                            "first_race_type": old[1], "new_race_type": record["race_type"]})
             continue
         db.execute("INSERT INTO races(race_id, year, race_type, payload, checksum, source) "
                    "VALUES(?,?,?,?,?,?)",
@@ -384,11 +388,12 @@ def main():
         "price_phase":"final",
         "sources_loaded":summary.get("sources_read",0),
         "duplicates_deduplicated":summary.get("duplicate_race",0),
-        "conflicting_duplicate":summary.get("conflicting_duplicate",0),
+        "conflicting_duplicate_odds":summary.get("conflicting_duplicate_odds",0),
+        "duplicate_type_label_variation":summary.get("duplicate_type_label_variation",0),
         "conflict_examples":summary["conflict_examples"],
         "incomplete_or_invalid_by_reason":{k:v for k,v in summary.items()
             if k not in ("conflict_examples","year_counts") and isinstance(v,int)
-            and k not in ("unique_complete_races","sources_read","duplicate_race","conflicting_duplicate")},
+            and k not in ("unique_complete_races","sources_read","duplicate_race","conflicting_duplicate_odds","duplicate_type_label_variation")},
         "notes":[
             "Output record keys are strictly race_id/race_type/odds, no result or rider fields.",
             "Only completely available numeric 3連単 and 3連複 books are exported.",
@@ -403,7 +408,8 @@ def main():
         {"races":report["unique_complete_races"],"years":{k:v["complete_races"] for k,v in products.items()},
          "skipped":report["incomplete_or_invalid_by_reason"],
          "duplicates":report["duplicates_deduplicated"],
-         "conflicts":report["conflicting_duplicate"]},
+         "odds_conflicts":report["conflicting_duplicate_odds"],
+         "type_label_variations":report["duplicate_type_label_variation"]},
          ensure_ascii=False),flush=True)
 
 
