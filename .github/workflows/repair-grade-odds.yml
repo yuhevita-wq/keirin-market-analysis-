@@ -1,0 +1,68 @@
+name: Repair missing G1 G2 G3 confirmed odds from stored ZIPs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - research/odds_universe_v1/grade_archive_repair.py
+      - .github/workflows/repair-grade-odds.yml
+  schedule:
+    - cron: '42 3 * * *'
+  workflow_dispatch:
+    inputs:
+      limit:
+        type: number
+        default: 100
+
+permissions:
+  contents: write
+
+concurrency:
+  group: grade-market-odds-repair-writer
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 80
+    env:
+      EVENT: ${{ github.event_name }}
+      LIMIT: ${{ github.event.inputs.limit }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e '.[scrape]'
+      - name: Fetch truly missing archives' entire 3連単 and 3連複 grids
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT" == "push" ]]; then
+            python research/odds_universe_v1/grade_archive_repair.py --limit 16 --sleep 0.6
+          elif [[ "$EVENT" == "schedule" ]]; then
+            python research/odds_universe_v1/grade_archive_repair.py --limit 100 --sleep 0.6
+          else
+            python research/odds_universe_v1/grade_archive_repair.py --limit "${LIMIT:-100}" --sleep 0.6
+          fi
+      - name: Audit and save immutable correction batches
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          base=Path('data/odds_universe_v1/grade_archive_repairs')
+          for p in base.glob('*/batch_*/summary.json'):
+              s=json.loads(p.read_text(encoding='utf-8'))
+              assert s['attempted']==s['complete']+s['failed']
+              assert (p.parent/'trifecta_final_odds.csv.gz').exists()
+              assert (p.parent/'trio_final_odds.csv.gz').exists()
+          print('GRADE_ODDS_REPAIRS_VALIDATED')
+          PY
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/odds_universe_v1/grade_archive_repairs
+          git commit -m 'data: append verified recovered G1/G2/G3 market prices' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
