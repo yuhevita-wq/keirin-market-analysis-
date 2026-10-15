@@ -42,6 +42,21 @@ jobs:
           print('ODDS_TABLE',len(soup.select('table.odds_table')))
           print('ODDS_HEADER',len(soup.select('div.odds_header')))
           pat=re.compile(r'[1-9]=[1-9]=[1-9]')
+          for j,tab in enumerate(soup.find_all('table')):
+              trs=tab.find_all('tr')
+              def pattern(tr):
+                  out=[]
+                  for cell in tr.find_all(['th','td'],recursive=False):
+                      v=cell.get_text(' ',strip=True)
+                      out.append('D' if re.fullmatch(r'[1-9]',v) else
+                                 'O' if re.fullmatch(r'[0-9,.]+',v) else
+                                 'R' if re.fullmatch(r'[0-9,.]+[～〜~\-][0-9,.]+',v) else
+                                 'T' if v else '_')
+                  return ''.join(out)[:35]
+              parent=tab.parent
+              print('TABLE_SHAPE',j,'class',','.join(tab.get('class',[])),
+                    'parent',','.join(parent.get('class',[])) if parent else '',
+                    'rows',len(trs),'shape','/'.join(pattern(tr) for tr in trs[:3]))
           for i,t in enumerate(soup.find_all('table')):
               content=t.get_text(' ',strip=True)
               n=len(pat.findall(content))
