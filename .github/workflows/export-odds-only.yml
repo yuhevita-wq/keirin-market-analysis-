@@ -43,7 +43,7 @@ jobs:
           import gzip,json,math,hashlib,itertools,re
           from pathlib import Path
           audit=json.loads(Path('data/audits/odds_only_export.json').read_text(encoding='utf-8'))
-          files=sorted(Path('data/odds_only').glob('odds_*.jsonl.gz'))
+          files=sorted(Path('data/odds_only').glob('odds_20??.jsonl.gz'))
           assert len(files)>=5,files
           assert audit['girls_included'] is False
           seen=set()
@@ -72,6 +72,16 @@ jobs:
               counts[year]=count
           assert sum(counts.values())==audit['unique_complete_races']
           assert counts['2023']>1000 and counts['2024']>1000 and counts['2025']>1000
+          allinfo=audit['all_years']
+          if allinfo['file']:
+              combined_path=Path('data/odds_only')/allinfo['file']
+              assert combined_path.exists()
+              assert hashlib.sha256(combined_path.read_bytes()).hexdigest()==allinfo['sha256']
+              with gzip.open(combined_path,'rt',encoding='utf-8') as stream:
+                  combined_ids=[json.loads(line)['race_id'] for line in stream]
+              assert len(combined_ids)==len(seen)==allinfo['complete_races']
+              assert set(combined_ids)==seen
+              print('SINGLE_ALL_YEARS_FILE_VALIDATED',len(combined_ids),flush=True)
           print('ODDS_ONLY_DATASET_VALIDATED',counts,flush=True)
           PY
       - name: Commit only clean odds data and separate quality audit
