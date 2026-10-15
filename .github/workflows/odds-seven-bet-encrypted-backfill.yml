@@ -5,12 +5,12 @@ on:
     paths:
       - '.github/workflows/odds-seven-bet-encrypted-backfill.yml'
   schedule:
-    - cron: '17 1,7,13,19 * * *'
+    - cron: '7,37 * * * *'
   workflow_dispatch:
     inputs:
       days:
         type: number
-        default: 2
+        default: 7
 
 permissions:
   contents: write
@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 85
     env:
-      WINDOW_DAYS: ${{ github.event.inputs.days || '2' }}
+      WINDOW_DAYS: ${{ github.event.inputs.days || '7' }}
     steps:
       - uses: actions/checkout@v4
         with:
