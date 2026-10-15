@@ -36,6 +36,7 @@ from collections import Counter, defaultdict
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
+from scope import START, END, in_scope
 
 ROOT = Path(__file__).resolve().parents[2]
 OUTPUT = ROOT / "data/odds_only"
@@ -79,7 +80,7 @@ def source_dirs():
 
 def year_of(meta, rid):
     day = str(meta.get("race_date", "")).strip()
-    if re.fullmatch(r"20\d\d-\d\d-\d\d", day):
+    if re.fullmatch(r"20\d\d-\d\d-\d\d", day) and in_scope(day):
         return day[:4]
     # Race-ID encodes meeting START date, not the date of the race itself.
     # Do not silently infer the race date from that starting date.
@@ -117,7 +118,7 @@ def read_metadata(races, entries):
     meta = {}
     for row in races:
         rid = source_identity(row)
-        if RACE_ID.fullmatch(rid):
+        if RACE_ID.fullmatch(rid) and in_scope(row.get("race_date")):
             meta[rid] = row
     runners = defaultdict(set)
     classes = defaultdict(list)
@@ -157,6 +158,8 @@ def normalize_combi(raw, kind):
 
 
 def market_rows_to_record(rid, market, meta, runners, classes):
+    if not in_scope(meta[rid].get("race_date")):
+        return None, "out_of_scope"
     count = len(runners.get(rid, ()))
     if not 3 <= count <= 9:
         return None, "missing_or_bad_entries"
@@ -406,6 +409,8 @@ def main():
         "field_names":["race_id","race_type","odds"],
         "girls_included":False,
         "price_phase":"final",
+        "eligible_date_range":[START.isoformat(),END.isoformat()],
+        "excluded_2026_second_half":True,
         "sources_loaded":summary.get("sources_read",0),
         "duplicates_deduplicated":summary.get("duplicate_race",0),
         "conflicting_duplicate_odds":summary.get("conflicting_duplicate_odds",0),
