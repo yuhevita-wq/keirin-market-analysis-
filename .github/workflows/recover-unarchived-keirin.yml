@@ -8,7 +8,7 @@ on:
       - '.github/workflows/recover-unarchived-keirin.yml'
       - 'data/audits/nationwide_census_vs_saved.json'
   schedule:
-    - cron: '05 7 * * *'
+    - cron: '05 2,8,14,20 * * *'
   workflow_dispatch:
     inputs:
       limit:
@@ -48,7 +48,7 @@ jobs:
           if [[ "$EVENT" == "schedule" ]]; then
             python research/odds_universe_v1/recover_unarchived.py --limit 120
           elif [[ "$EVENT" == "push" ]]; then
-            python research/odds_universe_v1/recover_unarchived.py --limit 12
+            python research/odds_universe_v1/recover_unarchived.py --limit 48
           else
             python research/odds_universe_v1/recover_unarchived.py --limit "${LIMIT:-100}"
           fi
