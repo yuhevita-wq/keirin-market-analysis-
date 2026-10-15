@@ -106,6 +106,60 @@ def choose_auto(limit):
         keys=survivors
     return selected
 
+def choose_failed_retry(limit, max_attempts=3):
+    """Retest failed full markets at most three times; never replay successes.
+
+    Every selection remains a completed race dated <=2026-06-30. A failure
+    is recorded, not silently treated as a success or as zero odds.
+    """
+    candidates=[]
+    seen=set()
+    for src in source_dirs():
+        base=BASE/src.relative_to(ROOT)
+        counts=defaultdict(int)
+        successes=set()
+        for path in sorted(base.glob("batch_*/summary.json")):
+            try:
+                report=json.loads(path.read_text(encoding="utf-8"))
+                successes.update(report.get("complete_race_ids",[]))
+                for rid in report.get("attempted_race_ids",[]):
+                    counts[rid]+=1
+            except (ValueError,KeyError):
+                continue
+        if not counts:
+            continue
+        for row in csv_read(src/"races.csv"):
+            rid=row.get("race_id")
+            if (rid and rid not in successes and rid in counts and
+                    counts[rid]<max_attempts and eligible(row) and rid not in seen):
+                candidates.append((counts[rid],row["race_date"],src,row))
+                seen.add(rid)
+    # Retry least-attempted failures, balanced across source families and years.
+    buckets=defaultdict(list)
+    for n,day,src,row in candidates:
+        year=day[:4]
+        family="A12" if "a_class_12" in str(src) else ("A3" if "a3_challenge" in str(src) else "S")
+        buckets[(n,family,year)].append((src,row))
+    for group in buckets:
+        buckets[group].sort(key=lambda p:(p[1]["race_date"],p[1]["race_id"]))
+    selected=[]
+    positions=defaultdict(int)
+    remaining=sorted(buckets)
+    while len(selected)<limit and remaining:
+        active=[]
+        for group in remaining:
+            idx=positions[group]
+            if idx<len(buckets[group]):
+                selected.append(buckets[group][idx])
+                positions[group]+=1
+            if positions[group]<len(buckets[group]):
+                active.append(group)
+            if len(selected)>=limit:
+                break
+        remaining=active
+    return selected
+
+
 def choose_s_missing(limit):
     """Collect only entire S-class source directories lacking either full price file.
 
@@ -216,7 +270,7 @@ def collect(tasks,delay,workers=2,tag="manual"):
         ids=sorted(r["race_id"] for r in rs)
         # Stable content-addressed path prevents accidental overwrites.
         import hashlib
-        digest=hashlib.sha256("\n".join(ids).encode()).hexdigest()[:14]
+        digest=hashlib.sha256(("\n".join(ids)+"\n"+now).encode()).hexdigest()[:14]
         out=BASE/src.relative_to(ROOT)/("batch_"+digest)
         if out.exists():
             raise RuntimeError("immutable batch already exists: "+str(out))
@@ -260,16 +314,20 @@ def main():
     ap.add_argument("--sleep",type=float,default=.5)
     ap.add_argument("--auto",action="store_true")
     ap.add_argument("--auto-s",action="store_true",help="S-class whole-file odds gaps only")
+    ap.add_argument("--retry-failed",action="store_true",help="retry recorded missing-odds cases at most three times")
     ap.add_argument("--tag",default="manual")
     arg=ap.parse_args()
     if not 1<=arg.limit<=500:ap.error("limit must be in [1,500]")
     if not 1<=arg.workers<=3:ap.error("workers must be in [1,3]")
     if not .25<=arg.sleep<=10:ap.error("sleep must be between 0.25 and 10 seconds")
-    if arg.auto and arg.auto_s:ap.error("choose exactly one automated mode")
+    if sum((bool(arg.auto),bool(arg.auto_s),bool(arg.retry_failed)))>1:
+        ap.error("choose exactly one automated mode")
     if arg.auto:
         tasks=choose_auto(arg.limit)
     elif arg.auto_s:
         tasks=choose_s_missing(arg.limit)
+    elif arg.retry_failed:
+        tasks=choose_failed_retry(arg.limit)
     else:
         if not arg.source:ap.error("--source or --auto required")
         folder=(ROOT/arg.source).resolve()
@@ -284,7 +342,7 @@ def main():
     output=collect(tasks,arg.sleep,arg.workers,arg.tag)
     print("FINISHED",json.dumps(output,ensure_ascii=False),flush=True)
     if output["attempted"] and output["complete"]==0:
-        raise SystemExit("all attempted races failed; no coverage claimed")
+        print("ALL_ATTEMPTS_FAILED; failure manifests retained for future capped retry",flush=True)
 
 
 if __name__=="__main__":
