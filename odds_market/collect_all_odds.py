@@ -182,7 +182,7 @@ def parse_all(html, race_id):
     if actual_date != first_day + timedelta(days=int(race_id[10:12])-1):
         raise ValueError("Odds page date does not match requested race")
     tables = [rows(t) for t in soup.find_all("table")]
-    for n in (9,7):
+    for n in (9,7,6,5):
         all_blocks = {}
         for rs in tables:
             got = first_place_block(rs,n)
@@ -239,7 +239,7 @@ def parse_all(html, race_id):
                 continue
             for key, (low,high) in sorted(found[kind].items()):
                 result.append((race_id,kind,"-".join(map(str,key)),low,high,stamp))
-        if len(result)!= (783 if n==9 else 329):
+        if len(result) != sum(len(choices) for choices in exp.values()):
             raise AssertionError("Incomplete all-odds count")
         return result
     raise ValueError("No complete 7-car or 9-car market found")
