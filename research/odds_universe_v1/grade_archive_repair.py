@@ -13,6 +13,7 @@ from pathlib import Path
 
 from keirin_market_analysis.historical_final_odds import scrape_race
 from backfill import ROOT,BASE,FIELDS,FAIL_FIELDS,validate
+from scope import in_scope, girls_race
 
 
 def read_zcsv(z,name):
@@ -51,8 +52,9 @@ def archive_candidates(path):
             trio=known["trio"][rid]
             if tri["good"]==n*(n-1)*(n-2) and tri["bad"]==0 and trio["good"]==math.comb(n,3) and trio["bad"]==0:
                 done.add(rid)
+        # Class/type serves only as a girls exclusion; not a predictive feature.
         candidates=[(path,r,sorted(em.get(rid,set()))) for rid,r in sorted(races.items(),key=lambda x:(x[1].get("race_date",""),x[0]))
-                    if rid not in done]
+                    if rid not in done and in_scope(r.get("race_date")) and not girls_race(r.get("race_type"))]
         return candidates
 
 
