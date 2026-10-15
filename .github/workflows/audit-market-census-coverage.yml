@@ -1,0 +1,66 @@
+name: Measure non-girls market-data gaps against national race census
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/odds_universe_v1/coverage_report.py'
+      - '.github/workflows/audit-market-census-coverage.yml'
+      - 'data/odds_only/odds_*.jsonl.gz'
+  schedule:
+    - cron: '48 5,21 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: men-odds-census-coverage-audit
+  cancel-in-progress: false
+
+jobs:
+  coverage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Load newest source and odds shards
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compare archived market IDs with actual recorded historic race dates
+        run: python research/odds_universe_v1/coverage_report.py
+      - name: Check internal accounting, publish evidence of missing races
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          doc=json.load(open('data/audits/odds_census_coverage.json',encoding='utf-8'))
+          years=doc['year']
+          assert sum(x['all_exported_full_market_races'] for x in years.values())==doc['total_complete_market_races']
+          for y,s in years.items():
+              assert s['complete_numeric_market']+s['no_complete_numeric_market']==s['race_ids_found'],(y,s)
+              assert s['complete_numeric_market']<=s['all_exported_full_market_races'],(y,s)
+          assert doc['covered_window']==['2021-01-01','2026-06-30']
+          assert doc['only_men'] and doc['no_result_or_player_features']
+          print('CENSUS_COVERAGE_VALIDATED',doc['calendar_days_sampled'])
+          PY
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/odds_census_coverage.json
+          if git diff --cached --quiet; then
+            echo 'Coverage audit unchanged'
+            exit 0
+          fi
+          git commit -m 'data: publish race-by-race missing-market coverage audit'
+          for attempt in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
