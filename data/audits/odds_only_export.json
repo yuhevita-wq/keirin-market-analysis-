@@ -1,12 +1,12 @@
 {
   "schema": "odds_and_race_type_only_v1",
-  "generated_utc": "2026-10-15T07:28:41.553895+00:00",
+  "generated_utc": "2026-10-15T07:41:06.241808+00:00",
   "years": {
     "2021": {
       "file": "odds_2021.jsonl.gz",
-      "complete_races": 466,
-      "bytes": 1223470,
-      "sha256": "a9dd44d61a1f8472465d96eff3ddb2e0ef67aee3b3f4fc04b502819975097747"
+      "complete_races": 478,
+      "bytes": 1236219,
+      "sha256": "38ef417d69330bf7a70aa48587d7e833646fc591e42106f3f5eb23f7394f5df0"
     },
     "2022": {
       "file": "odds_2022.jsonl.gz",
@@ -16,37 +16,37 @@
     },
     "2023": {
       "file": "odds_2023.jsonl.gz",
-      "complete_races": 7018,
-      "bytes": 11034897,
-      "sha256": "3ab5062d6fe28a048eaeae31b073adb0bab4b2cc86d064d4cfd8e0cf6c696518"
+      "complete_races": 7115,
+      "bytes": 11129808,
+      "sha256": "e859083b7d940ae1e0ec5253befd77a20ec8381642377484a1593fb26f22161b"
     },
     "2024": {
       "file": "odds_2024.jsonl.gz",
-      "complete_races": 7554,
-      "bytes": 11615449,
-      "sha256": "3cd73bbbc11b5dc06b01d70157852ceb07cd0a31aa0fcdaf125d5d421c371903"
+      "complete_races": 7594,
+      "bytes": 11655300,
+      "sha256": "67387983c5fc3d744962def11d8112ae3ed8e40a0c9b1e6b10f8db4cb8f59102"
     },
     "2025": {
       "file": "odds_2025.jsonl.gz",
-      "complete_races": 7646,
-      "bytes": 11822419,
-      "sha256": "1cc693838d421777a2aff20bc32e21532e1a268977c44cfb0adca9e960e9247e"
+      "complete_races": 7685,
+      "bytes": 11855432,
+      "sha256": "b14a7bd0ba30e53771f1fbc90fb8f46f12521163e44a16bf3c69ca080171eb50"
     },
     "2026": {
       "file": "odds_2026.jsonl.gz",
-      "complete_races": 3705,
-      "bytes": 5460683,
-      "sha256": "75109b5d1668951f7a820658e8d4571ce98b535637506ebc6f4cac67f1fd9577"
+      "complete_races": 3665,
+      "bytes": 5423119,
+      "sha256": "ed59b1b8830437a149f1a40c7685062b845fbeb181c7442f0c816143137c293b"
     }
   },
   "all_years": {
     "file": "odds_all.jsonl.gz",
-    "complete_races": 28765,
-    "bytes": 47070970,
-    "sha256": "2009dc3595933d0fc729fd1ca6680e25f63e12879a14ab44613613a3e772a428",
+    "complete_races": 28913,
+    "bytes": 47213930,
+    "sha256": "767e52b0a7c6d4a4124aad147d5b0091bc2dacd4ff8f0d7732620dceb90fd63a",
     "compression": "concatenated_gzip_members"
   },
-  "unique_complete_races": 28765,
+  "unique_complete_races": 28913,
   "supported_odds_types": [
     "3連単",
     "3連複"
@@ -58,17 +58,23 @@
   ],
   "girls_included": false,
   "price_phase": "final",
-  "sources_loaded": 58,
-  "duplicates_deduplicated": 4722,
+  "eligible_date_range": [
+    "2021-01-01",
+    "2026-06-30"
+  ],
+  "excluded_2026_second_half": true,
+  "sources_loaded": 68,
+  "duplicates_deduplicated": 4744,
   "conflicting_duplicate_odds": 0,
-  "duplicate_type_label_variation": 4722,
+  "duplicate_type_label_variation": 4744,
   "conflict_examples": [],
   "incomplete_or_invalid_by_reason": {
     "skipped_csv_source_without_both_market_files": 48,
-    "ok": 33476,
+    "ok": 33634,
     "girls_excluded": 66,
-    "imprecise_race_type": 11,
-    "imprecise_race_type_count": 11
+    "empty_metadata": 2,
+    "imprecise_race_type": 23,
+    "imprecise_race_type_count": 23
   },
   "notes": [
     "Output record keys are strictly race_id/race_type/odds, no result or rider fields.",
