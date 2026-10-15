@@ -1,6 +1,10 @@
 """Offline fixtures for all sold odds, no network use."""
 import itertools
-from odds_market.collect_all_odds import parse_all, expected
+import csv
+import gzip
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from odds_market.collect_all_odds import parse_all, expected, complete_saved_races, FIELDS, ExcludedRace
 
 
 def grid(kind, n):
@@ -26,6 +30,7 @@ def grid(kind, n):
 def market_fixture(n):
     result=["<body><h1>2024年07月04日 レース詳細</h1>",
             "<h2>3連単 2車単 3連複 2車複 2枠単 2枠複 ワイド 確定オッズ</h2>",
+            "<h3>A級一般</h3>",
             "<span>2024/07/04 10:51現在</span>"]
     for a in range(1,n+1):
         cars=[x for x in range(1,n+1) if x!=a]
@@ -55,12 +60,13 @@ def test_complete():
         assert len(rows)==sum(map(len,kinds.values()))
         assert len(rows)==sum(map(len,kinds.values()))
         assert len(rows)==(110 if n==5 else 200 if n==6 else 329 if n==7 else 783)
-        assert {r[1] for r in rows}==set(kinds)
+        assert {r[2] for r in rows}==set(kinds)
+        assert all(r[1]=="A級一般" for r in rows)
         for kind,choices in kinds.items():
-            got={tuple(map(int,r[2].split("-"))) for r in rows if r[1]==kind}
+            got={tuple(map(int,r[3].split("-"))) for r in rows if r[2]==kind}
             assert got==choices,(kind,len(got),len(choices))
-        wide=[r for r in rows if r[1]=="wide"]
-        assert all(row[3]=="5.4" and row[4]=="8.2" for row in wide)
+        wide=[r for r in rows if r[2]=="wide"]
+        assert all(row[4]=="5.4" and row[5]=="8.2" for row in wide)
 
 
 def test_incomplete_rejected():
@@ -82,8 +88,49 @@ def test_date_mismatch():
         raise AssertionError("Mismatched race date must fail")
 
 
+def test_girls_rejected():
+    html=market_fixture(7).replace("<h3>A級一般</h3>", "<h3>ガールズ予選</h3>")
+    try:
+        parse_all(html,"7320240704010001")
+    except ExcludedRace:
+        pass
+    else:
+        raise AssertionError("Girls market must never be stored")
+
+
+def test_unknown_race_type_rejected():
+    html=market_fixture(7).replace("<h3>A級一般</h3>", "")
+    try:
+        parse_all(html,"7320240704010001")
+    except ValueError as exc:
+        assert "Race type" in str(exc)
+    else:
+        raise AssertionError("Unverifiable race category must fail closed")
+
+
+def test_resumable_full_books():
+    with TemporaryDirectory() as tmp:
+        path=Path(tmp)/"archive.csv.gz"
+        odds=parse_all(market_fixture(7),"7320240704010001")
+        with gzip.open(path,"wt",encoding="utf-8",newline="") as f:
+            writer=csv.writer(f)
+            writer.writerow(FIELDS)
+            writer.writerows(odds)
+        complete=complete_saved_races(path)
+        assert len(complete)==1
+        assert len(complete["7320240704010001"])==329
+        with gzip.open(path,"wt",encoding="utf-8",newline="") as f:
+            writer=csv.writer(f)
+            writer.writerow(FIELDS)
+            writer.writerows(odds[:-1])
+        assert complete_saved_races(path)=={}, "Partial book cannot count as completed"
+
+
 if __name__=="__main__":
     test_complete()
     test_incomplete_rejected()
     test_date_mismatch()
+    test_girls_rejected()
+    test_unknown_race_type_rejected()
+    test_resumable_full_books()
     print("ALL 7 BET TYPE ODDS TESTS PASS")
