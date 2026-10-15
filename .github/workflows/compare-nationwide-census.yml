@@ -1,0 +1,52 @@
+name: Compare nationwide calendar IDs against stored race archives
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/odds_universe_v1/compare_calendar.py'
+      - '.github/workflows/compare-nationwide-census.yml'
+      - 'data/nationwide_calendar/**'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nationwide-calendar-comparison
+  cancel-in-progress: false
+
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fetch latest archives and race calendars
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compare all saved original ID keys with published public calendar
+        run: python research/odds_universe_v1/compare_calendar.py
+      - name: Validate and publish missing-ID report
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('data/audits/nationwide_census_vs_saved.json',encoding='utf-8'))
+          s=r['summary']
+          assert s['saved_unique_race_ids']>90000
+          assert s['census_missing_from_existing_archives']<=s['census_unique_race_ids']
+          assert s['census_found_in_existing_archives']+s['census_missing_from_existing_archives']==s['census_unique_race_ids']
+          print('VALIDATED',s)
+          PY
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/nationwide_census_vs_saved.json
+          git commit -m 'data: publish actual public-calendar IDs missing from all stored racing archives' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
