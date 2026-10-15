@@ -53,13 +53,14 @@ def market_fixture(n):
 
 
 def test_complete():
-    for n in (5,6,7,9):
+    for n in (3,4,5,6,7,8,9):
         race_id="7320240704010001"
         rows=parse_all(market_fixture(n),race_id)
         kinds=expected(n)
         assert len(rows)==sum(map(len,kinds.values()))
         assert len(rows)==sum(map(len,kinds.values()))
-        assert len(rows)==(110 if n==5 else 200 if n==6 else 329 if n==7 else 783)
+        expected_counts={3:19,4:48,5:110,6:200,7:329,8:504,9:783}
+        assert len(rows)==expected_counts[n],(n,len(rows))
         assert {r[2] for r in rows}==set(kinds)
         assert all(r[1]=="A級一般" for r in rows)
         for kind,choices in kinds.items():
