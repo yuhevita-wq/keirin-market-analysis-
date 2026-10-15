@@ -8,6 +8,7 @@ import csv,gzip,io,json,zipfile
 from collections import Counter
 from datetime import datetime,timezone
 from pathlib import Path
+from scope import in_scope
 ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/"data/audits/nationwide_census_vs_saved.json"
 
@@ -17,7 +18,7 @@ def saved_races():
         for path in (ROOT/"data"/parent).rglob("races.csv"):
             with path.open(encoding="utf-8-sig",newline="") as f:
                 for row in csv.DictReader(f):
-                    if row.get("race_id"):
+                    if row.get("race_id") and in_scope(row.get("race_date")):
                         known[row["race_id"]]=(row.get("race_date",""),str(path.relative_to(ROOT)))
     for path in (ROOT/"data/grade_races").rglob("*.zip"):
         with zipfile.ZipFile(path) as z:
@@ -26,12 +27,12 @@ def saved_races():
                 with z.open(name) as b:
                     with io.TextIOWrapper(b,encoding="utf-8-sig",newline="") as f:
                         for row in csv.DictReader(f):
-                            if row.get("race_id") and row["race_id"] not in known:
+                            if row.get("race_id") and row["race_id"] not in known and in_scope(row.get("race_date")):
                                 known[row["race_id"]]=(row.get("race_date",""),str(path.relative_to(ROOT)))
     for path in (ROOT/"data/girls_universe").rglob("races.csv"):
         with path.open(encoding="utf-8-sig",newline="") as f:
             for row in csv.DictReader(f):
-                if row.get("race_id") and row["race_id"] not in known:
+                if row.get("race_id") and row["race_id"] not in known and in_scope(row.get("race_date")):
                     known[row["race_id"]]=(row.get("race_date",""),str(path.relative_to(ROOT)))
     return known
 
@@ -46,6 +47,8 @@ def report():
         diff=[]
         for row in rows:
             rid=row["race_id"]
+            if not in_scope(row.get("race_date")):
+                continue
             if rid in covered and covered[rid]!=row["race_date"]:
                 raise ValueError("census race ID assigned conflicting event date")
             covered[rid]=row["race_date"]
