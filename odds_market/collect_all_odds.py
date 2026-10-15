@@ -205,12 +205,7 @@ def generic_grid(rs, width):
             vals = row[1:1+width]
             if len(vals) != width:
                 continue
-            if any(v and odds_value(v) is None for v in vals):
-                continue
-            seen_rows.add(one)
-            for two,v in zip(headings,vals):
-                if v:
-                    record_map(quote,(one,two),odds_value(v))
+            # Unavailable/diagonal cells contain printed markers, not empty HTML.\n            # Ignore these markers here, and REQUIRE exact numeric coverage later.\n            seen_rows.add(one)\n            for two,v in zip(headings,vals):\n                parsed = odds_value(v)\n                if parsed is not None:\n                    record_map(quote,(one,two),parsed)
             if len(seen_rows) == width:
                 break
         if len(seen_rows) != width:
