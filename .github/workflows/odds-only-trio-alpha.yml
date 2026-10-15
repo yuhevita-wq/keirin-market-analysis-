@@ -1,0 +1,47 @@
+name: Odds-only 3連複 blending alpha sweep
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/odds_only_v1/trio_alpha_sweep.py'
+      - '.github/workflows/odds-only-trio-alpha.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  alpha:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'numpy>=1.26' 'scipy>=1.13'
+      - name: Tune 2024, test 2025 and 2026
+        run: OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python research/odds_only_v1/trio_alpha_sweep.py
+      - name: Validate objective
+        run: |
+          python - <<'PY'
+          import json,math
+          r=json.load(open('data/audits/odds_only_trio_alpha_sweep_2023_2026.json',encoding='utf-8'))
+          assert r['alpha_selection_year']==2024
+          assert r['races_by_year']['2025']>4500
+          assert math.isfinite(r['selected_alpha'])
+          for y in ('2025','2026'):
+              assert r['yearly'][y]['selected']['races']==r['races_by_year'][y]
+          print('ALPHA SWEEP VALIDATED')
+          PY
+      - name: Publish
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/odds_only_trio_alpha_sweep_2023_2026.json
+          git commit -m 'research: publish 3連複 odds-only blend alpha sweep' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
