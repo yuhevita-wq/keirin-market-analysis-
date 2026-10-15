@@ -91,6 +91,8 @@ jobs:
               assert len(combined_ids)==len(seen)==allinfo['complete_races']
               assert set(combined_ids)==seen
               print('SINGLE_ALL_YEARS_FILE_VALIDATED',len(combined_ids),flush=True)
+          else:
+              assert not Path('data/odds_only/odds_all.jsonl.gz').exists(), 'stale master must never remain after partitioning'
           print('ODDS_ONLY_DATASET_VALIDATED',counts,flush=True)
           PY
       - name: Commit only clean odds data and separate quality audit
@@ -99,6 +101,7 @@ jobs:
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add -f data/odds_only/odds_*.jsonl.gz
+          git add -u data/odds_only
           git add data/audits/odds_only_export.json
           if git diff --cached --quiet; then
             echo 'Odds data is unchanged'
