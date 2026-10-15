@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import csv
 import gzip
+import gzip
 import itertools
 import json
 import math
@@ -64,10 +65,25 @@ def used_rids(source):
     return out
 
 
+def already_exported_odds_ids():
+    """Avoid spending requests on fully saved market books.
+
+    The annual exports are only a coverage index here; no odds are used as
+    prediction inputs. 2026 is capped by the shared scope predicate.
+    """
+    complete = set()
+    for archive in sorted((ROOT / "data/odds_only").glob("odds_20??.jsonl.gz")):
+        with gzip.open(archive, "rt", encoding="utf-8") as stream:
+            for line in stream:
+                complete.add(json.loads(line)["race_id"])
+    return complete
+
+
 def choose_auto(limit):
     """Balance A classes AND each historical year; never select 2026 H2."""
     from itertools import cycle
     catalogs=defaultdict(list)
+    complete_odds = already_exported_odds_ids()
     for src in source_dirs():
         family=src.relative_to(ROOT).parts[1]
         if family not in ("a_class_12","a3_challenge"):
@@ -75,7 +91,7 @@ def choose_auto(limit):
         attempted=used_rids(src)
         for row in csv_read(src/"races.csv"):
             rid=row.get("race_id")
-            if rid and rid not in attempted and eligible(row):
+            if rid and rid not in attempted and rid not in complete_odds and eligible(row):
                 catalogs[(family,row["race_date"][:4])].append((src,row))
     for key in catalogs:
         catalogs[key].sort(key=lambda v:(v[1]["race_date"],str(v[0]),v[1]["race_id"]))
