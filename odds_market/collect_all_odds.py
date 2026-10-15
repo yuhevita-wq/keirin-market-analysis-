@@ -222,9 +222,9 @@ def generic_grid(rs, width):
 def three_combinations_from_rank_tables(soup, n):
     all_odds = {}
     valid = set(itertools.combinations(range(1,n+1),3))
-    # Popularity top 50 + highest-payout top 50 covers 3renpuku's
+    # Only the 3renpuku odds ranking container; refund_table contains a payout\n    # for the winning same selection, which must NEVER be treated as an odds quote.\n    # Popularity top 50 + highest-payout top 50 covers 3renpuku's
     # at most 84 bets, without making the mistake of using 3rentan's top 50.
-    for tr in soup.find_all("tr"):
+    for tr in soup.select("div.odds_table table tr"):
         content = " ".join(text_cells(tr))
         for m in RANK_TRIPLE.finditer(content):
             key = tuple(sorted(int(m.group(j)) for j in (1,2,3)))
