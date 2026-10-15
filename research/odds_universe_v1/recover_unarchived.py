@@ -40,7 +40,9 @@ def read_candidates():
     for src in report.get("sources",[]):
         for r in src.get("unarchived_races",[]):
             rid=r["race_id"]
-            if rid not in known and rid not in done and in_scope(r.get("race_date")):found[rid]=r
+            if (rid not in known and rid not in done and
+                    in_scope(r.get("race_date")) and not girls_race(r.get("race_type"))):
+                found[rid]=r
     return sorted(found.values(),key=lambda r:(r["race_date"],r["race_id"]))
 
 
