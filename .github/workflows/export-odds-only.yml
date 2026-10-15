@@ -1,0 +1,89 @@
+name: Export odds and race types only (all non-girls races)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/odds_universe_v1/build_odds_only.py'
+      - 'research/odds_universe_v1/test_build_odds_only.py'
+      - '.github/workflows/export-odds-only.yml'
+  schedule:
+    - cron: '21 18 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: odds-and-race-types-only-export
+  cancel-in-progress: false
+
+jobs:
+  export:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Read most recent committed historical odds before aggregating
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Mathematical and data-schema consistency tests
+        run: python research/odds_universe_v1/test_build_odds_only.py
+      - name: Export real 2021-2026 odds without riders, scores or results
+        run: python -u research/odds_universe_v1/build_odds_only.py
+      - name: Audit every compressed data record, avoiding fabricated or dropped price points
+        run: |
+          python - <<'PY'
+          import gzip,json,math,hashlib,itertools,re
+          from pathlib import Path
+          audit=json.loads(Path('data/audits/odds_only_export.json').read_text(encoding='utf-8'))
+          files=sorted(Path('data/odds_only').glob('odds_*.jsonl.gz'))
+          assert len(files)>=5,files
+          assert audit['girls_included'] is False
+          seen=set()
+          counts={}
+          for path in files:
+              count=0
+              with gzip.open(path,'rt',encoding='utf-8') as f:
+                  for line in f:
+                      row=json.loads(line)
+                      assert set(row)=={'race_id','race_type','odds'},row.keys()
+                      assert row['race_id'] not in seen
+                      seen.add(row['race_id'])
+                      assert row['race_type'] and not re.search(r'ガールズ|女子|L級',row['race_type'],re.I)
+                      assert set(row['odds'])=={'3連単','3連複'}
+                      tri=row['odds']['3連単']
+                      trio=row['odds']['3連複']
+                      cars=sorted({int(x) for name in tri for x in name.split('-')})
+                      assert set(tri)=={'-'.join(map(str,x)) for x in itertools.permutations(cars,3)}
+                      assert set(trio)=={'='.join(map(str,x)) for x in itertools.combinations(cars,3)}
+                      assert all(isinstance(o,(int,float)) and math.isfinite(o) and o>=1
+                                 for k in ('3連単','3連複') for o in row['odds'][k].values())
+                      count+=1
+              year=path.name[5:9]
+              assert audit['years'][year]['complete_races']==count
+              assert audit['years'][year]['sha256']==hashlib.sha256(path.read_bytes()).hexdigest()
+              counts[year]=count
+          assert sum(counts.values())==audit['unique_complete_races']
+          assert counts['2023']>1000 and counts['2024']>1000 and counts['2025']>1000
+          print('ODDS_ONLY_DATASET_VALIDATED',counts,flush=True)
+          PY
+      - name: Commit only clean odds data and separate quality audit
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/odds_only/odds_*.jsonl.gz data/audits/odds_only_export.json
+          if git diff --cached --quiet; then
+            echo 'Odds data is unchanged'
+            exit 0
+          fi
+          git commit -m 'data: publish girls-excluded race type and complete final odds only'
+          git pull --rebase origin main
+          git push origin HEAD:main
