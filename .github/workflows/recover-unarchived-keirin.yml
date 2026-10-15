@@ -1,0 +1,71 @@
+name: Recover completely missing races from nationwide calendar
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/odds_universe_v1/recover_unarchived.py'
+      - '.github/workflows/recover-unarchived-keirin.yml'
+      - 'data/audits/nationwide_census_vs_saved.json'
+  schedule:
+    - cron: '05 7 * * *'
+  workflow_dispatch:
+    inputs:
+      limit:
+        type: number
+        default: 100
+
+permissions:
+  contents: write
+
+concurrency:
+  group: recovered-national-calendar-absent-races
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      EVENT: ${{ github.event_name }}
+      LIMIT: ${{ github.event.inputs.limit }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Read latest calendar and previous attempted race IDs
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e '.[scrape]'
+      - name: Fetch missing cards, full markets and separate result labels
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT" == "schedule" ]]; then
+            python research/odds_universe_v1/recover_unarchived.py --limit 120
+          elif [[ "$EVENT" == "push" ]]; then
+            python research/odds_universe_v1/recover_unarchived.py --limit 12
+          else
+            python research/odds_universe_v1/recover_unarchived.py --limit "${LIMIT:-100}"
+          fi
+      - name: Persist with exact provenance
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          for f in Path('data/unarchived_races_v1').rglob('summary.json'):
+              j=json.loads(f.read_text(encoding='utf-8'))
+              assert 0<=j['both_market_and_labels']<=j['complete_odds_books']<=j['race_cards_recovered']<=j['attempted']
+              assert len(j['attempted_ids'])==j['attempted']
+          print('UNARCHIVED_BATCHES_VERIFIED')
+          PY
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/unarchived_races_v1
+          git commit -m 'data: recover previously absent race records with verified historical markets' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
