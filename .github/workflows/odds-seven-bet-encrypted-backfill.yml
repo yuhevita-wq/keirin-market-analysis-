@@ -14,6 +14,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   backfill:
@@ -109,9 +110,54 @@ jobs:
           done
           echo "Failed to publish encrypted seven-bet batch" >&2
           exit 1
-      - name: Require complete source acquisition; partial batches stay encrypted and retryable
+      - name: Warn on incomplete source acquisition; all failures stay in the retry ledger
         if: always() && steps.window.outputs.ready == 'true'
         env:
           ACQUIRE_OUTCOME: ${{ steps.acquire.outcome }}
         run: |
-          test "$ACQUIRE_OUTCOME" = success
+          if [ "$ACQUIRE_OUTCOME" != success ]; then
+            echo "::warning::Partial extraction: incomplete races were not archived and dates were recorded for retry"
+          fi
+
+  continue-backfill:
+    needs: [backfill]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    concurrency:
+      group: seven-bet-odds-self-dispatch
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read latest stored shard cursors
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+      - name: Determine whether any shard has remaining dates or retries
+        id: pending
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          from odds_market.sharded_backfill import choose, SHARD_COUNT
+          remaining = [i for i in range(SHARD_COUNT) if choose(i, 4)]
+          print("pending=" + ("true" if remaining else "false"))
+          print("pending_shards=" + ",".join(map(str, remaining)))
+          PY
+      - name: Start another eight-way collection cycle without depending on flaky cron
+        if: steps.pending.outputs.pending == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "Pending shards: ${{ steps.pending.outputs.pending_shards }}"
+          for attempt in 1 2 3 4 5; do
+            if gh workflow run odds-seven-bet-encrypted-backfill.yml --ref main -f days=4; then
+              echo "Next 8-way cycle dispatched"
+              exit 0
+            fi
+            sleep 8
+          done
+          echo "Could not dispatch next backfill cycle" >&2
+          exit 1
