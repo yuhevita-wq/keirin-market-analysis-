@@ -207,10 +207,10 @@ def auto_week(today):
                 a=json.loads(p.read_text(encoding="utf-8"))["date_range"]
                 done.add((date.fromisoformat(a[0]),date.fromisoformat(a[1])))
             except (ValueError,KeyError):pass
-    start=date(2023,1,1)
+    start=date(2021,1,1)
     yesterday=today-timedelta(days=1)
-    while start<=yesterday:
-        end=min(start+timedelta(days=6),yesterday)
+    while start+timedelta(days=6)<=yesterday:
+        end=start+timedelta(days=6)
         if (start,end) not in done:return start,end
         start=end+timedelta(days=1)
     return None
