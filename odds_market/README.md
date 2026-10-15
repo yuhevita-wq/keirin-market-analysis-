@@ -24,12 +24,12 @@
 `data/odds_only/YYYY/YYYY-MM-DD.csv.gz` に含まれる列:
 
 ```csv
-race_id,bet_type,selection,odds_min,odds_max,odds_time_jst
+race_id,race_type,bet_type,selection,odds_min,odds_max,odds_time_jst
 ```
 
-**race_id** は結合用識別子。**selection** は買い目（例: `1-2-3`）。オッズは倍数。ワイドのレンジだけ `odds_min` と `odds_max` が異なる。確定オッズ以外は取り込まず、人気・投票票数・払戻・選手情報・取得元文章は保存しない。
+**race_id** は結合用識別子、**race_type** はレース固有の見出しから照合した種別（例: A級一般）。**selection** は買い目（例: `1-2-3`）。オッズは倍数。ワイドのレンジだけ `odds_min` と `odds_max` が異なる。確定オッズ以外は取り込まず、人気・投票票数・払戻・選手情報・取得元文章は保存しない。
 
-収集できない組番を推測・平均・補間で埋めず、完全収集できたレースのみ保存します。
+収集できない組番を推測・平均・補間で埋めず、完全収集できたレースのみ保存します。レース固有の見出しからレース種別を確認できない場合、ガールズを確実に除外できないため、そのレースは保存しません。同日ファイルに検証済みの完全な7券種オッズがある場合は、再開時にそのレースを再取得しません。
 
 ## 実行方法
 
@@ -41,7 +41,7 @@ python -m odds_market.test_collect_all_odds
 python odds_market/collect_all_odds.py --start 2024-07-04 --end 2024-07-04 --out data/odds_only --pause 2 --accept-terms
 ```
 
-GitHub Actions: [odds-market](https://github.com/yuhevita-wq/keirin-market-analysis-/actions/workflows/odds-market.yml)。対象日を指定できますが、許諾の確認が必要です。リポジトリは公開中であり、取得した外部オッズを無断でGitコミット・公開artifactにアップロードすることはしません。Actionsの一時ファイルは永続保存ではないため、認可された保存先を別途用意する必要があります。
+GitHub Actions: [odds-market](https://github.com/yuhevita-wq/keirin-market-analysis-/actions/workflows/odds-market.yml)。pushでは7券種のオフライン検証のみが動き、実取得は明示的な許諾確認を伴う手動dispatchでのみ実行します。対象日を指定できますが、取得・保管の許諾の確認が必要です。リポジトリは公開中であり、取得した外部オッズを無断でGitコミット・公開artifactにアップロードすることはしません。Actionsの一時ファイルは永続保存ではないため、認可された保存先を別途用意する必要があります。
 
 ## 15分前と確定オッズ
 
