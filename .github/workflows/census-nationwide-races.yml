@@ -54,7 +54,7 @@ jobs:
         run: |
           set -euo pipefail
           if [[ "$EVENT" == "push" ]]; then
-            python research/odds_universe_v1/nationwide_calendar.py --start 2025-01-01 --end 2025-01-03 --sleep .55
+            python research/odds_universe_v1/nationwide_calendar.py --auto --sleep .55
           elif [[ "$EVENT" == "schedule" || "$MODE" == "auto" ]]; then
             python research/odds_universe_v1/nationwide_calendar.py --auto --sleep .65
           elif [[ "$MODE" == "pilot" ]]; then
