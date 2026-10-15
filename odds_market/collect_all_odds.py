@@ -236,11 +236,11 @@ def three_combinations_from_rank_tables(soup, n):
     return all_odds
 
 
-def parse_all(html, race_id):
+def parse_all(html, race_id, require_final=True):
     soup = BeautifulSoup(html,"html.parser")
     label = soup.get_text(" ",strip=True)
     race_type = race_type_from_page(soup)
-    if "確定オッズ" not in label:
+    if require_final and "確定オッズ" not in label:
         raise ValueError("Odds are not explicitly final")
     matched = DATE_RX.search(label)
     if not matched:
