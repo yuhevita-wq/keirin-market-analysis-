@@ -7,7 +7,7 @@ No undocumented extrapolation of omitted final odds.
 """
 from __future__ import annotations
 import argparse,csv,gzip,hashlib,json,re,math
-from collections import Counter
+from collections import Counter,defaultdict
 from concurrent.futures import ThreadPoolExecutor,as_completed
 from datetime import datetime,timezone
 from pathlib import Path
@@ -43,7 +43,27 @@ def read_candidates():
             if (rid not in known and rid not in done and
                     in_scope(r.get("race_date")) and not girls_race(r.get("race_type"))):
                 found[rid]=r
-    return sorted(found.values(),key=lambda r:(r["race_date"],r["race_id"]))
+    # Alternate available historical years instead of exhausting all 2021
+    # missing records before a single 2022-2026 race can be recovered.
+    years=defaultdict(list)
+    for row in found.values():
+        years[row["race_date"][:4]].append(row)
+    for rows in years.values():
+        rows.sort(key=lambda r:(r["race_date"],r["race_id"]))
+    keys=sorted(years)
+    cursor=defaultdict(int)
+    ordered=[]
+    while keys:
+        remaining=[]
+        for year in keys:
+            i=cursor[year]
+            if i<len(years[year]):
+                ordered.append(years[year][i])
+                cursor[year]+=1
+            if cursor[year]<len(years[year]):
+                remaining.append(year)
+        keys=remaining
+    return ordered
 
 
 def fetch_one(item):
