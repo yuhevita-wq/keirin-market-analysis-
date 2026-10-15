@@ -1,0 +1,57 @@
+name: Backfill S-class entire market gaps 2023 Q1 and 2026 H2
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/odds_universe_v1/backfill.py'
+      - '.github/workflows/backfill-sclass-market.yml'
+  schedule:
+    - cron: '14 4 * * *'
+  workflow_dispatch:
+    inputs:
+      limit:
+        type: number
+        default: 160
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sclass-odds-gap-writer
+  cancel-in-progress: false
+
+jobs:
+  gather:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      EVENT: ${{ github.event_name }}
+      LIMIT: ${{ github.event.inputs.limit }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e '.[scrape]'
+      - name: Backfill missing S-class archived markets with full numeric validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT" == "push" ]]; then
+            python research/odds_universe_v1/backfill.py --auto-s --limit 80 --sleep 0.6 --workers 2 --tag startup-S-coverage
+          elif [[ "$EVENT" == "schedule" ]]; then
+            python research/odds_universe_v1/backfill.py --auto-s --limit 160 --sleep 0.6 --workers 2 --tag recurring-S-coverage
+          else
+            python research/odds_universe_v1/backfill.py --auto-s --limit "${LIMIT:-160}" --sleep 0.6 --workers 2 --tag manual-S-coverage
+          fi
+      - name: Publish append-only S-class batch
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/odds_universe_v1
+          git commit -m 'data: append recovered S-class full markets from archival source gaps' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
