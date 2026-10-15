@@ -41,7 +41,26 @@ python -m odds_market.test_collect_all_odds
 python odds_market/collect_all_odds.py --start 2024-07-04 --end 2024-07-04 --out data/odds_only --pause 2 --accept-terms
 ```
 
-GitHub Actions: [odds-market](https://github.com/yuhevita-wq/keirin-market-analysis-/actions/workflows/odds-market.yml)。pushでは7券種のオフライン検証のみが動き、実取得は明示的な許諾確認を伴う手動dispatchでのみ実行します。対象日を指定できますが、取得・保管の許諾の確認が必要です。リポジトリは公開中であり、取得した外部オッズを無断でGitコミット・公開artifactにアップロードすることはしません。Actionsの一時ファイルは永続保存ではないため、認可された保存先を別途用意する必要があります。
+GitHub Actions:
+- [単体7券種取得・暗号化実証](https://github.com/yuhevita-wq/keirin-market-analysis-/actions/workflows/odds-seven-bet-authorized-pilot.yml)
+- [認可済み全期間の暗号化・再開可能な定期収集](https://github.com/yuhevita-wq/keirin-market-analysis-/actions/workflows/odds-seven-bet-encrypted-backfill.yml)
+- [7券種オフライン検証と従来の手動試験](https://github.com/yuhevita-wq/keirin-market-analysis-/actions/workflows/odds-market.yml)
+
+**2026-10-15の実サイト検証:** 2024-07-04 小松島1R（9車）で7券種の全783組番を取得し、AES-256-GCMで暗号化保存。取得1件の実証にすぎず、全国網羅は別途監査する。定期収集は2021-01-01〜2026-06-30（ガールズ除外）を1回2日ずつ進め、実績が0件の失敗が3回続くと停止し、欠損日を記録して後から再試行する。
+
+公開GitHubに生のオッズや暗号化秘密鍵は置かない。取得した完全オッズは `data/odds_ciphertext/YYYY/YYYY-MM-DD/RUN_ID.p7m` に**暗号文だけ**を保存する。進捗や失敗日のメタデータは `data/audits/odds_seven_bet_cursor.json`。レースID以外の選手名・結果・払戻・得点・ライン情報は分析ファイルに保存しない。
+
+保管形式の復号（個人で秘密鍵を安全に管理すること）:
+
+```bash
+openssl cms -decrypt -binary -inform DER \
+  -in data/odds_ciphertext/2024/2024-07-04/38713793808.p7m \
+  -recip odds_market/vault_public_cert.pem \
+  -inkey keirin_odds_private.pem \
+  -out decoded_odds.csv.gz
+```
+
+`keirin_odds_private.pem` はチャット経由で別渡しする復号用の秘密鍵。**GitHubにアップロードしない。紛失すると暗号化済みオッズを復元できない。**
 
 ## 15分前と確定オッズ
 
