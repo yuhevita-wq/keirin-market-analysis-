@@ -63,6 +63,22 @@ def test_complete_market_and_no_lookahead():
     assert year_of(metadata,rid)=="2025"
 
 
+def test_scope_2026_first_half_and_girls():
+    rid="1320260701010001"
+    excluded=row(rid,"2026-07-01","S級予選")
+    prices=make_market(rid)
+    cars={rid:set(range(1,5))}
+    klasses={rid:["S1"]*4}
+    assert market_rows_to_record(rid,prices,{rid:excluded},cars,klasses)[0] is None
+    assert year_of(excluded,rid) is None
+    included=row(rid,"2026-06-30","S級予選")
+    assert market_rows_to_record(rid,prices,{rid:included},cars,klasses)[0] is not None
+    assert year_of(included,rid)=="2026"
+    women=row(rid,"2026-06-30","ガールズ決勝")
+    assert market_rows_to_record(rid,prices,{rid:women},cars,
+                                 {rid:["L1"]*4})[0] is None
+
+
 def test_dedup_and_gzip_real_export():
     rid="1320250101010001"
     kind="3連単"
@@ -101,6 +117,7 @@ def test_dedup_and_gzip_real_export():
 
 if __name__=="__main__":
     test_normalization_and_exclusion()
+    test_scope_2026_first_half_and_girls()
     test_complete_market_and_no_lookahead()
     test_dedup_and_gzip_real_export()
     print("ODDS_AND_RACE_TYPE_ONLY_EXPORT_TESTS_PASSED")
