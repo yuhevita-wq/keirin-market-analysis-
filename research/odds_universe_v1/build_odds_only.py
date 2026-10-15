@@ -377,10 +377,30 @@ def main():
         absent_race_shards(db,summary)
         products=export(db,summary,args.output)
         db.close()
+    # A single portable file for this request. Concatenated gzip streams
+    # are standard gzip and gzip.open reads every member transparently.
+    combined_path = args.output / "odds_all.jsonl.gz"
+    combined_size = sum((args.output / p["file"]).stat().st_size for p in products.values())
+    if combined_size <= 90_000_000:
+        with combined_path.open("wb") as dest:
+            for year in sorted(products):
+                with (args.output / products[year]["file"]).open("rb") as src:
+                    import shutil
+                    shutil.copyfileobj(src, dest)
+        combined = {"file":combined_path.name,
+                    "complete_races":sum(p["complete_races"] for p in products.values()),
+                    "bytes":combined_path.stat().st_size,
+                    "sha256":hashlib.sha256(combined_path.read_bytes()).hexdigest(),
+                    "compression":"concatenated_gzip_members"}
+    else:
+        if combined_path.exists():
+            combined_path.unlink()
+        combined = {"file":None,"reason":"all-years compressed file would approach GitHub per-file size limit; use yearly files"}
     report={
         "schema":"odds_and_race_type_only_v1",
         "generated_utc":datetime.now(timezone.utc).isoformat(),
         "years":products,
+        "all_years":combined,
         "unique_complete_races":summary.get("unique_complete_races",0),
         "supported_odds_types":list(SUPPORTED),
         "field_names":["race_id","race_type","odds"],
