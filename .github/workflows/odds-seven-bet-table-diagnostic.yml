@@ -1,0 +1,51 @@
+name: Diagnose historical KDreams odds table structure
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/odds-seven-bet-table-diagnostic.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect-structure:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install requests beautifulsoup4
+      - name: Extract table structural diagnostics without odds prices
+        run: |
+          python - <<'PY'
+          import re,requests
+          from bs4 import BeautifulSoup
+          url='https://keirin.kdreams.jp/racedetail/7320240704010001/?pageType=odds'
+          r=requests.get(url,timeout=35,headers={'User-Agent':'Keirin-Research-Odds-Collector/1.0'})
+          r.raise_for_status()
+          soup=BeautifulSoup(r.text,'html.parser')
+          print('TABLE_COUNT',len(soup.find_all('table')))
+          print('ODDS_TABLE',len(soup.select('table.odds_table')))
+          print('ODDS_HEADER',len(soup.select('div.odds_header')))
+          pat=re.compile(r'[1-9]=[1-9]=[1-9]')
+          for i,t in enumerate(soup.find_all('table')):
+              content=t.get_text(' ',strip=True)
+              n=len(pat.findall(content))
+              if n==0:continue
+              chain=[]
+              node=t
+              for depth in range(5):
+                  if node is None:break
+                  ident=str(node.get('id',''))[:50]
+                  cls='.'.join(node.get('class',[]))[:100]
+                  chain.append(f'{node.name}#{ident}.{cls}')
+                  node=node.parent
+              previous=t.find_previous(['h1','h2','h3','h4'])
+              prev=previous.get_text(' ',strip=True)[:90] if previous else ''
+              rows=t.find_all('tr')
+              columns=[len(row.find_all(['th','td'],recursive=False)) for row in rows[:5]]
+              print('TRIPLE_TABLE',i,'matches',n,'rows',len(rows),'cells',columns,
+                    'prior_heading',prev,'chain',' / '.join(chain))
+          PY
