@@ -53,8 +53,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [[ "$EVENT" == "push" || "$MODE" == "pilot" ]]; then
-            python research/odds_universe_v1/girls_discover.py --start 2025-01-01 --end 2025-01-03 --sleep 0.35
+          if [[ "$EVENT" == "push" ]]; then
+            python research/odds_universe_v1/girls_discover.py --auto --sleep 0.45
+          elif [[ "$MODE" == "pilot" ]]; then
+            python research/odds_universe_v1/girls_discover.py --start 2025-01-04 --end 2025-01-06 --sleep 0.45
           elif [[ "$EVENT" == "schedule" || "$MODE" == "auto" ]]; then
             python research/odds_universe_v1/girls_discover.py --auto --sleep 0.45
           elif [[ "$MODE" == "dated" ]]; then
