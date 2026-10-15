@@ -52,7 +52,15 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add data/audits/nationwide_census_vs_saved.json
           git commit -m 'data: publish actual public-calendar IDs missing from all stored racing archives' || exit 0
-          git pull --rebase origin main
-          git push origin HEAD:main
+          for attempt in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              echo "Published on attempt $attempt"
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "Git push race after six attempts" >&2
+          exit 1
 
 # Trigger re-audit after the first full 2021 month was archived.
