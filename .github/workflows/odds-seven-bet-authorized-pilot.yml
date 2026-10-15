@@ -1,0 +1,78 @@
+name: Authorized live seven-bet odds acquisition pilot
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/odds-seven-bet-authorized-pilot.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: authorized-seven-bet-live-pilot
+  cancel-in-progress: false
+
+jobs:
+  live-pilot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install collector dependencies
+        run: python -m pip install requests beautifulsoup4
+      - name: Assert complete odds matrix tests before touching the live site
+        run: python -m odds_market.test_collect_all_odds
+      - name: Collect authorized final odds, all sold bet types, one completed day
+        id: collect
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          python -u odds_market/collect_all_odds.py \
+            --start 2024-07-04 \
+            --end 2024-07-04 \
+            --out "$RUNNER_TEMP/private_odds" \
+            --pause 2 \
+            --accept-terms 2>&1 | tee "$RUNNER_TEMP/collector.log"
+      - name: Publish counts and diagnostic summary, never publish source odds
+        if: always()
+        env:
+          COLLECT_OUTCOME: ${{ steps.collect.outcome }}
+        run: |
+          python - <<'PY'
+          import csv,gzip,os
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP'])/'private_odds'
+          files=sorted(root.rglob('*.csv.gz'))
+          ids=set()
+          kinds=set()
+          total=0
+          for p in files:
+              with gzip.open(p,'rt',encoding='utf-8',newline='') as f:
+                  for row in csv.DictReader(f):
+                      total+=1
+                      ids.add(row['race_id'])
+                      kinds.add(row['bet_type'])
+          lines=[
+              '## Authorized 7-bet pilot (2024-07-04)',
+              f"- Collector outcome: {os.environ['COLLECT_OUTCOME']}",
+              f'- Verified complete races: {len(ids)}',
+              f'- Verified odds combination rows: {total}',
+              f"- Observed bet types: {', '.join(sorted(kinds)) or 'none'}",
+              '- Source odds remain in the job temporary filesystem; this public repository does not redistribute them.',
+              '- This pilot alone does not establish nationwide coverage or durable private storage.',
+          ]
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf-8') as out:
+              out.write('\n'.join(lines)+'\n')
+          print('\n'.join(lines),flush=True)
+          PY
+      - name: Fail visibly when no full-market extraction succeeded
+        if: always()
+        env:
+          COLLECT_OUTCOME: ${{ steps.collect.outcome }}
+        run: |
+          test "$COLLECT_OUTCOME" = success
