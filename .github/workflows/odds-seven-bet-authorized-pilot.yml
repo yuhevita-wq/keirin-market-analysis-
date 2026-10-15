@@ -65,8 +65,8 @@ jobs:
               f'- Verified complete races: {len(ids)}',
               f'- Verified odds combination rows: {total}',
               f"- Observed bet types: {', '.join(sorted(kinds)) or 'none'}",
-              '- Source odds remain in the job temporary filesystem; this public repository does not redistribute them.',
-              '- This pilot alone does not establish nationwide coverage or durable private storage.',
+              '- Source odds are sealed with AES-256-GCM before Git storage; plaintext is not published.',
+              '- This pilot does not establish nationwide coverage; archive decryption requires the private key.',
           ]
           with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf-8') as out:
               out.write('\n'.join(lines)+'\n')
