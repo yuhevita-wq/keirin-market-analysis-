@@ -1,4 +1,4 @@
-name: Backfill S-class entire market gaps 2023 Q1 and 2026 H2
+name: Backfill S-class entire market gaps (through 2026 H1)
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
       - 'research/odds_universe_v1/backfill.py'
       - '.github/workflows/backfill-sclass-market.yml'
   schedule:
-    - cron: '14 4 * * *'
+    - cron: '14 4,16 * * *'
   workflow_dispatch:
     inputs:
       limit:
@@ -45,7 +45,7 @@ jobs:
         run: |
           set -euo pipefail
           if [[ "$EVENT" == "push" ]]; then
-            python research/odds_universe_v1/backfill.py --auto-s --limit 80 --sleep 0.6 --workers 2 --tag startup-S-coverage
+            python research/odds_universe_v1/backfill.py --auto-s --limit 160 --sleep 0.6 --workers 2 --tag startup-S-coverage
           elif [[ "$EVENT" == "schedule" ]]; then
             python research/odds_universe_v1/backfill.py --auto-s --limit 160 --sleep 0.6 --workers 2 --tag recurring-S-coverage
           else
