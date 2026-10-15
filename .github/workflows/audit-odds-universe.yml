@@ -1,0 +1,45 @@
+name: Audit entire historical race universe
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - research/odds_universe_v1/inventory.py
+      - .github/workflows/audit-odds-universe.yml
+
+permissions:
+  contents: write
+
+jobs:
+  inventory:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Inspect all source CSVs and grade ZIP contents
+        run: python research/odds_universe_v1/inventory.py
+      - name: Assert source coverage accounting
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('data/audits/odds_universe_inventory.json').read_text())
+          assert r['source_counts']['csv_datasets']>=30
+          assert r['source_counts']['zip_archives']>=20
+          assert r['source_counts']['distinct_race_ids_across_sources']>20000
+          print('VALIDATED',r['source_counts'])
+          PY
+      - name: Commit coverage inventory
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/odds_universe_inventory.json
+          git commit -m 'data: publish all-grade race and market gap inventory' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
