@@ -336,7 +336,7 @@ def discover(session, day, pause):
     return urls
 
 
-def collect(start,end,output,pause):
+def collect(start,end,output,pause,only_race_id=None):
     if start<START_DATE or end>LAST_DATE:
         raise ValueError("research scope ends 2026-06-30; 2026 second half excluded")
     session=requests.Session()
@@ -355,6 +355,8 @@ def collect(start,end,output,pause):
             failures+=1
             continue
         for rid,url in sorted(url_map.items()):
+            if only_race_id is not None and rid != only_race_id:
+                continue
             if rid in completed:
                 continue
             try:
@@ -389,15 +391,18 @@ def main():
     p.add_argument("--end",type=date.fromisoformat,required=True)
     p.add_argument("--out",type=Path,default=Path("data/odds_only"))
     p.add_argument("--pause",type=float,default=2)
+    p.add_argument("--race-id",default=None,help="Optional single 16-digit ID for live smoke tests")
     p.add_argument("--accept-terms",action="store_true",
                    help="Confirm permission to collect and store source odds")
     args=p.parse_args()
+    if args.race_id is not None and not re.fullmatch(r'\d{16}', args.race_id):
+        p.error('Invalid race-id')
     if not args.accept_terms:
         p.error("Check and obtain source data collection/storage permission before running; specify --accept-terms")
     if (args.pause<2 or args.end<args.start or args.start<START_DATE
             or args.end>LAST_DATE or args.end>=datetime.now(JST).date()):
         p.error("Dates must be completed within 2021-01-01..2026-06-30 and pause >= 2 seconds")
-    collect(args.start,args.end,args.out,args.pause)
+    collect(args.start,args.end,args.out,args.pause,args.race_id)
 
 
 if __name__=="__main__":
