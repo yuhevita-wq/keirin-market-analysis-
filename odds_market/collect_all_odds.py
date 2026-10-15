@@ -14,6 +14,7 @@ import re
 import sys
 import time
 from datetime import date, datetime, timedelta, timezone
+from collections import defaultdict
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
@@ -26,11 +27,73 @@ DATE_RX = re.compile(r"(20\d\d)年\s*(\d{1,2})月\s*(\d{1,2})日\s*レース詳�
 RANK_TRIPLE = re.compile(r"(?<!\d)([1-9])\s*=\s*([1-9])\s*=\s*([1-9])\s+([\d,]+(?:\.\d+)?)")
 WIDE_RX = re.compile(r"^\s*([\d,]+(?:\.\d+)?)\s*[～〜~\-]\s*([\d,]+(?:\.\d+)?)\s*$")
 SINGLE_RX = re.compile(r"^\s*[\d,]+(?:\.\d+)?\s*$")
-FIELDS = ("race_id", "bet_type", "selection", "odds_min", "odds_max", "odds_time_jst")
+FIELDS = ("race_id", "race_type", "bet_type", "selection", "odds_min", "odds_max", "odds_time_jst")
 ALL_TYPES = ("3rentan","3renpuku","2shatan","2shafuku","wide","2wakutan","2wakufuku")
 JST = timezone(timedelta(hours=9))
 START_DATE = date(2021,1,1)
 LAST_DATE = date(2026,6,30)
+GIRLS_RX = re.compile(r"ガールズ|女子|(?:^|\W)[ＬL]級")
+RACE_TYPE_RX = re.compile(
+    r"(?:[ＳＡSA]級|チャレンジ|[ＧG][123１２３]|[ＦF][12１２])"
+    r"[^\s、。｜|（）()\[\]<>]{0,14}"
+)
+
+
+class ExcludedRace(ValueError):
+    """A girls race, not a failed men's odds extraction."""
+
+
+def race_type_from_page(soup):
+    """Use race-specific headings, not general site menus or car-count guesses."""
+    headings = [node.get_text(" ", strip=True) for node in
+                soup.select("h1,h2,h3,h4,.raceTitle,.race_title,.race-title,.raceInfo,.race-info")]
+    if any(GIRLS_RX.search(h) for h in headings):
+        raise ExcludedRace("girls race excluded")
+    for heading in headings:
+        m = RACE_TYPE_RX.search(heading)
+        if m:
+            return m.group(0)
+    raise ValueError("Race type not verified from race-specific heading")
+
+
+def complete_saved_races(path):
+    """Recover only already-verified full seven-bet books on restart."""
+    if not path.exists():
+        return {}
+    grouped = defaultdict(list)
+    with gzip.open(path, "rt", encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+        if tuple(reader.fieldnames or ()) != FIELDS:
+            raise ValueError(f"Existing odds file schema differs: {path}")
+        for row in reader:
+            grouped[row["race_id"]].append(row)
+    out = {}
+    for rid, records in grouped.items():
+        types = {r["race_type"] for r in records}
+        if len(types) != 1 or not next(iter(types)):
+            continue
+        try:
+            cars = {int(x) for r in records if r["bet_type"] == "3rentan"
+                    for x in r["selection"].split("-")}
+            exp = expected(len(cars))
+            if cars != set(range(1, len(cars)+1)):
+                continue
+            found = defaultdict(set)
+            for row in records:
+                kind = row["bet_type"]
+                key = tuple(map(int, row["selection"].split("-")))
+                if kind not in exp or key not in exp[kind] or key in found[kind]:
+                    raise ValueError("invalid or duplicate saved quote")
+                if (float(row["odds_min"]) < 1 or
+                    float(row["odds_max"]) < float(row["odds_min"]) or
+                    not math.isfinite(float(row["odds_max"]))):
+                    raise ValueError("invalid saved odds value")
+                found[kind].add(key)
+            if all(found[kind] == keys for kind, keys in exp.items()):
+                out[rid] = [tuple(row[field] for field in FIELDS) for row in records]
+        except (ValueError, TypeError, OverflowError):
+            continue
+    return out
 
 
 def text_cells(tr):
@@ -173,6 +236,7 @@ def three_combinations_from_rank_tables(soup, n):
 def parse_all(html, race_id):
     soup = BeautifulSoup(html,"html.parser")
     label = soup.get_text(" ",strip=True)
+    race_type = race_type_from_page(soup)
     if "確定オッズ" not in label:
         raise ValueError("Odds are not explicitly final")
     matched = DATE_RX.search(label)
@@ -240,11 +304,11 @@ def parse_all(html, race_id):
             if kind not in exp:
                 continue
             for key, (low,high) in sorted(found[kind].items()):
-                result.append((race_id,kind,"-".join(map(str,key)),low,high,stamp))
+                result.append((race_id,race_type,kind,"-".join(map(str,key)),low,high,stamp))
         if len(result) != sum(len(choices) for choices in exp.values()):
             raise AssertionError("Incomplete all-odds count")
         return result
-    raise ValueError("No complete 7-car or 9-car market found")
+    raise ValueError("No complete supported 5/6/7/9-car market found")
 
 
 def discover(session, day, pause):
@@ -280,7 +344,10 @@ def collect(start,end,output,pause):
     failures=0
     for offset in range((end-start).days+1):
         day=start+timedelta(days=offset)
-        success=[]
+        path=output/day.strftime("%Y")/(day.isoformat()+".csv.gz")
+        completed=complete_saved_races(path)
+        success=[row for records in completed.values() for row in records]
+        skipped_girls=0
         try:
             url_map=discover(session,day,pause)
         except Exception as exc:
@@ -288,17 +355,20 @@ def collect(start,end,output,pause):
             failures+=1
             continue
         for rid,url in sorted(url_map.items()):
+            if rid in completed:
+                continue
             try:
                 time.sleep(pause)
                 response=session.get(url,timeout=35)
                 response.raise_for_status()
                 lines=parse_all(response.text,rid)
                 success.extend(lines)
+            except ExcludedRace:
+                skipped_girls += 1
             except Exception as exc:
                 failures+=1
                 print(day,rid,"INCOMPLETE",str(exc),file=sys.stderr,flush=True)
         if success:
-            path=output/day.strftime("%Y")/(day.isoformat()+".csv.gz")
             path.parent.mkdir(parents=True,exist_ok=True)
             temp=path.with_suffix(".csv.gz.tmp")
             with gzip.open(temp,"wt",encoding="utf-8",newline="") as f:
@@ -307,7 +377,8 @@ def collect(start,end,output,pause):
                 writer.writerows(success)
             temp.replace(path)
         print(day,"complete_races",len(set(r[0] for r in success)),
-              "discovered_races",len(url_map),"odds_rows",len(success),flush=True)
+              "discovered_races",len(url_map),"girls_skipped",skipped_girls,
+              "resumed_races",len(completed),"odds_rows",len(success),flush=True)
     if failures:
         raise SystemExit(f"Incomplete collection; {failures} failures. No fabricated odds.")
 
