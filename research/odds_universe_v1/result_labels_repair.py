@@ -17,6 +17,7 @@ from keirin_market_analysis.s_yosen_2025 import fetch_html,make_session
 from keirin_market_analysis.results_payouts_2025 import result_url,parse_result_rows,parse_payout_rows
 
 from backfill import ROOT,source_dirs,csv_read
+from scope import eligible
 
 BASE=ROOT/"data/recovered_result_labels_v1"
 OUTCOME_FIELDS=[
@@ -64,7 +65,7 @@ def choose(limit,source=None,offset=0):
         key="A12" if "/a_class_12/" in str(folder) else "A3" if "/a3_challenge/" in str(folder) else "S"
         for race in csv_read(folder/"races.csv"):
             rid=race.get("race_id")
-            if rid and rid not in good and rid not in attempted:
+            if rid and rid not in good and rid not in attempted and eligible(race):
                 candidates[key].append((folder,race))
     for k in candidates:
         candidates[k].sort(key=lambda z:(z[1].get("race_date",""),str(z[0]),z[1]["race_id"]))
@@ -84,6 +85,8 @@ def choose(limit,source=None,offset=0):
 
 
 def fetch_one(race,expected_cars):
+    if not eligible(race):
+        raise ValueError("result labels out of scope or girls race")
     url=result_url(race.get("source_url",""))
     if urlsplit(url).netloc!="keirin.kdreams.jp" or not re.fullmatch(r"\d{16}",race.get("race_id","")):
         raise ValueError("untrusted result endpoint")
