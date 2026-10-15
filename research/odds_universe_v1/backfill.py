@@ -59,37 +59,27 @@ def used_rids(source):
 
 
 def choose_auto(limit):
-    """Deterministic balancing: rotate through each A1/A2 and A3 dataset.
-    Only one workflow writer is permitted; no invisible global cursor.
-    """
+    """Balanced A1/A2 and A3 coverage. Resumable from immutable manifests."""
     catalogs={"a_class_12":[],"a3_challenge":[]}
+    ledger={}
     for src in source_dirs():
-        x=src.relative_to(ROOT).parts[1]
+        family=src.relative_to(ROOT).parts[1]
+        ledger[src]=used_rids(src)
         for r in csv_read(src/"races.csv"):
-            if r.get("race_id"):
-                catalogs[x].append((r.get("race_date",""),src,r))
-    for x in catalogs:
-        catalogs[x].sort(key=lambda z:(z[0],str(z[1]),z[2]["race_id"]))
-    selected=[]
+            if r.get("race_id") and r["race_id"] not in ledger[src]:
+                catalogs[family].append((r.get("race_date",""),src,r))
+    for family in catalogs:
+        catalogs[family].sort(key=lambda z:(z[0],str(z[1]),z[2]["race_id"]))
+    quotas={"a_class_12":limit//2+limit%2,"a3_challenge":limit//2}
+    chosen=[]
     for family in ("a_class_12","a3_challenge"):
-        attempts=set()
-        for _,src,r in catalogs[family]:
-            if src not in attempts:
-                attempts.add(src)
-            if r["race_id"] in used_rids(src):
-                continue
-            selected.append((src,r))
-            if len(selected)>=limit:
-                break
-    # The first half of this routine may be skewed towards A1/A2.
-    # Reserve at least one slot for A3 if any exist.
-    if limit>1 and selected and all(x[0].parts[-2]!="a3_challenge" for x in selected):
-        for _,src,r in catalogs["a3_challenge"]:
-            if r["race_id"] not in used_rids(src):
-                selected[-1]=(src,r)
-                break
-    return selected[:limit]
-
+        chosen += [(src,r) for _,src,r in catalogs[family][:quotas[family]]]
+    if len(chosen)<limit:
+        already={(str(src),r["race_id"]) for src,r in chosen}
+        extra=[(src,r) for family in ("a_class_12","a3_challenge")
+               for _,src,r in catalogs[family] if (str(src),r["race_id"]) not in already]
+        chosen += extra[:limit-len(chosen)]
+    return chosen[:limit]
 
 def validate(race,entrants,three,trio):
     n=len(entrants)
