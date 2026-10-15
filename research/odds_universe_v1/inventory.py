@@ -90,8 +90,8 @@ def inspect_zip(zippath,totals):
                 with z.open(name) as raw:
                     f=io.TextIOWrapper(raw,encoding="utf-8-sig",newline="")
                     rows=list(csv.DictReader(f))
-                has3=any(x.rsplit("/",1)[0] == parent and x.rsplit("/",1)[-1].startswith("trifecta_final_odds") for x in names)
-                has2=any(x.rsplit("/",1)[0] == parent and x.rsplit("/",1)[-1]=="trio_final_odds.csv" for x in names)
+                has3=any((x.rsplit("/",1)[0] if "/" in x else "") == parent and x.rsplit("/",1)[-1].startswith("trifecta_final_odds") for x in names)
+                has2=any((x.rsplit("/",1)[0] if "/" in x else "") == parent and x.rsplit("/",1)[-1]=="trio_final_odds.csv" for x in names)
                 yy,dup=tally(rows,result_ids,name,has3 and has2,totals)
                 zreport["race_members"].append({"member":name,"by_year":yy,
                     "has_entries_csv":(parent+"/entries.csv" if parent else "entries.csv") in names,
