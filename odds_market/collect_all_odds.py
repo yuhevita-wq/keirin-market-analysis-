@@ -29,6 +29,8 @@ SINGLE_RX = re.compile(r"^\s*[\d,]+(?:\.\d+)?\s*$")
 FIELDS = ("race_id", "bet_type", "selection", "odds_min", "odds_max", "odds_time_jst")
 ALL_TYPES = ("3rentan","3renpuku","2shatan","2shafuku","wide","2wakutan","2wakufuku")
 JST = timezone(timedelta(hours=9))
+START_DATE = date(2021,1,1)
+LAST_DATE = date(2026,6,30)
 
 
 def text_cells(tr):
@@ -271,6 +273,8 @@ def discover(session, day, pause):
 
 
 def collect(start,end,output,pause):
+    if start<START_DATE or end>LAST_DATE:
+        raise ValueError("research scope ends 2026-06-30; 2026 second half excluded")
     session=requests.Session()
     session.headers.update({"User-Agent":"Keirin-Research-Odds-Collector/1.0"})
     failures=0
@@ -319,8 +323,9 @@ def main():
     args=p.parse_args()
     if not args.accept_terms:
         p.error("Check and obtain source data collection/storage permission before running; specify --accept-terms")
-    if args.pause<2 or args.end<args.start or args.end>=datetime.now(JST).date():
-        p.error("Dates must be completed before today, with pause >= 2 seconds")
+    if (args.pause<2 or args.end<args.start or args.start<START_DATE
+            or args.end>LAST_DATE or args.end>=datetime.now(JST).date()):
+        p.error("Dates must be completed within 2021-01-01..2026-06-30 and pause >= 2 seconds")
     collect(args.start,args.end,args.out,args.pause)
 
 
