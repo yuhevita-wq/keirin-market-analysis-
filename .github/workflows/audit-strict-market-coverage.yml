@@ -1,0 +1,46 @@
+name: Strict numeric market completeness audit (all classes and grades)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/odds_universe_v1/strict_coverage.py'
+      - '.github/workflows/audit-strict-market-coverage.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  strict:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Examine each exact trifecta/trio combination in all archives
+        run: python research/odds_universe_v1/strict_coverage.py
+      - name: Validate accounting
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('data/audits/strict_market_coverage.json',encoding='utf-8'))
+          assert len(r['sources'])>=70,len(r['sources'])
+          for key,part in r['family_source_row_counts'].items():
+              c=part
+              assert c.get('full_numeric_odds',0)+c.get('no_odds',0)+c.get('partial_or_invalid_odds',0)+c.get('incomplete_entries',0)==c.get('races',0),(key,c)
+              assert c.get('labelled_and_full_odds',0)<=c.get('full_numeric_odds',0)
+          print('STRICT_MARKET_COVERAGE_VALIDATED')
+          PY
+      - name: Commit audited results
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/strict_market_coverage.json
+          git commit -m 'data: publish strict per-race market completeness and gap audit' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
