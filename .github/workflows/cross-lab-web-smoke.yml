@@ -16,7 +16,7 @@ jobs:
         run: |
           set -euo pipefail
           BASE="https://yuhevita-wq.github.io/keirin-market-analysis-/cross-lab"
-          RELEASE="cross-lab-competition-audit-v3.1-20261015"
+          RELEASE="cross-context-reasoning-v4-20261015"
           echo "Checking $BASE"
           for attempt in $(seq 1 45); do
             marker=$(curl -fsSL --max-time 10 "$BASE/release.txt" 2>/dev/null || true)
