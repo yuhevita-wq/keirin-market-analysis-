@@ -1,0 +1,428 @@
+{
+  "status": "ODDS_ONLY_EXPLORATORY_FINAL_ODDS_RESEARCH",
+  "features_only": [
+    "trifecta_final_odds.csv",
+    "trio_final_odds.csv"
+  ],
+  "label_only": "results.csv winning order; never used for feature construction",
+  "no_race_cards_or_lineup_or_score": true,
+  "results_by_year": {
+    "2023": 4199,
+    "2024": 5084,
+    "2025": 5070,
+    "2026": 2523
+  },
+  "skipped": {
+    "invalid_or_incomplete": 195,
+    "duplicates": 4608
+  },
+  "training": "2023 train, 2024 tune, 2025 OOT with 2023-24 training, 2026 OOT with 2023-25 training",
+  "features": [
+    "market_logprob_temperature",
+    "trifecta_set_minus_trio_set_logprob",
+    "cross_market_gap_x_set_popularity",
+    "cross_market_gap_x_order_surprise",
+    "order_conditional_popularity",
+    "pair12_dependence",
+    "pair23_dependence",
+    "pair13_dependence",
+    "trio_set_logpop"
+  ],
+  "lambda_trials": {
+    "temp": [
+      {
+        "lambda": 0.002,
+        "logloss_2024": 4.138423919677734
+      },
+      {
+        "lambda": 0.01,
+        "logloss_2024": 4.138445854187012
+      },
+      {
+        "lambda": 0.05,
+        "logloss_2024": 4.138615608215332
+      },
+      {
+        "lambda": 0.2,
+        "logloss_2024": 4.139001846313477
+      }
+    ],
+    "cross": [
+      {
+        "lambda": 0.002,
+        "logloss_2024": 4.140299320220947
+      },
+      {
+        "lambda": 0.01,
+        "logloss_2024": 4.13960599899292
+      },
+      {
+        "lambda": 0.05,
+        "logloss_2024": 4.138972282409668
+      },
+      {
+        "lambda": 0.2,
+        "logloss_2024": 4.13908576965332
+      }
+    ],
+    "full": [
+      {
+        "lambda": 0.002,
+        "logloss_2024": 4.139723300933838
+      },
+      {
+        "lambda": 0.01,
+        "logloss_2024": 4.138919830322266
+      },
+      {
+        "lambda": 0.05,
+        "logloss_2024": 4.138117790222168
+      },
+      {
+        "lambda": 0.2,
+        "logloss_2024": 4.138159275054932
+      }
+    ]
+  },
+  "lambda_selected": {
+    "temp": 0.002,
+    "cross": 0.05,
+    "full": 0.05
+  },
+  "trio_alpha_trials": [
+    {
+      "alpha": 0,
+      "validation_2024": 2.675691663703859
+    },
+    {
+      "alpha": 0.25,
+      "validation_2024": 2.6687170676625778
+    },
+    {
+      "alpha": 0.5,
+      "validation_2024": 2.6630688963596514
+    },
+    {
+      "alpha": 0.75,
+      "validation_2024": 2.658686226489292
+    },
+    {
+      "alpha": 1,
+      "validation_2024": 2.6555136841013924
+    },
+    {
+      "alpha": 1.25,
+      "validation_2024": 2.6535009964719323
+    }
+  ],
+  "trio_alpha_selected": 1.25,
+  "models": {
+    "2024": {
+      "market": {
+        "n": 5084,
+        "logloss": 4.139492511749268,
+        "brier": 0.9616235494613647,
+        "top_choice_pct": 10.877261998426437
+      },
+      "temp": {
+        "n": 5084,
+        "logloss": 4.138423919677734,
+        "brier": 0.9616161584854126,
+        "top_choice_pct": 10.877261998426437
+      },
+      "cross": {
+        "n": 5084,
+        "logloss": 4.138972282409668,
+        "brier": 0.9616000056266785,
+        "top_choice_pct": 10.877261998426437
+      },
+      "full": {
+        "n": 5084,
+        "logloss": 4.138117790222168,
+        "brier": 0.9615393280982971,
+        "top_choice_pct": 10.798583792289536
+      },
+      "temp_minus_market": {
+        "gain_positive_is_better": 0.001068709883838892,
+        "race_date_clusters": 364,
+        "cluster_standard_error": 0.0005709596869559393,
+        "approx_95pct_ci": [
+          -5.037110259474911e-05,
+          0.002187790870272533
+        ]
+      },
+      "cross_minus_market": {
+        "gain_positive_is_better": 0.0005202446482144296,
+        "race_date_clusters": 364,
+        "cluster_standard_error": 0.0003586921068464247,
+        "approx_95pct_ci": [
+          -0.00018279188120456273,
+          0.001223281177633422
+        ]
+      },
+      "full_minus_market": {
+        "gain_positive_is_better": 0.0013747804332524538,
+        "race_date_clusters": 364,
+        "cluster_standard_error": 0.000652062893997753,
+        "approx_95pct_ci": [
+          9.6737161016858e-05,
+          0.0026528237054880494
+        ]
+      },
+      "full_minus_cross": {
+        "gain_positive_is_better": 0.0008545357850380242,
+        "race_date_clusters": 364,
+        "cluster_standard_error": 0.00043645829443042045,
+        "approx_95pct_ci": [
+          -9.22472045599863e-07,
+          0.0017099940421216482
+        ]
+      },
+      "trio_market": {
+        "n": 5084,
+        "logloss": 2.675691663703859,
+        "brier": 0.8787120943764455
+      },
+      "trio_tri3_aggregate": {
+        "n": 5084,
+        "logloss": 2.6555136841013924,
+        "brier": 0.8770578806438754
+      },
+      "trio_alpha_blend": {
+        "n": 5084,
+        "logloss": 2.6535009964719323,
+        "brier": 0.8770277158750689
+      },
+      "trio_blend_alpha_tuned_on_2024": 1.25,
+      "coefficient_vectors": {
+        "temp": {
+          "market_logprob_temperature": 0.154633
+        },
+        "cross": {
+          "market_logprob_temperature": 0.100585,
+          "trifecta_set_minus_trio_set_logprob": -0.043785,
+          "cross_market_gap_x_set_popularity": -0.008337,
+          "cross_market_gap_x_order_surprise": -0.000833
+        },
+        "full": {
+          "market_logprob_temperature": 0.039136,
+          "trifecta_set_minus_trio_set_logprob": -0.055419,
+          "cross_market_gap_x_set_popularity": -0.004882,
+          "cross_market_gap_x_order_surprise": -0.001767,
+          "order_conditional_popularity": 0.012618,
+          "pair12_dependence": 0.052424,
+          "pair23_dependence": -0.036128,
+          "pair13_dependence": 0.039425,
+          "trio_set_logpop": 0.056815
+        }
+      }
+    },
+    "2025": {
+      "market": {
+        "n": 5070,
+        "logloss": 4.153087139129639,
+        "brier": 0.9628117680549622,
+        "top_choice_pct": 10.512820512820513
+      },
+      "temp": {
+        "n": 5070,
+        "logloss": 4.151942729949951,
+        "brier": 0.9628732800483704,
+        "top_choice_pct": 10.512820512820513
+      },
+      "cross": {
+        "n": 5070,
+        "logloss": 4.151904582977295,
+        "brier": 0.9628199338912964,
+        "top_choice_pct": 10.512820512820513
+      },
+      "full": {
+        "n": 5070,
+        "logloss": 4.151132583618164,
+        "brier": 0.9627952575683594,
+        "top_choice_pct": 10.493096646942801
+      },
+      "temp_minus_market": {
+        "gain_positive_is_better": 0.0011446182616055012,
+        "race_date_clusters": 361,
+        "cluster_standard_error": 0.0005612332372089609,
+        "approx_95pct_ci": [
+          4.460111667593781e-05,
+          0.0022446354065350643
+        ]
+      },
+      "cross_minus_market": {
+        "gain_positive_is_better": 0.001182862208224833,
+        "race_date_clusters": 361,
+        "cluster_standard_error": 0.0003626969331627677,
+        "approx_95pct_ci": [
+          0.00047197621922580833,
+          0.0018937481972238577
+        ]
+      },
+      "full_minus_market": {
+        "gain_positive_is_better": 0.0019546225666999817,
+        "race_date_clusters": 361,
+        "cluster_standard_error": 0.0006443766133744414,
+        "approx_95pct_ci": [
+          0.0006916444044860765,
+          0.003217600728913887
+        ]
+      },
+      "full_minus_cross": {
+        "gain_positive_is_better": 0.0007717601838521659,
+        "race_date_clusters": 361,
+        "cluster_standard_error": 0.0004516734484684523,
+        "approx_95pct_ci": [
+          -0.00011351977514600052,
+          0.0016570401428503325
+        ]
+      },
+      "trio_market": {
+        "n": 5070,
+        "logloss": 2.6877033945509536,
+        "brier": 0.881496515617333
+      },
+      "trio_tri3_aggregate": {
+        "n": 5070,
+        "logloss": 2.6727194123880698,
+        "brier": 0.8796881406970278
+      },
+      "trio_alpha_blend": {
+        "n": 5070,
+        "logloss": 2.6717201102736214,
+        "brier": 0.8795886506225465
+      },
+      "trio_blend_alpha_tuned_on_2024": 1.25,
+      "coefficient_vectors": {
+        "temp": {
+          "market_logprob_temperature": 0.157471
+        },
+        "cross": {
+          "market_logprob_temperature": 0.092486,
+          "trifecta_set_minus_trio_set_logprob": 0.052986,
+          "cross_market_gap_x_set_popularity": -0.030367,
+          "cross_market_gap_x_order_surprise": -0.00727
+        },
+        "full": {
+          "market_logprob_temperature": 0.033231,
+          "trifecta_set_minus_trio_set_logprob": 0.038776,
+          "cross_market_gap_x_set_popularity": -0.026864,
+          "cross_market_gap_x_order_surprise": -0.006941,
+          "order_conditional_popularity": -0.010495,
+          "pair12_dependence": 0.054811,
+          "pair23_dependence": -0.024586,
+          "pair13_dependence": 0.034929,
+          "trio_set_logpop": 0.062382
+        }
+      }
+    },
+    "2026": {
+      "market": {
+        "n": 2523,
+        "logloss": 4.190309524536133,
+        "brier": 0.9640495181083679,
+        "top_choice_pct": 10.46373365041617
+      },
+      "temp": {
+        "n": 2523,
+        "logloss": 4.189490795135498,
+        "brier": 0.9639643430709839,
+        "top_choice_pct": 10.46373365041617
+      },
+      "cross": {
+        "n": 2523,
+        "logloss": 4.189228534698486,
+        "brier": 0.963975191116333,
+        "top_choice_pct": 10.46373365041617
+      },
+      "full": {
+        "n": 2523,
+        "logloss": 4.189686298370361,
+        "brier": 0.9639778733253479,
+        "top_choice_pct": 10.543004359889022
+      },
+      "temp_minus_market": {
+        "gain_positive_is_better": 0.0008186891209334135,
+        "race_date_clusters": 177,
+        "cluster_standard_error": 0.0007944609164130789,
+        "approx_95pct_ci": [
+          -0.0007384542752362211,
+          0.0023758325171030483
+        ]
+      },
+      "cross_minus_market": {
+        "gain_positive_is_better": 0.0010805748170241714,
+        "race_date_clusters": 177,
+        "cluster_standard_error": 0.0005307403583272899,
+        "approx_95pct_ci": [
+          4.03237147026832e-05,
+          0.0021208259193456593
+        ]
+      },
+      "full_minus_market": {
+        "gain_positive_is_better": 0.0006234365282580256,
+        "race_date_clusters": 177,
+        "cluster_standard_error": 0.001002569995861437,
+        "approx_95pct_ci": [
+          -0.0013416006636303907,
+          0.002588473720146442
+        ]
+      },
+      "full_minus_cross": {
+        "gain_positive_is_better": -0.00045713820145465434,
+        "race_date_clusters": 177,
+        "cluster_standard_error": 0.0006928218970436757,
+        "approx_95pct_ci": [
+          -0.0018150691196602588,
+          0.0009007927167509501
+        ]
+      },
+      "trio_market": {
+        "n": 2523,
+        "logloss": 2.725705017699307,
+        "brier": 0.8880898143344581
+      },
+      "trio_tri3_aggregate": {
+        "n": 2523,
+        "logloss": 2.7084872142141876,
+        "brier": 0.8861208909615325
+      },
+      "trio_alpha_blend": {
+        "n": 2523,
+        "logloss": 2.7072369791509128,
+        "brier": 0.8859884646786521
+      },
+      "trio_blend_alpha_tuned_on_2024": 1.25,
+      "coefficient_vectors": {
+        "temp": {
+          "market_logprob_temperature": 0.162814
+        },
+        "cross": {
+          "market_logprob_temperature": 0.094396,
+          "trifecta_set_minus_trio_set_logprob": 0.060777,
+          "cross_market_gap_x_set_popularity": -0.027253,
+          "cross_market_gap_x_order_surprise": -0.002506
+        },
+        "full": {
+          "market_logprob_temperature": 0.029458,
+          "trifecta_set_minus_trio_set_logprob": 0.048796,
+          "cross_market_gap_x_set_popularity": -0.02465,
+          "cross_market_gap_x_order_surprise": -0.002512,
+          "order_conditional_popularity": -0.011849,
+          "pair12_dependence": 0.059153,
+          "pair23_dependence": 0.004756,
+          "pair13_dependence": 0.029247,
+          "trio_set_logpop": 0.056995
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Archived final odds, not fixed pre-start prices",
+    "2024 is used for hyperparameter selection, not independent",
+    "2025/2026 have appeared in project analyses, so are not wholly untouched",
+    "No profits claimed; exact-order probability score and live return are different targets",
+    "Odds-only research does not read class labels, rider histories, lineups, or race cards"
+  ]
+}

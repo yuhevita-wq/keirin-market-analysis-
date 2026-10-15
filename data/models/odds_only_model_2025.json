@@ -1,0 +1,43 @@
+{
+  "status": "RESEARCH_ONLY_FINAL_ODDS",
+  "features": [
+    "market_logprob_temperature",
+    "trifecta_set_minus_trio_set_logprob",
+    "cross_market_gap_x_set_popularity",
+    "cross_market_gap_x_order_surprise",
+    "order_conditional_popularity",
+    "pair12_dependence",
+    "pair23_dependence",
+    "pair13_dependence",
+    "trio_set_logpop"
+  ],
+  "training_through": "2025-12-31",
+  "coefficients": {
+    "temp": {
+      "market_logprob_temperature": 0.162814
+    },
+    "cross": {
+      "market_logprob_temperature": 0.094396,
+      "trifecta_set_minus_trio_set_logprob": 0.060777,
+      "cross_market_gap_x_set_popularity": -0.027253,
+      "cross_market_gap_x_order_surprise": -0.002506
+    },
+    "full": {
+      "market_logprob_temperature": 0.029458,
+      "trifecta_set_minus_trio_set_logprob": 0.048796,
+      "cross_market_gap_x_set_popularity": -0.02465,
+      "cross_market_gap_x_order_surprise": -0.002512,
+      "order_conditional_popularity": -0.011849,
+      "pair12_dependence": 0.059153,
+      "pair23_dependence": 0.004756,
+      "pair13_dependence": 0.029247,
+      "trio_set_logpop": 0.056995
+    }
+  },
+  "selected_lambda": {
+    "temp": 0.002,
+    "cross": 0.05,
+    "full": 0.05
+  },
+  "trio_alpha": 1.25
+}
