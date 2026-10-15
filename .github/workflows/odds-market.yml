@@ -1,0 +1,62 @@
+name: Validate and collect historical keirin odds
+
+on:
+  push:
+    paths:
+      - "odds_market/**"
+      - ".github/workflows/odds-market.yml"
+  workflow_dispatch:
+    inputs:
+      start_date:
+        description: "Completed historical date (YYYY-MM-DD)"
+        required: true
+        default: "2024-07-06"
+      end_date:
+        description: "Completed historical date, max 7 days per run"
+        required: true
+        default: "2024-07-06"
+
+permissions:
+  contents: read
+
+jobs:
+  offline-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install parser dependencies
+        run: python -m pip install requests beautifulsoup4
+      - name: Verify full-market validation offline
+        run: python -m odds_market.test_collect_final
+
+  acquire-final-odds:
+    if: github.event_name == 'workflow_dispatch'
+    needs: offline-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install parser dependencies
+        run: python -m pip install requests beautifulsoup4
+      - name: Collect all venues and race classes on selected dates
+        run: |
+          python odds_market/collect_final.py \
+            --start "${{ inputs.start_date }}" \
+            --end "${{ inputs.end_date }}" \
+            --out /tmp/odds-final \
+            --sleep 2
+      - name: Upload private-use research output as workflow artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: odds-final-${{ inputs.start_date }}-to-${{ inputs.end_date }}
+          path: /tmp/odds-final
+          retention-days: 1
+          if-no-files-found: warn
