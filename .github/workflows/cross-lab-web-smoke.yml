@@ -16,7 +16,7 @@ jobs:
         run: |
           set -euo pipefail
           BASE="https://yuhevita-wq.github.io/keirin-market-analysis-/cross-lab"
-          RELEASE="cross-context-reasoning-v4-20261015"
+          RELEASE="cross-review-v4.1-20261015"
           echo "Checking $BASE"
           for attempt in $(seq 1 45); do
             marker=$(curl -fsSL --max-time 10 "$BASE/release.txt" 2>/dev/null || true)
@@ -64,4 +64,6 @@ jobs:
           grep -Fq "rankedSignature" cross_comparison.mjs
           grep -Fq "selectedSignature:null" cross_comparison.mjs
           grep -Fq "forwardCompetition" index.html
+          curl -fsSL --max-time 30 "$BASE/cross_review.mjs" -o cross_review.mjs
+          grep -Fq "export function reviewSubmission" cross_review.mjs
           echo "LIVE WEB ASSETS VERIFIED"

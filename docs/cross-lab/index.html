@@ -16,7 +16,7 @@ button{border:0;border-radius:8px;padding:12px 16px;background:#203c73;color:whi
 button.alt{background:#e9eef7;color:#1c396a}button:disabled{opacity:.5;cursor:not-allowed}
 .tablewrap{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:660px}
 th,td{border-bottom:1px solid #e7eaf0;padding:8px 5px;text-align:center;font-size:13px}
-th{background:#f6f8fc}th:first-child,td:first-child{text-align:left}
+td,th{border:1px solid #dfe4ed}th{background:#f6f8fc}th:first-child,td:first-child{text-align:left}
 td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 .info{background:#f5f7fa;padding:12px;border-radius:8px;margin:10px 0}
 .alert{background:#fff3ec;border-left:3px solid #be692e;padding:12px;line-height:1.7}
@@ -32,7 +32,7 @@ td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 </style>
 </head>
 <body><main class="wrap">
-<h1>CROSS LAB <small>事実・相手関係・反証 v4</small></h1>
+<h1>CROSS LAB <small>全ライン比較・答案照合 v4.1</small></h1>
 <p class="sub">強い選手を並べる機能は使用しません。異なる2ラインの全クロス型を比較し、採用理由を記録します。基本4点の3着は、選んだ4車の残り2車です。</p>
 <section>
 <h2>① 出走表を指定</h2>
@@ -83,7 +83,13 @@ td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 <div class="row" style="justify-content:flex-end"><button id="analyze">全型を比較・採用を記録</button></div>
 </section>
 <section id="results">
-<h2>③ クロス判定</h2><div id="analysis" class="info">分析待ち</div>
+<h2>③ クロス判定</h2><p><a href="./AUDIT_20261015.md">10月15日の答案と結果の照合</a></p><div id="analysis" class="info">分析待ち</div>
+</section>
+<section>
+<h2>④ 固定した答案と結果を照合</h2>
+<p class="muted">直前に③で記録した答案を照合します。入力欄を変更しただけでは答案は変わりません。結果から候補・補助を追加せず、選択ミスと定義違反を分けます。</p>
+<label for="actualResult">確定着順</label><input id="actualResult" placeholder="1-7-4">
+<button id="reviewResult">固定答案を照合</button><div id="reviewOutput" role="status"></div>
 </section>
 <section>
 <h2>クロスの定義（固定）</h2>
@@ -100,6 +106,7 @@ import {predictMarket} from "./market_model.mjs";
 import {predictJoint,pairCompetition} from "./joint_model.mjs";
 import {selectMainCross,buildAuxiliaryThirds} from "./cross_presentation.mjs";
 import {buildHorizontalLineReference,renderHorizontalLineReference} from "./horizontal_line_reference.mjs";
+import {candidateMatrix,reviewSubmission,reviewLabels,crossLabel} from "./cross_review.mjs";
 const byId=id=>document.getElementById(id);
 const escapeHtml=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 let loaded=null, current=null, lastRecord=null;
@@ -256,7 +263,9 @@ async function analyze(){
       ];
     }
     const selection=selectMainCross(result,decision,comparison);
-    lastRecord={version:result.version,recordedAt:new Date().toISOString(),input:race,odds,decision,
+    const sameRace=lastRecord && lastRecord.input.race_id===race.race_id && JSON.stringify(lastRecord.input.lines)===JSON.stringify(race.lines);
+    const lineComparisons=(sameRace?[...document.querySelectorAll('[data-line-comparison]')]:[]).map(e=>({linePair:e.dataset.lineComparison,reason:e.value.trim()}));
+    lastRecord={lineComparisons,version:result.version,recordedAt:new Date().toISOString(),input:race,odds,decision,
       forecast,objective,comparison,selection:{signature:selection.main?.signature??null,reason:selection.reason,label:selection.label,record:selection.record??null,basis:selection.basis??null}};
     const lineLabel=result.race.lines.map(l=>l.join("-")).join(" / ");
     const incomplete=result.incompleteCars.length;
@@ -295,8 +304,16 @@ async function analyze(){
       '% ／ 基本クロス '+(100*comparison.mass.CORE_CROSS).toFixed(1)+'% ／ 3ライン '+(100*comparison.mass.THREE_LINES).toFixed(1)+
       '% ／ 基本役割外 '+(100*comparison.mass.OUTSIDE_CORE_ROLE).toFixed(1)+'%。'+escapeHtml(comparison.reason)+'</p>';
     html+=result.notes.filter(n=>!n.includes("無理に1組へ固定しません")).map(n=>'<p class="muted">'+escapeHtml(n)+"</p>").join("");
-    if(incomplete)html+='<div class="alert">決まり手が欠損している選手がいます。強い順で穴埋めせず、推奨を保留します。入力済みの範囲で示すのは検証候補です。</div>';
+    if(incomplete)html+='<div class="info">決まり手欠損は未確認として残します。欠損だけを理由にクロス候補や採用を取り消しません。</div>';
     if(!Object.keys(odds).length)html+='<p class="alert">オッズ未取得。数値比較は合計的中確率です。高配当・割安・回収率は未評価です。</p>';
+    if(result.candidates.length){
+      html+='<h3>全3組を同じ展開で比較（列挙順・強さ順ではありません）</h3><p>各組について、誰の仕掛けでどの位置が空き、先頭と番手のどちらが残るかを比較します。組ごとに都合のよい別展開を作らず、採用組以外が残る場合も記録してください。記録の有無で候補を消しません。</p><div class="tablewrap"><table><thead><tr><th>2ライン／選外ライン</th><th>先頭×先頭</th><th>先頭×番手</th><th>番手×先頭</th><th>番手×番手</th></tr></thead><tbody>';
+      for(const row of candidateMatrix(race)){
+        html+='<tr><th>'+row.lines.map(l=>l.join('－')).join(' ／ ')+'<br>選外：'+row.excluded.map(l=>l.join('－')).join(' ／ ')+'</th>'+row.candidates.map(c=>'<td>'+escapeHtml(c.label)+'</td>').join('')+'</tr>';
+        html+='<tr><td colspan="5"><label>この2ラインが残る条件／他の組が残る条件</label><textarea data-line-comparison="'+row.id+'" placeholder="仕掛け → 位置の変化 → 残る選手。確認した走りと推測を分ける">'+escapeHtml(lineComparisons.find(x=>x.linePair===row.id)?.reason||'')+'</textarea></td></tr>';
+      }
+      html+='</tbody></table></div><p class="muted">比較を記入後「全型を比較・採用を記録」を押すと、答案と一緒に保存されます。</p>';
+    }
     if(result.candidates.length)html+=result.candidates.map((r,i)=>drawCandidate(r,i,odds,race,r===selection.main)).join("");
     if(result.candidates.length)html+='<section id="horizontalRef"><h3>横棒ライン筋（参考）</h3></section>';
     else html+='<p>成立条件に該当するクロスが見つかりません。強い選手を任意に4人選んで代用しません。</p>';
@@ -315,6 +332,20 @@ async function analyze(){
     }
   }catch(e){container.className="alert";container.textContent=e.message||String(e)}
 }
+byId('reviewResult').addEventListener('click',()=>{
+  const out=byId('reviewOutput');
+  try {
+    if(!lastRecord?.decision)throw Error('先に採用答案を③で記録してください');
+    const actual=byId('actualResult').value.trim().split(/[-－\s]+/).map(Number);
+    const candidate=analyzeCross(lastRecord.input).candidates.find(c=>c.signature===lastRecord.decision.signature);
+    const aux=buildAuxiliaryThirds(candidate,lastRecord.input,lastRecord.decision.auxiliary);
+    const review=reviewSubmission(lastRecord.input,{literal:crossLabel(candidate),status:'ADOPTED',
+      auxiliaryThirds:aux.thirds,auxiliaryAssessment:lastRecord.decision.auxiliary},actual);
+    out.textContent='固定答案 '+crossLabel(candidate)+' → '+actual.join('-')+'：'+reviewLabels[review.kind]+
+      (review.expected.length?'。結果を含む既存の型：'+review.expected.map(c=>c.literal+(c.coverage==='AUXILIARY'?'（補助）':'（基本）')).join(' ／ '):'。この結果は既存の基本・自動補助の範囲外です。')+
+      ' '+review.note;
+  }catch(e){out.textContent=e.message;}
+});
 async function load(){
   const url=byId("raceUrl").value.trim();
   try{

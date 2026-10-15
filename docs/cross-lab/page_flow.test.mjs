@@ -13,7 +13,7 @@ test('page flow keeps ranking, review, core, auxiliary and saved decision separa
   const make=()=>({value:'',checked:false,innerHTML:'',textContent:'',className:'',ownerDocument:null,
     addEventListener(){},append(){},replaceChildren(){}});
   const document={getElementById(id){if(!nodes.has(id))nodes.set(id,make());const n=nodes.get(id);n.ownerDocument=document;return n;},
-    createElement(){return make();},querySelector(selector){
+    createElement(){return make();},querySelectorAll(){return [];},querySelector(selector){
       const no=Number(selector.match(/data-car="(\d+)"/)[1]);
       const field=selector.match(/data-stat="([^\"]+)"/)?.[1]||'style';
       return {value:String(current.entries.find(e=>e.no===no)[field])};
@@ -32,6 +32,8 @@ test('page flow keeps ranking, review, core, auxiliary and saved decision separa
       const rendered=document.getElementById('analysis').innerHTML,record=module.record();
       assert.ok(record,document.getElementById('analysis').textContent);
       assert.match(rendered,/主採用未決定/);
+      assert.match(rendered,/全3組を同じ展開/);
+      assert.equal((rendered.match(/data-line-comparison=/g)||[]).length,3);
       assert.match(rendered,/比較数値の1位（主採用ではありません）/);
       assert.match(rendered,/2着の競合/);
       assert.equal((rendered.match(/<article class="candidate">/g)||[]).length,12);
