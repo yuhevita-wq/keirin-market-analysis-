@@ -17,9 +17,10 @@ from backfill import ROOT,BASE,FIELDS,FAIL_FIELDS,validate
 
 def read_zcsv(z,name):
     names=[x for x in z.namelist() if x.rsplit("/",1)[-1]==name]
-    if len(names)!=1:return []
+    if len(names)!=1:return
     with z.open(names[0]) as raw:
-        return list(csv.DictReader(io.TextIOWrapper(raw,encoding="utf-8-sig",newline="")))
+        text=io.TextIOWrapper(raw,encoding="utf-8-sig",newline="")
+        yield from csv.DictReader(text)
 
 
 def archive_candidates(path):
