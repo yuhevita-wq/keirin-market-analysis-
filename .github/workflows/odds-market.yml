@@ -1,4 +1,4 @@
-name: Validate and collect historical keirin odds
+name: Validate all-bet historical odds
 
 on:
   push:
@@ -8,13 +8,18 @@ on:
   workflow_dispatch:
     inputs:
       start_date:
-        description: "Completed historical date (YYYY-MM-DD)"
+        description: "Completed first date YYYY-MM-DD"
         required: true
-        default: "2024-07-06"
+        default: "2024-07-04"
       end_date:
-        description: "Completed historical date, max 7 days per run"
+        description: "Completed final date YYYY-MM-DD"
         required: true
-        default: "2024-07-06"
+        default: "2024-07-04"
+      confirm_authorized:
+        description: "I have authorization for automated collection and storage"
+        type: boolean
+        required: true
+        default: false
 
 permissions:
   contents: read
@@ -22,48 +27,38 @@ permissions:
 jobs:
   offline-tests:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install parser dependencies
+      - name: Install
         run: python -m pip install requests beautifulsoup4
-      - name: Verify full-market validation offline
-        run: python -m odds_market.test_collect_final
+      - name: Check every combination of each sold bet type
+        run: python -m odds_market.test_collect_all_odds
 
-  acquire-final-odds:
-    if: github.event_name == 'workflow_dispatch'
+  authorized-collection:
+    if: github.event_name == 'workflow_dispatch' && inputs.confirm_authorized == true
     needs: offline-tests
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install parser dependencies
+      - name: Install
         run: python -m pip install requests beautifulsoup4
-      - name: Collect all venues and race classes on selected dates
+      - name: Collect complete historical odds only
         run: |
-          python odds_market/collect_final.py \
+          python odds_market/collect_all_odds.py \
             --start "${{ inputs.start_date }}" \
             --end "${{ inputs.end_date }}" \
-            --out /tmp/odds-final \
-            --sleep 2
-      - name: Prepare audit-only output
+            --out /tmp/odds_only \
+            --pause 2 \
+            --accept-terms
+      - name: Count collected days without publishing source data
         if: always()
         run: |
-          mkdir -p /tmp/odds-audit
-          if [ -d /tmp/odds-final ]; then
-            find /tmp/odds-final -type f -name '*.manifest.json' -exec cp {} /tmp/odds-audit/ \;
-          fi
-      - name: Upload audit manifests only - never raw odds from public repository
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: odds-audit-${{ inputs.start_date }}-to-${{ inputs.end_date }}
-          path: /tmp/odds-audit
-          retention-days: 1
-          if-no-files-found: warn
+          find /tmp/odds_only -name '*.csv.gz' -type f | wc -l || true
