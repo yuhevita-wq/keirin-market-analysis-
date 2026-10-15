@@ -83,7 +83,7 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import json
-          roots=list(Path('data/odds_universe_v1').rglob('summary.json'))
+          roots=list(Path('data/odds_universe_v1/data').rglob('summary.json'))
           assert roots,'No immutable backfill summary exists'
           for p in roots:
               r=json.loads(p.read_text(encoding='utf-8'))
