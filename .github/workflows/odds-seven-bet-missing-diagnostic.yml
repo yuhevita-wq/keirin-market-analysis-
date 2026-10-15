@@ -1,0 +1,64 @@
+name: Diagnose missing odds source reasons
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/odds-seven-bet-missing-diagnostic.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install requests beautifulsoup4
+      - name: Examine exact failed pages without recording odds prices
+        run: |
+          python - <<'PY'
+          from datetime import date
+          import re
+          import requests
+          from bs4 import BeautifulSoup
+          from odds_market.collect_all_odds import discover,first_place_block,rows,DATE_RX,URL_ID
+          cases=[
+              (date(2024,7,17),"3420240716020001"),
+              (date(2025,11,30),"1320251130010006"),
+              (date(2022,6,26),"5420220625020101"),
+              (date(2025,3,26),"4520250326010003"),
+          ]
+          session=requests.Session()
+          session.headers.update({"User-Agent":"Keirin-Research-Odds-Collector/1.0"})
+          for day,rid in cases:
+              print("CASE",day.isoformat(),rid,flush=True)
+              try:
+                  u=discover(session,day,0.7).get(rid)
+                  print("LINK_PRESENT",bool(u),flush=True)
+                  if not u:continue
+                  r=session.get(u,timeout=35)
+                  r.raise_for_status()
+                  s=BeautifulSoup(r.text,"html.parser")
+                  title=s.title.get_text(" ",strip=True) if s.title else "none"
+                  header=s.select_one("div.odds_header")
+                  htxt=header.get_text(" ",strip=True) if header else ""
+                  match=DATE_RX.search(s.get_text(" ",strip=True))
+                  headings=[h.get_text(" ",strip=True)[:80] for h in s.select("h1,h2,h3")]
+                  race_tables=s.select("table.odds_table")
+                  print("TITLE",title[:160],flush=True)
+                  print("MATCHED_DATE",match.groups() if match else None,"EXPECTED_MEETING_DAY",str(rid[2:12]),flush=True)
+                  print("HEADINGS",headings[:6],flush=True)
+                  print("MARKET",bool(header),"FINAL",("確定オッズ" in htxt),"MATRICES",len(race_tables),flush=True)
+                  for n in (9,8,7,6,5,4,3):
+                      fixed=[first_place_block(rows(t),n) for t in race_tables]
+                      indices=sorted(set(next(iter(x))[0] for x in fixed if x))
+                      if indices:print("TRIFECTA",n,"FIRST_CARS",indices,flush=True)
+                  txt=s.get_text(" ",strip=True)
+                  for word in ("中止","取消","欠場","中断","無観客","不成立","不的中","発売なし","レース中止"):
+                      if word in txt:print("PAGE_HAS",word,flush=True)
+              except Exception as e:
+                  print("DIAGNOSTIC_ERROR",type(e).__name__,str(e)[:140],flush=True)
+          PY
