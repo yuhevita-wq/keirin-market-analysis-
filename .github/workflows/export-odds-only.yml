@@ -105,5 +105,13 @@ jobs:
             exit 0
           fi
           git commit -m 'data: publish girls-excluded race type and complete final odds only'
-          git pull --rebase origin main
-          git push origin HEAD:main
+          for attempt in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              echo "Published on attempt $attempt"
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "Git push race after six attempts" >&2
+          exit 1
