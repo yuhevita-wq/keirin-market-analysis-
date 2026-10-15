@@ -1,4 +1,5 @@
 name: Authorized live seven-bet odds acquisition pilot
+# Recheck both quinella families on a real nine-car market.
 on:
   push:
     branches: [main]
@@ -10,7 +11,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: authorized-seven-bet-fixed-parser-smoke
+  group: authorized-seven-bet-triangular-grid-smoke
   cancel-in-progress: false
 
 jobs:
