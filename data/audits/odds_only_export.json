@@ -1,0 +1,73 @@
+{
+  "schema": "odds_and_race_type_only_v1",
+  "generated_utc": "2026-10-15T07:21:40.449541+00:00",
+  "years": {
+    "2021": {
+      "file": "odds_2021.jsonl.gz",
+      "complete_races": 466,
+      "bytes": 1223470,
+      "sha256": "a9dd44d61a1f8472465d96eff3ddb2e0ef67aee3b3f4fc04b502819975097747"
+    },
+    "2022": {
+      "file": "odds_2022.jsonl.gz",
+      "complete_races": 2376,
+      "bytes": 5914052,
+      "sha256": "c5e0e2f230128507ef4eda72632220fdbbd4f57dd5a4b6802de736ccc395ef74"
+    },
+    "2023": {
+      "file": "odds_2023.jsonl.gz",
+      "complete_races": 7018,
+      "bytes": 11034897,
+      "sha256": "3ab5062d6fe28a048eaeae31b073adb0bab4b2cc86d064d4cfd8e0cf6c696518"
+    },
+    "2024": {
+      "file": "odds_2024.jsonl.gz",
+      "complete_races": 7554,
+      "bytes": 11615449,
+      "sha256": "3cd73bbbc11b5dc06b01d70157852ceb07cd0a31aa0fcdaf125d5d421c371903"
+    },
+    "2025": {
+      "file": "odds_2025.jsonl.gz",
+      "complete_races": 7646,
+      "bytes": 11822419,
+      "sha256": "1cc693838d421777a2aff20bc32e21532e1a268977c44cfb0adca9e960e9247e"
+    },
+    "2026": {
+      "file": "odds_2026.jsonl.gz",
+      "complete_races": 3705,
+      "bytes": 5460683,
+      "sha256": "75109b5d1668951f7a820658e8d4571ce98b535637506ebc6f4cac67f1fd9577"
+    }
+  },
+  "unique_complete_races": 28765,
+  "supported_odds_types": [
+    "3連単",
+    "3連複"
+  ],
+  "field_names": [
+    "race_id",
+    "race_type",
+    "odds"
+  ],
+  "girls_included": false,
+  "price_phase": "final",
+  "sources_loaded": 58,
+  "duplicates_deduplicated": 4722,
+  "conflicting_duplicate_odds": 0,
+  "duplicate_type_label_variation": 4722,
+  "conflict_examples": [],
+  "incomplete_or_invalid_by_reason": {
+    "skipped_csv_source_without_both_market_files": 48,
+    "ok": 33476,
+    "girls_excluded": 66,
+    "imprecise_race_type": 11,
+    "imprecise_race_type_count": 11
+  },
+  "notes": [
+    "Output record keys are strictly race_id/race_type/odds, no result or rider fields.",
+    "Only completely available numeric 3連単 and 3連複 books are exported.",
+    "The dataset does not yet contain all wager types, only 3連単 and 3連複.",
+    "Original sources and integrity criteria are checked, never included as model predictors.",
+    "File presence alone never means nationwide full historic coverage."
+  ]
+}
