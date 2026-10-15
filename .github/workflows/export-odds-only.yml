@@ -79,7 +79,8 @@ jobs:
           set -euo pipefail
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add data/odds_only/odds_*.jsonl.gz data/audits/odds_only_export.json
+          git add -f data/odds_only/odds_*.jsonl.gz
+          git add data/audits/odds_only_export.json
           if git diff --cached --quiet; then
             echo 'Odds data is unchanged'
             exit 0
