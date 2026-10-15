@@ -34,6 +34,14 @@ def saved_races():
             for row in csv.DictReader(f):
                 if row.get("race_id") and row["race_id"] not in known and in_scope(row.get("race_date")):
                     known[row["race_id"]]=(row.get("race_date",""),str(path.relative_to(ROOT)))
+    # A recovered racing card is now archived even if its final odds remain
+    # incomplete; the latter is a SEPARATE market completeness problem.
+    for path in (ROOT/"data/unarchived_races_v1").glob("batch_*/races.csv.gz"):
+        with gzip.open(path,"rt",encoding="utf-8",newline="") as f:
+            for row in csv.DictReader(f):
+                rid=row.get("race_id","")
+                if rid and rid not in known and in_scope(row.get("race_date")):
+                    known[rid]=(row["race_date"],str(path.relative_to(ROOT)))
     return known
 
 def report():
