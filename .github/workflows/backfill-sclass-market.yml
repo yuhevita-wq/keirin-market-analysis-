@@ -57,5 +57,13 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add data/odds_universe_v1
           git commit -m 'data: append recovered S-class full markets from archival source gaps' || exit 0
-          git pull --rebase origin main
-          git push origin HEAD:main
+          for attempt in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              echo "Published on attempt $attempt"
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "Git push race after six attempts" >&2
+          exit 1
