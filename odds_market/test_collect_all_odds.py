@@ -12,6 +12,8 @@ def grid(kind, n):
     heads = list(range(1,size+1))
     s=["<table><tr><th></th>"+''.join(f"<th>{x}</th>" for x in heads)+"</tr>"]
     for a in heads:
+        if a==1 and kind in ('2shafuku','2wakufuku'):
+            continue  # Live KDreams omits the all-empty first triangular row
         s.append(f"<tr><td>{a}</td>")
         for b in heads:
             if kind in ("2shatan","2wakutan"):
