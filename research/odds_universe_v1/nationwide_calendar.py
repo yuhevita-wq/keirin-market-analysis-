@@ -15,6 +15,7 @@ from urllib.parse import urljoin,urlsplit,urlunsplit
 
 from bs4 import BeautifulSoup
 from keirin_market_analysis.s_yosen_2025 import KDREAMS_DAILY,fetch_html,make_session
+from scope import START, END, in_scope
 
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/"data/nationwide_calendar"
@@ -62,6 +63,8 @@ def days(start,end):
 def execute(start,end,delay):
     if (end-start).days>30 or start>end:
         raise ValueError("bounded census must scan 1..31 consecutive days")
+    if not in_scope(start.isoformat()) or not in_scope(end.isoformat()):
+        raise ValueError("calendar census is restricted to 2021-01-01 through 2026-06-30")
     now=datetime.now(timezone(timedelta(hours=9))).date()
     if end>=now:
         raise ValueError("completed historical days only")
@@ -119,8 +122,8 @@ def automatic_month():
             if j["days_failed"]==0:
                 done.add((j["start"],j["end"]))
         except (KeyError,ValueError):pass
-    first=date(2021,1,1)
-    yesterday=datetime.now(timezone(timedelta(hours=9))).date()-timedelta(days=1)
+    first=START
+    yesterday=min(datetime.now(timezone(timedelta(hours=9))).date()-timedelta(days=1),END)
     now=first
     while now<=yesterday:
         last=date(now.year,now.month,calendar.monthrange(now.year,now.month)[1])
