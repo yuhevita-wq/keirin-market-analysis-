@@ -34,18 +34,23 @@ jobs:
         with:
           python-version: '3.12'
       - name: Mathematical and data-schema consistency tests
-        run: python research/odds_universe_v1/test_build_odds_only.py
+        run: |
+          python research/odds_universe_v1/scope.py
+          python research/odds_universe_v1/test_build_odds_only.py
       - name: Export real 2021-2026 odds without riders, scores or results
         run: python -u research/odds_universe_v1/build_odds_only.py
       - name: Audit every compressed data record, avoiding fabricated or dropped price points
         run: |
           python - <<'PY'
           import gzip,json,math,hashlib,itertools,re
+          from datetime import date,timedelta
           from pathlib import Path
           audit=json.loads(Path('data/audits/odds_only_export.json').read_text(encoding='utf-8'))
           files=sorted(Path('data/odds_only').glob('odds_20??.jsonl.gz'))
           assert len(files)>=5,files
           assert audit['girls_included'] is False
+          assert audit['eligible_date_range']==['2021-01-01','2026-06-30']
+          assert audit['excluded_2026_second_half'] is True
           seen=set()
           counts={}
           for path in files:
@@ -56,6 +61,10 @@ jobs:
                       assert set(row)=={'race_id','race_type','odds'},row.keys()
                       assert row['race_id'] not in seen
                       seen.add(row['race_id'])
+                      rid=row['race_id']
+                      meeting=date(int(rid[2:6]),int(rid[6:8]),int(rid[8:10]))
+                      day=meeting+timedelta(days=int(rid[10:12])-1)
+                      assert date(2021,1,1)<=day<=date(2026,6,30),(rid,day)
                       assert row['race_type'] and not re.search(r'ガールズ|女子|L級',row['race_type'],re.I)
                       assert set(row['odds'])=={'3連単','3連複'}
                       tri=row['odds']['3連単']
