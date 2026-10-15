@@ -32,7 +32,7 @@ td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 </style>
 </head>
 <body><main class="wrap">
-<h1>CROSS LAB <small>同時残存・2着競合の監査 v3.1</small></h1>
+<h1>CROSS LAB <small>事実・相手関係・反証 v4</small></h1>
 <p class="sub">強い選手を並べる機能は使用しません。異なる2ラインの全クロス型を比較し、採用理由を記録します。基本4点の3着は、選んだ4車の残り2車です。</p>
 <section>
 <h2>① 出走表を指定</h2>
@@ -45,14 +45,20 @@ td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 <div id="loadStatus" class="info" role="status">出走表未読込。ラインの手入力からも分析できます。</div>
 </section>
 <section>
-<h2>② 全選手の決まり手・Bを点検</h2>
-<p class="muted">欠損を0と見なしません。得点順位で代用しません。決まり手は対象となる勝ち方の件数を入力してください。未取得のままなら判定を保留します。</p>
+<h2>② 全選手の観測値と今回の条件を点検</h2>
+<p class="muted">欠損を0と見なしません。得点順位で代用しません。決まり手は対象となる勝ち方の件数を入力してください。未取得は未確認です。回数ゼロ・低得点を不成立の根拠にしません。</p>
 <div class="tablewrap"><table><thead><tr><th>車番 / 選手 / 位置</th><th>B</th><th>逃</th><th>捲</th><th>差</th><th>マ</th><th>得点</th><th>年齢</th><th>勝率%</th><th>3連対率%</th><th>脚質</th></tr></thead><tbody id="riders"><tr><td colspan="6">上のURLまたは並びを入力</td></tr></tbody></table></div>
 <label for="odds">3連単オッズ（任意。1行に「1-3-2=24.6」の形式。確率への換算はしません）</label>
 <textarea id="odds" rows="2" placeholder="1-3-2=24.6&#10;1-3-4=35.2"></textarea>
 <details><summary>採用判断を記録する</summary>
 <p class="muted">候補生成後、採用する1型と比較理由を入力してください。表示順は推奨順位ではありません。</p>
 <label for="primaryCross">採用クロス（例：13-13-24）</label><input id="primaryCross" placeholder="13-13-24">
+<label for="observedFacts">確認できた事実（具体的な走り・位置・相手・並び等）</label><textarea id="observedFacts" rows="2"></textarea>
+<label for="sourceContext">出典と条件（いつ・どのレース／コメントか。今回にも当てはまる点・違う点）</label><textarea id="sourceContext" rows="2"></textarea>
+<label for="counterEvidence">このクロスに不利な事実・崩れる条件</label><textarea id="counterEvidence" rows="2"></textarea>
+<label for="uncertainty">未確認の点・推測している点</label><textarea id="uncertainty" rows="2"></textarea>
+<p class="muted">事実と推論を分けて残します。未記録は未確認として保存し、不成立扱いや数値による穴埋めをしません。</p>
+<label for="auxiliaryCar">2車×2車クロスの補助3着（選外3車ラインから1人）</label><input id="auxiliaryCar" type="number" min="1" max="9"><label for="auxiliaryReason">その選手を補助に選ぶ今回の理由</label><textarea id="auxiliaryReason" rows="2"></textarea>
 <label for="interaction">この異線2人が1・2着を分け合う理由</label><textarea id="interaction" rows="2"></textarea>
 <label for="forwardCoexistence">表：先に記入した選手が勝つ走りで、相手が2着に残る理由</label><textarea id="forwardCoexistence" rows="2"></textarea>
 <label for="forwardCompetition">表：相手と同線番手・他車の2着競合を比較</label><textarea id="forwardCompetition" rows="2"></textarea>
@@ -62,10 +68,10 @@ td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 <label for="sameLine">横棒のライン筋で決まる可能性との比較</label><textarea id="sameLine" rows="2"></textarea>
 <label for="outside">選外車・選外ラインの入着に対する反証</label><textarea id="outside" rows="2"></textarea>
 </details>
-<details open><summary>A級・S級の同時入着比較</summary>
+<details><summary>補助：過去の集計値から計算したモデルとの比較</summary>
 <label for="autoModel">自動モデル</label><select id="autoModel"><option value="joint">A級1・2班／S級：同時入着v3（7車）</option><option value="market">S級F1：既存市場補正モデル</option></select>
 <label for="comparisonObjective">比較する数値（順位1位を自動採用しません）</label><select id="comparisonObjective"><option value="HIT_PROBABILITY">基本4点の合計的中確率</option><option value="EXPECTED_RETURN">基本4点の等額期待回収（全候補オッズ必須）</option></select>
-<label><input type="checkbox" id="useMarketModel" checked style="width:auto">学習済みモデルで全クロス型を自動比較する</label>
+<label><input type="checkbox" id="useMarketModel" style="width:auto">学習済みモデルで全クロス型を自動比較する</label>
 <p class="muted">同時入着v3はA級とS級を別々に学習。2023～2024年で学習し、2025年・2026年上半期で検証。今日の結果は学習に使いません。的中確率の比較はオッズ不要。市場補正モデルを選ぶ場合はS級F1と全オッズが必要です。</p>
 <label for="meetingGrade">開催区分</label><select id="meetingGrade"><option value="">未確認</option><option value="F1">F1</option><option value="F2">F2</option><option value="G">G1～G3</option></select>
 <label for="trioOdds">3連複全オッズ（1行に「1=2=3=24.6」）</label><textarea id="trioOdds" rows="3"></textarea>
@@ -170,7 +176,7 @@ function drawCandidate(item,i,odds,race,isMain){
     '<p>基本4点：相互作用なし '+pct(audit.additiveCoreProbability)+' → v3 '+pct(audit.coreProbability)+
     (audit.interactionDelta===null?'':'（差 '+(100*audit.interactionDelta).toFixed(2)+'ポイント）')+
     '。この差は成立の証明ではありません。</p></div>':"";
-  const aux=buildAuxiliaryThirds(item,race);
+  const aux=buildAuxiliaryThirds(item,race,isMain?lastRecord?.decision?.auxiliary:null);
   const rows=item.tickets.map(t=>{
     const key=t.join("-");
     return '<span class="tag">'+key+(odds[key]===undefined?"":" / "+odds[key]+"倍")+"</span>";
@@ -179,7 +185,7 @@ function drawCandidate(item,i,odds,race,isMain){
     const key=t.join("-");
     return '<span class="tag">（'+key+'）'+(odds[key]===undefined?"":" / "+odds[key]+"倍")+"</span>";
   }).join(" ");
-  const reasons=item.cases.map(x=>'<li>'+escapeHtml(x.label)+"（"+escapeHtml(x.evidence.join("、"))+"）</li>").join("");
+  const reasons=item.reasoning.map(d=>'<li><b>'+d.first+'→'+d.second+'</b><ul>'+d.questions.map(q=>'<li>'+escapeHtml(q)+'</li>').join('')+'</ul></li>').join('');
   const risks=item.warnings.map(x=>'<li class="warn">'+escapeHtml(x)+"</li>").join("");
   const horizontal=String(a)+"-"+String(c)+" / "+String(c)+"-"+String(a)+" ・ "+String(b)+"-"+String(d)+" / "+String(d)+"-"+String(b);
   const market=ticketMarket(item,odds);
@@ -195,8 +201,8 @@ function drawCandidate(item,i,odds,race,isMain){
       (extraRows?'<div class="stat">'+extraRows+'</div>':'<p class="muted">この3着は基本4点にも含まれています。重複追加なし。</p>')+
       '</div>':'')+
     (auxiliaryNotes?'<p class="muted">補助選定理由</p><ul>'+auxiliaryNotes+"</ul>":"")+
-    conditional+'<p><b>決まり手の観測（同時入着の証明ではない）</b></p><ul>'+reasons+"</ul>"+
-    (!item.cases.length?'<p class="warn">この型の決まり手根拠は未解決。候補から消さず比較する。</p>':'')+
+    '<p><b>今回の相手関係で比較すること（自動的な成立判定ではない）</b></p><ul>'+reasons+"</ul>"+conditional+
+    (!item.cases.length?'<p class="warn">出走表の集計値だけでは、この型を支持も否定もしません。事実と今回への推論を分けて比較してください。</p>':'')+
     (risks?'<p><b>反証・着外条件</b></p><ul>'+risks+"</ul>":"")+
     '<p class="muted">横棒参考（同ライン1・2着）：'+horizontal+"</p></article>";
 }
@@ -241,7 +247,9 @@ async function analyze(){
       const chosen=result.candidates.find(c=>[...c.firstPair].sort().join(",")===pair && [...c.remaining].sort().join(",")===thirds);
       if(!chosen)throw Error("採用クロスがこの並びの基本4点に該当しません");
       decision={signature:chosen.signature};
-      for(const key of ["interaction","alternativeCross","sameLine","outside"])decision[key]=byId(key).value.trim();
+      for(const key of ["interaction","alternativeCross","sameLine","outside","observedFacts","sourceContext","counterEvidence","uncertainty"])decision[key]=byId(key).value.trim();
+      if(byId('auxiliaryCar').value.trim())decision.auxiliary={no:Number(byId('auxiliaryCar').value),reason:byId('auxiliaryReason').value.trim()};
+      buildAuxiliaryThirds(chosen,race,decision.auxiliary);
       decision.directions=[
         {first:Number(match[1]),second:Number(match[2]),coexistence:byId('forwardCoexistence').value.trim(),secondCompetition:byId('forwardCompetition').value.trim()},
         {first:Number(match[2]),second:Number(match[1]),coexistence:byId('reverseCoexistence').value.trim(),secondCompetition:byId('reverseCompetition').value.trim()}
@@ -249,7 +257,7 @@ async function analyze(){
     }
     const selection=selectMainCross(result,decision,comparison);
     lastRecord={version:result.version,recordedAt:new Date().toISOString(),input:race,odds,decision,
-      forecast,objective,comparison,selection:{signature:selection.main?.signature??null,reason:selection.reason,label:selection.label,record:selection.record??null}};
+      forecast,objective,comparison,selection:{signature:selection.main?.signature??null,reason:selection.reason,label:selection.label,record:selection.record??null,basis:selection.basis??null}};
     const lineLabel=result.race.lines.map(l=>l.join("-")).join(" / ");
     const incomplete=result.incompleteCars.length;
     const state = selection.main ? selection.label+"：採用1型と比較候補" : selection.label+"：全型比較、採用判断待ち";
@@ -258,11 +266,11 @@ async function analyze(){
       [...result.race.lines.map(l=>l.length)].sort().join()==="2,2,3" ?
       (cls==="A"?"43.2%":"43.4%") : null;
     let html='<div class="gate">'+escapeHtml(state)+'</div><p class="muted">並び: '+
-      escapeHtml(lineLabel)+" / 基本クロス型 "+result.qualified+" / 決まり手仮説あり "+result.supported+"</p>";
+      escapeHtml(lineLabel)+" / 基本クロス型 "+result.qualified+"</p>";
     if(baseline)html+='<p class="info">過去の'+cls+'級3–2–2で1・2着が異線だった比率：'+baseline+
       '（全異線決着の頻度。特定のクロス4点の確率ではありません）</p>';
     if(selection.main){
-      const m=selection.main, aux=buildAuxiliaryThirds(m,race);
+      const m=selection.main, aux=buildAuxiliaryThirds(m,race,decision?.auxiliary);
       if(comparison){
         const row=comparison.rows.find(x=>x.signature===m.signature);
         html+='<p class="info">入力モデル基準：基本4点の推定的中率 '+(row.hitProbability*100).toFixed(2)+
@@ -272,7 +280,8 @@ async function analyze(){
       html+='<div class="main-choice"><b>'+escapeHtml(selection.label)+'：'+
         m.firstPair.join("")+'－'+m.firstPair.join("")+'－'+m.remaining.join("")+
         aux.thirds.map(n=>"（"+n+"）").join("")+'</b>'+
-        '<p>'+escapeHtml(selection.reason)+'</p></div>';
+        '<p>'+escapeHtml(selection.reason)+'</p>'+['observedFacts','sourceContext','counterEvidence','uncertainty'].map((k,i)=>
+          '<p><b>'+['確認した事実','出典・条件','不利な材料','未確認・推測'][i]+'</b>：'+escapeHtml(selection.basis[k]||'未記録')+'</p>').join('')+'</div>';
     }
     if(modelMessage)html+='<p class="info">自動モデル比較：'+escapeHtml(modelMessage)+'</p>';
     if(comparison?.rankedSignature){
@@ -327,3 +336,4 @@ byId("manual").addEventListener("click",()=>{try{buildManual()}catch(e){updateSt
 byId("analyze").addEventListener("click",analyze);
 byId("raceUrl").addEventListener("keydown",e=>{if(e.key==="Enter")load()});
 </script></body></html>
+

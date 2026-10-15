@@ -8,7 +8,7 @@
  * - Race points and B alone NEVER produce a recommended pair.
  * - No invented "probabilities" or value/EV without calibration and odds.
  */
-export const ENGINE_VERSION = "cross-competition-audit-v3.1";
+export const ENGINE_VERSION = "cross-context-reasoning-v4";
 const own = (obj, key) => Object.prototype.hasOwnProperty.call(obj || {}, key);
 const numeric = value => value === null || value === undefined || value === "" ? null :
   (Number.isFinite(Number(value)) && Number(value) >= 0 ? Number(value) : null);
@@ -109,104 +109,32 @@ export function crossTickets(firstA, firstB, thirdA, thirdB) {
           [n[1],n[0],n[2]], [n[1],n[0],n[3]]];
 }
 
-function lineFront(line, riders) { return riders.get(line[0]); }
-const has = (r,k,threshold=1) => r && r[k] !== null && r[k] !== undefined && r[k] >= threshold;
-const allKnown = (r,keys) => keys.every(k=>r?.[k] !== null && r?.[k] !== undefined);
-
+/** Structure generates questions, never a numeric proof or a veto. */
 function interactionEvidence(x,y,race) {
-  const px = race.position.get(x.no);
-  const py = race.position.get(y.no);
-  const ax = race.lines[px.line], by = race.lines[py.line];
-  const frontX = lineFront(ax,race.riders), frontY = lineFront(by,race.riders);
-  const cases = [];
-  const veto = [];
-  const lacking = new Set();
-  const req = (...checks)=>{
-    for (const [r,k] of checks) if (!allKnown(r,[k])) lacking.add(String(r.no)+":"+k);
-    return checks.every(([r,k])=>allKnown(r,[k]));
-  };
-
-  // "race points" deliberately absent: these are JOINT arrival mechanisms.
-  if (px.pos === 1 && py.pos === 1) {
-    if (req([x,"b"],[x,"nige"],[y,"makuri"]) &&
-        has(x,"b",2) && has(x,"nige") && has(y,"makuri")) {
-      cases.push({key:"A_LEAD_B_MAKURI",label:String(x.no)+"先行 × "+String(y.no)+"別線捲り",
-        evidence:[String(x.no)+"のB/逃げ",String(y.no)+"の捲り"]});
-    }
-    if (req([y,"b"],[y,"nige"],[x,"makuri"]) &&
-        has(y,"b",2) && has(y,"nige") && has(x,"makuri")) {
-      cases.push({key:"B_LEAD_A_MAKURI",label:String(y.no)+"先行 × "+String(x.no)+"別線捲り",
-        evidence:[String(y.no)+"のB/逃げ",String(x.no)+"の捲り"]});
-    }
-    if (allKnown(x,["b","nige"]) && allKnown(y,["b","nige"]) &&
-        has(x,"b",3) && has(y,"b",3) && has(x,"nige") && has(y,"nige")) {
-      veto.push("両先行の踏み合い。両者残りを当然視できない");
-    }
-  }
-  if (px.pos === 2 && py.pos === 1) {
-    if (req([x,"sashi"],[frontX,"b"],[frontX,"nige"],[y,"makuri"]) &&
-      has(x,"sashi") && has(frontX,"b",2) && has(frontX,"nige") && has(y,"makuri")) {
-      cases.push({key:"A_BANTE_B_MAKURI",label:String(x.no)+"番手差し × "+String(y.no)+"別線捲り",
-        evidence:[String(frontX.no)+"の先行力",String(x.no)+"の差し",String(y.no)+"の捲り"]});
-    }
-  }
-  if (py.pos === 2 && px.pos === 1) {
-    if (req([y,"sashi"],[frontY,"b"],[frontY,"nige"],[x,"makuri"]) &&
-      has(y,"sashi") && has(frontY,"b",2) && has(frontY,"nige") && has(x,"makuri")) {
-      cases.push({key:"B_BANTE_A_MAKURI",label:String(y.no)+"番手差し × "+String(x.no)+"別線捲り",
-        evidence:[String(frontY.no)+"の先行力",String(y.no)+"の差し",String(x.no)+"の捲り"]});
-    }
-  }
-  // The other line may launch a makuri while its bante closes onto the lead-line.
-  // Sashi is required because both 1st/2nd orders must remain plausible.
-  if (px.pos === 1 && py.pos === 2) {
-    if (req([x,"b"],[x,"nige"],[frontY,"makuri"],[y,"sashi"]) &&
-      has(x,"b",2) && has(x,"nige") && has(frontY,"makuri") && has(y,"sashi")) {
-      cases.push({key:"A_LEAD_B_MAKURI_BANTE",label:String(x.no)+"先行 × "+String(y.no)+"別線捲り番手",
-        evidence:[String(x.no)+"の先行",String(frontY.no)+"の捲り",String(y.no)+"の差し"]});
-    }
-  }
-  if (py.pos === 1 && px.pos === 2) {
-    if (req([y,"b"],[y,"nige"],[frontX,"makuri"],[x,"sashi"]) &&
-      has(y,"b",2) && has(y,"nige") && has(frontX,"makuri") && has(x,"sashi")) {
-      cases.push({key:"B_LEAD_A_MAKURI_BANTE",label:String(y.no)+"先行 × "+String(x.no)+"別線捲り番手",
-        evidence:[String(y.no)+"の先行",String(frontX.no)+"の捲り",String(x.no)+"の差し"]});
-    }
-  }
-  if (px.pos > 2 || py.pos > 2) veto.push("3番手以降の1・2着は追加根拠が必要");
-  if (px.pos === 2 && py.pos === 2) {
-    // A role is not a reason to delete a legal CROSS. Inspect both lines.
-    const signal = r => has(r,"sashi") || has(r,"mark");
-    if (signal(x) && signal(y) &&
-        (has(frontX,"nige") || has(frontX,"makuri")) &&
-        (has(frontY,"nige") || has(frontY,"makuri"))) {
-      cases.push({key:"BOTH_BANTE_RETENTION",label:x.no+"・"+y.no+"の異線番手残存・切替",
-        evidence:[frontX.no+"・"+frontY.no+"の自力実績",x.no+"・"+y.no+"の差し／追走実績"]});
-    }
-    veto.push("番手同士は両先頭の消耗・切替・コースを比較。役割だけで優遇しない");
-  }
-  if (!cases.length) veto.push("異線2人の同時残りを裏付ける決まり手の組合せが未成立");
-  return {cases,veto,lacking:[...lacking]};
+  const directions=[x,y].map((winner,i)=>{
+    const partner=[x,y][1-i];
+    const rivals=race.entries.filter(e=>e.no!==winner.no&&e.no!==partner.no);
+    return {first:winner.no,second:partner.no,
+      questions:[
+        `${winner.no}が勝つ動きの中で、${partner.no}はどの位置・コースから2着を確保するか`,
+        `${partner.no}が残るための条件は、${winner.no}が勝つための条件と両立するか`,
+        `2着を争う${rivals.map(e=>e.no).join('・')}の動きに対し、何が有利／不利になるか`,
+        'その推論に使った実際の走り・相手関係・並び・コメントは何か。確認できた事実と推測を分ける',
+        '同じ材料で筋決着や別クロスになる説明と比べ、こちらを選ぶ差は何か'
+      ], rivals:rivals.map(e=>({no:e.no,sameLineAsWinner:
+        race.position.get(e.no).line===race.position.get(winner.no).line}))};
+  });
+  return {cases:[],veto:[],directions};
 }
 
 function outsideRisks(race, chosen) {
-  const missing = race.entries.filter(e=>!chosen.has(e.no));
-  const excludedLines = race.lines.filter(line=>line.every(no=>!chosen.has(no)));
-  const issues = [];
-  if (excludedLines.some(line=>line.length >= 3)) {
-    issues.push("基本4点では3車ライン全滅が必要。3-2-2の2車×2車クロスでは特に厳しい（（）付き補助では緩和）");
-  }
-  if (excludedLines.some(line=>line.length === 2)) {
-    issues.push("別の2車ライン2人とも着外が必要");
-  }
-  // Rivals left outside the four tickets are examined individually, not just counted.
-  for (const r of missing) {
-    if (has(r,"b",3) && has(r,"nige"))
-      issues.push("選外"+r.no+"番にB/逃げ実績。ラインを消せる根拠が別途必要");
-    if (has(r,"makuri"))
-      issues.push("選外"+r.no+"番に捲り実績。別線への侵入リスク");
-  }
-  if (missing.length >= 3) issues.push("選外"+String(missing.length)+"人が全員着外になる必要");
+  const missing=race.entries.filter(e=>!chosen.has(e.no));
+  const excludedLines=race.lines.filter(line=>line.every(no=>!chosen.has(no)));
+  const issues=[];
+  if(excludedLines.some(line=>line.length>=3))
+    issues.push('基本4点の成立条件は3車ライン全滅。これは着順の条件であり、このレースで起こりにくいという証拠ではない（補助は別）');
+  for(const r of missing)
+    issues.push(`選外${r.no}番：どの動きなら入着し、どの相手関係なら届かないか。得点や決まり手の多寡だけで消さない`);
   return issues;
 }
 
@@ -228,11 +156,11 @@ export function analyzeCross(input, {limit=24}={}) {
       const tickets=crossTickets(firstA,firstB,thirdA,thirdB);
       const serious=risks.filter(s=>s.includes("3車ライン全滅"));
       found.push({lines:[i,j],firstPair:[firstA,firstB],
-        remaining:[thirdA,thirdB],tickets,cases:proof.cases,
+        remaining:[thirdA,thirdB],tickets,cases:proof.cases,reasoning:proof.directions,
         warnings:[...proof.veto,...risks],needsVerification:serious.length>0,
-        // Sorting describes quality of identified MECHANISMS, not rider merit.
+        // Compatibility fields: no mechanism counts are used as evidence.
         mechanismCount:proof.cases.length,exclusionCount:risks.length,
-        evidenceStatus:proof.cases.length ? "SUPPORTED_HYPOTHESIS" : "UNRESOLVED",
+        evidenceStatus:"UNASSESSED",
         observations:[firstA,firstB,thirdA,thirdB].map(no=>{
           const r=race.riders.get(no);return {no,position:race.position.get(no).pos,
             b:r.b,nige:r.nige,makuri:r.makuri,sashi:r.sashi,mark:r.mark};
@@ -250,15 +178,16 @@ export function analyzeCross(input, {limit=24}={}) {
   return {
     version:ENGINE_VERSION,race:{track:race.track,race_no:race.race_no,
       race_type:race.race_type,meeting_grade:race.meeting_grade,lines:race.lines},
-    status:supported.length === 0 ? "NO_EVIDENCE" : "COMPARISON_REQUIRED",
+    status:"COMPARISON_REQUIRED",
     recommended:null,
     candidates:top,evaluated,qualified:unique.length,supported:supported.length,ties:tied.length,
     incompleteCars:incomplete,
     notes:[
       "強い順の並べ替え・得点加点・基本4点の3着再選定は行いません（補助は別判定）",
-      "成立メカニズムの条件照合であり、的中確率や期待回収率ではありません",
-      incomplete.length ? "決まり手欠損："+incomplete.join("・")+"番。欠損時は確定推奨しません" : "",
+      "実績の回数は観測値。今回の成立・不成立の証拠に自動変換しません",
+      incomplete.length ? "決まり手欠損："+incomplete.join("・")+"番。数値欠損はクロス不成立を意味しません" : "",
       "列挙順・根拠件数・警告件数を採用順位に変換しません。主採用には比較記録が必要"
     ].filter(Boolean)
   };
 }
+

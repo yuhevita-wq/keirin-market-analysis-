@@ -87,7 +87,19 @@ export function resolveDecision(result, decision=null, comparison=null) {
     throw Error('表裏それぞれに、勝つ走りで相手が2着に残る理由と、同線番手を含む2着競合の比較が必要です');
   return {main,label:'主採用（分析者の比較判断）',provisional:true,
     reason:[decision.interaction,decision.alternativeCross,decision.sameLine,decision.outside].join('。'),
-    record:{...decision}};
+    record:{...decision},
+    basis:{
+      observedFacts:decision.observedFacts?.trim()||null,
+      sourceContext:decision.sourceContext?.trim()||null,
+      inference:directions.map(d=>({first:d.first,second:d.second,
+        coexistence:d.coexistence,secondCompetition:d.secondCompetition})),
+      counterEvidence:decision.counterEvidence?.trim()||null,
+      uncertainty:decision.uncertainty?.trim()||null,
+      status:'ANALYST_JUDGMENT',
+      unrecorded:['observedFacts','sourceContext','counterEvidence','uncertainty']
+        .filter(k=>!decision[k]?.trim()),
+      note:'記録の存在は正しさの証明ではない。未記録は不成立の証拠ではない。数値順位による補完はしない'
+    }};
 }
 
 export function gradeFrozenDecision(input, decision, actual, payoutPer100, result) {
@@ -100,3 +112,4 @@ export function gradeFrozenDecision(input, decision, actual, payoutPer100, resul
     failure:hit?'HIT':classification.coreCross?(candidateContains?'SELECTION_MISS':'GENERATION_MISS'):classification.kind,
     stake:400,payout:hit?payoutPer100:0};
 }
+

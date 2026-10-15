@@ -5,31 +5,11 @@
  */
 import { normalizeRace } from "./cross_engine.mjs";
 
-const positive = (r, key) => Number.isFinite(r?.[key]) && r[key] > 0;
 const uniqueTickets = tickets => [...new Map(tickets.map(t => [t.join("-"),t])).values()];
 
 export {resolveDecision as selectMainCross} from './cross_comparison.mjs';
 
-function thirdEntryEvidence(race, line, position) {
-  const rider = race.riders.get(line[position]);
-  const front = race.riders.get(line[0]);
-  const signals = [];
-  if (position === 0) {
-    if (positive(rider,"nige") && positive(rider,"b")) signals.push("逃げ・B実績から先行粘り");
-    if (positive(rider,"makuri")) signals.push("捲り実績から別線間への流入");
-  } else if (position === 1) {
-    if (positive(rider,"sashi") && (positive(front,"nige") || positive(front,"makuri") || positive(front,"b")))
-      signals.push("前の自力実績と本人の差し");
-    if (positive(rider,"mark")) signals.push("追走実績からの3着残り");
-  } else {
-    if (positive(rider,"mark") && (positive(front,"nige") || positive(front,"makuri") || positive(front,"b")))
-      signals.push("3番手追走と前方の自力実績");
-    if (positive(rider,"sashi")) signals.push("後位からの差し実績");
-  }
-  return {no:rider.no, signals, position:position+1};
-}
-
-export function buildAuxiliaryThirds(candidate, input) {
+export function buildAuxiliaryThirds(candidate, input, assessment=null) {
   const race = normalizeRace(input);
   const [ai,bi] = candidate.lines;
   const chosenLines = [race.lines[ai],race.lines[bi]];
@@ -53,22 +33,17 @@ export function buildAuxiliaryThirds(candidate, input) {
   }
 
   // Two two-rider lines cross: choose ONE rider from the excluded three line.
-  // This is based on third-place-specific mechanisms, not race score or B alone.
+  // An explicit contextual judgment replaces winning-method-count ranking.
   if (!extras.length && chosenLines.every(line => line.length === 2)) {
     const outside = race.lines.map((line,i) => ({line,i}))
       .filter(({line,i}) => i !== ai && i !== bi && line.length === 3);
     if (outside.length === 1) {
       const {line} = outside[0];
-      const ranked = line.map((_,p) => thirdEntryEvidence(race,line,p))
-        .sort((a,b)=>b.signals.length-a.signals.length || a.position-b.position);
-      const best = ranked[0];
-      if (best.signals.length) {
-        push(best.no,"選外3車ラインから"+best.no+"番（"+best.signals.join("・")+"）");
-        if (ranked[1]?.signals.length === best.signals.length)
-          explanations.push("3着の根拠が同数。選択は暫定であり他車を否定しない");
-      } else {
-        explanations.push("選外3車ラインの3着根拠が不足。車番を機械的に追加しない");
-      }
+      const no=Number(assessment?.no);
+      if(assessment && (!line.includes(no)||!assessment.reason?.trim()))
+        throw Error('補助3着は選外3車ラインの1人と、今回の相手関係で残る理由を指定してください');
+      if(assessment)push(no,'選外3車ラインから'+no+'番：'+assessment.reason+'（分析者判断）');
+      else explanations.push('選外3車ラインの'+line.join('・')+'から1人を比較選定。未選定であり、不成立でも根拠なしでもない。決まり手の項目数では選ばない');
     }
   }
 
@@ -87,4 +62,5 @@ export function buildAuxiliaryThirds(candidate, input) {
     coreTickets:candidate.tickets
   };
 }
+
 

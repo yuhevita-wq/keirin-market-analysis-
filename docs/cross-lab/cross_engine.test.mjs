@@ -27,7 +27,7 @@ test("never select because of race points or B alone",()=>{
   for(const e of race.entries){e.nige=null;e.makuri=null;e.sashi=null;e.mark=null;}
   race.entries[4].score=5000;
   race.entries[4].b_count=300;
-  assert.equal(analyzeCross(race).status,"NO_EVIDENCE");
+  assert.equal(analyzeCross(race).status,"COMPARISON_REQUIRED");
   assert.equal(analyzeCross(race).recommended,null);
 });
 
@@ -74,7 +74,7 @@ test("preserve specified line order and reject invented line membership",()=>{
   assert.throws(()=>parseLines("1-2 / 3-4",[1,2,3,5]));
 });
 
-test("front + opposing makuri requires actual winning-method evidence",()=>{
+test("zero makuri does not produce a numeric proof or remove a candidate",()=>{
   const race=example();
   let result=analyzeCross(race);
   assert.ok(result.candidates.some(x=>x.firstPair.join("-")==="1-3"));
@@ -89,4 +89,5 @@ test("explicitly cleared methods remain unknown even when old cache aliases exis
   race.entries[0].nige=null;
   assert.equal(normalizeRace(race).riders.get(1).nige,null);
 });
+
 

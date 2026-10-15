@@ -50,31 +50,17 @@ test("if third-position rider was already core third, show parentheses but no du
   assert.deepEqual(out.alreadyInCore,[3]);
 });
 
-test("2x2 cross draws one third from outside 3-line by third-specific evidence, not automatic bante",()=>{
-  const out=buildAuxiliaryThirds(example([1,2],[4,6],[5,7]),race);
-  assert.equal(out.thirds.length,1);
-  assert.equal(out.thirds[0],2); // two independent third-place clues (sashi + mark)
-  assert.deepEqual(out.additionalTickets,[[4,6,2],[6,4,2]]);
-});
-
-test("2x2 cross can pick the 3-line leader if its third-entry evidence is stronger",()=>{
-  const updated={...race,entries:race.entries.map(x=>({...x}))};
-  updated.entries[0].makuri=2; // nige/B and makuri: two qualifying mechanisms
-  updated.entries[1].sashi=0;
-  updated.entries[1].mark=0;
-  const out=buildAuxiliaryThirds(example([1,2],[4,6],[5,7]),updated);
-  assert.deepEqual(out.thirds,[1]);
-});
-
-test("no invented 3-line auxiliary when third-place data cannot support a rider",()=>{
-  const empty={...race,entries:race.entries.map(x=>({...x,b_count:null,nige:null,makuri:null,sashi:null,mark:null}))};
-  const out=buildAuxiliaryThirds(example([1,2],[4,6],[5,7]),empty);
-  assert.deepEqual(out.thirds,[]);
-  assert.deepEqual(out.additionalTickets,[]);
-  assert.match(out.explanations.join(" "),/根拠が不足/);
+test("2x2 auxiliary uses explicit contextual judgment even with zero recorded methods",()=>{
+  const c=example([1,2],[4,6],[5,7]);
+  const empty={...race,entries:race.entries.map(x=>({...x,b_count:0,nige:0,makuri:0,sashi:0,mark:0}))};
+  assert.deepEqual(buildAuxiliaryThirds(c,empty,{no:3,reason:'observed position and available course'}).thirds,[3]);
+  assert.deepEqual(buildAuxiliaryThirds(c,race).thirds,[]);
+  assert.throws(()=>buildAuxiliaryThirds(c,race,{no:7,reason:'wrong line'}));
+  assert.throws(()=>buildAuxiliaryThirds(c,race,{no:1,reason:''}));
 });
 
 test("cross not involving a 3-line bante and not 2x2 has no arbitrary auxiliary",()=>{
   const out=buildAuxiliaryThirds(example([0,1],[1,4],[2,5]),race);
   assert.deepEqual(out.thirds,[]);
 });
+

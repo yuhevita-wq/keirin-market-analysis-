@@ -50,6 +50,9 @@ test('page flow keeps ranking, review, core, auxiliary and saved decision separa
     const record=module.record();
     assert.ok(record.selection.signature);
     assert.equal(record.selection.record.directions.length,2);
+    assert.equal(record.selection.basis.status,'ANALYST_JUDGMENT');
+    assert.match(d('analysis').innerHTML,/確認した事実/);
     assert.match(d('analysis').innerHTML,/（）付き3着補助/);
   }finally{globalThis.document=previousDocument;globalThis.fetch=previousFetch;}
 });
+

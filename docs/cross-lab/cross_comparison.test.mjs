@@ -19,7 +19,7 @@ test('no winning method threshold silently deletes legal cross types',()=>{
   const result=analyzeCross(race,{limit:1000});
   assert.equal(result.candidates.length,12);
   assert.equal(result.recommended,null);
-  assert.ok(result.candidates.every(c=>c.evidenceStatus==='UNRESOLVED'));
+  assert.ok(result.candidates.every(c=>c.evidenceStatus==='UNASSESSED'));
 });
 
 test('renumbering riders cannot change the set of candidate tickets',()=>{
@@ -83,3 +83,4 @@ test('forecast chooses maximal four-point equal-stake return; partial prices nev
   delete odds[result.candidates[0].tickets[0].join('-')];
   assert.equal(compareJointForecast(race,result.candidates,f,odds).selectedSignature,null);
 });
+
