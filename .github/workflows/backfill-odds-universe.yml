@@ -24,9 +24,9 @@ on:
         type: number
         default: 0
       limit:
-        description: "Max races, 1..200"
+        description: "Max races, 1..500"
         type: number
-        default: 40
+        default: 400
 
 permissions:
   contents: write
@@ -57,11 +57,15 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [[ "$EVENT" == "push" || "$MODE" == "pilot" ]]; then
-            python research/odds_universe_v1/backfill.py --source data/a_class_12/2025_01_02 --offset 0 --limit 6 --workers 2 --sleep 0.5 --tag pilot-A12
-            python research/odds_universe_v1/backfill.py --source data/a3_challenge/2025_01_02 --offset 0 --limit 6 --workers 2 --sleep 0.5 --tag pilot-A3
-          elif [[ "$EVENT" == "schedule" || "$MODE" == "auto" ]]; then
-            python research/odds_universe_v1/backfill.py --auto --limit "${LIMIT:-40}" --workers 2 --sleep 0.6 --tag recurring-gap-backfill
+          if [[ "$MODE" == "pilot" ]]; then
+            python research/odds_universe_v1/backfill.py --source data/a_class_12/2025_01_02 --offset 6 --limit 6 --workers 2 --sleep 0.6 --tag followup-A12
+            python research/odds_universe_v1/backfill.py --source data/a3_challenge/2025_01_02 --offset 6 --limit 6 --workers 2 --sleep 0.6 --tag followup-A3
+          elif [[ "$EVENT" == "push" ]]; then
+            python research/odds_universe_v1/backfill.py --auto --limit 160 --workers 2 --sleep 0.6 --tag startup-broad-backfill
+          elif [[ "$EVENT" == "schedule" ]]; then
+            python research/odds_universe_v1/backfill.py --auto --limit 400 --workers 2 --sleep 0.6 --tag recurring-gap-backfill
+          elif [[ "$MODE" == "auto" ]]; then
+            python research/odds_universe_v1/backfill.py --auto --limit "${LIMIT:-400}" --workers 2 --sleep 0.6 --tag on-demand-gap-backfill
           elif [[ "$MODE" == "source" ]]; then
             python research/odds_universe_v1/backfill.py --source "$SOURCE" --offset "${OFFSET:-0}" --limit "${LIMIT:-40}" --workers 2 --sleep 0.6 --tag directed-source-backfill
           else
