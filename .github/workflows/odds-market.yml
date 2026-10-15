@@ -52,11 +52,18 @@ jobs:
             --end "${{ inputs.end_date }}" \
             --out /tmp/odds-final \
             --sleep 2
-      - name: Upload private-use research output as workflow artifact
+      - name: Prepare audit-only output
+        if: always()
+        run: |
+          mkdir -p /tmp/odds-audit
+          if [ -d /tmp/odds-final ]; then
+            find /tmp/odds-final -type f -name '*.manifest.json' -exec cp {} /tmp/odds-audit/ \;
+          fi
+      - name: Upload audit manifests only - never raw odds from public repository
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: odds-final-${{ inputs.start_date }}-to-${{ inputs.end_date }}
-          path: /tmp/odds-final
+          name: odds-audit-${{ inputs.start_date }}-to-${{ inputs.end_date }}
+          path: /tmp/odds-audit
           retention-days: 1
           if-no-files-found: warn
