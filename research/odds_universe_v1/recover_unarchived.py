@@ -18,6 +18,7 @@ from keirin_market_analysis.historical_final_odds import scrape_race
 from keirin_market_analysis.results_payouts_2025 import result_url,parse_result_page
 from backfill import ROOT,FIELDS,validate
 from compare_calendar import saved_races
+from scope import in_scope, girls_race
 
 BASE=ROOT/"data/unarchived_races_v1"
 RACE_COLS=["race_id","race_date","track","race_no","race_type","start_time","deadline","entry_count","source_url","captured_at_utc"]
@@ -39,7 +40,7 @@ def read_candidates():
     for src in report.get("sources",[]):
         for r in src.get("unarchived_races",[]):
             rid=r["race_id"]
-            if rid not in known and rid not in done:found[rid]=r
+            if rid not in known and rid not in done and in_scope(r.get("race_date")):found[rid]=r
     return sorted(found.values(),key=lambda r:(r["race_date"],r["race_id"]))
 
 
@@ -47,6 +48,8 @@ def fetch_one(item):
     rid=item["race_id"]
     url=item["odds_page_url"]
     if not re.fullmatch(r"\d{16}",rid):raise ValueError("invalid race ID")
+    if not in_scope(item.get("race_date")):
+        raise ValueError("2026 second-half and out-of-window collection is forbidden")
     session=cards.make_session()
     html=cards.fetch_html(session,url)
     ref=cards.RaceRef(discovered_on=item["race_date"],race_no=int(rid[-4:]),url=url)
@@ -59,6 +62,13 @@ def fetch_one(item):
         cards.TARGET_RACE_TYPE=prev
     if meta["race_id"]!=rid or meta["race_date"]!=item["race_date"]:
         raise ValueError("race-id or date mismatch between census and racecard")
+    classes=[str(e.get("class","")) for e in entries]
+    if girls_race(meta.get("race_type"), classes):
+        raise ValueError("girls race excluded; no odds retrieved")
+    # Prefer the source daily-index race type if supplied by the census.
+    race_type=str(item.get("race_type","")).strip()
+    if race_type and not girls_race(race_type, classes):
+        meta["race_type"]=race_type
     cars=sorted({int(e["car_no"]) for e in entries})
     if len(cars)!=len(entries):
         raise ValueError("duplicate racer numbers")
