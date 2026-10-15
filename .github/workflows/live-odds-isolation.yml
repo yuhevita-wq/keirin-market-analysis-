@@ -62,10 +62,13 @@ jobs:
         run: python -m pip install requests beautifulsoup4
       - name: Collect only fully parsed source-stamped snapshots until deadline
         shell: bash
+        env:
+          LIVE_RACE_URL: ${{ inputs.race_url }}
+          LIVE_CLOSE_JST: ${{ inputs.close_jst }}
         run: |
           python -m odds_market.live_watch \
-            --url "${{ inputs.race_url }}" \
-            --close-jst "${{ inputs.close_jst }}" \
+            --url "$LIVE_RACE_URL" \
+            --close-jst "$LIVE_CLOSE_JST" \
             --interval-seconds 45 \
             --max-age-minutes 4 \
             --out "$RUNNER_TEMP/live_private" \
