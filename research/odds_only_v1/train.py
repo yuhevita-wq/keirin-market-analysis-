@@ -181,10 +181,12 @@ def gather():
 def pack(rows):
     n=len(rows)
     if not n:raise ValueError("No complete races")
-    X=np.zeros((n,MAX_K,D),np.float32)
-    logq=np.full((n,MAX_K),-10000,np.float32)
+    max_k=max(len(r.logq) for r in rows)
+    if max_k>MAX_K:raise ValueError("more combinations than MAX_K")
+    X=np.zeros((n,max_k,D),np.float32)
+    logq=np.full((n,max_k),-10000,np.float32)
     winners=np.zeros(n,np.int16)
-    odds=np.zeros((n,MAX_K),np.float32)
+    odds=np.zeros((n,max_k),np.float32)
     lens=np.zeros(n,np.int16)
     for i,r in enumerate(rows):
         k=len(r.logq)
