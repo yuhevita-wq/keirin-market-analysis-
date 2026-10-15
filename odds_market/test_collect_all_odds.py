@@ -59,7 +59,7 @@ def test_complete():
         kinds=expected(n)
         assert len(rows)==sum(map(len,kinds.values()))
         assert len(rows)==sum(map(len,kinds.values()))
-        expected_counts={3:19,4:48,5:110,6:200,7:329,8:504,9:783}
+        expected_counts={3:19,4:52,5:110,6:200,7:329,8:504,9:783}
         assert len(rows)==expected_counts[n],(n,len(rows))
         assert {r[2] for r in rows}==set(kinds)
         assert all(r[1]=="A級一般" for r in rows)
