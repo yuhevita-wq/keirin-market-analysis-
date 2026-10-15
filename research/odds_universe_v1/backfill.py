@@ -39,8 +39,13 @@ def csv_read(path):
 
 
 def source_dirs():
+    # Source enumeration is for finding public odds URLs, never model features.
     for parent in ("data/a_class_12","data/a3_challenge"):
         for r in sorted((ROOT/parent).glob("*/races.csv")):
+            if (r.parent/"entries.csv").exists():
+                yield r.parent
+    for parent in ("data/2023","data/2024","data/2025","data/2026_h1","data/2026_future_block1"):
+        for r in sorted((ROOT/parent).rglob("races.csv")):
             if (r.parent/"entries.csv").exists():
                 yield r.parent
 
@@ -64,6 +69,7 @@ def choose_auto(limit):
     ledger={}
     for src in source_dirs():
         family=src.relative_to(ROOT).parts[1]
+        if family not in catalogs:continue
         ledger[src]=used_rids(src)
         for r in csv_read(src/"races.csv"):
             if r.get("race_id") and r["race_id"] not in ledger[src]:
@@ -80,6 +86,35 @@ def choose_auto(limit):
                for _,src,r in catalogs[family] if (str(src),r["race_id"]) not in already]
         chosen += extra[:limit-len(chosen)]
     return chosen[:limit]
+
+def choose_s_missing(limit):
+    """Collect only entire S-class source directories lacking either full price file.
+
+    Races in other directories with partial markets are separately recorded in
+    strict_market_coverage; they need targeted repair rather than recollection.
+    """
+    from itertools import zip_longest
+    families={"old":[],"recent":[]}
+    for src in source_dirs():
+        path=str(src.relative_to(ROOT))
+        if "s_class" not in path:continue
+        has3=(src/"trifecta_final_odds.csv").exists() or bool(list(src.glob("trifecta_final_odds_part*.csv")))
+        has2=(src/"trio_final_odds.csv").exists()
+        if has3 and has2:continue
+        used=used_rids(src)
+        key="recent" if "2026_future_block1" in path else "old"
+        for race in csv_read(src/"races.csv"):
+            if race.get("race_id") and race["race_id"] not in used:
+                families[key].append((src,race))
+    for key in families:
+        families[key].sort(key=lambda x:(x[1].get("race_date",""),str(x[0]),x[1]["race_id"]))
+    interleaved=[]
+    for a,b in zip_longest(families["recent"],families["old"]):
+        if a is not None:interleaved.append(a)
+        if b is not None:interleaved.append(b)
+        if len(interleaved)>=limit:break
+    return interleaved[:limit]
+
 
 def validate(race,entrants,three,trio):
     n=len(entrants)
@@ -203,13 +238,17 @@ def main():
     ap.add_argument("--workers",type=int,default=2)
     ap.add_argument("--sleep",type=float,default=.5)
     ap.add_argument("--auto",action="store_true")
+    ap.add_argument("--auto-s",action="store_true",help="S-class whole-file odds gaps only")
     ap.add_argument("--tag",default="manual")
     arg=ap.parse_args()
     if not 1<=arg.limit<=500:ap.error("limit must be in [1,500]")
     if not 1<=arg.workers<=3:ap.error("workers must be in [1,3]")
     if not .25<=arg.sleep<=10:ap.error("sleep must be between 0.25 and 10 seconds")
+    if arg.auto and arg.auto_s:ap.error("choose exactly one automated mode")
     if arg.auto:
         tasks=choose_auto(arg.limit)
+    elif arg.auto_s:
+        tasks=choose_s_missing(arg.limit)
     else:
         if not arg.source:ap.error("--source or --auto required")
         folder=(ROOT/arg.source).resolve()
@@ -217,7 +256,7 @@ def main():
         if not (folder/"races.csv").exists() or not (folder/"entries.csv").exists():
             ap.error("missing races.csv or entries.csv")
         if not any(folder==src for src in source_dirs()):
-            ap.error("source not part of audited A1/A2 or A3 historical directories")
+            ap.error("source not part of audited historical directories")
         if arg.offset<0:ap.error("offset cannot be negative")
         races=list(csv_read(folder/"races.csv"))
         tasks=[(folder,r) for r in races[arg.offset:arg.offset+arg.limit]]
