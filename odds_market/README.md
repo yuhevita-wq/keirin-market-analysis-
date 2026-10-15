@@ -18,7 +18,7 @@ python -m pip install requests beautifulsoup4
 python -m odds_market.test_collect_final
 python odds_market/collect_final.py --start 2024-07-06 --end 2024-07-06 --out /path/to/private/odds
 ```
-許諾・利用条件を確認した後、[GitHub Actions](https://github.com/yuhevita-wq/keirin-market-analysis-/actions/workflows/odds-market.yml) の **Run workflow** から開始日・終了日を指定できる。1回の実行は最長7日。失敗時もmanifestに理由が残る。Actions artifactは短期保管のため恒久データ倉庫として扱わない。
+許諾・利用条件を確認した後、[GitHub Actions](https://github.com/yuhevita-wq/keirin-market-analysis-/actions/workflows/odds-market.yml) の **Run workflow** から開始日・終了日を指定できる。1回の実行は最長7日。失敗時もmanifestに理由が残る。公開GitHubのActions artifactは第三者から閲覧できるため、ワークフローは監査用manifestのみアップロードし、取得したオッズCSVは公開しない。オッズ原本を保存するには利用条件・許諾を確認した上で、手元またはアクセス制限のある環境でスクリプトを実行する。
 
 ## 保存形式
 `YYYY/YYYY-MM-DD.csv.gz`：完全取得できたレースの全買い目。各レコードは `race_id, first, second, third, odds` を中核として、発売票数、オッズ時刻、取得時刻、参照URLなどを持つ。
