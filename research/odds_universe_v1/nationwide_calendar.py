@@ -7,14 +7,14 @@ Uses historical KDreams daily event index only. Missing page/discovery days are
 reported and must be reconciled before claiming nationwide coverage.
 """
 from __future__ import annotations
-import argparse,csv,gzip,json,re,time,calendar
+import argparse,csv,gzip,json,re,time,calendar,unicodedata
 from collections import Counter,defaultdict
 from datetime import date,timedelta,datetime,timezone
 from pathlib import Path
 from urllib.parse import urljoin,urlsplit,urlunsplit
 
 from bs4 import BeautifulSoup
-from keirin_market_analysis.s_yosen_2025 import KDREAMS_DAILY,fetch_html,make_session
+from keirin_market_analysis.s_yosen_2025 import KDREAMS_DAILY,fetch_html,make_session,expand_row_cells
 from scope import START, END, in_scope
 
 ROOT=Path(__file__).resolve().parents[2]
@@ -31,10 +31,39 @@ def as_race_day(rid):
     except (ValueError,IndexError):return None
 
 
+def race_label(text):
+    """A published programme label, never a model predictor."""
+    norm=unicodedata.normalize("NFKC",str(text or "")).replace(" ","").strip()
+    if norm.startswith(("S級","A級","L級","チャレンジ","ガールズ")):
+        return norm if len(norm)<32 else ""
+    return ""
+
+
 def extract_day(html,base_url,day):
     soup=BeautifulSoup(html,"lxml")
     found={}
     outside=Counter()
+    labels_by_id={}
+    # A KDreams meeting programme uses table headers with colspan to group
+    # consecutive race columns (e.g., A級予選 / A級特選 / S級予選).
+    # Track the last declared label for each expanded race column and assign it
+    # to its underlying racedetail links; do NOT guess by race number.
+    for table in soup.find_all("table"):
+        active={}
+        for row in table.find_all("tr"):
+            cells=expand_row_cells(row)
+            for i,cell in enumerate(cells):
+                label=race_label(cell.get_text(" ",strip=True))
+                if label:
+                    active[i]=label
+            for i,cell in enumerate(cells):
+                kind=active.get(i,"")
+                if not kind:
+                    continue
+                for a in cell.find_all("a",href=True):
+                    match=ID_RE.search(str(a["href"]))
+                    if match and as_race_day(match.group(1))==day:
+                        labels_by_id[match.group(1)]=kind
     for a in soup.find_all("a",href=True):
         href=str(a["href"])
         match=ID_RE.search(href)
@@ -47,11 +76,11 @@ def extract_day(html,base_url,day):
         url=urljoin(base_url,href)
         parts=urlsplit(url)
         if parts.scheme!="https" or parts.netloc!="keirin.kdreams.jp":
-            outside["off_provider"]+=1;continue
+            outside["off_provider"]+=1
+            continue
         link=urlunsplit(("https","keirin.kdreams.jp",parts.path,"pageType=odds",""))
-        found[rid]=link
+        found[rid]={"odds_page_url":link,"race_type":labels_by_id.get(rid,"")}
     return found,outside
-
 
 def days(start,end):
     d=start
@@ -83,9 +112,11 @@ def execute(start,end,delay):
             page_stats.append({"day":day.isoformat(),"discovered_race_ids":len(race_ids),
                                "noncurrent_day_links":extraneous.get("other_meeting_day",0),
                                "daily_index_url":url})
-            for rid,link in race_ids.items():
+            for rid,metadata in race_ids.items():
                 if rid not in found:found[rid]={"race_id":rid,
-                    "race_date":day.isoformat(),"odds_page_url":link,
+                    "race_date":day.isoformat(),
+                    "odds_page_url":metadata["odds_page_url"],
+                    "race_type":metadata["race_type"],
                     "daily_index_url":url}
         except Exception as exc:
             failures.append({"day":day.isoformat(),"daily_index_url":url,
@@ -93,7 +124,7 @@ def execute(start,end,delay):
         if delay:time.sleep(delay)
     folder.mkdir(parents=True,exist_ok=False)
     with gzip.open(folder/"race_index.csv.gz","wt",encoding="utf-8",newline="") as f:
-        w=csv.DictWriter(f,fieldnames=["race_id","race_date","odds_page_url","daily_index_url"])
+        w=csv.DictWriter(f,fieldnames=["race_id","race_date","odds_page_url","race_type","daily_index_url"])
         w.writeheader()
         w.writerows(sorted(found.values(),key=lambda r:(r["race_date"],r["race_id"])))
     (folder/"page_status.json").write_text(json.dumps({"pages":page_stats,"errors":failures},
@@ -104,6 +135,7 @@ def execute(start,end,delay):
         "days_attempted":(end-start).days+1,
         "days_succeeded":len(page_stats),"days_failed":len(failures),
         "unique_race_ids":len(found),
+        "race_type_labels_found":sum(bool(v.get("race_type")) for v in found.values()),
         "no_links_days":[r["day"] for r in page_stats if r["discovered_race_ids"]==0],
         "source":"楽天Kドリームス public daily racing index",
         "discovery_limitations":"Calendar race links might be missing or filtered; this is an observed-link census, not an independently certified JKA universe",
