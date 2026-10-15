@@ -42,7 +42,7 @@ def seal_all(source, target, run_id, cert):
         tmp = destination.with_suffix(".p7m.tmp")
         try:
             subprocess.run(["openssl", "cms", "-encrypt", "-binary",
-                            "-aes-256-cbc", "-in", str(path),
+                            "-aes-256-gcm", "-in", str(path),
                             "-out", str(tmp), "-outform", "DER", str(cert)],
                            check=True, capture_output=True, text=True)
             if not tmp.is_file() or tmp.stat().st_size < 500:
