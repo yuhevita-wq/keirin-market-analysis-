@@ -22,6 +22,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 from keirin_market_analysis.historical_final_odds import scrape_race
+from scope import eligible, in_scope
 
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/"data/odds_universe_v1"
@@ -44,7 +45,7 @@ def source_dirs():
         for r in sorted((ROOT/parent).glob("*/races.csv")):
             if (r.parent/"entries.csv").exists():
                 yield r.parent
-    for parent in ("data/2023","data/2024","data/2025","data/2026_h1","data/2026_future_block1"):
+    for parent in ("data/2023","data/2024","data/2025","data/2026_h1"):
         for r in sorted((ROOT/parent).rglob("races.csv")):
             if (r.parent/"entries.csv").exists():
                 yield r.parent
@@ -64,28 +65,46 @@ def used_rids(source):
 
 
 def choose_auto(limit):
-    """Balanced A1/A2 and A3 coverage. Resumable from immutable manifests."""
-    catalogs={"a_class_12":[],"a3_challenge":[]}
-    ledger={}
+    """Balance A classes AND each historical year; never select 2026 H2."""
+    from itertools import cycle
+    catalogs=defaultdict(list)
     for src in source_dirs():
         family=src.relative_to(ROOT).parts[1]
-        if family not in catalogs:continue
-        ledger[src]=used_rids(src)
-        for r in csv_read(src/"races.csv"):
-            if r.get("race_id") and r["race_id"] not in ledger[src]:
-                catalogs[family].append((r.get("race_date",""),src,r))
-    for family in catalogs:
-        catalogs[family].sort(key=lambda z:(z[0],str(z[1]),z[2]["race_id"]))
-    quotas={"a_class_12":limit//2+limit%2,"a3_challenge":limit//2}
-    chosen=[]
-    for family in ("a_class_12","a3_challenge"):
-        chosen += [(src,r) for _,src,r in catalogs[family][:quotas[family]]]
-    if len(chosen)<limit:
-        already={(str(src),r["race_id"]) for src,r in chosen}
-        extra=[(src,r) for family in ("a_class_12","a3_challenge")
-               for _,src,r in catalogs[family] if (str(src),r["race_id"]) not in already]
-        chosen += extra[:limit-len(chosen)]
-    return chosen[:limit]
+        if family not in ("a_class_12","a3_challenge"):
+            continue
+        attempted=used_rids(src)
+        for row in csv_read(src/"races.csv"):
+            rid=row.get("race_id")
+            if rid and rid not in attempted and eligible(row):
+                catalogs[(family,row["race_date"][:4])].append((src,row))
+    for key in catalogs:
+        catalogs[key].sort(key=lambda v:(v[1]["race_date"],str(v[0]),v[1]["race_id"]))
+    # Every available A-class/year is sampled repeatedly, rather than consuming
+    # 2023 then 2024 then 2025; older research years cannot be silently ignored.
+    keys=sorted(catalogs)
+    index=defaultdict(int)
+    selected=[]
+    used=set()
+    while len(selected)<limit and keys:
+        survivors=[]
+        for key in keys:
+            items=catalogs[key]
+            pos=index[key]
+            while pos<len(items) and items[pos][1]["race_id"] in used:
+                pos+=1
+            index[key]=pos
+            if pos>=len(items):
+                continue
+            src,row=items[pos]
+            selected.append((src,row))
+            used.add(row["race_id"])
+            index[key]+=1
+            if index[key]<len(items):
+                survivors.append(key)
+            if len(selected)>=limit:
+                break
+        keys=survivors
+    return selected
 
 def choose_s_missing(limit):
     """Collect only entire S-class source directories lacking either full price file.
@@ -102,9 +121,9 @@ def choose_s_missing(limit):
         has2=(src/"trio_final_odds.csv").exists()
         if has3 and has2:continue
         used=used_rids(src)
-        key="recent" if "2026_future_block1" in path else "old"
+        key="recent" if "2026_h1" in path else "old"
         for race in csv_read(src/"races.csv"):
-            if race.get("race_id") and race["race_id"] not in used:
+            if race.get("race_id") and race["race_id"] not in used and eligible(race):
                 families[key].append((src,race))
     for key in families:
         families[key].sort(key=lambda x:(x[1].get("race_date",""),str(x[0]),x[1]["race_id"]))
@@ -151,6 +170,8 @@ def validate(race,entrants,three,trio):
 
 def process(src,race,entries,delay):
     rid=race["race_id"]
+    if not eligible(race):
+        raise ValueError("out-of-scope date or girls race; no collection permitted")
     cars=entries.get(rid,[])
     if not re.fullmatch(r"\d{16}",rid):
         raise ValueError("invalid 16-digit KDreams race ID")
@@ -259,7 +280,7 @@ def main():
             ap.error("source not part of audited historical directories")
         if arg.offset<0:ap.error("offset cannot be negative")
         races=list(csv_read(folder/"races.csv"))
-        tasks=[(folder,r) for r in races[arg.offset:arg.offset+arg.limit]]
+        tasks=[(folder,r) for r in races[arg.offset:arg.offset+arg.limit] if eligible(r)]
     output=collect(tasks,arg.sleep,arg.workers,arg.tag)
     print("FINISHED",json.dumps(output,ensure_ascii=False),flush=True)
     if output["attempted"] and output["complete"]==0:
