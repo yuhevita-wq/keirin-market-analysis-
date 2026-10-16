@@ -36,7 +36,10 @@ test('page flow keeps ranking, review, core, auxiliary and saved decision separa
       assert.equal((rendered.match(/data-line-comparison=/g)||[]).length,3);
       assert.match(rendered,/比較数値の1位（主採用ではありません）/);
       assert.match(rendered,/2着の競合/);
-      assert.equal((rendered.match(/<article class="candidate">/g)||[]).length,12);
+      assert.equal((rendered.match(/<article class="candidate">/g)||[]).length,40);
+      assert.equal(record.roleConditions.length,3);
+      assert.match(rendered,/出走前の役割条件/);
+      assert.ok(record.roleConditions.every(x=>x.trainThrough==='2024-12-31'));
       assert.equal(record.selection.signature,null);
       assert.equal(record.comparison.selectedSignature,null);
       assert.ok(record.comparison.rankedSignature);

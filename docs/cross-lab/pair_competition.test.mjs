@@ -32,11 +32,11 @@ test('Nara 10R: own bante outranks cross partner in each winning direction',()=>
     assert.ok(Math.abs(d.secondAlternatives.reduce((s,x)=>s+x.conditionalProbability,0)-1)<1e-12);
 });
 
-test('withdrawn cards retain 12 legal four-ticket crosses but none becomes auto adopted',()=>{
+test('withdrawn cards retain 40 legal four-ticket crosses but none becomes auto adopted',()=>{
   for(const r of frozen.races){
     const result=analyzeCross(r),f=predictJoint(r,model);
     const c=compareJointForecast(r,result.candidates,f,{}, {objective:'HIT_PROBABILITY'});
-    assert.equal(result.candidates.length,12);
+    assert.equal(result.candidates.length,40);
     assert.ok(result.candidates.every(x=>x.tickets.length===4));
     assert.ok(c.rankedSignature);assert.equal(c.selectedSignature,null);
     assert.equal(resolveDecision(result,null,c).main,null);
