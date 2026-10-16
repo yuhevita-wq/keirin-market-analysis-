@@ -48,7 +48,7 @@ test('A/S coefficient sets stay separate, missing or zero-score fields fail, rac
   r.entries[0].score=90;r.entries[0].mark=null;assert.throws(()=>predictJoint(r,m),/不足/);
 });
 
-test('probability rank never becomes main choice; expected return still requires every price',()=>{
+test('model rank uses complete joint probabilities; expected return still requires every price',()=>{
   const r=card(),result=analyzeCross(r,{limit:1000}),f=predictJoint(r,blank()),selected=result.candidates[0];
   for(const key of Object.keys(f.probabilities))f.probabilities[key]=0;
   selected.tickets.forEach(t=>f.probabilities[t.join('-')]=0.25);
@@ -80,5 +80,5 @@ test('midnight answers remain frozen: core-cross misses, same-line outcomes and 
     else if(ps.every(x=>x.pos<=2)&&new Set(ps.map(x=>x.line)).size===2)coreMisses++;
     assert.equal(g.fitEligible,false);
   }
-  assert.equal(rows.length,9);assert.equal(coreMisses,2);assert.equal(sameLine,6);assert.equal(illegal,0);
+  assert.equal(rows.length,9);assert.equal(coreMisses,2);assert.equal(sameLine,6);assert.equal(illegal,1); // original Kumamoto 3R used a third rider as a core member
 });
