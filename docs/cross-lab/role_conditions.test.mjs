@@ -11,12 +11,12 @@ test('JS card features and role probabilities match independent Python reference
   assert.equal(p.leaf,c.leaf);p.probabilities.forEach((v,i)=>assert.ok(Math.abs(v-c.probabilities[i])<1e-10));assert.equal(p.trainThrough,'2024-12-31');
  }
 });
-test('all 210 outcomes have exact structural coverage; 18/18/4 candidate sets stay four tickets each',()=>{
+test('all 210 outcomes have exact structural coverage; 4/4/4 strict two-per-line candidate sets stay four tickets each',()=>{
  const input=fixtures[0].input,r=normalizeRace(input),cs=analyzeCross(input).candidates;
- assert.equal(cs.length,40);
- for(let a=0;a<3;a++)for(let b=a+1;b<3;b++)assert.equal(cs.filter(c=>c.lines.join() === [a,b].join()).length,r.lines[a].length*r.lines[b].length===6?18:4);
+ assert.equal(cs.length,12);
+ for(let a=0;a<3;a++)for(let b=a+1;b<3;b++)assert.equal(cs.filter(c=>c.lines.join() === [a,b].join()).length,4);
  for(const t of allOutcomes(input)){
-  const p=t.map(n=>r.position.get(n)),valid=p[0].line!==p[1].line&&new Set(p.map(x=>x.line)).size===2;
+  const p=t.map(n=>r.position.get(n)),valid=p[0].line!==p[1].line&&new Set(p.map(x=>x.line)).size===2&&p.every(x=>x.pos<=2);
   assert.equal(cs.some(c=>c.tickets.some(x=>x.join()===t.join())),valid);
  }
  assert.ok(cs.every(c=>c.tickets.length===4&&new Set(c.tickets.map(t=>t.join())).size===4));
