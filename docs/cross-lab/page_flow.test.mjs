@@ -31,17 +31,17 @@ test('page flow keeps ranking, review, core, auxiliary and saved decision separa
       await module.analyze();
       const rendered=document.getElementById('analysis').innerHTML,record=module.record();
       assert.ok(record,document.getElementById('analysis').textContent);
-      assert.match(rendered,/主採用未決定/);
+      assert.match(rendered,/主採用（モデル暫定1位）/);
       assert.match(rendered,/全3組を同じ展開/);
       assert.equal((rendered.match(/data-line-comparison=/g)||[]).length,3);
-      assert.match(rendered,/比較数値の1位（主採用ではありません）/);
+      assert.match(rendered,/比較数値の1位（暫定主採用候補）/);
       assert.match(rendered,/2着の競合/);
-      assert.equal((rendered.match(/<article class="candidate">/g)||[]).length,40);
+      assert.equal((rendered.match(/<article class="candidate">/g)||[]).length,11);
       assert.equal(record.roleConditions.length,3);
       assert.match(rendered,/出走前の役割条件/);
       assert.ok(record.roleConditions.every(x=>x.trainThrough==='2024-12-31'));
-      assert.equal(record.selection.signature,null);
-      assert.equal(record.comparison.selectedSignature,null);
+      assert.ok(record.selection.signature);
+      assert.equal(record.comparison.selectedSignature,null);assert.equal(record.selection.basis.status,'MODEL_PROVISIONAL');
       assert.ok(record.comparison.rankedSignature);
       assert.doesNotThrow(()=>JSON.stringify(record));
     }
