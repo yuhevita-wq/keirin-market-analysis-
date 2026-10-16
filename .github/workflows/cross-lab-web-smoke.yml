@@ -16,7 +16,7 @@ jobs:
         run: |
           set -euo pipefail
           BASE="https://yuhevita-wq.github.io/keirin-market-analysis-/cross-lab"
-          RELEASE="cross-review-v4.1-20261015"
+          RELEASE="cross-main-selection-v5.1-20261016"
           echo "Checking $BASE"
           for attempt in $(seq 1 45); do
             marker=$(curl -fsSL --max-time 10 "$BASE/release.txt" 2>/dev/null || true)
@@ -41,10 +41,13 @@ jobs:
           grep -Fq '【主採用】' index.html
           grep -Fq '（）付き3着補助' index.html
           grep -Fq 'export function analyzeCross' cross_engine.mjs
+          grep -Fq 'const coreA=a.slice(0,2), coreB=b.slice(0,2)' cross_engine.mjs
           grep -Fq 'export function renderHorizontalLineReference' horizontal_line_reference.mjs
           curl -fsSL --max-time 30 "$BASE/cross_comparison.mjs" -o cross_comparison.mjs
           grep -Fq 'resolveDecision as selectMainCross' cross_presentation.mjs
           grep -Fq 'export function compareJointForecast' cross_comparison.mjs
+          grep -Fq '主採用（モデル暫定1位）' cross_comparison.mjs
+          grep -Fq 'id="useMarketModel" checked' index.html
           curl -fsSL --max-time 30 "$BASE/market_model.mjs" -o market_model.mjs
           curl -fsSL --max-time 30 "$BASE/market_model_frozen.json" -o market_model_frozen.json
           grep -Fq 'export function predictMarket' market_model.mjs
