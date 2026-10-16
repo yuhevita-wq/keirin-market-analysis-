@@ -8,7 +8,7 @@
  * - Race points and B alone NEVER produce a recommended pair.
  * - No invented "probabilities" or value/EV without calibration and odds.
  */
-export const ENGINE_VERSION = "cross-role-conditions-v5";
+export const ENGINE_VERSION = "cross-main-selection-v5.1";
 const own = (obj, key) => Object.prototype.hasOwnProperty.call(obj || {}, key);
 const numeric = value => value === null || value === undefined || value === "" ? null :
   (Number.isFinite(Number(value)) && Number(value) >= 0 ? Number(value) : null);
@@ -145,11 +145,12 @@ export function analyzeCross(input, {limit=1000}={}) {
   for(let i=0;i<race.lines.length;i++)for(let j=i+1;j<race.lines.length;j++){
     const a=race.lines[i], b=race.lines[j];
     if(a.length<2 || b.length<2)continue;
-    // Every member can head the cross; choose any two other riders in the pair.
-    for(const firstA of a)for(const firstB of b){
-    const rest=[...a,...b].filter(no=>no!==firstA&&no!==firstB);
-    for(let u=0;u<rest.length;u++)for(let v=u+1;v<rest.length;v++){
-      const thirdA=rest[u],thirdB=rest[v];
+    // The CROSS core is exactly two riders from each line: front and bante.
+    // A three-rider line's third stays an explicit parenthesized auxiliary.
+    const coreA=a.slice(0,2), coreB=b.slice(0,2);
+    for(const firstA of coreA)for(const firstB of coreB){
+      const thirdA=coreA.find(no=>no!==firstA);
+      const thirdB=coreB.find(no=>no!==firstB);
       evaluated++;
       const proof = interactionEvidence(race.riders.get(firstA),race.riders.get(firstB),race);
       // No hard gate: a legal type with weak evidence must remain inspectable.
@@ -168,7 +169,6 @@ export function analyzeCross(input, {limit=1000}={}) {
         }),
         signature:tickets.map(t=>t.join("-")).join("|")});
     }
-    }
   }
   const unique=[...new Map(found.map(x=>[x.signature,x])).values()];
   // Enumeration order is not a strength ranking or a default main choice.
@@ -185,10 +185,10 @@ export function analyzeCross(input, {limit=1000}={}) {
     candidates:top,evaluated,qualified:unique.length,supported:supported.length,ties:tied.length,
     incompleteCars:incomplete,
     notes:[
-      "各型は4点。3×2は18型、2×2は4型を比較し、3番手も候補に含めます",
+      "各型は4点。各ラインの先頭・番手から2車ずつ。3×2も2×2も各4型、3番手は（）補助です",
       "実績の回数は観測値。今回の成立・不成立の証拠に自動変換しません",
       incomplete.length ? "決まり手欠損："+incomplete.join("・")+"番。数値欠損はクロス不成立を意味しません" : "",
-      "列挙順・根拠件数・警告件数を採用順位に変換しません。主採用には比較記録が必要"
+      "列挙順・根拠件数・警告件数は順位ではありません。同時入着モデルの4点確率と、全価格があるときの期待回収で主採用を比較します"
     ].filter(Boolean)
   };
 }
