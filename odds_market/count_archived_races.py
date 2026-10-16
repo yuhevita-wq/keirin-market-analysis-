@@ -13,7 +13,7 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 MANIFESTS = ROOT / "data/audits/odds_seven_bet_runs"
 CIPHERS = ROOT / "data/odds_ciphertext"
 OUT = ROOT / "data/audits/odds_seven_bet_archive_count.json"
