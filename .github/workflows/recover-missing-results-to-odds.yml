@@ -7,13 +7,6 @@ on:
         description: 'Maximum exact missing race IDs attempted per batch (1-400)'
         type: number
         default: 240
-  push:
-    branches: [main]
-    paths:
-      - 'research/result_alignment_v1/fetch_missing_labels.py'
-      - '.github/workflows/recover-missing-results-to-odds.yml'
-  schedule:
-    - cron: '8 0,4,8,12,16,20 * * *'
 
 permissions:
   contents: write
