@@ -57,23 +57,45 @@ export function compareJointForecast(input, candidates, forecast, odds={}, {obje
       directions:jointDiagnostics(c,forecast),competition:pairCompetition(c,forecast,input),
       returnRatio:market.complete?ks.reduce((s,k)=>s+p[k]*odds[k],0)/ks.length:null};
   });
-  const metric=objective==='EXPECTED_RETURN'?'returnRatio':'hitProbability';
+  // Incomplete market prices must never rank only the priced subset.
+  // Fall back to the full-distribution hit probability; do not call it market value.
+  const priceComplete=rows.every(r=>r.returnRatio!==null);
+  const actualObjective=objective==='EXPECTED_RETURN' && !priceComplete?'HIT_PROBABILITY':objective;
+  const metric=actualObjective==='EXPECTED_RETURN'?'returnRatio':'hitProbability';
   const ranked=rows.filter(r=>r[metric]!==null).sort((a,b)=>b[metric]-a[metric]);
-  // Partial candidate prices can reverse the choice: never optimize only priced subset.
   const complete=ranked.length===candidates.length && candidates.length>0;
   const tie=complete && ranked.length>1 && Math.abs(ranked[0][metric]-ranked[1][metric])<=1e-12;
-  return {source,mass,rows,complete,objective,priceComplete:rows.every(r=>r.returnRatio!==null),
-    // Argmax answers "which candidate ranks first", never "should adopt".
+  return {source,mass,rows,complete,objective:actualObjective,requestedObjective:objective,
+    priceComplete,ranking:ranked.map(r=>({signature:r.signature,hitProbability:r.hitProbability,
+      returnRatio:r.returnRatio,metricValue:r[metric]})),
     rankedSignature:complete&&!tie?ranked[0].signature:null,
     selectedSignature:null,
-    selectionStatus:'COMPARISON_ONLY',
-    reason:!complete?'全候補の基本4点オッズが不足':tie?'モデル基準で同値':objective==='EXPECTED_RETURN'?'入力モデル基準の4点等額期待回収を比較':'入力モデル基準の基本4点の合計的中確率を比較（利益順位ではない）',
-    note:'入力モデルの較正・収益性をこの計算器は証明しません。市場重みを予測確率で代用しません'};
+    selectionStatus:complete&&!tie?'PROVISIONAL_RANKING':'NO_UNIQUE_RANKING',
+    reason:!complete?'全候補の比較データ不足':tie?'モデル基準で同値（主採用の優劣を識別不能）':
+      objective==='EXPECTED_RETURN'&&!priceComplete?'全候補オッズ不足のため4点合計的中確率で暫定選定。高配当・期待値は未評価':
+      actualObjective==='EXPECTED_RETURN'?'同時入着確率×全候補オッズで4点等額期待回収を比較':
+      '同時入着確率から基本4点の合計的中確率を比較（利益順位ではない）',
+    note:'入力モデルの較正・収益性をこの計算器は証明しません。どちらかが勝つ確率ではなく、二人が1・2着を分ける確率を集計しています'};
 }
 
 export function resolveDecision(result, decision=null, comparison=null) {
-  if(!decision)return {main:null,label:'主採用未決定',provisional:false,
-    reason:'候補内のモデル順位だけでは主採用にしません。表裏それぞれの同時残存・2着競合と筋・別クロス・選外車を比較してください'};
+  if(!decision){
+    const main=comparison?.rankedSignature?
+      result.candidates.find(c=>c.signature===comparison.rankedSignature):null;
+    if(main){
+      const row=comparison.rows.find(r=>r.signature===main.signature);
+      const metric=comparison.objective==='EXPECTED_RETURN'?'期待回収':'4点的中確率';
+      return {main,label:'主採用（モデル暫定1位）',provisional:true,
+        reason:metric+'で全候補を比較し1位。'+comparison.reason+
+          '。表裏の同時残存を学習したモデルの順位であり、実際の展開・高配当・利益優位を保証しません',
+        record:{signature:main.signature,automatic:true,objective:comparison.objective,
+          source:comparison.source,hitProbability:row.hitProbability,returnRatio:row.returnRatio},
+        basis:{status:'MODEL_PROVISIONAL',observedFacts:null,sourceContext:comparison.source.id,
+          counterEvidence:'同線決着・別クロス・選外ラインの侵入',uncertainty:'個別展開未検証、モデル未較正'}};}
+    return {main:null,label:'主採用判定不能',provisional:false,
+      reason:comparison?'モデル値が同順位か比較データが不足。車番・単独勝率で無理に決めません':
+        'モデル未評価。全選手の出走前入力・レースID・対象級を確認してください'};}
+
   const main=result.candidates.find(c=>c.signature===decision.signature);
   if(!main)throw Error('採用クロスが候補集合に存在しません');
   for(const k of ['interaction','alternativeCross','sameLine','outside'])
