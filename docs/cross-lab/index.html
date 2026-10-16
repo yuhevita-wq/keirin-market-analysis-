@@ -95,11 +95,12 @@ td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 <h2>クロスの定義（固定）</h2>
 <div class="cross"><div class="edge">A1 ─ A2</div><div class="middle">×</div><div class="edge">B1 ─ B2</div></div>
 <p style="text-align:center"><strong>A1-B1-A2 / A1-B1-B2 / B1-A1-A2 / B1-A1-B2</strong></p>
-<p class="muted">1・2着は異線A1・B1の表裏。3着は選んだ4車のうち残りA2・B2。機械的な3着の再選抜は行いません。3車ライン番手が1・2着なら3番手を、2車ライン同士のクロスなら選外3車ラインから根拠のある1車を、3着補助として（）表示します。補助は基本4点に無断で混ぜません。</p>
+<p class="muted">1・2着は異線A1・B1の表裏。3着は選んだ4車のうち残りA2・B2。3×2は18型、2×2は4型を比較し、３番手も基本４点の候補に含めます。各型の購入点数は４点です。3車ライン番手が1・2着なら3番手を、2車ライン同士のクロスなら選外3車ラインから根拠のある1車を、3着補助として（）表示します。補助は基本4点に無断で混ぜません。</p>
 <p class="muted">この判定器は検証中の構造仮説で、的中率・回収率・過小評価を実証した予測モデルではありません。異線着順率の過去統計は候補4点の確率ではありません。</p>
 </section>
 </main>
 <script type="module">
+import {predictRoleConditions,ROLE_LABELS} from "./role_conditions.mjs";
 import {normalizeRace,parseLines,analyzeCross} from "./cross_engine.mjs";
 import {compareJointForecast,ticketMarket} from "./cross_comparison.mjs";
 import {predictMarket} from "./market_model.mjs";
@@ -194,12 +195,12 @@ function drawCandidate(item,i,odds,race,isMain){
   }).join(" ");
   const reasons=item.reasoning.map(d=>'<li><b>'+d.first+'→'+d.second+'</b><ul>'+d.questions.map(q=>'<li>'+escapeHtml(q)+'</li>').join('')+'</ul></li>').join('');
   const risks=item.warnings.map(x=>'<li class="warn">'+escapeHtml(x)+"</li>").join("");
-  const horizontal=String(a)+"-"+String(c)+" / "+String(c)+"-"+String(a)+" ・ "+String(b)+"-"+String(d)+" / "+String(d)+"-"+String(b);
+  const horizontal=item.lines.map(i=>{const l=race.lines[i];return l[0]+'-'+l[1]+' / '+l[1]+'-'+l[0];}).join(' ・ ');
   const market=ticketMarket(item,odds);
   const marketText=market.complete ? '基本4点オッズ '+market.minOdds+'～'+market.maxOdds+'倍。4点等額で的中した場合の最小回収率 '+(market.minRealizedReturnRatio*100).toFixed(1)+'%（的中確率ではない）' : '基本4点オッズ '+market.priced+'/4件。市場比較は未完了';
   const auxiliaryNotes=aux.explanations.map(s=>'<li>'+escapeHtml(s)+'</li>').join("");
   return '<article class="candidate'+(isMain?' main':'')+'"><h3>'+(isMain?'【主採用】':'比較候補'+(i+1)+'：')+' '+a+"・"+b+"の異線1/2着</h3>"+
-    '<div class="cross"><div class="edge">'+a+" ─ "+c+'</div><div class="middle">×</div><div class="edge">'+b+" ─ "+d+"</div></div>"+
+    '<p><b>１・２着：'+a+' ↔ '+b+' ／ ３着：'+c+'・'+d+'</b></p>'+
     '<div class="tickets">'+String(a)+String(b)+"－"+String(a)+String(b)+"－"+String(c)+String(d)+
       aux.thirds.map(n=>"（"+n+"）").join("")+"</div>"+
     '<p><b>基本クロス4点</b></p><div class="stat">'+rows+"</div><p>"+escapeHtml(marketText)+"</p>"+
@@ -213,11 +214,19 @@ function drawCandidate(item,i,odds,race,isMain){
     (risks?'<p><b>反証・着外条件</b></p><ul>'+risks+"</ul>":"")+
     '<p class="muted">横棒参考（同ライン1・2着）：'+horizontal+"</p></article>";
 }
+let roleConditionBundle=null;
 async function analyze(){
   const container=byId("analysis");
   try{
     const race=gatheredRace(),odds=parseOdds();
     const result=analyzeCross(race,{limit:1000});
+    let roleConditions=[],roleConditionError="";
+    if(race.entries.length===7 && race.lines.map(l=>l.length).sort().join() === "2,2,3"){
+      try {
+        if(!roleConditionBundle){const response=await fetch("./role_conditions_frozen.json");if(!response.ok)throw Error("役割条件を読み込めません");roleConditionBundle=await response.json();}
+        for(let i=0;i<3;i++)for(let j=i+1;j<3;j++)roleConditions.push(predictRoleConditions(race,[i,j],roleConditionBundle));
+      }catch(e){roleConditionError=e.message;}
+    }
     const rawForecast=byId("forecast").value.trim();
     let forecast=rawForecast?JSON.parse(rawForecast):null, modelMessage='';
     if(!forecast && byId("useMarketModel").checked){
@@ -225,8 +234,8 @@ async function analyze(){
         if(byId("autoModel").value==="joint"){
           if(!jointModel){const response=await fetch("./joint_model_frozen.json");if(!response.ok)throw Error("同時入着モデルを取得できません");jointModel=await response.json();}
           forecast=predictJoint(race,jointModel);
-          const cls=/[ＳS]級/.test(race.race_type)?"S":"A", v=jointModel.models[cls].validationSummary?.["2026_h1"];
-          if(v)modelMessage="検証中：2026年上半期の全参加回収率 "+(v.returnRatio*100).toFixed(1)+"%（基本4点・最高的中確率選定）。利益優位は未実証です。";
+          const cls=/[ＳS]級/.test(race.race_type)?"S級":"A級1・2班", v=roleConditions.length?roleConditionBundle?.liveValidation?.[cls+"|2026H1|live_expanded40"]:null;
+          modelMessage=v?"今回の３–２–２検証：2026年前半の全参加回収率 "+v.returnPct.toFixed(1)+"%（候補40型から最高的中確率の４点を毎回選定・"+v.n+"レース）。利益優位は未実証です。":"同時入着モデルは比較用です。候補を拡張した選定の利益優位は未実証です。";
         }else{
         const trio={};
         for(const row of byId("trioOdds").value.split(/\n/).map(s=>s.trim()).filter(Boolean)){
@@ -265,7 +274,7 @@ async function analyze(){
     const selection=selectMainCross(result,decision,comparison);
     const sameRace=lastRecord && lastRecord.input.race_id===race.race_id && JSON.stringify(lastRecord.input.lines)===JSON.stringify(race.lines);
     const lineComparisons=(sameRace?[...document.querySelectorAll('[data-line-comparison]')]:[]).map(e=>({linePair:e.dataset.lineComparison,reason:e.value.trim()}));
-    lastRecord={lineComparisons,version:result.version,recordedAt:new Date().toISOString(),input:race,odds,decision,
+    lastRecord={roleConditions,roleConditionVersion:roleConditionBundle?.version??null,lineComparisons,version:result.version,recordedAt:new Date().toISOString(),input:race,odds,decision,
       forecast,objective,comparison,selection:{signature:selection.main?.signature??null,reason:selection.reason,label:selection.label,record:selection.record??null,basis:selection.basis??null}};
     const lineLabel=result.race.lines.map(l=>l.join("-")).join(" / ");
     const incomplete=result.incompleteCars.length;
@@ -292,6 +301,7 @@ async function analyze(){
         '<p>'+escapeHtml(selection.reason)+'</p>'+['observedFacts','sourceContext','counterEvidence','uncertainty'].map((k,i)=>
           '<p><b>'+['確認した事実','出典・条件','不利な材料','未確認・推測'][i]+'</b>：'+escapeHtml(selection.basis[k]||'未記録')+'</p>').join('')+'</div>';
     }
+    if(roleConditionError)html+='<p class="info">'+escapeHtml(roleConditionError)+'</p>';
     if(modelMessage)html+='<p class="info">自動モデル比較：'+escapeHtml(modelMessage)+'</p>';
     if(comparison?.rankedSignature){
       const first=result.candidates.find(c=>c.signature===comparison.rankedSignature);
@@ -307,12 +317,22 @@ async function analyze(){
     if(incomplete)html+='<div class="info">決まり手欠損は未確認として残します。欠損だけを理由にクロス候補や採用を取り消しません。</div>';
     if(!Object.keys(odds).length)html+='<p class="alert">オッズ未取得。数値比較は合計的中確率です。高配当・割安・回収率は未評価です。</p>';
     if(result.candidates.length){
-      html+='<h3>全3組を同じ展開で比較（列挙順・強さ順ではありません）</h3><p>各組について、誰の仕掛けでどの位置が空き、先頭と番手のどちらが残るかを比較します。組ごとに都合のよい別展開を作らず、採用組以外が残る場合も記録してください。記録の有無で候補を消しません。</p><div class="tablewrap"><table><thead><tr><th>2ライン／選外ライン</th><th>先頭×先頭</th><th>先頭×番手</th><th>番手×先頭</th><th>番手×番手</th></tr></thead><tbody>';
+      html+='<h3>全3組を同じ展開で比較（列挙順・強さ順ではありません）</h3><p>各組について、誰の仕掛けでどの位置が空き、先頭と番手のどちらが残るかを比較します。組ごとに都合のよい別展開を作らず、採用組以外が残る場合も記録してください。記録の有無で候補を消しません。</p><div class="tablewrap"><table><thead><tr><th>2ライン／選外ライン</th><th>先頭×先頭</th><th>先頭×番手</th><th>番手×先頭</th><th>番手×番手</th><th>３番手を含む型</th></tr></thead><tbody>';
       for(const row of candidateMatrix(race)){
-        html+='<tr><th>'+row.lines.map(l=>l.join('－')).join(' ／ ')+'<br>選外：'+row.excluded.map(l=>l.join('－')).join(' ／ ')+'</th>'+row.candidates.map(c=>'<td>'+escapeHtml(c.label)+'</td>').join('')+'</tr>';
-        html+='<tr><td colspan="5"><label>この2ラインが残る条件／他の組が残る条件</label><textarea data-line-comparison="'+row.id+'" placeholder="仕掛け → 位置の変化 → 残る選手。確認した走りと推測を分ける">'+escapeHtml(lineComparisons.find(x=>x.linePair===row.id)?.reason||'')+'</textarea></td></tr>';
+        const rc=roleConditions.find(c=>[...c.lines].sort().join(',')===row.id), flip=rc&&rc.lines[0]!==Number(row.id.split(',')[0]);
+        html+='<tr><th>'+(rc?rc.lines.map(i=>race.lines[i]):row.lines).map((l,i)=>(i?'B：':'A：')+l.join('－')).join(' ／ ')+'<br>選外：'+row.excluded.map(l=>l.join('－')).join(' ／ ')+'</th>'+[0,1,2,3,4].map(k=>'<td>'+row.candidates.filter(c=>{const p=flip?[...c.roles].reverse():c.roles;return (p.some(x=>x>2)?4:2*(p[0]-1)+p[1]-1)===k;}).map(c=>escapeHtml(c.label)).join('<br>')+'</td>').join('')+'</tr>';
+
+        if(rc){
+          html+='<tr><td colspan="6"><b>出走前の役割条件</b>（A：'+race.lines[rc.lines[0]].join('－')+' ／ B：'+race.lines[rc.lines[1]].join('－')+'）<br>'+ROLE_LABELS.map((label,k)=>label+' '+(100*rc.probabilities[k]).toFixed(1)+'%').join(' ／ ')+
+            '<br>この２ラインが１・２着を分け、３着もこの２ラインから出る場合の条件付き比率。全レースの的中率ではありません。学習該当 '+rc.trainCrosses+'件（今回の'+rc.shape+'は '+rc.trainShapeCrosses+'件）。'+
+            (rc.missingFeatures.length?' 欠損補完あり。':'')+'<br>参照条件：'+rc.conditions.map(c=>escapeHtml(({A_front_minus_bante_score:'A先頭－番手の得点差',B_front_minus_bante_score:'B先頭－番手の得点差',A_bante_top3:'A番手の３連対率',B_front_top3:'B先頭の３連対率'}[c.feature]||c.feature)+' '+c.operator+' '+c.threshold.toFixed(2)+'（今回 '+c.value.toFixed(2)+'）')).join(' ／ ')+
+            '<br>発生条件の比較に使用。配当を含む選定の改善は未実証のため、この比率だけで主採用を変更しません。</td></tr>';
+
+          if(rc.validation){html+='<tr><td colspan="6"><details><summary>この条件・同じライン構成の発生率と配当を確認</summary><p>セルは「２ライン内クロスでの役割比率 ／ 先頭・番手４車からなるこの役割の基本４点を毎回買った回収率」。回収率の分母には外れも含みます。学習は2024年末まで。2026年後半は収集途中です。</p><table><thead><tr><th>検証期間／該当組数／クロス数</th>'+ROLE_LABELS.slice(0,4).map(t=>'<th>'+t+'</th>').join('')+'</tr></thead><tbody>'+Object.entries(rc.validation).map(([p,v])=>'<tr><th>'+escapeHtml(p)+(v.start?'（'+escapeHtml(v.start)+'～'+escapeHtml(v.end)+'）':'')+' ／ '+v.pairRows+' ／ '+v.crosses+'</th>'+Object.values(v.roles).slice(0,4).map(t=>'<td>'+t.conditionalPct.toFixed(1)+'% ／ '+t.returnPct.toFixed(1)+'%</td>').join('')+'</tr>').join('')+'</tbody></table><p>３番手が絡む基本４点の組み合わせは、この役割別回収率の集計外です。型が多いことと利益があることを分けて比較してください。</p></details></td></tr>';}
+        }
+        html+='<tr><td colspan="6"><label>この2ラインが残る条件／他の組が残る条件</label><textarea data-line-comparison="'+row.id+'" placeholder="仕掛け → 位置の変化 → 残る選手。確認した走りと推測を分ける">'+escapeHtml(lineComparisons.find(x=>x.linePair===row.id)?.reason||'')+'</textarea></td></tr>';
       }
-      html+='</tbody></table></div><p class="muted">比較を記入後「全型を比較・採用を記録」を押すと、答案と一緒に保存されます。</p>';
+      html+='</tbody></table></div><p class="muted">各列の型はそれぞれ４点です。役割条件は答案と一緒に保存されます。比較を記入後「全型を比較・採用を記録」を押すと、答案と一緒に保存されます。</p>';
     }
     if(result.candidates.length)html+=result.candidates.map((r,i)=>drawCandidate(r,i,odds,race,r===selection.main)).join("");
     if(result.candidates.length)html+='<section id="horizontalRef"><h3>横棒ライン筋（参考）</h3></section>';
