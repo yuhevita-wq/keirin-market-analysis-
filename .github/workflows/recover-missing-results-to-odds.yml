@@ -1,0 +1,89 @@
+name: Recover missing actual results for existing odds
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Maximum exact missing race IDs attempted per batch (1-400)'
+        type: number
+        default: 240
+  push:
+    branches: [main]
+    paths:
+      - 'research/result_alignment_v1/fetch_missing_labels.py'
+      - '.github/workflows/recover-missing-results-to-odds.yml'
+  schedule:
+    - cron: '8 0,4,8,12,16,20 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: odds-matched-results-recovery
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Synchronize latest exact unmatched race-ID ledger
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing, verified result-page parser
+        run: python -m pip install -e '.[scrape]'
+      - name: Recover real published results for missing odds race IDs only
+        env:
+          DISPATCH_LIMIT: ${{ github.event.inputs.limit }}
+        run: |
+          set -euo pipefail
+          LIMIT="${DISPATCH_LIMIT:-240}"
+          python -u research/result_alignment_v1/fetch_missing_labels.py \
+            --limit "$LIMIT" --workers 2 --pause 2 --max-attempts 3
+      - name: Verify recovery ledger, only observed result labels
+        run: |
+          python - <<'PY'
+          import csv,gzip,json
+          from pathlib import Path
+          from collections import defaultdict
+          for p in Path('data/recovered_result_labels_v1/odds_matched').glob('batch_*/summary.json'):
+              info=json.loads(p.read_text())
+              assert info['matched_against_only_saved_odds'] is True
+              assert info['results_never_model_features'] is True
+              assert info['attempted']==info['completed']+info['failed']
+              ranks=defaultdict(dict)
+              with gzip.open(p.parent/'results.csv.gz','rt',encoding='utf-8',newline='') as f:
+                  for r in csv.DictReader(f):
+                      if r['finish_position'] in ('1','2','3'):
+                          ranks[r['race_id']][int(r['finish_position'])]=r['car_no']
+              assert len(ranks)==info['completed']
+              for x in ranks.values():
+                  assert set(x)=={1,2,3} and len(set(x.values()))==3
+          PY
+      - name: Commit immutable, result-only batches and resume state
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f data/recovered_result_labels_v1/odds_matched
+          git add data/audits/results_to_odds_fetch_ledger.json
+          if git diff --cached --quiet; then
+            echo 'No eligible missing results to attempt'
+            exit 0
+          fi
+          git commit -m 'data: recover verified missing finishes matching saved odds'
+          for attempt in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              echo "Recovered outcomes committed on attempt $attempt"
+              exit 0
+            fi
+            sleep 3
+          done
+          exit 1
