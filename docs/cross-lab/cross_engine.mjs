@@ -4,11 +4,11 @@
  * Contract:
  * - CROSS means two riders from DIFFERENT lines contest 1st/2nd in BOTH orders.
  * - Third place is either of the OTHER TWO riders chosen from those same lines.
- * - Four tickets, always. No score-based third-place selection.
+ * - Four tickets, always. All legal third-place pairs are compared.
  * - Race points and B alone NEVER produce a recommended pair.
  * - No invented "probabilities" or value/EV without calibration and odds.
  */
-export const ENGINE_VERSION = "cross-context-reasoning-v4";
+export const ENGINE_VERSION = "cross-role-conditions-v5";
 const own = (obj, key) => Object.prototype.hasOwnProperty.call(obj || {}, key);
 const numeric = value => value === null || value === undefined || value === "" ? null :
   (Number.isFinite(Number(value)) && Number(value) >= 0 ? Number(value) : null);
@@ -138,17 +138,18 @@ function outsideRisks(race, chosen) {
   return issues;
 }
 
-export function analyzeCross(input, {limit=24}={}) {
+export function analyzeCross(input, {limit=1000}={}) {
   const race = normalizeRace(input);
   const found = [];
   let evaluated = 0;
   for(let i=0;i<race.lines.length;i++)for(let j=i+1;j<race.lines.length;j++){
     const a=race.lines[i], b=race.lines[j];
     if(a.length<2 || b.length<2)continue;
-    // Core: each line's front and bante. Actual third rider stays auxiliary.
-    for(const firstA of a.slice(0,2))for(const firstB of b.slice(0,2))
-    for(const thirdA of a.slice(0,2).filter(no=>no!==firstA))
-    for(const thirdB of b.slice(0,2).filter(no=>no!==firstB)){
+    // Every member can head the cross; choose any two other riders in the pair.
+    for(const firstA of a)for(const firstB of b){
+    const rest=[...a,...b].filter(no=>no!==firstA&&no!==firstB);
+    for(let u=0;u<rest.length;u++)for(let v=u+1;v<rest.length;v++){
+      const thirdA=rest[u],thirdB=rest[v];
       evaluated++;
       const proof = interactionEvidence(race.riders.get(firstA),race.riders.get(firstB),race);
       // No hard gate: a legal type with weak evidence must remain inspectable.
@@ -167,6 +168,7 @@ export function analyzeCross(input, {limit=24}={}) {
         }),
         signature:tickets.map(t=>t.join("-")).join("|")});
     }
+    }
   }
   const unique=[...new Map(found.map(x=>[x.signature,x])).values()];
   // Enumeration order is not a strength ranking or a default main choice.
@@ -183,7 +185,7 @@ export function analyzeCross(input, {limit=24}={}) {
     candidates:top,evaluated,qualified:unique.length,supported:supported.length,ties:tied.length,
     incompleteCars:incomplete,
     notes:[
-      "強い順の並べ替え・得点加点・基本4点の3着再選定は行いません（補助は別判定）",
+      "各型は4点。3×2は18型、2×2は4型を比較し、3番手も候補に含めます",
       "実績の回数は観測値。今回の成立・不成立の証拠に自動変換しません",
       incomplete.length ? "決まり手欠損："+incomplete.join("・")+"番。数値欠損はクロス不成立を意味しません" : "",
       "列挙順・根拠件数・警告件数を採用順位に変換しません。主採用には比較記録が必要"
