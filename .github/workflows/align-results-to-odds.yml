@@ -1,0 +1,83 @@
+name: Align actual results to saved odds race IDs
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/result_alignment_v1/**'
+      - 'tests/test_result_alignment.py'
+      - '.github/workflows/align-results-to-odds.yml'
+  schedule:
+    - cron: '17 6 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: actual-results-to-odds-alignment
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Load most recent odds and existing verified result archives
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test strict result join and conflict policy
+        run: python -m unittest discover -s tests -p test_result_alignment.py -v
+      - name: Reuse every already collected result, matched by exact race ID
+        run: python -u research/result_alignment_v1/build_result_targets.py
+      - name: Validate counts and verify odds bytes were not modified
+        run: |
+          python - <<'PY'
+          import gzip,json
+          from pathlib import Path
+          report=json.loads(Path('data/audits/results_to_odds_alignment.json').read_text())
+          odds_audit=json.loads(Path('data/audits/odds_only_export.json').read_text())
+          assert report['odds_race_count']==odds_audit['unique_complete_races']
+          assert report['matched_result_count']+report['missing_result_count']==report['odds_race_count']
+          assert report['results_are_labels_not_features'] is True
+          ids=set()
+          for year,part in report['by_year'].items():
+              with gzip.open(Path('data/results_only')/part['results_file'],'rt') as f:
+                  for line in f:
+                      r=json.loads(line)
+                      assert set(r)=={'race_id','finish_order'}
+                      assert r['race_id'] not in ids
+                      assert len(r['finish_order'])==len(set(r['finish_order']))==3
+                      ids.add(r['race_id'])
+          assert len(ids)==report['matched_result_count']
+          print('RESULT_JOIN_COVERAGE',report['matched_result_count'],
+                '/',report['odds_race_count'],'missing',report['missing_result_count'])
+          PY
+          git diff --exit-code -- data/odds_only
+      - name: Publish independent results-only files and exact missing-ID ledger
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f data/results_only/results_20??.jsonl.gz data/results_only/unmatched_race_ids.csv.gz
+          git add data/audits/results_to_odds_alignment.json
+          if git diff --cached --quiet; then
+            echo 'Aligned results unchanged'
+            exit 0
+          fi
+          git commit -m 'data: align real podium results to complete odds market IDs'
+          for attempt in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              echo "Verified result labels published on attempt $attempt"
+              exit 0
+            fi
+            sleep 3
+          done
+          exit 1
