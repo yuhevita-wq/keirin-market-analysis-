@@ -65,7 +65,7 @@ test('frozen fit contains A and S, and is independent of October 14 results',()=
   for(const cls of ['A','S']){assert.ok(model.models[cls].trainRaces>=1000);assert.equal(model.models[cls].pair.length,53);assert.equal(model.models[cls].third.length,29);}
 });
 
-test('midnight answers remain frozen: core-cross misses, same-line outcomes and illegal old core stay separate',()=>{
+test('midnight answers remain frozen: core-cross misses, same-line outcomes and expanded candidates never repair the frozen misses',()=>{
   const rows=JSON.parse(fs.readFileSync(new URL('./fixtures/midnight_20261014_frozen.json',import.meta.url)));
   let coreMisses=0,sameLine=0,illegal=0;
   for(const {input,frozenAnswer:f,gradingOnly:g} of rows){
@@ -80,5 +80,5 @@ test('midnight answers remain frozen: core-cross misses, same-line outcomes and 
     else if(ps.every(x=>x.pos<=2)&&new Set(ps.map(x=>x.line)).size===2)coreMisses++;
     assert.equal(g.fitEligible,false);
   }
-  assert.equal(rows.length,9);assert.equal(coreMisses,2);assert.equal(sameLine,6);assert.equal(illegal,1);
+  assert.equal(rows.length,9);assert.equal(coreMisses,2);assert.equal(sameLine,6);assert.equal(illegal,0);
 });
