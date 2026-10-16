@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
+      - uses: actions/checkout@v4
+      - name: CROSS LAB regression tests
+        run: node --test docs/cross-lab/*.test.mjs
       - name: Check published HTML, module scripts and release marker
         shell: bash
         run: |
