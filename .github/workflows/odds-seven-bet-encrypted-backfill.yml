@@ -1,8 +1,8 @@
 name: Backfill all authorized seven-bet odds to encrypted archive
 
-# Collection disabled at the user's request on 2026-10-17.
-# No schedule, workflow_dispatch, data acquisition or self-dispatch remains.
-# This one-time push hook cancels collectors started by the previous workflow.
+# Disabled at the user's request on 2026-10-17.
+# No scheduled or manual collection trigger and no backfill/self-dispatch jobs.
+# A push changing this file runs cancellation only, never collection.
 on:
   push:
     branches: [main]
@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
-      - name: Cancel queued and running seven-bet backfill runs
+      - name: Force-cancel all outstanding previous collectors
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -26,14 +26,17 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for attempt in 1 2 3 4 5; do
+          for attempt in 1 2 3 4; do
             ids="$(gh run list --workflow odds-seven-bet-encrypted-backfill.yml --limit 300 --json databaseId,status --jq '.[] | select(.status != "completed") | .databaseId')"
+            count=0
             while IFS= read -r id; do
               if [ -n "$id" ] && [ "$id" != "$CURRENT_RUN_ID" ]; then
-                echo "Cancel prior collection run: $id"
-                gh run cancel "$id" || true
+                echo "Force-cancel legacy collector: $id"
+                gh api --method POST "repos/$GH_REPO/actions/runs/$id/force-cancel" --silent || gh run cancel "$id" || true
+                count=$((count + 1))
               fi
             done <<< "$ids"
-            sleep 5
+            echo "Attempt $attempt: requested cancellation of $count legacy runs"
+            sleep 7
           done
-          echo "Scheduled collection and self-dispatch have been disabled."
+          echo "All automated seven-bet odds collection triggers remain disabled."
