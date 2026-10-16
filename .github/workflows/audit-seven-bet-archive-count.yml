@@ -1,0 +1,66 @@
+name: Audit seven-bet archived odds race counts
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'odds_market/count_archived_races.py'
+      - '.github/workflows/audit-seven-bet-archive-count.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: audit-seven-bet-archive-count
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Sync latest verified odds archives and run manifests
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Count sealed day-level races excluding retry overcounts
+        run: python odds_market/count_archived_races.py
+      - name: Check accounting and unchanged ciphertext
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/audits/odds_seven_bet_archive_count.json')
+          d=json.loads(p.read_text())
+          assert d['distinct_days']>=1800
+          assert d['confirmed_distinct_race_lower_bound']>0
+          assert d['raw_complete_races_across_sealed_runs_WITH_DUPLICATES']>=d['confirmed_distinct_race_lower_bound']
+          assert sum(v['confirmed_distinct_race_lower_bound'] for v in d['year'].values())==d['confirmed_distinct_race_lower_bound']
+          print('VERIFIED_ARCHIVE_RACES_AT_LEAST',d['confirmed_distinct_race_lower_bound'])
+          PY
+          git diff --exit-code -- data/odds_ciphertext data/odds_only
+      - name: Commit archival race-count audit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/audits/odds_seven_bet_archive_count.json
+          if git diff --cached --quiet; then
+            echo 'No changed audit'
+            exit 0
+          fi
+          git commit -m 'data: audit seven-bet odds count separately from old odds-only export'
+          for attempt in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            sleep 3
+          done
+          exit 1
