@@ -2,22 +2,62 @@
   "schema": 1,
   "shard": 5,
   "shards": 8,
-  "next_offset": 1157,
-  "last_run_utc": "2026-10-17T02:41:49.803241+00:00",
+  "next_offset": 1189,
+  "last_run_utc": "2026-10-17T02:46:37.337347+00:00",
   "last_batch": [
     {
-      "day": "2024-01-31",
-      "results": 53,
-      "complete": true,
+      "day": "2024-03-03",
+      "results": 77,
+      "complete": false,
       "venues_completed": 6,
-      "venues_total": 6,
+      "venues_total": 8,
+      "failed": 2,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "42202403020200",
+          "url": "https://keirin.kdreams.jp/nagoya/raceresult/42202403020200/",
+          "error": "Unresolved published podiums [[\"4220240302020007\", \"published first-second-third headers not present\"]]"
+        },
+        {
+          "stage": "race",
+          "venue": "86202403010300",
+          "url": "https://keirin.kdreams.jp/beppu/raceresult/86202403010300/",
+          "error": "Unresolved published podiums [[\"8620240301030004\", \"published first-second-third headers not present\"]]"
+        }
+      ],
+      "repair_pass": false
+    },
+    {
+      "day": "2024-03-11",
+      "results": 65,
+      "complete": true,
+      "venues_completed": 7,
+      "venues_total": 7,
       "failed": 0,
       "errors": [],
       "repair_pass": false
     },
     {
-      "day": "2024-02-08",
-      "results": 65,
+      "day": "2024-03-19",
+      "results": 83,
+      "complete": false,
+      "venues_completed": 7,
+      "venues_total": 8,
+      "failed": 1,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "47202403190100",
+          "url": "https://keirin.kdreams.jp/matsusaka/raceresult/47202403190100/",
+          "error": "Unresolved published podiums [[\"4720240319010010\", \"published first-second-third headers not present\"]]"
+        }
+      ],
+      "repair_pass": false
+    },
+    {
+      "day": "2024-03-27",
+      "results": 67,
       "complete": false,
       "venues_completed": 5,
       "venues_total": 7,
@@ -25,56 +65,22 @@
       "errors": [
         {
           "stage": "race",
-          "venue": "34202402070200",
-          "url": "https://keirin.kdreams.jp/kawasaki/raceresult/34202402070200/",
-          "error": "Unresolved published podiums [[\"3420240207020007\", \"published first-second-third headers not present\"]]"
+          "venue": "24202403250300",
+          "url": "https://keirin.kdreams.jp/utsunomiya/raceresult/24202403250300/",
+          "error": "Unresolved published podiums [[\"2420240325030006\", \"published first-second-third headers not present\"]]"
         },
         {
           "stage": "race",
-          "venue": "54202402080100",
-          "url": "https://keirin.kdreams.jp/mukomachi/raceresult/54202402080100/",
-          "error": "Unresolved published podiums [[\"5420240208010001\", \"published first-second-third headers not present\"]]"
-        }
-      ],
-      "repair_pass": false
-    },
-    {
-      "day": "2024-02-16",
-      "results": 42,
-      "complete": false,
-      "venues_completed": 4,
-      "venues_total": 5,
-      "failed": 1,
-      "errors": [
-        {
-          "stage": "race",
-          "venue": "34202402160100",
-          "url": "https://keirin.kdreams.jp/kawasaki/raceresult/34202402160100/",
-          "error": "Unresolved published podiums [[\"3420240216010003\", \"published first-second-third headers not present\"]]"
-        }
-      ],
-      "repair_pass": false
-    },
-    {
-      "day": "2024-02-24",
-      "results": 58,
-      "complete": false,
-      "venues_completed": 5,
-      "venues_total": 6,
-      "failed": 1,
-      "errors": [
-        {
-          "stage": "race",
-          "venue": "28202402220300",
-          "url": "https://keirin.kdreams.jp/tachikawa/raceresult/28202402220300/",
-          "error": "Unresolved published podiums [[\"2820240222030005\", \"published first-second-third headers not present\"]]"
+          "venue": "44202403260200",
+          "url": "https://keirin.kdreams.jp/ogaki/raceresult/44202403260200/",
+          "error": "Unresolved published podiums [[\"4420240326020001\", \"published first-second-third headers not present\"]]"
         }
       ],
       "repair_pass": false
     }
   ],
   "finished_forward_pass": false,
-  "pending_repair_days": 50,
+  "pending_repair_days": 53,
   "exhausted_unresolved_days": 0,
   "finished_all": false
 }
