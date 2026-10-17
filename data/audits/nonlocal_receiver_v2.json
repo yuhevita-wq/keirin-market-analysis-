@@ -1,0 +1,1287 @@
+{
+  "schema": "RESULT_TO_ODDS_DEVIATION_AND_SURVIVOR_v2",
+  "dataset": "all non-girls completed markets 2021..2026-H1 3連単+3連複",
+  "scope_note": "2 available pools; 7-pool archive is encrypted and not joined. These are FINAL odds only.",
+  "audit": {
+    "odds_rows": 34277,
+    "valid_joined": 31320,
+    "missing_result": 2957
+  },
+  "result_counts": {
+    "2021": 1076,
+    "2022": 2359,
+    "2023": 7283,
+    "2024": 8147,
+    "2025": 8208,
+    "2026": 4247
+  },
+  "inputs_only": [
+    "complete trifecta odds",
+    "complete trio odds"
+  ],
+  "label_only": "true finishing order",
+  "models": {
+    "train_2023_n": 7283,
+    "validate_2024_n": 8147,
+    "test_2025_n": 8208,
+    "test_2026_n": 4247,
+    "features": [
+      "log_qtrio",
+      "log_q3aggregate",
+      "log_market_odds",
+      "own_cross_log_ratio",
+      "own_q3_minus_qtrio",
+      "trio_popularity_rank",
+      "q3_popularity_rank",
+      "rank_disagreement",
+      "remote_zero_signed",
+      "remote_one_signed",
+      "remote_zero_pos",
+      "remote_zero_neg",
+      "remote_one_pos",
+      "remote_one_neg",
+      "interaction_remote_zero_one",
+      "interaction_own_remote_zero",
+      "interaction_own_remote_one",
+      "race_trio_entropy",
+      "race_three_concentration",
+      "race_market_disagreement",
+      "per_set_conditional_order_entropy",
+      "race_number_cars"
+    ],
+    "blend_lambda_2024": [
+      {
+        "alpha": 0.0,
+        "logloss": 2.821438282233901
+      },
+      {
+        "alpha": 0.2,
+        "logloss": 2.8134674952938754
+      },
+      {
+        "alpha": 0.4,
+        "logloss": 2.8079595169413114
+      },
+      {
+        "alpha": 0.6,
+        "logloss": 2.8047049907301838
+      },
+      {
+        "alpha": 0.8,
+        "logloss": 2.803522421122256
+      },
+      {
+        "alpha": 1.0,
+        "logloss": 2.8042550105030006
+      }
+    ],
+    "chosen_blend_alpha": 0.8,
+    "feature_importance_gain": {
+      "log_qtrio": 20137.52,
+      "log_q3aggregate": 250037.367,
+      "log_market_odds": 3792.072,
+      "own_cross_log_ratio": 1024.323,
+      "own_q3_minus_qtrio": 423.212,
+      "trio_popularity_rank": 635.535,
+      "q3_popularity_rank": 528.364,
+      "rank_disagreement": 297.807,
+      "remote_zero_signed": 451.767,
+      "remote_one_signed": 381.365,
+      "remote_zero_pos": 775.052,
+      "remote_zero_neg": 516.802,
+      "remote_one_pos": 734.287,
+      "remote_one_neg": 704.191,
+      "interaction_remote_zero_one": 468.228,
+      "interaction_own_remote_zero": 743.92,
+      "interaction_own_remote_one": 508.497,
+      "race_trio_entropy": 917.521,
+      "race_three_concentration": 558.157,
+      "race_market_disagreement": 377.46,
+      "per_set_conditional_order_entropy": 593.93,
+      "race_number_cars": 54.97
+    }
+  },
+  "note_selection": "Risk uses posterior downside uncertainty; all scores calculated before reading result. No cap on ticket count.",
+  "limitations": [
+    "2025/2026 previously viewed in other project analyses, not wholly untouched OOS.",
+    "EV from archived final odds not actionable T-15.",
+    "Risk coefficients are illustrative NOT ex-ante tuned; multiple thresholds examined.",
+    "Positive ROI in a small selected sample does not prove repeatable edge."
+  ],
+  "years": {
+    "2025": {
+      "races": 8208,
+      "local_remote_actual_vs_expected": {
+        "1": {
+          "actual": 2268,
+          "expected": 2160.557,
+          "observed_vs_market": 1.04973,
+          "candidate_rows": 59040
+        },
+        "2": {
+          "actual": 2103,
+          "expected": 2100.51,
+          "observed_vs_market": 1.00119,
+          "candidate_rows": 80492
+        },
+        "3": {
+          "actual": 1644,
+          "expected": 1713.652,
+          "observed_vs_market": 0.95935,
+          "candidate_rows": 91035
+        },
+        "4": {
+          "actual": 1152,
+          "expected": 1150.728,
+          "observed_vs_market": 1.00111,
+          "candidate_rows": 86387
+        },
+        "5": {
+          "actual": 1041,
+          "expected": 1082.554,
+          "observed_vs_market": 0.96162,
+          "candidate_rows": 73120
+        }
+      },
+      "survivor_exclusion": {
+        "0.1": {
+          "survivor_ticket_count": 43081,
+          "realized_winner_coverage_pct": 56.238,
+          "market_prob_covered_pct": 53.02,
+          "model_prob_covered_pct": 55.573,
+          "false_exclusion_races": 3592
+        },
+        "0.25": {
+          "survivor_ticket_count": 98910,
+          "realized_winner_coverage_pct": 77.303,
+          "market_prob_covered_pct": 73.591,
+          "model_prob_covered_pct": 76.692,
+          "false_exclusion_races": 1863
+        },
+        "0.5": {
+          "survivor_ticket_count": 197734,
+          "realized_winner_coverage_pct": 92.373,
+          "market_prob_covered_pct": 89.455,
+          "model_prob_covered_pct": 91.825,
+          "false_exclusion_races": 626
+        },
+        "0.75": {
+          "survivor_ticket_count": 296644,
+          "realized_winner_coverage_pct": 98.343,
+          "market_prob_covered_pct": 96.805,
+          "model_prob_covered_pct": 97.795,
+          "false_exclusion_races": 136
+        }
+      },
+      "selection": {
+        "trio": {
+          "0.0": {
+            "0.9": {
+              "bet_races": 6524,
+              "tickets": 15234,
+              "winners": 597,
+              "stake_yen": 1523400,
+              "payout_yen": 1253490,
+              "profit_yen": -269910,
+              "roi_pct": 82.282,
+              "roi_normal_approx_95pct_ci": [
+                73.5,
+                91.06
+              ],
+              "mean_max_ev": 0.9537
+            },
+            "0.95": {
+              "bet_races": 3713,
+              "tickets": 5606,
+              "winners": 195,
+              "stake_yen": 560600,
+              "payout_yen": 470950,
+              "profit_yen": -89650,
+              "roi_pct": 84.008,
+              "roi_normal_approx_95pct_ci": [
+                69.16,
+                98.85
+              ],
+              "mean_max_ev": 0.9537
+            },
+            "1.0": {
+              "bet_races": 1649,
+              "tickets": 2043,
+              "winners": 60,
+              "stake_yen": 204300,
+              "payout_yen": 156030,
+              "profit_yen": -48270,
+              "roi_pct": 76.373,
+              "roi_normal_approx_95pct_ci": [
+                55.23,
+                97.52
+              ],
+              "mean_max_ev": 0.9537
+            },
+            "1.03": {
+              "bet_races": 976,
+              "tickets": 1147,
+              "winners": 26,
+              "stake_yen": 114700,
+              "payout_yen": 71220,
+              "profit_yen": -43480,
+              "roi_pct": 62.092,
+              "roi_normal_approx_95pct_ci": [
+                37.11,
+                87.08
+              ],
+              "mean_max_ev": 0.9537
+            },
+            "1.07": {
+              "bet_races": 511,
+              "tickets": 566,
+              "winners": 16,
+              "stake_yen": 56600,
+              "payout_yen": 41320,
+              "profit_yen": -15280,
+              "roi_pct": 73.004,
+              "roi_normal_approx_95pct_ci": [
+                35.15,
+                110.86
+              ],
+              "mean_max_ev": 0.9537
+            },
+            "1.12": {
+              "bet_races": 218,
+              "tickets": 244,
+              "winners": 7,
+              "stake_yen": 24400,
+              "payout_yen": 17410,
+              "profit_yen": -6990,
+              "roi_pct": 71.352,
+              "roi_normal_approx_95pct_ci": [
+                14.28,
+                128.42
+              ],
+              "mean_max_ev": 0.9537
+            }
+          },
+          "0.001": {
+            "0.9": {
+              "bet_races": 6276,
+              "tickets": 13644,
+              "winners": 558,
+              "stake_yen": 1364400,
+              "payout_yen": 1139440,
+              "profit_yen": -224960,
+              "roi_pct": 83.512,
+              "roi_normal_approx_95pct_ci": [
+                74.22,
+                92.8
+              ],
+              "mean_max_ev": 0.9537
+            },
+            "0.95": {
+              "bet_races": 3364,
+              "tickets": 4892,
+              "winners": 178,
+              "stake_yen": 489200,
+              "payout_yen": 413090,
+              "profit_yen": -76110,
+              "roi_pct": 84.442,
+              "roi_normal_approx_95pct_ci": [
+                69.0,
+                99.88
+              ],
+              "mean_max_ev": 0.9537
+            },
+            "1.0": {
+              "bet_races": 1454,
+              "tickets": 1769,
+              "winners": 52,
+              "stake_yen": 176900,
+              "payout_yen": 133360,
+              "profit_yen": -43540,
+              "roi_pct": 75.387,
+              "roi_normal_approx_95pct_ci": [
+                52.71,
+                98.06
+              ],
+              "mean_max_ev": 0.9537
+            },
+            "1.03": {
+              "bet_races": 863,
+              "tickets": 999,
+              "winners": 24,
+              "stake_yen": 99900,
+              "payout_yen": 67490,
+              "profit_yen": -32410,
+              "roi_pct": 67.558,
+              "roi_normal_approx_95pct_ci": [
+                39.31,
+                95.8
+              ],
+              "mean_max_ev": 0.9537
+            },
+            "1.07": {
+              "bet_races": 454,
+              "tickets": 501,
+              "winners": 15,
+              "stake_yen": 50100,
+              "payout_yen": 39260,
+              "profit_yen": -10840,
+              "roi_pct": 78.363,
+              "roi_normal_approx_95pct_ci": [
+                36.4,
+                120.33
+              ],
+              "mean_max_ev": 0.9537
+            },
+            "1.12": {
+              "bet_races": 191,
+              "tickets": 216,
+              "winners": 7,
+              "stake_yen": 21600,
+              "payout_yen": 17410,
+              "profit_yen": -4190,
+              "roi_pct": 80.602,
+              "roi_normal_approx_95pct_ci": [
+                16.29,
+                144.91
+              ],
+              "mean_max_ev": 0.9537
+            }
+          },
+          "0.005": {
+            "0.9": {
+              "bet_races": 5083,
+              "tickets": 8601,
+              "winners": 409,
+              "stake_yen": 860100,
+              "payout_yen": 743890,
+              "profit_yen": -116210,
+              "roi_pct": 86.489,
+              "roi_normal_approx_95pct_ci": [
+                75.21,
+                97.77
+              ],
+              "mean_max_ev": 0.9537
+            },
+            "0.95": {
+              "bet_races": 2264,
+              "tickets": 2955,
+              "winners": 126,
+              "stake_yen": 295500,
+              "payout_yen": 263860,
+              "profit_yen": -31640,
+              "roi_pct": 89.293,
+              "roi_normal_approx_95pct_ci": [
+                71.0,
+                107.58
+              ],
+              "mean_max_ev": 0.9537
+            },
+            "1.0": {
+              "bet_races": 918,
+              "tickets": 1072,
+              "winners": 31,
+              "stake_yen": 107200,
+              "payout_yen": 74950,
+              "profit_yen": -32250,
+              "roi_pct": 69.916,
+              "roi_normal_approx_95pct_ci": [
+                43.0,
+                96.83
+              ],
+              "mean_max_ev": 0.9537
+            },
+            "1.03": {
+              "bet_races": 567,
+              "tickets": 633,
+              "winners": 20,
+              "stake_yen": 63300,
+              "payout_yen": 53100,
+              "profit_yen": -10200,
+              "roi_pct": 83.886,
+              "roi_normal_approx_95pct_ci": [
+                45.38,
+                122.4
+              ],
+              "mean_max_ev": 0.9537
+            },
+            "1.07": {
+              "bet_races": 288,
+              "tickets": 323,
+              "winners": 9,
+              "stake_yen": 32300,
+              "payout_yen": 21990,
+              "profit_yen": -10310,
+              "roi_pct": 68.08,
+              "roi_normal_approx_95pct_ci": [
+                20.86,
+                115.3
+              ],
+              "mean_max_ev": 0.9537
+            },
+            "1.12": {
+              "bet_races": 120,
+              "tickets": 135,
+              "winners": 5,
+              "stake_yen": 13500,
+              "payout_yen": 12020,
+              "profit_yen": -1480,
+              "roi_pct": 89.037,
+              "roi_normal_approx_95pct_ci": [
+                2.02,
+                176.05
+              ],
+              "mean_max_ev": 0.9537
+            }
+          }
+        },
+        "trifecta": {
+          "0.0": {
+            "0.9": {
+              "bet_races": 4548,
+              "tickets": 45876,
+              "winners": 206,
+              "stake_yen": 4587600,
+              "payout_yen": 3565980,
+              "profit_yen": -1021620,
+              "roi_pct": 77.731,
+              "roi_normal_approx_95pct_ci": [
+                51.07,
+                104.39
+              ],
+              "mean_max_ev": 0.9268
+            },
+            "0.95": {
+              "bet_races": 2352,
+              "tickets": 18594,
+              "winners": 69,
+              "stake_yen": 1859400,
+              "payout_yen": 1475340,
+              "profit_yen": -384060,
+              "roi_pct": 79.345,
+              "roi_normal_approx_95pct_ci": [
+                20.56,
+                138.13
+              ],
+              "mean_max_ev": 0.9268
+            },
+            "1.0": {
+              "bet_races": 1264,
+              "tickets": 8922,
+              "winners": 29,
+              "stake_yen": 892200,
+              "payout_yen": 509820,
+              "profit_yen": -382380,
+              "roi_pct": 57.142,
+              "roi_normal_approx_95pct_ci": [
+                25.52,
+                88.77
+              ],
+              "mean_max_ev": 0.9268
+            },
+            "1.03": {
+              "bet_races": 843,
+              "tickets": 5760,
+              "winners": 22,
+              "stake_yen": 576000,
+              "payout_yen": 435940,
+              "profit_yen": -140060,
+              "roi_pct": 75.684,
+              "roi_normal_approx_95pct_ci": [
+                28.01,
+                123.35
+              ],
+              "mean_max_ev": 0.9268
+            },
+            "1.07": {
+              "bet_races": 512,
+              "tickets": 3372,
+              "winners": 10,
+              "stake_yen": 337200,
+              "payout_yen": 163360,
+              "profit_yen": -173840,
+              "roi_pct": 48.446,
+              "roi_normal_approx_95pct_ci": [
+                13.42,
+                83.47
+              ],
+              "mean_max_ev": 0.9268
+            },
+            "1.12": {
+              "bet_races": 281,
+              "tickets": 1800,
+              "winners": 3,
+              "stake_yen": 180000,
+              "payout_yen": 56670,
+              "profit_yen": -123330,
+              "roi_pct": 31.483,
+              "roi_normal_approx_95pct_ci": [
+                -14.03,
+                76.99
+              ],
+              "mean_max_ev": 0.9268
+            }
+          },
+          "0.001": {
+            "0.9": {
+              "bet_races": 3860,
+              "tickets": 30882,
+              "winners": 178,
+              "stake_yen": 3088200,
+              "payout_yen": 2911790,
+              "profit_yen": -176410,
+              "roi_pct": 94.288,
+              "roi_normal_approx_95pct_ci": [
+                56.36,
+                132.22
+              ],
+              "mean_max_ev": 0.9268
+            },
+            "0.95": {
+              "bet_races": 1944,
+              "tickets": 12957,
+              "winners": 53,
+              "stake_yen": 1295700,
+              "payout_yen": 709170,
+              "profit_yen": -586530,
+              "roi_pct": 54.733,
+              "roi_normal_approx_95pct_ci": [
+                30.66,
+                78.8
+              ],
+              "mean_max_ev": 0.9268
+            },
+            "1.0": {
+              "bet_races": 999,
+              "tickets": 6218,
+              "winners": 27,
+              "stake_yen": 621800,
+              "payout_yen": 495180,
+              "profit_yen": -126620,
+              "roi_pct": 79.637,
+              "roi_normal_approx_95pct_ci": [
+                34.46,
+                124.82
+              ],
+              "mean_max_ev": 0.9268
+            },
+            "1.03": {
+              "bet_races": 677,
+              "tickets": 4067,
+              "winners": 14,
+              "stake_yen": 406700,
+              "payout_yen": 212580,
+              "profit_yen": -194120,
+              "roi_pct": 52.269,
+              "roi_normal_approx_95pct_ci": [
+                20.89,
+                83.65
+              ],
+              "mean_max_ev": 0.9268
+            },
+            "1.07": {
+              "bet_races": 411,
+              "tickets": 2377,
+              "winners": 7,
+              "stake_yen": 237700,
+              "payout_yen": 127960,
+              "profit_yen": -109740,
+              "roi_pct": 53.833,
+              "roi_normal_approx_95pct_ci": [
+                7.21,
+                100.46
+              ],
+              "mean_max_ev": 0.9268
+            },
+            "1.12": {
+              "bet_races": 211,
+              "tickets": 1178,
+              "winners": 3,
+              "stake_yen": 117800,
+              "payout_yen": 56670,
+              "profit_yen": -61130,
+              "roi_pct": 48.107,
+              "roi_normal_approx_95pct_ci": [
+                -21.34,
+                117.56
+              ],
+              "mean_max_ev": 0.9268
+            }
+          },
+          "0.005": {
+            "0.9": {
+              "bet_races": 1946,
+              "tickets": 9073,
+              "winners": 86,
+              "stake_yen": 907300,
+              "payout_yen": 623390,
+              "profit_yen": -283910,
+              "roi_pct": 68.708,
+              "roi_normal_approx_95pct_ci": [
+                47.42,
+                90.0
+              ],
+              "mean_max_ev": 0.9268
+            },
+            "0.95": {
+              "bet_races": 914,
+              "tickets": 4020,
+              "winners": 33,
+              "stake_yen": 402000,
+              "payout_yen": 349650,
+              "profit_yen": -52350,
+              "roi_pct": 86.978,
+              "roi_normal_approx_95pct_ci": [
+                49.54,
+                124.42
+              ],
+              "mean_max_ev": 0.9268
+            },
+            "1.0": {
+              "bet_races": 459,
+              "tickets": 1880,
+              "winners": 14,
+              "stake_yen": 188000,
+              "payout_yen": 191220,
+              "profit_yen": 3220,
+              "roi_pct": 101.713,
+              "roi_normal_approx_95pct_ci": [
+                37.03,
+                166.39
+              ],
+              "mean_max_ev": 0.9268
+            },
+            "1.03": {
+              "bet_races": 296,
+              "tickets": 1162,
+              "winners": 5,
+              "stake_yen": 116200,
+              "payout_yen": 82190,
+              "profit_yen": -34010,
+              "roi_pct": 70.731,
+              "roi_normal_approx_95pct_ci": [
+                -7.32,
+                148.79
+              ],
+              "mean_max_ev": 0.9268
+            },
+            "1.07": {
+              "bet_races": 170,
+              "tickets": 623,
+              "winners": 3,
+              "stake_yen": 62300,
+              "payout_yen": 56670,
+              "profit_yen": -5630,
+              "roi_pct": 90.963,
+              "roi_normal_approx_95pct_ci": [
+                -39.83,
+                221.76
+              ],
+              "mean_max_ev": 0.9268
+            },
+            "1.12": {
+              "bet_races": 76,
+              "tickets": 256,
+              "winners": 2,
+              "stake_yen": 25600,
+              "payout_yen": 46260,
+              "profit_yen": 20660,
+              "roi_pct": 180.703,
+              "roi_normal_approx_95pct_ci": [
+                -125.32,
+                486.73
+              ],
+              "mean_max_ev": 0.9268
+            }
+          }
+        }
+      }
+    },
+    "2026": {
+      "races": 4247,
+      "local_remote_actual_vs_expected": {
+        "1": {
+          "actual": 1202,
+          "expected": 1121.517,
+          "observed_vs_market": 1.07176,
+          "candidate_rows": 31123
+        },
+        "2": {
+          "actual": 1056,
+          "expected": 1023.524,
+          "observed_vs_market": 1.03173,
+          "candidate_rows": 38376
+        },
+        "3": {
+          "actual": 845,
+          "expected": 853.608,
+          "observed_vs_market": 0.98992,
+          "candidate_rows": 41869
+        },
+        "4": {
+          "actual": 554,
+          "expected": 589.822,
+          "observed_vs_market": 0.93927,
+          "candidate_rows": 39702
+        },
+        "5": {
+          "actual": 590,
+          "expected": 658.528,
+          "observed_vs_market": 0.89594,
+          "candidate_rows": 40470
+        }
+      },
+      "survivor_exclusion": {
+        "0.1": {
+          "survivor_ticket_count": 21234,
+          "realized_winner_coverage_pct": 55.427,
+          "market_prob_covered_pct": 52.641,
+          "model_prob_covered_pct": 55.104,
+          "false_exclusion_races": 1893
+        },
+        "0.25": {
+          "survivor_ticket_count": 48656,
+          "realized_winner_coverage_pct": 77.019,
+          "market_prob_covered_pct": 73.362,
+          "model_prob_covered_pct": 76.484,
+          "false_exclusion_races": 976
+        },
+        "0.5": {
+          "survivor_ticket_count": 97261,
+          "realized_winner_coverage_pct": 92.607,
+          "market_prob_covered_pct": 89.345,
+          "model_prob_covered_pct": 91.75,
+          "false_exclusion_races": 314
+        },
+        "0.75": {
+          "survivor_ticket_count": 145917,
+          "realized_winner_coverage_pct": 97.975,
+          "market_prob_covered_pct": 96.776,
+          "model_prob_covered_pct": 97.769,
+          "false_exclusion_races": 86
+        }
+      },
+      "selection": {
+        "trio": {
+          "0.0": {
+            "0.9": {
+              "bet_races": 3500,
+              "tickets": 8733,
+              "winners": 380,
+              "stake_yen": 873300,
+              "payout_yen": 865720,
+              "profit_yen": -7580,
+              "roi_pct": 99.132,
+              "roi_normal_approx_95pct_ci": [
+                85.82,
+                112.45
+              ],
+              "mean_max_ev": 0.9615
+            },
+            "0.95": {
+              "bet_races": 2130,
+              "tickets": 3361,
+              "winners": 109,
+              "stake_yen": 336100,
+              "payout_yen": 290870,
+              "profit_yen": -45230,
+              "roi_pct": 86.543,
+              "roi_normal_approx_95pct_ci": [
+                65.52,
+                107.56
+              ],
+              "mean_max_ev": 0.9615
+            },
+            "1.0": {
+              "bet_races": 992,
+              "tickets": 1274,
+              "winners": 29,
+              "stake_yen": 127400,
+              "payout_yen": 80540,
+              "profit_yen": -46860,
+              "roi_pct": 63.218,
+              "roi_normal_approx_95pct_ci": [
+                36.1,
+                90.34
+              ],
+              "mean_max_ev": 0.9615
+            },
+            "1.03": {
+              "bet_races": 632,
+              "tickets": 736,
+              "winners": 14,
+              "stake_yen": 73600,
+              "payout_yen": 43220,
+              "profit_yen": -30380,
+              "roi_pct": 58.723,
+              "roi_normal_approx_95pct_ci": [
+                21.48,
+                95.96
+              ],
+              "mean_max_ev": 0.9615
+            },
+            "1.07": {
+              "bet_races": 353,
+              "tickets": 387,
+              "winners": 8,
+              "stake_yen": 38700,
+              "payout_yen": 25350,
+              "profit_yen": -13350,
+              "roi_pct": 65.504,
+              "roi_normal_approx_95pct_ci": [
+                16.83,
+                114.18
+              ],
+              "mean_max_ev": 0.9615
+            },
+            "1.12": {
+              "bet_races": 147,
+              "tickets": 156,
+              "winners": 2,
+              "stake_yen": 15600,
+              "payout_yen": 6500,
+              "profit_yen": -9100,
+              "roi_pct": 41.667,
+              "roi_normal_approx_95pct_ci": [
+                -21.21,
+                104.54
+              ],
+              "mean_max_ev": 0.9615
+            }
+          },
+          "0.001": {
+            "0.9": {
+              "bet_races": 3395,
+              "tickets": 7880,
+              "winners": 355,
+              "stake_yen": 788000,
+              "payout_yen": 782420,
+              "profit_yen": -5580,
+              "roi_pct": 99.292,
+              "roi_normal_approx_95pct_ci": [
+                85.57,
+                113.01
+              ],
+              "mean_max_ev": 0.9615
+            },
+            "0.95": {
+              "bet_races": 1969,
+              "tickets": 2981,
+              "winners": 94,
+              "stake_yen": 298100,
+              "payout_yen": 227510,
+              "profit_yen": -70590,
+              "roi_pct": 76.32,
+              "roi_normal_approx_95pct_ci": [
+                57.48,
+                95.16
+              ],
+              "mean_max_ev": 0.9615
+            },
+            "1.0": {
+              "bet_races": 904,
+              "tickets": 1140,
+              "winners": 28,
+              "stake_yen": 114000,
+              "payout_yen": 79020,
+              "profit_yen": -34980,
+              "roi_pct": 69.316,
+              "roi_normal_approx_95pct_ci": [
+                39.13,
+                99.51
+              ],
+              "mean_max_ev": 0.9615
+            },
+            "1.03": {
+              "bet_races": 561,
+              "tickets": 640,
+              "winners": 11,
+              "stake_yen": 64000,
+              "payout_yen": 37990,
+              "profit_yen": -26010,
+              "roi_pct": 59.359,
+              "roi_normal_approx_95pct_ci": [
+                17.62,
+                101.09
+              ],
+              "mean_max_ev": 0.9615
+            },
+            "1.07": {
+              "bet_races": 314,
+              "tickets": 341,
+              "winners": 6,
+              "stake_yen": 34100,
+              "payout_yen": 17860,
+              "profit_yen": -16240,
+              "roi_pct": 52.375,
+              "roi_normal_approx_95pct_ci": [
+                7.22,
+                97.53
+              ],
+              "mean_max_ev": 0.9615
+            },
+            "1.12": {
+              "bet_races": 132,
+              "tickets": 140,
+              "winners": 2,
+              "stake_yen": 14000,
+              "payout_yen": 6500,
+              "profit_yen": -7500,
+              "roi_pct": 46.429,
+              "roi_normal_approx_95pct_ci": [
+                -23.59,
+                116.45
+              ],
+              "mean_max_ev": 0.9615
+            }
+          },
+          "0.005": {
+            "0.9": {
+              "bet_races": 2856,
+              "tickets": 5172,
+              "winners": 256,
+              "stake_yen": 517200,
+              "payout_yen": 483320,
+              "profit_yen": -33880,
+              "roi_pct": 93.449,
+              "roi_normal_approx_95pct_ci": [
+                78.7,
+                108.2
+              ],
+              "mean_max_ev": 0.9615
+            },
+            "0.95": {
+              "bet_races": 1398,
+              "tickets": 1891,
+              "winners": 64,
+              "stake_yen": 189100,
+              "payout_yen": 138590,
+              "profit_yen": -50510,
+              "roi_pct": 73.289,
+              "roi_normal_approx_95pct_ci": [
+                51.04,
+                95.54
+              ],
+              "mean_max_ev": 0.9615
+            },
+            "1.0": {
+              "bet_races": 595,
+              "tickets": 684,
+              "winners": 15,
+              "stake_yen": 68400,
+              "payout_yen": 37740,
+              "profit_yen": -30660,
+              "roi_pct": 55.175,
+              "roi_normal_approx_95pct_ci": [
+                24.15,
+                86.2
+              ],
+              "mean_max_ev": 0.9615
+            },
+            "1.03": {
+              "bet_races": 386,
+              "tickets": 424,
+              "winners": 8,
+              "stake_yen": 42400,
+              "payout_yen": 25350,
+              "profit_yen": -17050,
+              "roi_pct": 59.788,
+              "roi_normal_approx_95pct_ci": [
+                15.37,
+                104.21
+              ],
+              "mean_max_ev": 0.9615
+            },
+            "1.07": {
+              "bet_races": 195,
+              "tickets": 207,
+              "winners": 4,
+              "stake_yen": 20700,
+              "payout_yen": 13440,
+              "profit_yen": -7260,
+              "roi_pct": 64.928,
+              "roi_normal_approx_95pct_ci": [
+                -2.08,
+                131.94
+              ],
+              "mean_max_ev": 0.9615
+            },
+            "1.12": {
+              "bet_races": 84,
+              "tickets": 89,
+              "winners": 1,
+              "stake_yen": 8900,
+              "payout_yen": 4690,
+              "profit_yen": -4210,
+              "roi_pct": 52.697,
+              "roi_normal_approx_95pct_ci": [
+                -50.1,
+                155.49
+              ],
+              "mean_max_ev": 0.9615
+            }
+          }
+        },
+        "trifecta": {
+          "0.0": {
+            "0.9": {
+              "bet_races": 2408,
+              "tickets": 23790,
+              "winners": 112,
+              "stake_yen": 2379000,
+              "payout_yen": 1621720,
+              "profit_yen": -757280,
+              "roi_pct": 68.168,
+              "roi_normal_approx_95pct_ci": [
+                44.83,
+                91.5
+              ],
+              "mean_max_ev": 0.9309
+            },
+            "0.95": {
+              "bet_races": 1313,
+              "tickets": 10476,
+              "winners": 38,
+              "stake_yen": 1047600,
+              "payout_yen": 774680,
+              "profit_yen": -272920,
+              "roi_pct": 73.948,
+              "roi_normal_approx_95pct_ci": [
+                33.12,
+                114.78
+              ],
+              "mean_max_ev": 0.9309
+            },
+            "1.0": {
+              "bet_races": 707,
+              "tickets": 5058,
+              "winners": 12,
+              "stake_yen": 505800,
+              "payout_yen": 290020,
+              "profit_yen": -215780,
+              "roi_pct": 57.339,
+              "roi_normal_approx_95pct_ci": [
+                10.83,
+                103.85
+              ],
+              "mean_max_ev": 0.9309
+            },
+            "1.03": {
+              "bet_races": 473,
+              "tickets": 3246,
+              "winners": 7,
+              "stake_yen": 324600,
+              "payout_yen": 119280,
+              "profit_yen": -205320,
+              "roi_pct": 36.747,
+              "roi_normal_approx_95pct_ci": [
+                5.48,
+                68.01
+              ],
+              "mean_max_ev": 0.9309
+            },
+            "1.07": {
+              "bet_races": 286,
+              "tickets": 1896,
+              "winners": 3,
+              "stake_yen": 189600,
+              "payout_yen": 47760,
+              "profit_yen": -141840,
+              "roi_pct": 25.19,
+              "roi_normal_approx_95pct_ci": [
+                -12.17,
+                62.55
+              ],
+              "mean_max_ev": 0.9309
+            },
+            "1.12": {
+              "bet_races": 164,
+              "tickets": 1026,
+              "winners": 0,
+              "stake_yen": 102600,
+              "payout_yen": 0,
+              "profit_yen": -102600,
+              "roi_pct": 0.0,
+              "roi_normal_approx_95pct_ci": [
+                0.0,
+                0.0
+              ],
+              "mean_max_ev": 0.9309
+            }
+          },
+          "0.001": {
+            "0.9": {
+              "bet_races": 2078,
+              "tickets": 16635,
+              "winners": 94,
+              "stake_yen": 1663500,
+              "payout_yen": 1184170,
+              "profit_yen": -479330,
+              "roi_pct": 71.185,
+              "roi_normal_approx_95pct_ci": [
+                43.39,
+                98.98
+              ],
+              "mean_max_ev": 0.9309
+            },
+            "0.95": {
+              "bet_races": 1098,
+              "tickets": 7536,
+              "winners": 34,
+              "stake_yen": 753600,
+              "payout_yen": 580380,
+              "profit_yen": -173220,
+              "roi_pct": 77.014,
+              "roi_normal_approx_95pct_ci": [
+                37.44,
+                116.59
+              ],
+              "mean_max_ev": 0.9309
+            },
+            "1.0": {
+              "bet_races": 562,
+              "tickets": 3477,
+              "winners": 7,
+              "stake_yen": 347700,
+              "payout_yen": 119280,
+              "profit_yen": -228420,
+              "roi_pct": 34.305,
+              "roi_normal_approx_95pct_ci": [
+                5.12,
+                63.5
+              ],
+              "mean_max_ev": 0.9309
+            },
+            "1.03": {
+              "bet_races": 393,
+              "tickets": 2281,
+              "winners": 5,
+              "stake_yen": 228100,
+              "payout_yen": 80650,
+              "profit_yen": -147450,
+              "roi_pct": 35.357,
+              "roi_normal_approx_95pct_ci": [
+                -2.4,
+                73.12
+              ],
+              "mean_max_ev": 0.9309
+            },
+            "1.07": {
+              "bet_races": 223,
+              "tickets": 1295,
+              "winners": 3,
+              "stake_yen": 129500,
+              "payout_yen": 47760,
+              "profit_yen": -81740,
+              "roi_pct": 36.88,
+              "roi_normal_approx_95pct_ci": [
+                -17.84,
+                91.6
+              ],
+              "mean_max_ev": 0.9309
+            },
+            "1.12": {
+              "bet_races": 123,
+              "tickets": 659,
+              "winners": 0,
+              "stake_yen": 65900,
+              "payout_yen": 0,
+              "profit_yen": -65900,
+              "roi_pct": 0.0,
+              "roi_normal_approx_95pct_ci": [
+                0.0,
+                0.0
+              ],
+              "mean_max_ev": 0.9309
+            }
+          },
+          "0.005": {
+            "0.9": {
+              "bet_races": 1091,
+              "tickets": 5100,
+              "winners": 54,
+              "stake_yen": 510000,
+              "payout_yen": 390180,
+              "profit_yen": -119820,
+              "roi_pct": 76.506,
+              "roi_normal_approx_95pct_ci": [
+                44.52,
+                108.49
+              ],
+              "mean_max_ev": 0.9309
+            },
+            "0.95": {
+              "bet_races": 510,
+              "tickets": 2122,
+              "winners": 12,
+              "stake_yen": 212200,
+              "payout_yen": 145090,
+              "profit_yen": -67110,
+              "roi_pct": 68.374,
+              "roi_normal_approx_95pct_ci": [
+                18.75,
+                118.0
+              ],
+              "mean_max_ev": 0.9309
+            },
+            "1.0": {
+              "bet_races": 252,
+              "tickets": 950,
+              "winners": 2,
+              "stake_yen": 95000,
+              "payout_yen": 12680,
+              "profit_yen": -82320,
+              "roi_pct": 13.347,
+              "roi_normal_approx_95pct_ci": [
+                -5.28,
+                31.97
+              ],
+              "mean_max_ev": 0.9309
+            },
+            "1.03": {
+              "bet_races": 163,
+              "tickets": 595,
+              "winners": 2,
+              "stake_yen": 59500,
+              "payout_yen": 12680,
+              "profit_yen": -46820,
+              "roi_pct": 21.311,
+              "roi_normal_approx_95pct_ci": [
+                -8.52,
+                51.14
+              ],
+              "mean_max_ev": 0.9309
+            },
+            "1.07": {
+              "bet_races": 96,
+              "tickets": 327,
+              "winners": 0,
+              "stake_yen": 32700,
+              "payout_yen": 0,
+              "profit_yen": -32700,
+              "roi_pct": 0.0,
+              "roi_normal_approx_95pct_ci": [
+                0.0,
+                0.0
+              ],
+              "mean_max_ev": 0.9309
+            },
+            "1.12": {
+              "bet_races": 42,
+              "tickets": 150,
+              "winners": 0,
+              "stake_yen": 15000,
+              "payout_yen": 0,
+              "profit_yen": -15000,
+              "roi_pct": 0.0,
+              "roi_normal_approx_95pct_ci": [
+                0.0,
+                0.0
+              ],
+              "mean_max_ev": 0.9309
+            }
+          }
+        }
+      }
+    }
+  }
+}
