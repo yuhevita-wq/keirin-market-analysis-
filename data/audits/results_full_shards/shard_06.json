@@ -2,52 +2,72 @@
   "schema": 1,
   "shard": 6,
   "shards": 8,
-  "next_offset": 1286,
-  "last_run_utc": "2026-10-17T02:59:37.488861+00:00",
+  "next_offset": 1318,
+  "last_run_utc": "2026-10-17T03:04:16.383609+00:00",
   "last_batch": [
     {
-      "day": "2024-06-08",
-      "results": 70,
+      "day": "2024-07-10",
+      "results": 93,
       "complete": true,
+      "venues_completed": 9,
+      "venues_total": 9,
+      "failed": 0,
+      "errors": [],
+      "repair_pass": false
+    },
+    {
+      "day": "2024-07-18",
+      "results": 87,
+      "complete": false,
       "venues_completed": 7,
-      "venues_total": 7,
+      "venues_total": 9,
+      "failed": 2,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "73202407160300",
+          "url": "https://keirin.kdreams.jp/komatsushima/raceresult/73202407160300/",
+          "error": "Unresolved published podiums [[\"7320240716030002\", \"published first-second-third headers not present\"]]"
+        },
+        {
+          "stage": "race",
+          "venue": "74202407180100",
+          "url": "https://keirin.kdreams.jp/kochi/raceresult/74202407180100/",
+          "error": "Unresolved published podiums [[\"7420240718010005\", \"published first-second-third headers not present\"]]"
+        }
+      ],
+      "repair_pass": false
+    },
+    {
+      "day": "2024-07-26",
+      "results": 84,
+      "complete": true,
+      "venues_completed": 9,
+      "venues_total": 9,
       "failed": 0,
       "errors": [],
       "repair_pass": false
     },
     {
-      "day": "2024-06-16",
-      "results": 67,
-      "complete": true,
-      "venues_completed": 7,
-      "venues_total": 7,
-      "failed": 0,
-      "errors": [],
-      "repair_pass": false
-    },
-    {
-      "day": "2024-06-24",
-      "results": 76,
-      "complete": true,
+      "day": "2024-08-03",
+      "results": 81,
+      "complete": false,
       "venues_completed": 8,
-      "venues_total": 8,
-      "failed": 0,
-      "errors": [],
-      "repair_pass": false
-    },
-    {
-      "day": "2024-07-02",
-      "results": 65,
-      "complete": true,
-      "venues_completed": 8,
-      "venues_total": 8,
-      "failed": 0,
-      "errors": [],
+      "venues_total": 9,
+      "failed": 1,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "31202408010300",
+          "url": "https://keirin.kdreams.jp/matsudo/raceresult/31202408010300/",
+          "error": "Unresolved published podiums [[\"3120240801030005\", \"published first-second-third headers not present\"]]"
+        }
+      ],
       "repair_pass": false
     }
   ],
   "finished_forward_pass": false,
-  "pending_repair_days": 55,
+  "pending_repair_days": 57,
   "exhausted_unresolved_days": 0,
   "finished_all": false
 }
