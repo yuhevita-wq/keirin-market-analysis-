@@ -2,58 +2,66 @@
   "schema": 1,
   "shard": 0,
   "shards": 8,
-  "next_offset": 40,
-  "last_run_utc": "2026-10-17T00:16:24.931854+00:00",
+  "next_offset": 72,
+  "last_run_utc": "2026-10-17T00:20:08.437536+00:00",
   "last_batch": [
     {
-      "day": "2021-01-09",
+      "day": "2021-02-10",
+      "results": 59,
+      "complete": true,
+      "venues_completed": 6,
+      "venues_total": 6,
+      "failed": 0,
+      "errors": [],
+      "repair_pass": false
+    },
+    {
+      "day": "2021-02-18",
+      "results": 62,
+      "complete": false,
+      "venues_completed": 5,
+      "venues_total": 6,
+      "failed": 1,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "44202102170200",
+          "url": "https://keirin.kdreams.jp/ogaki/raceresult/44202102170200/",
+          "error": "Unresolved published podiums [[\"4420210217020009\", \"no results order_table\"]]"
+        }
+      ],
+      "repair_pass": false
+    },
+    {
+      "day": "2021-02-26",
       "results": 89,
+      "complete": false,
+      "venues_completed": 8,
+      "venues_total": 9,
+      "failed": 1,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "63202102240300",
+          "url": "https://keirin.kdreams.jp/hofu/raceresult/63202102240300/",
+          "error": "Unresolved published podiums [[\"6320210224030006\", \"published first-second-third headers not present\"]]"
+        }
+      ],
+      "repair_pass": false
+    },
+    {
+      "day": "2021-03-06",
+      "results": 98,
       "complete": true,
       "venues_completed": 9,
       "venues_total": 9,
       "failed": 0,
-      "errors": []
-    },
-    {
-      "day": "2021-01-17",
-      "results": 57,
-      "complete": false,
-      "venues_completed": 4,
-      "venues_total": 7,
-      "failed": 3,
-      "errors": [
-        {
-          "stage": "race",
-          "venue": "31202101150300",
-          "url": "https://keirin.kdreams.jp/matsudo/raceresult/31202101150300/",
-          "error": "Unresolved published podiums [[\"3120210115030009\", \"published first-second-third headers not present\"]]"
-        },
-        {
-          "stage": "race",
-          "venue": "37202101170100",
-          "url": "https://keirin.kdreams.jp/ito/raceresult/37202101170100/",
-          "error": "Unresolved published podiums [[\"3720210117010009\", \"no results order_table\"], [\"3720210117010010\", \"no results order_table\"]]"
-        }
-      ]
-    },
-    {
-      "day": "2021-01-25",
-      "results": 68,
-      "complete": true,
-      "venues_completed": 7,
-      "venues_total": 7,
-      "failed": 0,
-      "errors": []
-    },
-    {
-      "day": "2021-02-02",
-      "results": 70,
-      "complete": true,
-      "venues_completed": 7,
-      "venues_total": 7,
-      "failed": 0,
-      "errors": []
+      "errors": [],
+      "repair_pass": false
     }
   ],
-  "finished_forward_pass": false
+  "finished_forward_pass": false,
+  "pending_repair_days": 4,
+  "exhausted_unresolved_days": 0,
+  "finished_all": false
 }
