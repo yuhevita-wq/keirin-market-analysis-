@@ -277,7 +277,8 @@ async function analyze(){
         if(!frozenModel){const response=await fetch('./market_model_frozen.json');if(!response.ok)throw Error('学習済み係数を取得できません');frozenModel=await response.json();}
         forecast=predictMarket(race,odds,trio,frozenModel);
         }
-      }catch(e){modelMessage=e.message;}
+      }catch(e){modelMessage=pair9Analysis?
+        "9車は過去の実結果でペア共存を学習済み。ただし3着指定の4点予測は未学習なので主採用順位は判定しません。":e.message;}
     }
     activeForecast=forecast;
     const objective=byId("comparisonObjective").value;
@@ -343,13 +344,13 @@ async function analyze(){
       html+='<section><h3>9車｜実結果学習：ペア共存と個人能力のみの差</h3>'+
         '<p class="info">2022～2024年3,089Rで学習、2025年2,201R・2026年上半期941Rで独立検証。両年で個人能力のみのモデルを超えました。'+
         '<b>2人の3着以内同時入着と、1・2着同時連対は別の事象</b>です。いずれもクロス4点の確率ではありません。</p>'+
-        '<h4>異線ペア・2人とも3着以内</h4>'+
+        '<h4>基本クロス頭候補（各線先頭・番手）・2人とも3着以内</h4>'+
         '<div class="tablewrap"><table><thead><tr><th>順位</th><th>ペア</th><th>共存モデル</th><th>個人能力のみ</th><th>相互作用による差</th></tr></thead><tbody>';
       for(const [i,row] of pair9Analysis.top3Ranking.entries()){
         html+='<tr><td>'+(i+1)+'</td><td>'+row.pair.join('・')+'</td><td>'+percent(row.top3)+'</td><td>'+
           percent(row.top3RiderOnly)+'</td><td>'+delta(row.interactionDeltaTop3)+'</td></tr>';
       }
-      html+='</tbody></table></div><h4>異線ペア・1着と2着を占める</h4>'+
+      html+='</tbody></table></div><h4>基本クロス頭候補・1着と2着を占める</h4>'+
         '<div class="tablewrap"><table><thead><tr><th>順位</th><th>ペア</th><th>共存モデル</th><th>個人能力のみ</th><th>相互作用による差</th></tr></thead><tbody>';
       for(const [i,row] of pair9Analysis.top2Ranking.entries()){
         html+='<tr><td>'+(i+1)+'</td><td>'+row.pair.join('・')+'</td><td>'+percent(row.top2)+'</td><td>'+
