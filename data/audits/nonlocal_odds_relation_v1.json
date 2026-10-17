@@ -1,0 +1,801 @@
+{
+  "status": "ACTUAL_RESULTS_VS_NONLOCAL_ODDS_RELATION_V1",
+  "scope": "all eligible male classes, 2021-2026H1, every available complete 3連単 and 3連複 market",
+  "not_available": "other five bet types in the separately encrypted seven-bet archive; no access to decrypted exact-ID joined odds",
+  "only_predictive_inputs": [
+    "complete 3連単 final odds",
+    "complete 3連複 final odds"
+  ],
+  "labels_only": [
+    "finish_order (three finishers)"
+  ],
+  "outcome": "unordered top-3 set, every eligible set retained; exact order reserved for next stage",
+  "remote_definition": "target set intersects source set in <=1 car; source is max abs difference q_3t_set minus q_trio; source selected before looking at actual winner",
+  "candidate_features": {
+    "local": "log(q3set(target)/qtrio(target))",
+    "remote0": "sum_disjoint_source(q3set-qt) / (0.05+sum_disjoint_source(qt))",
+    "remote1": "sum_overlap1_source(q3set-qt) / (0.05+sum_overlap1_source(qt))",
+    "all_clipped": "-3..3"
+  },
+  "baseline": "per-race normalized inverse 3連複 odds; trifecta aggregate also shown descriptively",
+  "caveats": [
+    "Every quote is an archived finalized price, unavailable before betting closes.",
+    "This is an empirical nonlocal association test, not proof of market beating or betting profitability.",
+    "Feature family was chosen after seeing older explorations; later years are not wholly untouched for the broader project.",
+    "Quintile bins derive only from 2023 odds, independent of all result labels.",
+    "A full 7-bet study still requires decryption and exact race-ID joins."
+  ],
+  "audit": {
+    "all_odds_rows": 34277,
+    "joined": 31320,
+    "missing_label": 2957
+  },
+  "label_counts": {
+    "2021": 1076,
+    "2022": 2359,
+    "2023": 7283,
+    "2024": 8147,
+    "2025": 8208,
+    "2026": 4247
+  },
+  "joined_races": {
+    "2021": 1076,
+    "2022": 2359,
+    "2023": 7283,
+    "2024": 8147,
+    "2025": 8208,
+    "2026": 4247
+  },
+  "entrant_count": {
+    "9": 10034,
+    "7": 18825,
+    "8": 635,
+    "5": 361,
+    "6": 1465
+  },
+  "training_year": "2023",
+  "fitted_beta_local": [
+    0.5630809514211199
+  ],
+  "fitted_beta_nonlocal": [
+    0.5542036856701023,
+    -0.011462759197051881,
+    -0.10610634727194077
+  ],
+  "remote0_feature_cuts_2023": [
+    -0.07217868903320199,
+    -0.032475130159830695,
+    0.000957106327049185,
+    0.03428860977834796
+  ],
+  "by_year": {
+    "2021": {
+      "matched_races": 1076,
+      "remote_outcome_vs_market": {
+        "overall": {
+          "races": 1076,
+          "remote_actual": 393,
+          "remote_rate_pct": 36.524,
+          "expected_trio": 422.761,
+          "observed_over_trio_expected": 0.9296,
+          "observed_over_tri3_expected": 0.97853
+        },
+        "trifecta_above_trio": {
+          "races": 837,
+          "remote_actual": 304,
+          "remote_rate_pct": 36.32,
+          "expected_trio": 341.022,
+          "observed_over_trio_expected": 0.89144,
+          "observed_over_tri3_expected": 0.95864
+        },
+        "trio_above_trifecta": {
+          "races": 239,
+          "remote_actual": 89,
+          "remote_rate_pct": 37.238,
+          "expected_trio": 81.739,
+          "observed_over_trio_expected": 1.08883,
+          "observed_over_tri3_expected": 1.05318
+        }
+      },
+      "remote_feature_calibration": [
+        {
+          "bucket": 1,
+          "candidate_rows": 11468,
+          "winners": 326,
+          "expected_trio": 311.428,
+          "actual_div_trio_market": 1.04679,
+          "actual_div_trifecta_market": 1.00564
+        },
+        {
+          "bucket": 2,
+          "candidate_rows": 11749,
+          "winners": 248,
+          "expected_trio": 265.11,
+          "actual_div_trio_market": 0.93546,
+          "actual_div_trifecta_market": 0.92476
+        },
+        {
+          "bucket": 3,
+          "candidate_rows": 11916,
+          "winners": 208,
+          "expected_trio": 203.601,
+          "actual_div_trio_market": 1.0216,
+          "actual_div_trifecta_market": 1.03068
+        },
+        {
+          "bucket": 4,
+          "candidate_rows": 12096,
+          "winners": 155,
+          "expected_trio": 141.6,
+          "actual_div_trio_market": 1.09463,
+          "actual_div_trifecta_market": 1.12761
+        },
+        {
+          "bucket": 5,
+          "candidate_rows": 13523,
+          "winners": 139,
+          "expected_trio": 154.261,
+          "actual_div_trio_market": 0.90107,
+          "actual_div_trifecta_market": 0.96271
+        }
+      ],
+      "score": {
+        "trio_market": {
+          "logloss": 3.08007076,
+          "brier": 0.908962
+        },
+        "local": {
+          "logloss": 3.06879237,
+          "brier": 0.90829986
+        },
+        "nonlocal": {
+          "logloss": 3.06861069,
+          "brier": 0.90827193
+        },
+        "nonlocal_over_local_logloss_gain": 0.00018168,
+        "gain_std_error": 0.00011871,
+        "gain_95pct_ci": [
+          -5.099e-05,
+          0.00041436
+        ]
+      }
+    },
+    "2022": {
+      "matched_races": 2359,
+      "remote_outcome_vs_market": {
+        "overall": {
+          "races": 2359,
+          "remote_actual": 840,
+          "remote_rate_pct": 35.608,
+          "expected_trio": 937.17,
+          "observed_over_trio_expected": 0.89632,
+          "observed_over_tri3_expected": 0.97275
+        },
+        "trifecta_above_trio": {
+          "races": 2251,
+          "remote_actual": 802,
+          "remote_rate_pct": 35.629,
+          "expected_trio": 892.844,
+          "observed_over_trio_expected": 0.89825,
+          "observed_over_tri3_expected": 0.97913
+        },
+        "trio_above_trifecta": {
+          "races": 108,
+          "remote_actual": 38,
+          "remote_rate_pct": 35.185,
+          "expected_trio": 44.326,
+          "observed_over_trio_expected": 0.85729,
+          "observed_over_tri3_expected": 0.8551
+        }
+      },
+      "remote_feature_calibration": [
+        {
+          "bucket": 1,
+          "candidate_rows": 41808,
+          "winners": 1100,
+          "expected_trio": 1032.182,
+          "actual_div_trio_market": 1.0657,
+          "actual_div_trifecta_market": 1.01504
+        },
+        {
+          "bucket": 2,
+          "candidate_rows": 30882,
+          "winners": 467,
+          "expected_trio": 465.059,
+          "actual_div_trio_market": 1.00417,
+          "actual_div_trifecta_market": 0.99836
+        },
+        {
+          "bucket": 3,
+          "candidate_rows": 33786,
+          "winners": 344,
+          "expected_trio": 385.173,
+          "actual_div_trio_market": 0.8931,
+          "actual_div_trifecta_market": 0.91262
+        },
+        {
+          "bucket": 4,
+          "candidate_rows": 38847,
+          "winners": 250,
+          "expected_trio": 264.952,
+          "actual_div_trio_market": 0.94357,
+          "actual_div_trifecta_market": 1.01446
+        },
+        {
+          "bucket": 5,
+          "candidate_rows": 36739,
+          "winners": 198,
+          "expected_trio": 211.634,
+          "actual_div_trio_market": 0.93558,
+          "actual_div_trifecta_market": 1.07515
+        }
+      ],
+      "score": {
+        "trio_market": {
+          "logloss": 3.24030575,
+          "brier": 0.92459778
+        },
+        "local": {
+          "logloss": 3.22870539,
+          "brier": 0.92434229
+        },
+        "nonlocal": {
+          "logloss": 3.22858504,
+          "brier": 0.92433154
+        },
+        "nonlocal_over_local_logloss_gain": 0.00012035,
+        "gain_std_error": 7.62e-05,
+        "gain_95pct_ci": [
+          -2.901e-05,
+          0.00026971
+        ]
+      }
+    },
+    "2023": {
+      "matched_races": 7283,
+      "remote_outcome_vs_market": {
+        "overall": {
+          "races": 7283,
+          "remote_actual": 2399,
+          "remote_rate_pct": 32.94,
+          "expected_trio": 2534.554,
+          "observed_over_trio_expected": 0.94652,
+          "observed_over_tri3_expected": 1.00805
+        },
+        "trio_above_trifecta": {
+          "races": 1267,
+          "remote_actual": 446,
+          "remote_rate_pct": 35.201,
+          "expected_trio": 446.214,
+          "observed_over_trio_expected": 0.99952,
+          "observed_over_tri3_expected": 0.98206
+        },
+        "trifecta_above_trio": {
+          "races": 6016,
+          "remote_actual": 1953,
+          "remote_rate_pct": 32.463,
+          "expected_trio": 2088.339,
+          "observed_over_trio_expected": 0.93519,
+          "observed_over_tri3_expected": 1.01418
+        }
+      },
+      "remote_feature_calibration": [
+        {
+          "bucket": 1,
+          "candidate_rows": 71730,
+          "winners": 2419,
+          "expected_trio": 2320.782,
+          "actual_div_trio_market": 1.04232,
+          "actual_div_trifecta_market": 0.99986
+        },
+        {
+          "bucket": 2,
+          "candidate_rows": 71730,
+          "winners": 1879,
+          "expected_trio": 1875.697,
+          "actual_div_trio_market": 1.00176,
+          "actual_div_trifecta_market": 0.98969
+        },
+        {
+          "bucket": 3,
+          "candidate_rows": 71729,
+          "winners": 1332,
+          "expected_trio": 1380.891,
+          "actual_div_trio_market": 0.96459,
+          "actual_div_trifecta_market": 0.97713
+        },
+        {
+          "bucket": 4,
+          "candidate_rows": 71730,
+          "winners": 884,
+          "expected_trio": 894.442,
+          "actual_div_trio_market": 0.98833,
+          "actual_div_trifecta_market": 1.03124
+        },
+        {
+          "bucket": 5,
+          "candidate_rows": 71730,
+          "winners": 769,
+          "expected_trio": 811.189,
+          "actual_div_trio_market": 0.94799,
+          "actual_div_trifecta_market": 1.03263
+        }
+      ],
+      "score": {
+        "trio_market": {
+          "logloss": 2.85109304,
+          "brier": 0.89093992
+        },
+        "local": {
+          "logloss": 2.84120641,
+          "brier": 0.890026
+        },
+        "nonlocal": {
+          "logloss": 2.84106835,
+          "brier": 0.88999846
+        },
+        "nonlocal_over_local_logloss_gain": 0.00013806,
+        "gain_std_error": 4.816e-05,
+        "gain_95pct_ci": [
+          4.366e-05,
+          0.00023245
+        ]
+      }
+    },
+    "2024": {
+      "matched_races": 8147,
+      "remote_outcome_vs_market": {
+        "overall": {
+          "races": 8147,
+          "remote_actual": 2675,
+          "remote_rate_pct": 32.834,
+          "expected_trio": 2817.817,
+          "observed_over_trio_expected": 0.94932,
+          "observed_over_tri3_expected": 1.00549
+        },
+        "trifecta_above_trio": {
+          "races": 6601,
+          "remote_actual": 2103,
+          "remote_rate_pct": 31.859,
+          "expected_trio": 2286.23,
+          "observed_over_trio_expected": 0.91986,
+          "observed_over_tri3_expected": 0.99324
+        },
+        "trio_above_trifecta": {
+          "races": 1546,
+          "remote_actual": 572,
+          "remote_rate_pct": 36.999,
+          "expected_trio": 531.587,
+          "observed_over_trio_expected": 1.07602,
+          "observed_over_tri3_expected": 1.05328
+        }
+      },
+      "remote_feature_calibration": [
+        {
+          "bucket": 1,
+          "candidate_rows": 74519,
+          "winners": 2536,
+          "expected_trio": 2403.592,
+          "actual_div_trio_market": 1.05509,
+          "actual_div_trifecta_market": 1.01556
+        },
+        {
+          "bucket": 2,
+          "candidate_rows": 77680,
+          "winners": 2174,
+          "expected_trio": 2129.536,
+          "actual_div_trio_market": 1.02088,
+          "actual_div_trifecta_market": 1.01055
+        },
+        {
+          "bucket": 3,
+          "candidate_rows": 79870,
+          "winners": 1540,
+          "expected_trio": 1598.029,
+          "actual_div_trio_market": 0.96369,
+          "actual_div_trifecta_market": 0.97377
+        },
+        {
+          "bucket": 4,
+          "candidate_rows": 78674,
+          "winners": 962,
+          "expected_trio": 1045.29,
+          "actual_div_trio_market": 0.92032,
+          "actual_div_trifecta_market": 0.95312
+        },
+        {
+          "bucket": 5,
+          "candidate_rows": 76381,
+          "winners": 935,
+          "expected_trio": 970.554,
+          "actual_div_trio_market": 0.96337,
+          "actual_div_trifecta_market": 1.03002
+        }
+      ],
+      "score": {
+        "trio_market": {
+          "logloss": 2.82143828,
+          "brier": 0.88652635
+        },
+        "local": {
+          "logloss": 2.80731131,
+          "brier": 0.8853031
+        },
+        "nonlocal": {
+          "logloss": 2.8071599,
+          "brier": 0.8852842
+        },
+        "nonlocal_over_local_logloss_gain": 0.00015141,
+        "gain_std_error": 4.402e-05,
+        "gain_95pct_ci": [
+          6.512e-05,
+          0.00023769
+        ]
+      }
+    },
+    "2025": {
+      "matched_races": 8208,
+      "remote_outcome_vs_market": {
+        "overall": {
+          "races": 8208,
+          "remote_actual": 2792,
+          "remote_rate_pct": 34.016,
+          "expected_trio": 2855.087,
+          "observed_over_trio_expected": 0.9779,
+          "observed_over_tri3_expected": 1.02184
+        },
+        "trifecta_above_trio": {
+          "races": 6219,
+          "remote_actual": 2095,
+          "remote_rate_pct": 33.687,
+          "expected_trio": 2202.224,
+          "observed_over_trio_expected": 0.95131,
+          "observed_over_tri3_expected": 1.01566
+        },
+        "trio_above_trifecta": {
+          "races": 1989,
+          "remote_actual": 697,
+          "remote_rate_pct": 35.043,
+          "expected_trio": 652.863,
+          "observed_over_trio_expected": 1.06761,
+          "observed_over_tri3_expected": 1.04087
+        }
+      },
+      "remote_feature_calibration": [
+        {
+          "bucket": 1,
+          "candidate_rows": 58525,
+          "winners": 2053,
+          "expected_trio": 1918.535,
+          "actual_div_trio_market": 1.07009,
+          "actual_div_trifecta_market": 1.02976
+        },
+        {
+          "bucket": 2,
+          "candidate_rows": 80553,
+          "winners": 2184,
+          "expected_trio": 2190.737,
+          "actual_div_trio_market": 0.99692,
+          "actual_div_trifecta_market": 0.9857
+        },
+        {
+          "bucket": 3,
+          "candidate_rows": 91507,
+          "winners": 1780,
+          "expected_trio": 1867.932,
+          "actual_div_trio_market": 0.95293,
+          "actual_div_trifecta_market": 0.95854
+        },
+        {
+          "bucket": 4,
+          "candidate_rows": 87301,
+          "winners": 1208,
+          "expected_trio": 1220.034,
+          "actual_div_trio_market": 0.99014,
+          "actual_div_trifecta_market": 1.01884
+        },
+        {
+          "bucket": 5,
+          "candidate_rows": 72188,
+          "winners": 983,
+          "expected_trio": 1010.762,
+          "actual_div_trio_market": 0.97253,
+          "actual_div_trifecta_market": 1.02825
+        }
+      ],
+      "score": {
+        "trio_market": {
+          "logloss": 2.8394028,
+          "brier": 0.89019009
+        },
+        "local": {
+          "logloss": 2.82840639,
+          "brier": 0.88900159
+        },
+        "nonlocal": {
+          "logloss": 2.82831521,
+          "brier": 0.88898088
+        },
+        "nonlocal_over_local_logloss_gain": 9.118e-05,
+        "gain_std_error": 4.117e-05,
+        "gain_95pct_ci": [
+          1.05e-05,
+          0.00017187
+        ]
+      }
+    },
+    "2026": {
+      "matched_races": 4247,
+      "remote_outcome_vs_market": {
+        "overall": {
+          "races": 4247,
+          "remote_actual": 1372,
+          "remote_rate_pct": 32.305,
+          "expected_trio": 1455.545,
+          "observed_over_trio_expected": 0.9426,
+          "observed_over_tri3_expected": 0.97822
+        },
+        "trio_above_trifecta": {
+          "races": 1318,
+          "remote_actual": 444,
+          "remote_rate_pct": 33.687,
+          "expected_trio": 426.94,
+          "observed_over_trio_expected": 1.03996,
+          "observed_over_tri3_expected": 1.00742
+        },
+        "trifecta_above_trio": {
+          "races": 2929,
+          "remote_actual": 928,
+          "remote_rate_pct": 31.683,
+          "expected_trio": 1028.605,
+          "observed_over_trio_expected": 0.90219,
+          "observed_over_tri3_expected": 0.96484
+        }
+      },
+      "remote_feature_calibration": [
+        {
+          "bucket": 1,
+          "candidate_rows": 30675,
+          "winners": 1050,
+          "expected_trio": 987.681,
+          "actual_div_trio_market": 1.0631,
+          "actual_div_trifecta_market": 1.02483
+        },
+        {
+          "bucket": 2,
+          "candidate_rows": 38406,
+          "winners": 1131,
+          "expected_trio": 1068.779,
+          "actual_div_trio_market": 1.05822,
+          "actual_div_trifecta_market": 1.04464
+        },
+        {
+          "bucket": 3,
+          "candidate_rows": 42300,
+          "winners": 922,
+          "expected_trio": 945.086,
+          "actual_div_trio_market": 0.97557,
+          "actual_div_trifecta_market": 0.98373
+        },
+        {
+          "bucket": 4,
+          "candidate_rows": 40504,
+          "winners": 604,
+          "expected_trio": 636.88,
+          "actual_div_trio_market": 0.94837,
+          "actual_div_trifecta_market": 0.97004
+        },
+        {
+          "bucket": 5,
+          "candidate_rows": 39655,
+          "winners": 540,
+          "expected_trio": 608.574,
+          "actual_div_trio_market": 0.88732,
+          "actual_div_trifecta_market": 0.93124
+        }
+      ],
+      "score": {
+        "trio_market": {
+          "logloss": 2.82040196,
+          "brier": 0.89086234
+        },
+        "local": {
+          "logloss": 2.80778536,
+          "brier": 0.88975199
+        },
+        "nonlocal": {
+          "logloss": 2.80765992,
+          "brier": 0.88973294
+        },
+        "nonlocal_over_local_logloss_gain": 0.00012544,
+        "gain_std_error": 6.09e-05,
+        "gain_95pct_ci": [
+          6.08e-06,
+          0.00024481
+        ]
+      }
+    }
+  },
+  "examples": [
+    {
+      "race_id": "1320210102010001",
+      "anchor_set": [
+        1,
+        2,
+        4
+      ],
+      "actual_set": [
+        1,
+        5,
+        7
+      ],
+      "anchor_gap": 0.01528,
+      "actual_trio_market_rank": 1
+    },
+    {
+      "race_id": "1320210102010011",
+      "anchor_set": [
+        1,
+        4,
+        7
+      ],
+      "actual_set": [
+        2,
+        3,
+        7
+      ],
+      "anchor_gap": 0.01258,
+      "actual_trio_market_rank": 28
+    },
+    {
+      "race_id": "1320210102020003",
+      "anchor_set": [
+        2,
+        3,
+        5
+      ],
+      "actual_set": [
+        3,
+        4,
+        7
+      ],
+      "anchor_gap": 0.01366,
+      "actual_trio_market_rank": 15
+    },
+    {
+      "race_id": "1320210102020008",
+      "anchor_set": [
+        1,
+        2,
+        7
+      ],
+      "actual_set": [
+        1,
+        5,
+        6
+      ],
+      "anchor_gap": 0.01062,
+      "actual_trio_market_rank": 24
+    },
+    {
+      "race_id": "1320210102030001",
+      "anchor_set": [
+        1,
+        4,
+        7
+      ],
+      "actual_set": [
+        1,
+        3,
+        5
+      ],
+      "anchor_gap": 0.06787,
+      "actual_trio_market_rank": 9
+    },
+    {
+      "race_id": "1320210102030008",
+      "anchor_set": [
+        1,
+        3,
+        7
+      ],
+      "actual_set": [
+        4,
+        5,
+        7
+      ],
+      "anchor_gap": 0.01341,
+      "actual_trio_market_rank": 12
+    },
+    {
+      "race_id": "1320210102030009",
+      "anchor_set": [
+        1,
+        5,
+        6
+      ],
+      "actual_set": [
+        2,
+        3,
+        5
+      ],
+      "anchor_gap": 0.00667,
+      "actual_trio_market_rank": 3
+    },
+    {
+      "race_id": "1320210102030010",
+      "anchor_set": [
+        2,
+        3,
+        5
+      ],
+      "actual_set": [
+        3,
+        4,
+        7
+      ],
+      "anchor_gap": 0.00697,
+      "actual_trio_market_rank": 2
+    },
+    {
+      "race_id": "2220210101010004",
+      "anchor_set": [
+        1,
+        2,
+        3
+      ],
+      "actual_set": [
+        2,
+        4,
+        6
+      ],
+      "anchor_gap": 0.06226,
+      "actual_trio_market_rank": 15
+    },
+    {
+      "race_id": "2220210101010009",
+      "anchor_set": [
+        3,
+        4,
+        7
+      ],
+      "actual_set": [
+        1,
+        2,
+        4
+      ],
+      "anchor_gap": 0.03131,
+      "actual_trio_market_rank": 1
+    },
+    {
+      "race_id": "2220210101020005",
+      "anchor_set": [
+        1,
+        3,
+        6
+      ],
+      "actual_set": [
+        1,
+        2,
+        5
+      ],
+      "anchor_gap": 0.014,
+      "actual_trio_market_rank": 19
+    },
+    {
+      "race_id": "2220210101030005",
+      "anchor_set": [
+        1,
+        4,
+        5
+      ],
+      "actual_set": [
+        1,
+        2,
+        3
+      ],
+      "anchor_gap": 0.03177,
+      "actual_trio_market_rank": 4
+    }
+  ]
+}
