@@ -1,0 +1,58 @@
+name: Odds-only nonlocal break-even equation audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/nonlocal_break_even_v1/analyze.py'
+      - '.github/workflows/nonlocal-break-even-v1.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nonlocal-break-even-v1
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install math libraries
+        run: pip install numpy scipy
+      - name: Run nonlocal odds formula discovery and frozen-time profit verification
+        run: python -u research/nonlocal_break_even_v1/analyze.py
+      - name: Validate audit
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('data/audits/nonlocal_break_even_v1.json'))
+          assert r['audit']['valid_joined']>30000
+          assert r['training_2023_races']>7000
+          assert r['testing_2025_2026_races']>10000
+          for yr in ('2025','2026'):
+              for mod in ('market','local','nonlocal'):
+                  for kind in ('3連単','3連複'):
+                      assert set(r['results'][yr]['ticket_roi'][mod][kind]) == {'1.0','1.03','1.05','1.1','1.2'}
+          print('VERIFIED',r['audit'],flush=True)
+          PY
+      - name: Commit calculated evidence and frozen parameters
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/audits/nonlocal_break_even_v1.json data/models/nonlocal_break_even_v1.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'research: publish verified nonlocal break-even model outcomes'
+          for attempt in 1 2 3 4; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
