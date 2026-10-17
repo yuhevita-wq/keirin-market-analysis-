@@ -6,16 +6,16 @@ const scales=[5,20,25,6,6,6,6,6,12];
 const clip=x=>Math.max(-3,Math.min(3,x));
 const softmax=xs=>{const m=Math.max(...xs),e=xs.map(x=>Math.exp(x-m)),s=e.reduce((a,b)=>a+b,0);return e.map(x=>x/s);};
 const dot=(a,b)=>a.reduce((s,x,i)=>s+x*b[i],0);
-export function featurePack(input){
+export function featurePack(input,{carCount=7}={}){
   const r=normalizeRace(input);
-  if(r.entries.length!==7)throw Error('同時入着v3は7車立てが対象');
+  if(![7,9].includes(carCount)||r.entries.length!==carCount)throw Error('同時入着モデルの車数が対象外');
   for(const e of r.entries){
     if(fields.some(k=>e[k]==null||e[k]===''||!Number.isFinite(Number(e[k]))||Number(e[k])<0)||
        e.score<=0||e.age<=0||e.win_rate>100||e.top3_rate>100||!['逃','両','追'].includes(e.style))
       throw Error(e.no+'番の得点・年齢・勝率・3連対率・脚質・決まり手が不足（0得点は未評価）');
   }
   const cars=r.entries.map(e=>e.no).sort((a,b)=>a-b);
-  const means=fields.map(k=>r.entries.reduce((s,e)=>s+Number(e[k]),0)/7);
+  const means=fields.map(k=>r.entries.reduce((s,e)=>s+Number(e[k]),0)/carCount);
   const raw=no=>r.riders.get(no),pos=no=>r.position.get(no),line=no=>r.lines[pos(no).line];
   const front=no=>raw(line(no)[0]);
   const stats=no=>[...fields.map((k,j)=>clip((Number(raw(no)[k])-means[j])/scales[j])),+(raw(no).style==='逃'),+(raw(no).style==='両')];

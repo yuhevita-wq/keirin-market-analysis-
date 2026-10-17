@@ -35,7 +35,7 @@ test('page flow keeps ranking, review, core, auxiliary and saved decision separa
       assert.match(record.forecast.source.id,/^coexistence-v1_/);
       assert.equal(record.forecast.coexistenceGateEnabled,false);
       assert.match(rendered,/主採用（モデル暫定1位）/);
-      assert.match(rendered,/全3組を同じ展開/);
+      assert.match(rendered,/全ライン組を同じ条件/);
       assert.equal((rendered.match(/data-line-comparison=/g)||[]).length,3);
       assert.match(rendered,/比較数値の1位（暫定主採用候補）/);
       assert.match(rendered,/2着の競合/);

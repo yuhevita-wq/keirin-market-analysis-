@@ -32,7 +32,7 @@ td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 </style>
 </head>
 <body><main class="wrap">
-<h1>CROSS LAB <small>実結果で共存学習・強強/強弱の検証</small></h1>
+<h1>CROSS LAB <small>実結果で共存学習・7車／9車対応 v5.3</small></h1>
 <p class="sub">異なる2ラインの先頭・番手から各2人を取り、基本4点のクロスを比較して主採用1型を選びます。モデルによる選定は暫定であり、オッズ不在時は高配当や期待値を判定しません。</p>
 <section>
 <h2>① 出走表を指定</h2>
@@ -41,7 +41,7 @@ td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 <p class="muted">URL自体を外部サイトに送信しません。既存の競輪将棋が収集した出走表キャッシュから該当 race_id を照合します。未収録の場合は手入力を利用してください。</p>
 <label for="lineText">ライン並び（空欄時は読込データの並び。手入力可）</label>
 <input id="lineText" type="text" placeholder="例：1-2-3 / 4-5 / 6-7">
-<div class="row"><div class="grow"><label for="classSelect">級</label><select id="classSelect" style="border:1px solid #c9d1df;border-radius:7px;padding:10px;width:100%"><option value="unknown">不明</option><option value="A">A級1・2班</option><option value="S">S級</option></select></div><button id="manual" class="alt">並びから選手欄を作る</button></div>
+<div class="row"><div class="grow"><label for="classSelect">級</label><select id="classSelect" style="border:1px solid #c9d1df;border-radius:7px;padding:10px;width:100%"><option value="unknown">不明</option><option value="A">A級1・2班</option><option value="A3">A級チャレンジ</option><option value="S">S級</option></select></div><button id="manual" class="alt">並びから選手欄を作る</button></div>
 <div id="loadStatus" class="info" role="status">出走表未読込。ラインの手入力からも分析できます。</div>
 </section>
 <section>
@@ -69,10 +69,10 @@ td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 <label for="outside">選外車・選外ラインの入着に対する反証</label><textarea id="outside" rows="2"></textarea>
 </details>
 <details><summary>補助：過去の集計値から計算したモデルとの比較</summary>
-<label for="autoModel">自動モデル</label><select id="autoModel"><option value="joint">A級1・2班／S級：同時入着＋強強・強弱の共存（7車）</option><option value="market">S級F1：既存市場補正モデル</option></select>
+<label for="autoModel">自動モデル</label><select id="autoModel"><option value="joint">A級1・2班・チャレンジ／S級：同時入着（7車・S級9車）</option><option value="market">S級F1：既存市場補正モデル</option></select>
 <label for="comparisonObjective">主採用を決める数値（予測・検証中）</label><select id="comparisonObjective"><option value="EXPECTED_RETURN">4点の等額期待回収（全候補オッズ必須。不足なら的中確率で暫定判定）</option><option value="HIT_PROBABILITY">基本4点の合計的中確率（高配当評価なし）</option></select>
 <label><input type="checkbox" id="useMarketModel" checked style="width:auto">学習済みモデルで主採用を自動判定する</label>
-<p class="muted">同時入着v3はA級1・2班とS級を別々に学習した試験モデルです。全選手の特徴が揃えば4点確率で順位付けします。全候補のオッズもあれば4点等額期待回収で選定します。高配当・利益優位は未実証です。</p>
+<p class="muted">A級1・2班7車、S級7車、チャレンジ7車、S級9車を別々に学習した試験モデルです。全選手の特徴が揃えば4点確率で順位付けします。全候補のオッズもあれば4点等額期待回収で選定します。高配当・利益優位は未実証です。</p>
 <label for="meetingGrade">開催区分</label><select id="meetingGrade"><option value="">未確認</option><option value="F1">F1</option><option value="F2">F2</option><option value="G">G1～G3</option></select>
 <label for="trioOdds">3連複全オッズ（1行に「1=2=3=24.6」）</label><textarea id="trioOdds" rows="3"></textarea>
 </details>
@@ -106,6 +106,8 @@ import {compareJointForecast,ticketMarket} from "./cross_comparison.mjs";
 import {predictMarket} from "./market_model.mjs";
 import {predictJoint,pairCompetition} from "./joint_model.mjs";
 import {applyCoexistence} from "./coexistence.mjs";
+import {predictExtendedJoint,extendedScope} from "./extended_joint.mjs";
+import {resolveRaceClass,modelRaceType} from "./race_scope.mjs";
 import {predictObservedPair9} from "./coexistence9.mjs";
 import {selectMainCross,buildAuxiliaryThirds} from "./cross_presentation.mjs";
 import {buildHorizontalLineReference,renderHorizontalLineReference} from "./horizontal_line_reference.mjs";
@@ -115,15 +117,13 @@ const escapeHtml=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;"
 let loaded=null, current=null, lastRecord=null;
 const updateStatus=(message,error=false)=>{byId("loadStatus").className=error?"alert":"info";byId("loadStatus").textContent=message};
 const stats=["b","nige","makuri","sashi","mark","score","age","win_rate","top3_rate"];
-let frozenModel=null,jointModel=null,coexistenceModel=null,observedPair9Bundle=null,activeForecast=null;
+let frozenModel=null,jointModel=null,coexistenceModel=null,observedPair9Bundle=null,extendedModel=null,activeForecast=null;
 function initialize(race){
   current=normalizeRace(race);
   const positions=new Map();
   current.lines.forEach((line,i)=>line.forEach((no,j)=>positions.set(no,["A","B","C","D","E"][i]+(j+1))));
   byId("lineText").value=current.lines.map(l=>l.join("-")).join(" / ");
-  const cls=String(current.race_type+" "+current.meeting_grade);
-  if(/[SsＳｓ]級/.test(cls))byId("classSelect").value="S";
-  else if(/[AaＡａ]級/.test(cls))byId("classSelect").value="A";
+  byId("classSelect").value=resolveRaceClass(race);
   const rows=current.entries.sort((a,b)=>a.no-b.no).map(e=>{
     const cell=k=>'<td><input type="number" min="0" step="any" data-car="'+e.no+'" data-stat="'+k+'" value="'+(e[k]==null?"":e[k])+'" aria-label="'+e.no+'番 '+k+'"></td>';
     return '<tr><td><b>'+e.no+'</b> '+escapeHtml(e.name||"")+" <small>"+escapeHtml(positions.get(e.no))+"</small></td>"+stats.map(cell).join("")+'<td><select data-car="'+e.no+'" data-style><option value="">未取得</option>'+['逃','両','追'].map(v=>'<option '+(e.style===v?'selected':'')+'>'+v+'</option>').join('')+'</select></td></tr>' ;
@@ -131,7 +131,8 @@ function initialize(race){
   byId("riders").innerHTML=rows.join("");
   for(const id of ["primaryCross","interaction","forwardCoexistence","forwardCompetition","reverseCoexistence","reverseCompetition","alternativeCross","sameLine","outside","forecast","trioOdds","odds"])
     byId(id).value="";
-  byId("meetingGrade").value=/[ＦF]1|Ｆ１/.test(String(race.meeting_grade))?'F1':'';
+  const grade=String(race.meeting_grade||'').normalize('NFKC').toUpperCase();
+  byId("meetingGrade").value=/^G[123]$/.test(grade)?'G':['F1','F2'].includes(grade)?grade:'';
   lastRecord=null;activeForecast=null;
   byId("analysis").textContent="分析待ち";
 }
@@ -160,7 +161,9 @@ function gatheredRace(){
     copy.style=document.querySelector('select[data-car="'+e.no+'"][data-style]').value;
     return copy;
   });
-  return {...loaded,entries,lines,race_type:loaded?.race_type || byId("classSelect").value+"級",meeting_grade:byId("meetingGrade").value};
+  const selectedGrade=byId("meetingGrade").value;
+  const grade=selectedGrade==='G'&&/^G[123]$/.test(String(loaded?.meeting_grade))?loaded.meeting_grade:selectedGrade;
+  return {...loaded,entries,lines,race_type:modelRaceType(loaded?.race_type,byId("classSelect").value),meeting_grade:grade};
 }
 function parseOdds(){
   const prices={};
@@ -261,11 +264,18 @@ async function analyze(){
     if(!forecast && byId("useMarketModel").checked){
       try{
         if(byId("autoModel").value==="joint"){
+          const scope=extendedScope(race);
+          if(scope){
+            if(!extendedModel){const response=await fetch("./extended_joint_frozen.json");if(!response.ok)throw Error("級・車数別の4点モデルを取得できません");extendedModel=await response.json();}
+            forecast=predictExtendedJoint(race,extendedModel);
+            modelMessage=scope+"専用の実結果学習：1・2着の同時分布と、その同じ着順に条件付けた3着分布から基本4点を比較。学習は2024年末まで。2025年・2026年前半は別検証。利益優位は未実証です。";
+          }else{
           if(!jointModel){const response=await fetch("./joint_model_frozen.json");if(!response.ok)throw Error("同時入着モデルを取得できません");jointModel=await response.json();}
           forecast=predictJoint(race,jointModel);
           if(!coexistenceModel){const response=await fetch("./coexistence_frozen.json");if(!response.ok)throw Error("共存モデルを取得できません");coexistenceModel=await response.json();}
           forecast=applyCoexistence(race,forecast,coexistenceModel);
           modelMessage="共存判定を反映：ラインと選手の強強・強弱を別々に比較し、基本4点の同時確率で順位を付けます。強強の強制除外は後続検証で安定改善せず無効です。回収率の改善は未実証です。";
+          }
         }else{
         const trio={};
         for(const row of byId("trioOdds").value.split(/\n/).map(s=>s.trim()).filter(Boolean)){
@@ -356,7 +366,7 @@ async function analyze(){
         html+='<tr><td>'+(i+1)+'</td><td>'+row.pair.join('・')+'</td><td>'+percent(row.top2)+'</td><td>'+
           percent(row.top2RiderOnly)+'</td><td>'+delta(row.interactionDeltaTop2)+'</td></tr>';
       }
-      html+='</tbody></table></div><p class="alert"><b>4点主採用には未使用。</b>3着候補の条件付き分布が未学習のため、共存順位を4点順位へ変換しません。差はモデルの予測差で、個別展開の因果証明ではありません。</p></section>';
+      html+='</tbody></table></div><p class="alert"><b>このペア診断値は4点主採用には未使用。</b>ペア専用モデルの順位は4点順位へ変換しません。4点の主採用は別に学習した級・車数別の同時着順モデルで比較します。差はモデルの予測差で、個別展開の因果証明ではありません。</p></section>';
     }
     if(comparison?.coexistence?.audit){
       const audit=comparison.coexistence.audit,pct=p=>(100*p).toFixed(1)+'%',lineLabel=z=>z.lines.map(i=>race.lines[i].join('-')).join(' × ');
@@ -384,7 +394,7 @@ async function analyze(){
     if(!comparison)html+='<p class="alert">基本4点の確率分布は未算出。候補の列挙順は順位ではなく、9車ペア学習値から4点的中率・期待値を補完しません。</p>';
     else if(!comparison.priceComplete)html+='<p class="alert">全候補オッズ不足。入力モデルの4点合計的中確率の暫定順位です。高配当・割安・回収率は未評価です。</p>';
     if(result.candidates.length){
-      html+='<h3>全3組を同じ展開で比較（列挙順・強さ順ではありません）</h3><p>各組について、誰の仕掛けでどの位置が空き、先頭と番手のどちらが残るかを比較します。組ごとに都合のよい別展開を作らず、採用組以外が残る場合も記録してください。記録の有無で候補を消しません。</p><div class="tablewrap"><table><thead><tr><th>2ライン／選外ライン</th><th>先頭×先頭</th><th>先頭×番手</th><th>番手×先頭</th><th>番手×番手</th></tr></thead><tbody>';
+      html+='<h3>全ライン組を同じ条件で比較（列挙順・強さ順ではありません）</h3><p>各組について、誰の仕掛けでどの位置が空き、先頭と番手のどちらが残るかを比較します。組ごとに都合のよい別展開を作らず、採用組以外が残る場合も記録してください。記録の有無で候補を消しません。</p><div class="tablewrap"><table><thead><tr><th>2ライン／選外ライン</th><th>先頭×先頭</th><th>先頭×番手</th><th>番手×先頭</th><th>番手×番手</th></tr></thead><tbody>';
       for(const row of candidateMatrix(race)){
         const rc=roleConditions.find(c=>[...c.lines].sort().join(',')===row.id), flip=rc&&rc.lines[0]!==Number(row.id.split(',')[0]);
         html+='<tr><th>'+(rc?rc.lines.map(i=>race.lines[i]):row.lines).map((l,i)=>(i?'B：':'A：')+l.join('－')).join(' ／ ')+'<br>選外：'+row.excluded.map(l=>l.join('－')).join(' ／ ')+'</th>'+[0,1,2,3].map(k=>'<td>'+row.candidates.filter(c=>{const p=flip?[...c.roles].reverse():c.roles;return p.every(x=>x<=2)&&2*(p[0]-1)+p[1]-1===k;}).map(c=>escapeHtml(c.label)).join('<br>')+'</td>').join('')+'</tr>';
