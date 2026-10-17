@@ -1,0 +1,49 @@
+name: Census market price mistakes across complete odds books
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/market_error_census_v1/census.py'
+      - '.github/workflows/market-error-census-v1.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: market-error-census-v1
+  cancel-in-progress: false
+jobs:
+  discover:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical packages
+        run: pip install numpy scipy
+      - name: Audit market error across every complete odds combination
+        run: python -u research/market_error_census_v1/census.py
+      - name: Verify audit and publish
+        run: |
+          python - <<'PY'
+          import json
+          a=json.load(open('data/audits/market_error_census_v1.json'))
+          assert a['rows_by_year']['2023']>7000
+          assert a['rows_by_year']['2025']>8000
+          assert a['groups_explored']['matched_group_signatures']>100
+          assert a['inputs']=='complete finalized 3連複 and 3連単 odds ONLY'
+          print('PASSED',a['groups_explored'],flush=True)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/audits/market_error_census_v1.json
+          git commit -m 'research: audit systematic market pricing errors by odds signature' || exit 0
+          for i in 1 2 3 4; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
