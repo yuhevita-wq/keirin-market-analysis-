@@ -263,19 +263,39 @@ def run(shard,shards,days,pause):
     ses.headers.update(HEADERS)
     stats=[]
     consecutive_zero=0
+    span=(END-BEGIN).days+1
+    def missing_days():
+        missing=[];exhausted=[]
+        passed=min(span,int(state["next_offset"]))
+        for k in range(shard,passed,shards):
+            d=BEGIN+timedelta(days=k)
+            _,led=file_paths(d)
+            entry=load_json(led,{"attempts":0,"complete":False})
+            if not entry.get("complete"):
+                (missing if int(entry.get("attempts",0))<3 else exhausted).append(d)
+        return missing,exhausted
+    processed=set()
     for _ in range(days):
         i=int(state["next_offset"])
         day=BEGIN+timedelta(days=i)
-        if day>END:
-            break
+        repairing=day>END
+        if repairing:
+            candidates,_=missing_days()
+            candidates=[d for d in candidates if d not in processed]
+            if not candidates:
+                break
+            day=candidates[0]
         result=collect_day(ses,day,pause)
+        processed.add(day)
+        result["repair_pass"]=repairing
         stats.append(result)
         print("DAY_RESULTS",json.dumps(result,ensure_ascii=False),flush=True)
         if not result.get("complete",result.get("skipped_complete",False)) and result.get("results",0)==0:
             consecutive_zero+=1
         else:
             consecutive_zero=0
-        state["next_offset"]=i+shards
+        if not repairing:
+            state["next_offset"]=i+shards
         if consecutive_zero>=2:
             state["paused_for_source_failure"]=True
             state["pause_reason"]="Two consecutive days with zero verified outcomes and incomplete sources"
@@ -283,13 +303,20 @@ def run(shard,shards,days,pause):
     state["last_run_utc"]=datetime.now(timezone.utc).isoformat()
     state["last_batch"]=stats
     state["finished_forward_pass"]=(BEGIN+timedelta(days=int(state["next_offset"])))>END
+    pending,exhausted=missing_days()
+    state["pending_repair_days"]=len(pending)
+    state["exhausted_unresolved_days"]=len(exhausted)
+    state["finished_all"]=state["finished_forward_pass"] and not pending
     p.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print("RESULT_SHARD",json.dumps({
        "shard":shard,"processed_days":len(stats),
        "valid_podiums_in_processed_days":sum(x.get("results",0) for x in stats),
        "complete_days":sum(x.get("complete",False) for x in stats),
        "paused":bool(state.get("paused_for_source_failure")),
-       "finished":state["finished_forward_pass"],
+       "finished_forward":state["finished_forward_pass"],
+       "pending_repair":state["pending_repair_days"],
+       "exhausted_unresolved":state["exhausted_unresolved_days"],
+       "finished_all":state["finished_all"],
        "next":state["next_offset"],
     }),flush=True)
 
