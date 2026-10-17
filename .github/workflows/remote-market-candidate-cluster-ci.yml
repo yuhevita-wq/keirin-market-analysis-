@@ -1,0 +1,42 @@
+name: Check market-outcome error confidence across races
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/remote_market_transfer_v1/candidate_cluster_ci.py'
+      - '.github/workflows/remote-market-candidate-cluster-ci.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install numpy scipy
+      - run: python -u research/remote_market_transfer_v1/candidate_cluster_ci.py
+      - name: Verify data and save
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('data/audits/remote_market_candidate_cluster_ci.json'))
+          assert r['by_year']['2025']['tickets']>800
+          assert r['by_year']['2026']['tickets']>600
+          print('CONFIDENCE_AUDIT_VALIDATED')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/audits/remote_market_candidate_cluster_ci.json
+          git commit -m 'research: save probability and payout confidence check' || exit 0
+          for i in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
