@@ -2,52 +2,66 @@
   "schema": 1,
   "shard": 3,
   "shards": 8,
-  "next_offset": 1091,
-  "last_run_utc": "2026-10-17T02:31:57.731643+00:00",
+  "next_offset": 1123,
+  "last_run_utc": "2026-10-17T02:36:21.269802+00:00",
   "last_batch": [
     {
-      "day": "2023-11-26",
-      "results": 63,
+      "day": "2023-12-28",
+      "results": 55,
       "complete": true,
+      "venues_completed": 6,
+      "venues_total": 6,
+      "failed": 0,
+      "errors": [],
+      "repair_pass": false
+    },
+    {
+      "day": "2024-01-05",
+      "results": 64,
+      "complete": true,
+      "venues_completed": 6,
+      "venues_total": 6,
+      "failed": 0,
+      "errors": [],
+      "repair_pass": false
+    },
+    {
+      "day": "2024-01-13",
+      "results": 74,
+      "complete": false,
       "venues_completed": 7,
-      "venues_total": 7,
-      "failed": 0,
-      "errors": [],
-      "repair_pass": false
-    },
-    {
-      "day": "2023-12-04",
-      "results": 79,
-      "complete": true,
-      "venues_completed": 8,
       "venues_total": 8,
-      "failed": 0,
-      "errors": [],
+      "failed": 1,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "24202401130100",
+          "url": "https://keirin.kdreams.jp/utsunomiya/raceresult/24202401130100/",
+          "error": "Unresolved published podiums [[\"2420240113010010\", \"no results order_table\"], [\"2420240113010011\", \"no results order_table\"], [\"2420240113010012\", \"no results order_table\"]]"
+        }
+      ],
       "repair_pass": false
     },
     {
-      "day": "2023-12-12",
-      "results": 82,
-      "complete": true,
-      "venues_completed": 8,
-      "venues_total": 8,
-      "failed": 0,
-      "errors": [],
-      "repair_pass": false
-    },
-    {
-      "day": "2023-12-20",
-      "results": 69,
-      "complete": true,
+      "day": "2024-01-21",
+      "results": 81,
+      "complete": false,
       "venues_completed": 7,
-      "venues_total": 7,
-      "failed": 0,
-      "errors": [],
+      "venues_total": 8,
+      "failed": 1,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "81202401210100",
+          "url": "https://keirin.kdreams.jp/kokura/raceresult/81202401210100/",
+          "error": "Unresolved published podiums [[\"8120240121010007\", \"published first-second-third headers not present\"]]"
+        }
+      ],
       "repair_pass": false
     }
   ],
   "finished_forward_pass": false,
-  "pending_repair_days": 48,
+  "pending_repair_days": 50,
   "exhausted_unresolved_days": 0,
   "finished_all": false
 }
