@@ -92,9 +92,15 @@ export function predictObservedPair9(input,bundle){
     interactionDeltaTop2:z.top2Raw/total2-z.top2BaseRaw/total2Base,
     interactionDeltaTop3:z.top3Raw-z.top3BaseRaw
   }));
+  // Compare only eligible head pairs for CROSS basic four: first/bante on two lines.
+  // All 36 pairs remain in the normalization, including same-line, solo and third riders.
+  const core=rows.filter(z=>!z.sameLine&&z.pair.every(no=>race.position.get(no).pos<=2 &&
+    race.lines[race.position.get(no).line].length>=2));
   return {version:bundle.version,trainThrough:bundle.trainThrough,status:'PAIR_ONLY_NOT_4TICKET',
     input:race.race_id,rows,
-    top2Ranking:rows.filter(r=>!r.sameLine).sort((a,b)=>b.top2-a.top2),
-    top3Ranking:rows.filter(r=>!r.sameLine).sort((a,b)=>b.top3-a.top3),
-    message:'過去の実結果で学習した同時1・2着／同時3着以内。個人能力のみとの予測差を併記。3着指定の4点確率・期待値は未算出。'};
+    top2Ranking:[...core].sort((a,b)=>b.top2-a.top2),
+    top3Ranking:[...core].sort((a,b)=>b.top3-a.top3),
+    allCrossTop2:[...rows].filter(r=>!r.sameLine).sort((a,b)=>b.top2-a.top2),
+    allCrossTop3:[...rows].filter(r=>!r.sameLine).sort((a,b)=>b.top3-a.top3),
+    message:'全36組から同時1・2着／同時3着以内を学習。基本クロスの各線先頭/番手からのみ比較順位を表示。3着指定の4点確率・期待値は未算出。'};
 }
