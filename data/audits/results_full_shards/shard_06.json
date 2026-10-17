@@ -2,22 +2,39 @@
   "schema": 1,
   "shard": 6,
   "shards": 8,
-  "next_offset": 582,
-  "last_run_utc": "2026-10-17T01:27:13.086929+00:00",
+  "next_offset": 614,
+  "last_run_utc": "2026-10-17T01:31:23.234786+00:00",
   "last_batch": [
     {
-      "day": "2022-07-05",
-      "results": 69,
+      "day": "2022-08-06",
+      "results": 84,
       "complete": true,
-      "venues_completed": 7,
-      "venues_total": 7,
+      "venues_completed": 8,
+      "venues_total": 8,
       "failed": 0,
       "errors": [],
       "repair_pass": false
     },
     {
-      "day": "2022-07-13",
-      "results": 79,
+      "day": "2022-08-14",
+      "results": 45,
+      "complete": false,
+      "venues_completed": 4,
+      "venues_total": 5,
+      "failed": 1,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "63202208120300",
+          "url": "https://keirin.kdreams.jp/hofu/raceresult/63202208120300/",
+          "error": "Unresolved published podiums [[\"6320220812030003\", \"published first-second-third headers not present\"]]"
+        }
+      ],
+      "repair_pass": false
+    },
+    {
+      "day": "2022-08-22",
+      "results": 93,
       "complete": true,
       "venues_completed": 9,
       "venues_total": 9,
@@ -26,35 +43,31 @@
       "repair_pass": false
     },
     {
-      "day": "2022-07-21",
-      "results": 75,
+      "day": "2022-08-30",
+      "results": 78,
       "complete": false,
-      "venues_completed": 7,
+      "venues_completed": 5,
       "venues_total": 8,
-      "failed": 1,
+      "failed": 3,
       "errors": [
         {
           "stage": "race",
-          "venue": "86202207190300",
-          "url": "https://keirin.kdreams.jp/beppu/raceresult/86202207190300/",
-          "error": "Unresolved published podiums [[\"8620220719030002\", \"published first-second-third headers not present\"]]"
+          "venue": "23202208290200",
+          "url": "https://keirin.kdreams.jp/toride/raceresult/23202208290200/",
+          "error": "Unresolved published podiums [[\"2320220829020006\", \"published first-second-third headers not present\"]]"
+        },
+        {
+          "stage": "race",
+          "venue": "35202208290200",
+          "url": "https://keirin.kdreams.jp/hiratsuka/raceresult/35202208290200/",
+          "error": "Unresolved published podiums [[\"3520220829020011\", \"published first-second-third headers not present\"]]"
         }
       ],
-      "repair_pass": false
-    },
-    {
-      "day": "2022-07-29",
-      "results": 77,
-      "complete": true,
-      "venues_completed": 8,
-      "venues_total": 8,
-      "failed": 0,
-      "errors": [],
       "repair_pass": false
     }
   ],
   "finished_forward_pass": false,
-  "pending_repair_days": 24,
+  "pending_repair_days": 26,
   "exhausted_unresolved_days": 0,
   "finished_all": false
 }
