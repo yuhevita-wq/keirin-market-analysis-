@@ -1,0 +1,89 @@
+name: Pilot published daily keirin results before nationwide recovery
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/probe-daily-keirin-results.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests beautifulsoup4 lxml
+      - name: Read-only publisher page structure probe
+        run: |
+          python - <<'PY'
+          import json,re,requests,time
+          from pathlib import Path
+          from urllib.parse import urljoin,urlsplit
+          from bs4 import BeautifulSoup
+          s=requests.Session()
+          s.headers.update({'User-Agent':'Mozilla/5.0 (compatible; keirin-market-analysis/0.1; +https://github.com/yuhevita-wq/keirin-market-analysis-)','Accept-Language':'ja'})
+          base='https://keirin.kdreams.jp/'
+          output={}
+          try:
+            u=base+'raceresult/2023/07/21/'
+            r=s.get(u,timeout=25);r.raise_for_status()
+            soup=BeautifulSoup(r.text,'lxml')
+            hrefs=[]
+            for a in soup.find_all('a',href=True):
+              href=urljoin(u,a['href'])
+              if '/raceresult/' in urlsplit(href).path and re.search(r'/raceresult/\d{14}/?',urlsplit(href).path):
+                hrefs.append({'text':a.get_text(' ',strip=True)[:30],'url':href})
+            output['index']={'status':r.status_code,'title':str(soup.title.get_text(' ',strip=True) if soup.title else '')[:100],'matching_links':hrefs[:15]}
+            if not hrefs:raise ValueError('No venue result list URLs on daily result index')
+            time.sleep(2)
+            url=hrefs[0]['url']
+            r=s.get(url,timeout=25);r.raise_for_status()
+            soup=BeautifulSoup(r.text,'lxml')
+            headings=[]
+            for table in soup.find_all('table'):
+              trs=table.find_all('tr')
+              if not trs:continue
+              head=[t.get_text(' ',strip=True)[:25] for t in trs[0].find_all(['th','td'],recursive=False)]
+              if any('1着' in x for x in head):
+                first=[t.get_text(' ',strip=True)[:25] for t in trs[1].find_all(['th','td'],recursive=False)] if len(trs)>1 else []
+                headings.append({'table_class':table.get('class',[]),'headers':head[:11],'first_row':first[:11],
+                  'previous_headings':[p.get_text(' ',strip=True)[:65] for p in list(table.find_all_previous(['h2','h3','h4','h5'],limit=3))]})
+            links=[]
+            for a in soup.find_all('a',href=True):
+              m=re.search(r'/racedetail/(\d{16})/',urlsplit(urljoin(url,a['href'])).path)
+              if m:
+                links.append({'race_id':m.group(1),'label':a.get_text(' ',strip=True)[:35],
+                  'parent_tag':a.parent.name,'parent_class':a.parent.get('class',[]),
+                  'next_table_headers': [
+                     x.get_text(' ',strip=True)[:20] for x in (a.find_next('table').find('tr').find_all(['th','td'],recursive=False) if a.find_next('table') and a.find_next('table').find('tr') else [])[:8]
+                  ]})
+            output['venue']={'status':r.status_code,'url':url,'title':str(soup.title.get_text(' ',strip=True) if soup.title else '')[:100],
+                'tables_matching_result':headings[:5], 'race_links':links[:24],'race_links_all':len(links)}
+          except Exception as e:
+            output['error']=type(e).__name__+': '+str(e)
+          p=Path('data/audits/daily_keirin_result_probe.json')
+          p.parent.mkdir(parents=True,exist_ok=True)
+          p.write_text(json.dumps(output,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps(output,ensure_ascii=False)[:15000])
+          PY
+      - name: Commit read-only pilot diagnostic
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/audits/daily_keirin_result_probe.json
+          git commit -m 'audit: probe published date and venue result summaries' || exit 0
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
