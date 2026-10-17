@@ -2,56 +2,45 @@
   "schema": 1,
   "shard": 1,
   "shards": 8,
-  "next_offset": 609,
-  "last_run_utc": "2026-10-17T01:29:14.568686+00:00",
+  "next_offset": 641,
+  "last_run_utc": "2026-10-17T01:33:34.276427+00:00",
   "last_batch": [
     {
-      "day": "2022-08-01",
-      "results": 77,
+      "day": "2022-09-02",
+      "results": 82,
+      "complete": false,
+      "venues_completed": 7,
+      "venues_total": 9,
+      "failed": 2,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "27202209020100",
+          "url": "https://keirin.kdreams.jp/keiokaku/raceresult/27202209020100/",
+          "error": "Unresolved published podiums [[\"2720220902010003\", \"no results order_table\"]]"
+        },
+        {
+          "stage": "race",
+          "venue": "81202208310300",
+          "url": "https://keirin.kdreams.jp/kokura/raceresult/81202208310300/",
+          "error": "Unresolved published podiums [[\"8120220831030003\", \"published first-second-third headers not present\"]]"
+        }
+      ],
+      "repair_pass": false
+    },
+    {
+      "day": "2022-09-10",
+      "results": 73,
       "complete": true,
-      "venues_completed": 8,
-      "venues_total": 8,
+      "venues_completed": 7,
+      "venues_total": 7,
       "failed": 0,
       "errors": [],
       "repair_pass": false
     },
     {
-      "day": "2022-08-09",
-      "results": 55,
-      "complete": false,
-      "venues_completed": 5,
-      "venues_total": 6,
-      "failed": 1,
-      "errors": [
-        {
-          "stage": "race",
-          "venue": "21202208090100",
-          "url": "https://keirin.kdreams.jp/yahiko/raceresult/21202208090100/",
-          "error": "Unresolved published podiums [[\"2120220809010003\", \"published first-second-third headers not present\"]]"
-        }
-      ],
-      "repair_pass": false
-    },
-    {
-      "day": "2022-08-17",
-      "results": 83,
-      "complete": false,
-      "venues_completed": 8,
-      "venues_total": 9,
-      "failed": 1,
-      "errors": [
-        {
-          "stage": "race",
-          "venue": "47202208150300",
-          "url": "https://keirin.kdreams.jp/matsusaka/raceresult/47202208150300/",
-          "error": "Unresolved published podiums [[\"4720220815030005\", \"published first-second-third headers not present\"]]"
-        }
-      ],
-      "repair_pass": false
-    },
-    {
-      "day": "2022-08-25",
-      "results": 66,
+      "day": "2022-09-18",
+      "results": 64,
       "complete": false,
       "venues_completed": 6,
       "venues_total": 7,
@@ -59,16 +48,33 @@
       "errors": [
         {
           "stage": "race",
-          "venue": "47202208240200",
-          "url": "https://keirin.kdreams.jp/matsusaka/raceresult/47202208240200/",
-          "error": "Unresolved published podiums [[\"4720220824020003\", \"no results order_table\"]]"
+          "venue": "42202209160300",
+          "url": "https://keirin.kdreams.jp/nagoya/raceresult/42202209160300/",
+          "error": "Unresolved published podiums [[\"4220220916030003\", \"published first-second-third headers not present\"]]"
+        }
+      ],
+      "repair_pass": false
+    },
+    {
+      "day": "2022-09-26",
+      "results": 56,
+      "complete": false,
+      "venues_completed": 5,
+      "venues_total": 6,
+      "failed": 1,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "71202209240300",
+          "url": "https://keirin.kdreams.jp/takamatsu/raceresult/71202209240300/",
+          "error": "Unresolved published podiums [[\"7120220924030002\", \"published first-second-third headers not present\"]]"
         }
       ],
       "repair_pass": false
     }
   ],
   "finished_forward_pass": false,
-  "pending_repair_days": 31,
+  "pending_repair_days": 34,
   "exhausted_unresolved_days": 0,
   "finished_all": false
 }
