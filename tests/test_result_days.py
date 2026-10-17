@@ -46,6 +46,47 @@ class ResultDayTests(unittest.TestCase):
         self.assertNotIn("1120230721010001",good)
         self.assertEqual(len(meta["unresolved_podiums"]),1)
 
+    def test_unverifiable_podium_is_excluded_not_assumed_cancelled(self):
+        item=[["1120230721010002","published first-second-third headers not present"]]
+        records=C.excludable_entries(item,VENUE,DAY)
+        self.assertEqual(records["1120230721010002"]["status"],
+                         "excluded_unverified_standard_podium")
+        self.assertNotIn("cancelled",records["1120230721010002"]["reason"])
+
+    def test_bad_identity_or_unknown_parser_error_never_excluded(self):
+        wrong=[["1120230721020002","published first-second-third headers not present"]]
+        self.assertIsNone(C.excludable_entries(wrong,VENUE,DAY))
+        conflict=[["1120230721010002","conflicting podium in same meeting"]]
+        self.assertIsNone(C.excludable_entries(conflict,VENUE,DAY))
+
+    def test_prior_parsed_failure_reconciles_without_refetch(self):
+        state={
+          "index_verified":True,
+          "published_venue_count":2,
+          "venues_completed":["11202307210100"],
+          "recent_errors":[{
+              "stage":"race","venue":"23202307200200",
+              "url":"https://keirin.kdreams.jp/toride/raceresult/23202307200200/",
+              "error":"Unresolved published podiums "+
+                 '[["2320230720020002", "no results order_table"]]'
+          }]
+        }
+        self.assertTrue(C.accept_previous_exclusions(state,DAY))
+        self.assertTrue(state["complete"])
+        self.assertEqual(len(state["excluded_nonstandard_races"]),1)
+        self.assertEqual(len(state["venues_completed"]),2)
+
+    def test_network_error_must_remain_unresolved(self):
+        state={
+          "index_verified":True,
+          "published_venue_count":2,
+          "venues_completed":["11202307210100"],
+          "recent_errors":[{"stage":"venue","venue":"23202307200200",
+                            "error":"Timeout: HTTP request failed"}]
+        }
+        self.assertFalse(C.accept_previous_exclusions(state,DAY))
+        self.assertNotIn("complete",state)
+
     def test_race_id_date_identity(self):
         self.assertEqual(C.race_date_from_id("1120230721010001"),DAY)
         self.assertNotEqual(C.race_date_from_id("1120230721020001"),DAY)
