@@ -320,10 +320,10 @@ def main():
                  for a,kinds in stats['ticket_roi'].items()},flush=True)
     OUT.parent.mkdir(parents=True,exist_ok=True)
     COEFF.parent.mkdir(parents=True,exist_ok=True)
-    OUT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    OUT.write_text(json.dumps(report,ensure_ascii=False,indent=2,default=lambda o: o.item() if hasattr(o,'item') else str(o))+'\n',encoding='utf-8')
     COEFF.write_text(json.dumps({'status':'RESEARCH_FINAL_ODDS_ONLY','coefficients':report['coefficients'],
         'kappa':k,'features':report['features'],'lambda':tuned,
-        'not_t15_executable':True},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+        'not_t15_executable':True},ensure_ascii=False,indent=2,default=lambda o: o.item() if hasattr(o,'item') else str(o))+'\n',encoding='utf-8')
     print('SAVED',OUT,COEFF,flush=True)
 
 if __name__=='__main__':
