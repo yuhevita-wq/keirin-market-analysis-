@@ -90,8 +90,8 @@ def parse(row,winner):
     if n<5 or n>9 or len(sets)!=math.comb(n,3) or len(ordered)!=n*(n-1)*(n-2):return None
     canonical,d0,d1=get_masks(sets)
     if sets!=canonical or tuple(sorted(ordered))!=tuple(itertools.permutations(cars,3)):return None
-    wset=tuple(sorted(winner))
-    if wset not in trio or winner not in tr:return None
+    wset=tuple(sorted(winner)) if winner is not None else None
+    if winner is not None and (wset not in trio or winner not in tr):return None
     st={s:i for i,s in enumerate(sets)}
     ids=np.array([st[tuple(sorted(t))] for t in ordered],dtype=np.int16)
     inv3=np.array([1/tr[t] for t in ordered])
@@ -119,7 +119,7 @@ def parse(row,winner):
         sets,ordered,ids,cond.astype(np.float32),
         np.array([trio[k] for k in sets],dtype=np.float32),
         np.array([tr[k] for k in ordered],dtype=np.float32),
-        st[wset],ordered.index(winner))
+        (st[wset] if winner is not None else -1), (ordered.index(winner) if winner is not None else -1))
 
 def load():
     truth,counts=lookup()
