@@ -2,31 +2,38 @@
   "schema": 1,
   "shard": 6,
   "shards": 8,
-  "next_offset": 1062,
-  "last_run_utc": "2026-10-17T02:29:40.914251+00:00",
+  "next_offset": 1094,
+  "last_run_utc": "2026-10-17T02:34:13.311378+00:00",
   "last_batch": [
     {
-      "day": "2023-10-28",
-      "results": 71,
+      "day": "2023-11-29",
+      "results": 93,
+      "complete": false,
+      "venues_completed": 9,
+      "venues_total": 10,
+      "failed": 1,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "34202311290100",
+          "url": "https://keirin.kdreams.jp/kawasaki/raceresult/34202311290100/",
+          "error": "Unresolved published podiums [[\"3420231129010001\", \"published first-second-third headers not present\"]]"
+        }
+      ],
+      "repair_pass": false
+    },
+    {
+      "day": "2023-12-07",
+      "results": 59,
       "complete": true,
-      "venues_completed": 7,
-      "venues_total": 7,
+      "venues_completed": 6,
+      "venues_total": 6,
       "failed": 0,
       "errors": [],
       "repair_pass": false
     },
     {
-      "day": "2023-11-05",
-      "results": 63,
-      "complete": true,
-      "venues_completed": 7,
-      "venues_total": 7,
-      "failed": 0,
-      "errors": [],
-      "repair_pass": false
-    },
-    {
-      "day": "2023-11-13",
+      "day": "2023-12-15",
       "results": 77,
       "complete": true,
       "venues_completed": 8,
@@ -36,18 +43,25 @@
       "repair_pass": false
     },
     {
-      "day": "2023-11-21",
-      "results": 49,
-      "complete": true,
-      "venues_completed": 6,
-      "venues_total": 6,
-      "failed": 0,
-      "errors": [],
+      "day": "2023-12-23",
+      "results": 81,
+      "complete": false,
+      "venues_completed": 8,
+      "venues_total": 9,
+      "failed": 1,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "24202312230100",
+          "url": "https://keirin.kdreams.jp/utsunomiya/raceresult/24202312230100/",
+          "error": "Unresolved published podiums [[\"2420231223010010\", \"published first-second-third headers not present\"]]"
+        }
+      ],
       "repair_pass": false
     }
   ],
   "finished_forward_pass": false,
-  "pending_repair_days": 46,
+  "pending_repair_days": 48,
   "exhausted_unresolved_days": 0,
   "finished_all": false
 }
