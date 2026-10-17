@@ -1,0 +1,22 @@
+name: Nonlocal odds-to-tickets solver smoke test
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/nonlocal-odds-solver-smoke.yml'
+      - 'research/nonlocal_break_even_v1/predict.py'
+      - 'research/nonlocal_break_even_v1/test_predict.py'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install numpy scipy
+      - run: python research/nonlocal_break_even_v1/test_predict.py
