@@ -2,12 +2,35 @@
   "schema": 1,
   "shard": 6,
   "shards": 8,
-  "next_offset": 1798,
-  "last_run_utc": "2026-10-17T04:08:34.280926+00:00",
+  "next_offset": 1830,
+  "last_run_utc": "2026-10-17T04:12:49.090504+00:00",
   "last_batch": [
     {
-      "day": "2025-11-02",
-      "results": 61,
+      "day": "2025-12-04",
+      "results": 73,
+      "complete": false,
+      "venues_completed": 6,
+      "venues_total": 8,
+      "failed": 2,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "23202512030200",
+          "url": "https://keirin.kdreams.jp/toride/raceresult/23202512030200/",
+          "error": "Unresolved published podiums [[\"2320251203020012\", \"published first-second-third headers not present\"]]"
+        },
+        {
+          "stage": "race",
+          "venue": "35202512020300",
+          "url": "https://keirin.kdreams.jp/hiratsuka/raceresult/35202512020300/",
+          "error": "Unresolved published podiums [[\"3520251202030011\", \"published first-second-third headers not present\"]]"
+        }
+      ],
+      "repair_pass": false
+    },
+    {
+      "day": "2025-12-12",
+      "results": 69,
       "complete": true,
       "venues_completed": 7,
       "venues_total": 7,
@@ -16,18 +39,8 @@
       "repair_pass": false
     },
     {
-      "day": "2025-11-10",
-      "results": 77,
-      "complete": true,
-      "venues_completed": 8,
-      "venues_total": 8,
-      "failed": 0,
-      "errors": [],
-      "repair_pass": false
-    },
-    {
-      "day": "2025-11-18",
-      "results": 65,
+      "day": "2025-12-20",
+      "results": 62,
       "complete": true,
       "venues_completed": 7,
       "venues_total": 7,
@@ -36,18 +49,25 @@
       "repair_pass": false
     },
     {
-      "day": "2025-11-26",
-      "results": 67,
-      "complete": true,
-      "venues_completed": 8,
+      "day": "2025-12-28",
+      "results": 70,
+      "complete": false,
+      "venues_completed": 7,
       "venues_total": 8,
-      "failed": 0,
-      "errors": [],
+      "failed": 1,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "25202512270200",
+          "url": "https://keirin.kdreams.jp/omiya/raceresult/25202512270200/",
+          "error": "Unresolved published podiums [[\"2520251227020004\", \"published first-second-third headers not present\"]]"
+        }
+      ],
       "repair_pass": false
     }
   ],
   "finished_forward_pass": false,
-  "pending_repair_days": 71,
+  "pending_repair_days": 73,
   "exhausted_unresolved_days": 0,
   "finished_all": false
 }
