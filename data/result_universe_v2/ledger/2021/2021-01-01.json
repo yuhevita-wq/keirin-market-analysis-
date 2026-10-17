@@ -1,29 +1,33 @@
 {
   "schema": 1,
   "day": "2021-01-01",
-  "attempts": 1,
+  "attempts": 2,
   "venues_completed": [
     "22202101010100",
     "24202101010100",
     "27202101010100",
     "38202012310200",
     "45202012300300",
+    "53202012310200",
     "62202012300300",
     "81202101010100"
   ],
   "index_verified": true,
   "published_venue_count": 8,
-  "complete": false,
-  "podiums": 69,
+  "complete": true,
+  "podiums": 80,
   "girls_excluded_by_source_label": true,
   "results_are_target_labels_only": true,
-  "last_checked_utc": "2026-10-17T00:12:42.658667+00:00",
-  "recent_errors": [
-    {
-      "stage": "venue",
-      "venue": "53202012310200",
-      "url": "https://keirin.kdreams.jp/nara/raceresult/53202012310200/",
-      "error": "ValueError: invalid podiums [[\"5320201231020006\", \"published first-second-third headers not present\"]]"
+  "last_checked_utc": "2026-10-17T04:36:20.031732+00:00",
+  "recent_errors": [],
+  "excluded_nonstandard_races": {
+    "5320201231020006": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/nara/raceresult/53202012310200/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     }
-  ]
+  },
+  "nonstandard_policy": "excluded unverified podium, not declared cancelled",
+  "nonstandard_podium_excluded": 1
 }
