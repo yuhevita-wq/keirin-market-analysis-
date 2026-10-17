@@ -2,12 +2,29 @@
   "schema": 1,
   "shard": 3,
   "shards": 8,
-  "next_offset": 227,
-  "last_run_utc": "2026-10-17T00:40:01.338542+00:00",
+  "next_offset": 259,
+  "last_run_utc": "2026-10-17T00:43:39.286728+00:00",
   "last_batch": [
     {
-      "day": "2021-07-15",
-      "results": 52,
+      "day": "2021-08-16",
+      "results": 42,
+      "complete": false,
+      "venues_completed": 4,
+      "venues_total": 5,
+      "failed": 1,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "26202108160100",
+          "url": "https://keirin.kdreams.jp/seibuen/raceresult/26202108160100/",
+          "error": "Unresolved published podiums [[\"2620210816010007\", \"no results order_table\"]]"
+        }
+      ],
+      "repair_pass": false
+    },
+    {
+      "day": "2021-08-24",
+      "results": 44,
       "complete": true,
       "venues_completed": 5,
       "venues_total": 5,
@@ -16,51 +33,42 @@
       "repair_pass": false
     },
     {
-      "day": "2021-07-23",
-      "results": 69,
-      "complete": true,
-      "venues_completed": 7,
-      "venues_total": 7,
-      "failed": 0,
-      "errors": [],
-      "repair_pass": false
-    },
-    {
-      "day": "2021-07-31",
-      "results": 54,
-      "complete": true,
-      "venues_completed": 6,
-      "venues_total": 6,
-      "failed": 0,
-      "errors": [],
-      "repair_pass": false
-    },
-    {
-      "day": "2021-08-08",
-      "results": 64,
+      "day": "2021-09-01",
+      "results": 38,
       "complete": false,
-      "venues_completed": 5,
-      "venues_total": 7,
-      "failed": 2,
+      "venues_completed": 4,
+      "venues_total": 5,
+      "failed": 1,
       "errors": [
         {
           "stage": "race",
-          "venue": "34202108050400",
-          "url": "https://keirin.kdreams.jp/kawasaki/raceresult/34202108050400/",
-          "error": "Unresolved published podiums [[\"3420210805040004\", \"published first-second-third headers not present\"]]"
-        },
+          "venue": "12202108310200",
+          "url": "https://keirin.kdreams.jp/aomori/raceresult/12202108310200/",
+          "error": "Unresolved published podiums [[\"1220210831020001\", \"no results order_table\"], [\"1220210831020002\", \"no results order_table\"], [\"1220210831020003\", \"no results order_table\"], [\"1220210831020004\", \"no results order_table\"], [\"1220210831020005\", \"no results order_table\"], [\"1220210831020006\", \"no results order_table\"]]"
+        }
+      ],
+      "repair_pass": false
+    },
+    {
+      "day": "2021-09-09",
+      "results": 53,
+      "complete": false,
+      "venues_completed": 5,
+      "venues_total": 6,
+      "failed": 1,
+      "errors": [
         {
           "stage": "race",
-          "venue": "48202108060300",
-          "url": "https://keirin.kdreams.jp/yokkaichi/raceresult/48202108060300/",
-          "error": "Unresolved published podiums [[\"4820210806030003\", \"published first-second-third headers not present\"]]"
+          "venue": "83202109090100",
+          "url": "https://keirin.kdreams.jp/kurume/raceresult/83202109090100/",
+          "error": "Unresolved published podiums [[\"8320210909010007\", \"no results order_table\"], [\"8320210909010008\", \"no results order_table\"], [\"8320210909010009\", \"no results order_table\"], [\"8320210909010010\", \"no results order_table\"], [\"8320210909010011\", \"no results order_table\"], [\"8320210909010012\", \"no results order_table\"]]"
         }
       ],
       "repair_pass": false
     }
   ],
   "finished_forward_pass": false,
-  "pending_repair_days": 10,
+  "pending_repair_days": 13,
   "exhausted_unresolved_days": 0,
   "finished_all": false
 }
