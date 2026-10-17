@@ -1,0 +1,48 @@
+name: Validate remote-odds mistakes with 2023 odds-calibrated bins
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/remote_market_transfer_v1/analyze_adaptive_v2.py'
+      - '.github/workflows/remote-market-transfer-adaptive-v2.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: remote-market-transfer-adaptive-v2
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install numpy scipy
+      - name: Derive odds-only bins then test remote result prices
+        run: python -u research/remote_market_transfer_v1/analyze_adaptive_v2.py
+      - name: Validate and commit full results
+        run: |
+          python - <<'PY'
+          import json
+          p='data/audits/remote_market_transfer_adaptive_v2.json'
+          d=json.load(open(p))
+          assert d['year']['2025']['races']>8000
+          assert d['search']['num_signatures']>2500
+          assert '2023 odds-only' in d['cutpoint_calibration']
+          print('VALIDATED_ADAPTIVE_REMOTE',d['search'],flush=True)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/audits/remote_market_transfer_adaptive_v2.json
+          git commit -m 'research: save odds-calibrated remote transfer study' || exit 0
+          for i in 1 2 3 4; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
