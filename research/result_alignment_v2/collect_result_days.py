@@ -159,6 +159,97 @@ def venue_podiums(html, venue_url, day):
                     "men_podiums":len(values),"unresolved_podiums":invalid}
 
 
+
+# These are reasons for an UNVERIFIABLE published standard podium, not proven
+# cancellations. Keep them out of training labels rather than assigning winners.
+# A malformed race ID, conflicting source result, or failed HTTP fetch is NEVER
+# a permissible exclusion.
+EXCLUDABLE_PODIUM_REASONS = frozenset({
+    "no results order_table",
+    "empty results table",
+    "published first-second-third headers not present",
+    "top three race results missing",
+    "published podium cell missing car number",
+    "duplicate podium car number",
+})
+
+
+def excludable_entries(entries, venue_url, day):
+    if not isinstance(entries, list) or not entries:
+        return None
+    mid=VENUE_RX.fullmatch(urlsplit(venue_url).path)
+    if not mid or meeting_date_from_id(mid.group(2))!=day:
+        return None
+    accepted={}
+    for item in entries:
+        if not isinstance(item, list) or len(item)!=2:
+            return None
+        rid,reason=item
+        if (not isinstance(rid,str) or
+            rid[:12]!=mid.group(2)[:12] or race_date_from_id(rid)!=day or
+            reason not in EXCLUDABLE_PODIUM_REASONS):
+            return None
+        accepted[rid]={
+            "status":"excluded_unverified_standard_podium",
+            "reason":reason,
+            "source_url":venue_url,
+            "note":"Cannot establish 1st-3rd from this publication; cause not assumed",
+        }
+    return accepted
+
+
+def accept_previous_exclusions(state, day):
+    """Reconcile previously fetched abnormal result tables WITHOUT refetching.
+
+    A day is completed only when a verified index's full venue count is
+    accounted for, and NO outstanding source/page/identity errors remain.
+    """
+    previous=list(state.get("recent_errors",[]))
+    if not state.get("index_verified") or not previous:
+        return False
+    excluded=dict(state.get("excluded_nonstandard_races",{}))
+    done=set(state.get("venues_completed",[]))
+    remaining=[]
+    for err in previous:
+        if err.get("stage")!="race":
+            remaining.append(err)
+            continue
+        prefix="Unresolved published podiums "
+        message=err.get("error","")
+        if not message.startswith(prefix):
+            remaining.append(err)
+            continue
+        try:
+            entries=json.loads(message[len(prefix):])
+        except (ValueError,TypeError):
+            remaining.append(err)
+            continue
+        venue=err.get("url","")
+        accepted=excludable_entries(entries,venue,day)
+        if not accepted or err.get("venue")!=VENUE_RX.fullmatch(urlsplit(venue).path).group(2):
+            remaining.append(err)
+            continue
+        for rid,record in accepted.items():
+            if rid in excluded and excluded[rid]!=record:
+                remaining.append(err)
+                break
+        else:
+            excluded.update(accepted)
+            done.add(err["venue"])
+    changed=len(remaining)!=len(previous)
+    if changed:
+        state["excluded_nonstandard_races"]=excluded
+        state["venues_completed"]=sorted(done)
+        state["recent_errors"]=remaining
+        state["complete"]=(
+            isinstance(state.get("published_venue_count"),int) and
+            state["published_venue_count"]>0 and
+            len(done)==state["published_venue_count"] and
+            not remaining
+        )
+        state["nonstandard_policy"]="excluded unverified podium, not declared cancelled"
+    return changed
+
 def file_paths(day):
     return (DAY_DIR/str(day.year)/(day.isoformat()+".jsonl.gz"),
             LEDGER_DIR/str(day.year)/(day.isoformat()+".json"))
@@ -199,6 +290,9 @@ def get_html(session,url,pause):
 def collect_day(session,day,pause):
     output,ledger_path=file_paths(day)
     state=load_json(ledger_path,{"schema":1,"day":day.isoformat(),"attempts":0,"venues_completed":[]})
+    if accept_previous_exclusions(state,day):
+        ledger_path.parent.mkdir(parents=True,exist_ok=True)
+        ledger_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     if state.get("complete") is True:
         return {"day":day.isoformat(),"skipped_complete":True,"results":state.get("podiums",0),"failed":0}
     state["attempts"]=int(state.get("attempts",0))+1
@@ -223,11 +317,15 @@ def collect_day(session,day,pause):
                 if rid in rows and rows[rid]["finish_order"]!=record["finish_order"]:
                     raise ValueError("archived-versus-publisher conflicting podium "+rid)
             rows.update(venue_rows)
-            if venue_stats["unresolved_podiums"]:
+            issues=venue_stats["unresolved_podiums"]
+            accepted=excludable_entries(issues,url,day) if issues else {}
+            if accepted is None:
                 errors.append({"stage":"race","venue":mid,"url":url,
                                "error":"Unresolved published podiums "+
-                               json.dumps(venue_stats["unresolved_podiums"][:6],ensure_ascii=False)})
+                               json.dumps(issues,ensure_ascii=False)})
             else:
+                # Incomplete/nonstandard podiums are excluded, NEVER invented.
+                state.setdefault("excluded_nonstandard_races",{}).update(accepted)
                 successes.add(mid)
             print("VENUE_RESULTS",day,mid,venue_stats,flush=True)
         except Exception as exc:
@@ -236,6 +334,8 @@ def collect_day(session,day,pause):
     state["complete"]=bool(meetings) and set(meetings)==successes and not errors
     state["podiums"]=len(rows)
     state["girls_excluded_by_source_label"]=True
+    state["nonstandard_policy"]="excluded unverified podium, not declared cancelled"
+    state["nonstandard_podium_excluded"]=len(state.get("excluded_nonstandard_races",{}))
     state["results_are_target_labels_only"]=True
     state["last_checked_utc"]=datetime.now(timezone.utc).isoformat()
     state["recent_errors"]=errors[:12]
@@ -245,6 +345,7 @@ def collect_day(session,day,pause):
     ledger_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return {"day":day.isoformat(),"results":len(rows),"complete":state["complete"],
             "venues_completed":len(successes),"venues_total":len(meetings),"failed":len(errors),
+            "nonstandard_podium_excluded":state["nonstandard_podium_excluded"],
             "errors":errors[:2]}
 
 
