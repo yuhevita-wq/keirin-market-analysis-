@@ -2,12 +2,22 @@
   "schema": 1,
   "shard": 2,
   "shards": 8,
-  "next_offset": 386,
-  "last_run_utc": "2026-10-17T00:59:52.920807+00:00",
+  "next_offset": 418,
+  "last_run_utc": "2026-10-17T01:03:50.216181+00:00",
   "last_batch": [
     {
-      "day": "2021-12-21",
-      "results": 61,
+      "day": "2022-01-22",
+      "results": 47,
+      "complete": true,
+      "venues_completed": 5,
+      "venues_total": 5,
+      "failed": 0,
+      "errors": [],
+      "repair_pass": false
+    },
+    {
+      "day": "2022-01-30",
+      "results": 57,
       "complete": true,
       "venues_completed": 6,
       "venues_total": 6,
@@ -16,38 +26,42 @@
       "repair_pass": false
     },
     {
-      "day": "2021-12-29",
-      "results": 66,
-      "complete": true,
-      "venues_completed": 7,
-      "venues_total": 7,
-      "failed": 0,
-      "errors": [],
-      "repair_pass": false
-    },
-    {
-      "day": "2022-01-06",
+      "day": "2022-02-07",
       "results": 64,
-      "complete": true,
-      "venues_completed": 7,
+      "complete": false,
+      "venues_completed": 6,
       "venues_total": 7,
-      "failed": 0,
-      "errors": [],
+      "failed": 1,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "55202202050300",
+          "url": "https://keirin.kdreams.jp/wakayama/raceresult/55202202050300/",
+          "error": "Unresolved published podiums [[\"5520220205030009\", \"no results order_table\"], [\"5520220205030010\", \"no results order_table\"], [\"5520220205030011\", \"no results order_table\"], [\"5520220205030012\", \"no results order_table\"]]"
+        }
+      ],
       "repair_pass": false
     },
     {
-      "day": "2022-01-14",
-      "results": 69,
-      "complete": true,
+      "day": "2022-02-15",
+      "results": 89,
+      "complete": false,
       "venues_completed": 7,
-      "venues_total": 7,
-      "failed": 0,
-      "errors": [],
+      "venues_total": 8,
+      "failed": 1,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "43202202140200",
+          "url": "https://keirin.kdreams.jp/gifu/raceresult/43202202140200/",
+          "error": "Unresolved published podiums [[\"4320220214020003\", \"published first-second-third headers not present\"]]"
+        }
+      ],
       "repair_pass": false
     }
   ],
   "finished_forward_pass": false,
-  "pending_repair_days": 17,
+  "pending_repair_days": 19,
   "exhausted_unresolved_days": 0,
   "finished_all": false
 }
