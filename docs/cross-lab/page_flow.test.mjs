@@ -31,6 +31,9 @@ test('page flow keeps ranking, review, core, auxiliary and saved decision separa
       await module.analyze();
       const rendered=document.getElementById('analysis').innerHTML,record=module.record();
       assert.ok(record,document.getElementById('analysis').textContent);
+      assert.match(rendered,/強強の同時成立／強弱との比較/);
+      assert.match(record.forecast.source.id,/^coexistence-v1_/);
+      assert.equal(record.forecast.coexistenceGateEnabled,false);
       assert.match(rendered,/主採用（モデル暫定1位）/);
       assert.match(rendered,/全3組を同じ展開/);
       assert.equal((rendered.match(/data-line-comparison=/g)||[]).length,3);

@@ -1,6 +1,7 @@
 /** Exact ticket aggregation and explicit decision records. No fitted coefficients. */
 import {normalizeRace} from './cross_engine.mjs';
 import {jointDiagnostics,pairCompetition} from './joint_model.mjs';
+import {coexistenceEligibility} from './coexistence.mjs';
 
 export function allOutcomes(input) {
   const race=normalizeRace(input), cars=race.entries.map(e=>e.no), out=[];
@@ -62,13 +63,16 @@ export function compareJointForecast(input, candidates, forecast, odds={}, {obje
   const priceComplete=rows.every(r=>r.returnRatio!==null);
   const actualObjective=objective==='EXPECTED_RETURN' && !priceComplete?'HIT_PROBABILITY':objective;
   const metric=actualObjective==='EXPECTED_RETURN'?'returnRatio':'hitProbability';
-  const ranked=rows.filter(r=>r[metric]!==null).sort((a,b)=>b[metric]-a[metric]);
+  const coexistence=coexistenceEligibility(input,candidates,forecast);
+  for(const row of rows){const rule=coexistence.rows.find(x=>x.signature===row.signature);row.coexistenceEligible=rule.eligible;row.coexistenceReasons=rule.reasons;}
+  const ranked=rows.filter(r=>r[metric]!==null).sort((a,b)=>Number(b.coexistenceEligible)-Number(a.coexistenceEligible)||b[metric]-a[metric]);
+  const eligible=ranked.filter(r=>r.coexistenceEligible);
   const complete=ranked.length===candidates.length && candidates.length>0;
-  const tie=complete && ranked.length>1 && Math.abs(ranked[0][metric]-ranked[1][metric])<=1e-12;
-  return {source,mass,rows,complete,objective:actualObjective,requestedObjective:objective,
+  const tie=complete && eligible.length>1 && Math.abs(eligible[0][metric]-eligible[1][metric])<=1e-12;
+  return {source,mass,rows,complete,coexistence,objective:actualObjective,requestedObjective:objective,
     priceComplete,ranking:ranked.map(r=>({signature:r.signature,hitProbability:r.hitProbability,
       returnRatio:r.returnRatio,metricValue:r[metric]})),
-    rankedSignature:complete&&!tie?ranked[0].signature:null,
+    rankedSignature:complete&&!tie&&eligible.length?eligible[0].signature:null,
     selectedSignature:null,
     selectionStatus:complete&&!tie?'PROVISIONAL_RANKING':'NO_UNIQUE_RANKING',
     reason:!complete?'全候補の比較データ不足':tie?'モデル基準で同値（主採用の優劣を識別不能）':

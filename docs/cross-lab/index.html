@@ -32,7 +32,7 @@ td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 </style>
 </head>
 <body><main class="wrap">
-<h1>CROSS LAB <small>主採用1型・比較・答案照合 v5.1</small></h1>
+<h1>CROSS LAB <small>強強・強弱の同時成立比較 v5.2</small></h1>
 <p class="sub">異なる2ラインの先頭・番手から各2人を取り、基本4点のクロスを比較して主採用1型を選びます。モデルによる選定は暫定であり、オッズ不在時は高配当や期待値を判定しません。</p>
 <section>
 <h2>① 出走表を指定</h2>
@@ -69,7 +69,7 @@ td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 <label for="outside">選外車・選外ラインの入着に対する反証</label><textarea id="outside" rows="2"></textarea>
 </details>
 <details><summary>補助：過去の集計値から計算したモデルとの比較</summary>
-<label for="autoModel">自動モデル</label><select id="autoModel"><option value="joint">A級1・2班／S級：同時入着v3（7車）</option><option value="market">S級F1：既存市場補正モデル</option></select>
+<label for="autoModel">自動モデル</label><select id="autoModel"><option value="joint">A級1・2班／S級：同時入着＋強強・強弱の共存（7車）</option><option value="market">S級F1：既存市場補正モデル</option></select>
 <label for="comparisonObjective">主採用を決める数値（予測・検証中）</label><select id="comparisonObjective"><option value="EXPECTED_RETURN">4点の等額期待回収（全候補オッズ必須。不足なら的中確率で暫定判定）</option><option value="HIT_PROBABILITY">基本4点の合計的中確率（高配当評価なし）</option></select>
 <label><input type="checkbox" id="useMarketModel" checked style="width:auto">学習済みモデルで主採用を自動判定する</label>
 <p class="muted">同時入着v3はA級1・2班とS級を別々に学習した試験モデルです。全選手の特徴が揃えば4点確率で順位付けします。全候補のオッズもあれば4点等額期待回収で選定します。高配当・利益優位は未実証です。</p>
@@ -83,7 +83,7 @@ td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 <div class="row" style="justify-content:flex-end"><button id="analyze">クロスを判定・主採用1型を表示</button></div>
 </section>
 <section id="results">
-<h2>③ クロス判定</h2><p><a href="./AUDIT_20261015.md">10月15日の答案と結果の照合</a></p><div id="analysis" class="info">分析待ち</div>
+<h2>③ クロス判定</h2><p><a href="./COEXISTENCE_V52.md">強強・強弱の検証結果</a> ／ <a href="./AUDIT_20261015.md">10月15日の答案と結果の照合</a></p><div id="analysis" class="info">分析待ち</div>
 </section>
 <section>
 <h2>④ 固定した答案と結果を照合</h2>
@@ -105,6 +105,7 @@ import {normalizeRace,parseLines,analyzeCross} from "./cross_engine.mjs";
 import {compareJointForecast,ticketMarket} from "./cross_comparison.mjs";
 import {predictMarket} from "./market_model.mjs";
 import {predictJoint,pairCompetition} from "./joint_model.mjs";
+import {applyCoexistence} from "./coexistence.mjs";
 import {selectMainCross,buildAuxiliaryThirds} from "./cross_presentation.mjs";
 import {buildHorizontalLineReference,renderHorizontalLineReference} from "./horizontal_line_reference.mjs";
 import {candidateMatrix,reviewSubmission,reviewLabels,crossLabel} from "./cross_review.mjs";
@@ -113,7 +114,7 @@ const escapeHtml=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;"
 let loaded=null, current=null, lastRecord=null;
 const updateStatus=(message,error=false)=>{byId("loadStatus").className=error?"alert":"info";byId("loadStatus").textContent=message};
 const stats=["b","nige","makuri","sashi","mark","score","age","win_rate","top3_rate"];
-let frozenModel=null,jointModel=null,activeForecast=null;
+let frozenModel=null,jointModel=null,coexistenceModel=null,activeForecast=null;
 function initialize(race){
   current=normalizeRace(race);
   const positions=new Map();
@@ -196,7 +197,7 @@ function drawCandidate(item,i,odds,race,isMain){
       '（2着候補内'+d.partnerSecondRank+'位）。同線各車の2着合計 '+pct(d.ownLineSecondGivenFirst)+
       '。この順序の基本2点 '+pct(d.coreProbability)+'</p><p>2着の競合：'+d.secondAlternatives.map(s=>
         s.no+'番 '+pct(s.conditionalProbability)+(s.isCrossPartner?'［クロス相手］':s.sameLineAsWinner?'［同線］':'')).join(' ／ ')+'</p>').join('')+
-    '<p>基本4点：相互作用なし '+pct(audit.additiveCoreProbability)+' → v3 '+pct(audit.coreProbability)+
+    '<p>基本4点：相互作用なし '+pct(audit.additiveCoreProbability)+' → 現在の予測 '+pct(audit.coreProbability)+
     (audit.interactionDelta===null?'':'（差 '+(100*audit.interactionDelta).toFixed(2)+'ポイント）')+
     '。この差は成立の証明ではありません。</p></div>':"";
   const aux=buildAuxiliaryThirds(item,race,isMain?lastRecord?.decision?.auxiliary:null);
@@ -249,8 +250,9 @@ async function analyze(){
         if(byId("autoModel").value==="joint"){
           if(!jointModel){const response=await fetch("./joint_model_frozen.json");if(!response.ok)throw Error("同時入着モデルを取得できません");jointModel=await response.json();}
           forecast=predictJoint(race,jointModel);
-          const cls=/[ＳS]級/.test(race.race_type)?"S級":"A級1・2班", v=roleConditions.length?roleConditionBundle?.liveValidation?.[cls+"|2026H1|live_expanded40"]:null;
-          modelMessage=v?"今回の３–２–２検証：2026年前半の全参加回収率 "+v.returnPct.toFixed(1)+"%（候補40型から最高的中確率の４点を毎回選定・"+v.n+"レース）。利益優位は未実証です。":"同時入着モデルは比較用です。候補を拡張した選定の利益優位は未実証です。";
+          if(!coexistenceModel){const response=await fetch("./coexistence_frozen.json");if(!response.ok)throw Error("共存モデルを取得できません");coexistenceModel=await response.json();}
+          forecast=applyCoexistence(race,forecast,coexistenceModel);
+          modelMessage="共存判定を反映：ラインと選手の強強・強弱を別々に比較し、基本4点の同時確率で順位を付けます。強強の強制除外は後続検証で安定改善せず無効です。回収率の改善は未実証です。";
         }else{
         const trio={};
         for(const row of byId("trioOdds").value.split(/\n/).map(s=>s.trim()).filter(Boolean)){
@@ -322,6 +324,17 @@ async function analyze(){
     }
     if(roleConditionError)html+='<p class="info">'+escapeHtml(roleConditionError)+'</p>';
     if(modelMessage)html+='<p class="info">自動モデル比較：'+escapeHtml(modelMessage)+'</p>';
+    if(comparison?.coexistence?.audit){
+      const audit=comparison.coexistence.audit,pct=p=>(100*p).toFixed(1)+'%',lineLabel=z=>z.lines.map(i=>race.lines[i].join('-')).join(' × ');
+      html+='<section><h3>強強の同時成立／強弱との比較</h3><p class="muted">'+escapeHtml(audit.definition)+'。同時成立は2人（2ライン）で1・2着を分け合う事象です。3着まで残るかは基本4点で別に比較します。</p>';
+      if(audit.strongStrong)html+='<p><b>ライン単位</b>：相対上位2線 '+escapeHtml(lineLabel(audit.strongStrong))+' '+pct(audit.strongStrong.probability)+' ／ 最良の強弱 '+escapeHtml(lineLabel(audit.bestStrongWeak))+' '+pct(audit.bestStrongWeak.probability)+'。'+(audit.lineSwitch?'同時1・2着は強弱優勢。':'同時1・2着は強強優勢。')+' 筋決着全体 '+pct(audit.sameLine)+'。</p>';
+      else html+='<p>ラインの強強弱比較は3本の相対順位を識別できる場合に表示します。</p>';
+      const global=audit.globalPlayers;
+      if(global.unique)html+='<p><b>全選手の上位2人</b>：'+global.strongCars.join('・')+'番、同時1・2着 '+pct(global.strongPair.probability)+'。'+(global.strongPairSameLine?'2人は同ラインです。異線クロスと分けて比較します。':global.bestStrongWeak?'最良の異線強弱 '+global.bestStrongWeak.pair.join('・')+'番 '+pct(global.bestStrongWeak.probability)+'。':'')+'</p>';
+      html+='<div class="tablewrap"><table><thead><tr><th>二線</th><th>線内上位同士の強強</th><th>最良の強弱（1組）</th><th>同時1・2着の比較</th></tr></thead><tbody>';
+      for(const row of audit.lineRows){const sw=row.bestStrongWeak;html+='<tr><td>'+escapeHtml(lineLabel(row))+'</td><td>'+row.strongPair.pair.join('・')+'番 '+pct(row.strongPair.probability)+'</td><td>'+(sw?sw.pair.join('・')+'番 '+pct(sw.probability):'対象なし')+'</td><td>'+(!row.playerStrengthUnique?'単独強度が同値':row.playerSwitch?'強弱優勢':'強強優勢')+'</td></tr>';}
+      html+='</tbody></table></div><p class="muted">強弱は複数組の合算ではなく最良1組と比較します。3番手を含む比較も表示しますが、基本4点へは追加しません。'+escapeHtml(audit.note)+'</p></section>';
+    }
     if(comparison?.rankedSignature){
       const first=result.candidates.find(c=>c.signature===comparison.rankedSignature);
       const row=comparison.rows.find(c=>c.signature===comparison.rankedSignature);
