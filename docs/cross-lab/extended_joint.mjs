@@ -1,5 +1,5 @@
 import {normalizeRace} from './cross_engine.mjs';
-import {featurePack} from './joint_model.mjs';
+import {featurePack} from './joint_model.mjs?v=5.3';
 export const EXTENDED_VERSION='conditional-pair-extended-v1';
 const softmax=xs=>{const m=Math.max(...xs),e=xs.map(x=>Math.exp(x-m)),s=e.reduce((a,b)=>a+b,0);return e.map(x=>x/s);};
 const dot=(a,b)=>a.reduce((s,x,i)=>s+x*b[i],0);
