@@ -1,0 +1,70 @@
+name: Reconcile nationwide published results with existing archived outcomes
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/merge-published-results.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '35 */2 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: merged-historical-keirin-results
+  cancel-in-progress: false
+
+jobs:
+  merge:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: blob:none
+          sparse-checkout: |
+            data/result_universe_v2
+            data/audits/result_universe_merged_v2.json
+            research/result_alignment_v2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Use latest saved verified podium batches
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+      - name: Merge all outcome sources with exact race-ID verification
+        run: python -u research/result_alignment_v2/merge_archive_and_daily.py
+      - name: Verify year-partition reconciliation, quarantine conflicts
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('data/audits/result_universe_merged_v2.json').read_text())
+          assert sum(y['unique_verified_results'] for y in d['years'].values())==d['verified_unique_results']
+          assert d['verified_unique_results']>=d['previous_archived_results']-d['conflicting_race_ids']
+          assert d['results_are_targets_never_odds_features']
+          print('VERIFIED_TOTAL_PUBLISHED_RESULTS',d['verified_unique_results'])
+          print('DAILY_RECOVERED_RACE_IDS',d['published_daily_result_ids'])
+          print('UNRESOLVED_CONFLICT_RACE_IDS',d['conflicting_race_ids'])
+          PY
+      - name: Persist results only and audit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f data/result_universe_v2/combined
+          git add -f data/audits/result_universe_merged_v2.json
+          if git diff --cached --quiet; then
+            echo 'No change to outcome files'
+            exit 0
+          fi
+          git commit -m 'data: reconcile published podiums with archived verified results'
+          for n in 1 2 3 4 5 6 7 8 9 10; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
