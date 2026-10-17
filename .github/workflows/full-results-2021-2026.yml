@@ -119,7 +119,29 @@ jobs:
           filter: blob:none
           sparse-checkout: |
             data/audits/results_full_shards
+            data/result_universe_v2
+            research/result_alignment_v2
             .github/workflows/full-results-2021-2026.yml
+      - name: Reconcile known nonstandard podiums from existing source records
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+          python -u research/result_alignment_v2/reconcile_nonstandard.py
+      - name: Preserve exclusions, their original evidence and updated cursors
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f data/result_universe_v2/ledger data/audits/results_full_shards data/audits/result_nonstandard_exclusions.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: classify unverifiable podiums as explicit exclusions, not missing results'
+            for n in 1 2 3 4 5 6 7 8 9 10; do
+              git fetch origin main
+              git rebase origin/main
+              if git push origin HEAD:main; then break; fi
+              sleep 3
+              if [ "$n" = 10 ]; then exit 1; fi
+            done
+          fi
       - name: Resume only while sources are healthy and dates remain
         id: check
         run: |
