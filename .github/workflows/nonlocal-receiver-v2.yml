@@ -1,0 +1,50 @@
+name: Discover true-result odds bias and exclude losing formations
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/nonlocal_receiver_v2/discover.py'
+      - '.github/workflows/nonlocal-receiver-v2.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: odds-outcome-remote-receiver-v2
+  cancel-in-progress: false
+jobs:
+  research:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 110
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numeric and tree-learning packages
+        run: pip install numpy scipy lightgbm
+      - name: Learn actual-results to odds residuals and test surviving formations
+        run: python -u research/nonlocal_receiver_v2/discover.py
+      - name: Verify output and commit
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('data/audits/nonlocal_receiver_v2.json'))
+          assert d['audit']['valid_joined']>30000
+          assert d['models']['test_2025_n']>8000
+          assert d['models']['test_2026_n']>4000
+          assert 'survivor_exclusion' in d['years']['2025']
+          assert len(d['years']['2025']['selection']['trio'])==3
+          print('VERIFIED',d['models']['chosen_blend_alpha'])
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/audits/nonlocal_receiver_v2.json data/models/nonlocal_receiver_v2.json data/models/nonlocal_receiver_v2.txt
+          git commit -m 'research: full audit of survivor selections and nonlocal odds residuals' || exit 0
+          for i in 1 2 3 4; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
