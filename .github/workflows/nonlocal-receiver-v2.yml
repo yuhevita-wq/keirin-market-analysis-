@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install numeric and tree-learning packages
-        run: pip install numpy scipy lightgbm
+        run: pip install numpy scipy scikit-learn lightgbm
       - name: Learn actual-results to odds residuals and test surviving formations
         run: python -u research/nonlocal_receiver_v2/discover.py
       - name: Verify output and commit
