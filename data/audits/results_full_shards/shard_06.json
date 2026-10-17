@@ -2,12 +2,12 @@
   "schema": 1,
   "shard": 6,
   "shards": 8,
-  "next_offset": 294,
-  "last_run_utc": "2026-10-17T00:49:58.489135+00:00",
+  "next_offset": 326,
+  "last_run_utc": "2026-10-17T00:54:00.267018+00:00",
   "last_batch": [
     {
-      "day": "2021-09-20",
-      "results": 61,
+      "day": "2021-10-22",
+      "results": 74,
       "complete": true,
       "venues_completed": 7,
       "venues_total": 7,
@@ -16,38 +16,58 @@
       "repair_pass": false
     },
     {
-      "day": "2021-09-28",
-      "results": 70,
-      "complete": true,
-      "venues_completed": 7,
-      "venues_total": 7,
-      "failed": 0,
-      "errors": [],
-      "repair_pass": false
-    },
-    {
-      "day": "2021-10-06",
-      "results": 80,
-      "complete": true,
-      "venues_completed": 8,
-      "venues_total": 8,
-      "failed": 0,
-      "errors": [],
-      "repair_pass": false
-    },
-    {
-      "day": "2021-10-14",
-      "results": 63,
-      "complete": true,
+      "day": "2021-10-30",
+      "results": 65,
+      "complete": false,
       "venues_completed": 6,
-      "venues_total": 6,
+      "venues_total": 7,
+      "failed": 1,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "47202110280300",
+          "url": "https://keirin.kdreams.jp/matsusaka/raceresult/47202110280300/",
+          "error": "Unresolved published podiums [[\"4720211028030003\", \"published first-second-third headers not present\"]]"
+        }
+      ],
+      "repair_pass": false
+    },
+    {
+      "day": "2021-11-07",
+      "results": 66,
+      "complete": true,
+      "venues_completed": 7,
+      "venues_total": 7,
       "failed": 0,
       "errors": [],
+      "repair_pass": false
+    },
+    {
+      "day": "2021-11-15",
+      "results": 76,
+      "complete": false,
+      "venues_completed": 4,
+      "venues_total": 7,
+      "failed": 3,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "51202111150100",
+          "url": "https://keirin.kdreams.jp/fukui/raceresult/51202111150100/",
+          "error": "Unresolved published podiums [[\"5120211115010001\", \"published first-second-third headers not present\"]]"
+        },
+        {
+          "stage": "race",
+          "venue": "84202111150100",
+          "url": "https://keirin.kdreams.jp/takeo/raceresult/84202111150100/",
+          "error": "Unresolved published podiums [[\"8420211115010003\", \"published first-second-third headers not present\"]]"
+        }
+      ],
       "repair_pass": false
     }
   ],
   "finished_forward_pass": false,
-  "pending_repair_days": 11,
+  "pending_repair_days": 13,
   "exhausted_unresolved_days": 0,
   "finished_all": false
 }
