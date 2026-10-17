@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+# Analysis branch trigger: v6.1-HM01 / 2024Q1. No scheme changes.
 import csv
 import json
 from pathlib import Path
