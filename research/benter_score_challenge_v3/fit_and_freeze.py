@@ -100,7 +100,8 @@ def collect_past():
 def flatten(races,selected):
     indexes=[FIELDS.index(s) for s in selected]
     a=np.concatenate([r["features"][:,indexes] for r in races])
-    labels=np.concatenate([np.arange(len(r["cars"]))==r["winner"] for r in races]).astype(int)
+    # Unseen forecast races have no winner label: never inspect outcomes to predict.
+    labels=np.concatenate([np.arange(len(r["cars"]))==r["winner"] if "winner" in r else np.zeros(len(r["cars"]),dtype=bool) for r in races]).astype(int)
     boundaries=np.cumsum([0]+[len(r["cars"]) for r in races])
     return a,labels,boundaries
 
