@@ -1,0 +1,89 @@
+{
+  "protocol": "Training 2022-2024; untouched 2025 and 2026H1. Labels from REAL finish. Features PRE-RACE only.",
+  "source": "data/grade_races g1g2/g3 ZIP via scripts/keirin_shogi_ninecar_v2.py",
+  "population": "9-car S-class G1,G2,G3, published line_id and positions, unique 1st/2nd/3rd",
+  "years": {
+    "2022": 422,
+    "2023": 456,
+    "2024": 2211,
+    "2025": 2201,
+    "2026": 941
+  },
+  "train_races": 3089,
+  "expected_labels_per_race": {
+    "top2": 1,
+    "top3": 3
+  },
+  "holdout": {
+    "2025": {
+      "top2": {
+        "baseline": {
+          "race_n": 2201,
+          "race_pair_nll": 3.0061519145965576,
+          "top_pair_hit": 0.1935483870967742,
+          "top3_pair_capture": 0.3902771467514766
+        },
+        "mechanism": {
+          "race_n": 2201,
+          "race_pair_nll": 2.7399966716766357,
+          "top_pair_hit": 0.2839618355293049,
+          "top3_pair_capture": 0.45933666515220356
+        },
+        "nll_gain": 0.2661552429199219,
+        "improved": true
+      },
+      "top3": {
+        "baseline": {
+          "race_n": 2201,
+          "pair_brier": 0.07184891402721405,
+          "binary_nll": 0.26059940457344055,
+          "top_pair_both_top3": 0.34711494775102225
+        },
+        "mechanism": {
+          "race_n": 2201,
+          "pair_brier": 0.06941057741641998,
+          "binary_nll": 0.25001388788223267,
+          "top_pair_both_top3": 0.4116310767832803
+        },
+        "nll_gain": 0.010585516691207886,
+        "improved": true
+      }
+    },
+    "2026H1": {
+      "top2": {
+        "baseline": {
+          "race_n": 941,
+          "race_pair_nll": 2.9251489639282227,
+          "top_pair_hit": 0.255047821466525,
+          "top3_pair_capture": 0.4218916046758767
+        },
+        "mechanism": {
+          "race_n": 941,
+          "race_pair_nll": 2.6343870162963867,
+          "top_pair_hit": 0.310308182784272,
+          "top3_pair_capture": 0.5185972369819342
+        },
+        "nll_gain": 0.29076194763183594,
+        "improved": true
+      },
+      "top3": {
+        "baseline": {
+          "race_n": 941,
+          "pair_brier": 0.07159284502267838,
+          "binary_nll": 0.2585490345954895,
+          "top_pair_both_top3": 0.38575982996811903
+        },
+        "mechanism": {
+          "race_n": 941,
+          "pair_brier": 0.06915704905986786,
+          "binary_nll": 0.24829640984535217,
+          "top_pair_both_top3": 0.4165781083953241
+        },
+        "nll_gain": 0.010252624750137329,
+        "improved": true
+      }
+    }
+  },
+  "validated": true,
+  "status": "HOLDOUT_PASSED"
+}
