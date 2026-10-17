@@ -122,6 +122,10 @@ jobs:
             data/result_universe_v2
             research/result_alignment_v2
             .github/workflows/full-results-2021-2026.yml
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install requests beautifulsoup4
       - name: Reconcile known nonstandard podiums from existing source records
         run: |
           git fetch origin main
