@@ -1,0 +1,151 @@
+name: Collect national historic podium results alongside seven-bet odds archive
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/full-results-2021-2026.yml'
+  workflow_dispatch:
+    inputs:
+      days_per_shard:
+        description: 'Days per shard and run (1-12, 8 separate date shards)'
+        required: true
+        default: '4'
+        type: string
+  schedule:
+    - cron: '15 23 * * *'
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: historical-podium-2021-to-2026-h1
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: blob:none
+          sparse-checkout: |
+            data/result_universe_v2
+            data/audits/results_full_shards
+            research/result_alignment_v2
+            tests
+            .github/workflows/full-results-2021-2026.yml
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install requests beautifulsoup4 lxml
+      - name: Verify race-ID and source podium parsing invariants
+        run: python -m unittest discover -s tests -p 'test_result_days.py' -v
+      - name: Collect published daily-index and venue-list results
+        env:
+          SHARD: ${{ matrix.shard }}
+          DAYS: ${{ inputs.days_per_shard || '4' }}
+        run: |
+          python -u research/result_alignment_v2/collect_result_days.py \
+            --shard "$SHARD" --shards 8 --days "$DAYS" --pause 2
+      - name: Validate every saved podium strictly before writing remote
+        env:
+          SHARD: ${{ matrix.shard }}
+        run: |
+          python - <<'PY'
+          import gzip,json,re,os
+          from pathlib import Path
+          from datetime import date,timedelta
+          shard=int(os.environ['SHARD'])
+          state=json.loads(Path(f'data/audits/results_full_shards/shard_{shard:02d}.json').read_text())
+          assert state['shards']==8 and state['shard']==shard
+          checked=0
+          for r in state.get('last_batch',[]):
+            day=date.fromisoformat(r['day'])
+            file=Path(f'data/result_universe_v2/daily/{day.year}/{day}.jsonl.gz')
+            if not file.exists():continue
+            with gzip.open(file,'rt') as f:
+              for ln in f:
+                x=json.loads(ln)
+                rid=x['race_id']; cars=x['finish_order']
+                assert re.fullmatch(r'\d{16}',rid)
+                actual=date(int(rid[2:6]),int(rid[6:8]),int(rid[8:10]))+timedelta(days=int(rid[10:12])-1)
+                assert actual==day
+                assert len(cars)==3 and len(set(cars))==3 and all(1<=c<=9 for c in cars)
+                assert x['source_url'].startswith('https://keirin.kdreams.jp/')
+                checked+=1
+          print('VALIDATED_PUBLISHED_PODIUMS',checked,'SHARD',shard)
+          PY
+      - name: Commit result-only daily files, errors and shard progress
+        env:
+          SHARD: ${{ matrix.shard }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f data/result_universe_v2/daily data/result_universe_v2/ledger
+          git add "data/audits/results_full_shards/shard_$(printf '%02d' "$SHARD").json"
+          if git diff --cached --quiet; then
+            echo 'No new saved results/cursors'
+            exit 0
+          fi
+          git commit -m "data: collect published historical podiums shard $SHARD"
+          for n in 1 2 3 4 5 6 7 8 9 10; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then
+              echo "Result batch securely committed on attempt $n"
+              exit 0
+            fi
+            sleep 3
+          done
+          exit 1
+
+  continue_backfill:
+    needs: collect
+    if: ${{ needs.collect.result == 'success' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          filter: blob:none
+          sparse-checkout: |
+            data/audits/results_full_shards
+            .github/workflows/full-results-2021-2026.yml
+      - name: Resume only while sources are healthy and dates remain
+        id: check
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          states=[]
+          for shard in range(8):
+            p=Path(f'data/audits/results_full_shards/shard_{shard:02d}.json')
+            states.append(json.loads(p.read_text()) if p.exists() else {'shard':shard,'finished_forward_pass':False})
+          paused=[x['shard'] for x in states if x.get('paused_for_source_failure')]
+          unfinished=[x['shard'] for x in states if not x.get('finished_forward_pass')]
+          proceed=bool(unfinished) and not paused
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+            f.write(f"proceed={'true' if proceed else 'false'}\n")
+          print('PUBLISHED_RESULTS_FORWARD_CENSUS',json.dumps({
+              'unfinished_shards':unfinished,'paused_shards':paused,
+              'auto_continue':proceed
+          }))
+          PY
+      - name: Re-dispatch the next distributed historical result batch
+        if: ${{ steps.check.outputs.proceed == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          DAYS: ${{ inputs.days_per_shard || '4' }}
+        run: gh workflow run full-results-2021-2026.yml --ref main -f days_per_shard="$DAYS"
