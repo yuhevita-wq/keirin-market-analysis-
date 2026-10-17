@@ -15,7 +15,8 @@ const baseRace={
 test('actual coexistence model returns 36 joint pairs, not a four-ticket selection',()=>{
   const out=predictObservedPair9(baseRace,bundle);
   assert.equal(out.rows.length,36);
-  assert.equal(out.top2Ranking.length,27);
+  assert.equal(out.top2Ranking.length,12);
+  assert.equal(out.allCrossTop2.length,27);
   assert.equal(out.status,'PAIR_ONLY_NOT_4TICKET');
   assert.ok(Math.abs(out.rows.reduce((s,r)=>s+r.top2,0)-1)<1e-10);
   assert.ok(out.rows.every(r=>r.top3>0&&r.top3<1&&r.top2>0&&r.top2<1));
