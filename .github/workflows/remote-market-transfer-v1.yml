@@ -1,0 +1,48 @@
+name: Discover donor-to-distant-result market mispricing
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/remote_market_transfer_v1/analyze.py'
+      - '.github/workflows/remote-market-transfer-v1.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: remote-market-transfer-v1
+  cancel-in-progress: false
+jobs:
+  analyze:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install numpy scipy
+      - name: Evaluate all nonlocal donor and receiver price error groups
+        run: python -u research/remote_market_transfer_v1/analyze.py
+      - name: Validate outcome and publish full audit
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('data/audits/remote_market_transfer_v1.json'))
+          assert r['year']['2025']['races']>8000
+          assert r['year']['2026']['races']>4000
+          assert r['search']['num_signatures']>1000
+          assert r['only_odds_features']==['3連単 full price distribution','3連複 full price distribution']
+          print('VALIDATED',r['search'],flush=True)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/audits/remote_market_transfer_v1.json
+          git commit -m 'research: save real remote-market donor-to-result price audit' || exit 0
+          for attempt in 1 2 3 4; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
