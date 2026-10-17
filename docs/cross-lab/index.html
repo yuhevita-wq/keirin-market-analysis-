@@ -106,6 +106,7 @@ import {compareJointForecast,ticketMarket} from "./cross_comparison.mjs";
 import {predictMarket} from "./market_model.mjs";
 import {predictJoint,pairCompetition} from "./joint_model.mjs";
 import {applyCoexistence} from "./coexistence.mjs";
+import {predictObservedPair9} from "./coexistence9.mjs";
 import {selectMainCross,buildAuxiliaryThirds} from "./cross_presentation.mjs";
 import {buildHorizontalLineReference,renderHorizontalLineReference} from "./horizontal_line_reference.mjs";
 import {candidateMatrix,reviewSubmission,reviewLabels,crossLabel} from "./cross_review.mjs";
@@ -114,7 +115,7 @@ const escapeHtml=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;"
 let loaded=null, current=null, lastRecord=null;
 const updateStatus=(message,error=false)=>{byId("loadStatus").className=error?"alert":"info";byId("loadStatus").textContent=message};
 const stats=["b","nige","makuri","sashi","mark","score","age","win_rate","top3_rate"];
-let frozenModel=null,jointModel=null,coexistenceModel=null,activeForecast=null;
+let frozenModel=null,jointModel=null,coexistenceModel=null,observedPair9Bundle=null,activeForecast=null;
 function initialize(race){
   current=normalizeRace(race);
   const positions=new Map();
@@ -236,6 +237,18 @@ async function analyze(){
   try{
     const race=gatheredRace(),odds=parseOdds();
     const result=analyzeCross(race,{limit:1000});
+    let pair9Analysis=null,pair9Error="";
+    if(race.entries.length===9 && /[SsＳｓ]級/.test(race.race_type) &&
+        ["G1","G2","G3"].includes(String(race.meeting_grade).toUpperCase())){
+      try{
+        if(!observedPair9Bundle){
+          const response=await fetch("./coexistence9_frozen.json");
+          if(!response.ok)throw Error("9車の実結果共存モデルを取得できません");
+          observedPair9Bundle=await response.json();
+        }
+        pair9Analysis=predictObservedPair9(race,observedPair9Bundle);
+      }catch(e){pair9Error=e.message;}
+    }
     let roleConditions=[],roleConditionError="";
     if(race.entries.length===7 && race.lines.map(l=>l.length).sort().join() === "2,2,3"){
       try {
@@ -295,7 +308,7 @@ async function analyze(){
     }
     const sameRace=lastRecord && lastRecord.input.race_id===race.race_id && JSON.stringify(lastRecord.input.lines)===JSON.stringify(race.lines);
     const lineComparisons=(sameRace?[...document.querySelectorAll('[data-line-comparison]')]:[]).map(e=>({linePair:e.dataset.lineComparison,reason:e.value.trim()}));
-    lastRecord={roleConditions,roleConditionVersion:roleConditionBundle?.version??null,lineComparisons,version:result.version,recordedAt:new Date().toISOString(),input:race,odds,decision:decision||selection.record||null,
+    lastRecord={pair9Analysis,pair9Error,roleConditions,roleConditionVersion:roleConditionBundle?.version??null,lineComparisons,version:result.version,recordedAt:new Date().toISOString(),input:race,odds,decision:decision||selection.record||null,
       forecast,objective,comparison,selection:{signature:selection.main?.signature??null,reason:selection.reason,label:selection.label,record:selection.record??null,basis:selection.basis??null}};
     const lineLabel=result.race.lines.map(l=>l.join("-")).join(" / ");
     const incomplete=result.incompleteCars.length;
@@ -324,6 +337,26 @@ async function analyze(){
     }
     if(roleConditionError)html+='<p class="info">'+escapeHtml(roleConditionError)+'</p>';
     if(modelMessage)html+='<p class="info">自動モデル比較：'+escapeHtml(modelMessage)+'</p>';
+    if(pair9Error)html+='<p class="alert">9車共存実測モデル：'+escapeHtml(pair9Error)+'</p>';
+    if(pair9Analysis){
+      const percent=p=>(p*100).toFixed(2)+'%',delta=p=>(p>=0?'+':'')+(p*100).toFixed(2)+'pt';
+      html+='<section><h3>9車｜実結果学習：ペア共存と個人能力のみの差</h3>'+
+        '<p class="info">2022～2024年3,089Rで学習、2025年2,201R・2026年上半期941Rで独立検証。両年で個人能力のみのモデルを超えました。'+
+        '<b>2人の3着以内同時入着と、1・2着同時連対は別の事象</b>です。いずれもクロス4点の確率ではありません。</p>'+
+        '<h4>異線ペア・2人とも3着以内</h4>'+
+        '<div class="tablewrap"><table><thead><tr><th>順位</th><th>ペア</th><th>共存モデル</th><th>個人能力のみ</th><th>相互作用による差</th></tr></thead><tbody>';
+      for(const [i,row] of pair9Analysis.top3Ranking.entries()){
+        html+='<tr><td>'+(i+1)+'</td><td>'+row.pair.join('・')+'</td><td>'+percent(row.top3)+'</td><td>'+
+          percent(row.top3RiderOnly)+'</td><td>'+delta(row.interactionDeltaTop3)+'</td></tr>';
+      }
+      html+='</tbody></table></div><h4>異線ペア・1着と2着を占める</h4>'+
+        '<div class="tablewrap"><table><thead><tr><th>順位</th><th>ペア</th><th>共存モデル</th><th>個人能力のみ</th><th>相互作用による差</th></tr></thead><tbody>';
+      for(const [i,row] of pair9Analysis.top2Ranking.entries()){
+        html+='<tr><td>'+(i+1)+'</td><td>'+row.pair.join('・')+'</td><td>'+percent(row.top2)+'</td><td>'+
+          percent(row.top2RiderOnly)+'</td><td>'+delta(row.interactionDeltaTop2)+'</td></tr>';
+      }
+      html+='</tbody></table></div><p class="alert"><b>4点主採用には未使用。</b>3着候補の条件付き分布が未学習のため、共存順位を4点順位へ変換しません。差はモデルの予測差で、個別展開の因果証明ではありません。</p></section>';
+    }
     if(comparison?.coexistence?.audit){
       const audit=comparison.coexistence.audit,pct=p=>(100*p).toFixed(1)+'%',lineLabel=z=>z.lines.map(i=>race.lines[i].join('-')).join(' × ');
       html+='<section><h3>強強の同時成立／強弱との比較</h3><p class="muted">'+escapeHtml(audit.definition)+'。同時成立は2人（2ライン）で1・2着を分け合う事象です。3着まで残るかは基本4点で別に比較します。</p>';
