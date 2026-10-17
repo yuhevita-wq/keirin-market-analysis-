@@ -74,7 +74,7 @@ export function predictObservedPair9(input,bundle){
     ||bundle?.evaluationStatus!=='HOLDOUT_PASSED'||bundle?.canAutoRankCross4!==false)
     throw Error('未検証の9車共存モデルを採用判定に使用しません');
   const {race,pairs}=pairFeaturePack9(input);
-  const date=String(race.race_id).match(/^\\d{2}(\\d{4})(\\d{2})(\\d{2})/);
+  const date=String(race.race_id).match(/^\d{2}(\d{4})(\d{2})(\d{2})/);
   if(!date||date.slice(1).join('-')<=bundle.trainThrough)throw Error('出走レースID・学習期間の検証に失敗');
   const scores=pairs.map(z=>{
     const full=[...z.base,...z.mechanism];
