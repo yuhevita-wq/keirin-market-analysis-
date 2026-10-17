@@ -1,0 +1,2088 @@
+{
+  "status": "REAL_BREAK_EVEN_TEST_NO_PROFIT_PROMISE",
+  "scope": "odds-only male 2021 to 2026-H1; 3連複 and 3連単 complete final books",
+  "training_2023_races": 7283,
+  "validation_2024_races": 8147,
+  "testing_2025_2026_races": 12455,
+  "disallowed_inputs": [
+    "predicted lines",
+    "score",
+    "riders",
+    "race cards",
+    "actual results in inputs",
+    "payout in inputs"
+  ],
+  "result_labels": [
+    "actual finish order only used for fitting/evaluation"
+  ],
+  "market_probability": "q3set from 3連単 and qt from 3連複; normalized inverse odds",
+  "target": "p(trio set) proportional qt(set) times exp(local and all nonlocal bias features)",
+  "order": "p(order)=p(set)*cond(order)^kappa / sum_order_in_set cond^kappa",
+  "nonlocal_definition": "for EACH target set aggregate all disjoint and one-shared source sets cross-market odds residuals; use signed and positive/negative components plus interactions",
+  "ticket_solution": "for either ticket kind buy exactly those combinations with p_model(ticket)*final_odds(ticket)>threshold, no forced cap, abstain if empty",
+  "break_even": "100 yen expected profit =100*(p*odds-1)",
+  "risk_note": "one ticket 100 yen flat; all selected tickets purchased; no ex-post ticket pruning; interdependent outcomes make naive ticketwise Kelly unsafe",
+  "price_note": "final archived odds were not available at T-15; real-money profitability not validated",
+  "exposure_note": "2 markets only; other five betting pools archived separately as encrypted and not joined",
+  "audit": {
+    "odds_rows": 34277,
+    "valid_joined": 31320,
+    "missing_result": 2957
+  },
+  "label_counts": {
+    "2021": 1076,
+    "2022": 2359,
+    "2023": 7283,
+    "2024": 8147,
+    "2025": 8208,
+    "2026": 4247
+  },
+  "races_by_year": {
+    "2021": 1076,
+    "2022": 2359,
+    "2023": 7283,
+    "2024": 8147,
+    "2025": 8208,
+    "2026": 4247
+  },
+  "features": [
+    "self_cross_market_log_ratio",
+    "market_popularity_temperature",
+    "disjoint_signed_cross_gap",
+    "one_shared_signed_cross_gap",
+    "disjoint_positive_gap",
+    "disjoint_negative_gap",
+    "one_shared_positive_gap",
+    "one_shared_negative_gap",
+    "disjoint_gap_x_local_ratio",
+    "one_shared_gap_x_local_ratio",
+    "disjoint_gap_x_popularity",
+    "disjoint_gap_x_one_shared_gap"
+  ],
+  "lambda_tuning_2024": {
+    "local": [
+      {
+        "lambda": 0.002,
+        "logloss_2024": 2.800598621368408
+      },
+      {
+        "lambda": 0.015,
+        "logloss_2024": 2.8047497272491455
+      },
+      {
+        "lambda": 0.08,
+        "logloss_2024": 2.810992479324341
+      },
+      {
+        "lambda": 0.3,
+        "logloss_2024": 2.8157451152801514
+      }
+    ],
+    "nonlocal": [
+      {
+        "lambda": 0.002,
+        "logloss_2024": 2.799224853515625
+      },
+      {
+        "lambda": 0.015,
+        "logloss_2024": 2.804126024246216
+      },
+      {
+        "lambda": 0.08,
+        "logloss_2024": 2.8101367950439453
+      },
+      {
+        "lambda": 0.3,
+        "logloss_2024": 2.814754009246826
+      }
+    ]
+  },
+  "chosen_lambdas": {
+    "local": 0.002,
+    "nonlocal": 0.002
+  },
+  "conditional_order_temperature_2023": 1.0474017431887908,
+  "coefficients": {
+    "market": {},
+    "local": {
+      "self_cross_market_log_ratio": 1.0784502029418945,
+      "market_popularity_temperature": 0.1576133519411087
+    },
+    "nonlocal": {
+      "self_cross_market_log_ratio": 1.1411868333816528,
+      "market_popularity_temperature": 0.13626629114151,
+      "disjoint_signed_cross_gap": 0.10832036286592484,
+      "one_shared_signed_cross_gap": 0.03451882675290108,
+      "disjoint_positive_gap": 0.3009617328643799,
+      "disjoint_negative_gap": 0.19264109432697296,
+      "one_shared_positive_gap": 0.2894677519798279,
+      "one_shared_negative_gap": 0.2549482583999634,
+      "disjoint_gap_x_local_ratio": -0.004900195635855198,
+      "one_shared_gap_x_local_ratio": 0.17160490155220032,
+      "disjoint_gap_x_popularity": -0.07795789837837219,
+      "disjoint_gap_x_one_shared_gap": 0.004297162871807814
+    }
+  },
+  "results": {
+    "2023": {
+      "races": 7283,
+      "probability_score": {
+        "market": {
+          "sets_logloss": 2.851093,
+          "orders_logloss": 4.3073831,
+          "sets_brier": 0.8909400105476379
+        },
+        "local": {
+          "sets_logloss": 2.8361926,
+          "orders_logloss": 4.2919784,
+          "sets_brier": 0.8895630836486816
+        },
+        "nonlocal": {
+          "sets_logloss": 2.8348458,
+          "orders_logloss": 4.2906316,
+          "sets_brier": 0.8893852233886719
+        }
+      },
+      "ticket_roi": {
+        "market": {
+          "3連複": {
+            "1.0": {
+              "races": 7283,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74535,
+              "maximum_model_EV": 0.7492
+            },
+            "1.03": {
+              "races": 7283,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74535,
+              "maximum_model_EV": 0.7492
+            },
+            "1.05": {
+              "races": 7283,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74535,
+              "maximum_model_EV": 0.7492
+            },
+            "1.1": {
+              "races": 7283,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74535,
+              "maximum_model_EV": 0.7492
+            },
+            "1.2": {
+              "races": 7283,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74535,
+              "maximum_model_EV": 0.7492
+            }
+          },
+          "3連単": {
+            "1.0": {
+              "races": 7283,
+              "bet_races": 7037,
+              "ticket_count": 457758,
+              "stake_yen": 45775800,
+              "payout_yen": 23641330,
+              "net_yen": -22134470,
+              "roi_pct": 51.6459,
+              "roi_approx95pct_ci": [
+                40.688,
+                62.604
+              ],
+              "hits": 225,
+              "mean_max_model_EV": 1.43208,
+              "maximum_model_EV": 6.1587
+            },
+            "1.03": {
+              "races": 7283,
+              "bet_races": 6892,
+              "ticket_count": 392328,
+              "stake_yen": 39232800,
+              "payout_yen": 20095820,
+              "net_yen": -19136980,
+              "roi_pct": 51.222,
+              "roi_approx95pct_ci": [
+                39.1,
+                63.344
+              ],
+              "hits": 176,
+              "mean_max_model_EV": 1.43208,
+              "maximum_model_EV": 6.1587
+            },
+            "1.05": {
+              "races": 7283,
+              "bet_races": 6783,
+              "ticket_count": 353220,
+              "stake_yen": 35322000,
+              "payout_yen": 18110140,
+              "net_yen": -17211860,
+              "roi_pct": 51.2716,
+              "roi_approx95pct_ci": [
+                38.174,
+                64.37
+              ],
+              "hits": 147,
+              "mean_max_model_EV": 1.43208,
+              "maximum_model_EV": 6.1587
+            },
+            "1.1": {
+              "races": 7283,
+              "bet_races": 6407,
+              "ticket_count": 272880,
+              "stake_yen": 27288000,
+              "payout_yen": 13149900,
+              "net_yen": -14138100,
+              "roi_pct": 48.1893,
+              "roi_approx95pct_ci": [
+                33.474,
+                62.905
+              ],
+              "hits": 100,
+              "mean_max_model_EV": 1.43208,
+              "maximum_model_EV": 6.1587
+            },
+            "1.2": {
+              "races": 7283,
+              "bet_races": 5399,
+              "ticket_count": 160686,
+              "stake_yen": 16068600,
+              "payout_yen": 8865000,
+              "net_yen": -7203600,
+              "roi_pct": 55.1697,
+              "roi_approx95pct_ci": [
+                32.97,
+                77.369
+              ],
+              "hits": 55,
+              "mean_max_model_EV": 1.43208,
+              "maximum_model_EV": 6.1587
+            }
+          }
+        },
+        "local": {
+          "3連複": {
+            "1.0": {
+              "races": 7283,
+              "bet_races": 1282,
+              "ticket_count": 1673,
+              "stake_yen": 167300,
+              "payout_yen": 112380,
+              "net_yen": -54920,
+              "roi_pct": 67.1727,
+              "roi_approx95pct_ci": [
+                45.513,
+                88.832
+              ],
+              "hits": 70,
+              "mean_max_model_EV": 0.94688,
+              "maximum_model_EV": 2.2642
+            },
+            "1.03": {
+              "races": 7283,
+              "bet_races": 770,
+              "ticket_count": 968,
+              "stake_yen": 96800,
+              "payout_yen": 63520,
+              "net_yen": -33280,
+              "roi_pct": 65.6198,
+              "roi_approx95pct_ci": [
+                34.5,
+                96.74
+              ],
+              "hits": 34,
+              "mean_max_model_EV": 0.94688,
+              "maximum_model_EV": 2.2642
+            },
+            "1.05": {
+              "races": 7283,
+              "bet_races": 561,
+              "ticket_count": 704,
+              "stake_yen": 70400,
+              "payout_yen": 44970,
+              "net_yen": -25430,
+              "roi_pct": 63.8778,
+              "roi_approx95pct_ci": [
+                25.158,
+                102.598
+              ],
+              "hits": 18,
+              "mean_max_model_EV": 0.94688,
+              "maximum_model_EV": 2.2642
+            },
+            "1.1": {
+              "races": 7283,
+              "bet_races": 265,
+              "ticket_count": 320,
+              "stake_yen": 32000,
+              "payout_yen": 19090,
+              "net_yen": -12910,
+              "roi_pct": 59.6563,
+              "roi_approx95pct_ci": [
+                0,
+                119.909
+              ],
+              "hits": 7,
+              "mean_max_model_EV": 0.94688,
+              "maximum_model_EV": 2.2642
+            },
+            "1.2": {
+              "races": 7283,
+              "bet_races": 75,
+              "ticket_count": 87,
+              "stake_yen": 8700,
+              "payout_yen": 0,
+              "net_yen": -8700,
+              "roi_pct": 0.0,
+              "roi_approx95pct_ci": [
+                0,
+                0.0
+              ],
+              "hits": 0,
+              "mean_max_model_EV": 0.94688,
+              "maximum_model_EV": 2.2642
+            }
+          },
+          "3連単": {
+            "1.0": {
+              "races": 7283,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.82084,
+              "maximum_model_EV": 0.8598
+            },
+            "1.03": {
+              "races": 7283,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.82084,
+              "maximum_model_EV": 0.8598
+            },
+            "1.05": {
+              "races": 7283,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.82084,
+              "maximum_model_EV": 0.8598
+            },
+            "1.1": {
+              "races": 7283,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.82084,
+              "maximum_model_EV": 0.8598
+            },
+            "1.2": {
+              "races": 7283,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.82084,
+              "maximum_model_EV": 0.8598
+            }
+          }
+        },
+        "nonlocal": {
+          "3連複": {
+            "1.0": {
+              "races": 7283,
+              "bet_races": 1235,
+              "ticket_count": 1773,
+              "stake_yen": 177300,
+              "payout_yen": 100990,
+              "net_yen": -76310,
+              "roi_pct": 56.96,
+              "roi_approx95pct_ci": [
+                34.675,
+                79.245
+              ],
+              "hits": 56,
+              "mean_max_model_EV": 0.94792,
+              "maximum_model_EV": 2.2015
+            },
+            "1.03": {
+              "races": 7283,
+              "bet_races": 811,
+              "ticket_count": 1136,
+              "stake_yen": 113600,
+              "payout_yen": 72010,
+              "net_yen": -41590,
+              "roi_pct": 63.3891,
+              "roi_approx95pct_ci": [
+                30.842,
+                95.936
+              ],
+              "hits": 28,
+              "mean_max_model_EV": 0.94792,
+              "maximum_model_EV": 2.2015
+            },
+            "1.05": {
+              "races": 7283,
+              "bet_races": 622,
+              "ticket_count": 849,
+              "stake_yen": 84900,
+              "payout_yen": 47510,
+              "net_yen": -37390,
+              "roi_pct": 55.96,
+              "roi_approx95pct_ci": [
+                19.047,
+                92.872
+              ],
+              "hits": 16,
+              "mean_max_model_EV": 0.94792,
+              "maximum_model_EV": 2.2015
+            },
+            "1.1": {
+              "races": 7283,
+              "bet_races": 337,
+              "ticket_count": 443,
+              "stake_yen": 44300,
+              "payout_yen": 33670,
+              "net_yen": -10630,
+              "roi_pct": 76.0045,
+              "roi_approx95pct_ci": [
+                11.71,
+                140.299
+              ],
+              "hits": 9,
+              "mean_max_model_EV": 0.94792,
+              "maximum_model_EV": 2.2015
+            },
+            "1.2": {
+              "races": 7283,
+              "bet_races": 121,
+              "ticket_count": 159,
+              "stake_yen": 15900,
+              "payout_yen": 2790,
+              "net_yen": -13110,
+              "roi_pct": 17.5472,
+              "roi_approx95pct_ci": [
+                0,
+                41.499
+              ],
+              "hits": 2,
+              "mean_max_model_EV": 0.94792,
+              "maximum_model_EV": 2.2015
+            }
+          },
+          "3連単": {
+            "1.0": {
+              "races": 7283,
+              "bet_races": 66,
+              "ticket_count": 322,
+              "stake_yen": 32200,
+              "payout_yen": 5410,
+              "net_yen": -26790,
+              "roi_pct": 16.8012,
+              "roi_approx95pct_ci": [
+                0,
+                40.668
+              ],
+              "hits": 2,
+              "mean_max_model_EV": 0.84811,
+              "maximum_model_EV": 1.2869
+            },
+            "1.03": {
+              "races": 7283,
+              "bet_races": 45,
+              "ticket_count": 191,
+              "stake_yen": 19100,
+              "payout_yen": 0,
+              "net_yen": -19100,
+              "roi_pct": 0.0,
+              "roi_approx95pct_ci": [
+                0,
+                0.0
+              ],
+              "hits": 0,
+              "mean_max_model_EV": 0.84811,
+              "maximum_model_EV": 1.2869
+            },
+            "1.05": {
+              "races": 7283,
+              "bet_races": 32,
+              "ticket_count": 134,
+              "stake_yen": 13400,
+              "payout_yen": 0,
+              "net_yen": -13400,
+              "roi_pct": 0.0,
+              "roi_approx95pct_ci": [
+                0,
+                0.0
+              ],
+              "hits": 0,
+              "mean_max_model_EV": 0.84811,
+              "maximum_model_EV": 1.2869
+            },
+            "1.1": {
+              "races": 7283,
+              "bet_races": 13,
+              "ticket_count": 57,
+              "stake_yen": 5700,
+              "payout_yen": 0,
+              "net_yen": -5700,
+              "roi_pct": 0.0,
+              "roi_approx95pct_ci": [
+                0,
+                0.0
+              ],
+              "hits": 0,
+              "mean_max_model_EV": 0.84811,
+              "maximum_model_EV": 1.2869
+            },
+            "1.2": {
+              "races": 7283,
+              "bet_races": 4,
+              "ticket_count": 11,
+              "stake_yen": 1100,
+              "payout_yen": 0,
+              "net_yen": -1100,
+              "roi_pct": 0.0,
+              "roi_approx95pct_ci": [
+                0,
+                0.0
+              ],
+              "hits": 0,
+              "mean_max_model_EV": 0.84811,
+              "maximum_model_EV": 1.2869
+            }
+          }
+        }
+      }
+    },
+    "2024": {
+      "races": 8147,
+      "probability_score": {
+        "market": {
+          "sets_logloss": 2.8214383,
+          "orders_logloss": 4.2786634,
+          "sets_brier": 0.8865271806716919
+        },
+        "local": {
+          "sets_logloss": 2.7985804,
+          "orders_logloss": 4.2555951,
+          "sets_brier": 0.8846426010131836
+        },
+        "nonlocal": {
+          "sets_logloss": 2.7963712,
+          "orders_logloss": 4.2533859,
+          "sets_brier": 0.8841943144798279
+        }
+      },
+      "ticket_roi": {
+        "market": {
+          "3連複": {
+            "1.0": {
+              "races": 8147,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74507,
+              "maximum_model_EV": 0.7566
+            },
+            "1.03": {
+              "races": 8147,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74507,
+              "maximum_model_EV": 0.7566
+            },
+            "1.05": {
+              "races": 8147,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74507,
+              "maximum_model_EV": 0.7566
+            },
+            "1.1": {
+              "races": 8147,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74507,
+              "maximum_model_EV": 0.7566
+            },
+            "1.2": {
+              "races": 8147,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74507,
+              "maximum_model_EV": 0.7566
+            }
+          },
+          "3連単": {
+            "1.0": {
+              "races": 8147,
+              "bet_races": 7842,
+              "ticket_count": 505422,
+              "stake_yen": 50542200,
+              "payout_yen": 23008530,
+              "net_yen": -27533670,
+              "roi_pct": 45.5234,
+              "roi_approx95pct_ci": [
+                35.3,
+                55.747
+              ],
+              "hits": 176,
+              "mean_max_model_EV": 1.41112,
+              "maximum_model_EV": 7.6493
+            },
+            "1.03": {
+              "races": 8147,
+              "bet_races": 7659,
+              "ticket_count": 434976,
+              "stake_yen": 43497600,
+              "payout_yen": 17239100,
+              "net_yen": -26258500,
+              "roi_pct": 39.6323,
+              "roi_approx95pct_ci": [
+                29.229,
+                50.035
+              ],
+              "hits": 128,
+              "mean_max_model_EV": 1.41112,
+              "maximum_model_EV": 7.6493
+            },
+            "1.05": {
+              "races": 8147,
+              "bet_races": 7503,
+              "ticket_count": 392790,
+              "stake_yen": 39279000,
+              "payout_yen": 15940920,
+              "net_yen": -23338080,
+              "roi_pct": 40.5838,
+              "roi_approx95pct_ci": [
+                29.321,
+                51.847
+              ],
+              "hits": 110,
+              "mean_max_model_EV": 1.41112,
+              "maximum_model_EV": 7.6493
+            },
+            "1.1": {
+              "races": 8147,
+              "bet_races": 6993,
+              "ticket_count": 304566,
+              "stake_yen": 30456600,
+              "payout_yen": 11113180,
+              "net_yen": -19343420,
+              "roi_pct": 36.4886,
+              "roi_approx95pct_ci": [
+                23.169,
+                49.808
+              ],
+              "hits": 63,
+              "mean_max_model_EV": 1.41112,
+              "maximum_model_EV": 7.6493
+            },
+            "1.2": {
+              "races": 8147,
+              "bet_races": 5818,
+              "ticket_count": 181578,
+              "stake_yen": 18157800,
+              "payout_yen": 6882410,
+              "net_yen": -11275390,
+              "roi_pct": 37.9033,
+              "roi_approx95pct_ci": [
+                20.371,
+                55.435
+              ],
+              "hits": 33,
+              "mean_max_model_EV": 1.41112,
+              "maximum_model_EV": 7.6493
+            }
+          }
+        },
+        "local": {
+          "3連複": {
+            "1.0": {
+              "races": 8147,
+              "bet_races": 1352,
+              "ticket_count": 1715,
+              "stake_yen": 171500,
+              "payout_yen": 244870,
+              "net_yen": 73370,
+              "roi_pct": 142.7813,
+              "roi_approx95pct_ci": [
+                56.151,
+                229.411
+              ],
+              "hits": 73,
+              "mean_max_model_EV": 0.94298,
+              "maximum_model_EV": 2.0788
+            },
+            "1.03": {
+              "races": 8147,
+              "bet_races": 809,
+              "ticket_count": 985,
+              "stake_yen": 98500,
+              "payout_yen": 193250,
+              "net_yen": 94750,
+              "roi_pct": 196.1929,
+              "roi_approx95pct_ci": [
+                47.474,
+                344.911
+              ],
+              "hits": 39,
+              "mean_max_model_EV": 0.94298,
+              "maximum_model_EV": 2.0788
+            },
+            "1.05": {
+              "races": 8147,
+              "bet_races": 601,
+              "ticket_count": 717,
+              "stake_yen": 71700,
+              "payout_yen": 160930,
+              "net_yen": 89230,
+              "roi_pct": 224.4491,
+              "roi_approx95pct_ci": [
+                22.593,
+                426.305
+              ],
+              "hits": 24,
+              "mean_max_model_EV": 0.94298,
+              "maximum_model_EV": 2.0788
+            },
+            "1.1": {
+              "races": 8147,
+              "bet_races": 279,
+              "ticket_count": 322,
+              "stake_yen": 32200,
+              "payout_yen": 68260,
+              "net_yen": 36060,
+              "roi_pct": 211.9876,
+              "roi_approx95pct_ci": [
+                7.871,
+                416.104
+              ],
+              "hits": 11,
+              "mean_max_model_EV": 0.94298,
+              "maximum_model_EV": 2.0788
+            },
+            "1.2": {
+              "races": 8147,
+              "bet_races": 91,
+              "ticket_count": 102,
+              "stake_yen": 10200,
+              "payout_yen": 4970,
+              "net_yen": -5230,
+              "roi_pct": 48.7255,
+              "roi_approx95pct_ci": [
+                0,
+                115.93
+              ],
+              "hits": 2,
+              "mean_max_model_EV": 0.94298,
+              "maximum_model_EV": 2.0788
+            }
+          },
+          "3連単": {
+            "1.0": {
+              "races": 8147,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.82012,
+              "maximum_model_EV": 0.8631
+            },
+            "1.03": {
+              "races": 8147,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.82012,
+              "maximum_model_EV": 0.8631
+            },
+            "1.05": {
+              "races": 8147,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.82012,
+              "maximum_model_EV": 0.8631
+            },
+            "1.1": {
+              "races": 8147,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.82012,
+              "maximum_model_EV": 0.8631
+            },
+            "1.2": {
+              "races": 8147,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.82012,
+              "maximum_model_EV": 0.8631
+            }
+          }
+        },
+        "nonlocal": {
+          "3連複": {
+            "1.0": {
+              "races": 8147,
+              "bet_races": 1254,
+              "ticket_count": 1758,
+              "stake_yen": 175800,
+              "payout_yen": 224850,
+              "net_yen": 49050,
+              "roi_pct": 127.901,
+              "roi_approx95pct_ci": [
+                43.355,
+                212.447
+              ],
+              "hits": 60,
+              "mean_max_model_EV": 0.94341,
+              "maximum_model_EV": 2.3352
+            },
+            "1.03": {
+              "races": 8147,
+              "bet_races": 789,
+              "ticket_count": 1068,
+              "stake_yen": 106800,
+              "payout_yen": 180760,
+              "net_yen": 73960,
+              "roi_pct": 169.2509,
+              "roi_approx95pct_ci": [
+                32.065,
+                306.437
+              ],
+              "hits": 35,
+              "mean_max_model_EV": 0.94341,
+              "maximum_model_EV": 2.3352
+            },
+            "1.05": {
+              "races": 8147,
+              "bet_races": 600,
+              "ticket_count": 794,
+              "stake_yen": 79400,
+              "payout_yen": 144530,
+              "net_yen": 65130,
+              "roi_pct": 182.0277,
+              "roi_approx95pct_ci": [
+                1.034,
+                363.021
+              ],
+              "hits": 19,
+              "mean_max_model_EV": 0.94341,
+              "maximum_model_EV": 2.3352
+            },
+            "1.1": {
+              "races": 8147,
+              "bet_races": 300,
+              "ticket_count": 390,
+              "stake_yen": 39000,
+              "payout_yen": 74990,
+              "net_yen": 35990,
+              "roi_pct": 192.2821,
+              "roi_approx95pct_ci": [
+                0,
+                519.696
+              ],
+              "hits": 5,
+              "mean_max_model_EV": 0.94341,
+              "maximum_model_EV": 2.3352
+            },
+            "1.2": {
+              "races": 8147,
+              "bet_races": 120,
+              "ticket_count": 153,
+              "stake_yen": 15300,
+              "payout_yen": 65850,
+              "net_yen": 50550,
+              "roi_pct": 430.3922,
+              "roi_approx95pct_ci": [
+                0,
+                1257.361
+              ],
+              "hits": 1,
+              "mean_max_model_EV": 0.94341,
+              "maximum_model_EV": 2.3352
+            }
+          },
+          "3連単": {
+            "1.0": {
+              "races": 8147,
+              "bet_races": 61,
+              "ticket_count": 250,
+              "stake_yen": 25000,
+              "payout_yen": 66720,
+              "net_yen": 41720,
+              "roi_pct": 266.88,
+              "roi_approx95pct_ci": [
+                0,
+                711.509
+              ],
+              "hits": 5,
+              "mean_max_model_EV": 0.84874,
+              "maximum_model_EV": 1.3724
+            },
+            "1.03": {
+              "races": 8147,
+              "bet_races": 33,
+              "ticket_count": 118,
+              "stake_yen": 11800,
+              "payout_yen": 64780,
+              "net_yen": 52980,
+              "roi_pct": 548.9831,
+              "roi_approx95pct_ci": [
+                0,
+                1497.653
+              ],
+              "hits": 3,
+              "mean_max_model_EV": 0.84874,
+              "maximum_model_EV": 1.3724
+            },
+            "1.05": {
+              "races": 8147,
+              "bet_races": 18,
+              "ticket_count": 69,
+              "stake_yen": 6900,
+              "payout_yen": 60550,
+              "net_yen": 53650,
+              "roi_pct": 877.5362,
+              "roi_approx95pct_ci": [
+                0,
+                2540.484
+              ],
+              "hits": 1,
+              "mean_max_model_EV": 0.84874,
+              "maximum_model_EV": 1.3724
+            },
+            "1.1": {
+              "races": 8147,
+              "bet_races": 8,
+              "ticket_count": 25,
+              "stake_yen": 2500,
+              "payout_yen": 0,
+              "net_yen": -2500,
+              "roi_pct": 0.0,
+              "roi_approx95pct_ci": [
+                0,
+                0.0
+              ],
+              "hits": 0,
+              "mean_max_model_EV": 0.84874,
+              "maximum_model_EV": 1.3724
+            },
+            "1.2": {
+              "races": 8147,
+              "bet_races": 3,
+              "ticket_count": 11,
+              "stake_yen": 1100,
+              "payout_yen": 0,
+              "net_yen": -1100,
+              "roi_pct": 0.0,
+              "roi_approx95pct_ci": [
+                0,
+                0.0
+              ],
+              "hits": 0,
+              "mean_max_model_EV": 0.84874,
+              "maximum_model_EV": 1.3724
+            }
+          }
+        }
+      }
+    },
+    "2025": {
+      "races": 8208,
+      "probability_score": {
+        "market": {
+          "sets_logloss": 2.8394028,
+          "orders_logloss": 4.3081442,
+          "sets_brier": 0.8901895880699158
+        },
+        "local": {
+          "sets_logloss": 2.822134,
+          "orders_logloss": 4.2907489,
+          "sets_brier": 0.8885074257850647
+        },
+        "nonlocal": {
+          "sets_logloss": 2.8196087,
+          "orders_logloss": 4.2882236,
+          "sets_brier": 0.8880438804626465
+        }
+      },
+      "ticket_roi": {
+        "market": {
+          "3連複": {
+            "1.0": {
+              "races": 8208,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74507,
+              "maximum_model_EV": 0.7816
+            },
+            "1.03": {
+              "races": 8208,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74507,
+              "maximum_model_EV": 0.7816
+            },
+            "1.05": {
+              "races": 8208,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74507,
+              "maximum_model_EV": 0.7816
+            },
+            "1.1": {
+              "races": 8208,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74507,
+              "maximum_model_EV": 0.7816
+            },
+            "1.2": {
+              "races": 8208,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74507,
+              "maximum_model_EV": 0.7816
+            }
+          },
+          "3連単": {
+            "1.0": {
+              "races": 8208,
+              "bet_races": 7705,
+              "ticket_count": 416976,
+              "stake_yen": 41697600,
+              "payout_yen": 17256830,
+              "net_yen": -24440770,
+              "roi_pct": 41.3857,
+              "roi_approx95pct_ci": [
+                31.492,
+                51.279
+              ],
+              "hits": 158,
+              "mean_max_model_EV": 1.36893,
+              "maximum_model_EV": 5.8883
+            },
+            "1.03": {
+              "races": 8208,
+              "bet_races": 7476,
+              "ticket_count": 352560,
+              "stake_yen": 35256000,
+              "payout_yen": 13199620,
+              "net_yen": -22056380,
+              "roi_pct": 37.4394,
+              "roi_approx95pct_ci": [
+                27.316,
+                47.562
+              ],
+              "hits": 115,
+              "mean_max_model_EV": 1.36893,
+              "maximum_model_EV": 5.8883
+            },
+            "1.05": {
+              "races": 8208,
+              "bet_races": 7276,
+              "ticket_count": 315757,
+              "stake_yen": 31575700,
+              "payout_yen": 11027000,
+              "net_yen": -20548700,
+              "roi_pct": 34.9224,
+              "roi_approx95pct_ci": [
+                24.597,
+                45.247
+              ],
+              "hits": 93,
+              "mean_max_model_EV": 1.36893,
+              "maximum_model_EV": 5.8883
+            },
+            "1.1": {
+              "races": 8208,
+              "bet_races": 6692,
+              "ticket_count": 237882,
+              "stake_yen": 23788200,
+              "payout_yen": 8063620,
+              "net_yen": -15724580,
+              "roi_pct": 33.8976,
+              "roi_approx95pct_ci": [
+                21.32,
+                46.475
+              ],
+              "hits": 57,
+              "mean_max_model_EV": 1.36893,
+              "maximum_model_EV": 5.8883
+            },
+            "1.2": {
+              "races": 8208,
+              "bet_races": 5353,
+              "ticket_count": 136704,
+              "stake_yen": 13670400,
+              "payout_yen": 4284250,
+              "net_yen": -9386150,
+              "roi_pct": 31.3396,
+              "roi_approx95pct_ci": [
+                13.465,
+                49.215
+              ],
+              "hits": 24,
+              "mean_max_model_EV": 1.36893,
+              "maximum_model_EV": 5.8883
+            }
+          }
+        },
+        "local": {
+          "3連複": {
+            "1.0": {
+              "races": 8208,
+              "bet_races": 1524,
+              "ticket_count": 1960,
+              "stake_yen": 196000,
+              "payout_yen": 216940,
+              "net_yen": 20940,
+              "roi_pct": 110.6837,
+              "roi_approx95pct_ci": [
+                50.878,
+                170.489
+              ],
+              "hits": 73,
+              "mean_max_model_EV": 0.9453,
+              "maximum_model_EV": 2.0284
+            },
+            "1.03": {
+              "races": 8208,
+              "bet_races": 964,
+              "ticket_count": 1173,
+              "stake_yen": 117300,
+              "payout_yen": 111910,
+              "net_yen": -5390,
+              "roi_pct": 95.4049,
+              "roi_approx95pct_ci": [
+                56.144,
+                134.666
+              ],
+              "hits": 41,
+              "mean_max_model_EV": 0.9453,
+              "maximum_model_EV": 2.0284
+            },
+            "1.05": {
+              "races": 8208,
+              "bet_races": 707,
+              "ticket_count": 842,
+              "stake_yen": 84200,
+              "payout_yen": 83560,
+              "net_yen": -640,
+              "roi_pct": 99.2399,
+              "roi_approx95pct_ci": [
+                49.532,
+                148.948
+              ],
+              "hits": 27,
+              "mean_max_model_EV": 0.9453,
+              "maximum_model_EV": 2.0284
+            },
+            "1.1": {
+              "races": 8208,
+              "bet_races": 340,
+              "ticket_count": 393,
+              "stake_yen": 39300,
+              "payout_yen": 53990,
+              "net_yen": 14690,
+              "roi_pct": 137.3791,
+              "roi_approx95pct_ci": [
+                60.186,
+                214.572
+              ],
+              "hits": 17,
+              "mean_max_model_EV": 0.9453,
+              "maximum_model_EV": 2.0284
+            },
+            "1.2": {
+              "races": 8208,
+              "bet_races": 98,
+              "ticket_count": 110,
+              "stake_yen": 11000,
+              "payout_yen": 0,
+              "net_yen": -11000,
+              "roi_pct": 0.0,
+              "roi_approx95pct_ci": [
+                0,
+                0.0
+              ],
+              "hits": 0,
+              "mean_max_model_EV": 0.9453,
+              "maximum_model_EV": 2.0284
+            }
+          },
+          "3連単": {
+            "1.0": {
+              "races": 8208,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.82016,
+              "maximum_model_EV": 0.8604
+            },
+            "1.03": {
+              "races": 8208,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.82016,
+              "maximum_model_EV": 0.8604
+            },
+            "1.05": {
+              "races": 8208,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.82016,
+              "maximum_model_EV": 0.8604
+            },
+            "1.1": {
+              "races": 8208,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.82016,
+              "maximum_model_EV": 0.8604
+            },
+            "1.2": {
+              "races": 8208,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.82016,
+              "maximum_model_EV": 0.8604
+            }
+          }
+        },
+        "nonlocal": {
+          "3連複": {
+            "1.0": {
+              "races": 8208,
+              "bet_races": 1451,
+              "ticket_count": 2026,
+              "stake_yen": 202600,
+              "payout_yen": 230480,
+              "net_yen": 27880,
+              "roi_pct": 113.7611,
+              "roi_approx95pct_ci": [
+                54.127,
+                173.395
+              ],
+              "hits": 63,
+              "mean_max_model_EV": 0.94545,
+              "maximum_model_EV": 2.2237
+            },
+            "1.03": {
+              "races": 8208,
+              "bet_races": 956,
+              "ticket_count": 1291,
+              "stake_yen": 129100,
+              "payout_yen": 114980,
+              "net_yen": -14120,
+              "roi_pct": 89.0627,
+              "roi_approx95pct_ci": [
+                51.858,
+                126.267
+              ],
+              "hits": 38,
+              "mean_max_model_EV": 0.94545,
+              "maximum_model_EV": 2.2237
+            },
+            "1.05": {
+              "races": 8208,
+              "bet_races": 723,
+              "ticket_count": 966,
+              "stake_yen": 96600,
+              "payout_yen": 95040,
+              "net_yen": -1560,
+              "roi_pct": 98.3851,
+              "roi_approx95pct_ci": [
+                51.398,
+                145.372
+              ],
+              "hits": 26,
+              "mean_max_model_EV": 0.94545,
+              "maximum_model_EV": 2.2237
+            },
+            "1.1": {
+              "races": 8208,
+              "bet_races": 377,
+              "ticket_count": 474,
+              "stake_yen": 47400,
+              "payout_yen": 49500,
+              "net_yen": 2100,
+              "roi_pct": 104.4304,
+              "roi_approx95pct_ci": [
+                40.211,
+                168.65
+              ],
+              "hits": 13,
+              "mean_max_model_EV": 0.94545,
+              "maximum_model_EV": 2.2237
+            },
+            "1.2": {
+              "races": 8208,
+              "bet_races": 133,
+              "ticket_count": 165,
+              "stake_yen": 16500,
+              "payout_yen": 0,
+              "net_yen": -16500,
+              "roi_pct": 0.0,
+              "roi_approx95pct_ci": [
+                0,
+                0.0
+              ],
+              "hits": 0,
+              "mean_max_model_EV": 0.94545,
+              "maximum_model_EV": 2.2237
+            }
+          },
+          "3連単": {
+            "1.0": {
+              "races": 8208,
+              "bet_races": 58,
+              "ticket_count": 251,
+              "stake_yen": 25100,
+              "payout_yen": 90430,
+              "net_yen": 65330,
+              "roi_pct": 360.2789,
+              "roi_approx95pct_ci": [
+                0,
+                722.64
+              ],
+              "hits": 5,
+              "mean_max_model_EV": 0.8486,
+              "maximum_model_EV": 1.3164
+            },
+            "1.03": {
+              "races": 8208,
+              "bet_races": 29,
+              "ticket_count": 157,
+              "stake_yen": 15700,
+              "payout_yen": 27620,
+              "net_yen": 11920,
+              "roi_pct": 175.9236,
+              "roi_approx95pct_ci": [
+                0,
+                441.321
+              ],
+              "hits": 2,
+              "mean_max_model_EV": 0.8486,
+              "maximum_model_EV": 1.3164
+            },
+            "1.05": {
+              "races": 8208,
+              "bet_races": 20,
+              "ticket_count": 118,
+              "stake_yen": 11800,
+              "payout_yen": 2390,
+              "net_yen": -9410,
+              "roi_pct": 20.2542,
+              "roi_approx95pct_ci": [
+                0,
+                61.414
+              ],
+              "hits": 1,
+              "mean_max_model_EV": 0.8486,
+              "maximum_model_EV": 1.3164
+            },
+            "1.1": {
+              "races": 8208,
+              "bet_races": 8,
+              "ticket_count": 46,
+              "stake_yen": 4600,
+              "payout_yen": 0,
+              "net_yen": -4600,
+              "roi_pct": 0.0,
+              "roi_approx95pct_ci": [
+                0,
+                0.0
+              ],
+              "hits": 0,
+              "mean_max_model_EV": 0.8486,
+              "maximum_model_EV": 1.3164
+            },
+            "1.2": {
+              "races": 8208,
+              "bet_races": 3,
+              "ticket_count": 11,
+              "stake_yen": 1100,
+              "payout_yen": 0,
+              "net_yen": -1100,
+              "roi_pct": 0.0,
+              "roi_approx95pct_ci": [
+                0,
+                0.0
+              ],
+              "hits": 0,
+              "mean_max_model_EV": 0.8486,
+              "maximum_model_EV": 1.3164
+            }
+          }
+        }
+      }
+    },
+    "2026": {
+      "races": 4247,
+      "probability_score": {
+        "market": {
+          "sets_logloss": 2.820402,
+          "orders_logloss": 4.2754206,
+          "sets_brier": 0.8908612132072449
+        },
+        "local": {
+          "sets_logloss": 2.8008301,
+          "orders_logloss": 4.254892,
+          "sets_brier": 0.8893781900405884
+        },
+        "nonlocal": {
+          "sets_logloss": 2.8021117,
+          "orders_logloss": 4.2561736,
+          "sets_brier": 0.8895602822303772
+        }
+      },
+      "ticket_roi": {
+        "market": {
+          "3連複": {
+            "1.0": {
+              "races": 4247,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74502,
+              "maximum_model_EV": 0.7495
+            },
+            "1.03": {
+              "races": 4247,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74502,
+              "maximum_model_EV": 0.7495
+            },
+            "1.05": {
+              "races": 4247,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74502,
+              "maximum_model_EV": 0.7495
+            },
+            "1.1": {
+              "races": 4247,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74502,
+              "maximum_model_EV": 0.7495
+            },
+            "1.2": {
+              "races": 4247,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.74502,
+              "maximum_model_EV": 0.7495
+            }
+          },
+          "3連単": {
+            "1.0": {
+              "races": 4247,
+              "bet_races": 4025,
+              "ticket_count": 220368,
+              "stake_yen": 22036800,
+              "payout_yen": 8946610,
+              "net_yen": -13090190,
+              "roi_pct": 40.5985,
+              "roi_approx95pct_ci": [
+                27.718,
+                53.479
+              ],
+              "hits": 97,
+              "mean_max_model_EV": 1.4023,
+              "maximum_model_EV": 6.2883
+            },
+            "1.03": {
+              "races": 4247,
+              "bet_races": 3904,
+              "ticket_count": 188958,
+              "stake_yen": 18895800,
+              "payout_yen": 7172690,
+              "net_yen": -11723110,
+              "roi_pct": 37.9592,
+              "roi_approx95pct_ci": [
+                23.895,
+                52.024
+              ],
+              "hits": 73,
+              "mean_max_model_EV": 1.4023,
+              "maximum_model_EV": 6.2883
+            },
+            "1.05": {
+              "races": 4247,
+              "bet_races": 3819,
+              "ticket_count": 170616,
+              "stake_yen": 17061600,
+              "payout_yen": 6430030,
+              "net_yen": -10631570,
+              "roi_pct": 37.6871,
+              "roi_approx95pct_ci": [
+                22.802,
+                52.572
+              ],
+              "hits": 66,
+              "mean_max_model_EV": 1.4023,
+              "maximum_model_EV": 6.2883
+            },
+            "1.1": {
+              "races": 4247,
+              "bet_races": 3547,
+              "ticket_count": 131070,
+              "stake_yen": 13107000,
+              "payout_yen": 4369480,
+              "net_yen": -8737520,
+              "roi_pct": 33.337,
+              "roi_approx95pct_ci": [
+                16.2,
+                50.474
+              ],
+              "hits": 36,
+              "mean_max_model_EV": 1.4023,
+              "maximum_model_EV": 6.2883
+            },
+            "1.2": {
+              "races": 4247,
+              "bet_races": 2945,
+              "ticket_count": 78228,
+              "stake_yen": 7822800,
+              "payout_yen": 2764630,
+              "net_yen": -5058170,
+              "roi_pct": 35.3407,
+              "roi_approx95pct_ci": [
+                9.34,
+                61.341
+              ],
+              "hits": 15,
+              "mean_max_model_EV": 1.4023,
+              "maximum_model_EV": 6.2883
+            }
+          }
+        },
+        "local": {
+          "3連複": {
+            "1.0": {
+              "races": 4247,
+              "bet_races": 959,
+              "ticket_count": 1380,
+              "stake_yen": 138000,
+              "payout_yen": 124220,
+              "net_yen": -13780,
+              "roi_pct": 90.0145,
+              "roi_approx95pct_ci": [
+                55.845,
+                124.184
+              ],
+              "hits": 55,
+              "mean_max_model_EV": 0.95808,
+              "maximum_model_EV": 1.4522
+            },
+            "1.03": {
+              "races": 4247,
+              "bet_races": 643,
+              "ticket_count": 882,
+              "stake_yen": 88200,
+              "payout_yen": 62500,
+              "net_yen": -25700,
+              "roi_pct": 70.8617,
+              "roi_approx95pct_ci": [
+                33.96,
+                107.763
+              ],
+              "hits": 30,
+              "mean_max_model_EV": 0.95808,
+              "maximum_model_EV": 1.4522
+            },
+            "1.05": {
+              "races": 4247,
+              "bet_races": 504,
+              "ticket_count": 679,
+              "stake_yen": 67900,
+              "payout_yen": 54610,
+              "net_yen": -13290,
+              "roi_pct": 80.4271,
+              "roi_approx95pct_ci": [
+                34.382,
+                126.472
+              ],
+              "hits": 25,
+              "mean_max_model_EV": 0.95808,
+              "maximum_model_EV": 1.4522
+            },
+            "1.1": {
+              "races": 4247,
+              "bet_races": 265,
+              "ticket_count": 351,
+              "stake_yen": 35100,
+              "payout_yen": 13860,
+              "net_yen": -21240,
+              "roi_pct": 39.4872,
+              "roi_approx95pct_ci": [
+                4.899,
+                74.075
+              ],
+              "hits": 8,
+              "mean_max_model_EV": 0.95808,
+              "maximum_model_EV": 1.4522
+            },
+            "1.2": {
+              "races": 4247,
+              "bet_races": 91,
+              "ticket_count": 111,
+              "stake_yen": 11100,
+              "payout_yen": 3220,
+              "net_yen": -7880,
+              "roi_pct": 29.009,
+              "roi_approx95pct_ci": [
+                0,
+                68.015
+              ],
+              "hits": 3,
+              "mean_max_model_EV": 0.95808,
+              "maximum_model_EV": 1.4522
+            }
+          },
+          "3連単": {
+            "1.0": {
+              "races": 4247,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.81867,
+              "maximum_model_EV": 0.8569
+            },
+            "1.03": {
+              "races": 4247,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.81867,
+              "maximum_model_EV": 0.8569
+            },
+            "1.05": {
+              "races": 4247,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.81867,
+              "maximum_model_EV": 0.8569
+            },
+            "1.1": {
+              "races": 4247,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.81867,
+              "maximum_model_EV": 0.8569
+            },
+            "1.2": {
+              "races": 4247,
+              "bet_races": 0,
+              "ticket_count": 0,
+              "stake_yen": 0,
+              "payout_yen": 0,
+              "net_yen": 0,
+              "roi_pct": null,
+              "roi_approx95pct_ci": null,
+              "hits": 0,
+              "mean_max_model_EV": 0.81867,
+              "maximum_model_EV": 0.8569
+            }
+          }
+        },
+        "nonlocal": {
+          "3連複": {
+            "1.0": {
+              "races": 4247,
+              "bet_races": 970,
+              "ticket_count": 1495,
+              "stake_yen": 149500,
+              "payout_yen": 108280,
+              "net_yen": -41220,
+              "roi_pct": 72.4281,
+              "roi_approx95pct_ci": [
+                43.078,
+                101.778
+              ],
+              "hits": 46,
+              "mean_max_model_EV": 0.9592,
+              "maximum_model_EV": 1.765
+            },
+            "1.03": {
+              "races": 4247,
+              "bet_races": 638,
+              "ticket_count": 957,
+              "stake_yen": 95700,
+              "payout_yen": 65970,
+              "net_yen": -29730,
+              "roi_pct": 68.9342,
+              "roi_approx95pct_ci": [
+                34.164,
+                103.704
+              ],
+              "hits": 26,
+              "mean_max_model_EV": 0.9592,
+              "maximum_model_EV": 1.765
+            },
+            "1.05": {
+              "races": 4247,
+              "bet_races": 501,
+              "ticket_count": 743,
+              "stake_yen": 74300,
+              "payout_yen": 45460,
+              "net_yen": -28840,
+              "roi_pct": 61.1844,
+              "roi_approx95pct_ci": [
+                24.68,
+                97.689
+              ],
+              "hits": 17,
+              "mean_max_model_EV": 0.9592,
+              "maximum_model_EV": 1.765
+            },
+            "1.1": {
+              "races": 4247,
+              "bet_races": 293,
+              "ticket_count": 408,
+              "stake_yen": 40800,
+              "payout_yen": 22850,
+              "net_yen": -17950,
+              "roi_pct": 56.0049,
+              "roi_approx95pct_ci": [
+                13.511,
+                98.499
+              ],
+              "hits": 10,
+              "mean_max_model_EV": 0.9592,
+              "maximum_model_EV": 1.765
+            },
+            "1.2": {
+              "races": 4247,
+              "bet_races": 105,
+              "ticket_count": 142,
+              "stake_yen": 14200,
+              "payout_yen": 6520,
+              "net_yen": -7680,
+              "roi_pct": 45.9155,
+              "roi_approx95pct_ci": [
+                0,
+                135.889
+              ],
+              "hits": 1,
+              "mean_max_model_EV": 0.9592,
+              "maximum_model_EV": 1.765
+            }
+          },
+          "3連単": {
+            "1.0": {
+              "races": 4247,
+              "bet_races": 53,
+              "ticket_count": 267,
+              "stake_yen": 26700,
+              "payout_yen": 17060,
+              "net_yen": -9640,
+              "roi_pct": 63.8951,
+              "roi_approx95pct_ci": [
+                0,
+                185.344
+              ],
+              "hits": 1,
+              "mean_max_model_EV": 0.85364,
+              "maximum_model_EV": 1.3051
+            },
+            "1.03": {
+              "races": 4247,
+              "bet_races": 34,
+              "ticket_count": 165,
+              "stake_yen": 16500,
+              "payout_yen": 17060,
+              "net_yen": 560,
+              "roi_pct": 103.3939,
+              "roi_approx95pct_ci": [
+                0,
+                295.526
+              ],
+              "hits": 1,
+              "mean_max_model_EV": 0.85364,
+              "maximum_model_EV": 1.3051
+            },
+            "1.05": {
+              "races": 4247,
+              "bet_races": 26,
+              "ticket_count": 122,
+              "stake_yen": 12200,
+              "payout_yen": 17060,
+              "net_yen": 4860,
+              "roi_pct": 139.8361,
+              "roi_approx95pct_ci": [
+                0,
+                400.621
+              ],
+              "hits": 1,
+              "mean_max_model_EV": 0.85364,
+              "maximum_model_EV": 1.3051
+            },
+            "1.1": {
+              "races": 4247,
+              "bet_races": 15,
+              "ticket_count": 55,
+              "stake_yen": 5500,
+              "payout_yen": 0,
+              "net_yen": -5500,
+              "roi_pct": 0.0,
+              "roi_approx95pct_ci": [
+                0,
+                0.0
+              ],
+              "hits": 0,
+              "mean_max_model_EV": 0.85364,
+              "maximum_model_EV": 1.3051
+            },
+            "1.2": {
+              "races": 4247,
+              "bet_races": 3,
+              "ticket_count": 16,
+              "stake_yen": 1600,
+              "payout_yen": 0,
+              "net_yen": -1600,
+              "roi_pct": 0.0,
+              "roi_approx95pct_ci": [
+                0,
+                0.0
+              ],
+              "hits": 0,
+              "mean_max_model_EV": 0.85364,
+              "maximum_model_EV": 1.3051
+            }
+          }
+        }
+      }
+    }
+  }
+}
