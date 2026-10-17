@@ -2,22 +2,29 @@
   "schema": 1,
   "shard": 4,
   "shards": 8,
-  "next_offset": 164,
-  "last_run_utc": "2026-10-17T00:33:47.086405+00:00",
+  "next_offset": 196,
+  "last_run_utc": "2026-10-17T00:37:39.703272+00:00",
   "last_batch": [
     {
-      "day": "2021-05-13",
-      "results": 61,
-      "complete": true,
-      "venues_completed": 6,
+      "day": "2021-06-14",
+      "results": 59,
+      "complete": false,
+      "venues_completed": 5,
       "venues_total": 6,
-      "failed": 0,
-      "errors": [],
+      "failed": 1,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "71202106140100",
+          "url": "https://keirin.kdreams.jp/takamatsu/raceresult/71202106140100/",
+          "error": "Unresolved published podiums [[\"7120210614010002\", \"published first-second-third headers not present\"]]"
+        }
+      ],
       "repair_pass": false
     },
     {
-      "day": "2021-05-21",
-      "results": 78,
+      "day": "2021-06-22",
+      "results": 75,
       "complete": true,
       "venues_completed": 8,
       "venues_total": 8,
@@ -26,8 +33,18 @@
       "repair_pass": false
     },
     {
-      "day": "2021-05-29",
-      "results": 69,
+      "day": "2021-06-30",
+      "results": 59,
+      "complete": true,
+      "venues_completed": 6,
+      "venues_total": 6,
+      "failed": 0,
+      "errors": [],
+      "repair_pass": false
+    },
+    {
+      "day": "2021-07-08",
+      "results": 67,
       "complete": false,
       "venues_completed": 6,
       "venues_total": 7,
@@ -35,26 +52,16 @@
       "errors": [
         {
           "stage": "race",
-          "venue": "62202105290100",
-          "url": "https://keirin.kdreams.jp/hiroshima/raceresult/62202105290100/",
-          "error": "Unresolved published podiums [[\"6220210529010001\", \"published first-second-third headers not present\"]]"
+          "venue": "51202107080100",
+          "url": "https://keirin.kdreams.jp/fukui/raceresult/51202107080100/",
+          "error": "Unresolved published podiums [[\"5120210708010004\", \"published first-second-third headers not present\"], [\"5120210708010007\", \"no results order_table\"], [\"5120210708010008\", \"no results order_table\"]]"
         }
       ],
-      "repair_pass": false
-    },
-    {
-      "day": "2021-06-06",
-      "results": 68,
-      "complete": true,
-      "venues_completed": 7,
-      "venues_total": 7,
-      "failed": 0,
-      "errors": [],
       "repair_pass": false
     }
   ],
   "finished_forward_pass": false,
-  "pending_repair_days": 5,
+  "pending_repair_days": 7,
   "exhausted_unresolved_days": 0,
   "finished_all": false
 }
