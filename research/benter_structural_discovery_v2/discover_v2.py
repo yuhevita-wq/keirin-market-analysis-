@@ -51,8 +51,12 @@ STRUCT_FEATURES = [
     "solo_front_pressure", "teammate_score_support",
     "line_score_imbalance"
 ]
+ROLE_ONLY = ["leader", "second", "third_or_later", "solo", "line_size", "line_mate_count"]
 CANDIDATES = {
     "score_only": (["score"], []),
+    "score_plus_role": (["score"], ROLE_ONLY),
+    "no_score_plus_role": ([f for f in BASE_FEATURES if f != "score"], ROLE_ONLY),
+    "full_plus_role": (BASE_FEATURES, ROLE_ONLY),
     "raw_without_score": ([f for f in BASE_FEATURES if f != "score"], []),
     "score_plus_line": (["score"], [f for f in STRUCT_FEATURES if f not in ("teammate_score_support", "line_score_imbalance")]),
     "no_score_plus_line": ([f for f in BASE_FEATURES if f != "score"], [f for f in STRUCT_FEATURES if f not in ("teammate_score_support", "line_score_imbalance")]),
@@ -240,7 +244,9 @@ def main():
     for name in CANDIDATES:
         if name=="score_only":continue
         comparisons[f"{name}_vs_score_only"]=bootstrap_delta(winning_p[name],winning_p["score_only"])
-    for a,b in [("full_plus_line","full_v1"),("no_score_plus_line","raw_without_score")]:
+    for a,b in [("full_plus_line","full_v1"),("no_score_plus_line","raw_without_score"),
+                ("full_plus_line","full_plus_role"),("score_plus_line","score_plus_role"),
+                ("no_score_plus_line","no_score_plus_role")]:
         comparisons[f"{a}_vs_{b}"]=bootstrap_delta(winning_p[a],winning_p[b])
     report = {
         "design":"Pre-declared score-only, no-score and line-teammate models; 2026 holdout evaluated once.",
