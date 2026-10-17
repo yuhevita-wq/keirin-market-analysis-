@@ -1,0 +1,6376 @@
+{
+  "schema": "ODDS_ONLY_REMOTE_DONOR_RECEIVER_PRICE_ERROR_V1",
+  "training": "2023 and 2024, winners only as labels",
+  "forward_periods": [
+    "2025",
+    "2026H1"
+  ],
+  "only_odds_features": [
+    "3連単 full price distribution",
+    "3連複 full price distribution"
+  ],
+  "no_line_or_rider_information": true,
+  "predicted_source": "D_s=log(q3trifecta_aggregate(s)/qtrio(s))<-0.15, identified without observing result",
+  "remote_destination": "source overprice excess qtrio(s)-qtrifecta(s) on sets disjoint from target",
+  "donor_relation": "remote0 disjoint means no car numbers shared; no prior restriction on winner outcomes",
+  "note": "This discovers conditional associations, not causal movement of probability from one ticket to another.",
+  "not_using_other_5_pools": "other 5 market types remain encrypted; final odds not T-15",
+  "audit": {
+    "odds_rows": 34277,
+    "valid_joined": 31320,
+    "missing_result": 2957
+  },
+  "year": {
+    "2021": {
+      "races": 1076,
+      "mean_donor_excess_mass": 0.04068,
+      "no_donor_races": 0,
+      "market_hit_in_donor": 108,
+      "market_hit_in_other": 968,
+      "target_coverage": 1076
+    },
+    "2022": {
+      "races": 2359,
+      "mean_donor_excess_mass": 0.03954,
+      "no_donor_races": 3,
+      "market_hit_in_donor": 224,
+      "market_hit_in_other": 2135,
+      "target_coverage": 2359
+    },
+    "2023": {
+      "races": 7283,
+      "mean_donor_excess_mass": 0.0361,
+      "no_donor_races": 7,
+      "market_hit_in_donor": 731,
+      "market_hit_in_other": 6552,
+      "target_coverage": 7283
+    },
+    "2024": {
+      "races": 8147,
+      "mean_donor_excess_mass": 0.03507,
+      "no_donor_races": 13,
+      "market_hit_in_donor": 704,
+      "market_hit_in_other": 7443,
+      "target_coverage": 8147
+    },
+    "2025": {
+      "races": 8208,
+      "mean_donor_excess_mass": 0.03061,
+      "no_donor_races": 24,
+      "market_hit_in_donor": 633,
+      "market_hit_in_other": 7575,
+      "target_coverage": 8208
+    },
+    "2026": {
+      "races": 4247,
+      "mean_donor_excess_mass": 0.0332,
+      "no_donor_races": 7,
+      "market_hit_in_donor": 393,
+      "market_hit_in_other": 3854,
+      "target_coverage": 4247
+    }
+  },
+  "cuts": {
+    "market_gap": [
+      -0.15,
+      -0.05,
+      0.05,
+      0.15
+    ],
+    "price": [
+      10,
+      20,
+      50,
+      100,
+      300,
+      1000
+    ],
+    "rank": [
+      3,
+      6,
+      12,
+      24,
+      48
+    ],
+    "donor_mass": [
+      0.1,
+      0.2,
+      0.35,
+      0.5
+    ],
+    "outside_mass": [
+      0.08,
+      0.15,
+      0.25,
+      0.4
+    ],
+    "outside_share": [
+      0.2,
+      0.4,
+      0.6,
+      0.8
+    ],
+    "receiver_overlap": [
+      0.5,
+      1.5,
+      2.5
+    ],
+    "n_car": [
+      7.5
+    ],
+    "order_rank": [
+      1.5,
+      2.5,
+      3.5,
+      4.5,
+      5.5
+    ]
+  },
+  "search": {
+    "num_signatures": 2601,
+    "eligible_2023_2024_positive": 7,
+    "same_2025_2026_profit_positive": 0,
+    "both_forward_ci_lower_above_100": 0,
+    "development_negative_with_min_3000": 96
+  },
+  "development_positive_top50": [
+    {
+      "signature": "3連単|market_gap+price+order_rank|4,5,2",
+      "2023": {
+        "n": 6564,
+        "hits": 15,
+        "market_expected_hits": 9.947,
+        "hit_to_market_ratio": 1.5079,
+        "hit_z": 1.605,
+        "roi_pct": 123.675,
+        "net_yen": 155400,
+        "roi_approx95pct_ci": [
+          57.0,
+          190.35
+        ]
+      },
+      "2024": {
+        "n": 7416,
+        "hits": 16,
+        "market_expected_hits": 11.272,
+        "hit_to_market_ratio": 1.4194,
+        "hit_z": 1.411,
+        "roi_pct": 99.933,
+        "net_yen": -500,
+        "roi_approx95pct_ci": [
+          48.25,
+          151.62
+        ]
+      },
+      "2025": {
+        "n": 9503,
+        "hits": 14,
+        "market_expected_hits": 14.272,
+        "hit_to_market_ratio": 0.981,
+        "hit_z": -0.072,
+        "roi_pct": 74.022,
+        "net_yen": -246870,
+        "roi_approx95pct_ci": [
+          34.32,
+          113.72
+        ]
+      },
+      "2026": {
+        "n": 5834,
+        "hits": 4,
+        "market_expected_hits": 8.832,
+        "hit_to_market_ratio": 0.4529,
+        "hit_z": -1.63,
+        "roi_pct": 27.597,
+        "net_yen": -422400,
+        "roi_approx95pct_ci": [
+          0.33,
+          54.87
+        ]
+      },
+      "dev_return_pct": 111.08,
+      "dev_hits": 31
+    },
+    {
+      "signature": "3連単|market_gap+rank+order_rank|0,2,1",
+      "2023": {
+        "n": 504,
+        "hits": 16,
+        "market_expected_hits": 10.846,
+        "hit_to_market_ratio": 1.4752,
+        "hit_z": 1.584,
+        "roi_pct": 117.738,
+        "net_yen": 8940,
+        "roi_approx95pct_ci": [
+          58.72,
+          176.75
+        ]
+      },
+      "2024": {
+        "n": 620,
+        "hits": 18,
+        "market_expected_hits": 12.93,
+        "hit_to_market_ratio": 1.3921,
+        "hit_z": 1.427,
+        "roi_pct": 102.71,
+        "net_yen": 1680,
+        "roi_approx95pct_ci": [
+          53.5,
+          151.92
+        ]
+      },
+      "2025": {
+        "n": 749,
+        "hits": 14,
+        "market_expected_hits": 15.804,
+        "hit_to_market_ratio": 0.8859,
+        "hit_z": -0.459,
+        "roi_pct": 65.861,
+        "net_yen": -25570,
+        "roi_approx95pct_ci": [
+          30.38,
+          101.34
+        ]
+      },
+      "2026": {
+        "n": 453,
+        "hits": 11,
+        "market_expected_hits": 9.797,
+        "hit_to_market_ratio": 1.1228,
+        "hit_z": 0.389,
+        "roi_pct": 85.011,
+        "net_yen": -6790,
+        "roi_approx95pct_ci": [
+          33.79,
+          136.23
+        ]
+      },
+      "dev_return_pct": 109.448,
+      "dev_hits": 34
+    },
+    {
+      "signature": "3連単|market_gap+rank+outside_share|1,4,2",
+      "2023": {
+        "n": 856,
+        "hits": 8,
+        "market_expected_hits": 5.148,
+        "hit_to_market_ratio": 1.554,
+        "hit_z": 1.267,
+        "roi_pct": 99.346,
+        "net_yen": -560,
+        "roi_approx95pct_ci": [
+          30.53,
+          168.16
+        ]
+      },
+      "2024": {
+        "n": 806,
+        "hits": 8,
+        "market_expected_hits": 4.926,
+        "hit_to_market_ratio": 1.6241,
+        "hit_z": 1.396,
+        "roi_pct": 120.025,
+        "net_yen": 16140,
+        "roi_approx95pct_ci": [
+          35.05,
+          205.0
+        ]
+      },
+      "2025": {
+        "n": 931,
+        "hits": 6,
+        "market_expected_hits": 5.849,
+        "hit_to_market_ratio": 1.0258,
+        "hit_z": 0.063,
+        "roi_pct": 80.569,
+        "net_yen": -18090,
+        "roi_approx95pct_ci": [
+          14.05,
+          147.09
+        ]
+      },
+      "2026": {
+        "n": 458,
+        "hits": 3,
+        "market_expected_hits": 2.984,
+        "hit_to_market_ratio": 1.0053,
+        "hit_z": 0.009,
+        "roi_pct": 100.262,
+        "net_yen": 120,
+        "roi_approx95pct_ci": [
+          -13.99,
+          214.51
+        ]
+      },
+      "dev_return_pct": 109.374,
+      "dev_hits": 16
+    },
+    {
+      "signature": "3連単|market_gap+rank+order_rank|4,4,4",
+      "2023": {
+        "n": 1755,
+        "hits": 14,
+        "market_expected_hits": 10.059,
+        "hit_to_market_ratio": 1.3919,
+        "hit_z": 1.248,
+        "roi_pct": 106.12,
+        "net_yen": 10740,
+        "roi_approx95pct_ci": [
+          46.33,
+          165.91
+        ]
+      },
+      "2024": {
+        "n": 1743,
+        "hits": 14,
+        "market_expected_hits": 9.887,
+        "hit_to_market_ratio": 1.416,
+        "hit_z": 1.313,
+        "roi_pct": 110.878,
+        "net_yen": 18960,
+        "roi_approx95pct_ci": [
+          51.52,
+          170.24
+        ]
+      },
+      "2025": {
+        "n": 1618,
+        "hits": 12,
+        "market_expected_hits": 9.266,
+        "hit_to_market_ratio": 1.295,
+        "hit_z": 0.901,
+        "roi_pct": 96.044,
+        "net_yen": -6400,
+        "roi_approx95pct_ci": [
+          37.93,
+          154.16
+        ]
+      },
+      "2026": {
+        "n": 1055,
+        "hits": 10,
+        "market_expected_hits": 6.142,
+        "hit_to_market_ratio": 1.6282,
+        "hit_z": 1.563,
+        "roi_pct": 150.521,
+        "net_yen": 53300,
+        "roi_approx95pct_ci": [
+          51.08,
+          249.97
+        ]
+      },
+      "dev_return_pct": 108.491,
+      "dev_hits": 28
+    },
+    {
+      "signature": "3連複|market_gap+price+outside_share|1,3,2",
+      "2023": {
+        "n": 701,
+        "hits": 9,
+        "market_expected_hits": 7.253,
+        "hit_to_market_ratio": 1.2409,
+        "hit_z": 0.653,
+        "roi_pct": 104.95,
+        "net_yen": 3470,
+        "roi_approx95pct_ci": [
+          35.81,
+          174.09
+        ]
+      },
+      "2024": {
+        "n": 730,
+        "hits": 11,
+        "market_expected_hits": 7.615,
+        "hit_to_market_ratio": 1.4446,
+        "hit_z": 1.235,
+        "roi_pct": 106.247,
+        "net_yen": 4560,
+        "roi_approx95pct_ci": [
+          42.38,
+          170.12
+        ]
+      },
+      "2025": {
+        "n": 737,
+        "hits": 4,
+        "market_expected_hits": 7.597,
+        "hit_to_market_ratio": 0.5266,
+        "hit_z": -1.314,
+        "roi_pct": 34.993,
+        "net_yen": -47910,
+        "roi_approx95pct_ci": [
+          0.27,
+          69.72
+        ]
+      },
+      "2026": {
+        "n": 319,
+        "hits": 2,
+        "market_expected_hits": 3.265,
+        "hit_to_market_ratio": 0.6126,
+        "hit_z": -0.705,
+        "roi_pct": 43.699,
+        "net_yen": -17960,
+        "roi_approx95pct_ci": [
+          -16.84,
+          104.24
+        ]
+      },
+      "dev_return_pct": 105.611,
+      "dev_hits": 20
+    },
+    {
+      "signature": "3連複|market_gap+rank+outside_share|3,4,1",
+      "2023": {
+        "n": 3523,
+        "hits": 28,
+        "market_expected_hits": 21.652,
+        "hit_to_market_ratio": 1.2932,
+        "hit_z": 1.375,
+        "roi_pct": 98.263,
+        "net_yen": -6120,
+        "roi_approx95pct_ci": [
+          58.85,
+          137.68
+        ]
+      },
+      "2024": {
+        "n": 3668,
+        "hits": 34,
+        "market_expected_hits": 22.651,
+        "hit_to_market_ratio": 1.501,
+        "hit_z": 2.404,
+        "roi_pct": 104.155,
+        "net_yen": 15240,
+        "roi_approx95pct_ci": [
+          67.01,
+          141.3
+        ]
+      },
+      "2025": {
+        "n": 3985,
+        "hits": 21,
+        "market_expected_hits": 24.745,
+        "hit_to_market_ratio": 0.8487,
+        "hit_z": -0.759,
+        "roi_pct": 61.378,
+        "net_yen": -153910,
+        "roi_approx95pct_ci": [
+          32.2,
+          90.56
+        ]
+      },
+      "2026": {
+        "n": 1909,
+        "hits": 6,
+        "market_expected_hits": 11.765,
+        "hit_to_market_ratio": 0.51,
+        "hit_z": -1.694,
+        "roi_pct": 38.214,
+        "net_yen": -117950,
+        "roi_approx95pct_ci": [
+          1.86,
+          74.57
+        ]
+      },
+      "dev_return_pct": 101.268,
+      "dev_hits": 62
+    },
+    {
+      "signature": "3連単|market_gap+price+order_rank|1,3,1",
+      "2023": {
+        "n": 4351,
+        "hits": 58,
+        "market_expected_hits": 44.738,
+        "hit_to_market_ratio": 1.2964,
+        "hit_z": 2.0,
+        "roi_pct": 98.056,
+        "net_yen": -8460,
+        "roi_approx95pct_ci": [
+          72.56,
+          123.55
+        ]
+      },
+      "2024": {
+        "n": 4823,
+        "hits": 64,
+        "market_expected_hits": 49.958,
+        "hit_to_market_ratio": 1.2811,
+        "hit_z": 2.004,
+        "roi_pct": 95.407,
+        "net_yen": -22150,
+        "roi_approx95pct_ci": [
+          71.78,
+          119.03
+        ]
+      },
+      "2025": {
+        "n": 5302,
+        "hits": 66,
+        "market_expected_hits": 55.098,
+        "hit_to_market_ratio": 1.1979,
+        "hit_z": 1.482,
+        "roi_pct": 90.59,
+        "net_yen": -49890,
+        "roi_approx95pct_ci": [
+          68.54,
+          112.64
+        ]
+      },
+      "2026": {
+        "n": 2723,
+        "hits": 32,
+        "market_expected_hits": 28.454,
+        "hit_to_market_ratio": 1.1246,
+        "hit_z": 0.671,
+        "roi_pct": 82.853,
+        "net_yen": -46690,
+        "roi_approx95pct_ci": [
+          53.99,
+          111.72
+        ]
+      },
+      "dev_return_pct": 96.663,
+      "dev_hits": 122
+    }
+  ],
+  "forward_both_profitable_top50": [],
+  "forward_both_ci_lower_above100": [],
+  "development_overpriced_top40": [
+    {
+      "signature": "3連複|market_gap+outside_mass|0,0",
+      "2023": {
+        "n": 144726,
+        "hits": 731,
+        "market_expected_hits": 1059.242,
+        "hit_to_market_ratio": 0.6901,
+        "hit_z": -11.079,
+        "roi_pct": 39.332,
+        "net_yen": -8780220,
+        "roi_approx95pct_ci": [
+          34.95,
+          43.72
+        ]
+      },
+      "2024": {
+        "n": 157708,
+        "hits": 704,
+        "market_expected_hits": 1157.007,
+        "hit_to_market_ratio": 0.6085,
+        "hit_z": -14.602,
+        "roi_pct": 38.866,
+        "net_yen": -9641280,
+        "roi_approx95pct_ci": [
+          34.52,
+          43.21
+        ]
+      },
+      "2025": {
+        "n": 140928,
+        "hits": 633,
+        "market_expected_hits": 1056.372,
+        "hit_to_market_ratio": 0.5992,
+        "hit_z": -14.213,
+        "roi_pct": 37.235,
+        "net_yen": -8845390,
+        "roi_approx95pct_ci": [
+          32.39,
+          42.08
+        ]
+      },
+      "2026": {
+        "n": 71004,
+        "hits": 393,
+        "market_expected_hits": 589.195,
+        "hit_to_market_ratio": 0.667,
+        "hit_z": -8.889,
+        "roi_pct": 39.926,
+        "net_yen": -4265480,
+        "roi_approx95pct_ci": [
+          33.16,
+          46.69
+        ]
+      },
+      "dev_hit_z": -25.681
+    },
+    {
+      "signature": "3連複|market_gap+donor_mass|0,0",
+      "2023": {
+        "n": 144346,
+        "hits": 724,
+        "market_expected_hits": 1049.617,
+        "hit_to_market_ratio": 0.6898,
+        "hit_z": -11.029,
+        "roi_pct": 39.381,
+        "net_yen": -8750050,
+        "roi_approx95pct_ci": [
+          34.98,
+          43.78
+        ]
+      },
+      "2024": {
+        "n": 157501,
+        "hits": 703,
+        "market_expected_hits": 1150.534,
+        "hit_to_market_ratio": 0.611,
+        "hit_z": -14.455,
+        "roi_pct": 38.867,
+        "net_yen": -9628500,
+        "roi_approx95pct_ci": [
+          34.51,
+          43.22
+        ]
+      },
+      "2025": {
+        "n": 140757,
+        "hits": 632,
+        "market_expected_hits": 1051.227,
+        "hit_to_market_ratio": 0.6012,
+        "hit_z": -14.096,
+        "roi_pct": 37.262,
+        "net_yen": -8830760,
+        "roi_approx95pct_ci": [
+          32.41,
+          42.11
+        ]
+      },
+      "2026": {
+        "n": 70914,
+        "hits": 392,
+        "market_expected_hits": 586.025,
+        "hit_to_market_ratio": 0.6689,
+        "hit_z": -8.806,
+        "roi_pct": 39.975,
+        "net_yen": -4256580,
+        "roi_approx95pct_ci": [
+          33.2,
+          46.75
+        ]
+      },
+      "dev_hit_z": -25.484
+    },
+    {
+      "signature": "3連複|market_gap+outside_mass+donor_mass|0,0,0",
+      "2023": {
+        "n": 144341,
+        "hits": 724,
+        "market_expected_hits": 1049.599,
+        "hit_to_market_ratio": 0.6898,
+        "hit_z": -11.028,
+        "roi_pct": 39.383,
+        "net_yen": -8749550,
+        "roi_approx95pct_ci": [
+          34.99,
+          43.78
+        ]
+      },
+      "2024": {
+        "n": 157499,
+        "hits": 703,
+        "market_expected_hits": 1150.531,
+        "hit_to_market_ratio": 0.611,
+        "hit_z": -14.455,
+        "roi_pct": 38.868,
+        "net_yen": -9628300,
+        "roi_approx95pct_ci": [
+          34.51,
+          43.22
+        ]
+      },
+      "2025": {
+        "n": 140754,
+        "hits": 632,
+        "market_expected_hits": 1051.211,
+        "hit_to_market_ratio": 0.6012,
+        "hit_z": -14.096,
+        "roi_pct": 37.263,
+        "net_yen": -8830460,
+        "roi_approx95pct_ci": [
+          32.41,
+          42.11
+        ]
+      },
+      "2026": {
+        "n": 70910,
+        "hits": 392,
+        "market_expected_hits": 586.011,
+        "hit_to_market_ratio": 0.6689,
+        "hit_z": -8.806,
+        "roi_pct": 39.978,
+        "net_yen": -4256180,
+        "roi_approx95pct_ci": [
+          33.21,
+          46.75
+        ]
+      },
+      "dev_hit_z": -25.483
+    },
+    {
+      "signature": "3連複|market_gap+outside_share|0,0",
+      "2023": {
+        "n": 97537,
+        "hits": 615,
+        "market_expected_hits": 861.637,
+        "hit_to_market_ratio": 0.7138,
+        "hit_z": -9.118,
+        "roi_pct": 45.713,
+        "net_yen": -5294970,
+        "roi_approx95pct_ci": [
+          39.96,
+          51.47
+        ]
+      },
+      "2024": {
+        "n": 107423,
+        "hits": 583,
+        "market_expected_hits": 955.639,
+        "hit_to_market_ratio": 0.6101,
+        "hit_z": -13.07,
+        "roi_pct": 40.38,
+        "net_yen": -6404610,
+        "roi_approx95pct_ci": [
+          35.29,
+          45.47
+        ]
+      },
+      "2025": {
+        "n": 96521,
+        "hits": 540,
+        "market_expected_hits": 884.576,
+        "hit_to_market_ratio": 0.6105,
+        "hit_z": -12.534,
+        "roi_pct": 38.2,
+        "net_yen": -5964990,
+        "roi_approx95pct_ci": [
+          32.87,
+          43.53
+        ]
+      },
+      "2026": {
+        "n": 49042,
+        "hits": 347,
+        "market_expected_hits": 500.403,
+        "hit_to_market_ratio": 0.6934,
+        "hit_z": -7.478,
+        "roi_pct": 38.594,
+        "net_yen": -3011490,
+        "roi_approx95pct_ci": [
+          32.25,
+          44.94
+        ]
+      },
+      "dev_hit_z": -22.188
+    },
+    {
+      "signature": "3連複|market_gap+outside_share+donor_mass|0,0,0",
+      "2023": {
+        "n": 97227,
+        "hits": 608,
+        "market_expected_hits": 853.448,
+        "hit_to_market_ratio": 0.7124,
+        "hit_z": -9.107,
+        "roi_pct": 45.778,
+        "net_yen": -5271800,
+        "roi_approx95pct_ci": [
+          40.01,
+          51.55
+        ]
+      },
+      "2024": {
+        "n": 107250,
+        "hits": 582,
+        "market_expected_hits": 949.306,
+        "hit_to_market_ratio": 0.6131,
+        "hit_z": -12.914,
+        "roi_pct": 40.371,
+        "net_yen": -6395230,
+        "roi_approx95pct_ci": [
+          35.28,
+          45.46
+        ]
+      },
+      "2025": {
+        "n": 96368,
+        "hits": 539,
+        "market_expected_hits": 879.488,
+        "hit_to_market_ratio": 0.6129,
+        "hit_z": -12.408,
+        "roi_pct": 38.235,
+        "net_yen": -5952160,
+        "roi_approx95pct_ci": [
+          32.9,
+          43.57
+        ]
+      },
+      "2026": {
+        "n": 48955,
+        "hits": 346,
+        "market_expected_hits": 497.256,
+        "hit_to_market_ratio": 0.6958,
+        "hit_z": -7.389,
+        "roi_pct": 38.66,
+        "net_yen": -3002890,
+        "roi_approx95pct_ci": [
+          32.3,
+          45.02
+        ]
+      },
+      "dev_hit_z": -22.021
+    },
+    {
+      "signature": "3連複|market_gap+outside_mass+n_car|0,0,0",
+      "2023": {
+        "n": 60633,
+        "hits": 492,
+        "market_expected_hits": 705.88,
+        "hit_to_market_ratio": 0.697,
+        "hit_z": -8.861,
+        "roi_pct": 45.382,
+        "net_yen": -3311680,
+        "roi_approx95pct_ci": [
+          39.42,
+          51.34
+        ]
+      },
+      "2024": {
+        "n": 71544,
+        "hits": 487,
+        "market_expected_hits": 810.776,
+        "hit_to_market_ratio": 0.6007,
+        "hit_z": -12.487,
+        "roi_pct": 39.895,
+        "net_yen": -4300140,
+        "roi_approx95pct_ci": [
+          34.51,
+          45.28
+        ]
+      },
+      "2025": {
+        "n": 64313,
+        "hits": 455,
+        "market_expected_hits": 755.285,
+        "hit_to_market_ratio": 0.6024,
+        "hit_z": -11.971,
+        "roi_pct": 37.756,
+        "net_yen": -4003090,
+        "roi_approx95pct_ci": [
+          32.51,
+          43.0
+        ]
+      },
+      "2026": {
+        "n": 35559,
+        "hits": 304,
+        "market_expected_hits": 444.609,
+        "hit_to_market_ratio": 0.6837,
+        "hit_z": -7.353,
+        "roi_pct": 43.787,
+        "net_yen": -1998870,
+        "roi_approx95pct_ci": [
+          35.4,
+          52.17
+        ]
+      },
+      "dev_hit_z": -21.348
+    },
+    {
+      "signature": "3連複|market_gap+outside_share+n_car|0,0,0",
+      "2023": {
+        "n": 52786,
+        "hits": 459,
+        "market_expected_hits": 646.608,
+        "hit_to_market_ratio": 0.7099,
+        "hit_z": -8.07,
+        "roi_pct": 47.61,
+        "net_yen": -2765460,
+        "roi_approx95pct_ci": [
+          41.0,
+          54.22
+        ]
+      },
+      "2024": {
+        "n": 61780,
+        "hits": 438,
+        "market_expected_hits": 742.156,
+        "hit_to_market_ratio": 0.5902,
+        "hit_z": -12.186,
+        "roi_pct": 38.952,
+        "net_yen": -3771560,
+        "roi_approx95pct_ci": [
+          33.28,
+          44.62
+        ]
+      },
+      "2025": {
+        "n": 55260,
+        "hits": 428,
+        "market_expected_hits": 693.867,
+        "hit_to_market_ratio": 0.6168,
+        "hit_z": -10.999,
+        "roi_pct": 38.263,
+        "net_yen": -3411570,
+        "roi_approx95pct_ci": [
+          33.0,
+          43.52
+        ]
+      },
+      "2026": {
+        "n": 30431,
+        "hits": 287,
+        "market_expected_hits": 410.212,
+        "hit_to_market_ratio": 0.6996,
+        "hit_z": -6.674,
+        "roi_pct": 41.465,
+        "net_yen": -1781270,
+        "roi_approx95pct_ci": [
+          33.61,
+          49.32
+        ]
+      },
+      "dev_hit_z": -20.256
+    },
+    {
+      "signature": "3連複|market_gap+rank+outside_mass|0,3,0",
+      "2023": {
+        "n": 30462,
+        "hits": 240,
+        "market_expected_hits": 336.361,
+        "hit_to_market_ratio": 0.7135,
+        "hit_z": -5.422,
+        "roi_pct": 49.201,
+        "net_yen": -1547440,
+        "roi_approx95pct_ci": [
+          42.57,
+          55.83
+        ]
+      },
+      "2024": {
+        "n": 33828,
+        "hits": 185,
+        "market_expected_hits": 361.719,
+        "hit_to_market_ratio": 0.5114,
+        "hit_z": -9.577,
+        "roi_pct": 35.046,
+        "net_yen": -2197250,
+        "roi_approx95pct_ci": [
+          29.64,
+          40.45
+        ]
+      },
+      "2025": {
+        "n": 28090,
+        "hits": 187,
+        "market_expected_hits": 296.562,
+        "hit_to_market_ratio": 0.6306,
+        "hit_z": -6.535,
+        "roi_pct": 43.094,
+        "net_yen": -1598490,
+        "roi_approx95pct_ci": [
+          36.54,
+          49.65
+        ]
+      },
+      "2026": {
+        "n": 14887,
+        "hits": 92,
+        "market_expected_hits": 157.473,
+        "hit_to_market_ratio": 0.5842,
+        "hit_z": -5.361,
+        "roi_pct": 40.495,
+        "net_yen": -885850,
+        "roi_approx95pct_ci": [
+          31.49,
+          49.5
+        ]
+      },
+      "dev_hit_z": -14.999
+    },
+    {
+      "signature": "3連複|market_gap+rank+donor_mass|0,3,0",
+      "2023": {
+        "n": 30328,
+        "hits": 240,
+        "market_expected_hits": 334.946,
+        "hit_to_market_ratio": 0.7165,
+        "hit_z": -5.354,
+        "roi_pct": 49.418,
+        "net_yen": -1534040,
+        "roi_approx95pct_ci": [
+          42.76,
+          56.08
+        ]
+      },
+      "2024": {
+        "n": 33756,
+        "hits": 184,
+        "market_expected_hits": 361.167,
+        "hit_to_market_ratio": 0.5095,
+        "hit_z": -9.609,
+        "roi_pct": 34.887,
+        "net_yen": -2197970,
+        "roi_approx95pct_ci": [
+          29.49,
+          40.29
+        ]
+      },
+      "2025": {
+        "n": 28029,
+        "hits": 187,
+        "market_expected_hits": 296.111,
+        "hit_to_market_ratio": 0.6315,
+        "hit_z": -6.513,
+        "roi_pct": 43.188,
+        "net_yen": -1592390,
+        "roi_approx95pct_ci": [
+          36.62,
+          49.76
+        ]
+      },
+      "2026": {
+        "n": 14860,
+        "hits": 92,
+        "market_expected_hits": 157.218,
+        "hit_to_market_ratio": 0.5852,
+        "hit_z": -5.345,
+        "roi_pct": 40.569,
+        "net_yen": -883150,
+        "roi_approx95pct_ci": [
+          31.55,
+          49.59
+        ]
+      },
+      "dev_hit_z": -14.963
+    },
+    {
+      "signature": "3連複|market_gap+rank+n_car|0,3,0",
+      "2023": {
+        "n": 22743,
+        "hits": 157,
+        "market_expected_hits": 245.376,
+        "hit_to_market_ratio": 0.6398,
+        "hit_z": -5.832,
+        "roi_pct": 45.072,
+        "net_yen": -1249220,
+        "roi_approx95pct_ci": [
+          37.54,
+          52.61
+        ]
+      },
+      "2024": {
+        "n": 26194,
+        "hits": 140,
+        "market_expected_hits": 275.257,
+        "hit_to_market_ratio": 0.5086,
+        "hit_z": -8.416,
+        "roi_pct": 34.334,
+        "net_yen": -1720060,
+        "roi_approx95pct_ci": [
+          28.19,
+          40.48
+        ]
+      },
+      "2025": {
+        "n": 22038,
+        "hits": 141,
+        "market_expected_hits": 226.47,
+        "hit_to_market_ratio": 0.6226,
+        "hit_z": -5.842,
+        "roi_pct": 42.541,
+        "net_yen": -1266290,
+        "roi_approx95pct_ci": [
+          35.05,
+          50.03
+        ]
+      },
+      "2026": {
+        "n": 12055,
+        "hits": 72,
+        "market_expected_hits": 124.759,
+        "hit_to_market_ratio": 0.5771,
+        "hit_z": -4.858,
+        "roi_pct": 38.793,
+        "net_yen": -737850,
+        "roi_approx95pct_ci": [
+          29.08,
+          48.5
+        ]
+      },
+      "dev_hit_z": -14.248
+    },
+    {
+      "signature": "3連複|market_gap+outside_mass+n_car|0,0,1",
+      "2023": {
+        "n": 84093,
+        "hits": 239,
+        "market_expected_hits": 353.362,
+        "hit_to_market_ratio": 0.6764,
+        "hit_z": -6.656,
+        "roi_pct": 34.97,
+        "net_yen": -5468540,
+        "roi_approx95pct_ci": [
+          28.77,
+          41.17
+        ]
+      },
+      "2024": {
+        "n": 86164,
+        "hits": 217,
+        "market_expected_hits": 346.231,
+        "hit_to_market_ratio": 0.6267,
+        "hit_z": -7.586,
+        "roi_pct": 38.012,
+        "net_yen": -5341140,
+        "roi_approx95pct_ci": [
+          31.43,
+          44.6
+        ]
+      },
+      "2025": {
+        "n": 76615,
+        "hits": 178,
+        "market_expected_hits": 301.086,
+        "hit_to_market_ratio": 0.5912,
+        "hit_z": -7.662,
+        "roi_pct": 36.797,
+        "net_yen": -4842300,
+        "roi_approx95pct_ci": [
+          29.05,
+          44.54
+        ]
+      },
+      "2026": {
+        "n": 35445,
+        "hits": 89,
+        "market_expected_hits": 144.586,
+        "hit_to_market_ratio": 0.6156,
+        "hit_z": -5.042,
+        "roi_pct": 36.053,
+        "net_yen": -2266610,
+        "roi_approx95pct_ci": [
+          25.44,
+          46.66
+        ]
+      },
+      "dev_hit_z": -14.242
+    },
+    {
+      "signature": "3連複|market_gap+rank+outside_share|0,3,0",
+      "2023": {
+        "n": 25257,
+        "hits": 189,
+        "market_expected_hits": 279.317,
+        "hit_to_market_ratio": 0.6766,
+        "hit_z": -5.561,
+        "roi_pct": 47.19,
+        "net_yen": -1333820,
+        "roi_approx95pct_ci": [
+          40.02,
+          54.36
+        ]
+      },
+      "2024": {
+        "n": 28324,
+        "hits": 162,
+        "market_expected_hits": 304.622,
+        "hit_to_market_ratio": 0.5318,
+        "hit_z": -8.401,
+        "roi_pct": 36.37,
+        "net_yen": -1802260,
+        "roi_approx95pct_ci": [
+          30.37,
+          42.37
+        ]
+      },
+      "2025": {
+        "n": 23714,
+        "hits": 161,
+        "market_expected_hits": 251.502,
+        "hit_to_market_ratio": 0.6402,
+        "hit_z": -5.85,
+        "roi_pct": 43.945,
+        "net_yen": -1329300,
+        "roi_approx95pct_ci": [
+          36.78,
+          51.11
+        ]
+      },
+      "2026": {
+        "n": 12657,
+        "hits": 85,
+        "market_expected_hits": 134.485,
+        "hit_to_market_ratio": 0.632,
+        "hit_z": -4.375,
+        "roi_pct": 42.437,
+        "net_yen": -728580,
+        "roi_approx95pct_ci": [
+          32.71,
+          52.16
+        ]
+      },
+      "dev_hit_z": -13.962
+    },
+    {
+      "signature": "3連複|market_gap+price+outside_mass|0,4,0",
+      "2023": {
+        "n": 57781,
+        "hits": 158,
+        "market_expected_hits": 257.438,
+        "hit_to_market_ratio": 0.6137,
+        "hit_z": -6.359,
+        "roi_pct": 44.994,
+        "net_yen": -3178330,
+        "roi_approx95pct_ci": [
+          37.76,
+          52.23
+        ]
+      },
+      "2024": {
+        "n": 64167,
+        "hits": 164,
+        "market_expected_hits": 285.488,
+        "hit_to_market_ratio": 0.5745,
+        "hit_z": -7.376,
+        "roi_pct": 42.688,
+        "net_yen": -3677570,
+        "roi_approx95pct_ci": [
+          35.97,
+          49.4
+        ]
+      },
+      "2025": {
+        "n": 57304,
+        "hits": 131,
+        "market_expected_hits": 252.988,
+        "hit_to_market_ratio": 0.5178,
+        "hit_z": -7.846,
+        "roi_pct": 36.664,
+        "net_yen": -3629390,
+        "roi_approx95pct_ci": [
+          30.17,
+          43.16
+        ]
+      },
+      "2026": {
+        "n": 28735,
+        "hits": 72,
+        "market_expected_hits": 127.166,
+        "hit_to_market_ratio": 0.5662,
+        "hit_z": -5.006,
+        "roi_pct": 43.727,
+        "net_yen": -1617000,
+        "roi_approx95pct_ci": [
+          33.35,
+          54.11
+        ]
+      },
+      "dev_hit_z": -13.735
+    },
+    {
+      "signature": "3連複|market_gap+price+donor_mass|0,4,0",
+      "2023": {
+        "n": 57663,
+        "hits": 158,
+        "market_expected_hits": 256.888,
+        "hit_to_market_ratio": 0.6151,
+        "hit_z": -6.331,
+        "roi_pct": 45.086,
+        "net_yen": -3166530,
+        "roi_approx95pct_ci": [
+          37.84,
+          52.34
+        ]
+      },
+      "2024": {
+        "n": 64091,
+        "hits": 164,
+        "market_expected_hits": 285.167,
+        "hit_to_market_ratio": 0.5751,
+        "hit_z": -7.361,
+        "roi_pct": 42.738,
+        "net_yen": -3669970,
+        "roi_approx95pct_ci": [
+          36.01,
+          49.46
+        ]
+      },
+      "2025": {
+        "n": 57245,
+        "hits": 131,
+        "market_expected_hits": 252.721,
+        "hit_to_market_ratio": 0.5184,
+        "hit_z": -7.833,
+        "roi_pct": 36.702,
+        "net_yen": -3623490,
+        "roi_approx95pct_ci": [
+          30.2,
+          43.2
+        ]
+      },
+      "2026": {
+        "n": 28706,
+        "hits": 72,
+        "market_expected_hits": 127.035,
+        "hit_to_market_ratio": 0.5668,
+        "hit_z": -4.996,
+        "roi_pct": 43.771,
+        "net_yen": -1614100,
+        "roi_approx95pct_ci": [
+          33.38,
+          54.16
+        ]
+      },
+      "dev_hit_z": -13.692
+    },
+    {
+      "signature": "3連複|market_gap+price+outside_mass|0,3,0",
+      "2023": {
+        "n": 24651,
+        "hits": 174,
+        "market_expected_hits": 255.379,
+        "hit_to_market_ratio": 0.6813,
+        "hit_z": -5.223,
+        "roi_pct": 52.051,
+        "net_yen": -1181980,
+        "roi_approx95pct_ci": [
+          44.3,
+          59.8
+        ]
+      },
+      "2024": {
+        "n": 26353,
+        "hits": 149,
+        "market_expected_hits": 272.439,
+        "hit_to_market_ratio": 0.5469,
+        "hit_z": -7.663,
+        "roi_pct": 41.086,
+        "net_yen": -1552560,
+        "roi_approx95pct_ci": [
+          34.42,
+          47.75
+        ]
+      },
+      "2025": {
+        "n": 21537,
+        "hits": 149,
+        "market_expected_hits": 222.536,
+        "hit_to_market_ratio": 0.6696,
+        "hit_z": -5.039,
+        "roi_pct": 49.278,
+        "net_yen": -1092410,
+        "roi_approx95pct_ci": [
+          41.33,
+          57.23
+        ]
+      },
+      "2026": {
+        "n": 11263,
+        "hits": 71,
+        "market_expected_hits": 116.338,
+        "hit_to_market_ratio": 0.6103,
+        "hit_z": -4.296,
+        "roi_pct": 46.612,
+        "net_yen": -601310,
+        "roi_approx95pct_ci": [
+          35.68,
+          57.54
+        ]
+      },
+      "dev_hit_z": -12.886
+    },
+    {
+      "signature": "3連複|market_gap+price+donor_mass|0,3,0",
+      "2023": {
+        "n": 24575,
+        "hits": 174,
+        "market_expected_hits": 254.57,
+        "hit_to_market_ratio": 0.6835,
+        "hit_z": -5.179,
+        "roi_pct": 52.212,
+        "net_yen": -1174380,
+        "roi_approx95pct_ci": [
+          44.44,
+          59.99
+        ]
+      },
+      "2024": {
+        "n": 26309,
+        "hits": 148,
+        "market_expected_hits": 271.966,
+        "hit_to_market_ratio": 0.5442,
+        "hit_z": -7.702,
+        "roi_pct": 40.854,
+        "net_yen": -1556080,
+        "roi_approx95pct_ci": [
+          34.21,
+          47.5
+        ]
+      },
+      "2025": {
+        "n": 21517,
+        "hits": 149,
+        "market_expected_hits": 222.306,
+        "hit_to_market_ratio": 0.6702,
+        "hit_z": -5.026,
+        "roi_pct": 49.323,
+        "net_yen": -1090410,
+        "roi_approx95pct_ci": [
+          41.36,
+          57.28
+        ]
+      },
+      "2026": {
+        "n": 11245,
+        "hits": 71,
+        "market_expected_hits": 116.143,
+        "hit_to_market_ratio": 0.6113,
+        "hit_z": -4.282,
+        "roi_pct": 46.687,
+        "net_yen": -599510,
+        "roi_approx95pct_ci": [
+          35.74,
+          57.63
+        ]
+      },
+      "dev_hit_z": -12.881
+    },
+    {
+      "signature": "3連複|market_gap+price+n_car|0,4,0",
+      "2023": {
+        "n": 27467,
+        "hits": 71,
+        "market_expected_hits": 128.987,
+        "hit_to_market_ratio": 0.5504,
+        "hit_z": -5.201,
+        "roi_pct": 38.911,
+        "net_yen": -1677940,
+        "roi_approx95pct_ci": [
+          29.59,
+          48.23
+        ]
+      },
+      "2024": {
+        "n": 33126,
+        "hits": 73,
+        "market_expected_hits": 154.472,
+        "hit_to_market_ratio": 0.4726,
+        "hit_z": -6.679,
+        "roi_pct": 34.871,
+        "net_yen": -2157470,
+        "roi_approx95pct_ci": [
+          26.63,
+          43.12
+        ]
+      },
+      "2025": {
+        "n": 30438,
+        "hits": 65,
+        "market_expected_hits": 140.989,
+        "hit_to_market_ratio": 0.461,
+        "hit_z": -6.512,
+        "roi_pct": 33.746,
+        "net_yen": -2016650,
+        "roi_approx95pct_ci": [
+          25.21,
+          42.28
+        ]
+      },
+      "2026": {
+        "n": 16252,
+        "hits": 35,
+        "market_expected_hits": 74.807,
+        "hit_to_market_ratio": 0.4679,
+        "hit_z": -4.683,
+        "roi_pct": 35.813,
+        "net_yen": -1043160,
+        "roi_approx95pct_ci": [
+          23.62,
+          48.0
+        ]
+      },
+      "dev_hit_z": -11.88
+    },
+    {
+      "signature": "3連複|market_gap+price+n_car|0,3,0",
+      "2023": {
+        "n": 15954,
+        "hits": 107,
+        "market_expected_hits": 166.292,
+        "hit_to_market_ratio": 0.6434,
+        "hit_z": -4.715,
+        "roi_pct": 49.304,
+        "net_yen": -808800,
+        "roi_approx95pct_ci": [
+          39.95,
+          58.66
+        ]
+      },
+      "2024": {
+        "n": 18065,
+        "hits": 94,
+        "market_expected_hits": 187.904,
+        "hit_to_market_ratio": 0.5003,
+        "hit_z": -7.019,
+        "roi_pct": 37.252,
+        "net_yen": -1133540,
+        "roi_approx95pct_ci": [
+          29.63,
+          44.87
+        ]
+      },
+      "2025": {
+        "n": 15040,
+        "hits": 102,
+        "market_expected_hits": 155.887,
+        "hit_to_market_ratio": 0.6543,
+        "hit_z": -4.413,
+        "roi_pct": 48.505,
+        "net_yen": -774480,
+        "roi_approx95pct_ci": [
+          39.04,
+          57.98
+        ]
+      },
+      "2026": {
+        "n": 8104,
+        "hits": 50,
+        "market_expected_hits": 84.201,
+        "hit_to_market_ratio": 0.5938,
+        "hit_z": -3.808,
+        "roi_pct": 44.93,
+        "net_yen": -446290,
+        "roi_approx95pct_ci": [
+          32.39,
+          57.47
+        ]
+      },
+      "dev_hit_z": -11.734
+    },
+    {
+      "signature": "3連複|market_gap+outside_share|0,1",
+      "2023": {
+        "n": 39221,
+        "hits": 96,
+        "market_expected_hits": 171.171,
+        "hit_to_market_ratio": 0.5608,
+        "hit_z": -5.937,
+        "roi_pct": 27.122,
+        "net_yen": -2858360,
+        "roi_approx95pct_ci": [
+          19.58,
+          34.67
+        ]
+      },
+      "2024": {
+        "n": 41625,
+        "hits": 99,
+        "market_expected_hits": 172.592,
+        "hit_to_market_ratio": 0.5736,
+        "hit_z": -5.775,
+        "roi_pct": 34.309,
+        "net_yen": -2734400,
+        "roi_approx95pct_ci": [
+          25.41,
+          43.2
+        ]
+      },
+      "2025": {
+        "n": 35342,
+        "hits": 79,
+        "market_expected_hits": 143.009,
+        "hit_to_market_ratio": 0.5524,
+        "hit_z": -5.499,
+        "roi_pct": 37.198,
+        "net_yen": -2219560,
+        "roi_approx95pct_ci": [
+          25.31,
+          49.09
+        ]
+      },
+      "2026": {
+        "n": 17293,
+        "hits": 34,
+        "market_expected_hits": 73.411,
+        "hit_to_market_ratio": 0.4631,
+        "hit_z": -4.739,
+        "roi_pct": 38.082,
+        "net_yen": -1070740,
+        "roi_approx95pct_ci": [
+          19.48,
+          56.68
+        ]
+      },
+      "dev_hit_z": -11.712
+    },
+    {
+      "signature": "3連複|market_gap+outside_share+donor_mass|0,1,0",
+      "2023": {
+        "n": 39170,
+        "hits": 96,
+        "market_expected_hits": 170.011,
+        "hit_to_market_ratio": 0.5647,
+        "hit_z": -5.862,
+        "roi_pct": 27.157,
+        "net_yen": -2853260,
+        "roi_approx95pct_ci": [
+          19.6,
+          34.71
+        ]
+      },
+      "2024": {
+        "n": 41603,
+        "hits": 99,
+        "market_expected_hits": 172.511,
+        "hit_to_market_ratio": 0.5739,
+        "hit_z": -5.77,
+        "roi_pct": 34.327,
+        "net_yen": -2732200,
+        "roi_approx95pct_ci": [
+          25.43,
+          43.23
+        ]
+      },
+      "2025": {
+        "n": 35326,
+        "hits": 79,
+        "market_expected_hits": 142.947,
+        "hit_to_market_ratio": 0.5527,
+        "hit_z": -5.495,
+        "roi_pct": 37.215,
+        "net_yen": -2217960,
+        "roi_approx95pct_ci": [
+          25.32,
+          49.11
+        ]
+      },
+      "2026": {
+        "n": 17286,
+        "hits": 34,
+        "market_expected_hits": 73.374,
+        "hit_to_market_ratio": 0.4634,
+        "hit_z": -4.735,
+        "roi_pct": 38.098,
+        "net_yen": -1070040,
+        "roi_approx95pct_ci": [
+          19.49,
+          56.71
+        ]
+      },
+      "dev_hit_z": -11.632
+    },
+    {
+      "signature": "3連複|market_gap+price+outside_share|0,4,0",
+      "2023": {
+        "n": 40758,
+        "hits": 120,
+        "market_expected_hits": 185.042,
+        "hit_to_market_ratio": 0.6485,
+        "hit_z": -4.869,
+        "roi_pct": 48.04,
+        "net_yen": -2117780,
+        "roi_approx95pct_ci": [
+          39.13,
+          56.95
+        ]
+      },
+      "2024": {
+        "n": 45798,
+        "hits": 114,
+        "market_expected_hits": 207.551,
+        "hit_to_market_ratio": 0.5493,
+        "hit_z": -6.614,
+        "roi_pct": 41.667,
+        "net_yen": -2671550,
+        "roi_approx95pct_ci": [
+          33.78,
+          49.55
+        ]
+      },
+      "2025": {
+        "n": 41237,
+        "hits": 96,
+        "market_expected_hits": 185.875,
+        "hit_to_market_ratio": 0.5165,
+        "hit_z": -6.704,
+        "roi_pct": 36.335,
+        "net_yen": -2625350,
+        "roi_approx95pct_ci": [
+          28.77,
+          43.9
+        ]
+      },
+      "2026": {
+        "n": 20589,
+        "hits": 49,
+        "market_expected_hits": 92.992,
+        "hit_to_market_ratio": 0.5269,
+        "hit_z": -4.639,
+        "roi_pct": 41.052,
+        "net_yen": -1213680,
+        "roi_approx95pct_ci": [
+          29.2,
+          52.9
+        ]
+      },
+      "dev_hit_z": -11.483
+    },
+    {
+      "signature": "3連複|market_gap+price+outside_share|0,3,0",
+      "2023": {
+        "n": 19795,
+        "hits": 139,
+        "market_expected_hits": 205.779,
+        "hit_to_market_ratio": 0.6755,
+        "hit_z": -4.761,
+        "roi_pct": 51.838,
+        "net_yen": -953360,
+        "roi_approx95pct_ci": [
+          43.19,
+          60.48
+        ]
+      },
+      "2024": {
+        "n": 21484,
+        "hits": 125,
+        "market_expected_hits": 223.025,
+        "hit_to_market_ratio": 0.5605,
+        "hit_z": -6.707,
+        "roi_pct": 41.945,
+        "net_yen": -1247250,
+        "roi_approx95pct_ci": [
+          34.51,
+          49.38
+        ]
+      },
+      "2025": {
+        "n": 17694,
+        "hits": 126,
+        "market_expected_hits": 183.458,
+        "hit_to_market_ratio": 0.6868,
+        "hit_z": -4.327,
+        "roi_pct": 51.225,
+        "net_yen": -863030,
+        "roi_approx95pct_ci": [
+          42.22,
+          60.22
+        ]
+      },
+      "2026": {
+        "n": 9280,
+        "hits": 63,
+        "market_expected_hits": 96.248,
+        "hit_to_market_ratio": 0.6546,
+        "hit_z": -3.456,
+        "roi_pct": 48.845,
+        "net_yen": -474720,
+        "roi_approx95pct_ci": [
+          36.69,
+          61.0
+        ]
+      },
+      "dev_hit_z": -11.468
+    },
+    {
+      "signature": "3連複|market_gap+rank+outside_mass|0,4,0",
+      "2023": {
+        "n": 55132,
+        "hits": 178,
+        "market_expected_hits": 253.402,
+        "hit_to_market_ratio": 0.7024,
+        "hit_z": -4.855,
+        "roi_pct": 48.66,
+        "net_yen": -2830480,
+        "roi_approx95pct_ci": [
+          40.73,
+          56.59
+        ]
+      },
+      "2024": {
+        "n": 61817,
+        "hits": 175,
+        "market_expected_hits": 275.808,
+        "hit_to_market_ratio": 0.6345,
+        "hit_z": -6.216,
+        "roi_pct": 44.334,
+        "net_yen": -3441120,
+        "roi_approx95pct_ci": [
+          37.24,
+          51.43
+        ]
+      },
+      "2025": {
+        "n": 55081,
+        "hits": 130,
+        "market_expected_hits": 242.836,
+        "hit_to_market_ratio": 0.5353,
+        "hit_z": -7.396,
+        "roi_pct": 34.445,
+        "net_yen": -3610810,
+        "roi_approx95pct_ci": [
+          27.91,
+          40.98
+        ]
+      },
+      "2026": {
+        "n": 28607,
+        "hits": 78,
+        "market_expected_hits": 124.122,
+        "hit_to_market_ratio": 0.6284,
+        "hit_z": -4.229,
+        "roi_pct": 45.129,
+        "net_yen": -1569690,
+        "roi_approx95pct_ci": [
+          33.93,
+          56.33
+        ]
+      },
+      "dev_hit_z": -11.071
+    },
+    {
+      "signature": "3連複|market_gap+rank+donor_mass|0,4,0",
+      "2023": {
+        "n": 55010,
+        "hits": 178,
+        "market_expected_hits": 252.9,
+        "hit_to_market_ratio": 0.7038,
+        "hit_z": -4.827,
+        "roi_pct": 48.768,
+        "net_yen": -2818280,
+        "roi_approx95pct_ci": [
+          40.82,
+          56.72
+        ]
+      },
+      "2024": {
+        "n": 61750,
+        "hits": 175,
+        "market_expected_hits": 275.621,
+        "hit_to_market_ratio": 0.6349,
+        "hit_z": -6.207,
+        "roi_pct": 44.382,
+        "net_yen": -3434420,
+        "roi_approx95pct_ci": [
+          37.28,
+          51.49
+        ]
+      },
+      "2025": {
+        "n": 55022,
+        "hits": 130,
+        "market_expected_hits": 242.702,
+        "hit_to_market_ratio": 0.5356,
+        "hit_z": -7.39,
+        "roi_pct": 34.482,
+        "net_yen": -3604910,
+        "roi_approx95pct_ci": [
+          27.94,
+          41.03
+        ]
+      },
+      "2026": {
+        "n": 28578,
+        "hits": 78,
+        "market_expected_hits": 124.01,
+        "hit_to_market_ratio": 0.629,
+        "hit_z": -4.221,
+        "roi_pct": 45.175,
+        "net_yen": -1566790,
+        "roi_approx95pct_ci": [
+          33.96,
+          56.39
+        ]
+      },
+      "dev_hit_z": -11.034
+    },
+    {
+      "signature": "3連複|market_gap+rank+outside_mass|0,5,0",
+      "2023": {
+        "n": 48982,
+        "hits": 28,
+        "market_expected_hits": 86.843,
+        "hit_to_market_ratio": 0.3224,
+        "hit_z": -6.459,
+        "roi_pct": 20.399,
+        "net_yen": -3899010,
+        "roi_approx95pct_ci": [
+          11.78,
+          29.02
+        ]
+      },
+      "2024": {
+        "n": 50599,
+        "hits": 49,
+        "market_expected_hits": 88.419,
+        "hit_to_market_ratio": 0.5542,
+        "hit_z": -4.289,
+        "roi_pct": 32.753,
+        "net_yen": -3402630,
+        "roi_approx95pct_ci": [
+          22.83,
+          42.67
+        ]
+      },
+      "2025": {
+        "n": 47136,
+        "hits": 46,
+        "market_expected_hits": 82.724,
+        "hit_to_market_ratio": 0.5561,
+        "hit_z": -4.126,
+        "roi_pct": 35.807,
+        "net_yen": -3025780,
+        "roi_approx95pct_ci": [
+          24.06,
+          47.56
+        ]
+      },
+      "2026": {
+        "n": 21393,
+        "hits": 18,
+        "market_expected_hits": 37.19,
+        "hit_to_market_ratio": 0.484,
+        "hit_z": -3.217,
+        "roi_pct": 29.295,
+        "net_yen": -1512600,
+        "roi_approx95pct_ci": [
+          13.62,
+          44.97
+        ]
+      },
+      "dev_hit_z": -10.748
+    },
+    {
+      "signature": "3連複|market_gap+rank+n_car|0,5,1",
+      "2023": {
+        "n": 48983,
+        "hits": 28,
+        "market_expected_hits": 86.844,
+        "hit_to_market_ratio": 0.3224,
+        "hit_z": -6.459,
+        "roi_pct": 20.399,
+        "net_yen": -3899110,
+        "roi_approx95pct_ci": [
+          11.78,
+          29.02
+        ]
+      },
+      "2024": {
+        "n": 50599,
+        "hits": 49,
+        "market_expected_hits": 88.419,
+        "hit_to_market_ratio": 0.5542,
+        "hit_z": -4.289,
+        "roi_pct": 32.753,
+        "net_yen": -3402630,
+        "roi_approx95pct_ci": [
+          22.83,
+          42.67
+        ]
+      },
+      "2025": {
+        "n": 47136,
+        "hits": 46,
+        "market_expected_hits": 82.724,
+        "hit_to_market_ratio": 0.5561,
+        "hit_z": -4.126,
+        "roi_pct": 35.807,
+        "net_yen": -3025780,
+        "roi_approx95pct_ci": [
+          24.06,
+          47.56
+        ]
+      },
+      "2026": {
+        "n": 21393,
+        "hits": 18,
+        "market_expected_hits": 37.19,
+        "hit_to_market_ratio": 0.484,
+        "hit_z": -3.217,
+        "roi_pct": 29.295,
+        "net_yen": -1512600,
+        "roi_approx95pct_ci": [
+          13.62,
+          44.97
+        ]
+      },
+      "dev_hit_z": -10.748
+    },
+    {
+      "signature": "3連複|market_gap+rank+donor_mass|0,5,0",
+      "2023": {
+        "n": 48965,
+        "hits": 28,
+        "market_expected_hits": 86.814,
+        "hit_to_market_ratio": 0.3225,
+        "hit_z": -6.457,
+        "roi_pct": 20.406,
+        "net_yen": -3897310,
+        "roi_approx95pct_ci": [
+          11.78,
+          29.03
+        ]
+      },
+      "2024": {
+        "n": 50599,
+        "hits": 49,
+        "market_expected_hits": 88.419,
+        "hit_to_market_ratio": 0.5542,
+        "hit_z": -4.289,
+        "roi_pct": 32.753,
+        "net_yen": -3402630,
+        "roi_approx95pct_ci": [
+          22.83,
+          42.67
+        ]
+      },
+      "2025": {
+        "n": 47136,
+        "hits": 46,
+        "market_expected_hits": 82.724,
+        "hit_to_market_ratio": 0.5561,
+        "hit_z": -4.126,
+        "roi_pct": 35.807,
+        "net_yen": -3025780,
+        "roi_approx95pct_ci": [
+          24.06,
+          47.56
+        ]
+      },
+      "2026": {
+        "n": 21393,
+        "hits": 18,
+        "market_expected_hits": 37.19,
+        "hit_to_market_ratio": 0.484,
+        "hit_z": -3.217,
+        "roi_pct": 29.295,
+        "net_yen": -1512600,
+        "roi_approx95pct_ci": [
+          13.62,
+          44.97
+        ]
+      },
+      "dev_hit_z": -10.746
+    },
+    {
+      "signature": "3連複|market_gap+price+n_car|0,5,1",
+      "2023": {
+        "n": 37701,
+        "hits": 13,
+        "market_expected_hits": 57.433,
+        "hit_to_market_ratio": 0.2263,
+        "hit_z": -5.951,
+        "roi_pct": 17.89,
+        "net_yen": -3095640,
+        "roi_approx95pct_ci": [
+          7.48,
+          28.3
+        ]
+      },
+      "2024": {
+        "n": 39306,
+        "hits": 26,
+        "market_expected_hits": 59.87,
+        "hit_to_market_ratio": 0.4343,
+        "hit_z": -4.448,
+        "roi_pct": 29.105,
+        "net_yen": -2786590,
+        "roi_approx95pct_ci": [
+          17.51,
+          40.7
+        ]
+      },
+      "2025": {
+        "n": 36703,
+        "hits": 27,
+        "market_expected_hits": 56.033,
+        "hit_to_market_ratio": 0.4819,
+        "hit_z": -3.936,
+        "roi_pct": 35.489,
+        "net_yen": -2367740,
+        "roi_approx95pct_ci": [
+          21.14,
+          49.83
+        ]
+      },
+      "2026": {
+        "n": 16680,
+        "hits": 7,
+        "market_expected_hits": 25.386,
+        "hit_to_market_ratio": 0.2757,
+        "hit_z": -3.705,
+        "roi_pct": 22.351,
+        "net_yen": -1295180,
+        "roi_approx95pct_ci": [
+          4.39,
+          40.31
+        ]
+      },
+      "dev_hit_z": -10.399
+    },
+    {
+      "signature": "3連複|market_gap+outside_share+n_car|0,1,1",
+      "2023": {
+        "n": 33220,
+        "hits": 71,
+        "market_expected_hits": 122.535,
+        "hit_to_market_ratio": 0.5794,
+        "hit_z": -4.838,
+        "roi_pct": 27.116,
+        "net_yen": -2421210,
+        "roi_approx95pct_ci": [
+          18.53,
+          35.7
+        ]
+      },
+      "2024": {
+        "n": 34408,
+        "hits": 61,
+        "market_expected_hits": 117.773,
+        "hit_to_market_ratio": 0.5179,
+        "hit_z": -5.429,
+        "roi_pct": 30.955,
+        "net_yen": -2375690,
+        "roi_approx95pct_ci": [
+          21.12,
+          40.79
+        ]
+      },
+      "2025": {
+        "n": 29242,
+        "hits": 56,
+        "market_expected_hits": 96.352,
+        "hit_to_market_ratio": 0.5812,
+        "hit_z": -4.245,
+        "roi_pct": 36.703,
+        "net_yen": -1850920,
+        "roi_approx95pct_ci": [
+          23.05,
+          50.36
+        ]
+      },
+      "2026": {
+        "n": 13948,
+        "hits": 26,
+        "market_expected_hits": 47.639,
+        "hit_to_market_ratio": 0.5458,
+        "hit_z": -3.25,
+        "roi_pct": 43.058,
+        "net_yen": -794230,
+        "roi_approx95pct_ci": [
+          20.23,
+          65.88
+        ]
+      },
+      "dev_hit_z": -10.267
+    },
+    {
+      "signature": "3連複|market_gap+price+outside_mass|0,5,0",
+      "2023": {
+        "n": 43259,
+        "hits": 19,
+        "market_expected_hits": 68.179,
+        "hit_to_market_ratio": 0.2787,
+        "hit_z": -6.034,
+        "roi_pct": 21.211,
+        "net_yen": -3408330,
+        "roi_approx95pct_ci": [
+          11.04,
+          31.38
+        ]
+      },
+      "2024": {
+        "n": 46537,
+        "hits": 38,
+        "market_expected_hits": 73.738,
+        "hit_to_market_ratio": 0.5153,
+        "hit_z": -4.219,
+        "roi_pct": 33.177,
+        "net_yen": -3109750,
+        "roi_approx95pct_ci": [
+          22.23,
+          44.12
+        ]
+      },
+      "2025": {
+        "n": 43907,
+        "hits": 30,
+        "market_expected_hits": 69.741,
+        "hit_to_market_ratio": 0.4302,
+        "hit_z": -4.819,
+        "roi_pct": 32.598,
+        "net_yen": -2959400,
+        "roi_approx95pct_ci": [
+          20.13,
+          45.07
+        ]
+      },
+      "2026": {
+        "n": 21022,
+        "hits": 13,
+        "market_expected_hits": 33.585,
+        "hit_to_market_ratio": 0.3871,
+        "hit_z": -3.597,
+        "roi_pct": 29.147,
+        "net_yen": -1489470,
+        "roi_approx95pct_ci": [
+          12.17,
+          46.13
+        ]
+      },
+      "dev_hit_z": -10.253
+    },
+    {
+      "signature": "3連複|market_gap+price+donor_mass|0,5,0",
+      "2023": {
+        "n": 43203,
+        "hits": 19,
+        "market_expected_hits": 68.083,
+        "hit_to_market_ratio": 0.2791,
+        "hit_z": -6.027,
+        "roi_pct": 21.239,
+        "net_yen": -3402730,
+        "roi_approx95pct_ci": [
+          11.06,
+          31.42
+        ]
+      },
+      "2024": {
+        "n": 46507,
+        "hits": 38,
+        "market_expected_hits": 73.682,
+        "hit_to_market_ratio": 0.5157,
+        "hit_z": -4.214,
+        "roi_pct": 33.198,
+        "net_yen": -3106750,
+        "roi_approx95pct_ci": [
+          22.25,
+          44.15
+        ]
+      },
+      "2025": {
+        "n": 43865,
+        "hits": 30,
+        "market_expected_hits": 69.671,
+        "hit_to_market_ratio": 0.4306,
+        "hit_z": -4.813,
+        "roi_pct": 32.63,
+        "net_yen": -2955200,
+        "roi_approx95pct_ci": [
+          20.15,
+          45.11
+        ]
+      },
+      "2026": {
+        "n": 21014,
+        "hits": 13,
+        "market_expected_hits": 33.571,
+        "hit_to_market_ratio": 0.3872,
+        "hit_z": -3.595,
+        "roi_pct": 29.158,
+        "net_yen": -1488670,
+        "roi_approx95pct_ci": [
+          12.17,
+          46.14
+        ]
+      },
+      "dev_hit_z": -10.241
+    },
+    {
+      "signature": "3連複|market_gap+outside_mass|1,0",
+      "2023": {
+        "n": 66187,
+        "hits": 1044,
+        "market_expected_hits": 1163.254,
+        "hit_to_market_ratio": 0.8975,
+        "hit_z": -3.956,
+        "roi_pct": 54.092,
+        "net_yen": -3038520,
+        "roi_approx95pct_ci": [
+          48.1,
+          60.09
+        ]
+      },
+      "2024": {
+        "n": 70099,
+        "hits": 1109,
+        "market_expected_hits": 1306.338,
+        "hit_to_market_ratio": 0.8489,
+        "hit_z": -6.187,
+        "roi_pct": 55.058,
+        "net_yen": -3150410,
+        "roi_approx95pct_ci": [
+          49.36,
+          60.76
+        ]
+      },
+      "2025": {
+        "n": 75207,
+        "hits": 1261,
+        "market_expected_hits": 1418.419,
+        "hit_to_market_ratio": 0.889,
+        "hit_z": -4.775,
+        "roi_pct": 61.229,
+        "net_yen": -2915840,
+        "roi_approx95pct_ci": [
+          55.35,
+          67.11
+        ]
+      },
+      "2026": {
+        "n": 34161,
+        "hits": 640,
+        "market_expected_hits": 750.65,
+        "hit_to_market_ratio": 0.8526,
+        "hit_z": -4.651,
+        "roi_pct": 62.743,
+        "net_yen": -1272720,
+        "roi_approx95pct_ci": [
+          50.39,
+          75.09
+        ]
+      },
+      "dev_hit_z": -10.143
+    },
+    {
+      "signature": "3連複|market_gap+rank+donor_mass|0,2,0",
+      "2023": {
+        "n": 7512,
+        "hits": 123,
+        "market_expected_hits": 182.71,
+        "hit_to_market_ratio": 0.6732,
+        "hit_z": -4.541,
+        "roi_pct": 49.421,
+        "net_yen": -379950,
+        "roi_approx95pct_ci": [
+          40.35,
+          58.5
+        ]
+      },
+      "2024": {
+        "n": 8332,
+        "hits": 123,
+        "market_expected_hits": 199.477,
+        "hit_to_market_ratio": 0.6166,
+        "hit_z": -5.562,
+        "roi_pct": 44.814,
+        "net_yen": -459810,
+        "roi_approx95pct_ci": [
+          36.55,
+          53.08
+        ]
+      },
+      "2025": {
+        "n": 7283,
+        "hits": 102,
+        "market_expected_hits": 176.652,
+        "hit_to_market_ratio": 0.5774,
+        "hit_z": -5.764,
+        "roi_pct": 40.284,
+        "net_yen": -434910,
+        "roi_approx95pct_ci": [
+          31.82,
+          48.75
+        ]
+      },
+      "2026": {
+        "n": 4070,
+        "hits": 70,
+        "market_expected_hits": 101.38,
+        "hit_to_market_ratio": 0.6905,
+        "hit_z": -3.203,
+        "roi_pct": 48.646,
+        "net_yen": -209010,
+        "roi_approx95pct_ci": [
+          36.75,
+          60.54
+        ]
+      },
+      "dev_hit_z": -10.103
+    },
+    {
+      "signature": "3連複|market_gap+donor_mass|1,0",
+      "2023": {
+        "n": 66100,
+        "hits": 1044,
+        "market_expected_hits": 1162.206,
+        "hit_to_market_ratio": 0.8983,
+        "hit_z": -3.923,
+        "roi_pct": 54.163,
+        "net_yen": -3029820,
+        "roi_approx95pct_ci": [
+          48.16,
+          60.17
+        ]
+      },
+      "2024": {
+        "n": 70048,
+        "hits": 1109,
+        "market_expected_hits": 1305.697,
+        "hit_to_market_ratio": 0.8494,
+        "hit_z": -6.169,
+        "roi_pct": 55.098,
+        "net_yen": -3145310,
+        "roi_approx95pct_ci": [
+          49.39,
+          60.8
+        ]
+      },
+      "2025": {
+        "n": 75176,
+        "hits": 1261,
+        "market_expected_hits": 1417.911,
+        "hit_to_market_ratio": 0.8893,
+        "hit_z": -4.761,
+        "roi_pct": 61.254,
+        "net_yen": -2912740,
+        "roi_approx95pct_ci": [
+          55.37,
+          67.13
+        ]
+      },
+      "2026": {
+        "n": 34142,
+        "hits": 640,
+        "market_expected_hits": 750.426,
+        "hit_to_market_ratio": 0.8528,
+        "hit_z": -4.643,
+        "roi_pct": 62.778,
+        "net_yen": -1270820,
+        "roi_approx95pct_ci": [
+          50.42,
+          75.13
+        ]
+      },
+      "dev_hit_z": -10.092
+    },
+    {
+      "signature": "3連複|market_gap+outside_mass+donor_mass|1,0,0",
+      "2023": {
+        "n": 66098,
+        "hits": 1044,
+        "market_expected_hits": 1162.199,
+        "hit_to_market_ratio": 0.8983,
+        "hit_z": -3.923,
+        "roi_pct": 54.165,
+        "net_yen": -3029620,
+        "roi_approx95pct_ci": [
+          48.16,
+          60.17
+        ]
+      },
+      "2024": {
+        "n": 70048,
+        "hits": 1109,
+        "market_expected_hits": 1305.697,
+        "hit_to_market_ratio": 0.8494,
+        "hit_z": -6.169,
+        "roi_pct": 55.098,
+        "net_yen": -3145310,
+        "roi_approx95pct_ci": [
+          49.39,
+          60.8
+        ]
+      },
+      "2025": {
+        "n": 75174,
+        "hits": 1261,
+        "market_expected_hits": 1417.9,
+        "hit_to_market_ratio": 0.8893,
+        "hit_z": -4.76,
+        "roi_pct": 61.256,
+        "net_yen": -2912540,
+        "roi_approx95pct_ci": [
+          55.38,
+          67.14
+        ]
+      },
+      "2026": {
+        "n": 34142,
+        "hits": 640,
+        "market_expected_hits": 750.426,
+        "hit_to_market_ratio": 0.8528,
+        "hit_z": -4.643,
+        "roi_pct": 62.778,
+        "net_yen": -1270820,
+        "roi_approx95pct_ci": [
+          50.42,
+          75.13
+        ]
+      },
+      "dev_hit_z": -10.092
+    },
+    {
+      "signature": "3連複|market_gap+rank+outside_mass|0,2,0",
+      "2023": {
+        "n": 7569,
+        "hits": 125,
+        "market_expected_hits": 184.259,
+        "hit_to_market_ratio": 0.6784,
+        "hit_z": -4.488,
+        "roi_pct": 49.601,
+        "net_yen": -381470,
+        "roi_approx95pct_ci": [
+          40.57,
+          58.63
+        ]
+      },
+      "2024": {
+        "n": 8361,
+        "hits": 123,
+        "market_expected_hits": 199.992,
+        "hit_to_market_ratio": 0.615,
+        "hit_z": -5.593,
+        "roi_pct": 44.659,
+        "net_yen": -462710,
+        "roi_approx95pct_ci": [
+          36.42,
+          52.9
+        ]
+      },
+      "2025": {
+        "n": 7309,
+        "hits": 103,
+        "market_expected_hits": 177.162,
+        "hit_to_market_ratio": 0.5814,
+        "hit_z": -5.718,
+        "roi_pct": 40.479,
+        "net_yen": -435040,
+        "roi_approx95pct_ci": [
+          32.02,
+          48.94
+        ]
+      },
+      "2026": {
+        "n": 4086,
+        "hits": 70,
+        "market_expected_hits": 101.876,
+        "hit_to_market_ratio": 0.6871,
+        "hit_z": -3.247,
+        "roi_pct": 48.456,
+        "net_yen": -210610,
+        "roi_approx95pct_ci": [
+          36.61,
+          60.3
+        ]
+      },
+      "dev_hit_z": -10.081
+    },
+    {
+      "signature": "3連複|market_gap+rank+outside_share|0,2,0",
+      "2023": {
+        "n": 6730,
+        "hits": 117,
+        "market_expected_hits": 165.119,
+        "hit_to_market_ratio": 0.7086,
+        "hit_z": -3.85,
+        "roi_pct": 51.663,
+        "net_yen": -325310,
+        "roi_approx95pct_ci": [
+          41.94,
+          61.39
+        ]
+      },
+      "2024": {
+        "n": 7499,
+        "hits": 107,
+        "market_expected_hits": 180.515,
+        "hit_to_market_ratio": 0.5927,
+        "hit_z": -5.621,
+        "roi_pct": 41.522,
+        "net_yen": -438530,
+        "roi_approx95pct_ci": [
+          33.41,
+          49.63
+        ]
+      },
+      "2025": {
+        "n": 6620,
+        "hits": 95,
+        "market_expected_hits": 161.878,
+        "hit_to_market_ratio": 0.5869,
+        "hit_z": -5.395,
+        "roi_pct": 40.775,
+        "net_yen": -392070,
+        "roi_approx95pct_ci": [
+          31.87,
+          49.68
+        ]
+      },
+      "2026": {
+        "n": 3700,
+        "hits": 68,
+        "market_expected_hits": 93.306,
+        "hit_to_market_ratio": 0.7288,
+        "hit_z": -2.693,
+        "roi_pct": 52.295,
+        "net_yen": -176510,
+        "roi_approx95pct_ci": [
+          39.32,
+          65.27
+        ]
+      },
+      "dev_hit_z": -9.471
+    },
+    {
+      "signature": "3連複|market_gap+price+outside_mass|0,2,0",
+      "2023": {
+        "n": 11940,
+        "hits": 203,
+        "market_expected_hits": 258.048,
+        "hit_to_market_ratio": 0.7867,
+        "hit_z": -3.541,
+        "roi_pct": 60.772,
+        "net_yen": -468380,
+        "roi_approx95pct_ci": [
+          52.35,
+          69.19
+        ]
+      },
+      "2024": {
+        "n": 12582,
+        "hits": 177,
+        "market_expected_hits": 271.136,
+        "hit_to_market_ratio": 0.6528,
+        "hit_z": -5.899,
+        "roi_pct": 47.016,
+        "net_yen": -666650,
+        "roi_approx95pct_ci": [
+          40.02,
+          54.01
+        ]
+      },
+      "2025": {
+        "n": 10570,
+        "hits": 134,
+        "market_expected_hits": 231.65,
+        "hit_to_market_ratio": 0.5785,
+        "hit_z": -6.607,
+        "roi_pct": 43.789,
+        "net_yen": -594150,
+        "roi_approx95pct_ci": [
+          36.25,
+          51.32
+        ]
+      },
+      "2026": {
+        "n": 5791,
+        "hits": 87,
+        "market_expected_hits": 126.972,
+        "hit_to_market_ratio": 0.6852,
+        "hit_z": -3.656,
+        "roi_pct": 51.822,
+        "net_yen": -279000,
+        "roi_approx95pct_ci": [
+          40.85,
+          62.79
+        ]
+      },
+      "dev_hit_z": -9.44
+    },
+    {
+      "signature": "3連複|market_gap+price+donor_mass|0,2,0",
+      "2023": {
+        "n": 11857,
+        "hits": 202,
+        "market_expected_hits": 255.952,
+        "hit_to_market_ratio": 0.7892,
+        "hit_z": -3.484,
+        "roi_pct": 61.01,
+        "net_yen": -462310,
+        "roi_approx95pct_ci": [
+          52.53,
+          69.48
+        ]
+      },
+      "2024": {
+        "n": 12563,
+        "hits": 177,
+        "market_expected_hits": 270.717,
+        "hit_to_market_ratio": 0.6538,
+        "hit_z": -5.877,
+        "roi_pct": 47.087,
+        "net_yen": -664750,
+        "roi_approx95pct_ci": [
+          40.08,
+          54.09
+        ]
+      },
+      "2025": {
+        "n": 10542,
+        "hits": 133,
+        "market_expected_hits": 230.962,
+        "hit_to_market_ratio": 0.5759,
+        "hit_z": -6.638,
+        "roi_pct": 43.671,
+        "net_yen": -593820,
+        "roi_approx95pct_ci": [
+          36.13,
+          51.21
+        ]
+      },
+      "2026": {
+        "n": 5777,
+        "hits": 87,
+        "market_expected_hits": 126.579,
+        "hit_to_market_ratio": 0.6873,
+        "hit_z": -3.625,
+        "roi_pct": 51.947,
+        "net_yen": -277600,
+        "roi_approx95pct_ci": [
+          40.95,
+          62.94
+        ]
+      },
+      "dev_hit_z": -9.361
+    },
+    {
+      "signature": "3連複|market_gap+price+outside_share|0,2,0",
+      "2023": {
+        "n": 10345,
+        "hits": 172,
+        "market_expected_hits": 225.127,
+        "hit_to_market_ratio": 0.764,
+        "hit_z": -3.655,
+        "roi_pct": 58.447,
+        "net_yen": -429870,
+        "roi_approx95pct_ci": [
+          49.63,
+          67.26
+        ]
+      },
+      "2024": {
+        "n": 11069,
+        "hits": 155,
+        "market_expected_hits": 239.97,
+        "hit_to_market_ratio": 0.6459,
+        "hit_z": -5.656,
+        "roi_pct": 46.565,
+        "net_yen": -591470,
+        "roi_approx95pct_ci": [
+          39.15,
+          53.98
+        ]
+      },
+      "2025": {
+        "n": 9391,
+        "hits": 120,
+        "market_expected_hits": 207.002,
+        "hit_to_market_ratio": 0.5797,
+        "hit_z": -6.225,
+        "roi_pct": 43.743,
+        "net_yen": -528310,
+        "roi_approx95pct_ci": [
+          35.77,
+          51.71
+        ]
+      },
+      "2026": {
+        "n": 5179,
+        "hits": 83,
+        "market_expected_hits": 114.135,
+        "hit_to_market_ratio": 0.7272,
+        "hit_z": -3.002,
+        "roi_pct": 55.25,
+        "net_yen": -231760,
+        "roi_approx95pct_ci": [
+          43.3,
+          67.2
+        ]
+      },
+      "dev_hit_z": -9.311
+    }
+  ],
+  "full_source_destination_matrix": {
+    "3連複|market_gap+outside_share|0,0": {
+      "2021": {
+        "n": 14317,
+        "hits": 80,
+        "market_expected_hits": 137.311,
+        "hit_to_market_ratio": 0.5826,
+        "hit_z": -5.364,
+        "roi_pct": 41.799,
+        "net_yen": -833270,
+        "roi_approx95pct_ci": [
+          26.63,
+          56.97
+        ]
+      },
+      "2022": {
+        "n": 44191,
+        "hits": 144,
+        "market_expected_hits": 233.893,
+        "hit_to_market_ratio": 0.6157,
+        "hit_z": -6.265,
+        "roi_pct": 32.443,
+        "net_yen": -2985430,
+        "roi_approx95pct_ci": [
+          24.83,
+          40.06
+        ]
+      },
+      "2023": {
+        "n": 97537,
+        "hits": 615,
+        "market_expected_hits": 861.637,
+        "hit_to_market_ratio": 0.7138,
+        "hit_z": -9.118,
+        "roi_pct": 45.713,
+        "net_yen": -5294970,
+        "roi_approx95pct_ci": [
+          39.96,
+          51.47
+        ]
+      },
+      "2024": {
+        "n": 107423,
+        "hits": 583,
+        "market_expected_hits": 955.639,
+        "hit_to_market_ratio": 0.6101,
+        "hit_z": -13.07,
+        "roi_pct": 40.38,
+        "net_yen": -6404610,
+        "roi_approx95pct_ci": [
+          35.29,
+          45.47
+        ]
+      },
+      "2025": {
+        "n": 96521,
+        "hits": 540,
+        "market_expected_hits": 884.576,
+        "hit_to_market_ratio": 0.6105,
+        "hit_z": -12.534,
+        "roi_pct": 38.2,
+        "net_yen": -5964990,
+        "roi_approx95pct_ci": [
+          32.87,
+          43.53
+        ]
+      },
+      "2026": {
+        "n": 49042,
+        "hits": 347,
+        "market_expected_hits": 500.403,
+        "hit_to_market_ratio": 0.6934,
+        "hit_z": -7.478,
+        "roi_pct": 38.594,
+        "net_yen": -3011490,
+        "roi_approx95pct_ci": [
+          32.25,
+          44.94
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|0,1": {
+      "2021": {
+        "n": 7205,
+        "hits": 22,
+        "market_expected_hits": 35.293,
+        "hit_to_market_ratio": 0.6234,
+        "hit_z": -2.329,
+        "roi_pct": 57.728,
+        "net_yen": -304570,
+        "roi_approx95pct_ci": [
+          25.09,
+          90.36
+        ]
+      },
+      "2022": {
+        "n": 32200,
+        "hits": 71,
+        "market_expected_hits": 123.086,
+        "hit_to_market_ratio": 0.5768,
+        "hit_z": -4.89,
+        "roi_pct": 38.359,
+        "net_yen": -1984840,
+        "roi_approx95pct_ci": [
+          24.48,
+          52.24
+        ]
+      },
+      "2023": {
+        "n": 39221,
+        "hits": 96,
+        "market_expected_hits": 171.171,
+        "hit_to_market_ratio": 0.5608,
+        "hit_z": -5.937,
+        "roi_pct": 27.122,
+        "net_yen": -2858360,
+        "roi_approx95pct_ci": [
+          19.58,
+          34.67
+        ]
+      },
+      "2024": {
+        "n": 41625,
+        "hits": 99,
+        "market_expected_hits": 172.592,
+        "hit_to_market_ratio": 0.5736,
+        "hit_z": -5.775,
+        "roi_pct": 34.309,
+        "net_yen": -2734400,
+        "roi_approx95pct_ci": [
+          25.41,
+          43.2
+        ]
+      },
+      "2025": {
+        "n": 35342,
+        "hits": 79,
+        "market_expected_hits": 143.009,
+        "hit_to_market_ratio": 0.5524,
+        "hit_z": -5.499,
+        "roi_pct": 37.198,
+        "net_yen": -2219560,
+        "roi_approx95pct_ci": [
+          25.31,
+          49.09
+        ]
+      },
+      "2026": {
+        "n": 17293,
+        "hits": 34,
+        "market_expected_hits": 73.411,
+        "hit_to_market_ratio": 0.4631,
+        "hit_z": -4.739,
+        "roi_pct": 38.082,
+        "net_yen": -1070740,
+        "roi_approx95pct_ci": [
+          19.48,
+          56.68
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|0,2": {
+      "2021": {
+        "n": 1324,
+        "hits": 6,
+        "market_expected_hits": 5.194,
+        "hit_to_market_ratio": 1.1551,
+        "hit_z": 0.356,
+        "roi_pct": 100.642,
+        "net_yen": 850,
+        "roi_approx95pct_ci": [
+          -4.64,
+          205.93
+        ]
+      },
+      "2022": {
+        "n": 4716,
+        "hits": 9,
+        "market_expected_hits": 13.953,
+        "hit_to_market_ratio": 0.645,
+        "hit_z": -1.335,
+        "roi_pct": 56.198,
+        "net_yen": -206570,
+        "roi_approx95pct_ci": [
+          10.91,
+          101.49
+        ]
+      },
+      "2023": {
+        "n": 6929,
+        "hits": 20,
+        "market_expected_hits": 22.575,
+        "hit_to_market_ratio": 0.8859,
+        "hit_z": -0.546,
+        "roi_pct": 24.522,
+        "net_yen": -522990,
+        "roi_approx95pct_ci": [
+          12.44,
+          36.6
+        ]
+      },
+      "2024": {
+        "n": 7461,
+        "hits": 17,
+        "market_expected_hits": 24.634,
+        "hit_to_market_ratio": 0.6901,
+        "hit_z": -1.549,
+        "roi_pct": 41.682,
+        "net_yen": -435110,
+        "roi_approx95pct_ci": [
+          14.1,
+          69.27
+        ]
+      },
+      "2025": {
+        "n": 7409,
+        "hits": 11,
+        "market_expected_hits": 23.372,
+        "hit_to_market_ratio": 0.4706,
+        "hit_z": -2.575,
+        "roi_pct": 24.123,
+        "net_yen": -562170,
+        "roi_approx95pct_ci": [
+          5.44,
+          42.81
+        ]
+      },
+      "2026": {
+        "n": 3691,
+        "hits": 12,
+        "market_expected_hits": 11.98,
+        "hit_to_market_ratio": 1.0017,
+        "hit_z": 0.006,
+        "roi_pct": 76.849,
+        "net_yen": -85450,
+        "roi_approx95pct_ci": [
+          26.94,
+          126.76
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|0,3": {
+      "2021": {
+        "n": 180,
+        "hits": 0,
+        "market_expected_hits": 0.63,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.797,
+        "roi_pct": 0.0,
+        "net_yen": -18000,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2022": {
+        "n": 323,
+        "hits": 0,
+        "market_expected_hits": 0.752,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.871,
+        "roi_pct": 0.0,
+        "net_yen": -32300,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2023": {
+        "n": 938,
+        "hits": 0,
+        "market_expected_hits": 3.428,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -1.865,
+        "roi_pct": 0.0,
+        "net_yen": -93800,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2024": {
+        "n": 1076,
+        "hits": 5,
+        "market_expected_hits": 3.663,
+        "hit_to_market_ratio": 1.3651,
+        "hit_z": 0.702,
+        "roi_pct": 49.015,
+        "net_yen": -54860,
+        "roi_approx95pct_ci": [
+          -4.94,
+          102.97
+        ]
+      },
+      "2025": {
+        "n": 1386,
+        "hits": 3,
+        "market_expected_hits": 4.502,
+        "hit_to_market_ratio": 0.6664,
+        "hit_z": -0.711,
+        "roi_pct": 48.29,
+        "net_yen": -71670,
+        "roi_approx95pct_ci": [
+          -33.79,
+          130.37
+        ]
+      },
+      "2026": {
+        "n": 830,
+        "hits": 0,
+        "market_expected_hits": 2.954,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -1.729,
+        "roi_pct": 0.0,
+        "net_yen": -83000,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|0,4": {
+      "2021": {
+        "n": 24,
+        "hits": 0,
+        "market_expected_hits": 0.1,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.317,
+        "roi_pct": 0.0,
+        "net_yen": -2400,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2022": {
+        "n": 27,
+        "hits": 0,
+        "market_expected_hits": 0.058,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.243,
+        "roi_pct": 0.0,
+        "net_yen": -2700,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2023": {
+        "n": 114,
+        "hits": 0,
+        "market_expected_hits": 0.49,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.705,
+        "roi_pct": 0.0,
+        "net_yen": -11400,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2024": {
+        "n": 135,
+        "hits": 0,
+        "market_expected_hits": 0.528,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.73,
+        "roi_pct": 0.0,
+        "net_yen": -13500,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2025": {
+        "n": 282,
+        "hits": 0,
+        "market_expected_hits": 0.958,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.983,
+        "roi_pct": 0.0,
+        "net_yen": -28200,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2026": {
+        "n": 158,
+        "hits": 0,
+        "market_expected_hits": 0.478,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.694,
+        "roi_pct": 0.0,
+        "net_yen": -15800,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|1,0": {
+      "2021": {
+        "n": 6401,
+        "hits": 124,
+        "market_expected_hits": 123.798,
+        "hit_to_market_ratio": 1.0016,
+        "hit_z": 0.02,
+        "roi_pct": 66.529,
+        "net_yen": -214250,
+        "roi_approx95pct_ci": [
+          46.47,
+          86.59
+        ]
+      },
+      "2022": {
+        "n": 14211,
+        "hits": 163,
+        "market_expected_hits": 168.549,
+        "hit_to_market_ratio": 0.9671,
+        "hit_z": -0.456,
+        "roi_pct": 60.308,
+        "net_yen": -564070,
+        "roi_approx95pct_ci": [
+          44.21,
+          76.41
+        ]
+      },
+      "2023": {
+        "n": 39109,
+        "hits": 744,
+        "market_expected_hits": 823.017,
+        "hit_to_market_ratio": 0.904,
+        "hit_z": -3.049,
+        "roi_pct": 60.352,
+        "net_yen": -1550590,
+        "roi_approx95pct_ci": [
+          52.21,
+          68.49
+        ]
+      },
+      "2024": {
+        "n": 42684,
+        "hits": 806,
+        "market_expected_hits": 955.216,
+        "hit_to_market_ratio": 0.8438,
+        "hit_z": -5.361,
+        "roi_pct": 57.154,
+        "net_yen": -1828860,
+        "roi_approx95pct_ci": [
+          50.08,
+          64.23
+        ]
+      },
+      "2025": {
+        "n": 46732,
+        "hits": 936,
+        "market_expected_hits": 1030.61,
+        "hit_to_market_ratio": 0.9082,
+        "hit_z": -3.29,
+        "roi_pct": 62.012,
+        "net_yen": -1775240,
+        "roi_approx95pct_ci": [
+          55.54,
+          68.48
+        ]
+      },
+      "2026": {
+        "n": 22005,
+        "hits": 481,
+        "market_expected_hits": 564.678,
+        "hit_to_market_ratio": 0.8518,
+        "hit_z": -3.974,
+        "roi_pct": 53.903,
+        "net_yen": -1014370,
+        "roi_approx95pct_ci": [
+          45.34,
+          62.47
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|1,1": {
+      "2021": {
+        "n": 4463,
+        "hits": 43,
+        "market_expected_hits": 49.45,
+        "hit_to_market_ratio": 0.8696,
+        "hit_z": -0.976,
+        "roi_pct": 56.424,
+        "net_yen": -194480,
+        "roi_approx95pct_ci": [
+          27.3,
+          85.55
+        ]
+      },
+      "2022": {
+        "n": 15529,
+        "hits": 142,
+        "market_expected_hits": 147.27,
+        "hit_to_market_ratio": 0.9642,
+        "hit_z": -0.46,
+        "roi_pct": 61.542,
+        "net_yen": -597210,
+        "roi_approx95pct_ci": [
+          41.17,
+          81.91
+        ]
+      },
+      "2023": {
+        "n": 21708,
+        "hits": 248,
+        "market_expected_hits": 287.414,
+        "hit_to_market_ratio": 0.8629,
+        "hit_z": -2.491,
+        "roi_pct": 42.806,
+        "net_yen": -1241570,
+        "roi_approx95pct_ci": [
+          33.44,
+          52.17
+        ]
+      },
+      "2024": {
+        "n": 21682,
+        "hits": 252,
+        "market_expected_hits": 297.298,
+        "hit_to_market_ratio": 0.8476,
+        "hit_z": -2.811,
+        "roi_pct": 53.116,
+        "net_yen": -1016530,
+        "roi_approx95pct_ci": [
+          41.83,
+          64.4
+        ]
+      },
+      "2025": {
+        "n": 21761,
+        "hits": 258,
+        "market_expected_hits": 318.652,
+        "hit_to_market_ratio": 0.8097,
+        "hit_z": -3.655,
+        "roi_pct": 56.899,
+        "net_yen": -937930,
+        "roi_approx95pct_ci": [
+          44.59,
+          69.21
+        ]
+      },
+      "2026": {
+        "n": 9379,
+        "hits": 131,
+        "market_expected_hits": 152.857,
+        "hit_to_market_ratio": 0.857,
+        "hit_z": -1.91,
+        "roi_pct": 85.134,
+        "net_yen": -139430,
+        "roi_approx95pct_ci": [
+          46.56,
+          123.7
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|1,2": {
+      "2021": {
+        "n": 1024,
+        "hits": 8,
+        "market_expected_hits": 7.89,
+        "hit_to_market_ratio": 1.0139,
+        "hit_z": 0.041,
+        "roi_pct": 45.02,
+        "net_yen": -56300,
+        "roi_approx95pct_ci": [
+          10.09,
+          79.95
+        ]
+      },
+      "2022": {
+        "n": 3274,
+        "hits": 21,
+        "market_expected_hits": 23.411,
+        "hit_to_market_ratio": 0.897,
+        "hit_z": -0.518,
+        "roi_pct": 44.939,
+        "net_yen": -180270,
+        "roi_approx95pct_ci": [
+          12.99,
+          76.89
+        ]
+      },
+      "2023": {
+        "n": 4621,
+        "hits": 44,
+        "market_expected_hits": 43.994,
+        "hit_to_market_ratio": 1.0001,
+        "hit_z": 0.001,
+        "roi_pct": 55.953,
+        "net_yen": -203540,
+        "roi_approx95pct_ci": [
+          28.07,
+          83.84
+        ]
+      },
+      "2024": {
+        "n": 4877,
+        "hits": 43,
+        "market_expected_hits": 45.569,
+        "hit_to_market_ratio": 0.9436,
+        "hit_z": -0.398,
+        "roi_pct": 39.725,
+        "net_yen": -293960,
+        "roi_approx95pct_ci": [
+          20.93,
+          58.52
+        ]
+      },
+      "2025": {
+        "n": 5424,
+        "hits": 57,
+        "market_expected_hits": 56.586,
+        "hit_to_market_ratio": 1.0073,
+        "hit_z": 0.058,
+        "roi_pct": 71.578,
+        "net_yen": -154160,
+        "roi_approx95pct_ci": [
+          38.28,
+          104.88
+        ]
+      },
+      "2026": {
+        "n": 2207,
+        "hits": 26,
+        "market_expected_hits": 26.723,
+        "hit_to_market_ratio": 0.973,
+        "hit_z": -0.148,
+        "roi_pct": 69.157,
+        "net_yen": -68070,
+        "roi_approx95pct_ci": [
+          15.22,
+          123.09
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|1,3": {
+      "2021": {
+        "n": 124,
+        "hits": 0,
+        "market_expected_hits": 1.078,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -1.059,
+        "roi_pct": 0.0,
+        "net_yen": -12400,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2022": {
+        "n": 279,
+        "hits": 3,
+        "market_expected_hits": 1.287,
+        "hit_to_market_ratio": 2.3309,
+        "hit_z": 1.528,
+        "roi_pct": 56.022,
+        "net_yen": -12270,
+        "roi_approx95pct_ci": [
+          -33.0,
+          145.04
+        ]
+      },
+      "2023": {
+        "n": 643,
+        "hits": 6,
+        "market_expected_hits": 6.997,
+        "hit_to_market_ratio": 0.8575,
+        "hit_z": -0.395,
+        "roi_pct": 45.49,
+        "net_yen": -35050,
+        "roi_approx95pct_ci": [
+          -25.55,
+          116.53
+        ]
+      },
+      "2024": {
+        "n": 732,
+        "hits": 6,
+        "market_expected_hits": 6.825,
+        "hit_to_market_ratio": 0.8791,
+        "hit_z": -0.332,
+        "roi_pct": 90.915,
+        "net_yen": -6650,
+        "roi_approx95pct_ci": [
+          -10.95,
+          192.78
+        ]
+      },
+      "2025": {
+        "n": 1050,
+        "hits": 9,
+        "market_expected_hits": 9.253,
+        "hit_to_market_ratio": 0.9727,
+        "hit_z": -0.086,
+        "roi_pct": 76.124,
+        "net_yen": -25070,
+        "roi_approx95pct_ci": [
+          2.68,
+          149.57
+        ]
+      },
+      "2026": {
+        "n": 451,
+        "hits": 2,
+        "market_expected_hits": 4.249,
+        "hit_to_market_ratio": 0.4707,
+        "hit_z": -1.128,
+        "roi_pct": 13.636,
+        "net_yen": -38950,
+        "roi_approx95pct_ci": [
+          -9.8,
+          37.07
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|1,4": {
+      "2021": {
+        "n": 33,
+        "hits": 1,
+        "market_expected_hits": 0.369,
+        "hit_to_market_ratio": 2.7106,
+        "hit_z": 1.102,
+        "roi_pct": 11.515,
+        "net_yen": -2920,
+        "roi_approx95pct_ci": [
+          -11.02,
+          34.05
+        ]
+      },
+      "2022": {
+        "n": 27,
+        "hits": 0,
+        "market_expected_hits": 0.111,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.335,
+        "roi_pct": 0.0,
+        "net_yen": -2700,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2023": {
+        "n": 109,
+        "hits": 2,
+        "market_expected_hits": 1.843,
+        "hit_to_market_ratio": 1.0854,
+        "hit_z": 0.124,
+        "roi_pct": 25.963,
+        "net_yen": -8070,
+        "roi_approx95pct_ci": [
+          -9.89,
+          61.81
+        ]
+      },
+      "2024": {
+        "n": 126,
+        "hits": 2,
+        "market_expected_hits": 1.435,
+        "hit_to_market_ratio": 1.3939,
+        "hit_z": 0.486,
+        "roi_pct": 63.413,
+        "net_yen": -4610,
+        "roi_approx95pct_ci": [
+          -23.27,
+          150.09
+        ]
+      },
+      "2025": {
+        "n": 245,
+        "hits": 1,
+        "market_expected_hits": 3.337,
+        "hit_to_market_ratio": 0.2997,
+        "hit_z": -1.331,
+        "roi_pct": 2.286,
+        "net_yen": -23940,
+        "roi_approx95pct_ci": [
+          -2.19,
+          6.76
+        ]
+      },
+      "2026": {
+        "n": 120,
+        "hits": 0,
+        "market_expected_hits": 2.146,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -1.552,
+        "roi_pct": 0.0,
+        "net_yen": -12000,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|2,0": {
+      "2021": {
+        "n": 6285,
+        "hits": 228,
+        "market_expected_hits": 207.045,
+        "hit_to_market_ratio": 1.1012,
+        "hit_z": 1.751,
+        "roi_pct": 79.566,
+        "net_yen": -128430,
+        "roi_approx95pct_ci": [
+          61.3,
+          97.83
+        ]
+      },
+      "2022": {
+        "n": 13031,
+        "hits": 296,
+        "market_expected_hits": 288.164,
+        "hit_to_market_ratio": 1.0272,
+        "hit_z": 0.527,
+        "roi_pct": 74.678,
+        "net_yen": -329970,
+        "roi_approx95pct_ci": [
+          59.44,
+          89.92
+        ]
+      },
+      "2023": {
+        "n": 41771,
+        "hits": 1565,
+        "market_expected_hits": 1539.386,
+        "hit_to_market_ratio": 1.0166,
+        "hit_z": 0.793,
+        "roi_pct": 71.004,
+        "net_yen": -1211180,
+        "roi_approx95pct_ci": [
+          64.28,
+          77.73
+        ]
+      },
+      "2024": {
+        "n": 46796,
+        "hits": 1872,
+        "market_expected_hits": 1797.534,
+        "hit_to_market_ratio": 1.0414,
+        "hit_z": 2.15,
+        "roi_pct": 71.982,
+        "net_yen": -1311140,
+        "roi_approx95pct_ci": [
+          66.54,
+          77.42
+        ]
+      },
+      "2025": {
+        "n": 52814,
+        "hits": 1996,
+        "market_expected_hits": 1918.376,
+        "hit_to_market_ratio": 1.0405,
+        "hit_z": 2.181,
+        "roi_pct": 75.767,
+        "net_yen": -1279850,
+        "roi_approx95pct_ci": [
+          69.82,
+          81.71
+        ]
+      },
+      "2026": {
+        "n": 25234,
+        "hits": 971,
+        "market_expected_hits": 991.257,
+        "hit_to_market_ratio": 0.9796,
+        "hit_z": -0.793,
+        "roi_pct": 76.206,
+        "net_yen": -600410,
+        "roi_approx95pct_ci": [
+          60.87,
+          91.54
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|2,1": {
+      "2021": {
+        "n": 4773,
+        "hits": 100,
+        "market_expected_hits": 90.866,
+        "hit_to_market_ratio": 1.1005,
+        "hit_z": 1.069,
+        "roi_pct": 80.444,
+        "net_yen": -93340,
+        "roi_approx95pct_ci": [
+          53.29,
+          107.6
+        ]
+      },
+      "2022": {
+        "n": 17128,
+        "hits": 361,
+        "market_expected_hits": 342.838,
+        "hit_to_market_ratio": 1.053,
+        "hit_z": 1.115,
+        "roi_pct": 67.951,
+        "net_yen": -548930,
+        "roi_approx95pct_ci": [
+          53.55,
+          82.35
+        ]
+      },
+      "2023": {
+        "n": 24588,
+        "hits": 724,
+        "market_expected_hits": 666.86,
+        "hit_to_market_ratio": 1.0857,
+        "hit_z": 2.525,
+        "roi_pct": 72.844,
+        "net_yen": -667700,
+        "roi_approx95pct_ci": [
+          63.15,
+          82.54
+        ]
+      },
+      "2024": {
+        "n": 25132,
+        "hits": 763,
+        "market_expected_hits": 716.614,
+        "hit_to_market_ratio": 1.0647,
+        "hit_z": 1.989,
+        "roi_pct": 66.621,
+        "net_yen": -838880,
+        "roi_approx95pct_ci": [
+          57.52,
+          75.72
+        ]
+      },
+      "2025": {
+        "n": 26069,
+        "hits": 825,
+        "market_expected_hits": 770.634,
+        "hit_to_market_ratio": 1.0705,
+        "hit_z": 2.274,
+        "roi_pct": 70.108,
+        "net_yen": -779260,
+        "roi_approx95pct_ci": [
+          59.95,
+          80.26
+        ]
+      },
+      "2026": {
+        "n": 11130,
+        "hits": 358,
+        "market_expected_hits": 333.763,
+        "hit_to_market_ratio": 1.0726,
+        "hit_z": 1.527,
+        "roi_pct": 70.655,
+        "net_yen": -326610,
+        "roi_approx95pct_ci": [
+          56.23,
+          85.08
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|2,2": {
+      "2021": {
+        "n": 1177,
+        "hits": 11,
+        "market_expected_hits": 12.997,
+        "hit_to_market_ratio": 0.8464,
+        "hit_z": -0.577,
+        "roi_pct": 51.062,
+        "net_yen": -57600,
+        "roi_approx95pct_ci": [
+          6.48,
+          95.64
+        ]
+      },
+      "2022": {
+        "n": 3840,
+        "hits": 64,
+        "market_expected_hits": 60.113,
+        "hit_to_market_ratio": 1.0647,
+        "hit_z": 0.542,
+        "roi_pct": 51.151,
+        "net_yen": -187580,
+        "roi_approx95pct_ci": [
+          27.25,
+          75.05
+        ]
+      },
+      "2023": {
+        "n": 5588,
+        "hits": 118,
+        "market_expected_hits": 104.207,
+        "hit_to_market_ratio": 1.1324,
+        "hit_z": 1.469,
+        "roi_pct": 65.941,
+        "net_yen": -190320,
+        "roi_approx95pct_ci": [
+          39.0,
+          92.88
+        ]
+      },
+      "2024": {
+        "n": 5622,
+        "hits": 129,
+        "market_expected_hits": 97.928,
+        "hit_to_market_ratio": 1.3173,
+        "hit_z": 3.388,
+        "roi_pct": 112.782,
+        "net_yen": 71860,
+        "roi_approx95pct_ci": [
+          68.62,
+          156.94
+        ]
+      },
+      "2025": {
+        "n": 6617,
+        "hits": 144,
+        "market_expected_hits": 132.02,
+        "hit_to_market_ratio": 1.0907,
+        "hit_z": 1.136,
+        "roi_pct": 63.106,
+        "net_yen": -244130,
+        "roi_approx95pct_ci": [
+          44.07,
+          82.14
+        ]
+      },
+      "2026": {
+        "n": 2711,
+        "hits": 72,
+        "market_expected_hits": 56.377,
+        "hit_to_market_ratio": 1.2771,
+        "hit_z": 2.272,
+        "roi_pct": 60.627,
+        "net_yen": -106740,
+        "roi_approx95pct_ci": [
+          32.19,
+          89.07
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|2,3": {
+      "2021": {
+        "n": 179,
+        "hits": 3,
+        "market_expected_hits": 1.606,
+        "hit_to_market_ratio": 1.8677,
+        "hit_z": 1.13,
+        "roi_pct": 220.112,
+        "net_yen": 21500,
+        "roi_approx95pct_ci": [
+          -56.68,
+          496.9
+        ]
+      },
+      "2022": {
+        "n": 356,
+        "hits": 6,
+        "market_expected_hits": 3.102,
+        "hit_to_market_ratio": 1.9344,
+        "hit_z": 1.696,
+        "roi_pct": 226.096,
+        "net_yen": 44890,
+        "roi_approx95pct_ci": [
+          -42.64,
+          494.83
+        ]
+      },
+      "2023": {
+        "n": 787,
+        "hits": 9,
+        "market_expected_hits": 12.018,
+        "hit_to_market_ratio": 0.7489,
+        "hit_z": -0.913,
+        "roi_pct": 20.013,
+        "net_yen": -62950,
+        "roi_approx95pct_ci": [
+          1.29,
+          38.74
+        ]
+      },
+      "2024": {
+        "n": 880,
+        "hits": 6,
+        "market_expected_hits": 12.004,
+        "hit_to_market_ratio": 0.4998,
+        "hit_z": -1.808,
+        "roi_pct": 54.545,
+        "net_yen": -40000,
+        "roi_approx95pct_ci": [
+          -2.23,
+          111.32
+        ]
+      },
+      "2025": {
+        "n": 1236,
+        "hits": 27,
+        "market_expected_hits": 16.878,
+        "hit_to_market_ratio": 1.5997,
+        "hit_z": 2.605,
+        "roi_pct": 65.437,
+        "net_yen": -42720,
+        "roi_approx95pct_ci": [
+          31.77,
+          99.1
+        ]
+      },
+      "2026": {
+        "n": 530,
+        "hits": 6,
+        "market_expected_hits": 7.797,
+        "hit_to_market_ratio": 0.7695,
+        "hit_z": -0.678,
+        "roi_pct": 41.34,
+        "net_yen": -31090,
+        "roi_approx95pct_ci": [
+          1.1,
+          81.58
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|2,4": {
+      "2021": {
+        "n": 28,
+        "hits": 0,
+        "market_expected_hits": 0.287,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.546,
+        "roi_pct": 0.0,
+        "net_yen": -2800,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2022": {
+        "n": 20,
+        "hits": 0,
+        "market_expected_hits": 0.153,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.396,
+        "roi_pct": 0.0,
+        "net_yen": -2000,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2023": {
+        "n": 139,
+        "hits": 0,
+        "market_expected_hits": 2.771,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -1.73,
+        "roi_pct": 0.0,
+        "net_yen": -13900,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2024": {
+        "n": 155,
+        "hits": 4,
+        "market_expected_hits": 2.618,
+        "hit_to_market_ratio": 1.5276,
+        "hit_z": 0.891,
+        "roi_pct": 233.097,
+        "net_yen": 20630,
+        "roi_approx95pct_ci": [
+          -76.8,
+          542.99
+        ]
+      },
+      "2025": {
+        "n": 308,
+        "hits": 4,
+        "market_expected_hits": 5.23,
+        "hit_to_market_ratio": 0.7649,
+        "hit_z": -0.561,
+        "roi_pct": 32.37,
+        "net_yen": -20830,
+        "roi_approx95pct_ci": [
+          -7.68,
+          72.42
+        ]
+      },
+      "2026": {
+        "n": 135,
+        "hits": 6,
+        "market_expected_hits": 3.184,
+        "hit_to_market_ratio": 1.8842,
+        "hit_z": 1.75,
+        "roi_pct": 211.333,
+        "net_yen": 15030,
+        "roi_approx95pct_ci": [
+          -4.62,
+          427.28
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|3,0": {
+      "2021": {
+        "n": 4144,
+        "hits": 192,
+        "market_expected_hits": 166.192,
+        "hit_to_market_ratio": 1.1553,
+        "hit_z": 2.312,
+        "roi_pct": 86.54,
+        "net_yen": -55780,
+        "roi_approx95pct_ci": [
+          69.76,
+          103.31
+        ]
+      },
+      "2022": {
+        "n": 7471,
+        "hits": 295,
+        "market_expected_hits": 267.26,
+        "hit_to_market_ratio": 1.1038,
+        "hit_z": 1.931,
+        "roi_pct": 79.605,
+        "net_yen": -152370,
+        "roi_approx95pct_ci": [
+          63.11,
+          96.1
+        ]
+      },
+      "2023": {
+        "n": 28245,
+        "hits": 1460,
+        "market_expected_hits": 1319.011,
+        "hit_to_market_ratio": 1.1069,
+        "hit_z": 4.601,
+        "roi_pct": 78.029,
+        "net_yen": -620570,
+        "roi_approx95pct_ci": [
+          70.66,
+          85.4
+        ]
+      },
+      "2024": {
+        "n": 32167,
+        "hits": 1750,
+        "market_expected_hits": 1561.324,
+        "hit_to_market_ratio": 1.1208,
+        "hit_z": 5.699,
+        "roi_pct": 78.867,
+        "net_yen": -679770,
+        "roi_approx95pct_ci": [
+          73.19,
+          84.55
+        ]
+      },
+      "2025": {
+        "n": 34853,
+        "hits": 1733,
+        "market_expected_hits": 1487.412,
+        "hit_to_market_ratio": 1.1651,
+        "hit_z": 7.521,
+        "roi_pct": 83.774,
+        "net_yen": -565520,
+        "roi_approx95pct_ci": [
+          77.42,
+          90.13
+        ]
+      },
+      "2026": {
+        "n": 18930,
+        "hits": 910,
+        "market_expected_hits": 788.02,
+        "hit_to_market_ratio": 1.1548,
+        "hit_z": 5.131,
+        "roi_pct": 81.01,
+        "net_yen": -359480,
+        "roi_approx95pct_ci": [
+          72.93,
+          89.09
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|3,1": {
+      "2021": {
+        "n": 3303,
+        "hits": 99,
+        "market_expected_hits": 94.209,
+        "hit_to_market_ratio": 1.0509,
+        "hit_z": 0.557,
+        "roi_pct": 79.949,
+        "net_yen": -66230,
+        "roi_approx95pct_ci": [
+          48.57,
+          111.32
+        ]
+      },
+      "2022": {
+        "n": 12537,
+        "hits": 468,
+        "market_expected_hits": 406.576,
+        "hit_to_market_ratio": 1.1511,
+        "hit_z": 3.554,
+        "roi_pct": 78.768,
+        "net_yen": -266180,
+        "roi_approx95pct_ci": [
+          67.8,
+          89.74
+        ]
+      },
+      "2023": {
+        "n": 17801,
+        "hits": 726,
+        "market_expected_hits": 651.092,
+        "hit_to_market_ratio": 1.1151,
+        "hit_z": 3.357,
+        "roi_pct": 82.562,
+        "net_yen": -310410,
+        "roi_approx95pct_ci": [
+          67.08,
+          98.04
+        ]
+      },
+      "2024": {
+        "n": 18399,
+        "hits": 820,
+        "market_expected_hits": 690.512,
+        "hit_to_market_ratio": 1.1875,
+        "hit_z": 5.677,
+        "roi_pct": 91.22,
+        "net_yen": -161550,
+        "roi_approx95pct_ci": [
+          74.47,
+          107.97
+        ]
+      },
+      "2025": {
+        "n": 18135,
+        "hits": 764,
+        "market_expected_hits": 646.186,
+        "hit_to_market_ratio": 1.1823,
+        "hit_z": 5.283,
+        "roi_pct": 70.158,
+        "net_yen": -541180,
+        "roi_approx95pct_ci": [
+          61.32,
+          78.99
+        ]
+      },
+      "2026": {
+        "n": 8353,
+        "hits": 333,
+        "market_expected_hits": 279.596,
+        "hit_to_market_ratio": 1.191,
+        "hit_z": 3.621,
+        "roi_pct": 79.656,
+        "net_yen": -169930,
+        "roi_approx95pct_ci": [
+          64.45,
+          94.87
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|3,2": {
+      "2021": {
+        "n": 807,
+        "hits": 16,
+        "market_expected_hits": 11.588,
+        "hit_to_market_ratio": 1.3808,
+        "hit_z": 1.354,
+        "roi_pct": 59.145,
+        "net_yen": -32970,
+        "roi_approx95pct_ci": [
+          18.25,
+          100.04
+        ]
+      },
+      "2022": {
+        "n": 2999,
+        "hits": 58,
+        "market_expected_hits": 53.431,
+        "hit_to_market_ratio": 1.0855,
+        "hit_z": 0.667,
+        "roi_pct": 65.402,
+        "net_yen": -103760,
+        "roi_approx95pct_ci": [
+          33.35,
+          97.46
+        ]
+      },
+      "2023": {
+        "n": 4145,
+        "hits": 93,
+        "market_expected_hits": 88.667,
+        "hit_to_market_ratio": 1.0489,
+        "hit_z": 0.492,
+        "roi_pct": 59.39,
+        "net_yen": -168330,
+        "roi_approx95pct_ci": [
+          40.04,
+          78.74
+        ]
+      },
+      "2024": {
+        "n": 4126,
+        "hits": 89,
+        "market_expected_hits": 81.644,
+        "hit_to_market_ratio": 1.0901,
+        "hit_z": 0.864,
+        "roi_pct": 57.203,
+        "net_yen": -176580,
+        "roi_approx95pct_ci": [
+          36.38,
+          78.02
+        ]
+      },
+      "2025": {
+        "n": 4834,
+        "hits": 115,
+        "market_expected_hits": 96.018,
+        "hit_to_market_ratio": 1.1977,
+        "hit_z": 2.063,
+        "roi_pct": 77.156,
+        "net_yen": -110430,
+        "roi_approx95pct_ci": [
+          44.45,
+          109.86
+        ]
+      },
+      "2026": {
+        "n": 2082,
+        "hits": 50,
+        "market_expected_hits": 41.402,
+        "hit_to_market_ratio": 1.2077,
+        "hit_z": 1.41,
+        "roi_pct": 80.893,
+        "net_yen": -39780,
+        "roi_approx95pct_ci": [
+          44.55,
+          117.24
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|3,3": {
+      "2021": {
+        "n": 122,
+        "hits": 0,
+        "market_expected_hits": 1.284,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -1.17,
+        "roi_pct": 0.0,
+        "net_yen": -12200,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2022": {
+        "n": 302,
+        "hits": 3,
+        "market_expected_hits": 2.676,
+        "hit_to_market_ratio": 1.1212,
+        "hit_z": 0.203,
+        "roi_pct": 54.801,
+        "net_yen": -13650,
+        "roi_approx95pct_ci": [
+          -18.27,
+          127.87
+        ]
+      },
+      "2023": {
+        "n": 664,
+        "hits": 8,
+        "market_expected_hits": 9.356,
+        "hit_to_market_ratio": 0.8551,
+        "hit_z": -0.46,
+        "roi_pct": 49.94,
+        "net_yen": -33240,
+        "roi_approx95pct_ci": [
+          -5.71,
+          105.59
+        ]
+      },
+      "2024": {
+        "n": 667,
+        "hits": 16,
+        "market_expected_hits": 9.489,
+        "hit_to_market_ratio": 1.6861,
+        "hit_z": 2.195,
+        "roi_pct": 55.937,
+        "net_yen": -29390,
+        "roi_approx95pct_ci": [
+          16.9,
+          94.97
+        ]
+      },
+      "2025": {
+        "n": 982,
+        "hits": 17,
+        "market_expected_hits": 13.321,
+        "hit_to_market_ratio": 1.2762,
+        "hit_z": 1.044,
+        "roi_pct": 60.58,
+        "net_yen": -38710,
+        "roi_approx95pct_ci": [
+          20.91,
+          100.25
+        ]
+      },
+      "2026": {
+        "n": 480,
+        "hits": 2,
+        "market_expected_hits": 7.423,
+        "hit_to_market_ratio": 0.2694,
+        "hit_z": -2.07,
+        "roi_pct": 9.917,
+        "net_yen": -43240,
+        "roi_approx95pct_ci": [
+          -7.0,
+          26.83
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|3,4": {
+      "2021": {
+        "n": 28,
+        "hits": 0,
+        "market_expected_hits": 0.336,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.592,
+        "roi_pct": 0.0,
+        "net_yen": -2800,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2022": {
+        "n": 24,
+        "hits": 0,
+        "market_expected_hits": 0.239,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.509,
+        "roi_pct": 0.0,
+        "net_yen": -2400,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2023": {
+        "n": 115,
+        "hits": 3,
+        "market_expected_hits": 1.87,
+        "hit_to_market_ratio": 1.6042,
+        "hit_z": 0.848,
+        "roi_pct": 99.652,
+        "net_yen": -40,
+        "roi_approx95pct_ci": [
+          -29.51,
+          228.82
+        ]
+      },
+      "2024": {
+        "n": 150,
+        "hits": 2,
+        "market_expected_hits": 2.29,
+        "hit_to_market_ratio": 0.8733,
+        "hit_z": -0.198,
+        "roi_pct": 48.467,
+        "net_yen": -7730,
+        "roi_approx95pct_ci": [
+          -18.96,
+          115.89
+        ]
+      },
+      "2025": {
+        "n": 252,
+        "hits": 4,
+        "market_expected_hits": 3.633,
+        "hit_to_market_ratio": 1.1009,
+        "hit_z": 0.198,
+        "roi_pct": 57.937,
+        "net_yen": -10600,
+        "roi_approx95pct_ci": [
+          -14.47,
+          130.35
+        ]
+      },
+      "2026": {
+        "n": 104,
+        "hits": 2,
+        "market_expected_hits": 1.44,
+        "hit_to_market_ratio": 1.389,
+        "hit_z": 0.481,
+        "roi_pct": 15.385,
+        "net_yen": -8800,
+        "roi_approx95pct_ci": [
+          -8.83,
+          39.6
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|4,0": {
+      "2021": {
+        "n": 2758,
+        "hits": 100,
+        "market_expected_hits": 83.023,
+        "hit_to_market_ratio": 1.2045,
+        "hit_z": 2.03,
+        "roi_pct": 76.751,
+        "net_yen": -64120,
+        "roi_approx95pct_ci": [
+          57.09,
+          96.41
+        ]
+      },
+      "2022": {
+        "n": 2330,
+        "hits": 83,
+        "market_expected_hits": 72.078,
+        "hit_to_market_ratio": 1.1515,
+        "hit_z": 1.369,
+        "roi_pct": 85.03,
+        "net_yen": -34880,
+        "roi_approx95pct_ci": [
+          45.69,
+          124.37
+        ]
+      },
+      "2023": {
+        "n": 12825,
+        "hits": 514,
+        "market_expected_hits": 438.148,
+        "hit_to_market_ratio": 1.1731,
+        "hit_z": 3.93,
+        "roi_pct": 82.749,
+        "net_yen": -221250,
+        "roi_approx95pct_ci": [
+          69.54,
+          95.96
+        ]
+      },
+      "2024": {
+        "n": 14209,
+        "hits": 608,
+        "market_expected_hits": 487.147,
+        "hit_to_market_ratio": 1.2481,
+        "hit_z": 5.916,
+        "roi_pct": 97.613,
+        "net_yen": -33920,
+        "roi_approx95pct_ci": [
+          81.47,
+          113.75
+        ]
+      },
+      "2025": {
+        "n": 16245,
+        "hits": 486,
+        "market_expected_hits": 448.158,
+        "hit_to_market_ratio": 1.0844,
+        "hit_z": 1.919,
+        "roi_pct": 71.73,
+        "net_yen": -459240,
+        "roi_approx95pct_ci": [
+          60.85,
+          82.61
+        ]
+      },
+      "2026": {
+        "n": 10470,
+        "hits": 367,
+        "market_expected_hits": 287.808,
+        "hit_to_market_ratio": 1.2752,
+        "hit_z": 5.031,
+        "roi_pct": 84.293,
+        "net_yen": -164450,
+        "roi_approx95pct_ci": [
+          72.08,
+          96.5
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|4,1": {
+      "2021": {
+        "n": 1491,
+        "hits": 36,
+        "market_expected_hits": 38.519,
+        "hit_to_market_ratio": 0.9346,
+        "hit_z": -0.43,
+        "roi_pct": 73.313,
+        "net_yen": -39790,
+        "roi_approx95pct_ci": [
+          29.32,
+          117.3
+        ]
+      },
+      "2022": {
+        "n": 5212,
+        "hits": 146,
+        "market_expected_hits": 128.752,
+        "hit_to_market_ratio": 1.134,
+        "hit_z": 1.63,
+        "roi_pct": 87.717,
+        "net_yen": -64020,
+        "roi_approx95pct_ci": [
+          60.8,
+          114.63
+        ]
+      },
+      "2023": {
+        "n": 8082,
+        "hits": 242,
+        "market_expected_hits": 194.445,
+        "hit_to_market_ratio": 1.2446,
+        "hit_z": 3.612,
+        "roi_pct": 75.742,
+        "net_yen": -196050,
+        "roi_approx95pct_ci": [
+          58.65,
+          92.84
+        ]
+      },
+      "2024": {
+        "n": 8061,
+        "hits": 238,
+        "market_expected_hits": 189.855,
+        "hit_to_market_ratio": 1.2536,
+        "hit_z": 3.687,
+        "roi_pct": 87.849,
+        "net_yen": -97950,
+        "roi_approx95pct_ci": [
+          64.42,
+          111.28
+        ]
+      },
+      "2025": {
+        "n": 8070,
+        "hits": 163,
+        "market_expected_hits": 159.992,
+        "hit_to_market_ratio": 1.0188,
+        "hit_z": 0.25,
+        "roi_pct": 58.711,
+        "net_yen": -333200,
+        "roi_approx95pct_ci": [
+          44.35,
+          73.07
+        ]
+      },
+      "2026": {
+        "n": 4336,
+        "hits": 112,
+        "market_expected_hits": 89.029,
+        "hit_to_market_ratio": 1.258,
+        "hit_z": 2.555,
+        "roi_pct": 88.176,
+        "net_yen": -51270,
+        "roi_approx95pct_ci": [
+          64.76,
+          111.59
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|4,2": {
+      "2021": {
+        "n": 469,
+        "hits": 5,
+        "market_expected_hits": 6.169,
+        "hit_to_market_ratio": 0.8106,
+        "hit_z": -0.483,
+        "roi_pct": 25.33,
+        "net_yen": -35020,
+        "roi_approx95pct_ci": [
+          -0.76,
+          51.42
+        ]
+      },
+      "2022": {
+        "n": 1786,
+        "hits": 26,
+        "market_expected_hits": 19.82,
+        "hit_to_market_ratio": 1.3118,
+        "hit_z": 1.431,
+        "roi_pct": 42.917,
+        "net_yen": -101950,
+        "roi_approx95pct_ci": [
+          21.42,
+          64.41
+        ]
+      },
+      "2023": {
+        "n": 2432,
+        "hits": 38,
+        "market_expected_hits": 27.679,
+        "hit_to_market_ratio": 1.3729,
+        "hit_z": 2.015,
+        "roi_pct": 60.337,
+        "net_yen": -96460,
+        "roi_approx95pct_ci": [
+          32.32,
+          88.36
+        ]
+      },
+      "2024": {
+        "n": 2421,
+        "hits": 27,
+        "market_expected_hits": 29.493,
+        "hit_to_market_ratio": 0.9155,
+        "hit_z": -0.472,
+        "roi_pct": 59.447,
+        "net_yen": -98180,
+        "roi_approx95pct_ci": [
+          25.11,
+          93.78
+        ]
+      },
+      "2025": {
+        "n": 2721,
+        "hits": 32,
+        "market_expected_hits": 28.688,
+        "hit_to_market_ratio": 1.1155,
+        "hit_z": 0.633,
+        "roi_pct": 72.591,
+        "net_yen": -74580,
+        "roi_approx95pct_ci": [
+          37.57,
+          107.62
+        ]
+      },
+      "2026": {
+        "n": 1394,
+        "hits": 21,
+        "market_expected_hits": 15.552,
+        "hit_to_market_ratio": 1.3503,
+        "hit_z": 1.412,
+        "roi_pct": 48.278,
+        "net_yen": -72100,
+        "roi_approx95pct_ci": [
+          23.3,
+          73.26
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|4,3": {
+      "2021": {
+        "n": 71,
+        "hits": 2,
+        "market_expected_hits": 0.675,
+        "hit_to_market_ratio": 2.9642,
+        "hit_z": 1.643,
+        "roi_pct": 70.845,
+        "net_yen": -2070,
+        "roi_approx95pct_ci": [
+          -47.52,
+          189.21
+        ]
+      },
+      "2022": {
+        "n": 227,
+        "hits": 0,
+        "market_expected_hits": 1.364,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -1.182,
+        "roi_pct": 0.0,
+        "net_yen": -22700,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2023": {
+        "n": 439,
+        "hits": 4,
+        "market_expected_hits": 3.889,
+        "hit_to_market_ratio": 1.0284,
+        "hit_z": 0.057,
+        "roi_pct": 15.148,
+        "net_yen": -37250,
+        "roi_approx95pct_ci": [
+          -2.14,
+          32.43
+        ]
+      },
+      "2024": {
+        "n": 444,
+        "hits": 8,
+        "market_expected_hits": 4.331,
+        "hit_to_market_ratio": 1.8474,
+        "hit_z": 1.796,
+        "roi_pct": 80.586,
+        "net_yen": -8620,
+        "roi_approx95pct_ci": [
+          -0.92,
+          162.09
+        ]
+      },
+      "2025": {
+        "n": 620,
+        "hits": 2,
+        "market_expected_hits": 5.247,
+        "hit_to_market_ratio": 0.3812,
+        "hit_z": -1.445,
+        "roi_pct": 6.742,
+        "net_yen": -57820,
+        "roi_approx95pct_ci": [
+          -3.55,
+          17.04
+        ]
+      },
+      "2026": {
+        "n": 339,
+        "hits": 2,
+        "market_expected_hits": 3.273,
+        "hit_to_market_ratio": 0.611,
+        "hit_z": -0.714,
+        "roi_pct": 46.283,
+        "net_yen": -18210,
+        "roi_approx95pct_ci": [
+          -22.92,
+          115.49
+        ]
+      }
+    },
+    "3連複|market_gap+outside_share|4,4": {
+      "2021": {
+        "n": 22,
+        "hits": 0,
+        "market_expected_hits": 0.092,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.305,
+        "roi_pct": 0.0,
+        "net_yen": -2200,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2022": {
+        "n": 22,
+        "hits": 0,
+        "market_expected_hits": 0.062,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.251,
+        "roi_pct": 0.0,
+        "net_yen": -2200,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2023": {
+        "n": 99,
+        "hits": 4,
+        "market_expected_hits": 1.035,
+        "hit_to_market_ratio": 3.865,
+        "hit_z": 2.968,
+        "roi_pct": 255.253,
+        "net_yen": 15370,
+        "roi_approx95pct_ci": [
+          18.0,
+          492.5
+        ]
+      },
+      "2024": {
+        "n": 74,
+        "hits": 2,
+        "market_expected_hits": 0.816,
+        "hit_to_market_ratio": 2.4497,
+        "hit_z": 1.331,
+        "roi_pct": 147.432,
+        "net_yen": 3510,
+        "roi_approx95pct_ci": [
+          -51.18,
+          346.04
+        ]
+      },
+      "2025": {
+        "n": 166,
+        "hits": 2,
+        "market_expected_hits": 1.353,
+        "hit_to_market_ratio": 1.4783,
+        "hit_z": 0.565,
+        "roi_pct": 51.084,
+        "net_yen": -8120,
+        "roi_approx95pct_ci": [
+          -22.08,
+          124.25
+        ]
+      },
+      "2026": {
+        "n": 136,
+        "hits": 2,
+        "market_expected_hits": 1.197,
+        "hit_to_market_ratio": 1.6707,
+        "hit_z": 0.744,
+        "roi_pct": 63.971,
+        "net_yen": -4900,
+        "roi_approx95pct_ci": [
+          -33.56,
+          161.5
+        ]
+      }
+    },
+    "3連複|market_gap+outside_mass|0,0": {
+      "2021": {
+        "n": 23043,
+        "hits": 108,
+        "market_expected_hits": 178.498,
+        "hit_to_market_ratio": 0.605,
+        "hit_z": -5.878,
+        "roi_pct": 49.803,
+        "net_yen": -1156690,
+        "roi_approx95pct_ci": [
+          34.91,
+          64.69
+        ]
+      },
+      "2022": {
+        "n": 81454,
+        "hits": 224,
+        "market_expected_hits": 371.735,
+        "hit_to_market_ratio": 0.6026,
+        "hit_z": -8.427,
+        "roi_pct": 36.019,
+        "net_yen": -5211540,
+        "roi_approx95pct_ci": [
+          28.76,
+          43.28
+        ]
+      },
+      "2023": {
+        "n": 144726,
+        "hits": 731,
+        "market_expected_hits": 1059.242,
+        "hit_to_market_ratio": 0.6901,
+        "hit_z": -11.079,
+        "roi_pct": 39.332,
+        "net_yen": -8780220,
+        "roi_approx95pct_ci": [
+          34.95,
+          43.72
+        ]
+      },
+      "2024": {
+        "n": 157708,
+        "hits": 704,
+        "market_expected_hits": 1157.007,
+        "hit_to_market_ratio": 0.6085,
+        "hit_z": -14.602,
+        "roi_pct": 38.866,
+        "net_yen": -9641280,
+        "roi_approx95pct_ci": [
+          34.52,
+          43.21
+        ]
+      },
+      "2025": {
+        "n": 140928,
+        "hits": 633,
+        "market_expected_hits": 1056.372,
+        "hit_to_market_ratio": 0.5992,
+        "hit_z": -14.213,
+        "roi_pct": 37.235,
+        "net_yen": -8845390,
+        "roi_approx95pct_ci": [
+          32.39,
+          42.08
+        ]
+      },
+      "2026": {
+        "n": 71004,
+        "hits": 393,
+        "market_expected_hits": 589.195,
+        "hit_to_market_ratio": 0.667,
+        "hit_z": -8.889,
+        "roi_pct": 39.926,
+        "net_yen": -4265480,
+        "roi_approx95pct_ci": [
+          33.16,
+          46.69
+        ]
+      }
+    },
+    "3連複|market_gap+outside_mass|0,1": {
+      "2021": {
+        "n": 6,
+        "hits": 0,
+        "market_expected_hits": 0.028,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.168,
+        "roi_pct": 0.0,
+        "net_yen": -600,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2022": {
+        "n": 3,
+        "hits": 0,
+        "market_expected_hits": 0.008,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.087,
+        "roi_pct": 0.0,
+        "net_yen": -300,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2023": {
+        "n": 13,
+        "hits": 0,
+        "market_expected_hits": 0.059,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.246,
+        "roi_pct": 0.0,
+        "net_yen": -1300,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2024": {
+        "n": 12,
+        "hits": 0,
+        "market_expected_hits": 0.049,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.223,
+        "roi_pct": 0.0,
+        "net_yen": -1200,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2025": {
+        "n": 12,
+        "hits": 0,
+        "market_expected_hits": 0.046,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.215,
+        "roi_pct": 0.0,
+        "net_yen": -1200,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2026": {
+        "n": 10,
+        "hits": 0,
+        "market_expected_hits": 0.031,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.177,
+        "roi_pct": 0.0,
+        "net_yen": -1000,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "3連複|market_gap+outside_mass|1,0": {
+      "2021": {
+        "n": 12044,
+        "hits": 176,
+        "market_expected_hits": 182.57,
+        "hit_to_market_ratio": 0.964,
+        "hit_z": -0.552,
+        "roi_pct": 60.125,
+        "net_yen": -480250,
+        "roi_approx95pct_ci": [
+          45.02,
+          75.23
+        ]
+      },
+      "2022": {
+        "n": 33319,
+        "hits": 329,
+        "market_expected_hits": 340.626,
+        "hit_to_market_ratio": 0.9659,
+        "hit_z": -0.696,
+        "roi_pct": 59.29,
+        "net_yen": -1356420,
+        "roi_approx95pct_ci": [
+          47.26,
+          71.32
+        ]
+      },
+      "2023": {
+        "n": 66187,
+        "hits": 1044,
+        "market_expected_hits": 1163.254,
+        "hit_to_market_ratio": 0.8975,
+        "hit_z": -3.956,
+        "roi_pct": 54.092,
+        "net_yen": -3038520,
+        "roi_approx95pct_ci": [
+          48.1,
+          60.09
+        ]
+      },
+      "2024": {
+        "n": 70099,
+        "hits": 1109,
+        "market_expected_hits": 1306.338,
+        "hit_to_market_ratio": 0.8489,
+        "hit_z": -6.187,
+        "roi_pct": 55.058,
+        "net_yen": -3150410,
+        "roi_approx95pct_ci": [
+          49.36,
+          60.76
+        ]
+      },
+      "2025": {
+        "n": 75207,
+        "hits": 1261,
+        "market_expected_hits": 1418.419,
+        "hit_to_market_ratio": 0.889,
+        "hit_z": -4.775,
+        "roi_pct": 61.229,
+        "net_yen": -2915840,
+        "roi_approx95pct_ci": [
+          55.35,
+          67.11
+        ]
+      },
+      "2026": {
+        "n": 34161,
+        "hits": 640,
+        "market_expected_hits": 750.65,
+        "hit_to_market_ratio": 0.8526,
+        "hit_z": -4.651,
+        "roi_pct": 62.743,
+        "net_yen": -1272720,
+        "roi_approx95pct_ci": [
+          50.39,
+          75.09
+        ]
+      }
+    },
+    "3連複|market_gap+outside_mass|2,0": {
+      "2021": {
+        "n": 12440,
+        "hits": 342,
+        "market_expected_hits": 312.795,
+        "hit_to_market_ratio": 1.0934,
+        "hit_z": 2.067,
+        "roi_pct": 79.062,
+        "net_yen": -260470,
+        "roi_approx95pct_ci": [
+          64.59,
+          93.53
+        ]
+      },
+      "2022": {
+        "n": 34373,
+        "hits": 727,
+        "market_expected_hits": 694.326,
+        "hit_to_market_ratio": 1.0471,
+        "hit_z": 1.535,
+        "roi_pct": 70.227,
+        "net_yen": -1023390,
+        "roi_approx95pct_ci": [
+          60.49,
+          79.96
+        ]
+      },
+      "2023": {
+        "n": 72862,
+        "hits": 2416,
+        "market_expected_hits": 2325.2,
+        "hit_to_market_ratio": 1.0391,
+        "hit_z": 2.418,
+        "roi_pct": 70.561,
+        "net_yen": -2144950,
+        "roi_approx95pct_ci": [
+          65.26,
+          75.86
+        ]
+      },
+      "2024": {
+        "n": 78580,
+        "hits": 2774,
+        "market_expected_hits": 2626.667,
+        "hit_to_market_ratio": 1.0561,
+        "hit_z": 3.709,
+        "roi_pct": 73.313,
+        "net_yen": -2097030,
+        "roi_approx95pct_ci": [
+          68.02,
+          78.61
+        ]
+      },
+      "2025": {
+        "n": 87036,
+        "hits": 2996,
+        "market_expected_hits": 2843.064,
+        "hit_to_market_ratio": 1.0538,
+        "hit_z": 3.77,
+        "roi_pct": 72.816,
+        "net_yen": -2365990,
+        "roi_approx95pct_ci": [
+          68.01,
+          77.62
+        ]
+      },
+      "2026": {
+        "n": 39736,
+        "hits": 1413,
+        "market_expected_hits": 1392.364,
+        "hit_to_market_ratio": 1.0148,
+        "hit_z": 0.718,
+        "roi_pct": 73.59,
+        "net_yen": -1049420,
+        "roi_approx95pct_ci": [
+          62.98,
+          84.2
+        ]
+      }
+    },
+    "3連複|market_gap+outside_mass|2,1": {
+      "2021": {
+        "n": 1,
+        "hits": 0,
+        "market_expected_hits": 0.004,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.061,
+        "roi_pct": 0.0,
+        "net_yen": -100,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2022": {
+        "n": 2,
+        "hits": 0,
+        "market_expected_hits": 0.044,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.216,
+        "roi_pct": 0.0,
+        "net_yen": -200,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2023": {
+        "n": 11,
+        "hits": 0,
+        "market_expected_hits": 0.042,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.205,
+        "roi_pct": 0.0,
+        "net_yen": -1100,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2024": {
+        "n": 5,
+        "hits": 0,
+        "market_expected_hits": 0.032,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.18,
+        "roi_pct": 0.0,
+        "net_yen": -500,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2025": {
+        "n": 7,
+        "hits": 0,
+        "market_expected_hits": 0.067,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.263,
+        "roi_pct": 0.0,
+        "net_yen": -700,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2026": {
+        "n": 4,
+        "hits": 0,
+        "market_expected_hits": 0.015,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.122,
+        "roi_pct": 0.0,
+        "net_yen": -400,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "3連複|market_gap+outside_mass|3,0": {
+      "2021": {
+        "n": 8402,
+        "hits": 307,
+        "market_expected_hits": 273.6,
+        "hit_to_market_ratio": 1.1221,
+        "hit_z": 2.438,
+        "roi_pct": 79.793,
+        "net_yen": -169780,
+        "roi_approx95pct_ci": [
+          64.9,
+          94.68
+        ]
+      },
+      "2022": {
+        "n": 23331,
+        "hits": 824,
+        "market_expected_hits": 730.053,
+        "hit_to_market_ratio": 1.1287,
+        "hit_z": 4.343,
+        "roi_pct": 76.934,
+        "net_yen": -538160,
+        "roi_approx95pct_ci": [
+          68.23,
+          85.64
+        ]
+      },
+      "2023": {
+        "n": 50957,
+        "hits": 2290,
+        "market_expected_hits": 2069.796,
+        "hit_to_market_ratio": 1.1064,
+        "hit_z": 6.0,
+        "roi_pct": 77.799,
+        "net_yen": -1131290,
+        "roi_approx95pct_ci": [
+          70.94,
+          84.66
+        ]
+      },
+      "2024": {
+        "n": 55502,
+        "hits": 2677,
+        "market_expected_hits": 2345.221,
+        "hit_to_market_ratio": 1.1415,
+        "hit_z": 8.523,
+        "roi_pct": 81.004,
+        "net_yen": -1054320,
+        "roi_approx95pct_ci": [
+          74.46,
+          87.54
+        ]
+      },
+      "2025": {
+        "n": 59049,
+        "hits": 2633,
+        "market_expected_hits": 2246.517,
+        "hit_to_market_ratio": 1.172,
+        "hit_z": 10.012,
+        "roi_pct": 78.565,
+        "net_yen": -1265740,
+        "roi_approx95pct_ci": [
+          73.32,
+          83.81
+        ]
+      },
+      "2026": {
+        "n": 29946,
+        "hits": 1297,
+        "market_expected_hits": 1117.858,
+        "hit_to_market_ratio": 1.1603,
+        "hit_z": 6.549,
+        "roi_pct": 79.265,
+        "net_yen": -620930,
+        "roi_approx95pct_ci": [
+          72.34,
+          86.19
+        ]
+      }
+    },
+    "3連複|market_gap+outside_mass|3,1": {
+      "2021": {
+        "n": 2,
+        "hits": 0,
+        "market_expected_hits": 0.009,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.096,
+        "roi_pct": 0.0,
+        "net_yen": -200,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2022": {
+        "n": 2,
+        "hits": 0,
+        "market_expected_hits": 0.129,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.384,
+        "roi_pct": 0.0,
+        "net_yen": -200,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2023": {
+        "n": 13,
+        "hits": 0,
+        "market_expected_hits": 0.2,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.46,
+        "roi_pct": 0.0,
+        "net_yen": -1300,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2024": {
+        "n": 6,
+        "hits": 0,
+        "market_expected_hits": 0.034,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.185,
+        "roi_pct": 0.0,
+        "net_yen": -600,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2025": {
+        "n": 5,
+        "hits": 0,
+        "market_expected_hits": 0.032,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.18,
+        "roi_pct": 0.0,
+        "net_yen": -500,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2026": {
+        "n": 3,
+        "hits": 0,
+        "market_expected_hits": 0.024,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.155,
+        "roi_pct": 0.0,
+        "net_yen": -300,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "3連複|market_gap+outside_mass|4,0": {
+      "2021": {
+        "n": 4806,
+        "hits": 143,
+        "market_expected_hits": 128.449,
+        "hit_to_market_ratio": 1.1133,
+        "hit_z": 1.409,
+        "roi_pct": 70.308,
+        "net_yen": -142700,
+        "roi_approx95pct_ci": [
+          52.52,
+          88.1
+        ]
+      },
+      "2022": {
+        "n": 9575,
+        "hits": 255,
+        "market_expected_hits": 222.066,
+        "hit_to_market_ratio": 1.1483,
+        "hit_z": 2.405,
+        "roi_pct": 76.444,
+        "net_yen": -225550,
+        "roi_approx95pct_ci": [
+          58.57,
+          94.32
+        ]
+      },
+      "2023": {
+        "n": 23866,
+        "hits": 802,
+        "market_expected_hits": 664.979,
+        "hit_to_market_ratio": 1.2061,
+        "hit_z": 5.791,
+        "roi_pct": 77.602,
+        "net_yen": -534540,
+        "roi_approx95pct_ci": [
+          68.01,
+          87.19
+        ]
+      },
+      "2024": {
+        "n": 25202,
+        "hits": 882,
+        "market_expected_hits": 711.596,
+        "hit_to_market_ratio": 1.2395,
+        "hit_z": 6.934,
+        "roi_pct": 90.456,
+        "net_yen": -240530,
+        "roi_approx95pct_ci": [
+          78.22,
+          102.69
+        ]
+      },
+      "2025": {
+        "n": 27816,
+        "hits": 685,
+        "market_expected_hits": 643.389,
+        "hit_to_market_ratio": 1.0647,
+        "hit_z": 1.769,
+        "roi_pct": 66.481,
+        "net_yen": -932360,
+        "roi_approx95pct_ci": [
+          58.19,
+          74.77
+        ]
+      },
+      "2026": {
+        "n": 16668,
+        "hits": 504,
+        "market_expected_hits": 396.763,
+        "hit_to_market_ratio": 1.2703,
+        "hit_z": 5.836,
+        "roi_pct": 81.388,
+        "net_yen": -310230,
+        "roi_approx95pct_ci": [
+          71.38,
+          91.4
+        ]
+      }
+    },
+    "3連複|market_gap+outside_mass|4,1": {
+      "2021": {
+        "n": 4,
+        "hits": 0,
+        "market_expected_hits": 0.027,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.165,
+        "roi_pct": 0.0,
+        "net_yen": -400,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2022": {
+        "n": 2,
+        "hits": 0,
+        "market_expected_hits": 0.01,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.102,
+        "roi_pct": 0.0,
+        "net_yen": -200,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2023": {
+        "n": 7,
+        "hits": 0,
+        "market_expected_hits": 0.104,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.331,
+        "roi_pct": 0.0,
+        "net_yen": -700,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2024": {
+        "n": 7,
+        "hits": 1,
+        "market_expected_hits": 0.046,
+        "hit_to_market_ratio": 21.8136,
+        "hit_z": 4.497,
+        "roi_pct": 867.143,
+        "net_yen": 5370,
+        "roi_approx95pct_ci": [
+          -589.66,
+          2323.94
+        ]
+      },
+      "2025": {
+        "n": 4,
+        "hits": 0,
+        "market_expected_hits": 0.019,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.139,
+        "roi_pct": 0.0,
+        "net_yen": -400,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2026": {
+        "n": 7,
+        "hits": 0,
+        "market_expected_hits": 0.096,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.317,
+        "roi_pct": 0.0,
+        "net_yen": -700,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "3連複|market_gap+donor_mass|0,0": {
+      "2021": {
+        "n": 22934,
+        "hits": 104,
+        "market_expected_hits": 174.803,
+        "hit_to_market_ratio": 0.595,
+        "hit_z": -5.951,
+        "roi_pct": 49.955,
+        "net_yen": -1147730,
+        "roi_approx95pct_ci": [
+          34.99,
+          64.92
+        ]
+      },
+      "2022": {
+        "n": 81351,
+        "hits": 224,
+        "market_expected_hits": 371.104,
+        "hit_to_market_ratio": 0.6036,
+        "hit_z": -8.396,
+        "roi_pct": 36.064,
+        "net_yen": -5201240,
+        "roi_approx95pct_ci": [
+          28.8,
+          43.33
+        ]
+      },
+      "2023": {
+        "n": 144346,
+        "hits": 724,
+        "market_expected_hits": 1049.617,
+        "hit_to_market_ratio": 0.6898,
+        "hit_z": -11.029,
+        "roi_pct": 39.381,
+        "net_yen": -8750050,
+        "roi_approx95pct_ci": [
+          34.98,
+          43.78
+        ]
+      },
+      "2024": {
+        "n": 157501,
+        "hits": 703,
+        "market_expected_hits": 1150.534,
+        "hit_to_market_ratio": 0.611,
+        "hit_z": -14.455,
+        "roi_pct": 38.867,
+        "net_yen": -9628500,
+        "roi_approx95pct_ci": [
+          34.51,
+          43.22
+        ]
+      },
+      "2025": {
+        "n": 140757,
+        "hits": 632,
+        "market_expected_hits": 1051.227,
+        "hit_to_market_ratio": 0.6012,
+        "hit_z": -14.096,
+        "roi_pct": 37.262,
+        "net_yen": -8830760,
+        "roi_approx95pct_ci": [
+          32.41,
+          42.11
+        ]
+      },
+      "2026": {
+        "n": 70914,
+        "hits": 392,
+        "market_expected_hits": 586.025,
+        "hit_to_market_ratio": 0.6689,
+        "hit_z": -8.806,
+        "roi_pct": 39.975,
+        "net_yen": -4256580,
+        "roi_approx95pct_ci": [
+          33.2,
+          46.75
+        ]
+      }
+    },
+    "3連複|market_gap+donor_mass|0,1": {
+      "2021": {
+        "n": 116,
+        "hits": 4,
+        "market_expected_hits": 3.724,
+        "hit_to_market_ratio": 1.0741,
+        "hit_z": 0.182,
+        "roi_pct": 16.724,
+        "net_yen": -9660,
+        "roi_approx95pct_ci": [
+          -0.99,
+          34.44
+        ]
+      },
+      "2022": {
+        "n": 106,
+        "hits": 0,
+        "market_expected_hits": 0.638,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.988,
+        "roi_pct": 0.0,
+        "net_yen": -10600,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2023": {
+        "n": 361,
+        "hits": 5,
+        "market_expected_hits": 9.003,
+        "hit_to_market_ratio": 0.5554,
+        "hit_z": -1.674,
+        "roi_pct": 10.111,
+        "net_yen": -32450,
+        "roi_approx95pct_ci": [
+          0.49,
+          19.73
+        ]
+      },
+      "2024": {
+        "n": 219,
+        "hits": 1,
+        "market_expected_hits": 6.522,
+        "hit_to_market_ratio": 0.1533,
+        "hit_z": -2.786,
+        "roi_pct": 36.164,
+        "net_yen": -13980,
+        "roi_approx95pct_ci": [
+          -35.64,
+          107.97
+        ]
+      },
+      "2025": {
+        "n": 183,
+        "hits": 1,
+        "market_expected_hits": 5.19,
+        "hit_to_market_ratio": 0.1927,
+        "hit_z": -2.487,
+        "roi_pct": 13.497,
+        "net_yen": -15830,
+        "roi_approx95pct_ci": [
+          -11.49,
+          38.48
+        ]
+      },
+      "2026": {
+        "n": 100,
+        "hits": 1,
+        "market_expected_hits": 3.202,
+        "hit_to_market_ratio": 0.3123,
+        "hit_z": -1.659,
+        "roi_pct": 1.0,
+        "net_yen": -9900,
+        "roi_approx95pct_ci": [
+          -0.78,
+          2.78
+        ]
+      }
+    },
+    "3連複|market_gap+donor_mass|1,0": {
+      "2021": {
+        "n": 12015,
+        "hits": 176,
+        "market_expected_hits": 182.165,
+        "hit_to_market_ratio": 0.9662,
+        "hit_z": -0.519,
+        "roi_pct": 60.27,
+        "net_yen": -477350,
+        "roi_approx95pct_ci": [
+          45.13,
+          75.41
+        ]
+      },
+      "2022": {
+        "n": 33307,
+        "hits": 329,
+        "market_expected_hits": 340.527,
+        "hit_to_market_ratio": 0.9661,
+        "hit_z": -0.691,
+        "roi_pct": 59.311,
+        "net_yen": -1355220,
+        "roi_approx95pct_ci": [
+          47.28,
+          71.35
+        ]
+      },
+      "2023": {
+        "n": 66100,
+        "hits": 1044,
+        "market_expected_hits": 1162.206,
+        "hit_to_market_ratio": 0.8983,
+        "hit_z": -3.923,
+        "roi_pct": 54.163,
+        "net_yen": -3029820,
+        "roi_approx95pct_ci": [
+          48.16,
+          60.17
+        ]
+      },
+      "2024": {
+        "n": 70048,
+        "hits": 1109,
+        "market_expected_hits": 1305.697,
+        "hit_to_market_ratio": 0.8494,
+        "hit_z": -6.169,
+        "roi_pct": 55.098,
+        "net_yen": -3145310,
+        "roi_approx95pct_ci": [
+          49.39,
+          60.8
+        ]
+      },
+      "2025": {
+        "n": 75176,
+        "hits": 1261,
+        "market_expected_hits": 1417.911,
+        "hit_to_market_ratio": 0.8893,
+        "hit_z": -4.761,
+        "roi_pct": 61.254,
+        "net_yen": -2912740,
+        "roi_approx95pct_ci": [
+          55.37,
+          67.13
+        ]
+      },
+      "2026": {
+        "n": 34142,
+        "hits": 640,
+        "market_expected_hits": 750.426,
+        "hit_to_market_ratio": 0.8528,
+        "hit_z": -4.643,
+        "roi_pct": 62.778,
+        "net_yen": -1270820,
+        "roi_approx95pct_ci": [
+          50.42,
+          75.13
+        ]
+      }
+    },
+    "3連複|market_gap+donor_mass|1,1": {
+      "2021": {
+        "n": 30,
+        "hits": 0,
+        "market_expected_hits": 0.419,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.671,
+        "roi_pct": 0.0,
+        "net_yen": -3000,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2022": {
+        "n": 13,
+        "hits": 0,
+        "market_expected_hits": 0.101,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.327,
+        "roi_pct": 0.0,
+        "net_yen": -1300,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2023": {
+        "n": 87,
+        "hits": 0,
+        "market_expected_hits": 1.044,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -1.06,
+        "roi_pct": 0.0,
+        "net_yen": -8700,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2024": {
+        "n": 53,
+        "hits": 0,
+        "market_expected_hits": 0.646,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.831,
+        "roi_pct": 0.0,
+        "net_yen": -5300,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2025": {
+        "n": 36,
+        "hits": 0,
+        "market_expected_hits": 0.526,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.757,
+        "roi_pct": 0.0,
+        "net_yen": -3600,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2026": {
+        "n": 20,
+        "hits": 0,
+        "market_expected_hits": 0.228,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.49,
+        "roi_pct": 0.0,
+        "net_yen": -2000,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "3連複|market_gap+donor_mass|2,0": {
+      "2021": {
+        "n": 12407,
+        "hits": 340,
+        "market_expected_hits": 311.918,
+        "hit_to_market_ratio": 1.09,
+        "hit_z": 1.991,
+        "roi_pct": 78.999,
+        "net_yen": -260560,
+        "roi_approx95pct_ci": [
+          64.5,
+          93.5
+        ]
+      },
+      "2022": {
+        "n": 34359,
+        "hits": 726,
+        "market_expected_hits": 694.056,
+        "hit_to_market_ratio": 1.046,
+        "hit_z": 1.501,
+        "roi_pct": 70.245,
+        "net_yen": -1022350,
+        "roi_approx95pct_ci": [
+          60.51,
+          79.98
+        ]
+      },
+      "2023": {
+        "n": 72732,
+        "hits": 2413,
+        "market_expected_hits": 2323.061,
+        "hit_to_market_ratio": 1.0387,
+        "hit_z": 2.397,
+        "roi_pct": 70.462,
+        "net_yen": -2148380,
+        "roi_approx95pct_ci": [
+          65.16,
+          75.76
+        ]
+      },
+      "2024": {
+        "n": 78528,
+        "hits": 2772,
+        "market_expected_hits": 2625.508,
+        "hit_to_market_ratio": 1.0558,
+        "hit_z": 3.689,
+        "roi_pct": 73.351,
+        "net_yen": -2092700,
+        "roi_approx95pct_ci": [
+          68.06,
+          78.65
+        ]
+      },
+      "2025": {
+        "n": 87002,
+        "hits": 2995,
+        "market_expected_hits": 2842.177,
+        "hit_to_market_ratio": 1.0538,
+        "hit_z": 3.769,
+        "roi_pct": 72.803,
+        "net_yen": -2366220,
+        "roi_approx95pct_ci": [
+          68.0,
+          77.61
+        ]
+      },
+      "2026": {
+        "n": 39715,
+        "hits": 1413,
+        "market_expected_hits": 1391.795,
+        "hit_to_market_ratio": 1.0152,
+        "hit_z": 0.738,
+        "roi_pct": 73.629,
+        "net_yen": -1047320,
+        "roi_approx95pct_ci": [
+          63.01,
+          84.24
+        ]
+      }
+    },
+    "3連複|market_gap+donor_mass|2,1": {
+      "2021": {
+        "n": 35,
+        "hits": 2,
+        "market_expected_hits": 0.883,
+        "hit_to_market_ratio": 2.2657,
+        "hit_z": 1.262,
+        "roi_pct": 96.857,
+        "net_yen": -110,
+        "roi_approx95pct_ci": [
+          -24.24,
+          217.95
+        ]
+      },
+      "2022": {
+        "n": 16,
+        "hits": 1,
+        "market_expected_hits": 0.315,
+        "hit_to_market_ratio": 3.1741,
+        "hit_z": 1.358,
+        "roi_pct": 22.5,
+        "net_yen": -1240,
+        "roi_approx95pct_ci": [
+          -28.17,
+          73.17
+        ]
+      },
+      "2023": {
+        "n": 134,
+        "hits": 3,
+        "market_expected_hits": 2.13,
+        "hit_to_market_ratio": 1.4084,
+        "hit_z": 0.64,
+        "roi_pct": 122.612,
+        "net_yen": 3030,
+        "roi_approx95pct_ci": [
+          -38.22,
+          283.45
+        ]
+      },
+      "2024": {
+        "n": 57,
+        "hits": 2,
+        "market_expected_hits": 1.191,
+        "hit_to_market_ratio": 1.6797,
+        "hit_z": 0.818,
+        "roi_pct": 15.263,
+        "net_yen": -4830,
+        "roi_approx95pct_ci": [
+          -6.62,
+          37.14
+        ]
+      },
+      "2025": {
+        "n": 42,
+        "hits": 1,
+        "market_expected_hits": 0.961,
+        "hit_to_market_ratio": 1.0404,
+        "hit_z": 0.043,
+        "roi_pct": 86.429,
+        "net_yen": -570,
+        "roi_approx95pct_ci": [
+          -81.43,
+          254.29
+        ]
+      },
+      "2026": {
+        "n": 25,
+        "hits": 0,
+        "market_expected_hits": 0.583,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.809,
+        "roi_pct": 0.0,
+        "net_yen": -2500,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "3連複|market_gap+donor_mass|3,0": {
+      "2021": {
+        "n": 8355,
+        "hits": 306,
+        "market_expected_hits": 271.843,
+        "hit_to_market_ratio": 1.1257,
+        "hit_z": 2.503,
+        "roi_pct": 80.097,
+        "net_yen": -166290,
+        "roi_approx95pct_ci": [
+          65.13,
+          95.07
+        ]
+      },
+      "2022": {
+        "n": 23322,
+        "hits": 824,
+        "market_expected_hits": 729.937,
+        "hit_to_market_ratio": 1.1289,
+        "hit_z": 4.349,
+        "roi_pct": 76.963,
+        "net_yen": -537260,
+        "roi_approx95pct_ci": [
+          68.26,
+          85.67
+        ]
+      },
+      "2023": {
+        "n": 50813,
+        "hits": 2285,
+        "market_expected_hits": 2065.521,
+        "hit_to_market_ratio": 1.1063,
+        "hit_z": 5.987,
+        "roi_pct": 77.908,
+        "net_yen": -1122560,
+        "roi_approx95pct_ci": [
+          71.03,
+          84.79
+        ]
+      },
+      "2024": {
+        "n": 55426,
+        "hits": 2673,
+        "market_expected_hits": 2342.624,
+        "hit_to_market_ratio": 1.141,
+        "hit_z": 8.492,
+        "roi_pct": 81.075,
+        "net_yen": -1048910,
+        "roi_approx95pct_ci": [
+          74.53,
+          87.63
+        ]
+      },
+      "2025": {
+        "n": 58999,
+        "hits": 2626,
+        "market_expected_hits": 2244.456,
+        "hit_to_market_ratio": 1.17,
+        "hit_z": 9.888,
+        "roi_pct": 78.32,
+        "net_yen": -1279120,
+        "roi_approx95pct_ci": [
+          73.08,
+          83.56
+        ]
+      },
+      "2026": {
+        "n": 29905,
+        "hits": 1294,
+        "market_expected_hits": 1116.623,
+        "hit_to_market_ratio": 1.1589,
+        "hit_z": 6.488,
+        "roi_pct": 79.129,
+        "net_yen": -624150,
+        "roi_approx95pct_ci": [
+          72.2,
+          86.06
+        ]
+      }
+    },
+    "3連複|market_gap+donor_mass|3,1": {
+      "2021": {
+        "n": 49,
+        "hits": 1,
+        "market_expected_hits": 1.766,
+        "hit_to_market_ratio": 0.5661,
+        "hit_z": -0.662,
+        "roi_pct": 24.694,
+        "net_yen": -3690,
+        "roi_approx95pct_ci": [
+          -22.59,
+          71.98
+        ]
+      },
+      "2022": {
+        "n": 11,
+        "hits": 0,
+        "market_expected_hits": 0.245,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.57,
+        "roi_pct": 0.0,
+        "net_yen": -1100,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2023": {
+        "n": 151,
+        "hits": 5,
+        "market_expected_hits": 4.412,
+        "hit_to_market_ratio": 1.1333,
+        "hit_z": 0.324,
+        "roi_pct": 37.55,
+        "net_yen": -9430,
+        "roi_approx95pct_ci": [
+          -0.75,
+          75.85
+        ]
+      },
+      "2024": {
+        "n": 83,
+        "hits": 4,
+        "market_expected_hits": 2.635,
+        "hit_to_market_ratio": 1.5178,
+        "hit_z": 1.007,
+        "roi_pct": 26.386,
+        "net_yen": -6110,
+        "roi_approx95pct_ci": [
+          5.88,
+          46.89
+        ]
+      },
+      "2025": {
+        "n": 57,
+        "hits": 7,
+        "market_expected_hits": 2.114,
+        "hit_to_market_ratio": 3.3113,
+        "hit_z": 4.099,
+        "roi_pct": 322.456,
+        "net_yen": 12680,
+        "roi_approx95pct_ci": [
+          122.95,
+          521.96
+        ]
+      },
+      "2026": {
+        "n": 44,
+        "hits": 3,
+        "market_expected_hits": 1.259,
+        "hit_to_market_ratio": 2.3832,
+        "hit_z": 1.787,
+        "roi_pct": 166.364,
+        "net_yen": 2920,
+        "roi_approx95pct_ci": [
+          -4.02,
+          336.75
+        ]
+      }
+    },
+    "3連複|market_gap+donor_mass|4,0": {
+      "2021": {
+        "n": 4691,
+        "hits": 140,
+        "market_expected_hits": 125.27,
+        "hit_to_market_ratio": 1.1176,
+        "hit_z": 1.441,
+        "roi_pct": 71.224,
+        "net_yen": -134990,
+        "roi_approx95pct_ci": [
+          53.03,
+          89.42
+        ]
+      },
+      "2022": {
+        "n": 9555,
+        "hits": 254,
+        "market_expected_hits": 221.376,
+        "hit_to_market_ratio": 1.1474,
+        "hit_z": 2.385,
+        "roi_pct": 76.495,
+        "net_yen": -224590,
+        "roi_approx95pct_ci": [
+          58.59,
+          94.4
+        ]
+      },
+      "2023": {
+        "n": 23595,
+        "hits": 789,
+        "market_expected_hits": 654.595,
+        "hit_to_market_ratio": 1.2053,
+        "hit_z": 5.712,
+        "roi_pct": 77.578,
+        "net_yen": -529040,
+        "roi_approx95pct_ci": [
+          67.9,
+          87.26
+        ]
+      },
+      "2024": {
+        "n": 25056,
+        "hits": 873,
+        "market_expected_hits": 705.637,
+        "hit_to_market_ratio": 1.2372,
+        "hit_z": 6.831,
+        "roi_pct": 90.052,
+        "net_yen": -249260,
+        "roi_approx95pct_ci": [
+          77.79,
+          102.31
+        ]
+      },
+      "2025": {
+        "n": 27710,
+        "hits": 680,
+        "market_expected_hits": 638.228,
+        "hit_to_market_ratio": 1.0654,
+        "hit_z": 1.781,
+        "roi_pct": 66.628,
+        "net_yen": -924740,
+        "roi_approx95pct_ci": [
+          58.31,
+          74.95
+        ]
+      },
+      "2026": {
+        "n": 16584,
+        "hits": 500,
+        "market_expected_hits": 394.131,
+        "hit_to_market_ratio": 1.2686,
+        "hit_z": 5.777,
+        "roi_pct": 81.333,
+        "net_yen": -309570,
+        "roi_approx95pct_ci": [
+          71.28,
+          91.38
+        ]
+      }
+    },
+    "3連複|market_gap+donor_mass|4,1": {
+      "2021": {
+        "n": 120,
+        "hits": 3,
+        "market_expected_hits": 3.207,
+        "hit_to_market_ratio": 0.9354,
+        "hit_z": -0.142,
+        "roi_pct": 31.583,
+        "net_yen": -8210,
+        "roi_approx95pct_ci": [
+          -0.68,
+          63.84
+        ]
+      },
+      "2022": {
+        "n": 22,
+        "hits": 1,
+        "market_expected_hits": 0.7,
+        "hit_to_market_ratio": 1.4281,
+        "hit_z": 0.448,
+        "roi_pct": 47.273,
+        "net_yen": -1160,
+        "roi_approx95pct_ci": [
+          11.54,
+          83.01
+        ]
+      },
+      "2023": {
+        "n": 260,
+        "hits": 13,
+        "market_expected_hits": 9.411,
+        "hit_to_market_ratio": 1.3813,
+        "hit_z": 1.504,
+        "roi_pct": 83.077,
+        "net_yen": -4400,
+        "roi_approx95pct_ci": [
+          29.09,
+          137.06
+        ]
+      },
+      "2024": {
+        "n": 153,
+        "hits": 10,
+        "market_expected_hits": 6.005,
+        "hit_to_market_ratio": 1.6652,
+        "hit_z": 2.124,
+        "roi_pct": 192.157,
+        "net_yen": 14100,
+        "roi_approx95pct_ci": [
+          35.14,
+          349.17
+        ]
+      },
+      "2025": {
+        "n": 112,
+        "hits": 5,
+        "market_expected_hits": 5.209,
+        "hit_to_market_ratio": 0.9598,
+        "hit_z": -0.121,
+        "roi_pct": 26.607,
+        "net_yen": -8220,
+        "roi_approx95pct_ci": [
+          1.07,
+          52.14
+        ]
+      },
+      "2026": {
+        "n": 91,
+        "hits": 4,
+        "market_expected_hits": 2.728,
+        "hit_to_market_ratio": 1.4661,
+        "hit_z": 0.964,
+        "roi_pct": 85.055,
+        "net_yen": -1360,
+        "roi_approx95pct_ci": [
+          2.21,
+          167.9
+        ]
+      }
+    },
+    "3連複|market_gap+outside_mass|1,1": {
+      "2022": {
+        "n": 1,
+        "hits": 0,
+        "market_expected_hits": 0.002,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.044,
+        "roi_pct": 0.0,
+        "net_yen": -100,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2023": {
+        "n": 3,
+        "hits": 0,
+        "market_expected_hits": 0.01,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.102,
+        "roi_pct": 0.0,
+        "net_yen": -300,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2024": {
+        "n": 2,
+        "hits": 0,
+        "market_expected_hits": 0.005,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.072,
+        "roi_pct": 0.0,
+        "net_yen": -200,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2025": {
+        "n": 5,
+        "hits": 0,
+        "market_expected_hits": 0.018,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.135,
+        "roi_pct": 0.0,
+        "net_yen": -500,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "2026": {
+        "n": 1,
+        "hits": 0,
+        "market_expected_hits": 0.004,
+        "hit_to_market_ratio": 0.0,
+        "hit_z": -0.06,
+        "roi_pct": 0.0,
+        "net_yen": -100,
+        "roi_approx95pct_ci": [
+          0.0,
+          0.0
+        ]
+      }
+    }
+  },
+  "cautions": [
+    "Many correlated subgroups, raw CI does not adjust for multiple hypotheses.",
+    "2025/2026 were previously seen in other exploratory work; this is not truly pristine forward test.",
+    "A recipient with hit/market ratio >1 may still be negative ROI.",
+    "Market normalized q has about 25% takeout; use 1/offered odds for actual break-even."
+  ]
+}
