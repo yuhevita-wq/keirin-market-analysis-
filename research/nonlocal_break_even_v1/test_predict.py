@@ -4,7 +4,9 @@ import itertools
 import json
 from pathlib import Path
 import numpy as np
-from research.nonlocal_break_even_v1 import predict
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parent))
+import predict
 
 cars=range(1,6)
 tr={'-'.join(map(str,k)):10.0+((k[0]*3+k[1]*5+k[2]*7)%37)
