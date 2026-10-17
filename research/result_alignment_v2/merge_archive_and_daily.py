@@ -52,11 +52,7 @@ def merge():
     OUT.mkdir(parents=True,exist_ok=True)
     years={}
     for year in range(2021,2027):
-        ids=[rid for rid in sorted(completed) if rid[2:6]==str(year) or
-             # Meeting on New Year's Eve, raced on next calendar year.
-             (rid[2:6]==str(year-1) and rid[6:10]=="1231" and int(rid[10:12])>1)]
-        # Prevent overlap of Dec 31 meeting-day IDs between adjacent years.
-        # The canonical chronological partition is the race date, not meeting start.
+        # Meeting start year can differ from actual race year at New Year's.
         from datetime import date,timedelta
         ids=[rid for rid in completed
              if (date(int(rid[2:6]),int(rid[6:8]),int(rid[8:10]))+timedelta(days=int(rid[10:12])-1)).year==year]
