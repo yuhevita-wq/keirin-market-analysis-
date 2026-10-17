@@ -151,11 +151,12 @@ def venue_podiums(html, venue_url, day):
             invalid.append([rid,str(exc)[:140]])
     if cards==0:
         raise ValueError("no race cards on venue results page")
-    if invalid:
-        raise ValueError("invalid podiums "+json.dumps(invalid[:8],ensure_ascii=False))
-    if cards!=len(values)+girls:
-        raise ValueError("some race cards lack podium results")
-    return values, {"cards":cards,"girls_excluded":girls,"men_podiums":len(values)}
+    if cards!=len(values)+girls+len(invalid):
+        raise ValueError("published race cards not fully accounted for")
+    # Preserve verifiable races even when one result is a dead heat or cancelled.
+    # Never synthesize or silently classify an abnormal podium as complete.
+    return values, {"cards":cards,"girls_excluded":girls,
+                    "men_podiums":len(values),"unresolved_podiums":invalid}
 
 
 def file_paths(day):
@@ -222,7 +223,12 @@ def collect_day(session,day,pause):
                 if rid in rows and rows[rid]["finish_order"]!=record["finish_order"]:
                     raise ValueError("archived-versus-publisher conflicting podium "+rid)
             rows.update(venue_rows)
-            successes.add(mid)
+            if venue_stats["unresolved_podiums"]:
+                errors.append({"stage":"race","venue":mid,"url":url,
+                               "error":"Unresolved published podiums "+
+                               json.dumps(venue_stats["unresolved_podiums"][:6],ensure_ascii=False)})
+            else:
+                successes.add(mid)
             print("VENUE_RESULTS",day,mid,venue_stats,flush=True)
         except Exception as exc:
             errors.append({"stage":"venue","venue":mid,"url":url,"error":f"{type(exc).__name__}: {exc}"[:400]})
