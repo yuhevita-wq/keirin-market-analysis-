@@ -1,0 +1,46 @@
+name: Check market mispricing after rank and offered-odds controls
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/market_error_census_v1/rank_controls.py'
+      - '.github/workflows/market-error-rank-controls.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: market-error-rank-controls
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install numpy scipy
+      - run: python -u research/market_error_census_v1/rank_controls.py
+      - name: Validate and save
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('data/audits/market_error_census_v1_rank_controls.json'))
+          for y in ('2023','2024','2025','2026'):
+              assert d['year'][y]['rank_cross']
+              assert d['year'][y]['odds_cross']
+          print('CONTROL_GROUPS_PASSED',flush=True)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/audits/market_error_census_v1_rank_controls.json
+          git commit -m 'research: control observed pricing bias by rank and offered odds' || exit 0
+          for i in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
