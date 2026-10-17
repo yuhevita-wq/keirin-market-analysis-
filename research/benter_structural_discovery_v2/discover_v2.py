@@ -22,6 +22,23 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "research/benter_fundamental_v1"))
 import train_v1 as v1
 
+# V1's matrix builder has a hard-coded 17-feature dimension; replace only
+# its padding with an input-dimension-aware version for the ablation study.
+def matrix_variable_width(races, scaler):
+    n = len(races)
+    p = len(scaler.median) * 2
+    x = np.zeros((n, 9, p), dtype=float)
+    mask = np.zeros((n, 9), dtype=bool)
+    winners = np.zeros(n, dtype=int)
+    for i, race in enumerate(races):
+        k = len(race["cars"])
+        x[i, :k] = scaler.apply(race["x"])
+        mask[i, :k] = True
+        winners[i] = race["winner"]
+    return x, mask, winners
+
+v1.matrix = matrix_variable_width
+
 OUT = ROOT / "research/benter_structural_discovery_v2/output"
 BASE_FEATURES = list(v1.FEATURES)
 STRUCT_FEATURES = [
