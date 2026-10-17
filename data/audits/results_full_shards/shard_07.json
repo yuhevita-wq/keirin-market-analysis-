@@ -2,12 +2,22 @@
   "schema": 1,
   "shard": 7,
   "shards": 8,
-  "next_offset": 967,
-  "last_run_utc": "2026-10-17T02:17:23.318202+00:00",
+  "next_offset": 999,
+  "last_run_utc": "2026-10-17T02:21:14.044918+00:00",
   "last_batch": [
     {
-      "day": "2023-07-25",
-      "results": 57,
+      "day": "2023-08-26",
+      "results": 91,
+      "complete": true,
+      "venues_completed": 10,
+      "venues_total": 10,
+      "failed": 0,
+      "errors": [],
+      "repair_pass": false
+    },
+    {
+      "day": "2023-09-03",
+      "results": 56,
       "complete": true,
       "venues_completed": 6,
       "venues_total": 6,
@@ -16,27 +26,24 @@
       "repair_pass": false
     },
     {
-      "day": "2023-08-02",
-      "results": 86,
-      "complete": true,
-      "venues_completed": 9,
-      "venues_total": 9,
-      "failed": 0,
-      "errors": [],
-      "repair_pass": false
-    },
-    {
-      "day": "2023-08-10",
-      "results": 45,
-      "complete": true,
-      "venues_completed": 5,
+      "day": "2023-09-11",
+      "results": 46,
+      "complete": false,
+      "venues_completed": 4,
       "venues_total": 5,
-      "failed": 0,
-      "errors": [],
+      "failed": 1,
+      "errors": [
+        {
+          "stage": "race",
+          "venue": "48202309110100",
+          "url": "https://keirin.kdreams.jp/yokkaichi/raceresult/48202309110100/",
+          "error": "Unresolved published podiums [[\"4820230911010008\", \"published first-second-third headers not present\"]]"
+        }
+      ],
       "repair_pass": false
     },
     {
-      "day": "2023-08-18",
+      "day": "2023-09-19",
       "results": 67,
       "complete": true,
       "venues_completed": 7,
@@ -47,7 +54,7 @@
     }
   ],
   "finished_forward_pass": false,
-  "pending_repair_days": 32,
+  "pending_repair_days": 33,
   "exhausted_unresolved_days": 0,
   "finished_all": false
 }
