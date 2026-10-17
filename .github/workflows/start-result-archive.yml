@@ -1,0 +1,64 @@
+name: Verify and begin nationwide historical results recovery
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/start-result-archive.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: result-recovery-pilot-and-existing-archives
+  cancel-in-progress: false
+
+jobs:
+  verify_and_start:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install result index parser dependencies
+        run: python -m pip install requests beautifulsoup4 lxml
+      - name: Verify published result parser
+        run: python -m unittest discover -s tests -p 'test_result_days.py' -v
+      - name: Build all already archived historical outcomes, regardless of old odds subset
+        run: python -u research/result_alignment_v2/build_result_universe.py
+      - name: Collect real 2021-01-01 daily results as online pilot
+        run: python -u research/result_alignment_v2/collect_result_days.py --shard 0 --shards 8 --days 1 --pause 2
+      - name: Audit outcome outputs and unchanged source odds
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a=json.loads(Path('data/audits/result_universe_v2.json').read_text())
+          b=json.loads(Path('data/audits/results_full_shards/shard_00.json').read_text())
+          assert a['verified_podium_races']>10000, a
+          assert b['next_offset']==8
+          assert len(b['last_batch'])==1
+          assert not b.get('paused_for_source_failure')
+          assert b['last_batch'][0]['results']>0, b
+          print('ARCHIVE_EXISTING_RESULTS',a['verified_podium_races'])
+          print('NEW_DAILY_RESULTS',b['last_batch'][0]['results'])
+          PY
+          git diff --exit-code -- data/odds_ciphertext data/odds_only
+      - name: Save verified result labels with the daily restart cursor
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f data/result_universe_v2
+          git add data/audits/result_universe_v2.json data/audits/results_full_shards/shard_00.json
+          git commit -m 'data: persist validated historical podium labels and nationwide recovery pilot'
+          for n in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
