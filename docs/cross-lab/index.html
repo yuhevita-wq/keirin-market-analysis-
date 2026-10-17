@@ -32,7 +32,7 @@ td input{max-width:72px;min-width:54px;padding:7px 4px;text-align:center}
 </style>
 </head>
 <body><main class="wrap">
-<h1>CROSS LAB <small>強強・強弱の同時成立比較 v5.2</small></h1>
+<h1>CROSS LAB <small>実結果で共存学習・強強/強弱の検証</small></h1>
 <p class="sub">異なる2ラインの先頭・番手から各2人を取り、基本4点のクロスを比較して主採用1型を選びます。モデルによる選定は暫定であり、オッズ不在時は高配当や期待値を判定しません。</p>
 <section>
 <h2>① 出走表を指定</h2>
@@ -380,7 +380,8 @@ async function analyze(){
       '% ／ 基本役割外 '+(100*comparison.mass.OUTSIDE_CORE_ROLE).toFixed(1)+'%。'+escapeHtml(comparison.reason)+'</p>';
     html+=result.notes.filter(n=>!n.includes("無理に1組へ固定しません")).map(n=>'<p class="muted">'+escapeHtml(n)+"</p>").join("");
     if(incomplete)html+='<div class="info">決まり手欠損は未確認として残します。欠損だけを理由にクロス候補や採用を取り消しません。</div>';
-    if(!comparison?.priceComplete)html+='<p class="alert">全候補のオッズ未取得。期待回収ではなく4点合計的中確率の暫定順位です。高配当・割安・回収率は未評価です。</p>';
+    if(!comparison)html+='<p class="alert">基本4点の確率分布は未算出。候補の列挙順は順位ではなく、9車ペア学習値から4点的中率・期待値を補完しません。</p>';
+    else if(!comparison.priceComplete)html+='<p class="alert">全候補オッズ不足。入力モデルの4点合計的中確率の暫定順位です。高配当・割安・回収率は未評価です。</p>';
     if(result.candidates.length){
       html+='<h3>全3組を同じ展開で比較（列挙順・強さ順ではありません）</h3><p>各組について、誰の仕掛けでどの位置が空き、先頭と番手のどちらが残るかを比較します。組ごとに都合のよい別展開を作らず、採用組以外が残る場合も記録してください。記録の有無で候補を消しません。</p><div class="tablewrap"><table><thead><tr><th>2ライン／選外ライン</th><th>先頭×先頭</th><th>先頭×番手</th><th>番手×先頭</th><th>番手×番手</th></tr></thead><tbody>';
       for(const row of candidateMatrix(race)){
