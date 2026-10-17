@@ -3,8 +3,11 @@
   "day": "2021-08-21",
   "attempts": 1,
   "venues_completed": [
+    "31202108210100",
     "35202108190300",
+    "46202108210100",
     "55202108200200",
+    "73202108210100",
     "75202108200200",
     "84202108210100",
     "85202108200200",
@@ -12,29 +15,31 @@
   ],
   "index_verified": true,
   "published_venue_count": 9,
-  "complete": false,
+  "complete": true,
   "podiums": 87,
   "girls_excluded_by_source_label": true,
   "results_are_target_labels_only": true,
   "last_checked_utc": "2026-10-17T00:42:53.546869+00:00",
-  "recent_errors": [
-    {
-      "stage": "race",
-      "venue": "31202108210100",
-      "url": "https://keirin.kdreams.jp/matsudo/raceresult/31202108210100/",
-      "error": "Unresolved published podiums [[\"3120210821010005\", \"published first-second-third headers not present\"]]"
+  "recent_errors": [],
+  "excluded_nonstandard_races": {
+    "3120210821010005": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/matsudo/raceresult/31202108210100/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     },
-    {
-      "stage": "race",
-      "venue": "46202108210100",
-      "url": "https://keirin.kdreams.jp/toyama/raceresult/46202108210100/",
-      "error": "Unresolved published podiums [[\"4620210821010003\", \"published first-second-third headers not present\"]]"
+    "4620210821010003": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/toyama/raceresult/46202108210100/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     },
-    {
-      "stage": "race",
-      "venue": "73202108210100",
-      "url": "https://keirin.kdreams.jp/komatsushima/raceresult/73202108210100/",
-      "error": "Unresolved published podiums [[\"7320210821010008\", \"no results order_table\"]]"
+    "7320210821010008": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "no results order_table",
+      "source_url": "https://keirin.kdreams.jp/komatsushima/raceresult/73202108210100/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     }
-  ]
+  },
+  "nonstandard_policy": "excluded unverified podium, not declared cancelled"
 }

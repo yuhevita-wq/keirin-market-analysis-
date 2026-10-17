@@ -5,29 +5,33 @@
   "venues_completed": [
     "26202109030200",
     "36202109030200",
+    "38202109030200",
+    "42202109030200",
     "54202109020300",
     "75202109020300",
     "83202109030200"
   ],
   "index_verified": true,
   "published_venue_count": 7,
-  "complete": false,
+  "complete": true,
   "podiums": 63,
   "girls_excluded_by_source_label": true,
   "results_are_target_labels_only": true,
   "last_checked_utc": "2026-10-17T00:45:20.010899+00:00",
-  "recent_errors": [
-    {
-      "stage": "race",
-      "venue": "38202109030200",
-      "url": "https://keirin.kdreams.jp/shizuoka/raceresult/38202109030200/",
-      "error": "Unresolved published podiums [[\"3820210903020008\", \"published first-second-third headers not present\"]]"
+  "recent_errors": [],
+  "excluded_nonstandard_races": {
+    "3820210903020008": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/shizuoka/raceresult/38202109030200/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     },
-    {
-      "stage": "race",
-      "venue": "42202109030200",
-      "url": "https://keirin.kdreams.jp/nagoya/raceresult/42202109030200/",
-      "error": "Unresolved published podiums [[\"4220210903020005\", \"published first-second-third headers not present\"]]"
+    "4220210903020005": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/nagoya/raceresult/42202109030200/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     }
-  ]
+  },
+  "nonstandard_policy": "excluded unverified podium, not declared cancelled"
 }

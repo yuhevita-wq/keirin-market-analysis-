@@ -5,31 +5,35 @@
   "venues_completed": [
     "13202209010200",
     "22202209020100",
+    "27202209020100",
     "43202209010200",
     "44202208310300",
     "53202208310300",
     "61202209020100",
+    "81202208310300",
     "84202209010200"
   ],
   "index_verified": true,
   "published_venue_count": 9,
-  "complete": false,
+  "complete": true,
   "podiums": 82,
   "girls_excluded_by_source_label": true,
   "results_are_target_labels_only": true,
   "last_checked_utc": "2026-10-17T01:32:24.214908+00:00",
-  "recent_errors": [
-    {
-      "stage": "race",
-      "venue": "27202209020100",
-      "url": "https://keirin.kdreams.jp/keiokaku/raceresult/27202209020100/",
-      "error": "Unresolved published podiums [[\"2720220902010003\", \"no results order_table\"]]"
+  "recent_errors": [],
+  "excluded_nonstandard_races": {
+    "2720220902010003": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "no results order_table",
+      "source_url": "https://keirin.kdreams.jp/keiokaku/raceresult/27202209020100/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     },
-    {
-      "stage": "race",
-      "venue": "81202208310300",
-      "url": "https://keirin.kdreams.jp/kokura/raceresult/81202208310300/",
-      "error": "Unresolved published podiums [[\"8120220831030003\", \"published first-second-third headers not present\"]]"
+    "8120220831030003": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/kokura/raceresult/81202208310300/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     }
-  ]
+  },
+  "nonstandard_policy": "excluded unverified podium, not declared cancelled"
 }

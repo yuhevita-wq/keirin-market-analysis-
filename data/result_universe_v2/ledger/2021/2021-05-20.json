@@ -4,29 +4,39 @@
   "attempts": 1,
   "venues_completed": [
     "22202105200100",
+    "38202105200100",
     "44202105190200",
+    "53202105180300",
     "63202105180300",
     "86202105180300"
   ],
   "index_verified": true,
   "published_venue_count": 6,
-  "complete": false,
+  "complete": true,
   "podiums": 57,
   "girls_excluded_by_source_label": true,
   "results_are_target_labels_only": true,
   "last_checked_utc": "2026-10-17T00:31:24.284389+00:00",
-  "recent_errors": [
-    {
-      "stage": "race",
-      "venue": "38202105200100",
-      "url": "https://keirin.kdreams.jp/shizuoka/raceresult/38202105200100/",
-      "error": "Unresolved published podiums [[\"3820210520010008\", \"published first-second-third headers not present\"]]"
+  "recent_errors": [],
+  "excluded_nonstandard_races": {
+    "3820210520010008": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/shizuoka/raceresult/38202105200100/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     },
-    {
-      "stage": "race",
-      "venue": "53202105180300",
-      "url": "https://keirin.kdreams.jp/nara/raceresult/53202105180300/",
-      "error": "Unresolved published podiums [[\"5320210518030007\", \"no results order_table\"], [\"5320210518030008\", \"no results order_table\"]]"
+    "5320210518030007": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "no results order_table",
+      "source_url": "https://keirin.kdreams.jp/nara/raceresult/53202105180300/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
+    },
+    "5320210518030008": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "no results order_table",
+      "source_url": "https://keirin.kdreams.jp/nara/raceresult/53202105180300/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     }
-  ]
+  },
+  "nonstandard_policy": "excluded unverified podium, not declared cancelled"
 }

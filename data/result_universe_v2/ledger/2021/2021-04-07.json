@@ -4,31 +4,35 @@
   "attempts": 1,
   "venues_completed": [
     "13202104050300",
+    "22202104070100",
     "36202104060200",
     "42202104070100",
     "55202104070100",
+    "71202104060200",
     "81202104070100",
     "85202104050300"
   ],
   "index_verified": true,
   "published_venue_count": 8,
-  "complete": false,
+  "complete": true,
   "podiums": 78,
   "girls_excluded_by_source_label": true,
   "results_are_target_labels_only": true,
   "last_checked_utc": "2026-10-17T00:24:12.687069+00:00",
-  "recent_errors": [
-    {
-      "stage": "race",
-      "venue": "22202104070100",
-      "url": "https://keirin.kdreams.jp/maebashi/raceresult/22202104070100/",
-      "error": "Unresolved published podiums [[\"2220210407010009\", \"published first-second-third headers not present\"]]"
+  "recent_errors": [],
+  "excluded_nonstandard_races": {
+    "2220210407010009": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/maebashi/raceresult/22202104070100/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     },
-    {
-      "stage": "race",
-      "venue": "71202104060200",
-      "url": "https://keirin.kdreams.jp/takamatsu/raceresult/71202104060200/",
-      "error": "Unresolved published podiums [[\"7120210406020007\", \"published first-second-third headers not present\"]]"
+    "7120210406020007": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/takamatsu/raceresult/71202104060200/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     }
-  ]
+  },
+  "nonstandard_policy": "excluded unverified podium, not declared cancelled"
 }

@@ -4,6 +4,7 @@
   "attempts": 1,
   "venues_completed": [
     "11202208040200",
+    "42202208030300",
     "43202208050100",
     "56202208040200",
     "73202208050100",
@@ -11,17 +12,25 @@
   ],
   "index_verified": true,
   "published_venue_count": 6,
-  "complete": false,
+  "complete": true,
   "podiums": 57,
   "girls_excluded_by_source_label": true,
   "results_are_target_labels_only": true,
   "last_checked_utc": "2026-10-17T01:29:48.444302+00:00",
-  "recent_errors": [
-    {
-      "stage": "race",
-      "venue": "42202208030300",
-      "url": "https://keirin.kdreams.jp/nagoya/raceresult/42202208030300/",
-      "error": "Unresolved published podiums [[\"4220220803030005\", \"published first-second-third headers not present\"], [\"4220220803030007\", \"published first-second-third headers not present\"]]"
+  "recent_errors": [],
+  "excluded_nonstandard_races": {
+    "4220220803030005": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/nagoya/raceresult/42202208030300/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
+    },
+    "4220220803030007": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/nagoya/raceresult/42202208030300/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     }
-  ]
+  },
+  "nonstandard_policy": "excluded unverified podium, not declared cancelled"
 }

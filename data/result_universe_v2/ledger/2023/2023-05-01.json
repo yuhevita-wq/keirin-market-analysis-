@@ -4,32 +4,36 @@
   "attempts": 1,
   "venues_completed": [
     "11202305010100",
+    "24202304300200",
     "28202305010100",
     "38202304290300",
     "42202305010100",
     "46202305010100",
     "55202305010100",
+    "75202304300200",
     "84202305010100"
   ],
   "index_verified": true,
   "published_venue_count": 9,
-  "complete": false,
+  "complete": true,
   "podiums": 74,
   "girls_excluded_by_source_label": true,
   "results_are_target_labels_only": true,
   "last_checked_utc": "2026-10-17T02:02:11.701900+00:00",
-  "recent_errors": [
-    {
-      "stage": "race",
-      "venue": "24202304300200",
-      "url": "https://keirin.kdreams.jp/utsunomiya/raceresult/24202304300200/",
-      "error": "Unresolved published podiums [[\"2420230430020011\", \"published first-second-third headers not present\"]]"
+  "recent_errors": [],
+  "excluded_nonstandard_races": {
+    "2420230430020011": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/utsunomiya/raceresult/24202304300200/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     },
-    {
-      "stage": "race",
-      "venue": "75202304300200",
-      "url": "https://keirin.kdreams.jp/matsuyama/raceresult/75202304300200/",
-      "error": "Unresolved published podiums [[\"7520230430020009\", \"published first-second-third headers not present\"]]"
+    "7520230430020009": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/matsuyama/raceresult/75202304300200/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     }
-  ]
+  },
+  "nonstandard_policy": "excluded unverified podium, not declared cancelled"
 }

@@ -5,27 +5,31 @@
   "venues_completed": [
     "36202103180100",
     "43202103160300",
+    "62202103160300",
+    "75202103170200",
     "86202103160300"
   ],
   "index_verified": true,
   "published_venue_count": 5,
-  "complete": false,
+  "complete": true,
   "podiums": 45,
   "girls_excluded_by_source_label": true,
   "results_are_target_labels_only": true,
   "last_checked_utc": "2026-10-17T00:24:53.372922+00:00",
-  "recent_errors": [
-    {
-      "stage": "race",
-      "venue": "62202103160300",
-      "url": "https://keirin.kdreams.jp/hiroshima/raceresult/62202103160300/",
-      "error": "Unresolved published podiums [[\"6220210316030001\", \"published first-second-third headers not present\"]]"
+  "recent_errors": [],
+  "excluded_nonstandard_races": {
+    "6220210316030001": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/hiroshima/raceresult/62202103160300/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     },
-    {
-      "stage": "race",
-      "venue": "75202103170200",
-      "url": "https://keirin.kdreams.jp/matsuyama/raceresult/75202103170200/",
-      "error": "Unresolved published podiums [[\"7520210317020004\", \"published first-second-third headers not present\"]]"
+    "7520210317020004": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/matsuyama/raceresult/75202103170200/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     }
-  ]
+  },
+  "nonstandard_policy": "excluded unverified podium, not declared cancelled"
 }

@@ -5,6 +5,7 @@
   "venues_completed": [
     "21202506100300",
     "35202506120100",
+    "46202506120100",
     "48202506120100",
     "51202506120100",
     "61202506100300",
@@ -13,17 +14,19 @@
   ],
   "index_verified": true,
   "published_venue_count": 8,
-  "complete": false,
+  "complete": true,
   "podiums": 73,
   "girls_excluded_by_source_label": true,
   "results_are_target_labels_only": true,
   "last_checked_utc": "2026-10-17T03:46:26.860496+00:00",
-  "recent_errors": [
-    {
-      "stage": "race",
-      "venue": "46202506120100",
-      "url": "https://keirin.kdreams.jp/toyama/raceresult/46202506120100/",
-      "error": "Unresolved published podiums [[\"4620250612010005\", \"published first-second-third headers not present\"]]"
+  "recent_errors": [],
+  "excluded_nonstandard_races": {
+    "4620250612010005": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/toyama/raceresult/46202506120100/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     }
-  ]
+  },
+  "nonstandard_policy": "excluded unverified podium, not declared cancelled"
 }

@@ -3,7 +3,10 @@
   "day": "2023-01-08",
   "attempts": 1,
   "venues_completed": [
+    "26202301080100",
     "35202301060300",
+    "37202301080100",
+    "44202301060300",
     "45202301070200",
     "53202301080100",
     "62202301060300",
@@ -12,29 +15,31 @@
   ],
   "index_verified": true,
   "published_venue_count": 9,
-  "complete": false,
+  "complete": true,
   "podiums": 87,
   "girls_excluded_by_source_label": true,
   "results_are_target_labels_only": true,
   "last_checked_utc": "2026-10-17T01:49:00.149266+00:00",
-  "recent_errors": [
-    {
-      "stage": "race",
-      "venue": "26202301080100",
-      "url": "https://keirin.kdreams.jp/seibuen/raceresult/26202301080100/",
-      "error": "Unresolved published podiums [[\"2620230108010009\", \"published first-second-third headers not present\"]]"
+  "recent_errors": [],
+  "excluded_nonstandard_races": {
+    "2620230108010009": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/seibuen/raceresult/26202301080100/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     },
-    {
-      "stage": "race",
-      "venue": "37202301080100",
-      "url": "https://keirin.kdreams.jp/ito/raceresult/37202301080100/",
-      "error": "Unresolved published podiums [[\"3720230108010004\", \"published first-second-third headers not present\"]]"
+    "3720230108010004": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/ito/raceresult/37202301080100/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     },
-    {
-      "stage": "race",
-      "venue": "44202301060300",
-      "url": "https://keirin.kdreams.jp/ogaki/raceresult/44202301060300/",
-      "error": "Unresolved published podiums [[\"4420230106030005\", \"published first-second-third headers not present\"]]"
+    "4420230106030005": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/ogaki/raceresult/44202301060300/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     }
-  ]
+  },
+  "nonstandard_policy": "excluded unverified podium, not declared cancelled"
 }

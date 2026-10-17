@@ -5,29 +5,33 @@
   "venues_completed": [
     "13202312290300",
     "44202312310100",
+    "54202312290300",
     "56202312310100",
     "73202312310100",
-    "81202312290300"
+    "81202312290300",
+    "83202312310100"
   ],
   "index_verified": true,
   "published_venue_count": 7,
-  "complete": false,
+  "complete": true,
   "podiums": 74,
   "girls_excluded_by_source_label": true,
   "results_are_target_labels_only": true,
   "last_checked_utc": "2026-10-17T02:36:59.154239+00:00",
-  "recent_errors": [
-    {
-      "stage": "race",
-      "venue": "54202312290300",
-      "url": "https://keirin.kdreams.jp/mukomachi/raceresult/54202312290300/",
-      "error": "Unresolved published podiums [[\"5420231229030009\", \"published first-second-third headers not present\"]]"
+  "recent_errors": [],
+  "excluded_nonstandard_races": {
+    "5420231229030009": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/mukomachi/raceresult/54202312290300/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     },
-    {
-      "stage": "race",
-      "venue": "83202312310100",
-      "url": "https://keirin.kdreams.jp/kurume/raceresult/83202312310100/",
-      "error": "Unresolved published podiums [[\"8320231231010010\", \"published first-second-third headers not present\"]]"
+    "8320231231010010": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/kurume/raceresult/83202312310100/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     }
-  ]
+  },
+  "nonstandard_policy": "excluded unverified podium, not declared cancelled"
 }

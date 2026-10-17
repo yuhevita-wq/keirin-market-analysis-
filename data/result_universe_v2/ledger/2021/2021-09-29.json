@@ -5,6 +5,7 @@
   "venues_completed": [
     "11202109280200",
     "21202109270300",
+    "23202109270300",
     "42202109280200",
     "54202109280200",
     "73202109270300",
@@ -12,17 +13,19 @@
   ],
   "index_verified": true,
   "published_venue_count": 7,
-  "complete": false,
+  "complete": true,
   "podiums": 69,
   "girls_excluded_by_source_label": true,
   "results_are_target_labels_only": true,
   "last_checked_utc": "2026-10-17T00:49:21.163225+00:00",
-  "recent_errors": [
-    {
-      "stage": "race",
-      "venue": "23202109270300",
-      "url": "https://keirin.kdreams.jp/toride/raceresult/23202109270300/",
-      "error": "Unresolved published podiums [[\"2320210927030009\", \"published first-second-third headers not present\"]]"
+  "recent_errors": [],
+  "excluded_nonstandard_races": {
+    "2320210927030009": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/toride/raceresult/23202109270300/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     }
-  ]
+  },
+  "nonstandard_policy": "excluded unverified podium, not declared cancelled"
 }

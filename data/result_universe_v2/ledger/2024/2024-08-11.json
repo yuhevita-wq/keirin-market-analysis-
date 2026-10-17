@@ -4,7 +4,9 @@
   "attempts": 1,
   "venues_completed": [
     "11202408100200",
+    "23202408100200",
     "26202408100200",
+    "27202408100200",
     "34202408100200",
     "44202408090300",
     "47202408100200",
@@ -12,23 +14,25 @@
   ],
   "index_verified": true,
   "published_venue_count": 8,
-  "complete": false,
+  "complete": true,
   "podiums": 82,
   "girls_excluded_by_source_label": true,
   "results_are_target_labels_only": true,
   "last_checked_utc": "2026-10-17T03:07:06.518249+00:00",
-  "recent_errors": [
-    {
-      "stage": "race",
-      "venue": "23202408100200",
-      "url": "https://keirin.kdreams.jp/toride/raceresult/23202408100200/",
-      "error": "Unresolved published podiums [[\"2320240810020008\", \"no results order_table\"]]"
+  "recent_errors": [],
+  "excluded_nonstandard_races": {
+    "2320240810020008": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "no results order_table",
+      "source_url": "https://keirin.kdreams.jp/toride/raceresult/23202408100200/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     },
-    {
-      "stage": "race",
-      "venue": "27202408100200",
-      "url": "https://keirin.kdreams.jp/keiokaku/raceresult/27202408100200/",
-      "error": "Unresolved published podiums [[\"2720240810020009\", \"published first-second-third headers not present\"]]"
+    "2720240810020009": {
+      "status": "excluded_unverified_standard_podium",
+      "reason": "published first-second-third headers not present",
+      "source_url": "https://keirin.kdreams.jp/keiokaku/raceresult/27202408100200/",
+      "note": "Cannot establish 1st-3rd from this publication; cause not assumed"
     }
-  ]
+  },
+  "nonstandard_policy": "excluded unverified podium, not declared cancelled"
 }
