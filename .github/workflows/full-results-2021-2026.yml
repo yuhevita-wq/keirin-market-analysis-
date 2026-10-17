@@ -133,7 +133,7 @@ jobs:
             p=Path(f'data/audits/results_full_shards/shard_{shard:02d}.json')
             states.append(json.loads(p.read_text()) if p.exists() else {'shard':shard,'finished_forward_pass':False})
           paused=[x['shard'] for x in states if x.get('paused_for_source_failure')]
-          unfinished=[x['shard'] for x in states if not x.get('finished_forward_pass')]
+          unfinished=[x['shard'] for x in states if not x.get('finished_all', x.get('finished_forward_pass', False))]
           proceed=bool(unfinished) and not paused
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:
             f.write(f"proceed={'true' if proceed else 'false'}\n")
