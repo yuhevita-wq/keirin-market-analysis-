@@ -32,17 +32,19 @@ class ResultDayTests(unittest.TestCase):
         self.assertEqual(got["1120230721010001"]["finish_order"],[7,1,3])
         self.assertEqual(got["1120230721010003"]["finish_order"],[2,5,6])
         self.assertNotIn("1120230721010002",got)
-        self.assertEqual(meta,{"cards":3,"girls_excluded":1,"men_podiums":2})
+        self.assertEqual(meta,{"cards":3,"girls_excluded":1,"men_podiums":2,"unresolved_podiums":[]})
 
     def test_missing_podium_cannot_borrow_next_race_table(self):
         bad=HTML.replace('<table class="order_table">', '<div class="hidden">',1).replace('</table>','</div>',1)
-        with self.assertRaises(ValueError):
-            C.venue_podiums(bad,VENUE,DAY)
+        good,meta=C.venue_podiums(bad,VENUE,DAY)
+        self.assertNotIn("1120230721010001",good)
+        self.assertEqual(len(meta["unresolved_podiums"]),1)
 
     def test_reject_duplicate_cars(self):
         bad=HTML.replace('3 助川 翔太郎','7 助川 翔太郎')
-        with self.assertRaises(ValueError):
-            C.venue_podiums(bad,VENUE,DAY)
+        good,meta=C.venue_podiums(bad,VENUE,DAY)
+        self.assertNotIn("1120230721010001",good)
+        self.assertEqual(len(meta["unresolved_podiums"]),1)
 
     def test_race_id_date_identity(self):
         self.assertEqual(C.race_date_from_id("1120230721010001"),DAY)
