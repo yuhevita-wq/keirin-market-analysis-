@@ -1,0 +1,42 @@
+name: Verify historical odds relation sensitivity
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/remote_market_transfer_v1/candidate_robustness_v1.py'
+      - '.github/workflows/remote-market-candidate-robustness-v1.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install numpy scipy
+      - run: python -u research/remote_market_transfer_v1/candidate_robustness_v1.py
+      - name: Check and commit audit
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('data/audits/remote_market_candidate_robustness_v1.json'))
+          assert r['summary']['Y2023_selected']['tickets']>500
+          assert r['summary']['Y2026_selected']['tickets']>400
+          print('VERIFY_COMPLETE')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/audits/remote_market_candidate_robustness_v1.json
+          git commit -m 'research: save historical comparison results' || exit 0
+          for i in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
