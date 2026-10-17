@@ -1,0 +1,49 @@
+name: Test real-pair CROSS LAB nine-car parity
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/cross-lab/coexistence9.mjs'
+      - 'docs/cross-lab/coexistence9.test.mjs'
+      - 'docs/cross-lab/coexistence9_frozen.json'
+      - 'docs/cross-lab/index.html'
+      - 'research/cross_pair_coexistence9/parity_fixture.py'
+      - '.github/workflows/test-cross-lab9.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          filter: blob:none
+          sparse-checkout: |
+            data/grade_races
+            scripts/keirin_shogi_ninecar_v2.py
+            docs/cross-lab
+            research/cross_pair_coexistence9
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install parity check dependencies
+        run: python -m pip install numpy scikit-learn joblib
+      - name: Actual 2025 race feature and prediction parity
+        run: |
+          python research/cross_pair_coexistence9/parity_fixture.py /tmp/cross9-real-parity.json
+          CROSS9_PARITY_FIXTURE=/tmp/cross9-real-parity.json node --test docs/cross-lab/coexistence9.test.mjs
+      - name: Check embedded UI JavaScript syntax
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          source=Path('docs/cross-lab/index.html').read_text()
+          code=source.split('<script type="module">',1)[1].split('</script>',1)[0]
+          Path('/tmp/cross-lab-inline.mjs').write_text(code)
+          PY
+          node --check /tmp/cross-lab-inline.mjs
