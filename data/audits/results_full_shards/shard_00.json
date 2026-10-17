@@ -2,24 +2,57 @@
   "schema": 1,
   "shard": 0,
   "shards": 8,
-  "next_offset": 8,
-  "last_run_utc": "2026-10-17T00:12:42.659779+00:00",
+  "next_offset": 40,
+  "last_run_utc": "2026-10-17T00:16:24.931854+00:00",
   "last_batch": [
     {
-      "day": "2021-01-01",
-      "results": 69,
+      "day": "2021-01-09",
+      "results": 89,
+      "complete": true,
+      "venues_completed": 9,
+      "venues_total": 9,
+      "failed": 0,
+      "errors": []
+    },
+    {
+      "day": "2021-01-17",
+      "results": 57,
       "complete": false,
-      "venues_completed": 7,
-      "venues_total": 8,
-      "failed": 1,
+      "venues_completed": 4,
+      "venues_total": 7,
+      "failed": 3,
       "errors": [
         {
-          "stage": "venue",
-          "venue": "53202012310200",
-          "url": "https://keirin.kdreams.jp/nara/raceresult/53202012310200/",
-          "error": "ValueError: invalid podiums [[\"5320201231020006\", \"published first-second-third headers not present\"]]"
+          "stage": "race",
+          "venue": "31202101150300",
+          "url": "https://keirin.kdreams.jp/matsudo/raceresult/31202101150300/",
+          "error": "Unresolved published podiums [[\"3120210115030009\", \"published first-second-third headers not present\"]]"
+        },
+        {
+          "stage": "race",
+          "venue": "37202101170100",
+          "url": "https://keirin.kdreams.jp/ito/raceresult/37202101170100/",
+          "error": "Unresolved published podiums [[\"3720210117010009\", \"no results order_table\"], [\"3720210117010010\", \"no results order_table\"]]"
         }
       ]
+    },
+    {
+      "day": "2021-01-25",
+      "results": 68,
+      "complete": true,
+      "venues_completed": 7,
+      "venues_total": 7,
+      "failed": 0,
+      "errors": []
+    },
+    {
+      "day": "2021-02-02",
+      "results": 70,
+      "complete": true,
+      "venues_completed": 7,
+      "venues_total": 7,
+      "failed": 0,
+      "errors": []
     }
   ],
   "finished_forward_pass": false
