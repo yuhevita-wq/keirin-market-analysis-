@@ -1,0 +1,299 @@
+name: Analyze remote result correlations from all odds combinations
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/analyze-nonlocal-odds-relations-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical dependencies
+        run: pip install numpy scipy
+      - name: Calculate real outcome correlations from odds only
+        run: |
+          python - <<'PY'
+          import gzip
+          import json
+          import math
+          from collections import Counter, defaultdict
+          from pathlib import Path
+          import numpy as np
+          from scipy.optimize import minimize
+          
+          ROOT = Path('.')
+          ODDS = ROOT / 'data/odds_only'
+          LABEL = ROOT / 'data/results_only'
+          OUT = ROOT / 'data/audits/nonlocal_odds_relation_v1.json'
+          YEARS = range(2021, 2027)
+          MASK_CACHE = {}
+          
+          def masks(combos):
+              k = tuple(combos)
+              if k not in MASK_CACHE:
+                  sets = [set(t) for t in combos]
+                  overlap = np.array([[len(a & b) for b in sets] for a in sets])
+                  MASK_CACHE[k] = ((overlap == 0).astype(float), (overlap == 1).astype(float), overlap)
+              return MASK_CACHE[k]
+          
+          def get_labels():
+              labels = {}
+              per_year = {}
+              for yr in YEARS:
+                  path = LABEL / f'results_{yr}.jsonl.gz'
+                  if not path.exists():
+                      per_year[str(yr)] = 0
+                      continue
+                  count = 0
+                  with gzip.open(path, 'rt', encoding='utf-8') as src:
+                      for line in src:
+                          obj = json.loads(line)
+                          key = str(obj['race_id'])
+                          val = tuple(int(v) for v in obj['finish_order'])
+                          if len(val) == 3 and len(set(val)) == 3:
+                              if key in labels and labels[key] != val:
+                                  raise ValueError(f'Conflicting result: {key}')
+                              labels[key] = val
+                              count += 1
+                  per_year[str(yr)] = count
+              return labels, per_year
+          
+          def load():
+              labels, label_counts = get_labels()
+              rec = defaultdict(list)
+              audit = Counter()
+              examples = []
+              for yr in YEARS:
+                  path = ODDS / f'odds_{yr}.jsonl.gz'
+                  if not path.exists():
+                      continue
+                  with gzip.open(path, 'rt', encoding='utf-8') as src:
+                      for line in src:
+                          audit['all_odds_rows'] += 1
+                          row = json.loads(line)
+                          rid = str(row['race_id'])
+                          order = labels.get(rid)
+                          if order is None:
+                              audit['missing_label'] += 1
+                              continue
+                          markets = row['odds']
+                          if set(markets) != {'3連単', '3連複'}:
+                              audit['missing_markets'] += 1
+                              continue
+                          try:
+                              tr = {tuple(int(a) for a in k.split('-')): float(v) for k, v in markets['3連単'].items()}
+                              to = {tuple(sorted(int(a) for a in k.split('='))): float(v) for k, v in markets['3連複'].items()}
+                              if any(not math.isfinite(v) or v < 1 for v in list(tr.values()) + list(to.values())):
+                                  raise ValueError('invalid price')
+                              combos = tuple(sorted(to))
+                              n = len(combos)
+                              cars = set(x for t in combos for x in t)
+                              if len(to) != math.comb(len(cars), 3) or len(tr) != len(cars)*(len(cars)-1)*(len(cars)-2):
+                                  raise ValueError('incomplete')
+                              winner = tuple(sorted(order))
+                              if winner not in to or order not in tr:
+                                  raise ValueError('outcome not priced')
+                              rev = {k:1/v for k,v in tr.items()}
+                              z = sum(rev.values())
+                              rev3 = defaultdict(float)
+                              for k,v in rev.items():
+                                  rev3[tuple(sorted(k))] += v/z
+                              if len(rev3) != n:
+                                  raise ValueError('incomplete 3t aggregate')
+                              qt0 = np.array([1/to[k] for k in combos], dtype=float)
+                              qt = qt0 / qt0.sum()
+                              q3 = np.array([rev3[k] for k in combos], dtype=float)
+                              if min(qt) <= 0 or min(q3) <= 0:
+                                  raise ValueError('zero probability')
+                              m0, m1, overlap = masks(combos)
+                              d = q3 - qt
+                              remote0 = (m0 @ d) / (0.05 + m0 @ qt)
+                              remote1 = (m1 @ d) / (0.05 + m1 @ qt)
+                              local = np.log(q3 / qt)
+                              x = np.column_stack([np.clip(local,-3,3),np.clip(remote0,-3,3),np.clip(remote1,-3,3)])
+                              ind = combos.index(winner)
+                              # Source is the combination with the largest absolute cross-market disagreement.
+                              # It is NEVER selected using the result.
+                              anchor = int(np.argmax(abs(d)))
+                              remote_mask = (overlap[anchor] <= 1).astype(float)
+                              record = {
+                                  'year':yr, 'race_id':rid, 'qt':qt, 'q3':q3, 'x':x, 'winner':ind,
+                                  'remote_actual':int(remote_mask[ind]),
+                                  'remote_expected_trio':float(remote_mask @ qt),
+                                  'remote_expected_trifecta':float(remote_mask @ q3),
+                                  'anchor_sign':('trifecta_above_trio' if d[anchor]>0 else 'trio_above_trifecta'),
+                                  'anchor_gap':float(abs(d[anchor])),
+                                  'market_tv':float(sum(abs(d))/2),
+                                  'n_cars':len(cars),
+                              }
+                              rec[yr].append(record)
+                              audit['joined'] += 1
+                              if len(examples) < 12 and remote_mask[ind] and len(cars)==7:
+                                  examples.append({'race_id':rid,'anchor_set':list(combos[anchor]),'actual_set':list(winner),
+                                                   'anchor_gap':round(abs(d[anchor]),5),
+                                                   'actual_trio_market_rank':int(np.argsort(-qt).tolist().index(ind)+1)})
+                          except (ValueError, KeyError, ZeroDivisionError, OverflowError) as exc:
+                              audit['invalid'] += 1
+              return rec, dict(audit), label_counts, examples
+          
+          def fit(records, indices):
+              if not records:
+                  return None
+              def value_grad(b):
+                  loss = 0.0
+                  grad = np.zeros(len(b))
+                  for r in records:
+                      f = r['x'][:,indices]
+                      v = np.log(r['qt']) + f @ b
+                      v = v - max(v)
+                      e = np.exp(v); p = e/e.sum()
+                      y = r['winner']
+                      loss += math.log(max(float(p[y]),1e-300)) * -1
+                      grad += p @ f - f[y]
+                  lam = 0.02
+                  loss = loss/len(records) + lam*float(b@b)/2
+                  grad = grad/len(records) + lam*b
+                  return loss,grad
+              start=np.zeros(len(indices))
+              res=minimize(value_grad,start,jac=True,method='BFGS',
+                           options={'maxiter':120,'gtol':1e-7})
+              return res.x
+          
+          def scores(records, betas):
+              out={}
+              n=len(records)
+              for name,(cols,beta) in betas.items():
+                  ll=[]; br=[]
+                  for r in records:
+                      v=np.log(r['qt'])+(r['x'][:,cols] @ beta if len(cols) else 0)
+                      v=v-max(v)
+                      a=np.exp(v); p=a/a.sum()
+                      y=r['winner']
+                      ll.append(-math.log(max(float(p[y]),1e-300)))
+                      br.append(1-2*p[y]+p@p)
+                  out[name] = {'logloss':round(float(np.mean(ll)),8),
+                               'brier':round(float(np.mean(br)),8)}
+                  out[name+'_row_ll']=np.array(ll)
+              diff = out['local_row_ll'] - out['nonlocal_row_ll']
+              mu=float(np.mean(diff)); se=float(np.std(diff,ddof=1)/np.sqrt(n)) if n>1 else None
+              compact={k:v for k,v in out.items() if '_row_ll' not in k}
+              compact['nonlocal_over_local_logloss_gain']=round(mu,8)
+              compact['gain_std_error']=round(se,8) if se is not None else None
+              compact['gain_95pct_ci']=[round(mu-1.96*se,8),round(mu+1.96*se,8)] if se is not None else None
+              return compact
+          
+          def remote_stats(records):
+              stats = defaultdict(lambda: {'races':0,'observed':0,'expected_trio':0.,'expected_trifecta':0.})
+              for r in records:
+                  for key in ['overall',r['anchor_sign']]:
+                      x=stats[key]
+                      x['races']+=1
+                      x['observed']+=r['remote_actual']
+                      x['expected_trio']+=r['remote_expected_trio']
+                      x['expected_trifecta']+=r['remote_expected_trifecta']
+              return {k:{'races':v['races'],'remote_actual':v['observed'],
+                         'remote_rate_pct':round(100*v['observed']/v['races'],3),
+                         'expected_trio':round(v['expected_trio'],3),
+                         'observed_over_trio_expected':round(v['observed']/v['expected_trio'],5) if v['expected_trio'] else None,
+                         'observed_over_tri3_expected':round(v['observed']/v['expected_trifecta'],5) if v['expected_trifecta'] else None}
+                      for k,v in stats.items()}
+          
+          def receiver_buckets(records,cuts):
+              stats=[{'candidates':0,'hits':0,'expected_trio':0.,'expected_trifecta':0.} for _ in range(5)]
+              for r in records:
+                  x=r['x'][:,1]; q=r['qt']; z=r['q3']; winner=r['winner']
+                  bins=np.searchsorted(cuts,x,side='right')
+                  for i in range(5):
+                      mask=bins==i
+                      b=stats[i];b['candidates']+=int(mask.sum());b['hits']+=bool(mask[winner])
+                      b['expected_trio']+=float(q[mask].sum());b['expected_trifecta']+=float(z[mask].sum())
+              return [{'bucket':i+1,'candidate_rows':b['candidates'],'winners':b['hits'],
+                       'expected_trio':round(b['expected_trio'],3),
+                       'actual_div_trio_market':round(b['hits']/b['expected_trio'],5) if b['expected_trio'] else None,
+                       'actual_div_trifecta_market':round(b['hits']/b['expected_trifecta'],5) if b['expected_trifecta'] else None}
+                      for i,b in enumerate(stats)]
+          
+          def main():
+              rec,audit,labels,examples=load()
+              if len(rec[2023]) < 1000 or len(rec[2024]) < 1000:
+                  raise RuntimeError('Insufficient real joined races: '+str({y:len(rec[y]) for y in YEARS}))
+              # Train once on 2023, DO NOT adjust using results in 2024-2026.
+              train=rec[2023]
+              beta_local=fit(train,[0])
+              beta_nonlocal=fit(train,[0,1,2])
+              betas={'trio_market':([],np.array([])),
+                     'local':([0],beta_local),
+                     'nonlocal':([0,1,2],beta_nonlocal)}
+              cuts=np.quantile(np.concatenate([r['x'][:,1] for r in train]),[.2,.4,.6,.8])
+              report={
+                  'status':'ACTUAL_RESULTS_VS_NONLOCAL_ODDS_RELATION_V1',
+                  'scope':'all eligible male classes, 2021-2026H1, every available complete 3連単 and 3連複 market',
+                  'not_available':'other five bet types in the separately encrypted seven-bet archive; no access to decrypted exact-ID joined odds',
+                  'only_predictive_inputs':['complete 3連単 final odds','complete 3連複 final odds'],
+                  'labels_only':['finish_order (three finishers)'],
+                  'outcome':'unordered top-3 set, every eligible set retained; exact order reserved for next stage',
+                  'remote_definition':'target set intersects source set in <=1 car; source is max abs difference q_3t_set minus q_trio; source selected before looking at actual winner',
+                  'candidate_features':{
+                    'local':'log(q3set(target)/qtrio(target))',
+                    'remote0':'sum_disjoint_source(q3set-qt) / (0.05+sum_disjoint_source(qt))',
+                    'remote1':'sum_overlap1_source(q3set-qt) / (0.05+sum_overlap1_source(qt))',
+                    'all_clipped':'-3..3',
+                  },
+                  'baseline':'per-race normalized inverse 3連複 odds; trifecta aggregate also shown descriptively',
+                  'caveats':['Every quote is an archived finalized price, unavailable before betting closes.',
+                     'This is an empirical nonlocal association test, not proof of market beating or betting profitability.',
+                     'Feature family was chosen after seeing older explorations; later years are not wholly untouched for the broader project.',
+                     'Quintile bins derive only from 2023 odds, independent of all result labels.',
+                     'A full 7-bet study still requires decryption and exact race-ID joins.'],
+                  'audit':audit,'label_counts':labels,'joined_races':{str(y):len(rec[y]) for y in YEARS},
+                  'entrant_count':dict(Counter(str(r['n_cars']) for rs in rec.values() for r in rs)),
+                  'training_year':'2023','fitted_beta_local':beta_local.tolist(),
+                  'fitted_beta_nonlocal':beta_nonlocal.tolist(),
+                  'remote0_feature_cuts_2023':cuts.tolist(),
+                  'by_year':{},'examples':examples,
+              }
+              for year in YEARS:
+                  rs=rec[year]
+                  if not rs:continue
+                  report['by_year'][str(year)]={
+                     'matched_races':len(rs),
+                     'remote_outcome_vs_market':remote_stats(rs),
+                     'remote_feature_calibration':receiver_buckets(rs,cuts),
+                     'score':scores(rs,betas),
+                  }
+                  print('YEAR',year,'races',len(rs),'remote',report['by_year'][str(year)]['remote_outcome_vs_market'].get('overall'),'scores',report['by_year'][str(year)]['score'],flush=True)
+              OUT.parent.mkdir(parents=True,exist_ok=True)
+              OUT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+              print('SAVED',OUT,'TOTAL',sum(len(v) for v in rec.values()),flush=True)
+          if __name__=='__main__':
+              main()
+          PY
+      - name: Validate and save compact analysis report
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('data/audits/nonlocal_odds_relation_v1.json'))
+          assert x['joined_races']['2023']>1000
+          assert x['joined_races']['2024']>1000
+          assert set(x['only_predictive_inputs'])=={'complete 3連単 final odds','complete 3連複 final odds'}
+          print('REAL_ODDS_NONLOCAL_ANALYSIS_VERIFIED',x['joined_races'])
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/audits/nonlocal_odds_relation_v1.json
+          git commit -m 'research: quantify nonlocal odds versus actual outcomes' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
