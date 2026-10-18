@@ -48,7 +48,7 @@ def calibrate_h2(p):
     a=np.exp(logits)
     return a/a.sum()
 
-def group_probability(path,key):
+def group_probability(path):
     groups=defaultdict(list)
     for rec in read(path):
         groups[rec["race_id"]].append(rec)
