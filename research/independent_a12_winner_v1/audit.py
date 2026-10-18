@@ -176,7 +176,7 @@ def feature_completeness(root, date_start, date_end):
                 "s_count", "b_count", "nige_count", "makuri_count", "sashi_count", "mark_count")
     total, missing = 0, defaultdict(int)
     for p in sorted(root.iterdir()):
-        if not p.is_dir() or not re.fullmatch(r"202[3456]_\d{2}_\d{2}", p.name):
+        if not p.is_dir() or not re.fullmatch(r"202[3456]_(?:\d{2}_\d{2}|\d{2}_\d{4})", p.name):
             continue
         if not (p / "entries.csv").exists():
             continue
@@ -209,7 +209,7 @@ def split_stats(races, records, metas):
 def read_meta(root):
     metas = {}
     for folder in sorted(root.iterdir()):
-        if not re.fullmatch(r"202[3456]_\d{2}_\d{2}", folder.name):
+        if not re.fullmatch(r"202[3456]_(?:\d{2}_\d{2}|\d{2}_\d{4})", folder.name):
             continue
         if not (folder / "races.csv").exists():
             continue
