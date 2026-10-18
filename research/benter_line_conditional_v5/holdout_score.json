@@ -1,0 +1,428 @@
+{
+  "scope": "F1 S級, 2026年9月, all uniquely completed ordered finishes with valid line",
+  "train_period": "2026-07-02..2026-08-30",
+  "test_period": "2026-09-01..2026-09-30; observed in prior no-line tests",
+  "fit_audit": {
+    "forecast_count": 875,
+    "n": 867,
+    "excluded": {
+      "tie_or_missing_places": 8
+    },
+    "second_relationships": {
+      "different_line": 418,
+      "same_line": 449
+    },
+    "third_relationships": {
+      "first_third_same_second_diff": 129,
+      "first_second_same_third_diff": 316,
+      "second_third_same_first_diff": 134,
+      "all_different": 155,
+      "all_same": 133
+    }
+  },
+  "test_audit": {
+    "forecast_count": 422,
+    "n": 419,
+    "excluded": {
+      "tie_or_missing_places": 3
+    },
+    "second_relationships": {
+      "different_line": 194,
+      "same_line": 225
+    },
+    "third_relationships": {
+      "second_third_same_first_diff": 68,
+      "all_same": 68,
+      "first_second_same_third_diff": 157,
+      "all_different": 55,
+      "first_third_same_second_diff": 71
+    }
+  },
+  "parameters": {
+    "second": {
+      "penalty": 0.05,
+      "theta": [
+        0.7027876147881222,
+        0.662629942690145,
+        0.16728109049416112,
+        0.2438746826232069,
+        0.3576603392940064,
+        0.16305987370555045,
+        0.0005607722172774005
+      ],
+      "validation_candidates": [
+        {
+          "lambda": 0.05,
+          "validation_logloss": 1.3859940356203118,
+          "july_params": [
+            0.6772539782553321,
+            0.6545562128371091,
+            0.15858414546814223,
+            0.284693696077661,
+            0.31293844343397276,
+            0.07745474025103681,
+            -0.08737465655976667
+          ]
+        },
+        {
+          "lambda": 0.5,
+          "validation_logloss": 1.4419822246656941,
+          "july_params": [
+            0.7224303101228932,
+            0.27692856161641355,
+            0.12745756246629988,
+            0.10894119393942485,
+            0.15928819075825887,
+            0.04135311722808249,
+            0.0003962867110379639
+          ]
+        },
+        {
+          "lambda": 2.0,
+          "validation_logloss": 1.5004138988343623,
+          "july_params": [
+            0.7478627671977325,
+            0.09652573819388437,
+            0.04790526612496291,
+            0.0352776435704825,
+            0.058710915408881834,
+            0.016861724268852494,
+            0.0024264627453395465
+          ]
+        },
+        {
+          "lambda": 10.0,
+          "validation_logloss": 1.5308571617099471,
+          "july_params": [
+            0.7596763978365202,
+            0.02147109650067778,
+            0.010869240995911278,
+            0.007657844176316865,
+            0.013275641855399105,
+            0.0039699566190446395,
+            0.0007002480499641664
+          ]
+        }
+      ],
+      "july_theta": [
+        0.6772539782553321,
+        0.6545562128371091,
+        0.15858414546814223,
+        0.284693696077661,
+        0.31293844343397276,
+        0.07745474025103681,
+        -0.08737465655976667
+      ],
+      "august_theta": [
+        0.7312826457977991,
+        0.6723798873982093,
+        0.1789564224639682,
+        0.20452926705054364,
+        0.4028595290000646,
+        0.2530373820468411,
+        0.0888845209684907
+      ],
+      "train_loss": 1.3929545681259787,
+      "train_size": 867,
+      "param_names": [
+        "probability_exponent",
+        "same_first_line",
+        "winner_leader_candidate_bante",
+        "winner_bante_candidate_leader",
+        "candidate_behind_winner",
+        "candidate_bante",
+        "candidate_tail"
+      ]
+    },
+    "third": {
+      "penalty": 0.5,
+      "theta": [
+        0.3458163340675697,
+        0.12138858696689801,
+        0.12112559759421726,
+        0.09164540078862221,
+        0.0355132769552997,
+        -0.022715522621397914,
+        0.05989602514414255,
+        0.09384232996885977,
+        0.10114665059791723,
+        -0.1626352228228925
+      ],
+      "validation_candidates": [
+        {
+          "lambda": 0.05,
+          "validation_logloss": 1.5110334379477552,
+          "july_params": [
+            0.48206393799714675,
+            0.03798348770838506,
+            0.1847483629809976,
+            0.1693101346158848,
+            0.08837245677761128,
+            -0.1360850259713612,
+            0.23351885938595635,
+            0.20210142668920728,
+            0.3845002851307033,
+            -0.31718660972279955
+          ]
+        },
+        {
+          "lambda": 0.5,
+          "validation_logloss": 1.5056509558887978,
+          "july_params": [
+            0.3880476919741618,
+            0.082982473126121,
+            0.14422973271601525,
+            0.09751028606346208,
+            0.04609692142647922,
+            -0.058434674331405236,
+            0.09313901197588728,
+            0.09301395987261096,
+            0.14481602701538374,
+            -0.18092731199543613
+          ]
+        },
+        {
+          "lambda": 2.0,
+          "validation_logloss": 1.5322099683910526,
+          "july_params": [
+            0.34524118098203244,
+            0.0373706396983216,
+            0.05722918646857471,
+            0.03830630251015905,
+            0.017442912657177782,
+            -0.021608288893362363,
+            0.033648826742174454,
+            0.0369657787309919,
+            0.05235233853647973,
+            -0.074885662274453
+          ]
+        },
+        {
+          "lambda": 10.0,
+          "validation_logloss": 1.5535226872080052,
+          "july_params": [
+            0.3283591479941635,
+            0.009031197267827714,
+            0.013319074778553625,
+            0.00886557961861349,
+            0.003980842082179812,
+            -0.004971645178614789,
+            0.007604249414441246,
+            0.008643689382444062,
+            0.011860764480551221,
+            -0.017851890245443213
+          ]
+        }
+      ],
+      "july_theta": [
+        0.3880476919741618,
+        0.082982473126121,
+        0.14422973271601525,
+        0.09751028606346208,
+        0.04609692142647922,
+        -0.058434674331405236,
+        0.09313901197588728,
+        0.09301395987261096,
+        0.14481602701538374,
+        -0.18092731199543613
+      ],
+      "august_theta": [
+        0.2955435413228509,
+        0.16323816469538027,
+        0.0967838930966023,
+        0.0862755504399835,
+        0.024388099270349704,
+        0.014555328855970794,
+        0.02467509128615943,
+        0.0954540843804641,
+        0.053776750455514985,
+        -0.14078682483012034
+      ],
+      "train_loss": 1.4864575019079003,
+      "train_size": 867,
+      "param_names": [
+        "probability_exponent",
+        "same_first_line",
+        "same_second_line",
+        "all_three_same_line",
+        "head_bante_tail_completion",
+        "candidate_bante",
+        "candidate_tail",
+        "candidate_behind_first",
+        "candidate_behind_second",
+        "unselected_teammates"
+      ]
+    }
+  },
+  "fixed_baseline": {
+    "gamma": 0.7837784969662068,
+    "delta": 0.29282925890631
+  },
+  "models": {
+    "baseline": {
+      "n": 419,
+      "conditional_second_logloss": 1.5608167109582853,
+      "conditional_third_logloss": 1.5438635301378705,
+      "joint_trifecta_logloss": 4.668007645637776,
+      "second_conditional_top1_hit": 143,
+      "third_conditional_top1_hit": 142,
+      "trifecta_top1_hit": 17,
+      "trifecta_top10_hit": 129,
+      "ordered_pseudo_R2": 0.11920811624759742
+    },
+    "line_second_only": {
+      "n": 419,
+      "conditional_second_logloss": 1.4058493538006218,
+      "conditional_third_logloss": 1.5438635301378705,
+      "joint_trifecta_logloss": 4.513040288480113,
+      "second_conditional_top1_hit": 185,
+      "third_conditional_top1_hit": 142,
+      "trifecta_top1_hit": 24,
+      "trifecta_top10_hit": 139,
+      "ordered_pseudo_R2": 0.14844842620265553
+    },
+    "line_third_only": {
+      "n": 419,
+      "conditional_second_logloss": 1.5608167109582853,
+      "conditional_third_logloss": 1.4734966640776914,
+      "joint_trifecta_logloss": 4.597640779577598,
+      "second_conditional_top1_hit": 143,
+      "third_conditional_top1_hit": 170,
+      "trifecta_top1_hit": 23,
+      "trifecta_top10_hit": 138,
+      "ordered_pseudo_R2": 0.13248542194541812
+    },
+    "line_both": {
+      "n": 419,
+      "conditional_second_logloss": 1.4058493538006218,
+      "conditional_third_logloss": 1.4734966640776914,
+      "joint_trifecta_logloss": 4.442673422419934,
+      "second_conditional_top1_hit": 185,
+      "third_conditional_top1_hit": 170,
+      "trifecta_top1_hit": 31,
+      "trifecta_top10_hit": 151,
+      "ordered_pseudo_R2": 0.16172573190047645
+    }
+  },
+  "comparison": {
+    "line_both_over_baseline": {
+      "second_logloss": {
+        "improvement_positive_better": 0.1549673571576637,
+        "date_cluster_bootstrap95": [
+          0.10177721121988229,
+          0.21133170461650377
+        ]
+      },
+      "third_logloss": {
+        "improvement_positive_better": 0.07036686606017913,
+        "date_cluster_bootstrap95": [
+          0.04928119392708612,
+          0.09443719047612666
+        ]
+      },
+      "ordered_logloss": {
+        "improvement_positive_better": 0.22533422321784283,
+        "date_cluster_bootstrap95": [
+          0.1622485204707022,
+          0.28670036806260224
+        ]
+      }
+    },
+    "line_second_only_over_baseline": {
+      "second_logloss": {
+        "improvement_positive_better": 0.1549673571576637,
+        "date_cluster_bootstrap95": [
+          0.10046341377982498,
+          0.21276251729740672
+        ]
+      },
+      "third_logloss": {
+        "improvement_positive_better": 0.0,
+        "date_cluster_bootstrap95": [
+          0.0,
+          0.0
+        ]
+      },
+      "ordered_logloss": {
+        "improvement_positive_better": 0.15496735715766372,
+        "date_cluster_bootstrap95": [
+          0.10070687366684256,
+          0.20906980284453108
+        ]
+      }
+    },
+    "line_third_only_over_baseline": {
+      "second_logloss": {
+        "improvement_positive_better": 0.0,
+        "date_cluster_bootstrap95": [
+          0.0,
+          0.0
+        ]
+      },
+      "third_logloss": {
+        "improvement_positive_better": 0.07036686606017913,
+        "date_cluster_bootstrap95": [
+          0.050098641081050534,
+          0.09281729207510007
+        ]
+      },
+      "ordered_logloss": {
+        "improvement_positive_better": 0.07036686606017914,
+        "date_cluster_bootstrap95": [
+          0.04976403571267598,
+          0.09394082497674217
+        ]
+      }
+    },
+    "line_both_over_line_second_only": {
+      "second_logloss": {
+        "improvement_positive_better": 0.0,
+        "date_cluster_bootstrap95": [
+          0.0,
+          0.0
+        ]
+      },
+      "third_logloss": {
+        "improvement_positive_better": 0.07036686606017913,
+        "date_cluster_bootstrap95": [
+          0.05121440014471398,
+          0.09358726882961249
+        ]
+      },
+      "ordered_logloss": {
+        "improvement_positive_better": 0.07036686606017911,
+        "date_cluster_bootstrap95": [
+          0.05042550853873616,
+          0.09266925153585584
+        ]
+      }
+    },
+    "line_both_over_line_third_only": {
+      "second_logloss": {
+        "improvement_positive_better": 0.1549673571576637,
+        "date_cluster_bootstrap95": [
+          0.09688861915616483,
+          0.20988994468003133
+        ]
+      },
+      "third_logloss": {
+        "improvement_positive_better": 0.0,
+        "date_cluster_bootstrap95": [
+          0.0,
+          0.0
+        ]
+      },
+      "ordered_logloss": {
+        "improvement_positive_better": 0.1549673571576637,
+        "date_cluster_bootstrap95": [
+          0.09828121955961017,
+          0.21010580963690487
+        ]
+      }
+    }
+  },
+  "uniform_ordered_logloss": 5.299785036336676,
+  "interpretation": "Improved conditional probabilities and ordered 3-car joint likelihood do NOT themselves prove betting profitability",
+  "selection_integrity": "July->August penalty choice, July+August full training; no Sept model/feature/penalty tuning",
+  "global_test_integrity": "September outcomes already used in previous no-line tests; followup prospective holdout still needed"
+}
