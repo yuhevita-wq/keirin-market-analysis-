@@ -1,0 +1,87 @@
+{
+  "name": "A1/A2 independent winner v1 (odds excluded)",
+  "status": "research; not approved for EV deployment",
+  "train_period": "2023-01-01..2024-12-31",
+  "validation_period": "2025-01-01..2025-12-31",
+  "test_period": "2026-01-01..2026-06-30 (untouched for tuning)",
+  "train_races": 24199,
+  "validation_races": 11633,
+  "audit": {
+    "accepted": 41398,
+    "no_unique_first_place": 101,
+    "missing_line": 30,
+    "incomplete_results": 1
+  },
+  "selection": {
+    "baseline_score_only": {
+      "ridge": 0.01,
+      "validation": {
+        "races": 11633,
+        "entrants": 81028,
+        "log_loss": 1.689102,
+        "race_brier": 0.763306,
+        "top1_accuracy": 0.368693,
+        "score_rank1_accuracy": 0.368693,
+        "entrant_ece": 0.011936
+      }
+    },
+    "full_model": {
+      "ridge": 0.001,
+      "validation": {
+        "races": 11633,
+        "entrants": 81028,
+        "log_loss": 1.494414,
+        "race_brier": 0.704596,
+        "top1_accuracy": 0.420528,
+        "score_rank1_accuracy": 0.368693,
+        "entrant_ece": 0.005217
+      }
+    }
+  },
+  "test": {
+    "baseline_score_only": {
+      "races": 5566,
+      "entrants": 38832,
+      "log_loss": 1.716675,
+      "race_brier": 0.765457,
+      "top1_accuracy": 0.368487,
+      "score_rank1_accuracy": 0.368487,
+      "entrant_ece": 0.01297
+    },
+    "full_model": {
+      "races": 5566,
+      "entrants": 38832,
+      "log_loss": 1.522131,
+      "race_brier": 0.708719,
+      "top1_accuracy": 0.425799,
+      "score_rank1_accuracy": 0.368487,
+      "entrant_ece": 0.004037
+    }
+  },
+  "production_fit_end": "2025-12-31",
+  "production_coefficients": {
+    "score_relative": 1.459755756,
+    "win_rate_relative": 0.6250358174,
+    "top2_rate_relative": 0.2968315265,
+    "top3_rate_relative": 0.0578035832,
+    "log_b_relative": 0.2406514216,
+    "log_s_relative": -0.0112259889,
+    "log_nige_relative": -0.0320789491,
+    "log_makuri_relative": 0.2701455585,
+    "log_sashi_relative": 0.0373996515,
+    "log_mark_relative": -0.1388301961,
+    "age_relative": -0.3127545143,
+    "a1_relative": 0.2162756074,
+    "style_escape_relative": 0.1114874512,
+    "style_chase_relative": -0.1908620185,
+    "style_allround_relative": 0.0793745673,
+    "line_leader_relative": -0.1951522318,
+    "line_second_relative": 0.5668396939,
+    "line_third_relative": -0.7462886497,
+    "line_single_relative": 0.3746011876,
+    "line_size_relative": 1.1302876572,
+    "partner_max_score_relative": 0.1562004776
+  },
+  "baseline_coefficient": 2.056765589375239,
+  "policy": "Reject positive performance claim unless test log-loss, top1, and calibration support it. No odds consulted."
+}
