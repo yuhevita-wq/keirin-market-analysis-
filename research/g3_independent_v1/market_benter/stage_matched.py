@@ -16,8 +16,9 @@ from engine import (EXCLUSIVE,aggregate_probability,frame_mapping,
                     outcome_selection,validate_quotes)
 from train_fusion import SINGLE_WIN_PROXY,first_proxy_from_3rentan
 from predict_g3_ordered_triples import all_ordered_triples
+G3DIR=Path(__file__).resolve().parent.parent
 
-def convert(row):
+def convert(row,second_model,third_model):
     if row.get("scope")!="G3 S級":raise ValueError("Only G3 S級 historical records")
     if row.get("fundamental_provenance")!="G3_only_prior_period_independent":
         raise ValueError("Every model probability must be fixed before the historical G3 race")
@@ -32,7 +33,7 @@ def convert(row):
     if len(set(triple))!=3:raise ValueError("Finishing order not unique")
     if set(row["card"])&{"first","second","third","result","results","odds"}:
         raise ValueError("Historical winning result cannot be a predictor")
-    predictions=all_ordered_triples(row["card"],row["second_model"],row["third_model"])
+    predictions=all_ordered_triples(row["card"],second_model,third_model)
     first_probs={str(x["car_no"]):x["probability"] for x in predictions["first_marginal"]}
     cars={int(x) for x in first_probs}
     if not set(triple).issubset(cars):
@@ -74,7 +75,11 @@ def main():
     p=argparse.ArgumentParser()
     p.add_argument("--input",type=Path,required=True,help="Matched G3 race JSONL (odds + historical first forecast + podium)")
     p.add_argument("--output-dir",type=Path,required=True)
+    p.add_argument("--second",type=Path,default=G3DIR/"models/g3_second_conditional_v1.json")
+    p.add_argument("--third",type=Path,default=G3DIR/"models/g3_third_conditional_v1.json")
     args=p.parse_args()
+    second_model=json.loads(args.second.read_text(encoding="utf-8"))
+    third_model=json.loads(args.third.read_text(encoding="utf-8"))
     seen=set();lines=collections.defaultdict(list);n=0
     for line in args.input.open(encoding="utf-8"):
         if not line.strip():continue
@@ -83,7 +88,7 @@ def main():
         rid=str(record.get("race_id",""))
         if not rid or rid in seen:raise ValueError("Missing or duplicated source G3 race id")
         seen.add(rid)
-        rows=convert(record)
+        rows=convert(record,second_model,third_model)
         if not rows:raise ValueError("No usable exhaustive G3 odds for race "+rid)
         for name,data in rows.items():
             lines[name].append(data)
