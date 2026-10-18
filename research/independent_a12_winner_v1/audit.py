@@ -14,6 +14,7 @@ from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
+from scipy.optimize import minimize_scalar
 
 from train import (
     FEATURE_NAMES, fit, load_history, make_features, pack,
@@ -93,12 +94,28 @@ def race_vectors(races, columns, beta):
     return output
 
 
+def validation_temperature(validation_races, columns, beta):
+    """Tune only one scalar, using 2025 validation predictions from 2023-24 fit."""
+    x, y, start, _ = pack(validation_races, columns)
+    def loss(log_temp):
+        p = probabilities(x, start, beta / math.exp(log_temp))
+        return float(-np.log(np.maximum(p[y == 1], 1e-15)).mean())
+    opt = minimize_scalar(loss, method="bounded", bounds=(-0.65, 0.65),
+                          options={"xatol": 1e-6})
+    if not opt.success:
+        raise RuntimeError("Temperature optimization failed")
+    return float(math.exp(opt.x))
+
+
 def report_metrics(records):
     if not records:
         return {"races": 0}
     entrants = sum(r["cars"] for r in records)
+    cal = ece_bins(records)
+    ece = sum(b["count"] * abs(b["mean_predicted"]-b["observed_rate"]) for b in cal) / entrants
     return {
         "races": len(records),
+        "entrant_ece": round(float(ece), 6),
         "first_place_hits": sum(r["top1"] for r in records),
         "first_place_accuracy": round(np.mean([r["top1"] for r in records]), 6),
         "log_loss": round(np.mean([r["neg_log_likelihood"] for r in records]), 6),
@@ -224,6 +241,8 @@ def main():
         "no_line": select(train, val, no_line_cols),
         "full": select(train, val, full_cols),
     }
+    old_beta = fit(train, full_cols, selections["full"][1])
+    fixed_temperature = validation_temperature(val, full_cols, old_beta)
     coef = {key: fit(train + val, cols, selections[key][1])
             for key, cols in (("score_only", score_cols),
                               ("no_line", no_line_cols), ("full", full_cols))}
@@ -232,6 +251,7 @@ def main():
         "research_stage": "A1/A2 first place locked coefficient audit; odds excluded",
         "as_of": "2026-10-18",
         "training": {"races": len(train), "validation_races": len(val),
+                     "temperature_selected_from_2025_only": fixed_temperature,
                      "ridge_selected_in_2025": {k: float(v[1]) for k, v in selections.items()}},
         "audits": {"h1": train_audit, "h2": h2_audit,
                    "field_completeness": feature_completeness(root, "2023-01-01", "2026-10-02")},
@@ -242,15 +262,18 @@ def main():
             "score_only": race_vectors(part, score_cols, coef["score_only"]),
             "no_line": race_vectors(part, no_line_cols, coef["no_line"]),
             "full": race_vectors(part, full_cols, coef["full"]),
+            "full_temperature": race_vectors(part, full_cols, coef["full"] / fixed_temperature),
         }
         output["holdouts"][name] = {
             "range": [part[0][0], part[-1][0]],
             "metrics": {key: report_metrics(items) for key, items in predictions.items()},
             "full_vs_score": paired_ci(part, predictions["score_only"], predictions["full"]),
             "full_vs_no_line": paired_ci(part, predictions["no_line"], predictions["full"], seed=20261019),
+            "temperature_vs_raw": paired_ci(part, predictions["full"], predictions["full_temperature"], seed=20261020),
             "calibration": {
                 "score_only": ece_bins(predictions["score_only"]),
                 "full": ece_bins(predictions["full"]),
+                "full_temperature": ece_bins(predictions["full_temperature"]),
             },
             "full_strata": split_stats(part, predictions["full"], metas),
             "score_strata": split_stats(part, predictions["score_only"], metas),
@@ -262,7 +285,8 @@ def main():
         "training": output["training"],
         "holdouts": {k: {"metrics": v["metrics"],
                          "full_vs_score": v["full_vs_score"],
-                         "full_vs_no_line": v["full_vs_no_line"]}
+                         "full_vs_no_line": v["full_vs_no_line"],
+                         "temperature_vs_raw": v["temperature_vs_raw"]}
                      for k, v in output["holdouts"].items()},
     }, ensure_ascii=False, indent=2))
 
