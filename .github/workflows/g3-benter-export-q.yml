@@ -1,0 +1,53 @@
+name: Freeze past-year G3 first win probabilities for Benter market matching
+on:
+  push:
+    branches: [research/g3-independent-first-20261018]
+    paths:
+      - .github/workflows/g3-benter-export-q.yml
+      - research/g3_independent_v1/benter_market/export_prior_g3_q.py
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: g3-immutable-prior-year-first-q
+  cancel-in-progress: false
+jobs:
+  archive_independent_G3_first_q:
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/g3-independent-first-20261018
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /data/grade_races/g3/*/*.zip
+            /research/g3_independent_v1/benter_market/export_prior_g3_q.py
+            /research/g3_independent_v1/train_g3_first.py
+            /research/g3_independent_v1/train_g3_second.py
+            /research/g3_independent_v1/vendor/train_v1.py
+            /research/g3_independent_v1/vendor/discover_v2.py
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Dependencies for source model regeneration
+        run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.11,<2'
+      - name: Recreate G3-only first q from earlier training years (no 2026 race outcomes as predictors)
+        run: python -u research/g3_independent_v1/benter_market/export_prior_g3_q.py
+      - name: Preserve compressed G3 historical prediction input and SHA256 audit
+        run: |
+          set -euo pipefail
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add -f --sparse research/g3_independent_v1/data/g3_prior_year_first_q_2023_2026h1.jsonl.gz research/g3_independent_v1/output/g3_prior_year_first_market_input_audit.json
+          git diff --cached --quiet || git commit -m "Freeze earlier-year G3 first probabilities for later Benter market calibration [skip ci]"
+          git pull --rebase origin research/g3-independent-first-20261018
+          git push origin HEAD:research/g3-independent-first-20261018
+      - uses: actions/upload-artifact@v4
+        with:
+          name: g3-prior-year-win-probabilities-for-benter
+          path: |
+            research/g3_independent_v1/data/g3_prior_year_first_q_2023_2026h1.jsonl.gz
+            research/g3_independent_v1/output/g3_prior_year_first_market_input_audit.json
+          retention-days: 30
