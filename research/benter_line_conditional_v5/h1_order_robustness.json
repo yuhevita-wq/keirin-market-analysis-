@@ -1,0 +1,106 @@
+{
+  "model": "V5 line-conditioned ranking coefficients frozen on July-Aug, applied to earlier H1 F1 S-class outcomes",
+  "scope": "2026-01-01 through 2026-06-30; 1/2/3 uniquely ranked",
+  "forecasted_races": 2553,
+  "eligible": 2538,
+  "skipped": {
+    "ambiguous_or_missing_1_2_3": 15
+  },
+  "same_line_first_second_count": 1302,
+  "n_days": 177,
+  "metrics": {
+    "baseline": {
+      "second": 1.5711567131858581,
+      "third": 1.5536009314838843,
+      "ordered": 4.705390179148201
+    },
+    "line_second_only": {
+      "second": 1.4324704042081087,
+      "third": 1.5536009314838843,
+      "ordered": 4.566703870170452
+    },
+    "line_third_only": {
+      "second": 1.5711567131858581,
+      "third": 1.4806491251702907,
+      "ordered": 4.632438372834607
+    },
+    "line_both": {
+      "second": 1.4324704042081087,
+      "third": 1.4806491251702907,
+      "ordered": 4.493752063856858
+    }
+  },
+  "comparisons": {
+    "line_second_only": {
+      "second": {
+        "mean_logloss_improvement": 0.13868630897774945,
+        "bootstrap_day_95pct": [
+          0.11872569553324543,
+          0.15804421741925723
+        ]
+      },
+      "third": {
+        "mean_logloss_improvement": 0.0,
+        "bootstrap_day_95pct": [
+          0.0,
+          0.0
+        ]
+      },
+      "ordered": {
+        "mean_logloss_improvement": 0.13868630897774947,
+        "bootstrap_day_95pct": [
+          0.11905811460879194,
+          0.1593057826639241
+        ]
+      }
+    },
+    "line_third_only": {
+      "second": {
+        "mean_logloss_improvement": 0.0,
+        "bootstrap_day_95pct": [
+          0.0,
+          0.0
+        ]
+      },
+      "third": {
+        "mean_logloss_improvement": 0.07295180631359366,
+        "bootstrap_day_95pct": [
+          0.06348319104826557,
+          0.08223039886379085
+        ]
+      },
+      "ordered": {
+        "mean_logloss_improvement": 0.07295180631359366,
+        "bootstrap_day_95pct": [
+          0.0640245477330592,
+          0.08207990321862091
+        ]
+      }
+    },
+    "line_both": {
+      "second": {
+        "mean_logloss_improvement": 0.13868630897774945,
+        "bootstrap_day_95pct": [
+          0.11899090022359413,
+          0.1577971046877162
+        ]
+      },
+      "third": {
+        "mean_logloss_improvement": 0.07295180631359366,
+        "bootstrap_day_95pct": [
+          0.06400377313023217,
+          0.08195687844580647
+        ]
+      },
+      "ordered": {
+        "mean_logloss_improvement": 0.21163811529134308,
+        "bootstrap_day_95pct": [
+          0.1888252903033865,
+          0.23563640700843708
+        ]
+      }
+    }
+  },
+  "limitation": "This H1 has been used as V2 original win-model development holdout; supplementary robustness only",
+  "parameter_change": false
+}
