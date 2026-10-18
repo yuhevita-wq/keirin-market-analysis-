@@ -1,0 +1,58 @@
+name: Benter V5 conditional line effects in 2nd and 3rd
+on:
+  push:
+    branches:
+      - research/benter-line-conditional-23-v5-20261018
+    paths:
+      - .github/workflows/benter-line-conditional-v5.yml
+      - research/benter_line_conditional_v5/model_line_conditional.py
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  prefit_and_score:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/benter-line-conditional-23-v5-20261018
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/benter_line_conditional_v5/model_line_conditional.py
+            /research/benter_ordered_23/parameters_frozen.json
+            /research/benter_calibration_v4/sep_predictions_frozen.csv
+            /research/benter_calibration_v4/sep_holdout/races.csv
+            /research/benter_calibration_v4/sep_holdout/results.csv
+            /research/benter_score_challenge_v3/frozen_2026h2_probabilities.csv
+            /data/2026_future_block1/s_class_f1_20260701_20260830/results.csv
+            /data/2026_future_block1/s_class_f1_20260701_20260830/races.csv
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install numerical optimization
+        run: pip install 'numpy>=1.26,<3' 'scipy>=1.11,<2'
+      - name: Fit pre-registered line interaction models with July-to-August penalty selection
+        run: python -u research/benter_line_conditional_v5/model_line_conditional.py fit
+      - name: Commit and freeze conditional line coefficients before scoring September
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add -f --sparse research/benter_line_conditional_v5/parameters_pretest.json
+          git commit -m "Freeze July-Aug conditional-line parameters before September scoring [skip ci]"
+          git push origin HEAD:research/benter-line-conditional-23-v5-20261018
+      - name: Score September conditional 2nd/3rd and all ordered trifecta probabilities
+        run: python -u research/benter_line_conditional_v5/model_line_conditional.py score
+      - name: Preserve results and per-race audit
+        run: |
+          git add -f --sparse research/benter_line_conditional_v5/holdout_score.json research/benter_line_conditional_v5/holdout_by_race.csv
+          git commit -m "Preserve independent period V5 line-conditional order evaluation [skip ci]"
+          git push origin HEAD:research/benter-line-conditional-23-v5-20261018
+      - uses: actions/upload-artifact@v4
+        with:
+          name: benter-conditional-line-v5
+          path: |
+            research/benter_line_conditional_v5/parameters_pretest.json
+            research/benter_line_conditional_v5/holdout_score.json
+            research/benter_line_conditional_v5/holdout_by_race.csv
