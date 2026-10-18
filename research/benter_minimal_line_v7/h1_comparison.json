@@ -1,0 +1,174 @@
+{
+  "stage": "h1",
+  "train": "2026-07-02..2026-08-30 only",
+  "n": 2538,
+  "days": 177,
+  "audit": {
+    "forecast_count": 2553,
+    "n": 2538,
+    "skipped": {
+      "tie_missing": 15
+    }
+  },
+  "parameters": {
+    "second": {
+      "kind": "second",
+      "penalty": 0.01,
+      "coefficients": [
+        1.159076608829774
+      ],
+      "training_conditional_loss": 1.3988364162816804,
+      "baseline_loss": 1.5400391951552306
+    },
+    "third": {
+      "kind": "third_union",
+      "penalty": 0.01,
+      "coefficients": [
+        0.8605376375074845
+      ],
+      "training_conditional_loss": 1.4856121199453358,
+      "baseline_loss": 1.5524388784355072
+    }
+  },
+  "comparators": {
+    "benter": {
+      "second": 1.5711567131858581,
+      "third": 1.5536009314838843,
+      "joint": 4.705390179148201
+    },
+    "simple": {
+      "second": 1.432385511584784,
+      "third": 1.4738813684177894,
+      "joint": 4.486899414481032
+    },
+    "v5": {
+      "second": 1.4324704042081087,
+      "third": 1.4806491251702907,
+      "joint": 4.493752063856858
+    },
+    "v6": {
+      "second": 1.4324704042081087,
+      "third": 1.462259506469995,
+      "joint": 4.475362445156563
+    }
+  },
+  "paired_improvement": {
+    "simple_vs_benter": {
+      "second": {
+        "gain": 0.13877120160107423,
+        "day_cluster_bootstrap_95": [
+          0.11756521083709691,
+          0.15950538761242755
+        ]
+      },
+      "third": {
+        "gain": 0.07971956306609496,
+        "day_cluster_bootstrap_95": [
+          0.06565678087938692,
+          0.09356387789301293
+        ]
+      },
+      "joint": {
+        "gain": 0.21849076466716927,
+        "day_cluster_bootstrap_95": [
+          0.18976060589084406,
+          0.24812154467944758
+        ]
+      }
+    },
+    "simple_vs_v5": {
+      "second": {
+        "gain": 8.489262332479959e-05,
+        "day_cluster_bootstrap_95": [
+          -0.005684017890526435,
+          0.005604249489930761
+        ]
+      },
+      "third": {
+        "gain": 0.006767756752501317,
+        "day_cluster_bootstrap_95": [
+          -0.0014197304054145868,
+          0.015393795781098264
+        ]
+      },
+      "joint": {
+        "gain": 0.006852649375826125,
+        "day_cluster_bootstrap_95": [
+          -0.00372743900709435,
+          0.017935297468180407
+        ]
+      }
+    },
+    "simple_vs_v6": {
+      "second": {
+        "gain": 8.489262332479959e-05,
+        "day_cluster_bootstrap_95": [
+          -0.005564855590060164,
+          0.005267960094875254
+        ]
+      },
+      "third": {
+        "gain": -0.011621861947794496,
+        "day_cluster_bootstrap_95": [
+          -0.020106951653882606,
+          -0.0033747753798986447
+        ]
+      },
+      "joint": {
+        "gain": -0.011536969324469687,
+        "day_cluster_bootstrap_95": [
+          -0.02261430349303723,
+          -0.0012259646431533168
+        ]
+      }
+    },
+    "v5_vs_benter": {
+      "second": {
+        "gain": 0.13868630897774945,
+        "day_cluster_bootstrap_95": [
+          0.11807932501468599,
+          0.1594387463725361
+        ]
+      },
+      "third": {
+        "gain": 0.07295180631359365,
+        "day_cluster_bootstrap_95": [
+          0.0637988464229932,
+          0.08260637451949468
+        ]
+      },
+      "joint": {
+        "gain": 0.21163811529134308,
+        "day_cluster_bootstrap_95": [
+          0.18832625949227322,
+          0.23535118141577666
+        ]
+      }
+    },
+    "v6_vs_v5": {
+      "second": {
+        "gain": 0.0,
+        "day_cluster_bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "third": {
+        "gain": 0.01838961870029581,
+        "day_cluster_bootstrap_95": [
+          0.012957926858118148,
+          0.023907606501804915
+        ]
+      },
+      "joint": {
+        "gain": 0.018389618700295814,
+        "day_cluster_bootstrap_95": [
+          0.012901087699524427,
+          0.023927573087197035
+        ]
+      }
+    }
+  },
+  "interpretation": "Benter-first minimal residual line model is preferred only if validated; higher accuracy ≠ profitable betting.",
+  "caveat": "Earlier research already examined both September and H1 outcomes. Not a globally virgin holdout."
+}
