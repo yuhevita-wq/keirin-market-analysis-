@@ -118,15 +118,19 @@ def _price_phase_gate(meta, require_predated=True):
     if abs(mins-target)>tolerance:
         raise ValueError(f"Snapshot not within declared cutoff window: actual {mins:.3f} minutes before closure")
 
-def load_coefficients(calibration,market):
+def load_coefficients(calibration,market,price_phase=None):
     if calibration is None:return None
     if not isinstance(calibration,dict) or calibration.get("status")!="CHRONOLOGICAL_MARKET_FIT_COMPLETED":
         raise ValueError("Market coefficients are not estimated and chronologically validated")
     if calibration.get("market")!=market:
         raise ValueError("Market-type specific coefficients required")
+    if price_phase=="predeadline" and not calibration.get("approved_for_15min_runtime",False):
+        raise ValueError("Final-odds trained coefficients cannot be used at 15 minutes before closure without direct snapshot-phase validation")
+    if price_phase is not None and calibration.get("price_phase") not in (None,price_phase):
+        raise ValueError("Model was calibrated to a different quote phase")
     par=calibration.get("coefficients",{})
     a=float(par["alpha_fundamental"]);b=float(par["beta_public"])
-    if not math.isfinite(a) or not math.isfinite(b) or a<0 or b<0:
+    if not math.isfinite(a) or not math.isfinite(b):
         raise ValueError("Market fusion coefficient invalid")
     return a,b
 
@@ -157,6 +161,25 @@ def analyze(card, second_model,third_model,quotes_by_market,metadata,calibration
             "calibration_missing_markets":[],
             "source":"G3 frozen first, second and third models",
             "markets":{}}
+    proxy_cal=(calibration_by_market or {}).get("1着市場代理_3連単")
+    if proxy_cal is not None:
+        if "3連単" not in quotes_by_market:
+            raise ValueError("First-win market proxy needs complete 3連単 odds")
+        first_f={str(r["car_no"]):r["probability"] for r in distribution["first_marginal"]}
+        trifecta_f=aggregate_probability(triples,"3連単")
+        triodds=validate_quotes(quotes_by_market["3連単"],trifecta_f,"3連単")
+        tri_public,_=inverse_price_public_probability(triodds,"3連単")
+        public_first={car:0.0 for car in first_f}
+        for outcome,p in tri_public.items():
+            public_first[outcome.split("-")[0]]+=p
+        alpha,beta=load_coefficients(proxy_cal,"1着市場代理_3連単",metadata["price_phase"])
+        combined_first=fuse(first_f,public_first,alpha,beta)
+        report["first_win_market_combination"]={
+            "method":"Benter WIN-stage loglinear using 3連単 market-marginal as keirin proxy",
+            "market_proxy_warning":"Deriving win probability from a 3連単 book is a keirin extension, not a method asserted to be in Benter 1994",
+            "probabilities":[{"car_no":int(car),"fundamental":first_f[car],
+                              "market_approx":public_first[car],"combined":combined_first[car]}
+                             for car in sorted(first_f,key=int)]}
     for market,book in sorted(quotes_by_market.items()):
         if market in REQUIRES_FRAMES and frames is None:
             raise ValueError("Frame market requested without explicit frame mapping")
@@ -164,7 +187,7 @@ def analyze(card, second_model,third_model,quotes_by_market,metadata,calibration
         prices=validate_quotes(book,f,market)
         public,inv_mass=(inverse_price_public_probability(prices,market)
                          if market in EXCLUSIVE else (None,None))
-        coef=load_coefficients((calibration_by_market or {}).get(market),market)
+        coef=load_coefficients((calibration_by_market or {}).get(market),market,metadata["price_phase"])
         if coef and market=="ワイド":
             raise ValueError("Wide is nonexclusive; needs independently calibrated binary model, not multinomial logit")
         if coef is None:
