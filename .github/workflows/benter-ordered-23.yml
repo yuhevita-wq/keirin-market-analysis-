@@ -1,0 +1,54 @@
+name: Benter ordered 2nd 3rd empirical study
+on:
+  push:
+    branches:
+      - research/benter-ordered-23-20261018
+    paths:
+      - .github/workflows/benter-ordered-23.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fit_then_holdout_score:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/benter-ordered-23-20261018
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/benter_ordered_23/*
+            /research/benter_calibration_v4/sep_predictions_frozen.csv
+            /research/benter_calibration_v4/sep_holdout/results.csv
+            /research/benter_score_challenge_v3/frozen_2026h2_probabilities.csv
+            /data/2026_future_block1/s_class_f1_20260701_20260830/results.csv
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install numerical optimizer
+        run: pip install 'numpy>=1.26,<3' 'scipy>=1.11,<2'
+      - name: Learn Benter rank exponents on Jul-Aug ONLY
+        run: python -u research/benter_ordered_23/fit_benter_ordered.py fit
+      - name: Freeze and commit learnt parameters BEFORE opening September result file
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add -f --sparse research/benter_ordered_23/parameters_frozen.json
+          git commit -m "Freeze empirical rank coefficients before September evaluation [skip ci]"
+          git push origin HEAD:research/benter-ordered-23-20261018
+      - name: Score against September outcomes, no refit or tuning
+        run: python -u research/benter_ordered_23/fit_benter_ordered.py score
+      - name: Store all rank evaluation evidence
+        run: |
+          git add -f --sparse research/benter_ordered_23/september_evaluation.json research/benter_ordered_23/september_by_race.csv
+          git commit -m "Report held-out September second/third and trifecta probabilities [skip ci]"
+          git push origin HEAD:research/benter-ordered-23-20261018
+      - uses: actions/upload-artifact@v4
+        with:
+          name: benter-ordered-23-september
+          path: |
+            research/benter_ordered_23/parameters_frozen.json
+            research/benter_ordered_23/september_evaluation.json
+            research/benter_ordered_23/september_by_race.csv
