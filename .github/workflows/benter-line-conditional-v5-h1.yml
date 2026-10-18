@@ -1,0 +1,40 @@
+name: Benter V5 independent H1 line-effect replication
+on:
+  push:
+    branches:
+      - research/benter-line-conditional-23-v5-20261018
+    paths:
+      - .github/workflows/benter-line-conditional-v5-h1.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  evaluate_frozen_coefficients:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/benter-line-conditional-23-v5-20261018
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/benter_line_conditional_v5/model_line_conditional.py
+            /research/benter_line_conditional_v5/evaluate_h1_robustness.py
+            /research/benter_line_conditional_v5/parameters_pretest.json
+            /research/benter_structural_discovery_v2/output/test_full_plus_line_win_probability.csv
+            /data/2026_h1/s_class_f1_all/races.csv
+            /data/2026_h1/s_class_f1_all/results.csv
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install 'numpy>=1.26,<3' 'scipy>=1.11,<2'
+      - name: Score frozen coefficients on H1 results without retraining
+        run: python -u research/benter_line_conditional_v5/evaluate_h1_robustness.py
+      - name: Commit independent order-calibration robustness evidence
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add -f --sparse research/benter_line_conditional_v5/h1_order_robustness.json
+          git commit -m "Log no-refit H1 replication of second third line equation [skip ci]"
+          git push origin HEAD:research/benter-line-conditional-23-v5-20261018
