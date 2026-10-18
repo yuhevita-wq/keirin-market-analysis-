@@ -318,6 +318,10 @@ def fit_second():
         report["daily_cluster_comparisons"][selected+"_OVER_g3_gamma_plus_same_line"]=day_bootstrap(
             winner_first_known_test_losses["g3_gamma_plus_same_line"],winner_first_known_test_losses[selected],
             [samples[k]["date"] for k in testidx])
+    if selected != "g3_gamma_plus_directed_position":
+        report["daily_cluster_comparisons"][selected+"_OVER_g3_gamma_plus_directed_position"]=day_bootstrap(
+            winner_first_known_test_losses["g3_gamma_plus_directed_position"],winner_first_known_test_losses[selected],
+            [samples[k]["date"] for k in testidx])
     report["conditional_2nd_given_actual_1st_is_not_unconditional_exacta_accuracy"]=True
     report["pre_race_no_actual_first_or_second_inputs"]=True
     (OUT/"g3_second_model_report.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
