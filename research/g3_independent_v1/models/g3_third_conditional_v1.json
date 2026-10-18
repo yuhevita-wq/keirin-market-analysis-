@@ -1,0 +1,336 @@
+{
+  "schema": "G3_INDEPENDENT_THIRD_CONDITIONAL_V1",
+  "status": "G3_THIRD_RESEARCH_REFERENCE_SELECTED_BY_2025_VALIDATION",
+  "scope": "G3開催 S級 only 5-9 starters; no G1 G2 F1 F2 A級 girls",
+  "first_model_ref": "research/g3_independent_v1/output/g3_first_win_report.json",
+  "second_model_ref": "research/g3_independent_v1/models/g3_second_conditional_v1.json",
+  "third_study_ref": "research/g3_independent_v1/output/g3_third_model_report.json",
+  "third_census_ref": "research/g3_independent_v1/output/g3_third_empirical.json",
+  "selected_family": "g3_delta_plus_direction_and_role",
+  "equation": "P(k third|i first,j second)=q_k^delta exp(sum_{z in mutually-exclusive-directed-positions} beta_z * I(position(i,j,k)=z) + sum_{t in candidate_roles} eta_t * I(role(k)=t)) / sum_{h not in (i,j)} q_h^delta exp(the same position and role terms for h)",
+  "reference_position": "neither_line",
+  "reference_role": "leader in multi-rider line",
+  "variable_sequence": [
+    "log_q",
+    "direction_ahead_of_both",
+    "direction_between_first_second",
+    "direction_behind_both",
+    "direction_ahead_of_first",
+    "direction_directly_behind_first",
+    "direction_further_behind_first",
+    "direction_ahead_of_second",
+    "direction_directly_behind_second",
+    "direction_further_behind_second",
+    "role_second",
+    "role_third_or_later",
+    "role_solo"
+  ],
+  "parameter_vector": [
+    0.5016361541121158,
+    0.921439840489169,
+    1.4422504655730244,
+    1.8170951302790206,
+    0.7186185411588027,
+    1.0021325910412773,
+    -0.22390982730177827,
+    0.6930881922183579,
+    1.130410648197571,
+    0.10297485444189176,
+    0.1887322459132436,
+    0.40885564663588475,
+    0.5038372166505192
+  ],
+  "coefficients": {
+    "log_q": 0.5016361541121158,
+    "direction_ahead_of_both": 0.921439840489169,
+    "direction_between_first_second": 1.4422504655730244,
+    "direction_behind_both": 1.8170951302790206,
+    "direction_ahead_of_first": 0.7186185411588027,
+    "direction_directly_behind_first": 1.0021325910412773,
+    "direction_further_behind_first": -0.22390982730177827,
+    "direction_ahead_of_second": 0.6930881922183579,
+    "direction_directly_behind_second": 1.130410648197571,
+    "direction_further_behind_second": 0.10297485444189176,
+    "role_second": 0.1887322459132436,
+    "role_third_or_later": 0.40885564663588475,
+    "role_solo": 0.5038372166505192
+  },
+  "line_position_groups_are_exclusive": true,
+  "dont_double_count_line_membership": "Ownership indicator equals sum of its applicable exclusive position indicators, so combined ownership+position is redundant and was NOT fitted",
+  "empirical_population": 8945,
+  "empirical_candidate_rows": 60506,
+  "train_2023_24": 3950,
+  "select_2025": 1966,
+  "refit_2023_25": 5916,
+  "chronological_2026h1": 1081,
+  "evaluation_2026h1": {
+    "races": 1081,
+    "third_candidate_rows": 7335,
+    "log_loss": 1.693720402196773,
+    "uniform_baseline_log_loss": 1.9095328022836597,
+    "pseudo_r2_against_conditional_uniform": 0.11301843038715609,
+    "top_predicted_third_given_actual_first_second_accuracy": 0.35892691951896394,
+    "multiclass_brier": 0.7766121632976127,
+    "line_group_calibration": {
+      "owner_both_line": {
+        "candidate_rows": 443,
+        "expected_third": 185.21774605268874,
+        "actual_third": 192,
+        "calibration_error_actual_minus_predicted": 6.782253947311261
+      },
+      "owner_first_line_only": {
+        "candidate_rows": 722,
+        "expected_third": 157.03444029249926,
+        "actual_third": 143,
+        "calibration_error_actual_minus_predicted": -14.034440292499255
+      },
+      "owner_second_line_only": {
+        "candidate_rows": 718,
+        "expected_third": 162.11013750724788,
+        "actual_third": 151,
+        "calibration_error_actual_minus_predicted": -11.110137507247885
+      },
+      "direction_ahead_of_both": {
+        "candidate_rows": 75,
+        "expected_third": 26.230893159927188,
+        "actual_third": 28,
+        "calibration_error_actual_minus_predicted": 1.769106840072812
+      },
+      "direction_between_first_second": {
+        "candidate_rows": 16,
+        "expected_third": 7.47823746193785,
+        "actual_third": 6,
+        "calibration_error_actual_minus_predicted": -1.4782374619378498
+      },
+      "direction_behind_both": {
+        "candidate_rows": 352,
+        "expected_third": 151.50861543082368,
+        "actual_third": 158,
+        "calibration_error_actual_minus_predicted": 6.491384569176319
+      },
+      "direction_ahead_of_first": {
+        "candidate_rows": 255,
+        "expected_third": 58.809345160566984,
+        "actual_third": 56,
+        "calibration_error_actual_minus_predicted": -2.809345160566984
+      },
+      "direction_directly_behind_first": {
+        "candidate_rows": 364,
+        "expected_third": 93.46201738691408,
+        "actual_third": 77,
+        "calibration_error_actual_minus_predicted": -16.462017386914084
+      },
+      "direction_further_behind_first": {
+        "candidate_rows": 103,
+        "expected_third": 4.763077745018195,
+        "actual_third": 10,
+        "calibration_error_actual_minus_predicted": 5.236922254981805
+      },
+      "direction_ahead_of_second": {
+        "candidate_rows": 285,
+        "expected_third": 63.582358238587446,
+        "actual_third": 56,
+        "calibration_error_actual_minus_predicted": -7.582358238587446
+      },
+      "direction_directly_behind_second": {
+        "candidate_rows": 342,
+        "expected_third": 92.81050328434424,
+        "actual_third": 90,
+        "calibration_error_actual_minus_predicted": -2.810503284344236
+      },
+      "direction_further_behind_second": {
+        "candidate_rows": 91,
+        "expected_third": 5.717275984316181,
+        "actual_third": 5,
+        "calibration_error_actual_minus_predicted": -0.7172759843161813
+      },
+      "role_second": {
+        "candidate_rows": 2599,
+        "expected_third": 419.989926152137,
+        "actual_third": 379,
+        "calibration_error_actual_minus_predicted": -40.989926152137
+      },
+      "role_third_or_later": {
+        "candidate_rows": 1589,
+        "expected_third": 253.012105057147,
+        "actual_third": 256,
+        "calibration_error_actual_minus_predicted": 2.9878949428529893
+      },
+      "role_solo": {
+        "candidate_rows": 451,
+        "expected_third": 54.42264714495208,
+        "actual_third": 53,
+        "calibration_error_actual_minus_predicted": -1.4226471449520801
+      },
+      "other_line": {
+        "candidate_rows": 5452,
+        "expected_third": 576.6376761475642,
+        "actual_third": 595
+      },
+      "neither_line": {
+        "candidate_rows": 5452,
+        "expected_third": 576.6376761475642,
+        "actual_third": 595
+      },
+      "role_leader": {
+        "candidate_rows": 2696,
+        "expected_third": 353.5753216457639,
+        "actual_third": 393
+      }
+    },
+    "probability_bins": [
+      {
+        "range": [
+          0,
+          0.01
+        ],
+        "candidate_rows": 17,
+        "predicted": 0.028382266191318985,
+        "actual": 1
+      },
+      {
+        "range": [
+          0.01,
+          0.025
+        ],
+        "candidate_rows": 36,
+        "predicted": 0.7658311074138281,
+        "actual": 2
+      },
+      {
+        "range": [
+          0.025,
+          0.05
+        ],
+        "candidate_rows": 735,
+        "predicted": 29.816786038226553,
+        "actual": 29
+      },
+      {
+        "range": [
+          0.05,
+          0.075
+        ],
+        "candidate_rows": 1306,
+        "predicted": 82.00909373124848,
+        "actual": 80
+      },
+      {
+        "range": [
+          0.075,
+          0.1
+        ],
+        "candidate_rows": 1213,
+        "predicted": 105.63775496376607,
+        "actual": 110
+      },
+      {
+        "range": [
+          0.1,
+          0.15
+        ],
+        "candidate_rows": 1579,
+        "predicted": 193.39475981540232,
+        "actual": 195
+      },
+      {
+        "range": [
+          0.15,
+          0.2
+        ],
+        "candidate_rows": 874,
+        "predicted": 150.5382473110317,
+        "actual": 161
+      },
+      {
+        "range": [
+          0.2,
+          0.25
+        ],
+        "candidate_rows": 462,
+        "predicted": 102.47605508077069,
+        "actual": 102
+      },
+      {
+        "range": [
+          0.25,
+          0.3
+        ],
+        "candidate_rows": 321,
+        "predicted": 87.54634457035377,
+        "actual": 93
+      },
+      {
+        "range": [
+          0.3,
+          0.4
+        ],
+        "candidate_rows": 404,
+        "predicted": 140.03239376538733,
+        "actual": 134
+      },
+      {
+        "range": [
+          0.4,
+          0.5
+        ],
+        "candidate_rows": 257,
+        "predicted": 115.22357072555562,
+        "actual": 115
+      },
+      {
+        "range": [
+          0.5,
+          0.6
+        ],
+        "candidate_rows": 105,
+        "predicted": 56.87546118955283,
+        "actual": 45
+      },
+      {
+        "range": [
+          0.6,
+          0.7
+        ],
+        "candidate_rows": 23,
+        "predicted": 14.422300831272146,
+        "actual": 11
+      },
+      {
+        "range": [
+          0.7,
+          1
+        ],
+        "candidate_rows": 3,
+        "predicted": 2.2330186038273636,
+        "actual": 3
+      }
+    ]
+  },
+  "best_2026h1_family": "g3_delta_plus_directed_position",
+  "best_2026h1_family_loss": 1.6909150892425835,
+  "selection_note": "2025 validation selected position + role, per pre-declared selection procedure. 2026H1 favors simpler direction-only. Keep both families and comparison; role addition not shown reliably beneficial.",
+  "role_addition_comparison": {
+    "point_improvement_positive_is_new_better": -0.002805312954189358,
+    "95pct_day_cluster_bootstrap": [
+      -0.009032797148877666,
+      0.003655042805723732
+    ],
+    "days": 87
+  },
+  "direction_over_membership_comparison": {
+    "point_improvement_positive_is_new_better": 0.01657691252686858,
+    "95pct_day_cluster_bootstrap": [
+      0.0022752817484061323,
+      0.03154770628744302
+    ],
+    "days": 87
+  },
+  "first_win_probability_provenance": "G3-only per-year earlier data for 2023 onward; 2022 in-sample q never used in 3rd conditional fit",
+  "old_f1_or_g3_third_coefficients_reused": false,
+  "first_and_second_frozen_models_unchanged": true,
+  "pre_race_use": "Enumerate all distinct first,second,third: q_i * P(second=j|first=i) * P(third=k|first=i,second=j). Do not condition on actual race results when predicting",
+  "market_odds_used": false,
+  "expected_value_claim": false,
+  "historical_asof_capture_verified": false
+}
