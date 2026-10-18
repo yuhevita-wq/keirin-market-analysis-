@@ -1,5 +1,6 @@
 """Synthetic 5-car G3 outcome/odds-to-training-rows staging tests."""
 import json
+import copy
 import sys
 import unittest
 from pathlib import Path
@@ -22,7 +23,7 @@ def sample():
             "fundamental_provenance":"G3_only_prior_period_independent",
             "price_phase":"final",
             "original_asof_card_certified":False,
-            "card":CARD,"finish":{"first":1,"second":2,"third":3},
+            "card":copy.deepcopy(CARD),"finish":{"first":1,"second":2,"third":3},
             "markets":ODDS["markets"]}
 
 class StageMarket(unittest.TestCase):
