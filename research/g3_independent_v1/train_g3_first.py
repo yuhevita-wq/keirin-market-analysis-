@@ -14,7 +14,7 @@ from scipy.optimize import minimize
 from scipy.special import logsumexp
 
 ROOT=Path(__file__).resolve().parents[2]
-sys.path.insert(0,str(ROOT/"research/benter_structural_discovery_v2"))
+sys.path.insert(0,str(ROOT/"research/g3_independent_v1/vendor"))
 import discover_v2 as struct
 BASE=ROOT/"data/grade_races/g3"
 OUT=ROOT/"research/g3_independent_v1/output"
