@@ -1,0 +1,133 @@
+{
+  "stage": "score-sep",
+  "fit_source": "2026 July-Aug only",
+  "training_n": 867,
+  "evaluation_audit": {
+    "forecast_count": 422,
+    "n": 419,
+    "excluded": {
+      "tie_or_missing_places": 3
+    },
+    "second_relationships": {
+      "different_line": 194,
+      "same_line": 225
+    },
+    "third_relationships": {
+      "second_third_same_first_diff": 68,
+      "all_same": 68,
+      "first_second_same_third_diff": 157,
+      "all_different": 55,
+      "first_third_same_second_diff": 71
+    }
+  },
+  "selected": {
+    "family": "coarse",
+    "penalty": 0.2,
+    "july_loss": 1.4453963715381197,
+    "aug_validation_loss": 1.4913418879682592
+  },
+  "parameters_locked": true,
+  "numerics": {
+    "races": 419,
+    "average_loss_old": 1.4734966640776919,
+    "average_loss_new": 1.4548874555441937,
+    "gain": 0.018609208533498237,
+    "cluster_bootstrap_days_95pct": [
+      0.0063937997492098005,
+      0.03190569861485465
+    ],
+    "pair_same_races": 225,
+    "pair_different_races": 194,
+    "origin_breakdown": {
+      "paired_different__third_second_line": {
+        "n": 68,
+        "gain_sum": 2.8628171391280537,
+        "mean_improvement": 0.04210025204600079
+      },
+      "pair_different": {
+        "n": 194,
+        "gain_sum": 2.4365592724818077,
+        "mean_improvement": 0.012559583878772205
+      },
+      "paired_same__third_teammate": {
+        "n": 68,
+        "gain_sum": 13.874214061129909,
+        "mean_improvement": 0.20403255972249865
+      },
+      "pair_same": {
+        "n": 225,
+        "gain_sum": 5.3606991030536175,
+        "mean_improvement": 0.023825329346904966
+      },
+      "paired_same__third_external": {
+        "n": 157,
+        "gain_sum": -8.513514958076291,
+        "mean_improvement": -0.05422620992405281
+      },
+      "paired_different__third_other_line": {
+        "n": 55,
+        "gain_sum": -4.741127688855667,
+        "mean_improvement": -0.08620232161555759
+      },
+      "paired_different__third_first_line": {
+        "n": 71,
+        "gain_sum": 4.314869822209419,
+        "mean_improvement": 0.06077281439731576
+      }
+    },
+    "origin_probabilities": {
+      "pair_different::paired_different__third_first_line": {
+        "available_candidates": 254,
+        "actual_wins": 71,
+        "v5_predicted_wins": 59.92537915336143,
+        "v6_predicted_wins": 62.99086886343756,
+        "actual_share_per_race": 0.36597938144329895,
+        "v5_predicted_share_per_race": 0.30889370697608987,
+        "v6_predicted_share_per_race": 0.3246952003269977
+      },
+      "pair_different::paired_different__third_second_line": {
+        "available_candidates": 243,
+        "actual_wins": 68,
+        "v5_predicted_wins": 55.62367172088554,
+        "v6_predicted_wins": 58.70049317148787,
+        "actual_share_per_race": 0.35051546391752575,
+        "v5_predicted_share_per_race": 0.2867199573241523,
+        "v6_predicted_share_per_race": 0.3025798617087004
+      },
+      "pair_different::paired_different__third_other_line": {
+        "available_candidates": 453,
+        "actual_wins": 55,
+        "v5_predicted_wins": 78.450949125753,
+        "v6_predicted_wins": 72.30863796507458,
+        "actual_share_per_race": 0.28350515463917525,
+        "v5_predicted_share_per_race": 0.40438633569975774,
+        "v6_predicted_share_per_race": 0.37272493796430195
+      },
+      "pair_same::paired_same__third_external": {
+        "available_candidates": 952,
+        "actual_wins": 157,
+        "v5_predicted_wins": 176.63505054735361,
+        "v6_predicted_wins": 165.72493006072477,
+        "actual_share_per_race": 0.6977777777777778,
+        "v5_predicted_share_per_race": 0.7850446690993494,
+        "v6_predicted_share_per_race": 0.7365552447143323
+      },
+      "pair_same::paired_same__third_teammate": {
+        "available_candidates": 159,
+        "actual_wins": 68,
+        "v5_predicted_wins": 48.364949452646435,
+        "v6_predicted_wins": 59.275069939275326,
+        "actual_share_per_race": 0.3022222222222222,
+        "v5_predicted_share_per_race": 0.21495533090065083,
+        "v6_predicted_share_per_race": 0.26344475528566813
+      }
+    },
+    "days": 30,
+    "v5_trifecta_top1_hits": 31,
+    "v6_trifecta_top1_hits": 23,
+    "v5_trifecta_top10_hits": 151,
+    "v6_trifecta_top10_hits": 157
+  },
+  "warning": "This is conditional third given true 1st/2nd; separately count genuinely pre-race trifecta rank hits.",
+  "data_not_globally_unseen": true
+}
