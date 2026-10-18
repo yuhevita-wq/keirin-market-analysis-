@@ -2,6 +2,15 @@
 
 **2026年10月18日、G3の歴史的な出走表と確定結果だけで推定した研究版。**
 
+## ベンター式オッズ統合（新しい会話へ引継ぎ）
+
+- **[新しい会話のための引継書](market_benter/NEW_CHAT_HANDOFF.md)** — 研究の現在地と作業開始プロンプト
+- [市場統合の実装・入力仕様・残る未検証事項](market_benter/README.md)
+- [モデル係数とオッズの参照固定](market_benter/source_lock.json)
+- [GitHub Actionsの動作テスト](https://github.com/yuhevita-wq/keirin-market-analysis-/actions/workflows/g3-benter-market-bridge-tests.yml)
+
+**現段階：G3独立1/2/3着モデルは凍結、ベンター式統合プログラムは作成・動作確認済み。ただしG3の実結果×オッズ×独自確率の結合母数と最尤係数α・βは未確定。保存済みの確定オッズは3連単・3連複中心で、全7券種や15分前時点の揃いは保証しない。**
+
 ## 学習対象
 
 - `data/grade_races/g3/` 内の2022年Q1〜2026年Q2、**18個の保存済みZIPのみ**を使用。
