@@ -1,0 +1,75 @@
+{
+  "schema": "G3_BENTER_MARKET_FOUNDATION_MANIFEST_V1",
+  "purpose": "Cross-chat reproducible scientific bridge from frozen G3 independent models to Benter 1994 public odds combination and all 7 Keirin market probability comparison",
+  "source_paper": "W. Benter 1994 Computer Based Horse Race Handicapping and Wagering Systems: A Report, printed pages 187-193 and 190-192 for market and staking",
+  "original_benter": "c_i = normalized f_i^alpha * p_i^beta; historical outcomes fit alpha,beta on out-of-sample f and actual public WIN tote prices; expected return c*div; account for pool impact and joint bets",
+  "G3_non_original_adaptation": "No single-win Keirin pool. Public 1st proxy p_i is exacta marginal from all observed 2車単 odds normalized across a complete 2車単 book; it is an unvalidated adaptation, not a formula ascribed to Benter",
+  "G3_only_models": {
+    "first": {
+      "path": "research/g3_independent_v1/output/g3_first_win_report.json",
+      "git_blob_sha": "484c9e89f81beebab26f62ba1a634d7d046cd218",
+      "status": "FROZEN"
+    },
+    "second": {
+      "path": "research/g3_independent_v1/models/g3_second_conditional_v1.json",
+      "git_blob_sha": "efeec71799826dea33bb02809649d038930ee9dc",
+      "status": "FROZEN"
+    },
+    "third": {
+      "path": "research/g3_independent_v1/models/g3_third_conditional_v1.json",
+      "git_blob_sha": "8049c0b4a7b95bef4c64b9f442af53593706710d",
+      "status": "FROZEN"
+    }
+  },
+  "supported_markets": [
+    "2枠複",
+    "2枠単",
+    "2車複",
+    "2車単",
+    "3連複",
+    "3連単",
+    "ワイド"
+  ],
+  "full_market_probability_engine": "research/g3_independent_v1/benter_market/ticket_space.py",
+  "public_first_bridge": "research/g3_independent_v1/benter_market/combination.py",
+  "historical_market_fit": "research/g3_independent_v1/benter_market/calibrate.py",
+  "historical_prior_year_q_generator": "research/g3_independent_v1/benter_market/export_prior_g3_q.py",
+  "market_snapshot_evaluator": "research/g3_independent_v1/benter_market/evaluate.py",
+  "known_persisted_odds": {
+    "plain_odds_only_export": {
+      "source_audit": "data/audits/odds_only_export.json",
+      "git_blob_sha": "e6849eae092ae91a630aa1d9e3bfbd924b8d0a47",
+      "complete_races_across_all_grades": 36383,
+      "bet_types_only": [
+        "3連単",
+        "3連複"
+      ],
+      "odds_phase": "final",
+      "not_a_G3_complete_exacta_market": true
+    },
+    "sealed_seven_market_archive": {
+      "source_audit": "data/audits/odds_seven_bet_archive_count.json",
+      "git_blob_sha": "36d1793bde2993da7d2383ea7cf6e6109bcf3e2f",
+      "confirmed_distinct_race_lower_bound_across_all_grades": 134336,
+      "encrypted": true,
+      "number_G3_decrypted_and_matched_to_fundamental_q": null,
+      "ready_for_direct_G3_alpha_beta_fit": false
+    }
+  },
+  "historical_G3_independent_first_q_2023_2026H1": {
+    "status": "GENERATE_AND_PIN_FROM_G3_ARCHIVES",
+    "archive": "research/g3_independent_v1/data/g3_prior_year_first_q_2023_2026h1.jsonl.gz",
+    "audit": "research/g3_independent_v1/output/g3_prior_year_first_market_input_audit.json",
+    "note": "2022 q is in-sample and excluded; all 2023 onwards q fitted only on G3 from preceding years"
+  },
+  "market_calibration_alpha": null,
+  "market_calibration_beta": null,
+  "market_calibration_source": null,
+  "calibration_phase": null,
+  "post_combination_exotic_joint_log_loss_evaluated": false,
+  "T15_live_odds_snapshots_audited": false,
+  "EV_positive_tickets_can_be_asserted_now": false,
+  "stake_amounts_cannot_be_estimated_without_pool_depth_and_self_impact": true,
+  "new_chat_must_not_modify_frozen_G3_models_or_run_event_specific_predictions_before_asked": true,
+  "readiness": "FOUNDATION_CODE_AVAILABLE_REAL_MARKET_DATA_JOIN_AND_CALIBRATION_BLOCKED"
+}
