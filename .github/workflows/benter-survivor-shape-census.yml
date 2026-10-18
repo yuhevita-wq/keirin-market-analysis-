@@ -1,0 +1,46 @@
+name: 3rd remaining line topology by 322 and all other layouts
+on:
+  push:
+    branches:
+      - research/benter-third-survivor-v6-20261018
+    paths:
+      - .github/workflows/benter-survivor-shape-census.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  census:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/benter-third-survivor-v6-20261018
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/benter_third_survivor_v6/model_survivor_v6.py
+            /research/benter_third_survivor_v6/remaining_line_census.py
+            /research/benter_line_conditional_v5/model_line_conditional.py
+            /research/benter_score_challenge_v3/frozen_2026h2_probabilities.csv
+            /research/benter_calibration_v4/sep_predictions_frozen.csv
+            /research/benter_calibration_v4/sep_holdout/races.csv
+            /research/benter_calibration_v4/sep_holdout/results.csv
+            /research/benter_structural_discovery_v2/output/test_full_plus_line_win_probability.csv
+            /data/2026_future_block1/s_class_f1_20260701_20260830/races.csv
+            /data/2026_future_block1/s_class_f1_20260701_20260830/results.csv
+            /data/2026_h1/s_class_f1_all/races.csv
+            /data/2026_h1/s_class_f1_all/results.csv
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install 'numpy>=1.26,<3' 'scipy>=1.11,<2'
+      - name: Count observed and eligible 3rd candidates by remaining lineup structure
+        run: python -u research/benter_third_survivor_v6/remaining_line_census.py
+      - name: Store all shapes, cases and residual candidate counts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f --sparse research/benter_third_survivor_v6/remaining_line_census.json
+          git commit -m "Save conditional 3rd line-candidate structure by exact formation [skip ci]"
+          git push origin HEAD:research/benter-third-survivor-v6-20261018
