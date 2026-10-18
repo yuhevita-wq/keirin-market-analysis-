@@ -90,6 +90,20 @@ python research/g3_independent_v1/benter_market/evaluate.py --race VALID_ACTUAL_
 # → CALIBRATION_REQUIRED_NOT_EV_READY（全券種監査と市場proxyまで。EV+の断定なし）
 ```
 
+### 新しい会話での推奨：1コマンドで全部つなぐ
+
+過去データの較正は上の手順による。未来の指定レースでは、**G3独自1着確率の計算もこのコマンドで内部実行**するため、qを手作業で書く必要がない。
+
+```bash
+python research/g3_independent_v1/benter_market/run_pipeline.py --input ACTUAL_RAW_G3_CARD_AND_MARKET.json --mode live --output stage/g3_precheck.json
+```
+
+`--calibration` を省略したときは全7賭式の確率と価格の整合監査まで行い、**EVプラス断定を拒否**する。G3のT−15分に実証済みのαβが手に入った場合だけ、同じコマンドに `--calibration ACTUAL_G3_T15_CALIBRATION.json` を追加できる。
+
+この入力は `racecard` に**実際の出走選手情報**（選手ごとの `car_no`, `score`, `age`, `term`, `b_count`, `s_count`, `nige_count`, `makuri_count`, `sashi_count`, `mark_count`, `first_count`, `second_count`, `third_count`, `outside_count`, `win_rate`, `top2_rate`, `top3_rate`, `gear` 等）を渡し、`market_snapshot` に実際の発売オッズを渡す。凍結済み37特徴量モデルがqを計算してから7券種の価格判定へ進む。
+
+[`predict_g3_first.py`](predict_g3_first.py) は凍結したG3だけの1着係数を読み込む。出走表の `source_url` と `snapshot_captured_at_utc` が必須で、確定着順やオッズは特徴量へ入れない。
+
 ### 入力契約
 
 `VALID_ACTUAL_MARKET_INPUT.json` は `racecard` と `market_snapshot` の2つのルート項目からなる。
