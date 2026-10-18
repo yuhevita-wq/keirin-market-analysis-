@@ -19,6 +19,9 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /research/g3_independent_v1/market_benter/*
+            /research/g3_independent_v1/market_benter/fixtures/*.json
+            /research/g3_independent_v1/output/g3_first_win_report.json
+            /data/audits/odds_only_export.json
             /research/g3_independent_v1/models/g3_second_conditional_v1.json
             /research/g3_independent_v1/models/g3_third_conditional_v1.json
             /research/g3_independent_v1/predict_g3_first_second.py
@@ -28,6 +31,21 @@ jobs:
           python-version: '3.11'
       - name: Install statistical inference dependencies
         run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.11,<2'
+      - name: Confirm frozen G3 model source content matches source lock
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          lock=json.loads(Path("research/g3_independent_v1/market_benter/source_lock.json").read_text())
+          for path,meta in (list(lock["source_model_files"].items())+
+                            list(lock["probability_engine_files"].items())+
+                            [(lock["odds_audit"]["path"],lock["odds_audit"])]):
+              data=Path(path).read_bytes()
+              hashed=hashlib.sha1(("blob "+str(len(data))+"\0").encode()+data).hexdigest()
+              assert hashed==meta["git_blob_sha"],f"Changed frozen G3 model or odds audit: {path}"
+          assert lock["market_calibration_status"]=="NOT_FITTED"
+          print("G3 original model and odds audit hashes match immutable source lock")
+          PY
       - name: Compile Benter bridge and training code
         run: |
           python -m py_compile research/g3_independent_v1/market_benter/engine.py \
@@ -36,3 +54,22 @@ jobs:
       - name: Check all seven payoffs and prevent uncertified odds/EV
         run: |
           python -m unittest discover -s research/g3_independent_v1/market_benter -p 'test_*.py' -v
+      - name: Exercise new-chat command with synthetic complete books
+        run: |
+          python research/g3_independent_v1/market_benter/run.py \
+            --card research/g3_independent_v1/market_benter/fixtures/synthetic_g3_card.json \
+            --odds research/g3_independent_v1/market_benter/fixtures/synthetic_final_odds.json \
+            --historical-final \
+            --output /tmp/g3_market_bridge_demo.json > /dev/null
+          python - <<'PY'
+          import json
+          r=json.load(open("/tmp/g3_market_bridge_demo.json"))
+          assert r["status"]=="MARKET_COMPARISON_REQUIRES_FITTED_COEFFICIENTS"
+          assert "3連単" in r["calibration_missing_markets"]
+          assert "3連複" in r["calibration_missing_markets"]
+          assert len(r["markets"]["3連単"]["rows"])==60
+          assert len(r["markets"]["3連複"]["rows"])==10
+          assert all(x["expected_return_multiple"] is None
+                     for m in r["markets"].values() for x in m["rows"])
+          print("New-chat G3 bridge executable; no artificial profitable wager outputs")
+          PY
