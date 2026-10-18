@@ -1,0 +1,171 @@
+{
+  "stage": "frozen_without_September_or_2026H1_outcomes",
+  "train_period": "2026-07-02 to 2026-08-30",
+  "calibration_samples": 867,
+  "source_audit": {
+    "forecast_count": 875,
+    "n": 867,
+    "excluded": {
+      "tie_or_missing_places": 8
+    },
+    "second_relationships": {
+      "different_line": 418,
+      "same_line": 449
+    },
+    "third_relationships": {
+      "first_third_same_second_diff": 129,
+      "first_second_same_third_diff": 316,
+      "second_third_same_first_diff": 134,
+      "all_different": 155,
+      "all_same": 133
+    }
+  },
+  "selection_protocol": "July train; August candidate family and L2 penalty validation; refit July+August",
+  "candidate_grid": [
+    {
+      "family": "coarse",
+      "penalty": 0.01,
+      "july_loss": 1.4394069184477551,
+      "aug_validation_loss": 1.4919965879353478
+    },
+    {
+      "family": "coarse",
+      "penalty": 0.05,
+      "july_loss": 1.440607600533768,
+      "aug_validation_loss": 1.491352331730982
+    },
+    {
+      "family": "coarse",
+      "penalty": 0.2,
+      "july_loss": 1.4453963715381197,
+      "aug_validation_loss": 1.4913418879682592
+    },
+    {
+      "family": "coarse",
+      "penalty": 0.75,
+      "july_loss": 1.454278293519647,
+      "aug_validation_loss": 1.4942646908656072
+    },
+    {
+      "family": "coarse",
+      "penalty": 3,
+      "july_loss": 1.4635957985745083,
+      "aug_validation_loss": 1.4995257370964379
+    },
+    {
+      "family": "coarse",
+      "penalty": 12,
+      "july_loss": 1.4680769504079645,
+      "aug_validation_loss": 1.5024865139939143
+    },
+    {
+      "family": "detailed",
+      "penalty": 0.01,
+      "july_loss": 1.4238475820496264,
+      "aug_validation_loss": 1.5021397584845444
+    },
+    {
+      "family": "detailed",
+      "penalty": 0.05,
+      "july_loss": 1.432273870526437,
+      "aug_validation_loss": 1.4993527708694285
+    },
+    {
+      "family": "detailed",
+      "penalty": 0.2,
+      "july_loss": 1.4398168408603251,
+      "aug_validation_loss": 1.4957722182011781
+    },
+    {
+      "family": "detailed",
+      "penalty": 0.75,
+      "july_loss": 1.450273547243599,
+      "aug_validation_loss": 1.4951131277247742
+    },
+    {
+      "family": "detailed",
+      "penalty": 3,
+      "july_loss": 1.461736424136765,
+      "aug_validation_loss": 1.4992934708139931
+    },
+    {
+      "family": "detailed",
+      "penalty": 12,
+      "july_loss": 1.4674954803294848,
+      "aug_validation_loss": 1.5023525563055828
+    }
+  ],
+  "selected": {
+    "family": "coarse",
+    "penalty": 0.2,
+    "july_loss": 1.4453963715381197,
+    "aug_validation_loss": 1.4913418879682592
+  },
+  "feature_names": [
+    "same_pair__third_teammate",
+    "same_pair__third_outside",
+    "diff_pair__third_first_line",
+    "diff_pair__third_second_line",
+    "diff_pair__third_other_line",
+    "remaining_teammates_in_candidate_line",
+    "candidate_only_survivor_in_line",
+    "candidate_has_two_plus_further_survivors"
+  ],
+  "beta": [
+    0.09878710798353973,
+    -0.09878710798353971,
+    0.029663396956303635,
+    0.027485659268858906,
+    -0.05714905622516251,
+    -0.0761071990984355,
+    0.13521862055728592,
+    0.0637269423008804
+  ],
+  "beta_july": [
+    0.11176835560336246,
+    -0.11176835560336244,
+    -0.05117182532113285,
+    0.06797447595995373,
+    -0.016802650638820794,
+    -0.10198436037954173,
+    0.13779695570805403,
+    0.0372476047638692
+  ],
+  "beta_august": [
+    0.08566795079653265,
+    -0.08566795079653262,
+    0.11576227300408073,
+    -0.017431490688218372,
+    -0.09833078231586255,
+    -0.04850413126643076,
+    0.13102327245386092,
+    0.09012468306118807
+  ],
+  "baseline_train_loss": 1.4864575019079003,
+  "updated_train_loss": 1.466888577830187,
+  "v5_base2": [
+    0.7027876147881222,
+    0.662629942690145,
+    0.16728109049416112,
+    0.2438746826232069,
+    0.3576603392940064,
+    0.16305987370555045,
+    0.0005607722172774005
+  ],
+  "v5_base3": [
+    0.3458163340675697,
+    0.12138858696689801,
+    0.12112559759421726,
+    0.09164540078862221,
+    0.0355132769552997,
+    -0.022715522621397914,
+    0.05989602514414255,
+    0.09384232996885977,
+    0.10114665059791723,
+    -0.1626352228228925
+  ],
+  "history_leakage_warning": "September & H1 were used earlier in non-residual model studies; this is transfer replication, not a fully untouched blind test.",
+  "formula": "P3(k|i,j) prop V5_P3(k|i,j) * exp(residual_survivor_features(i,j,k) dot beta)",
+  "no_market_odds": true,
+  "fitted_on_sept_or_h1": false
+}
