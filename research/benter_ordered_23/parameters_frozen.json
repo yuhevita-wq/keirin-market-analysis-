@@ -1,0 +1,94 @@
+{
+  "model": "Benter 1994 rank-exponent, trained on independent V2 1st place probabilities",
+  "formula": "p(i,j,k) = p_i*(p_j^gamma / sum_{a != i} p_a^gamma)*(p_k^delta / sum_{b != i,j} p_b^delta)",
+  "training_period": "2026-07-02 to 2026-08-30",
+  "holdout_period": "2026-09-01 to 2026-09-30",
+  "training_audit": {
+    "forecast_races": 875,
+    "eligible": 867,
+    "excluded": {
+      "tie_or_missing_finish_1_2_3": 8
+    }
+  },
+  "historical_benter_parameters": {
+    "gamma": 0.81,
+    "delta": 0.65
+  },
+  "parameter_bounds": [
+    0.15,
+    2.5
+  ],
+  "fitted_parameters": {
+    "p": {
+      "gamma": 0.7666192428057735,
+      "second_loss": 1.5412747915436111,
+      "second_harville": 1.5576413873705064,
+      "second_benter": 1.5418747073496886,
+      "delta": 0.28999279746572465,
+      "third_loss": 1.5525055030072503,
+      "third_harville": 1.7172819898485367,
+      "third_benter": 1.5982613875715894
+    },
+    "q": {
+      "gamma": 0.7837784969662068,
+      "second_loss": 1.5400391891729914,
+      "second_harville": 1.5536512427017106,
+      "second_benter": 1.540251162145458,
+      "delta": 0.29282925890631,
+      "third_loss": 1.552438878138091,
+      "third_harville": 1.7128049543593968,
+      "third_benter": 1.5965735328227946
+    }
+  },
+  "monthly_fits": {
+    "2026-07": {
+      "n": 444,
+      "raw": {
+        "gamma": 0.7461104982753953,
+        "second_loss": 1.5408931691299024,
+        "second_harville": 1.5613658862403044,
+        "second_benter": 1.5422720653522053,
+        "delta": 0.32115190371792957,
+        "third_loss": 1.5448995063833124,
+        "third_harville": 1.7031522765100797,
+        "third_benter": 1.5852365627917069
+      },
+      "calibrated": {
+        "gamma": 0.7631862934480715,
+        "second_loss": 1.5401421115905543,
+        "second_harville": 1.557364281460377,
+        "second_benter": 1.5408561940219956,
+        "delta": 0.32373836022038754,
+        "third_loss": 1.544985648215607,
+        "third_harville": 1.6991848518714237,
+        "third_benter": 1.5839102927569901
+      }
+    },
+    "2026-08": {
+      "n": 423,
+      "raw": {
+        "gamma": 0.7907863294960147,
+        "second_loss": 1.5413471469734956,
+        "second_harville": 1.5537319843014972,
+        "second_benter": 1.5414576223541387,
+        "delta": 0.25295857140386696,
+        "third_loss": 1.559586960302491,
+        "third_harville": 1.7321131783172679,
+        "third_benter": 1.611932834858272
+      },
+      "calibrated": {
+        "gamma": 0.8079014009853795,
+        "second_loss": 1.539614814984479,
+        "second_harville": 1.5497538686855177,
+        "second_benter": 1.539616093225403,
+        "delta": 0.25609420033689195,
+        "third_loss": 1.5593925268546116,
+        "third_harville": 1.727101232148191,
+        "third_benter": 1.6098654443812246
+      }
+    }
+  },
+  "target_results_used_for_training": false,
+  "input_models_frozen": true,
+  "calibration": "Prior lambda=1, hinge threshold 0.4 fixed on July-Aug; no parameter refitting on September"
+}
