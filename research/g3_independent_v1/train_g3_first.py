@@ -92,6 +92,16 @@ def load():
                 r["retro"]=any((not e.get("captured_at_utc") or e.get("captured_at_utc")[:10]>=date)
                                for e in entries)
                 r["podium_complete"]=all(len(results[rid][str(p)])==1 for p in (1,2,3))
+                # Stored for subsequent G3-only conditional finishing research.
+                # NOT included in the pre-race feature matrix or first-place fit.
+                r["actual_second_car"]=(
+                    int(results[rid]["2"][0]) if len(results[rid]["2"])==1
+                    and str(results[rid]["2"][0]).isdigit() else None
+                )
+                r["actual_third_car"]=(
+                    int(results[rid]["3"][0]) if len(results[rid]["3"])==1
+                    and str(results[rid]["3"][0]).isdigit() else None
+                )
                 records.append(r)
                 counts["eligible"]+=1
                 counts[f"field_{len(cars)}"]+=1
