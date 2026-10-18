@@ -1,0 +1,70 @@
+name: A1/A2 independent winner research v1
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feat/a12-independent-winner-v1
+    paths:
+      - research/independent_a12_winner_v1/train.py
+      - .github/workflows/a12-independent-winner-v1.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: a12-winner-v1
+  cancel-in-progress: false
+
+jobs:
+  train:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical dependencies
+        run: python -m pip install 'numpy>=1.26' 'scipy>=1.12'
+      - name: Compile syntax
+        run: python -m py_compile research/independent_a12_winner_v1/train.py
+      - name: Train and evaluate held-out A1/A2 races
+        run: |
+          python research/independent_a12_winner_v1/train.py \
+            --data-root data/a_class_12 \
+            --output research/independent_a12_winner_v1/report.json
+      - name: Validate report
+        run: |
+          python - <<'PY'
+          import json, math
+          from pathlib import Path
+          p = Path('research/independent_a12_winner_v1/report.json')
+          d = json.loads(p.read_text(encoding='utf-8'))
+          assert d['test']['full_model']['races'] >= 100
+          assert len(d['production_coefficients']) == 21
+          for model in d['test'].values():
+              assert 0 < model['top1_accuracy'] < 1, model
+              assert math.isfinite(model['log_loss']) and model['log_loss'] > 0
+          for value in d['production_coefficients'].values():
+              assert math.isfinite(value)
+          print('A1/A2 winner report OK')
+          PY
+      - name: Publish reproducible research report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/independent_a12_winner_v1/report.json
+          if ! git diff --cached --quiet; then
+            git commit -m "research: record A1/A2 winner holdout evaluation"
+            git push origin HEAD:feat/a12-independent-winner-v1
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: a12-independent-winner-v1
+          retention-days: 30
+          path: research/independent_a12_winner_v1/report.json
+          if-no-files-found: warn
