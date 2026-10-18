@@ -1,0 +1,51 @@
+name: Independently fit G3 S-class first-place model
+on:
+  push:
+    branches: [research/g3-independent-first-20261018]
+    paths:
+      - .github/workflows/g3-independent-first-train.yml
+      - research/g3_independent_v1/train_g3_first.py
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: independent-g3-first-win-study
+  cancel-in-progress: false
+jobs:
+  train_and_evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 110
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/g3-independent-first-20261018
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /data/grade_races/g3/*/*.zip
+            /research/g3_independent_v1/train_g3_first.py
+            /research/benter_fundamental_v1/train_v1.py
+            /research/benter_structural_discovery_v2/discover_v2.py
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install numerical statistical dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.11,<2'
+      - name: Fit independent G3 fundamental probabilities and evaluate against uniform
+        run: python -u research/g3_independent_v1/train_g3_first.py
+      - name: Preserve G3-only data and model reports
+        run: |
+          set -euo pipefail
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add -f --sparse research/g3_independent_v1/output/g3_cohort_audit.json research/g3_independent_v1/output/g3_first_win_report.json
+          git commit -m "Store G3-only first-win fitted coefficients and chrono precision report [skip ci]"
+          git pull --rebase origin research/g3-independent-first-20261018
+          git push origin HEAD:research/g3-independent-first-20261018
+      - uses: actions/upload-artifact@v4
+        with:
+          name: independent-g3-first-win-cohort-and-model
+          path: |
+            research/g3_independent_v1/output/g3_cohort_audit.json
+            research/g3_independent_v1/output/g3_first_win_report.json
+          retention-days: 30
