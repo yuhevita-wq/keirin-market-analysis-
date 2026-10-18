@@ -1,0 +1,57 @@
+{
+  "schema": "g3_benter_market_bridge_v1",
+  "research_scope": "G3開催 S級のみ",
+  "model_status": "G3_FIRST_SECOND_THIRD_FROZEN",
+  "market_calibration_status": "NOT_FITTED",
+  "market_advantage_status": "NOT_PROVEN",
+  "historical_odds_prices": "final",
+  "live_runtime_prices_required": "timestamped near 15 minutes before deadline; later or final prices not substitutes",
+  "source_model_files": {
+    "research/g3_independent_v1/output/g3_first_win_report.json": {
+      "git_blob_sha": "484c9e89f81beebab26f62ba1a634d7d046cd218"
+    },
+    "research/g3_independent_v1/models/g3_second_conditional_v1.json": {
+      "git_blob_sha": "efeec71799826dea33bb02809649d038930ee9dc"
+    },
+    "research/g3_independent_v1/models/g3_third_conditional_v1.json": {
+      "git_blob_sha": "8049c0b4a7b95bef4c64b9f442af53593706710d"
+    }
+  },
+  "odds_audit": {
+    "path": "data/audits/odds_only_export.json",
+    "git_blob_sha": "e6849eae092ae91a630aa1d9e3bfbd924b8d0a47",
+    "source_summary": [
+      "3連単",
+      "3連複"
+    ],
+    "complete_all_grade_odds_races": 36383
+  },
+  "probability_engine_files": {
+    "research/g3_independent_v1/predict_g3_ordered_triples.py": {
+      "git_blob_sha": "bce450fb15d4fd5cce15cf99ef04641957fc4c29"
+    },
+    "research/g3_independent_v1/predict_g3_first_second.py": {
+      "git_blob_sha": "dc5704b095572aa1f7483ae2a35aae9b3ad37b31"
+    }
+  },
+  "allowed_market_book_schema": [
+    "3連単",
+    "3連複",
+    "2車単",
+    "2車複",
+    "2枠単",
+    "2枠複",
+    "ワイド"
+  ],
+  "market_book_availability_from_saved_odds": [
+    "3連単",
+    "3連複"
+  ],
+  "must_not_infer_7_wager_types_from_two": true,
+  "source_asof_card_coverage_certified": false,
+  "notes": [
+    "Do not claim market probabilities equal normalized inverse odds outside exhaustive exclusive outcome books. ワイド has three winning selections per valid finish.",
+    "Historical G3 cards are retrospectively captured and not certified asof; final odds are not 15-minute quotes.",
+    "No calibrated alpha/beta, EV edge or stake recommendations until matching cohort audit and chronological estimation."
+  ]
+}
