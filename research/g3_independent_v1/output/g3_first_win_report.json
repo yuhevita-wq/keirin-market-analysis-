@@ -1,0 +1,2409 @@
+{
+  "status": "G3_INDEPENDENT_FIRST_WIN_TRAINED",
+  "scope": "G3 S級 only, no F1 training rows or parameters",
+  "total_eligible_races": 8995,
+  "year_counts": {
+    "all_source_races": 9167,
+    "eligible": 8995,
+    "field_9": 7787,
+    "retrospective_capture": 8995,
+    "foreign_races": 0,
+    "podium_complete": 8945,
+    "field_7": 391,
+    "field_8": 596,
+    "field_6": 142,
+    "field_5": 79,
+    "non_g3_s_or_missing_card": 149,
+    "no_unique_winner": 23,
+    "eligible_2022": 1961,
+    "eligible_2023": 1979,
+    "eligible_2024": 1989,
+    "eligible_2025": 1981,
+    "eligible_2026": 1085
+  },
+  "training_2022_2024": 5929,
+  "validation_2025": 1981,
+  "development_fit_2022_2025": 7910,
+  "test_2026h1": 1085,
+  "selected_features": [
+    "score",
+    "age",
+    "term",
+    "s_count",
+    "b_count",
+    "nige_count",
+    "makuri_count",
+    "sashi_count",
+    "mark_count",
+    "first_count",
+    "second_count",
+    "third_count",
+    "outside_count",
+    "win_rate",
+    "top2_rate",
+    "top3_rate",
+    "gear",
+    "leader",
+    "second",
+    "third_or_later",
+    "solo",
+    "line_size",
+    "leader_b",
+    "follower_mark",
+    "lead_follow_synergy",
+    "line_leader_first",
+    "line_follow_first",
+    "line_leader_pressure_share",
+    "rival_front_b",
+    "lead_attack_versatility",
+    "line_mate_count",
+    "line_head_vs_follower_win_gap",
+    "own_role_front_b",
+    "solo_front_pressure",
+    "teammate_score_support",
+    "line_score_imbalance",
+    "term999_foreign_category"
+  ],
+  "selected_ridge": 0.0001,
+  "best_validation": {
+    "races": 1981,
+    "mean_log_loss": 1.65364653089265,
+    "mean_uniform_log_loss": 2.1673574317308772,
+    "benter_pseudo_r2": 0.23702177283604375,
+    "mean_brier": 0.7385292432466632,
+    "top1_accuracy": 0.39424533064109035,
+    "top2_contains_winner": 0.6314992428066633,
+    "by_year": {
+      "2025": {
+        "races": 1981,
+        "log_loss": 1.65364653089265
+      }
+    },
+    "calibration": [
+      {
+        "range": [
+          0,
+          0.01
+        ],
+        "candidate_rows": 1490,
+        "expected_winners": 9.262031813058895,
+        "actual_winners": 12
+      },
+      {
+        "range": [
+          0.01,
+          0.025
+        ],
+        "candidate_rows": 2882,
+        "expected_winners": 49.1928799223339,
+        "actual_winners": 42
+      },
+      {
+        "range": [
+          0.025,
+          0.05
+        ],
+        "candidate_rows": 2947,
+        "expected_winners": 106.75430170430499,
+        "actual_winners": 87
+      },
+      {
+        "range": [
+          0.05,
+          0.1
+        ],
+        "candidate_rows": 3486,
+        "expected_winners": 254.00443778958595,
+        "actual_winners": 259
+      },
+      {
+        "range": [
+          0.1,
+          0.15
+        ],
+        "candidate_rows": 2050,
+        "expected_winners": 251.891739587946,
+        "actual_winners": 245
+      },
+      {
+        "range": [
+          0.15,
+          0.2
+        ],
+        "candidate_rows": 1347,
+        "expected_winners": 233.31162569405228,
+        "actual_winners": 226
+      },
+      {
+        "range": [
+          0.2,
+          0.3
+        ],
+        "candidate_rows": 1575,
+        "expected_winners": 384.6955931281831,
+        "actual_winners": 427
+      },
+      {
+        "range": [
+          0.3,
+          0.4
+        ],
+        "candidate_rows": 743,
+        "expected_winners": 256.52225847726925,
+        "actual_winners": 252
+      },
+      {
+        "range": [
+          0.4,
+          0.5
+        ],
+        "candidate_rows": 458,
+        "expected_winners": 203.70295987086175,
+        "actual_winners": 210
+      },
+      {
+        "range": [
+          0.5,
+          0.6
+        ],
+        "candidate_rows": 219,
+        "expected_winners": 118.76397600231076,
+        "actual_winners": 113
+      },
+      {
+        "range": [
+          0.6,
+          0.7
+        ],
+        "candidate_rows": 102,
+        "expected_winners": 66.03831570547038,
+        "actual_winners": 65
+      },
+      {
+        "range": [
+          0.7,
+          0.8
+        ],
+        "candidate_rows": 47,
+        "expected_winners": 34.9637222966652,
+        "actual_winners": 33
+      },
+      {
+        "range": [
+          0.8,
+          1
+        ],
+        "candidate_rows": 14,
+        "expected_winners": 11.896158007957496,
+        "actual_winners": 10
+      }
+    ]
+  },
+  "model_comparisons": [
+    {
+      "family": "full_plus_line",
+      "alpha": 0.0001,
+      "train_races": 5929,
+      "validation": {
+        "races": 1981,
+        "mean_log_loss": 1.65364653089265,
+        "mean_uniform_log_loss": 2.1673574317308772,
+        "benter_pseudo_r2": 0.23702177283604375,
+        "mean_brier": 0.7385292432466632,
+        "top1_accuracy": 0.39424533064109035,
+        "top2_contains_winner": 0.6314992428066633,
+        "by_year": {
+          "2025": {
+            "races": 1981,
+            "log_loss": 1.65364653089265
+          }
+        },
+        "calibration": [
+          {
+            "range": [
+              0,
+              0.01
+            ],
+            "candidate_rows": 1490,
+            "expected_winners": 9.262031813058895,
+            "actual_winners": 12
+          },
+          {
+            "range": [
+              0.01,
+              0.025
+            ],
+            "candidate_rows": 2882,
+            "expected_winners": 49.1928799223339,
+            "actual_winners": 42
+          },
+          {
+            "range": [
+              0.025,
+              0.05
+            ],
+            "candidate_rows": 2947,
+            "expected_winners": 106.75430170430499,
+            "actual_winners": 87
+          },
+          {
+            "range": [
+              0.05,
+              0.1
+            ],
+            "candidate_rows": 3486,
+            "expected_winners": 254.00443778958595,
+            "actual_winners": 259
+          },
+          {
+            "range": [
+              0.1,
+              0.15
+            ],
+            "candidate_rows": 2050,
+            "expected_winners": 251.891739587946,
+            "actual_winners": 245
+          },
+          {
+            "range": [
+              0.15,
+              0.2
+            ],
+            "candidate_rows": 1347,
+            "expected_winners": 233.31162569405228,
+            "actual_winners": 226
+          },
+          {
+            "range": [
+              0.2,
+              0.3
+            ],
+            "candidate_rows": 1575,
+            "expected_winners": 384.6955931281831,
+            "actual_winners": 427
+          },
+          {
+            "range": [
+              0.3,
+              0.4
+            ],
+            "candidate_rows": 743,
+            "expected_winners": 256.52225847726925,
+            "actual_winners": 252
+          },
+          {
+            "range": [
+              0.4,
+              0.5
+            ],
+            "candidate_rows": 458,
+            "expected_winners": 203.70295987086175,
+            "actual_winners": 210
+          },
+          {
+            "range": [
+              0.5,
+              0.6
+            ],
+            "candidate_rows": 219,
+            "expected_winners": 118.76397600231076,
+            "actual_winners": 113
+          },
+          {
+            "range": [
+              0.6,
+              0.7
+            ],
+            "candidate_rows": 102,
+            "expected_winners": 66.03831570547038,
+            "actual_winners": 65
+          },
+          {
+            "range": [
+              0.7,
+              0.8
+            ],
+            "candidate_rows": 47,
+            "expected_winners": 34.9637222966652,
+            "actual_winners": 33
+          },
+          {
+            "range": [
+              0.8,
+              1
+            ],
+            "candidate_rows": 14,
+            "expected_winners": 11.896158007957496,
+            "actual_winners": 10
+          }
+        ]
+      },
+      "optim": {
+        "success": true,
+        "iterations": 346,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+      }
+    },
+    {
+      "family": "full_plus_line",
+      "alpha": 0.003,
+      "train_races": 5929,
+      "validation": {
+        "races": 1981,
+        "mean_log_loss": 1.6567558230358097,
+        "mean_uniform_log_loss": 2.1673574317308772,
+        "benter_pseudo_r2": 0.23558717229547832,
+        "mean_brier": 0.7390698799721828,
+        "top1_accuracy": 0.39475012619888944,
+        "top2_contains_winner": 0.6269560827864715,
+        "by_year": {
+          "2025": {
+            "races": 1981,
+            "log_loss": 1.6567558230358097
+          }
+        },
+        "calibration": [
+          {
+            "range": [
+              0,
+              0.01
+            ],
+            "candidate_rows": 1402,
+            "expected_winners": 8.848984339995965,
+            "actual_winners": 12
+          },
+          {
+            "range": [
+              0.01,
+              0.025
+            ],
+            "candidate_rows": 2857,
+            "expected_winners": 48.68807737963158,
+            "actual_winners": 38
+          },
+          {
+            "range": [
+              0.025,
+              0.05
+            ],
+            "candidate_rows": 2966,
+            "expected_winners": 107.54042673326332,
+            "actual_winners": 80
+          },
+          {
+            "range": [
+              0.05,
+              0.1
+            ],
+            "candidate_rows": 3525,
+            "expected_winners": 257.0165071305185,
+            "actual_winners": 267
+          },
+          {
+            "range": [
+              0.1,
+              0.15
+            ],
+            "candidate_rows": 2113,
+            "expected_winners": 259.4931402041117,
+            "actual_winners": 244
+          },
+          {
+            "range": [
+              0.15,
+              0.2
+            ],
+            "candidate_rows": 1347,
+            "expected_winners": 233.35211711967574,
+            "actual_winners": 228
+          },
+          {
+            "range": [
+              0.2,
+              0.3
+            ],
+            "candidate_rows": 1582,
+            "expected_winners": 385.2479796882131,
+            "actual_winners": 436
+          },
+          {
+            "range": [
+              0.3,
+              0.4
+            ],
+            "candidate_rows": 746,
+            "expected_winners": 256.9928594494893,
+            "actual_winners": 250
+          },
+          {
+            "range": [
+              0.4,
+              0.5
+            ],
+            "candidate_rows": 457,
+            "expected_winners": 202.86198528968197,
+            "actual_winners": 214
+          },
+          {
+            "range": [
+              0.5,
+              0.6
+            ],
+            "candidate_rows": 205,
+            "expected_winners": 110.9009207167158,
+            "actual_winners": 105
+          },
+          {
+            "range": [
+              0.6,
+              0.7
+            ],
+            "candidate_rows": 101,
+            "expected_winners": 65.05838411582191,
+            "actual_winners": 66
+          },
+          {
+            "range": [
+              0.7,
+              0.8
+            ],
+            "candidate_rows": 46,
+            "expected_winners": 33.977813121822635,
+            "actual_winners": 31
+          },
+          {
+            "range": [
+              0.8,
+              1
+            ],
+            "candidate_rows": 13,
+            "expected_winners": 11.020804711058567,
+            "actual_winners": 10
+          }
+        ]
+      },
+      "optim": {
+        "success": true,
+        "iterations": 154,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+      }
+    },
+    {
+      "family": "full_plus_line",
+      "alpha": 0.03,
+      "train_races": 5929,
+      "validation": {
+        "races": 1981,
+        "mean_log_loss": 1.6666769981060308,
+        "mean_uniform_log_loss": 2.1673574317308772,
+        "benter_pseudo_r2": 0.23100962780513645,
+        "mean_brier": 0.7416208596753758,
+        "top1_accuracy": 0.38818778394750125,
+        "top2_contains_winner": 0.6229177183240787,
+        "by_year": {
+          "2025": {
+            "races": 1981,
+            "log_loss": 1.6666769981060308
+          }
+        },
+        "calibration": [
+          {
+            "range": [
+              0,
+              0.01
+            ],
+            "candidate_rows": 1040,
+            "expected_winners": 6.972849106567266,
+            "actual_winners": 8
+          },
+          {
+            "range": [
+              0.01,
+              0.025
+            ],
+            "candidate_rows": 2703,
+            "expected_winners": 46.40233529936249,
+            "actual_winners": 31
+          },
+          {
+            "range": [
+              0.025,
+              0.05
+            ],
+            "candidate_rows": 3078,
+            "expected_winners": 112.7885532208897,
+            "actual_winners": 77
+          },
+          {
+            "range": [
+              0.05,
+              0.1
+            ],
+            "candidate_rows": 3687,
+            "expected_winners": 270.1294396209372,
+            "actual_winners": 257
+          },
+          {
+            "range": [
+              0.1,
+              0.15
+            ],
+            "candidate_rows": 2328,
+            "expected_winners": 285.85155428337623,
+            "actual_winners": 267
+          },
+          {
+            "range": [
+              0.15,
+              0.2
+            ],
+            "candidate_rows": 1427,
+            "expected_winners": 247.3570912513026,
+            "actual_winners": 258
+          },
+          {
+            "range": [
+              0.2,
+              0.3
+            ],
+            "candidate_rows": 1653,
+            "expected_winners": 400.86738044546604,
+            "actual_winners": 449
+          },
+          {
+            "range": [
+              0.3,
+              0.4
+            ],
+            "candidate_rows": 751,
+            "expected_winners": 259.31153802484937,
+            "actual_winners": 268
+          },
+          {
+            "range": [
+              0.4,
+              0.5
+            ],
+            "candidate_rows": 413,
+            "expected_winners": 183.26583383287777,
+            "actual_winners": 202
+          },
+          {
+            "range": [
+              0.5,
+              0.6
+            ],
+            "candidate_rows": 164,
+            "expected_winners": 89.27477731926726,
+            "actual_winners": 88
+          },
+          {
+            "range": [
+              0.6,
+              0.7
+            ],
+            "candidate_rows": 80,
+            "expected_winners": 51.56537677832436,
+            "actual_winners": 52
+          },
+          {
+            "range": [
+              0.7,
+              0.8
+            ],
+            "candidate_rows": 28,
+            "expected_winners": 20.51559877605684,
+            "actual_winners": 16
+          },
+          {
+            "range": [
+              0.8,
+              1
+            ],
+            "candidate_rows": 8,
+            "expected_winners": 6.697672040722841,
+            "actual_winners": 8
+          }
+        ]
+      },
+      "optim": {
+        "success": true,
+        "iterations": 70,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+      }
+    },
+    {
+      "family": "score_and_line",
+      "alpha": 0.0001,
+      "train_races": 5929,
+      "validation": {
+        "races": 1981,
+        "mean_log_loss": 1.6853400676892765,
+        "mean_uniform_log_loss": 2.1673574317308772,
+        "benter_pseudo_r2": 0.22239864868835046,
+        "mean_brier": 0.7479519392992066,
+        "top1_accuracy": 0.386673397274104,
+        "top2_contains_winner": 0.6168601716304897,
+        "by_year": {
+          "2025": {
+            "races": 1981,
+            "log_loss": 1.6853400676892765
+          }
+        },
+        "calibration": [
+          {
+            "range": [
+              0,
+              0.01
+            ],
+            "candidate_rows": 1377,
+            "expected_winners": 8.572914035688964,
+            "actual_winners": 13
+          },
+          {
+            "range": [
+              0.01,
+              0.025
+            ],
+            "candidate_rows": 2928,
+            "expected_winners": 50.05416593839488,
+            "actual_winners": 44
+          },
+          {
+            "range": [
+              0.025,
+              0.05
+            ],
+            "candidate_rows": 2837,
+            "expected_winners": 102.8247790553678,
+            "actual_winners": 90
+          },
+          {
+            "range": [
+              0.05,
+              0.1
+            ],
+            "candidate_rows": 3482,
+            "expected_winners": 253.8059666695907,
+            "actual_winners": 264
+          },
+          {
+            "range": [
+              0.1,
+              0.15
+            ],
+            "candidate_rows": 2115,
+            "expected_winners": 260.7163501353793,
+            "actual_winners": 242
+          },
+          {
+            "range": [
+              0.15,
+              0.2
+            ],
+            "candidate_rows": 1401,
+            "expected_winners": 243.07153097360066,
+            "actual_winners": 235
+          },
+          {
+            "range": [
+              0.2,
+              0.3
+            ],
+            "candidate_rows": 1654,
+            "expected_winners": 402.5737840104018,
+            "actual_winners": 425
+          },
+          {
+            "range": [
+              0.3,
+              0.4
+            ],
+            "candidate_rows": 815,
+            "expected_winners": 280.56045525452515,
+            "actual_winners": 298
+          },
+          {
+            "range": [
+              0.4,
+              0.5
+            ],
+            "candidate_rows": 429,
+            "expected_winners": 189.04547001869514,
+            "actual_winners": 185
+          },
+          {
+            "range": [
+              0.5,
+              0.6
+            ],
+            "candidate_rows": 208,
+            "expected_winners": 112.86536975328241,
+            "actual_winners": 117
+          },
+          {
+            "range": [
+              0.6,
+              0.7
+            ],
+            "candidate_rows": 78,
+            "expected_winners": 49.831377624764194,
+            "actual_winners": 44
+          },
+          {
+            "range": [
+              0.7,
+              0.8
+            ],
+            "candidate_rows": 30,
+            "expected_winners": 22.14075749647821,
+            "actual_winners": 20
+          },
+          {
+            "range": [
+              0.8,
+              1
+            ],
+            "candidate_rows": 6,
+            "expected_winners": 4.937079033830802,
+            "actual_winners": 4
+          }
+        ]
+      },
+      "optim": {
+        "success": true,
+        "iterations": 96,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+      }
+    },
+    {
+      "family": "score_and_line",
+      "alpha": 0.003,
+      "train_races": 5929,
+      "validation": {
+        "races": 1981,
+        "mean_log_loss": 1.6864803903165493,
+        "mean_uniform_log_loss": 2.1673574317308772,
+        "benter_pseudo_r2": 0.22187251367684835,
+        "mean_brier": 0.7477292910074168,
+        "top1_accuracy": 0.38515901060070673,
+        "top2_contains_winner": 0.6178697627460878,
+        "by_year": {
+          "2025": {
+            "races": 1981,
+            "log_loss": 1.6864803903165493
+          }
+        },
+        "calibration": [
+          {
+            "range": [
+              0,
+              0.01
+            ],
+            "candidate_rows": 1292,
+            "expected_winners": 8.263659768192738,
+            "actual_winners": 11
+          },
+          {
+            "range": [
+              0.01,
+              0.025
+            ],
+            "candidate_rows": 2879,
+            "expected_winners": 49.189920406847776,
+            "actual_winners": 39
+          },
+          {
+            "range": [
+              0.025,
+              0.05
+            ],
+            "candidate_rows": 2868,
+            "expected_winners": 104.26247706349766,
+            "actual_winners": 91
+          },
+          {
+            "range": [
+              0.05,
+              0.1
+            ],
+            "candidate_rows": 3521,
+            "expected_winners": 256.96062142166727,
+            "actual_winners": 255
+          },
+          {
+            "range": [
+              0.1,
+              0.15
+            ],
+            "candidate_rows": 2198,
+            "expected_winners": 271.04882804879367,
+            "actual_winners": 262
+          },
+          {
+            "range": [
+              0.15,
+              0.2
+            ],
+            "candidate_rows": 1394,
+            "expected_winners": 241.8671360085575,
+            "actual_winners": 228
+          },
+          {
+            "range": [
+              0.2,
+              0.3
+            ],
+            "candidate_rows": 1676,
+            "expected_winners": 407.77260162206187,
+            "actual_winners": 433
+          },
+          {
+            "range": [
+              0.3,
+              0.4
+            ],
+            "candidate_rows": 807,
+            "expected_winners": 277.70561449940027,
+            "actual_winners": 299
+          },
+          {
+            "range": [
+              0.4,
+              0.5
+            ],
+            "candidate_rows": 422,
+            "expected_winners": 185.93252467856797,
+            "actual_winners": 188
+          },
+          {
+            "range": [
+              0.5,
+              0.6
+            ],
+            "candidate_rows": 196,
+            "expected_winners": 106.12302122549514,
+            "actual_winners": 110
+          },
+          {
+            "range": [
+              0.6,
+              0.7
+            ],
+            "candidate_rows": 74,
+            "expected_winners": 47.13335560440657,
+            "actual_winners": 41
+          },
+          {
+            "range": [
+              0.7,
+              0.8
+            ],
+            "candidate_rows": 29,
+            "expected_winners": 21.45448491698809,
+            "actual_winners": 22
+          },
+          {
+            "range": [
+              0.8,
+              1
+            ],
+            "candidate_rows": 4,
+            "expected_winners": 3.285754735523495,
+            "actual_winners": 2
+          }
+        ]
+      },
+      "optim": {
+        "success": true,
+        "iterations": 74,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+      }
+    },
+    {
+      "family": "score_and_line",
+      "alpha": 0.03,
+      "train_races": 5929,
+      "validation": {
+        "races": 1981,
+        "mean_log_loss": 1.6965154404732476,
+        "mean_uniform_log_loss": 2.1673574317308772,
+        "benter_pseudo_r2": 0.21724242820512052,
+        "mean_brier": 0.7499693561339579,
+        "top1_accuracy": 0.3836446239273094,
+        "top2_contains_winner": 0.6128218071680969,
+        "by_year": {
+          "2025": {
+            "races": 1981,
+            "log_loss": 1.6965154404732476
+          }
+        },
+        "calibration": [
+          {
+            "range": [
+              0,
+              0.01
+            ],
+            "candidate_rows": 810,
+            "expected_winners": 5.4752475189121315,
+            "actual_winners": 7
+          },
+          {
+            "range": [
+              0.01,
+              0.025
+            ],
+            "candidate_rows": 2670,
+            "expected_winners": 45.978524320027034,
+            "actual_winners": 28
+          },
+          {
+            "range": [
+              0.025,
+              0.05
+            ],
+            "candidate_rows": 2945,
+            "expected_winners": 107.86856951922188,
+            "actual_winners": 84
+          },
+          {
+            "range": [
+              0.05,
+              0.1
+            ],
+            "candidate_rows": 3783,
+            "expected_winners": 276.4750244750778,
+            "actual_winners": 255
+          },
+          {
+            "range": [
+              0.1,
+              0.15
+            ],
+            "candidate_rows": 2471,
+            "expected_winners": 303.49363464682585,
+            "actual_winners": 275
+          },
+          {
+            "range": [
+              0.15,
+              0.2
+            ],
+            "candidate_rows": 1591,
+            "expected_winners": 275.31893876090874,
+            "actual_winners": 257
+          },
+          {
+            "range": [
+              0.2,
+              0.3
+            ],
+            "candidate_rows": 1764,
+            "expected_winners": 430.51110752548493,
+            "actual_winners": 488
+          },
+          {
+            "range": [
+              0.3,
+              0.4
+            ],
+            "candidate_rows": 779,
+            "expected_winners": 267.7006185526683,
+            "actual_winners": 301
+          },
+          {
+            "range": [
+              0.4,
+              0.5
+            ],
+            "candidate_rows": 359,
+            "expected_winners": 159.3872571991011,
+            "actual_winners": 174
+          },
+          {
+            "range": [
+              0.5,
+              0.6
+            ],
+            "candidate_rows": 131,
+            "expected_winners": 70.79397937073054,
+            "actual_winners": 74
+          },
+          {
+            "range": [
+              0.6,
+              0.7
+            ],
+            "candidate_rows": 43,
+            "expected_winners": 27.717204481792333,
+            "actual_winners": 28
+          },
+          {
+            "range": [
+              0.7,
+              0.8
+            ],
+            "candidate_rows": 14,
+            "expected_winners": 10.279893629249313,
+            "actual_winners": 10
+          }
+        ]
+      },
+      "optim": {
+        "success": true,
+        "iterations": 41,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+      }
+    },
+    {
+      "family": "full_no_line",
+      "alpha": 0.0001,
+      "train_races": 5929,
+      "validation": {
+        "races": 1981,
+        "mean_log_loss": 1.7477536618588478,
+        "mean_uniform_log_loss": 2.1673574317308772,
+        "benter_pseudo_r2": 0.19360155539131763,
+        "mean_brier": 0.7614183442677762,
+        "top1_accuracy": 0.36597677940434126,
+        "top2_contains_winner": 0.5820292781423524,
+        "by_year": {
+          "2025": {
+            "races": 1981,
+            "log_loss": 1.7477536618588478
+          }
+        },
+        "calibration": [
+          {
+            "range": [
+              0,
+              0.01
+            ],
+            "candidate_rows": 653,
+            "expected_winners": 4.305071860464539,
+            "actual_winners": 5
+          },
+          {
+            "range": [
+              0.01,
+              0.025
+            ],
+            "candidate_rows": 2358,
+            "expected_winners": 41.667594388294305,
+            "actual_winners": 27
+          },
+          {
+            "range": [
+              0.025,
+              0.05
+            ],
+            "candidate_rows": 3556,
+            "expected_winners": 130.94550865312206,
+            "actual_winners": 112
+          },
+          {
+            "range": [
+              0.05,
+              0.1
+            ],
+            "candidate_rows": 4228,
+            "expected_winners": 304.4086530379832,
+            "actual_winners": 304
+          },
+          {
+            "range": [
+              0.1,
+              0.15
+            ],
+            "candidate_rows": 2281,
+            "expected_winners": 280.3646907977203,
+            "actual_winners": 311
+          },
+          {
+            "range": [
+              0.15,
+              0.2
+            ],
+            "candidate_rows": 1363,
+            "expected_winners": 236.02819206291724,
+            "actual_winners": 245
+          },
+          {
+            "range": [
+              0.2,
+              0.3
+            ],
+            "candidate_rows": 1464,
+            "expected_winners": 359.03236477723647,
+            "actual_winners": 375
+          },
+          {
+            "range": [
+              0.3,
+              0.4
+            ],
+            "candidate_rows": 781,
+            "expected_winners": 269.26288419189206,
+            "actual_winners": 267
+          },
+          {
+            "range": [
+              0.4,
+              0.5
+            ],
+            "candidate_rows": 349,
+            "expected_winners": 155.29756820838125,
+            "actual_winners": 147
+          },
+          {
+            "range": [
+              0.5,
+              0.6
+            ],
+            "candidate_rows": 185,
+            "expected_winners": 100.87037135237463,
+            "actual_winners": 101
+          },
+          {
+            "range": [
+              0.6,
+              0.7
+            ],
+            "candidate_rows": 83,
+            "expected_winners": 53.422252615806194,
+            "actual_winners": 47
+          },
+          {
+            "range": [
+              0.7,
+              0.8
+            ],
+            "candidate_rows": 43,
+            "expected_winners": 32.09833705499558,
+            "actual_winners": 29
+          },
+          {
+            "range": [
+              0.8,
+              1
+            ],
+            "candidate_rows": 16,
+            "expected_winners": 13.296510998812177,
+            "actual_winners": 11
+          }
+        ]
+      },
+      "optim": {
+        "success": true,
+        "iterations": 131,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+      }
+    },
+    {
+      "family": "full_no_line",
+      "alpha": 0.003,
+      "train_races": 5929,
+      "validation": {
+        "races": 1981,
+        "mean_log_loss": 1.7493971784740165,
+        "mean_uniform_log_loss": 2.1673574317308772,
+        "benter_pseudo_r2": 0.19284325101977884,
+        "mean_brier": 0.7622132882421933,
+        "top1_accuracy": 0.36648157496214034,
+        "top2_contains_winner": 0.5835436648157496,
+        "by_year": {
+          "2025": {
+            "races": 1981,
+            "log_loss": 1.7493971784740165
+          }
+        },
+        "calibration": [
+          {
+            "range": [
+              0,
+              0.01
+            ],
+            "candidate_rows": 610,
+            "expected_winners": 4.029286231246761,
+            "actual_winners": 5
+          },
+          {
+            "range": [
+              0.01,
+              0.025
+            ],
+            "candidate_rows": 2316,
+            "expected_winners": 40.966000839409006,
+            "actual_winners": 27
+          },
+          {
+            "range": [
+              0.025,
+              0.05
+            ],
+            "candidate_rows": 3568,
+            "expected_winners": 131.44053550492612,
+            "actual_winners": 111
+          },
+          {
+            "range": [
+              0.05,
+              0.1
+            ],
+            "candidate_rows": 4267,
+            "expected_winners": 307.0841089562275,
+            "actual_winners": 301
+          },
+          {
+            "range": [
+              0.1,
+              0.15
+            ],
+            "candidate_rows": 2324,
+            "expected_winners": 285.81177512134525,
+            "actual_winners": 318
+          },
+          {
+            "range": [
+              0.15,
+              0.2
+            ],
+            "candidate_rows": 1357,
+            "expected_winners": 235.04015849044941,
+            "actual_winners": 242
+          },
+          {
+            "range": [
+              0.2,
+              0.3
+            ],
+            "candidate_rows": 1477,
+            "expected_winners": 362.0273238831118,
+            "actual_winners": 380
+          },
+          {
+            "range": [
+              0.3,
+              0.4
+            ],
+            "candidate_rows": 786,
+            "expected_winners": 270.82227099784717,
+            "actual_winners": 271
+          },
+          {
+            "range": [
+              0.4,
+              0.5
+            ],
+            "candidate_rows": 339,
+            "expected_winners": 151.09980282035292,
+            "actual_winners": 146
+          },
+          {
+            "range": [
+              0.5,
+              0.6
+            ],
+            "candidate_rows": 179,
+            "expected_winners": 97.53125853920051,
+            "actual_winners": 96
+          },
+          {
+            "range": [
+              0.6,
+              0.7
+            ],
+            "candidate_rows": 80,
+            "expected_winners": 51.41319736475194,
+            "actual_winners": 44
+          },
+          {
+            "range": [
+              0.7,
+              0.8
+            ],
+            "candidate_rows": 42,
+            "expected_winners": 31.292312027619225,
+            "actual_winners": 30
+          },
+          {
+            "range": [
+              0.8,
+              1
+            ],
+            "candidate_rows": 15,
+            "expected_winners": 12.441969223512492,
+            "actual_winners": 10
+          }
+        ]
+      },
+      "optim": {
+        "success": true,
+        "iterations": 91,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+      }
+    },
+    {
+      "family": "full_no_line",
+      "alpha": 0.03,
+      "train_races": 5929,
+      "validation": {
+        "races": 1981,
+        "mean_log_loss": 1.7523995222781086,
+        "mean_uniform_log_loss": 2.1673574317308772,
+        "benter_pseudo_r2": 0.1914579955191693,
+        "mean_brier": 0.7640202834723522,
+        "top1_accuracy": 0.36547198384654217,
+        "top2_contains_winner": 0.5800100959111559,
+        "by_year": {
+          "2025": {
+            "races": 1981,
+            "log_loss": 1.7523995222781086
+          }
+        },
+        "calibration": [
+          {
+            "range": [
+              0,
+              0.01
+            ],
+            "candidate_rows": 373,
+            "expected_winners": 2.500008942469486,
+            "actual_winners": 5
+          },
+          {
+            "range": [
+              0.01,
+              0.025
+            ],
+            "candidate_rows": 2015,
+            "expected_winners": 36.29315829655403,
+            "actual_winners": 17
+          },
+          {
+            "range": [
+              0.025,
+              0.05
+            ],
+            "candidate_rows": 3593,
+            "expected_winners": 133.36091754677778,
+            "actual_winners": 104
+          },
+          {
+            "range": [
+              0.05,
+              0.1
+            ],
+            "candidate_rows": 4574,
+            "expected_winners": 329.59263260028973,
+            "actual_winners": 298
+          },
+          {
+            "range": [
+              0.1,
+              0.15
+            ],
+            "candidate_rows": 2509,
+            "expected_winners": 308.23850861794836,
+            "actual_winners": 341
+          },
+          {
+            "range": [
+              0.15,
+              0.2
+            ],
+            "candidate_rows": 1444,
+            "expected_winners": 249.67581678913893,
+            "actual_winners": 263
+          },
+          {
+            "range": [
+              0.2,
+              0.3
+            ],
+            "candidate_rows": 1557,
+            "expected_winners": 380.49375180224854,
+            "actual_winners": 399
+          },
+          {
+            "range": [
+              0.3,
+              0.4
+            ],
+            "candidate_rows": 731,
+            "expected_winners": 250.55534879197603,
+            "actual_winners": 271
+          },
+          {
+            "range": [
+              0.4,
+              0.5
+            ],
+            "candidate_rows": 318,
+            "expected_winners": 141.98244509982135,
+            "actual_winners": 143
+          },
+          {
+            "range": [
+              0.5,
+              0.6
+            ],
+            "candidate_rows": 148,
+            "expected_winners": 80.61209798637289,
+            "actual_winners": 73
+          },
+          {
+            "range": [
+              0.6,
+              0.7
+            ],
+            "candidate_rows": 57,
+            "expected_winners": 36.693754873987125,
+            "actual_winners": 40
+          },
+          {
+            "range": [
+              0.7,
+              0.8
+            ],
+            "candidate_rows": 33,
+            "expected_winners": 24.461991316147802,
+            "actual_winners": 21
+          },
+          {
+            "range": [
+              0.8,
+              1
+            ],
+            "candidate_rows": 8,
+            "expected_winners": 6.539567336267852,
+            "actual_winners": 6
+          }
+        ]
+      },
+      "optim": {
+        "success": true,
+        "iterations": 41,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+      }
+    },
+    {
+      "family": "score_only",
+      "alpha": 0.003,
+      "train_races": 5929,
+      "validation": {
+        "races": 1981,
+        "mean_log_loss": 1.7912043158115056,
+        "mean_uniform_log_loss": 2.1673574317308772,
+        "benter_pseudo_r2": 0.17355379893152711,
+        "mean_brier": 0.7686865595355518,
+        "top1_accuracy": 0.36092882382635033,
+        "top2_contains_winner": 0.5805148914689551,
+        "by_year": {
+          "2025": {
+            "races": 1981,
+            "log_loss": 1.7912043158115056
+          }
+        },
+        "calibration": [
+          {
+            "range": [
+              0,
+              0.01
+            ],
+            "candidate_rows": 486,
+            "expected_winners": 3.168611494101282,
+            "actual_winners": 8
+          },
+          {
+            "range": [
+              0.01,
+              0.025
+            ],
+            "candidate_rows": 2080,
+            "expected_winners": 37.35816225041102,
+            "actual_winners": 32
+          },
+          {
+            "range": [
+              0.025,
+              0.05
+            ],
+            "candidate_rows": 3451,
+            "expected_winners": 126.86656691888474,
+            "actual_winners": 106
+          },
+          {
+            "range": [
+              0.05,
+              0.1
+            ],
+            "candidate_rows": 4544,
+            "expected_winners": 329.1486875949753,
+            "actual_winners": 305
+          },
+          {
+            "range": [
+              0.1,
+              0.15
+            ],
+            "candidate_rows": 2459,
+            "expected_winners": 302.0049026976002,
+            "actual_winners": 309
+          },
+          {
+            "range": [
+              0.15,
+              0.2
+            ],
+            "candidate_rows": 1439,
+            "expected_winners": 248.59115355861042,
+            "actual_winners": 256
+          },
+          {
+            "range": [
+              0.2,
+              0.3
+            ],
+            "candidate_rows": 1582,
+            "expected_winners": 385.553129999234,
+            "actual_winners": 421
+          },
+          {
+            "range": [
+              0.3,
+              0.4
+            ],
+            "candidate_rows": 731,
+            "expected_winners": 251.35862699161567,
+            "actual_winners": 253
+          },
+          {
+            "range": [
+              0.4,
+              0.5
+            ],
+            "candidate_rows": 357,
+            "expected_winners": 157.86798452776793,
+            "actual_winners": 157
+          },
+          {
+            "range": [
+              0.5,
+              0.6
+            ],
+            "candidate_rows": 127,
+            "expected_winners": 68.65279416356441,
+            "actual_winners": 71
+          },
+          {
+            "range": [
+              0.6,
+              0.7
+            ],
+            "candidate_rows": 71,
+            "expected_winners": 45.56010231715226,
+            "actual_winners": 44
+          },
+          {
+            "range": [
+              0.7,
+              0.8
+            ],
+            "candidate_rows": 29,
+            "expected_winners": 21.538900514031695,
+            "actual_winners": 17
+          },
+          {
+            "range": [
+              0.8,
+              1
+            ],
+            "candidate_rows": 4,
+            "expected_winners": 3.3303769720511758,
+            "actual_winners": 2
+          }
+        ]
+      },
+      "optim": {
+        "success": true,
+        "iterations": 6,
+        "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"
+      }
+    },
+    {
+      "family": "score_only",
+      "alpha": 0.0001,
+      "train_races": 5929,
+      "validation": {
+        "races": 1981,
+        "mean_log_loss": 1.7914596998660723,
+        "mean_uniform_log_loss": 2.1673574317308772,
+        "benter_pseudo_r2": 0.17343596693444718,
+        "mean_brier": 0.7686584654543208,
+        "top1_accuracy": 0.36092882382635033,
+        "top2_contains_winner": 0.5805148914689551,
+        "by_year": {
+          "2025": {
+            "races": 1981,
+            "log_loss": 1.7914596998660723
+          }
+        },
+        "calibration": [
+          {
+            "range": [
+              0,
+              0.01
+            ],
+            "candidate_rows": 528,
+            "expected_winners": 3.456305861512633,
+            "actual_winners": 9
+          },
+          {
+            "range": [
+              0.01,
+              0.025
+            ],
+            "candidate_rows": 2137,
+            "expected_winners": 38.38061723099891,
+            "actual_winners": 31
+          },
+          {
+            "range": [
+              0.025,
+              0.05
+            ],
+            "candidate_rows": 3434,
+            "expected_winners": 126.21033236418151,
+            "actual_winners": 111
+          },
+          {
+            "range": [
+              0.05,
+              0.1
+            ],
+            "candidate_rows": 4500,
+            "expected_winners": 325.8271809206007,
+            "actual_winners": 302
+          },
+          {
+            "range": [
+              0.1,
+              0.15
+            ],
+            "candidate_rows": 2426,
+            "expected_winners": 298.110346570096,
+            "actual_winners": 310
+          },
+          {
+            "range": [
+              0.15,
+              0.2
+            ],
+            "candidate_rows": 1421,
+            "expected_winners": 245.55204427595834,
+            "actual_winners": 251
+          },
+          {
+            "range": [
+              0.2,
+              0.3
+            ],
+            "candidate_rows": 1570,
+            "expected_winners": 382.6346855833167,
+            "actual_winners": 414
+          },
+          {
+            "range": [
+              0.3,
+              0.4
+            ],
+            "candidate_rows": 737,
+            "expected_winners": 253.34789784103515,
+            "actual_winners": 252
+          },
+          {
+            "range": [
+              0.4,
+              0.5
+            ],
+            "candidate_rows": 367,
+            "expected_winners": 162.52631747036924,
+            "actual_winners": 161
+          },
+          {
+            "range": [
+              0.5,
+              0.6
+            ],
+            "candidate_rows": 135,
+            "expected_winners": 73.28125373910221,
+            "actual_winners": 77
+          },
+          {
+            "range": [
+              0.6,
+              0.7
+            ],
+            "candidate_rows": 69,
+            "expected_winners": 44.49523573531223,
+            "actual_winners": 42
+          },
+          {
+            "range": [
+              0.7,
+              0.8
+            ],
+            "candidate_rows": 32,
+            "expected_winners": 23.82639649129322,
+            "actual_winners": 19
+          },
+          {
+            "range": [
+              0.8,
+              1
+            ],
+            "candidate_rows": 4,
+            "expected_winners": 3.351385916223259,
+            "actual_winners": 2
+          }
+        ]
+      },
+      "optim": {
+        "success": true,
+        "iterations": 6,
+        "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"
+      }
+    },
+    {
+      "family": "score_only",
+      "alpha": 0.03,
+      "train_races": 5929,
+      "validation": {
+        "races": 1981,
+        "mean_log_loss": 1.7924012777669789,
+        "mean_uniform_log_loss": 2.1673574317308772,
+        "benter_pseudo_r2": 0.17300153102317506,
+        "mean_brier": 0.770021361370006,
+        "top1_accuracy": 0.36092882382635033,
+        "top2_contains_winner": 0.5805148914689551,
+        "by_year": {
+          "2025": {
+            "races": 1981,
+            "log_loss": 1.7924012777669789
+          }
+        },
+        "calibration": [
+          {
+            "range": [
+              0,
+              0.01
+            ],
+            "candidate_rows": 253,
+            "expected_winners": 1.5882026273358552,
+            "actual_winners": 6
+          },
+          {
+            "range": [
+              0.01,
+              0.025
+            ],
+            "candidate_rows": 1595,
+            "expected_winners": 29.295796664549517,
+            "actual_winners": 21
+          },
+          {
+            "range": [
+              0.025,
+              0.05
+            ],
+            "candidate_rows": 3474,
+            "expected_winners": 129.23619041406658,
+            "actual_winners": 85
+          },
+          {
+            "range": [
+              0.05,
+              0.1
+            ],
+            "candidate_rows": 4952,
+            "expected_winners": 361.0144004800642,
+            "actual_winners": 312
+          },
+          {
+            "range": [
+              0.1,
+              0.15
+            ],
+            "candidate_rows": 2744,
+            "expected_winners": 337.07414747674954,
+            "actual_winners": 333
+          },
+          {
+            "range": [
+              0.15,
+              0.2
+            ],
+            "candidate_rows": 1567,
+            "expected_winners": 270.7463089678573,
+            "actual_winners": 285
+          },
+          {
+            "range": [
+              0.2,
+              0.3
+            ],
+            "candidate_rows": 1640,
+            "expected_winners": 397.67867710283696,
+            "actual_winners": 451
+          },
+          {
+            "range": [
+              0.3,
+              0.4
+            ],
+            "candidate_rows": 705,
+            "expected_winners": 241.7939065671146,
+            "actual_winners": 263
+          },
+          {
+            "range": [
+              0.4,
+              0.5
+            ],
+            "candidate_rows": 278,
+            "expected_winners": 122.46159271837797,
+            "actual_winners": 131
+          },
+          {
+            "range": [
+              0.5,
+              0.6
+            ],
+            "candidate_rows": 94,
+            "expected_winners": 51.46206825489001,
+            "actual_winners": 56
+          },
+          {
+            "range": [
+              0.6,
+              0.7
+            ],
+            "candidate_rows": 45,
+            "expected_winners": 29.032469377651385,
+            "actual_winners": 30
+          },
+          {
+            "range": [
+              0.7,
+              0.8
+            ],
+            "candidate_rows": 12,
+            "expected_winners": 8.778794845992083,
+            "actual_winners": 7
+          },
+          {
+            "range": [
+              0.8,
+              1
+            ],
+            "candidate_rows": 1,
+            "expected_winners": 0.8374445025138821,
+            "actual_winners": 1
+          }
+        ]
+      },
+      "optim": {
+        "success": true,
+        "iterations": 6,
+        "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"
+      }
+    }
+  ],
+  "test": {
+    "races": 1085,
+    "mean_log_loss": 1.6729570765760293,
+    "mean_uniform_log_loss": 2.170265321851333,
+    "benter_pseudo_r2": 0.2291462892892181,
+    "mean_brier": 0.7443921682487233,
+    "top1_accuracy": 0.3741935483870968,
+    "top2_contains_winner": 0.5990783410138248,
+    "by_year": {
+      "2026": {
+        "races": 1085,
+        "log_loss": 1.6729570765760293
+      }
+    },
+    "calibration": [
+      {
+        "range": [
+          0,
+          0.01
+        ],
+        "candidate_rows": 695,
+        "expected_winners": 4.314176563165777,
+        "actual_winners": 6
+      },
+      {
+        "range": [
+          0.01,
+          0.025
+        ],
+        "candidate_rows": 1634,
+        "expected_winners": 27.977637534388926,
+        "actual_winners": 25
+      },
+      {
+        "range": [
+          0.025,
+          0.05
+        ],
+        "candidate_rows": 1636,
+        "expected_winners": 60.15251757718077,
+        "actual_winners": 57
+      },
+      {
+        "range": [
+          0.05,
+          0.1
+        ],
+        "candidate_rows": 1967,
+        "expected_winners": 141.88173801151544,
+        "actual_winners": 121
+      },
+      {
+        "range": [
+          0.1,
+          0.15
+        ],
+        "candidate_rows": 1139,
+        "expected_winners": 139.42458748272966,
+        "actual_winners": 157
+      },
+      {
+        "range": [
+          0.15,
+          0.2
+        ],
+        "candidate_rows": 726,
+        "expected_winners": 124.94922810106249,
+        "actual_winners": 130
+      },
+      {
+        "range": [
+          0.2,
+          0.3
+        ],
+        "candidate_rows": 870,
+        "expected_winners": 213.23978716353923,
+        "actual_winners": 227
+      },
+      {
+        "range": [
+          0.3,
+          0.4
+        ],
+        "candidate_rows": 428,
+        "expected_winners": 147.39290106937125,
+        "actual_winners": 149
+      },
+      {
+        "range": [
+          0.4,
+          0.5
+        ],
+        "candidate_rows": 251,
+        "expected_winners": 112.12465380516888,
+        "actual_winners": 98
+      },
+      {
+        "range": [
+          0.5,
+          0.6
+        ],
+        "candidate_rows": 105,
+        "expected_winners": 56.87940278730105,
+        "actual_winners": 58
+      },
+      {
+        "range": [
+          0.6,
+          0.7
+        ],
+        "candidate_rows": 51,
+        "expected_winners": 32.744035524813405,
+        "actual_winners": 35
+      },
+      {
+        "range": [
+          0.7,
+          0.8
+        ],
+        "candidate_rows": 23,
+        "expected_winners": 17.027793759884414,
+        "actual_winners": 15
+      },
+      {
+        "range": [
+          0.8,
+          1
+        ],
+        "candidate_rows": 8,
+        "expected_winners": 6.8915406198787075,
+        "actual_winners": 7
+      }
+    ]
+  },
+  "development_fit": {
+    "races": 7910,
+    "mean_log_loss": 1.6503328976405318,
+    "mean_uniform_log_loss": 2.1664757745060594,
+    "benter_pseudo_r2": 0.2382407793058311,
+    "mean_brier": 0.7370443825561986,
+    "top1_accuracy": 0.4005056890012642,
+    "top2_contains_winner": 0.6252844500632111,
+    "by_year": {
+      "2022": {
+        "races": 1961,
+        "log_loss": 1.664546491651419
+      },
+      "2023": {
+        "races": 1979,
+        "log_loss": 1.6395814540176477
+      },
+      "2024": {
+        "races": 1989,
+        "log_loss": 1.6474042995197091
+      },
+      "2025": {
+        "races": 1981,
+        "log_loss": 1.6499438167403073
+      }
+    },
+    "calibration": [
+      {
+        "range": [
+          0,
+          0.01
+        ],
+        "candidate_rows": 6108,
+        "expected_winners": 37.670871794991506,
+        "actual_winners": 48
+      },
+      {
+        "range": [
+          0.01,
+          0.025
+        ],
+        "candidate_rows": 11657,
+        "expected_winners": 198.3087109225063,
+        "actual_winners": 170
+      },
+      {
+        "range": [
+          0.025,
+          0.05
+        ],
+        "candidate_rows": 11649,
+        "expected_winners": 424.3784877982322,
+        "actual_winners": 373
+      },
+      {
+        "range": [
+          0.05,
+          0.1
+        ],
+        "candidate_rows": 13792,
+        "expected_winners": 1002.5508755829514,
+        "actual_winners": 988
+      },
+      {
+        "range": [
+          0.1,
+          0.15
+        ],
+        "candidate_rows": 8142,
+        "expected_winners": 1001.3470790146159,
+        "actual_winners": 963
+      },
+      {
+        "range": [
+          0.15,
+          0.2
+        ],
+        "candidate_rows": 5254,
+        "expected_winners": 910.7439748062948,
+        "actual_winners": 938
+      },
+      {
+        "range": [
+          0.2,
+          0.3
+        ],
+        "candidate_rows": 6266,
+        "expected_winners": 1532.9749915928373,
+        "actual_winners": 1631
+      },
+      {
+        "range": [
+          0.3,
+          0.4
+        ],
+        "candidate_rows": 3151,
+        "expected_winners": 1087.5199618976808,
+        "actual_winners": 1131
+      },
+      {
+        "range": [
+          0.4,
+          0.5
+        ],
+        "candidate_rows": 1725,
+        "expected_winners": 766.9011280377491,
+        "actual_winners": 774
+      },
+      {
+        "range": [
+          0.5,
+          0.6
+        ],
+        "candidate_rows": 867,
+        "expected_winners": 470.63029433689405,
+        "actual_winners": 448
+      },
+      {
+        "range": [
+          0.6,
+          0.7
+        ],
+        "candidate_rows": 441,
+        "expected_winners": 283.6532511562182,
+        "actual_winners": 275
+      },
+      {
+        "range": [
+          0.7,
+          0.8
+        ],
+        "candidate_rows": 171,
+        "expected_winners": 126.33176912985033,
+        "actual_winners": 114
+      },
+      {
+        "range": [
+          0.8,
+          1
+        ],
+        "candidate_rows": 79,
+        "expected_winners": 66.98860392917801,
+        "actual_winners": 57
+      }
+    ]
+  },
+  "selection_rule": "Best 2025 validation log-loss, no tuning on 2026H1 labels",
+  "g3_model_does_not_inherit_f1_coefficients": true,
+  "source_snapshot_asof_validity_verified": false,
+  "today_2026_10_18_excluded_from_training": true,
+  "model_coefficients": [
+    1.101737552651348,
+    -0.09860920474060594,
+    0.06116303347771213,
+    -0.017713547675276973,
+    0.16926915630496844,
+    0.02539412149369583,
+    0.16048368063518112,
+    -0.012949303729077336,
+    -0.057449880964077396,
+    0.0728370986159777,
+    0.05075533342839231,
+    0.11813236034382343,
+    -0.191921471415076,
+    0.1724523746080483,
+    0.13396079309290762,
+    -0.3670026226386098,
+    0.02444376159884923,
+    0.3673751351492854,
+    0.06354892509712955,
+    -0.5341953584130555,
+    -0.0486492985001619,
+    0.11129786417243857,
+    0.4206768429315571,
+    0.012462807846190423,
+    0.022406078019088043,
+    0.04407528845175322,
+    -0.15528209088951714,
+    -0.16822011953728833,
+    -0.14275321565198265,
+    -0.012118080849142324,
+    0.1112978641724406,
+    -0.028152238682177838,
+    0.17113581824323992,
+    0.13719166720046955,
+    1.0105875285964563,
+    1.013176450210617,
+    0.0,
+    0.0,
+    0.0,
+    -2.4445241172393466,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    -0.364618302877279,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "transform": {
+    "median": [
+      100.84,
+      37.0,
+      96.0,
+      2.0,
+      1.0,
+      0.0,
+      1.0,
+      2.0,
+      1.0,
+      3.0,
+      3.0,
+      3.0,
+      13.0,
+      12.9,
+      28.0,
+      42.3,
+      3.92,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      3.0,
+      1.0986122886681096,
+      0.0,
+      1.0562089524757783,
+      0.6931471805599453,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      2.0,
+      0.0,
+      0.0,
+      0.0,
+      101.03,
+      3.8699999999999903,
+      0.0
+    ],
+    "mean": [
+      101.29470087443364,
+      36.415875443710135,
+      97.33462237742056,
+      2.7751002857060403,
+      3.381475282098641,
+      1.2458659201754638,
+      1.6497792271507317,
+      2.6617413638856022,
+      1.2090415861014112,
+      3.462829355574154,
+      3.303598741739055,
+      3.193847219416467,
+      13.710397968312602,
+      14.659389339413003,
+      28.572762690831436,
+      41.9676329687455,
+      3.9190935326541805,
+      0.427303685319327,
+      0.3755880061181496,
+      0.19710830856252345,
+      0.05171567920117746,
+      2.5551354939251394,
+      1.1503897367760232,
+      0.3267085862882113,
+      0.8197988330765723,
+      0.8958432328319097,
+      0.46579908301597234,
+      0.10922106790094471,
+      1.0470961792769788,
+      0.7079760823020321,
+      1.5551354939251392,
+      0.2795966816394445,
+      0.7678932945313621,
+      0.15973227362315753,
+      96.5487983559878,
+      9.644245567708483,
+      0.0
+    ],
+    "std": [
+      7.526555962456254,
+      7.87696420517207,
+      13.542416562906121,
+      2.8336074590858327,
+      4.92743794623173,
+      2.338796173646208,
+      2.294268736937461,
+      2.5389765360530174,
+      1.4273586329993946,
+      2.827043602014268,
+      2.1040379940840066,
+      2.0131306019626996,
+      5.300713954590117,
+      11.809244335993919,
+      15.221638358566997,
+      15.884706440384198,
+      0.0200835373072195,
+      0.4946870180546974,
+      0.4842743600257424,
+      0.397814810254903,
+      0.22145240510307931,
+      0.6458212118134836,
+      1.1301481745875108,
+      0.5507723658479122,
+      0.7784722291394743,
+      0.9022968497194342,
+      0.7241850882972439,
+      0.17333211652533737,
+      1.2453332958725611,
+      0.9609626250541263,
+      0.6458212118134836,
+      0.7547382138975222,
+      1.0512116536746186,
+      0.6922733608046704,
+      23.58173816528234,
+      21.92938807920906,
+      1.0
+    ]
+  },
+  "fitting_diagnostic": {
+    "success": true,
+    "iterations": 363,
+    "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+  },
+  "source_race_ids_sha256": "c328d1267622f65b8ddc4e19a98ad8c095961d7b36c1a712e848a994b27784d2",
+  "caution": "Retrospective card data may not match true historical pre-race values; out-of-time evaluation is not a prospective proof."
+}
