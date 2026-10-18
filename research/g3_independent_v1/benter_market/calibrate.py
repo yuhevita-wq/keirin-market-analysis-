@@ -40,8 +40,8 @@ def daily_ci(rows,co,phase,seed=20261018,n_rep=1600):
     counts=np.array([len(grouped[d]) for d in days])
     gen=np.random.default_rng(seed)
     indices=gen.integers(len(days),size=(n_rep,len(days)))
-    samples=sum_mat[indices].sum(axis=1)/counts[indices].sum(axis=1)[:,:,None] if False else (
-        sum_mat[indices].sum(axis=1)/counts[indices].sum(axis=1)[:,None])
+    samples=(sum_mat[indices].sum(axis=1) /
+             counts[indices].sum(axis=1)[:,None])
     return {
       "days":len(days),
       "improvement_combined_over_public_mean":float(sum_mat[:,0].sum()/counts.sum()),
