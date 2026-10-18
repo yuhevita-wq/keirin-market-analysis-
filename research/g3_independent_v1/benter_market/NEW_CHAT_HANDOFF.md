@@ -14,7 +14,7 @@
 4. [`research/g3_independent_v1/models/g3_third_conditional_v1.json`](../models/g3_third_conditional_v1.json)：G3専用3着。
 5. [`research/g3_independent_v1/output/g3_first_win_report.json`](../output/g3_first_win_report.json)：G3専用1着。
 6. [`research/g3_independent_v1/output/g3_prior_year_first_market_input_audit.json`](../output/g3_prior_year_first_market_input_audit.json)：G3過去年次1着独立確率 **7,034R**。
-7. [`research/g3_independent_v1/benter_market/combination.py`](combination.py)、[`calibrate.py`](calibrate.py)、[`ticket_space.py`](ticket_space.py)、[`evaluate.py`](evaluate.py)：実行コード。
+7. [`research/g3_independent_v1/benter_market/combination.py`](combination.py)、[`calibrate.py`](calibrate.py)、[`ticket_space.py`](ticket_space.py)、[`evaluate.py`](evaluate.py)、[`predict_g3_first.py`](predict_g3_first.py)、[`run_pipeline.py`](run_pipeline.py)：既存G3モデルから全7市場までをつなぐ実行コード。
 
 ## 研究最上位原則
 
@@ -36,7 +36,7 @@
 
 ## 今日の検証
 
-この新会話では、その後で**2026年10月18日**のユーザーが指定するG3レースに研究基盤を適用する。実際のレース前の出走表、全車の独立1着確率、全発売賭式の全組番の実オッズを検証して入力する。
+この新会話では、その後で**2026年10月18日**のユーザーが指定するG3レースに研究基盤を適用する。実際のレース前出走表と全発売賭式の全組番の実オッズを確認する。**凍結済みG3 V1の1着確率は `run_pipeline.py` が実出走表から計算する。勝率を手作業で捏造しない。**
 
 **レースの結果を予測入力に使わない。** 今日すでに発走したレースを、後から『発走前に知っていた』としてバックテストしない。買う前に見えたオッズの時刻を証明できない場合は、確定オッズとの事後比較として扱う。
 
