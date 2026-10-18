@@ -144,6 +144,13 @@ def forecast(period):
     transform.median[category_idx]=0.
     transform.mean[category_idx]=0.
     transform.std[category_idx]=1.
+    # Sparse 0/1 foreign feature needs more L-BFGS iterations for convergence.
+    # Numerical optimization only; objective, penalty, and features unchanged.
+    base_minimize=v1.minimize
+    def extend_iterations(*args,**kwargs):
+        kwargs["options"]={**kwargs.get("options",{}),"maxiter":2400}
+        return base_minimize(*args,**kwargs)
+    v1.minimize=extend_iterations
     beta=v1.fit(train,transform,ALPHA)
     OUT.mkdir(parents=True,exist_ok=True)
     path=OUT/f"independent_win_{period}.csv"
