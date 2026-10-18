@@ -34,9 +34,6 @@ def describe(seq):
 
 def main():
     by_h2=defaultdict(list);specs=defaultdict(dict)
-    for p,target in ((H2,by_h2),(H1,None)):
-        # Keep raw values for per-feature comparison, but do not use outcomes in features.
-        pass
     h2list=list(rows(H2/"entries.csv"))
     h1list=list(rows(H1/"entries.csv"))
     for row in h2list:
@@ -71,7 +68,7 @@ def main():
                               "top2_rate":value(z.get("top2_rate")),
                               "gear":value(z.get("gear"))})
             extremes.append({"race_id":rid,"date":e.get("race_date"),"car":car,"p":p,
-                             "actual_winner":int((rid,car) not in failure_ids) if p>=.8 else 0,
+                             "is_known_counterexample":(rid,car) in failure_ids,
                              "race_type":specs.get(rid,{}).get("race_type"),
                              "lineup":specs.get(rid,{}).get("predicted_line_formation"),
                              "features":fields,
