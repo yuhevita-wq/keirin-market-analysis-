@@ -1,0 +1,1844 @@
+{
+  "status": "G3_THIRD_RESULT_FIRST_EMPIRICAL_BEFORE_FITTING",
+  "research_grade": "G3開催 S級 only, excludes G1 G2 F1 F2 A級 girls",
+  "all_first_eligible_races": 8995,
+  "eligible_unique_first_second_third_races": 8945,
+  "candidate_third_rows": 60506,
+  "missing_podium_breakdown": {
+    "missing_invalid_or_nonunique_third": 22,
+    "missing_invalid_or_nonunique_second": 28
+  },
+  "baseline_equation": "P(third=k | actual first=i, actual second=j)=q_k / (1-q_i-q_j), where q from prior-year-only G3 first model",
+  "conditions_on_real_first_second_for_empirical_measurement": true,
+  "not_an_unconditional_trifecta_accuracy": true,
+  "G3_only_prior_year_first_model_fits": [
+    {
+      "prediction_year": 2022,
+      "training_races": 1961,
+      "target_races": 1961,
+      "trained_on_years": [
+        "2022"
+      ],
+      "target_is_in_sample": true,
+      "optimizer_converged": true,
+      "coefficient_sha256": "3081315599302346cffcc9d032af26119af661057e6a77992e6229d0d4574b05"
+    },
+    {
+      "prediction_year": 2023,
+      "training_races": 1961,
+      "target_races": 1979,
+      "trained_on_years": [
+        "2022"
+      ],
+      "target_is_in_sample": false,
+      "optimizer_converged": true,
+      "coefficient_sha256": "3081315599302346cffcc9d032af26119af661057e6a77992e6229d0d4574b05"
+    },
+    {
+      "prediction_year": 2024,
+      "training_races": 3940,
+      "target_races": 1989,
+      "trained_on_years": [
+        "2022",
+        "2023"
+      ],
+      "target_is_in_sample": false,
+      "optimizer_converged": true,
+      "coefficient_sha256": "740879e1ad267938ea0c4386308fd3c0b644a37c3c93c9add24b6743d7c3edba"
+    },
+    {
+      "prediction_year": 2025,
+      "training_races": 5929,
+      "target_races": 1981,
+      "trained_on_years": [
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "target_is_in_sample": false,
+      "optimizer_converged": true,
+      "coefficient_sha256": "a013292a4c6ad95670ff607b89b4ded6ed8c1c002cf866702b3c84f19a7a736d"
+    },
+    {
+      "prediction_year": 2026,
+      "training_races": 7910,
+      "target_races": 1085,
+      "trained_on_years": [
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "target_is_in_sample": false,
+      "optimizer_converged": true,
+      "coefficient_sha256": "401bb63145164a744d1d7cea349d80c917cd4cf900b4d88398c1e6f9044bb3f8"
+    }
+  ],
+  "features_to_be_considered_after_census": [
+    "log_q",
+    "owner_both_line",
+    "owner_first_line_only",
+    "owner_second_line_only",
+    "direction_ahead_of_both",
+    "direction_between_first_second",
+    "direction_behind_both",
+    "direction_ahead_of_first",
+    "direction_directly_behind_first",
+    "direction_further_behind_first",
+    "direction_ahead_of_second",
+    "direction_directly_behind_second",
+    "direction_further_behind_second",
+    "role_second",
+    "role_third_or_later",
+    "role_solo"
+  ],
+  "first_fit_2022_in_sample_observational_only": true,
+  "all_discovery_data_included": true,
+  "data_collected_retrospectively_asof_not_certified": true,
+  "previous_G3_first_and_second_parameters_untouched": true,
+  "original_source_race_id_sha256": "c328d1267622f65b8ddc4e19a98ad8c095961d7b36c1a712e848a994b27784d2",
+  "eligible_third_race_ids_sha256": "576641d1ea215d5fe99cb75b931f16b6646578e00a4061f935ea9abb662fef7e",
+  "observed_vs_expected": {
+    "all": {
+      "candidate_role|leader": {
+        "candidate_rows": 21715,
+        "harville_expected_third": 4108.13802736075,
+        "actual_third": 2935,
+        "observed_minus_expected": -1173.1380273607501,
+        "actual_candidate_frequency": 0.13516002763067003,
+        "baseline_candidate_frequency": 0.18918434388030164
+      },
+      "candidate_role|second": {
+        "candidate_rows": 21048,
+        "harville_expected_third": 4004.2245120121,
+        "actual_third": 3452,
+        "observed_minus_expected": -552.2245120121001,
+        "actual_candidate_frequency": 0.16400608133789435,
+        "baseline_candidate_frequency": 0.19024251767446315
+      },
+      "candidate_role|solo": {
+        "candidate_rows": 3563,
+        "harville_expected_third": 341.0324092485438,
+        "actual_third": 421,
+        "observed_minus_expected": 79.96759075145621,
+        "actual_candidate_frequency": 0.11815885489755824,
+        "baseline_candidate_frequency": 0.09571496189967549
+      },
+      "candidate_role|third_or_later": {
+        "candidate_rows": 14180,
+        "harville_expected_third": 491.6050513786333,
+        "actual_third": 2137,
+        "observed_minus_expected": 1645.3949486213667,
+        "actual_candidate_frequency": 0.1507052186177715,
+        "baseline_candidate_frequency": 0.03466890348227315
+      },
+      "configuration_x_ownership|different_first_second_lines|first_line_only": {
+        "candidate_rows": 6168,
+        "harville_expected_third": 1089.7805115107953,
+        "actual_third": 1309,
+        "observed_minus_expected": 219.21948848920465,
+        "actual_candidate_frequency": 0.21222438391699092,
+        "baseline_candidate_frequency": 0.17668296230719768
+      },
+      "configuration_x_ownership|different_first_second_lines|neither_line": {
+        "candidate_rows": 15344,
+        "harville_expected_third": 1991.5690123650513,
+        "actual_third": 1470,
+        "observed_minus_expected": -521.5690123650513,
+        "actual_candidate_frequency": 0.09580291970802919,
+        "baseline_candidate_frequency": 0.12979464366299864
+      },
+      "configuration_x_ownership|different_first_second_lines|second_line_only": {
+        "candidate_rows": 6004,
+        "harville_expected_third": 988.6504761241462,
+        "actual_third": 1291,
+        "observed_minus_expected": 302.34952387585383,
+        "actual_candidate_frequency": 0.21502331778814124,
+        "baseline_candidate_frequency": 0.16466530248570055
+      },
+      "configuration_x_ownership|same_first_second_line|both_line": {
+        "candidate_rows": 3891,
+        "harville_expected_third": 417.75271959167895,
+        "actual_third": 1582,
+        "observed_minus_expected": 1164.247280408321,
+        "actual_candidate_frequency": 0.4065792855307119,
+        "baseline_candidate_frequency": 0.10736384466504213
+      },
+      "configuration_x_ownership|same_first_second_line|neither_line": {
+        "candidate_rows": 29099,
+        "harville_expected_third": 4457.247280408326,
+        "actual_third": 3293,
+        "observed_minus_expected": -1164.2472804083263,
+        "actual_candidate_frequency": 0.11316540087288222,
+        "baseline_candidate_frequency": 0.1531752733911243
+      },
+      "configuration_x_position|different_first_second_lines|ahead_of_first": {
+        "candidate_rows": 2061,
+        "harville_expected_third": 523.8236963431679,
+        "actual_third": 465,
+        "observed_minus_expected": -58.82369634316785,
+        "actual_candidate_frequency": 0.22561863173216884,
+        "baseline_candidate_frequency": 0.25415996911361854
+      },
+      "configuration_x_position|different_first_second_lines|ahead_of_second": {
+        "candidate_rows": 2270,
+        "harville_expected_third": 537.8524298631207,
+        "actual_third": 478,
+        "observed_minus_expected": -59.85242986312073,
+        "actual_candidate_frequency": 0.2105726872246696,
+        "baseline_candidate_frequency": 0.23693939641547168
+      },
+      "configuration_x_position|different_first_second_lines|directly_behind_first": {
+        "candidate_rows": 3059,
+        "harville_expected_third": 524.1674502383212,
+        "actual_third": 785,
+        "observed_minus_expected": 260.8325497616788,
+        "actual_candidate_frequency": 0.2566198103955541,
+        "baseline_candidate_frequency": 0.1713525499308013
+      },
+      "configuration_x_position|different_first_second_lines|directly_behind_second": {
+        "candidate_rows": 2846,
+        "harville_expected_third": 421.3636751545452,
+        "actual_third": 760,
+        "observed_minus_expected": 338.6363248454548,
+        "actual_candidate_frequency": 0.2670414617006325,
+        "baseline_candidate_frequency": 0.1480546996326582
+      },
+      "configuration_x_position|different_first_second_lines|further_behind_first": {
+        "candidate_rows": 1048,
+        "harville_expected_third": 41.78936492930702,
+        "actual_third": 59,
+        "observed_minus_expected": 17.21063507069298,
+        "actual_candidate_frequency": 0.05629770992366412,
+        "baseline_candidate_frequency": 0.039875348214987616
+      },
+      "configuration_x_position|different_first_second_lines|further_behind_second": {
+        "candidate_rows": 888,
+        "harville_expected_third": 29.434371106478974,
+        "actual_third": 53,
+        "observed_minus_expected": 23.565628893521026,
+        "actual_candidate_frequency": 0.059684684684684686,
+        "baseline_candidate_frequency": 0.033146814309097945
+      },
+      "configuration_x_position|different_first_second_lines|neither_line": {
+        "candidate_rows": 15344,
+        "harville_expected_third": 1991.5690123650513,
+        "actual_third": 1470,
+        "observed_minus_expected": -521.5690123650513,
+        "actual_candidate_frequency": 0.09580291970802919,
+        "baseline_candidate_frequency": 0.12979464366299864
+      },
+      "configuration_x_position|same_first_second_line|ahead_of_both": {
+        "candidate_rows": 675,
+        "harville_expected_third": 181.23470603736584,
+        "actual_third": 234,
+        "observed_minus_expected": 52.76529396263416,
+        "actual_candidate_frequency": 0.3466666666666667,
+        "baseline_candidate_frequency": 0.26849586079609755
+      },
+      "configuration_x_position|same_first_second_line|behind_both": {
+        "candidate_rows": 3058,
+        "harville_expected_third": 186.1575942139337,
+        "actual_third": 1269,
+        "observed_minus_expected": 1082.8424057860664,
+        "actual_candidate_frequency": 0.41497710922171355,
+        "baseline_candidate_frequency": 0.06087560307846099
+      },
+      "configuration_x_position|same_first_second_line|between_first_second": {
+        "candidate_rows": 158,
+        "harville_expected_third": 50.36041934037946,
+        "actual_third": 79,
+        "observed_minus_expected": 28.639580659620542,
+        "actual_candidate_frequency": 0.5,
+        "baseline_candidate_frequency": 0.31873683126822444
+      },
+      "configuration_x_position|same_first_second_line|neither_line": {
+        "candidate_rows": 29099,
+        "harville_expected_third": 4457.247280408326,
+        "actual_third": 3293,
+        "observed_minus_expected": -1164.2472804083263,
+        "actual_candidate_frequency": 0.11316540087288222,
+        "baseline_candidate_frequency": 0.1531752733911243
+      },
+      "directed_position|ahead_of_both": {
+        "candidate_rows": 675,
+        "harville_expected_third": 181.23470603736584,
+        "actual_third": 234,
+        "observed_minus_expected": 52.76529396263416,
+        "actual_candidate_frequency": 0.3466666666666667,
+        "baseline_candidate_frequency": 0.26849586079609755
+      },
+      "directed_position|ahead_of_first": {
+        "candidate_rows": 2061,
+        "harville_expected_third": 523.8236963431679,
+        "actual_third": 465,
+        "observed_minus_expected": -58.82369634316785,
+        "actual_candidate_frequency": 0.22561863173216884,
+        "baseline_candidate_frequency": 0.25415996911361854
+      },
+      "directed_position|ahead_of_second": {
+        "candidate_rows": 2270,
+        "harville_expected_third": 537.8524298631207,
+        "actual_third": 478,
+        "observed_minus_expected": -59.85242986312073,
+        "actual_candidate_frequency": 0.2105726872246696,
+        "baseline_candidate_frequency": 0.23693939641547168
+      },
+      "directed_position|behind_both": {
+        "candidate_rows": 3058,
+        "harville_expected_third": 186.1575942139337,
+        "actual_third": 1269,
+        "observed_minus_expected": 1082.8424057860664,
+        "actual_candidate_frequency": 0.41497710922171355,
+        "baseline_candidate_frequency": 0.06087560307846099
+      },
+      "directed_position|between_first_second": {
+        "candidate_rows": 158,
+        "harville_expected_third": 50.36041934037946,
+        "actual_third": 79,
+        "observed_minus_expected": 28.639580659620542,
+        "actual_candidate_frequency": 0.5,
+        "baseline_candidate_frequency": 0.31873683126822444
+      },
+      "directed_position|directly_behind_first": {
+        "candidate_rows": 3059,
+        "harville_expected_third": 524.1674502383212,
+        "actual_third": 785,
+        "observed_minus_expected": 260.8325497616788,
+        "actual_candidate_frequency": 0.2566198103955541,
+        "baseline_candidate_frequency": 0.1713525499308013
+      },
+      "directed_position|directly_behind_second": {
+        "candidate_rows": 2846,
+        "harville_expected_third": 421.3636751545452,
+        "actual_third": 760,
+        "observed_minus_expected": 338.6363248454548,
+        "actual_candidate_frequency": 0.2670414617006325,
+        "baseline_candidate_frequency": 0.1480546996326582
+      },
+      "directed_position|further_behind_first": {
+        "candidate_rows": 1048,
+        "harville_expected_third": 41.78936492930702,
+        "actual_third": 59,
+        "observed_minus_expected": 17.21063507069298,
+        "actual_candidate_frequency": 0.05629770992366412,
+        "baseline_candidate_frequency": 0.039875348214987616
+      },
+      "directed_position|further_behind_second": {
+        "candidate_rows": 888,
+        "harville_expected_third": 29.434371106478974,
+        "actual_third": 53,
+        "observed_minus_expected": 23.565628893521026,
+        "actual_candidate_frequency": 0.059684684684684686,
+        "baseline_candidate_frequency": 0.033146814309097945
+      },
+      "directed_position|neither_line": {
+        "candidate_rows": 44443,
+        "harville_expected_third": 6448.8162927734065,
+        "actual_third": 4763,
+        "observed_minus_expected": -1685.8162927734065,
+        "actual_candidate_frequency": 0.10717098305694935,
+        "baseline_candidate_frequency": 0.14510308243758085
+      },
+      "first_second_configuration|different_first_second_lines": {
+        "candidate_rows": 27516,
+        "harville_expected_third": 4070.0000000000155,
+        "actual_third": 4070,
+        "observed_minus_expected": -1.546140993013978e-11,
+        "actual_candidate_frequency": 0.14791394097979357,
+        "baseline_candidate_frequency": 0.14791394097979413
+      },
+      "first_second_configuration|same_first_second_line": {
+        "candidate_rows": 32990,
+        "harville_expected_third": 4875.000000000034,
+        "actual_third": 4875,
+        "observed_minus_expected": -3.3651303965598345e-11,
+        "actual_candidate_frequency": 0.14777205213701122,
+        "baseline_candidate_frequency": 0.14777205213701222
+      },
+      "line_ownership|both_line": {
+        "candidate_rows": 3891,
+        "harville_expected_third": 417.75271959167895,
+        "actual_third": 1582,
+        "observed_minus_expected": 1164.247280408321,
+        "actual_candidate_frequency": 0.4065792855307119,
+        "baseline_candidate_frequency": 0.10736384466504213
+      },
+      "line_ownership|first_line_only": {
+        "candidate_rows": 6168,
+        "harville_expected_third": 1089.7805115107953,
+        "actual_third": 1309,
+        "observed_minus_expected": 219.21948848920465,
+        "actual_candidate_frequency": 0.21222438391699092,
+        "baseline_candidate_frequency": 0.17668296230719768
+      },
+      "line_ownership|neither_line": {
+        "candidate_rows": 44443,
+        "harville_expected_third": 6448.8162927734065,
+        "actual_third": 4763,
+        "observed_minus_expected": -1685.8162927734065,
+        "actual_candidate_frequency": 0.10717098305694935,
+        "baseline_candidate_frequency": 0.14510308243758085
+      },
+      "line_ownership|second_line_only": {
+        "candidate_rows": 6004,
+        "harville_expected_third": 988.6504761241462,
+        "actual_third": 1291,
+        "observed_minus_expected": 302.34952387585383,
+        "actual_candidate_frequency": 0.21502331778814124,
+        "baseline_candidate_frequency": 0.16466530248570055
+      }
+    },
+    "year_2022": {
+      "candidate_role|leader": {
+        "candidate_rows": 4603,
+        "harville_expected_third": 913.475436314524,
+        "actual_third": 651,
+        "observed_minus_expected": -262.475436314524,
+        "actual_candidate_frequency": 0.14142950249837064,
+        "baseline_candidate_frequency": 0.19845219124799565
+      },
+      "candidate_role|second": {
+        "candidate_rows": 4510,
+        "harville_expected_third": 860.0717720484391,
+        "actual_third": 765,
+        "observed_minus_expected": -95.07177204843913,
+        "actual_candidate_frequency": 0.1696230598669623,
+        "baseline_candidate_frequency": 0.190703275398767
+      },
+      "candidate_role|solo": {
+        "candidate_rows": 767,
+        "harville_expected_third": 69.11989417302449,
+        "actual_third": 103,
+        "observed_minus_expected": 33.88010582697551,
+        "actual_candidate_frequency": 0.13428943937418514,
+        "baseline_candidate_frequency": 0.09011720231163559
+      },
+      "candidate_role|third_or_later": {
+        "candidate_rows": 3076,
+        "harville_expected_third": 105.3328974640115,
+        "actual_third": 429,
+        "observed_minus_expected": 323.66710253598853,
+        "actual_candidate_frequency": 0.1394668400520156,
+        "baseline_candidate_frequency": 0.0342434647152183
+      },
+      "configuration_x_ownership|different_first_second_lines|first_line_only": {
+        "candidate_rows": 1379,
+        "harville_expected_third": 255.044052278403,
+        "actual_third": 298,
+        "observed_minus_expected": 42.955947721597,
+        "actual_candidate_frequency": 0.21609862218999276,
+        "baseline_candidate_frequency": 0.1849485513258905
+      },
+      "configuration_x_ownership|different_first_second_lines|neither_line": {
+        "candidate_rows": 3255,
+        "harville_expected_third": 416.725782652452,
+        "actual_third": 324,
+        "observed_minus_expected": -92.72578265245198,
+        "actual_candidate_frequency": 0.09953917050691244,
+        "baseline_candidate_frequency": 0.12802635411749677
+      },
+      "configuration_x_ownership|different_first_second_lines|second_line_only": {
+        "candidate_rows": 1323,
+        "harville_expected_third": 226.23016506914405,
+        "actual_third": 276,
+        "observed_minus_expected": 49.76983493085595,
+        "actual_candidate_frequency": 0.20861678004535147,
+        "baseline_candidate_frequency": 0.17099785719512023
+      },
+      "configuration_x_ownership|same_first_second_line|both_line": {
+        "candidate_rows": 847,
+        "harville_expected_third": 96.29220799734736,
+        "actual_third": 307,
+        "observed_minus_expected": 210.70779200265264,
+        "actual_candidate_frequency": 0.3624557260920897,
+        "baseline_candidate_frequency": 0.11368619598270055
+      },
+      "configuration_x_ownership|same_first_second_line|neither_line": {
+        "candidate_rows": 6152,
+        "harville_expected_third": 953.7077920026521,
+        "actual_third": 743,
+        "observed_minus_expected": -210.70779200265213,
+        "actual_candidate_frequency": 0.1207737321196359,
+        "baseline_candidate_frequency": 0.1550240234074532
+      },
+      "configuration_x_position|different_first_second_lines|ahead_of_first": {
+        "candidate_rows": 451,
+        "harville_expected_third": 119.64848502839828,
+        "actual_third": 103,
+        "observed_minus_expected": -16.648485028398284,
+        "actual_candidate_frequency": 0.22838137472283815,
+        "baseline_candidate_frequency": 0.26529597567272345
+      },
+      "configuration_x_position|different_first_second_lines|ahead_of_second": {
+        "candidate_rows": 493,
+        "harville_expected_third": 123.28224794356927,
+        "actual_third": 101,
+        "observed_minus_expected": -22.282247943569274,
+        "actual_candidate_frequency": 0.20486815415821502,
+        "baseline_candidate_frequency": 0.25006541165024193
+      },
+      "configuration_x_position|different_first_second_lines|directly_behind_first": {
+        "candidate_rows": 687,
+        "harville_expected_third": 125.09550888727516,
+        "actual_third": 179,
+        "observed_minus_expected": 53.90449111272484,
+        "actual_candidate_frequency": 0.26055312954876275,
+        "baseline_candidate_frequency": 0.18208953258700897
+      },
+      "configuration_x_position|different_first_second_lines|directly_behind_second": {
+        "candidate_rows": 630,
+        "harville_expected_third": 96.75799435969408,
+        "actual_third": 161,
+        "observed_minus_expected": 64.24200564030592,
+        "actual_candidate_frequency": 0.25555555555555554,
+        "baseline_candidate_frequency": 0.15358411803126046
+      },
+      "configuration_x_position|different_first_second_lines|further_behind_first": {
+        "candidate_rows": 241,
+        "harville_expected_third": 10.300058362729335,
+        "actual_third": 16,
+        "observed_minus_expected": 5.6999416372706655,
+        "actual_candidate_frequency": 0.06639004149377593,
+        "baseline_candidate_frequency": 0.042738831380619645
+      },
+      "configuration_x_position|different_first_second_lines|further_behind_second": {
+        "candidate_rows": 200,
+        "harville_expected_third": 6.1899227658812315,
+        "actual_third": 14,
+        "observed_minus_expected": 7.8100772341187685,
+        "actual_candidate_frequency": 0.07,
+        "baseline_candidate_frequency": 0.030949613829406156
+      },
+      "configuration_x_position|different_first_second_lines|neither_line": {
+        "candidate_rows": 3255,
+        "harville_expected_third": 416.725782652452,
+        "actual_third": 324,
+        "observed_minus_expected": -92.72578265245198,
+        "actual_candidate_frequency": 0.09953917050691244,
+        "baseline_candidate_frequency": 0.12802635411749677
+      },
+      "configuration_x_position|same_first_second_line|ahead_of_both": {
+        "candidate_rows": 145,
+        "harville_expected_third": 43.15605370527443,
+        "actual_third": 51,
+        "observed_minus_expected": 7.843946294725569,
+        "actual_candidate_frequency": 0.35172413793103446,
+        "baseline_candidate_frequency": 0.29762795658809954
+      },
+      "configuration_x_position|same_first_second_line|behind_both": {
+        "candidate_rows": 670,
+        "harville_expected_third": 42.280029619812446,
+        "actual_third": 240,
+        "observed_minus_expected": 197.71997038018756,
+        "actual_candidate_frequency": 0.3582089552238806,
+        "baseline_candidate_frequency": 0.06310452182061559
+      },
+      "configuration_x_position|same_first_second_line|between_first_second": {
+        "candidate_rows": 32,
+        "harville_expected_third": 10.85612467226053,
+        "actual_third": 16,
+        "observed_minus_expected": 5.143875327739471,
+        "actual_candidate_frequency": 0.5,
+        "baseline_candidate_frequency": 0.33925389600814154
+      },
+      "configuration_x_position|same_first_second_line|neither_line": {
+        "candidate_rows": 6152,
+        "harville_expected_third": 953.7077920026521,
+        "actual_third": 743,
+        "observed_minus_expected": -210.70779200265213,
+        "actual_candidate_frequency": 0.1207737321196359,
+        "baseline_candidate_frequency": 0.1550240234074532
+      },
+      "directed_position|ahead_of_both": {
+        "candidate_rows": 145,
+        "harville_expected_third": 43.15605370527443,
+        "actual_third": 51,
+        "observed_minus_expected": 7.843946294725569,
+        "actual_candidate_frequency": 0.35172413793103446,
+        "baseline_candidate_frequency": 0.29762795658809954
+      },
+      "directed_position|ahead_of_first": {
+        "candidate_rows": 451,
+        "harville_expected_third": 119.64848502839828,
+        "actual_third": 103,
+        "observed_minus_expected": -16.648485028398284,
+        "actual_candidate_frequency": 0.22838137472283815,
+        "baseline_candidate_frequency": 0.26529597567272345
+      },
+      "directed_position|ahead_of_second": {
+        "candidate_rows": 493,
+        "harville_expected_third": 123.28224794356927,
+        "actual_third": 101,
+        "observed_minus_expected": -22.282247943569274,
+        "actual_candidate_frequency": 0.20486815415821502,
+        "baseline_candidate_frequency": 0.25006541165024193
+      },
+      "directed_position|behind_both": {
+        "candidate_rows": 670,
+        "harville_expected_third": 42.280029619812446,
+        "actual_third": 240,
+        "observed_minus_expected": 197.71997038018756,
+        "actual_candidate_frequency": 0.3582089552238806,
+        "baseline_candidate_frequency": 0.06310452182061559
+      },
+      "directed_position|between_first_second": {
+        "candidate_rows": 32,
+        "harville_expected_third": 10.85612467226053,
+        "actual_third": 16,
+        "observed_minus_expected": 5.143875327739471,
+        "actual_candidate_frequency": 0.5,
+        "baseline_candidate_frequency": 0.33925389600814154
+      },
+      "directed_position|directly_behind_first": {
+        "candidate_rows": 687,
+        "harville_expected_third": 125.09550888727516,
+        "actual_third": 179,
+        "observed_minus_expected": 53.90449111272484,
+        "actual_candidate_frequency": 0.26055312954876275,
+        "baseline_candidate_frequency": 0.18208953258700897
+      },
+      "directed_position|directly_behind_second": {
+        "candidate_rows": 630,
+        "harville_expected_third": 96.75799435969408,
+        "actual_third": 161,
+        "observed_minus_expected": 64.24200564030592,
+        "actual_candidate_frequency": 0.25555555555555554,
+        "baseline_candidate_frequency": 0.15358411803126046
+      },
+      "directed_position|further_behind_first": {
+        "candidate_rows": 241,
+        "harville_expected_third": 10.300058362729335,
+        "actual_third": 16,
+        "observed_minus_expected": 5.6999416372706655,
+        "actual_candidate_frequency": 0.06639004149377593,
+        "baseline_candidate_frequency": 0.042738831380619645
+      },
+      "directed_position|further_behind_second": {
+        "candidate_rows": 200,
+        "harville_expected_third": 6.1899227658812315,
+        "actual_third": 14,
+        "observed_minus_expected": 7.8100772341187685,
+        "actual_candidate_frequency": 0.07,
+        "baseline_candidate_frequency": 0.030949613829406156
+      },
+      "directed_position|neither_line": {
+        "candidate_rows": 9407,
+        "harville_expected_third": 1370.433574655104,
+        "actual_third": 1067,
+        "observed_minus_expected": -303.43357465510394,
+        "actual_candidate_frequency": 0.11342617199957479,
+        "baseline_candidate_frequency": 0.14568231898108897
+      },
+      "first_second_configuration|different_first_second_lines": {
+        "candidate_rows": 5957,
+        "harville_expected_third": 897.9999999999999,
+        "actual_third": 898,
+        "observed_minus_expected": 1.1368683772161603e-13,
+        "actual_candidate_frequency": 0.15074702031223772,
+        "baseline_candidate_frequency": 0.1507470203122377
+      },
+      "first_second_configuration|same_first_second_line": {
+        "candidate_rows": 6999,
+        "harville_expected_third": 1049.9999999999973,
+        "actual_third": 1050,
+        "observed_minus_expected": 2.7284841053187847e-12,
+        "actual_candidate_frequency": 0.15002143163309045,
+        "baseline_candidate_frequency": 0.15002143163309006
+      },
+      "line_ownership|both_line": {
+        "candidate_rows": 847,
+        "harville_expected_third": 96.29220799734736,
+        "actual_third": 307,
+        "observed_minus_expected": 210.70779200265264,
+        "actual_candidate_frequency": 0.3624557260920897,
+        "baseline_candidate_frequency": 0.11368619598270055
+      },
+      "line_ownership|first_line_only": {
+        "candidate_rows": 1379,
+        "harville_expected_third": 255.044052278403,
+        "actual_third": 298,
+        "observed_minus_expected": 42.955947721597,
+        "actual_candidate_frequency": 0.21609862218999276,
+        "baseline_candidate_frequency": 0.1849485513258905
+      },
+      "line_ownership|neither_line": {
+        "candidate_rows": 9407,
+        "harville_expected_third": 1370.433574655104,
+        "actual_third": 1067,
+        "observed_minus_expected": -303.43357465510394,
+        "actual_candidate_frequency": 0.11342617199957479,
+        "baseline_candidate_frequency": 0.14568231898108897
+      },
+      "line_ownership|second_line_only": {
+        "candidate_rows": 1323,
+        "harville_expected_third": 226.23016506914405,
+        "actual_third": 276,
+        "observed_minus_expected": 49.76983493085595,
+        "actual_candidate_frequency": 0.20861678004535147,
+        "baseline_candidate_frequency": 0.17099785719512023
+      }
+    },
+    "year_2023": {
+      "candidate_role|leader": {
+        "candidate_rows": 4782,
+        "harville_expected_third": 938.2819788682934,
+        "actual_third": 653,
+        "observed_minus_expected": -285.28197886829344,
+        "actual_candidate_frequency": 0.13655374320368047,
+        "baseline_candidate_frequency": 0.19621120428027886
+      },
+      "candidate_role|second": {
+        "candidate_rows": 4667,
+        "harville_expected_third": 864.7210963050155,
+        "actual_third": 776,
+        "observed_minus_expected": -88.72109630501552,
+        "actual_candidate_frequency": 0.16627383758302977,
+        "baseline_candidate_frequency": 0.1852841431979892
+      },
+      "candidate_role|solo": {
+        "candidate_rows": 791,
+        "harville_expected_third": 65.0481912609735,
+        "actual_third": 84,
+        "observed_minus_expected": 18.951808739026504,
+        "actual_candidate_frequency": 0.10619469026548672,
+        "baseline_candidate_frequency": 0.08223538718201454
+      },
+      "candidate_role|third_or_later": {
+        "candidate_rows": 3238,
+        "harville_expected_third": 102.94873356571586,
+        "actual_third": 458,
+        "observed_minus_expected": 355.0512664342841,
+        "actual_candidate_frequency": 0.14144533662754788,
+        "baseline_candidate_frequency": 0.031793926363717064
+      },
+      "configuration_x_ownership|different_first_second_lines|first_line_only": {
+        "candidate_rows": 1399,
+        "harville_expected_third": 248.63710780607371,
+        "actual_third": 311,
+        "observed_minus_expected": 62.362892193926285,
+        "actual_candidate_frequency": 0.22230164403145103,
+        "baseline_candidate_frequency": 0.17772488049040294
+      },
+      "configuration_x_ownership|different_first_second_lines|neither_line": {
+        "candidate_rows": 3499,
+        "harville_expected_third": 445.0525370209369,
+        "actual_third": 319,
+        "observed_minus_expected": -126.05253702093688,
+        "actual_candidate_frequency": 0.0911689054015433,
+        "baseline_candidate_frequency": 0.12719420892281705
+      },
+      "configuration_x_ownership|different_first_second_lines|second_line_only": {
+        "candidate_rows": 1371,
+        "harville_expected_third": 220.31035517298943,
+        "actual_third": 284,
+        "observed_minus_expected": 63.68964482701057,
+        "actual_candidate_frequency": 0.20714806710430342,
+        "baseline_candidate_frequency": 0.1606931839336174
+      },
+      "configuration_x_ownership|same_first_second_line|both_line": {
+        "candidate_rows": 856,
+        "harville_expected_third": 92.91993697687909,
+        "actual_third": 351,
+        "observed_minus_expected": 258.08006302312094,
+        "actual_candidate_frequency": 0.4100467289719626,
+        "baseline_candidate_frequency": 0.10855132824401763
+      },
+      "configuration_x_ownership|same_first_second_line|neither_line": {
+        "candidate_rows": 6353,
+        "harville_expected_third": 964.0800630231173,
+        "actual_third": 706,
+        "observed_minus_expected": -258.0800630231173,
+        "actual_candidate_frequency": 0.11112860066110498,
+        "baseline_candidate_frequency": 0.15175193814310048
+      },
+      "configuration_x_position|different_first_second_lines|ahead_of_first": {
+        "candidate_rows": 465,
+        "harville_expected_third": 118.69614826538839,
+        "actual_third": 115,
+        "observed_minus_expected": -3.6961482653883877,
+        "actual_candidate_frequency": 0.24731182795698925,
+        "baseline_candidate_frequency": 0.25526053390406106
+      },
+      "configuration_x_position|different_first_second_lines|ahead_of_second": {
+        "candidate_rows": 478,
+        "harville_expected_third": 116.4219570228388,
+        "actual_third": 101,
+        "observed_minus_expected": -15.421957022838797,
+        "actual_candidate_frequency": 0.2112970711297071,
+        "baseline_candidate_frequency": 0.24356057954568786
+      },
+      "configuration_x_position|different_first_second_lines|directly_behind_first": {
+        "candidate_rows": 683,
+        "harville_expected_third": 119.75621667212272,
+        "actual_third": 187,
+        "observed_minus_expected": 67.24378332787728,
+        "actual_candidate_frequency": 0.27379209370424595,
+        "baseline_candidate_frequency": 0.17533853099871555
+      },
+      "configuration_x_position|different_first_second_lines|directly_behind_second": {
+        "candidate_rows": 673,
+        "harville_expected_third": 97.0702294567456,
+        "actual_third": 174,
+        "observed_minus_expected": 76.9297705432544,
+        "actual_candidate_frequency": 0.2585438335809807,
+        "baseline_candidate_frequency": 0.1442351106340945
+      },
+      "configuration_x_position|different_first_second_lines|further_behind_first": {
+        "candidate_rows": 251,
+        "harville_expected_third": 10.184742868562115,
+        "actual_third": 9,
+        "observed_minus_expected": -1.1847428685621146,
+        "actual_candidate_frequency": 0.035856573705179286,
+        "baseline_candidate_frequency": 0.040576664814988506
+      },
+      "configuration_x_position|different_first_second_lines|further_behind_second": {
+        "candidate_rows": 220,
+        "harville_expected_third": 6.8181686934052275,
+        "actual_third": 9,
+        "observed_minus_expected": 2.1818313065947725,
+        "actual_candidate_frequency": 0.04090909090909091,
+        "baseline_candidate_frequency": 0.03099167587911467
+      },
+      "configuration_x_position|different_first_second_lines|neither_line": {
+        "candidate_rows": 3499,
+        "harville_expected_third": 445.0525370209369,
+        "actual_third": 319,
+        "observed_minus_expected": -126.05253702093688,
+        "actual_candidate_frequency": 0.0911689054015433,
+        "baseline_candidate_frequency": 0.12719420892281705
+      },
+      "configuration_x_position|same_first_second_line|ahead_of_both": {
+        "candidate_rows": 152,
+        "harville_expected_third": 45.630619057895274,
+        "actual_third": 53,
+        "observed_minus_expected": 7.369380942104726,
+        "actual_candidate_frequency": 0.34868421052631576,
+        "baseline_candidate_frequency": 0.3002014411703636
+      },
+      "configuration_x_position|same_first_second_line|behind_both": {
+        "candidate_rows": 675,
+        "harville_expected_third": 38.88042377853095,
+        "actual_third": 280,
+        "observed_minus_expected": 241.11957622146906,
+        "actual_candidate_frequency": 0.4148148148148148,
+        "baseline_candidate_frequency": 0.057600627820045845
+      },
+      "configuration_x_position|same_first_second_line|between_first_second": {
+        "candidate_rows": 29,
+        "harville_expected_third": 8.40889414045299,
+        "actual_third": 18,
+        "observed_minus_expected": 9.59110585954701,
+        "actual_candidate_frequency": 0.6206896551724138,
+        "baseline_candidate_frequency": 0.2899618669121721
+      },
+      "configuration_x_position|same_first_second_line|neither_line": {
+        "candidate_rows": 6353,
+        "harville_expected_third": 964.0800630231173,
+        "actual_third": 706,
+        "observed_minus_expected": -258.0800630231173,
+        "actual_candidate_frequency": 0.11112860066110498,
+        "baseline_candidate_frequency": 0.15175193814310048
+      },
+      "directed_position|ahead_of_both": {
+        "candidate_rows": 152,
+        "harville_expected_third": 45.630619057895274,
+        "actual_third": 53,
+        "observed_minus_expected": 7.369380942104726,
+        "actual_candidate_frequency": 0.34868421052631576,
+        "baseline_candidate_frequency": 0.3002014411703636
+      },
+      "directed_position|ahead_of_first": {
+        "candidate_rows": 465,
+        "harville_expected_third": 118.69614826538839,
+        "actual_third": 115,
+        "observed_minus_expected": -3.6961482653883877,
+        "actual_candidate_frequency": 0.24731182795698925,
+        "baseline_candidate_frequency": 0.25526053390406106
+      },
+      "directed_position|ahead_of_second": {
+        "candidate_rows": 478,
+        "harville_expected_third": 116.4219570228388,
+        "actual_third": 101,
+        "observed_minus_expected": -15.421957022838797,
+        "actual_candidate_frequency": 0.2112970711297071,
+        "baseline_candidate_frequency": 0.24356057954568786
+      },
+      "directed_position|behind_both": {
+        "candidate_rows": 675,
+        "harville_expected_third": 38.88042377853095,
+        "actual_third": 280,
+        "observed_minus_expected": 241.11957622146906,
+        "actual_candidate_frequency": 0.4148148148148148,
+        "baseline_candidate_frequency": 0.057600627820045845
+      },
+      "directed_position|between_first_second": {
+        "candidate_rows": 29,
+        "harville_expected_third": 8.40889414045299,
+        "actual_third": 18,
+        "observed_minus_expected": 9.59110585954701,
+        "actual_candidate_frequency": 0.6206896551724138,
+        "baseline_candidate_frequency": 0.2899618669121721
+      },
+      "directed_position|directly_behind_first": {
+        "candidate_rows": 683,
+        "harville_expected_third": 119.75621667212272,
+        "actual_third": 187,
+        "observed_minus_expected": 67.24378332787728,
+        "actual_candidate_frequency": 0.27379209370424595,
+        "baseline_candidate_frequency": 0.17533853099871555
+      },
+      "directed_position|directly_behind_second": {
+        "candidate_rows": 673,
+        "harville_expected_third": 97.0702294567456,
+        "actual_third": 174,
+        "observed_minus_expected": 76.9297705432544,
+        "actual_candidate_frequency": 0.2585438335809807,
+        "baseline_candidate_frequency": 0.1442351106340945
+      },
+      "directed_position|further_behind_first": {
+        "candidate_rows": 251,
+        "harville_expected_third": 10.184742868562115,
+        "actual_third": 9,
+        "observed_minus_expected": -1.1847428685621146,
+        "actual_candidate_frequency": 0.035856573705179286,
+        "baseline_candidate_frequency": 0.040576664814988506
+      },
+      "directed_position|further_behind_second": {
+        "candidate_rows": 220,
+        "harville_expected_third": 6.8181686934052275,
+        "actual_third": 9,
+        "observed_minus_expected": 2.1818313065947725,
+        "actual_candidate_frequency": 0.04090909090909091,
+        "baseline_candidate_frequency": 0.03099167587911467
+      },
+      "directed_position|neither_line": {
+        "candidate_rows": 9852,
+        "harville_expected_third": 1409.132600044061,
+        "actual_third": 1025,
+        "observed_minus_expected": -384.13260004406106,
+        "actual_candidate_frequency": 0.10403978887535525,
+        "baseline_candidate_frequency": 0.14303010556679466
+      },
+      "first_second_configuration|different_first_second_lines": {
+        "candidate_rows": 6269,
+        "harville_expected_third": 913.9999999999997,
+        "actual_third": 914,
+        "observed_minus_expected": 3.410605131648481e-13,
+        "actual_candidate_frequency": 0.14579677779550168,
+        "baseline_candidate_frequency": 0.14579677779550163
+      },
+      "first_second_configuration|same_first_second_line": {
+        "candidate_rows": 7209,
+        "harville_expected_third": 1056.9999999999977,
+        "actual_third": 1057,
+        "observed_minus_expected": 2.2737367544323206e-12,
+        "actual_candidate_frequency": 0.14662227770842004,
+        "baseline_candidate_frequency": 0.1466222777084197
+      },
+      "line_ownership|both_line": {
+        "candidate_rows": 856,
+        "harville_expected_third": 92.91993697687909,
+        "actual_third": 351,
+        "observed_minus_expected": 258.08006302312094,
+        "actual_candidate_frequency": 0.4100467289719626,
+        "baseline_candidate_frequency": 0.10855132824401763
+      },
+      "line_ownership|first_line_only": {
+        "candidate_rows": 1399,
+        "harville_expected_third": 248.63710780607371,
+        "actual_third": 311,
+        "observed_minus_expected": 62.362892193926285,
+        "actual_candidate_frequency": 0.22230164403145103,
+        "baseline_candidate_frequency": 0.17772488049040294
+      },
+      "line_ownership|neither_line": {
+        "candidate_rows": 9852,
+        "harville_expected_third": 1409.132600044061,
+        "actual_third": 1025,
+        "observed_minus_expected": -384.13260004406106,
+        "actual_candidate_frequency": 0.10403978887535525,
+        "baseline_candidate_frequency": 0.14303010556679466
+      },
+      "line_ownership|second_line_only": {
+        "candidate_rows": 1371,
+        "harville_expected_third": 220.31035517298943,
+        "actual_third": 284,
+        "observed_minus_expected": 63.68964482701057,
+        "actual_candidate_frequency": 0.20714806710430342,
+        "baseline_candidate_frequency": 0.1606931839336174
+      }
+    },
+    "year_2024": {
+      "candidate_role|leader": {
+        "candidate_rows": 4841,
+        "harville_expected_third": 889.1753428305469,
+        "actual_third": 646,
+        "observed_minus_expected": -243.17534283054692,
+        "actual_candidate_frequency": 0.1334435034083867,
+        "baseline_candidate_frequency": 0.18367596422857818
+      },
+      "candidate_role|second": {
+        "candidate_rows": 4655,
+        "harville_expected_third": 899.8014803782553,
+        "actual_third": 741,
+        "observed_minus_expected": -158.8014803782553,
+        "actual_candidate_frequency": 0.15918367346938775,
+        "baseline_candidate_frequency": 0.19329784755709029
+      },
+      "candidate_role|solo": {
+        "candidate_rows": 744,
+        "harville_expected_third": 75.02107672686834,
+        "actual_third": 93,
+        "observed_minus_expected": 17.978923273131656,
+        "actual_candidate_frequency": 0.125,
+        "baseline_candidate_frequency": 0.10083478054686605
+      },
+      "candidate_role|third_or_later": {
+        "candidate_rows": 3201,
+        "harville_expected_third": 115.00210006433153,
+        "actual_third": 499,
+        "observed_minus_expected": 383.99789993566844,
+        "actual_candidate_frequency": 0.15588878475476414,
+        "baseline_candidate_frequency": 0.035926929104758365
+      },
+      "configuration_x_ownership|different_first_second_lines|first_line_only": {
+        "candidate_rows": 1296,
+        "harville_expected_third": 223.92062926015174,
+        "actual_third": 278,
+        "observed_minus_expected": 54.07937073984826,
+        "actual_candidate_frequency": 0.21450617283950618,
+        "baseline_candidate_frequency": 0.17277826331801832
+      },
+      "configuration_x_ownership|different_first_second_lines|neither_line": {
+        "candidate_rows": 3241,
+        "harville_expected_third": 427.4685765930059,
+        "actual_third": 297,
+        "observed_minus_expected": -130.46857659300588,
+        "actual_candidate_frequency": 0.09163838321505709,
+        "baseline_candidate_frequency": 0.1318940378256729
+      },
+      "configuration_x_ownership|different_first_second_lines|second_line_only": {
+        "candidate_rows": 1276,
+        "harville_expected_third": 205.61079414684264,
+        "actual_third": 282,
+        "observed_minus_expected": 76.38920585315736,
+        "actual_candidate_frequency": 0.22100313479623823,
+        "baseline_candidate_frequency": 0.16113698600849735
+      },
+      "configuration_x_ownership|same_first_second_line|both_line": {
+        "candidate_rows": 898,
+        "harville_expected_third": 92.3766641181422,
+        "actual_third": 362,
+        "observed_minus_expected": 269.62333588185777,
+        "actual_candidate_frequency": 0.40311804008908686,
+        "baseline_candidate_frequency": 0.1028693364344568
+      },
+      "configuration_x_ownership|same_first_second_line|neither_line": {
+        "candidate_rows": 6730,
+        "harville_expected_third": 1029.6233358818606,
+        "actual_third": 760,
+        "observed_minus_expected": -269.6233358818606,
+        "actual_candidate_frequency": 0.11292719167904904,
+        "baseline_candidate_frequency": 0.15299009448467468
+      },
+      "configuration_x_position|different_first_second_lines|ahead_of_first": {
+        "candidate_rows": 433,
+        "harville_expected_third": 109.84932083891967,
+        "actual_third": 99,
+        "observed_minus_expected": -10.849320838919667,
+        "actual_candidate_frequency": 0.22863741339491916,
+        "baseline_candidate_frequency": 0.2536935816141332
+      },
+      "configuration_x_position|different_first_second_lines|ahead_of_second": {
+        "candidate_rows": 502,
+        "harville_expected_third": 114.1699286148635,
+        "actual_third": 112,
+        "observed_minus_expected": -2.169928614863494,
+        "actual_candidate_frequency": 0.22310756972111553,
+        "baseline_candidate_frequency": 0.227430136682995
+      },
+      "configuration_x_position|different_first_second_lines|directly_behind_first": {
+        "candidate_rows": 647,
+        "harville_expected_third": 105.84486574174205,
+        "actual_third": 168,
+        "observed_minus_expected": 62.155134258257945,
+        "actual_candidate_frequency": 0.2596599690880989,
+        "baseline_candidate_frequency": 0.16359330099187336
+      },
+      "configuration_x_position|different_first_second_lines|directly_behind_second": {
+        "candidate_rows": 583,
+        "harville_expected_third": 84.83586943104967,
+        "actual_third": 161,
+        "observed_minus_expected": 76.16413056895033,
+        "actual_candidate_frequency": 0.27615780445969124,
+        "baseline_candidate_frequency": 0.14551607106526532
+      },
+      "configuration_x_position|different_first_second_lines|further_behind_first": {
+        "candidate_rows": 216,
+        "harville_expected_third": 8.226442679490592,
+        "actual_third": 11,
+        "observed_minus_expected": 2.7735573205094077,
+        "actual_candidate_frequency": 0.05092592592592592,
+        "baseline_candidate_frequency": 0.03808538277541941
+      },
+      "configuration_x_position|different_first_second_lines|further_behind_second": {
+        "candidate_rows": 191,
+        "harville_expected_third": 6.60499610092973,
+        "actual_third": 9,
+        "observed_minus_expected": 2.39500389907027,
+        "actual_candidate_frequency": 0.04712041884816754,
+        "baseline_candidate_frequency": 0.034581131418480265
+      },
+      "configuration_x_position|different_first_second_lines|neither_line": {
+        "candidate_rows": 3241,
+        "harville_expected_third": 427.4685765930059,
+        "actual_third": 297,
+        "observed_minus_expected": -130.46857659300588,
+        "actual_candidate_frequency": 0.09163838321505709,
+        "baseline_candidate_frequency": 0.1318940378256729
+      },
+      "configuration_x_position|same_first_second_line|ahead_of_both": {
+        "candidate_rows": 150,
+        "harville_expected_third": 34.92599822762154,
+        "actual_third": 48,
+        "observed_minus_expected": 13.074001772378459,
+        "actual_candidate_frequency": 0.32,
+        "baseline_candidate_frequency": 0.23283998818414361
+      },
+      "configuration_x_position|same_first_second_line|behind_both": {
+        "candidate_rows": 711,
+        "harville_expected_third": 43.7689914383975,
+        "actual_third": 298,
+        "observed_minus_expected": 254.2310085616025,
+        "actual_candidate_frequency": 0.4191279887482419,
+        "baseline_candidate_frequency": 0.06155976292320323
+      },
+      "configuration_x_position|same_first_second_line|between_first_second": {
+        "candidate_rows": 37,
+        "harville_expected_third": 13.681674452123156,
+        "actual_third": 16,
+        "observed_minus_expected": 2.318325547876844,
+        "actual_candidate_frequency": 0.43243243243243246,
+        "baseline_candidate_frequency": 0.3697749851925177
+      },
+      "configuration_x_position|same_first_second_line|neither_line": {
+        "candidate_rows": 6730,
+        "harville_expected_third": 1029.6233358818606,
+        "actual_third": 760,
+        "observed_minus_expected": -269.6233358818606,
+        "actual_candidate_frequency": 0.11292719167904904,
+        "baseline_candidate_frequency": 0.15299009448467468
+      },
+      "directed_position|ahead_of_both": {
+        "candidate_rows": 150,
+        "harville_expected_third": 34.92599822762154,
+        "actual_third": 48,
+        "observed_minus_expected": 13.074001772378459,
+        "actual_candidate_frequency": 0.32,
+        "baseline_candidate_frequency": 0.23283998818414361
+      },
+      "directed_position|ahead_of_first": {
+        "candidate_rows": 433,
+        "harville_expected_third": 109.84932083891967,
+        "actual_third": 99,
+        "observed_minus_expected": -10.849320838919667,
+        "actual_candidate_frequency": 0.22863741339491916,
+        "baseline_candidate_frequency": 0.2536935816141332
+      },
+      "directed_position|ahead_of_second": {
+        "candidate_rows": 502,
+        "harville_expected_third": 114.1699286148635,
+        "actual_third": 112,
+        "observed_minus_expected": -2.169928614863494,
+        "actual_candidate_frequency": 0.22310756972111553,
+        "baseline_candidate_frequency": 0.227430136682995
+      },
+      "directed_position|behind_both": {
+        "candidate_rows": 711,
+        "harville_expected_third": 43.7689914383975,
+        "actual_third": 298,
+        "observed_minus_expected": 254.2310085616025,
+        "actual_candidate_frequency": 0.4191279887482419,
+        "baseline_candidate_frequency": 0.06155976292320323
+      },
+      "directed_position|between_first_second": {
+        "candidate_rows": 37,
+        "harville_expected_third": 13.681674452123156,
+        "actual_third": 16,
+        "observed_minus_expected": 2.318325547876844,
+        "actual_candidate_frequency": 0.43243243243243246,
+        "baseline_candidate_frequency": 0.3697749851925177
+      },
+      "directed_position|directly_behind_first": {
+        "candidate_rows": 647,
+        "harville_expected_third": 105.84486574174205,
+        "actual_third": 168,
+        "observed_minus_expected": 62.155134258257945,
+        "actual_candidate_frequency": 0.2596599690880989,
+        "baseline_candidate_frequency": 0.16359330099187336
+      },
+      "directed_position|directly_behind_second": {
+        "candidate_rows": 583,
+        "harville_expected_third": 84.83586943104967,
+        "actual_third": 161,
+        "observed_minus_expected": 76.16413056895033,
+        "actual_candidate_frequency": 0.27615780445969124,
+        "baseline_candidate_frequency": 0.14551607106526532
+      },
+      "directed_position|further_behind_first": {
+        "candidate_rows": 216,
+        "harville_expected_third": 8.226442679490592,
+        "actual_third": 11,
+        "observed_minus_expected": 2.7735573205094077,
+        "actual_candidate_frequency": 0.05092592592592592,
+        "baseline_candidate_frequency": 0.03808538277541941
+      },
+      "directed_position|further_behind_second": {
+        "candidate_rows": 191,
+        "harville_expected_third": 6.60499610092973,
+        "actual_third": 9,
+        "observed_minus_expected": 2.39500389907027,
+        "actual_candidate_frequency": 0.04712041884816754,
+        "baseline_candidate_frequency": 0.034581131418480265
+      },
+      "directed_position|neither_line": {
+        "candidate_rows": 9971,
+        "harville_expected_third": 1457.0919124748636,
+        "actual_third": 1057,
+        "observed_minus_expected": -400.09191247486365,
+        "actual_candidate_frequency": 0.106007421522415,
+        "baseline_candidate_frequency": 0.14613297688043964
+      },
+      "first_second_configuration|different_first_second_lines": {
+        "candidate_rows": 5813,
+        "harville_expected_third": 857.0000000000005,
+        "actual_third": 857,
+        "observed_minus_expected": -4.547473508864641e-13,
+        "actual_candidate_frequency": 0.14742817822122828,
+        "baseline_candidate_frequency": 0.14742817822122836
+      },
+      "first_second_configuration|same_first_second_line": {
+        "candidate_rows": 7628,
+        "harville_expected_third": 1122.0000000000055,
+        "actual_third": 1122,
+        "observed_minus_expected": -5.4569682106375694e-12,
+        "actual_candidate_frequency": 0.14708966963817516,
+        "baseline_candidate_frequency": 0.14708966963817585
+      },
+      "line_ownership|both_line": {
+        "candidate_rows": 898,
+        "harville_expected_third": 92.3766641181422,
+        "actual_third": 362,
+        "observed_minus_expected": 269.62333588185777,
+        "actual_candidate_frequency": 0.40311804008908686,
+        "baseline_candidate_frequency": 0.1028693364344568
+      },
+      "line_ownership|first_line_only": {
+        "candidate_rows": 1296,
+        "harville_expected_third": 223.92062926015174,
+        "actual_third": 278,
+        "observed_minus_expected": 54.07937073984826,
+        "actual_candidate_frequency": 0.21450617283950618,
+        "baseline_candidate_frequency": 0.17277826331801832
+      },
+      "line_ownership|neither_line": {
+        "candidate_rows": 9971,
+        "harville_expected_third": 1457.0919124748636,
+        "actual_third": 1057,
+        "observed_minus_expected": -400.09191247486365,
+        "actual_candidate_frequency": 0.106007421522415,
+        "baseline_candidate_frequency": 0.14613297688043964
+      },
+      "line_ownership|second_line_only": {
+        "candidate_rows": 1276,
+        "harville_expected_third": 205.61079414684264,
+        "actual_third": 282,
+        "observed_minus_expected": 76.38920585315736,
+        "actual_candidate_frequency": 0.22100313479623823,
+        "baseline_candidate_frequency": 0.16113698600849735
+      }
+    },
+    "year_2025": {
+      "candidate_role|leader": {
+        "candidate_rows": 4793,
+        "harville_expected_third": 869.2008157824391,
+        "actual_third": 592,
+        "observed_minus_expected": -277.2008157824391,
+        "actual_candidate_frequency": 0.12351345712497393,
+        "baseline_candidate_frequency": 0.18134796907624434
+      },
+      "candidate_role|second": {
+        "candidate_rows": 4617,
+        "harville_expected_third": 901.7044333790741,
+        "actual_third": 791,
+        "observed_minus_expected": -110.70443337907409,
+        "actual_candidate_frequency": 0.17132337015377952,
+        "baseline_candidate_frequency": 0.1953009385702998
+      },
+      "candidate_role|solo": {
+        "candidate_rows": 810,
+        "harville_expected_third": 82.78631650643354,
+        "actual_third": 88,
+        "observed_minus_expected": 5.213683493566464,
+        "actual_candidate_frequency": 0.10864197530864197,
+        "baseline_candidate_frequency": 0.10220532902028831
+      },
+      "candidate_role|third_or_later": {
+        "candidate_rows": 3076,
+        "harville_expected_third": 112.30843433205673,
+        "actual_third": 495,
+        "observed_minus_expected": 382.6915656679433,
+        "actual_candidate_frequency": 0.16092327698309492,
+        "baseline_candidate_frequency": 0.03651119451627332
+      },
+      "configuration_x_ownership|different_first_second_lines|first_line_only": {
+        "candidate_rows": 1372,
+        "harville_expected_third": 237.29231068138535,
+        "actual_third": 279,
+        "observed_minus_expected": 41.707689318614655,
+        "actual_candidate_frequency": 0.2033527696793003,
+        "baseline_candidate_frequency": 0.17295357921383772
+      },
+      "configuration_x_ownership|different_first_second_lines|neither_line": {
+        "candidate_rows": 3368,
+        "harville_expected_third": 442.8848519778267,
+        "actual_third": 318,
+        "observed_minus_expected": -124.88485197782671,
+        "actual_candidate_frequency": 0.09441805225653206,
+        "baseline_candidate_frequency": 0.1314978776656255
+      },
+      "configuration_x_ownership|different_first_second_lines|second_line_only": {
+        "candidate_rows": 1316,
+        "harville_expected_third": 214.82283734078777,
+        "actual_third": 298,
+        "observed_minus_expected": 83.17716265921223,
+        "actual_candidate_frequency": 0.22644376899696048,
+        "baseline_candidate_frequency": 0.16323923810090257
+      },
+      "configuration_x_ownership|same_first_second_line|both_line": {
+        "candidate_rows": 847,
+        "harville_expected_third": 91.62746981920864,
+        "actual_third": 370,
+        "observed_minus_expected": 278.3725301807914,
+        "actual_candidate_frequency": 0.43683589138134593,
+        "baseline_candidate_frequency": 0.10817883095538211
+      },
+      "configuration_x_ownership|same_first_second_line|neither_line": {
+        "candidate_rows": 6393,
+        "harville_expected_third": 979.3725301807914,
+        "actual_third": 701,
+        "observed_minus_expected": -278.3725301807914,
+        "actual_candidate_frequency": 0.10965118097919599,
+        "baseline_candidate_frequency": 0.1531945143408089
+      },
+      "configuration_x_position|different_first_second_lines|ahead_of_first": {
+        "candidate_rows": 457,
+        "harville_expected_third": 111.10474018525956,
+        "actual_third": 92,
+        "observed_minus_expected": -19.10474018525956,
+        "actual_candidate_frequency": 0.2013129102844639,
+        "baseline_candidate_frequency": 0.24311759340319378
+      },
+      "configuration_x_position|different_first_second_lines|ahead_of_second": {
+        "candidate_rows": 512,
+        "harville_expected_third": 115.56427288238007,
+        "actual_third": 108,
+        "observed_minus_expected": -7.564272882380067,
+        "actual_candidate_frequency": 0.2109375,
+        "baseline_candidate_frequency": 0.22571147047339857
+      },
+      "configuration_x_position|different_first_second_lines|directly_behind_first": {
+        "candidate_rows": 678,
+        "harville_expected_third": 116.82316481462446,
+        "actual_third": 174,
+        "observed_minus_expected": 57.17683518537554,
+        "actual_candidate_frequency": 0.25663716814159293,
+        "baseline_candidate_frequency": 0.1723055528239299
+      },
+      "configuration_x_position|different_first_second_lines|directly_behind_second": {
+        "candidate_rows": 618,
+        "harville_expected_third": 93.08115655026695,
+        "actual_third": 174,
+        "observed_minus_expected": 80.91884344973305,
+        "actual_candidate_frequency": 0.2815533980582524,
+        "baseline_candidate_frequency": 0.150616758171953
+      },
+      "configuration_x_position|different_first_second_lines|further_behind_first": {
+        "candidate_rows": 237,
+        "harville_expected_third": 9.364405681501525,
+        "actual_third": 13,
+        "observed_minus_expected": 3.635594318498475,
+        "actual_candidate_frequency": 0.05485232067510549,
+        "baseline_candidate_frequency": 0.0395122602595001
+      },
+      "configuration_x_position|different_first_second_lines|further_behind_second": {
+        "candidate_rows": 186,
+        "harville_expected_third": 6.177407908140561,
+        "actual_third": 16,
+        "observed_minus_expected": 9.82259209185944,
+        "actual_candidate_frequency": 0.08602150537634409,
+        "baseline_candidate_frequency": 0.03321187047387398
+      },
+      "configuration_x_position|different_first_second_lines|neither_line": {
+        "candidate_rows": 3368,
+        "harville_expected_third": 442.8848519778267,
+        "actual_third": 318,
+        "observed_minus_expected": -124.88485197782671,
+        "actual_candidate_frequency": 0.09441805225653206,
+        "baseline_candidate_frequency": 0.1314978776656255
+      },
+      "configuration_x_position|same_first_second_line|ahead_of_both": {
+        "candidate_rows": 153,
+        "harville_expected_third": 37.78988940913385,
+        "actual_third": 54,
+        "observed_minus_expected": 16.21011059086615,
+        "actual_candidate_frequency": 0.35294117647058826,
+        "baseline_candidate_frequency": 0.24699274123616896
+      },
+      "configuration_x_position|same_first_second_line|behind_both": {
+        "candidate_rows": 650,
+        "harville_expected_third": 40.20901452778119,
+        "actual_third": 293,
+        "observed_minus_expected": 252.7909854722188,
+        "actual_candidate_frequency": 0.45076923076923076,
+        "baseline_candidate_frequency": 0.06186002235043261
+      },
+      "configuration_x_position|same_first_second_line|between_first_second": {
+        "candidate_rows": 44,
+        "harville_expected_third": 13.62856588229353,
+        "actual_third": 23,
+        "observed_minus_expected": 9.37143411770647,
+        "actual_candidate_frequency": 0.5227272727272727,
+        "baseline_candidate_frequency": 0.30974013368848935
+      },
+      "configuration_x_position|same_first_second_line|neither_line": {
+        "candidate_rows": 6393,
+        "harville_expected_third": 979.3725301807914,
+        "actual_third": 701,
+        "observed_minus_expected": -278.3725301807914,
+        "actual_candidate_frequency": 0.10965118097919599,
+        "baseline_candidate_frequency": 0.1531945143408089
+      },
+      "directed_position|ahead_of_both": {
+        "candidate_rows": 153,
+        "harville_expected_third": 37.78988940913385,
+        "actual_third": 54,
+        "observed_minus_expected": 16.21011059086615,
+        "actual_candidate_frequency": 0.35294117647058826,
+        "baseline_candidate_frequency": 0.24699274123616896
+      },
+      "directed_position|ahead_of_first": {
+        "candidate_rows": 457,
+        "harville_expected_third": 111.10474018525956,
+        "actual_third": 92,
+        "observed_minus_expected": -19.10474018525956,
+        "actual_candidate_frequency": 0.2013129102844639,
+        "baseline_candidate_frequency": 0.24311759340319378
+      },
+      "directed_position|ahead_of_second": {
+        "candidate_rows": 512,
+        "harville_expected_third": 115.56427288238007,
+        "actual_third": 108,
+        "observed_minus_expected": -7.564272882380067,
+        "actual_candidate_frequency": 0.2109375,
+        "baseline_candidate_frequency": 0.22571147047339857
+      },
+      "directed_position|behind_both": {
+        "candidate_rows": 650,
+        "harville_expected_third": 40.20901452778119,
+        "actual_third": 293,
+        "observed_minus_expected": 252.7909854722188,
+        "actual_candidate_frequency": 0.45076923076923076,
+        "baseline_candidate_frequency": 0.06186002235043261
+      },
+      "directed_position|between_first_second": {
+        "candidate_rows": 44,
+        "harville_expected_third": 13.62856588229353,
+        "actual_third": 23,
+        "observed_minus_expected": 9.37143411770647,
+        "actual_candidate_frequency": 0.5227272727272727,
+        "baseline_candidate_frequency": 0.30974013368848935
+      },
+      "directed_position|directly_behind_first": {
+        "candidate_rows": 678,
+        "harville_expected_third": 116.82316481462446,
+        "actual_third": 174,
+        "observed_minus_expected": 57.17683518537554,
+        "actual_candidate_frequency": 0.25663716814159293,
+        "baseline_candidate_frequency": 0.1723055528239299
+      },
+      "directed_position|directly_behind_second": {
+        "candidate_rows": 618,
+        "harville_expected_third": 93.08115655026695,
+        "actual_third": 174,
+        "observed_minus_expected": 80.91884344973305,
+        "actual_candidate_frequency": 0.2815533980582524,
+        "baseline_candidate_frequency": 0.150616758171953
+      },
+      "directed_position|further_behind_first": {
+        "candidate_rows": 237,
+        "harville_expected_third": 9.364405681501525,
+        "actual_third": 13,
+        "observed_minus_expected": 3.635594318498475,
+        "actual_candidate_frequency": 0.05485232067510549,
+        "baseline_candidate_frequency": 0.0395122602595001
+      },
+      "directed_position|further_behind_second": {
+        "candidate_rows": 186,
+        "harville_expected_third": 6.177407908140561,
+        "actual_third": 16,
+        "observed_minus_expected": 9.82259209185944,
+        "actual_candidate_frequency": 0.08602150537634409,
+        "baseline_candidate_frequency": 0.03321187047387398
+      },
+      "directed_position|neither_line": {
+        "candidate_rows": 9761,
+        "harville_expected_third": 1422.2573821586177,
+        "actual_third": 1019,
+        "observed_minus_expected": -403.2573821586177,
+        "actual_candidate_frequency": 0.10439504149165045,
+        "baseline_candidate_frequency": 0.14570816331919043
+      },
+      "first_second_configuration|different_first_second_lines": {
+        "candidate_rows": 6056,
+        "harville_expected_third": 895.0000000000045,
+        "actual_third": 895,
+        "observed_minus_expected": -4.547473508864641e-12,
+        "actual_candidate_frequency": 0.14778731836195508,
+        "baseline_candidate_frequency": 0.14778731836195583
+      },
+      "first_second_configuration|same_first_second_line": {
+        "candidate_rows": 7240,
+        "harville_expected_third": 1071.0000000000014,
+        "actual_third": 1071,
+        "observed_minus_expected": -1.3642420526593924e-12,
+        "actual_candidate_frequency": 0.14792817679558012,
+        "baseline_candidate_frequency": 0.1479281767955803
+      },
+      "line_ownership|both_line": {
+        "candidate_rows": 847,
+        "harville_expected_third": 91.62746981920864,
+        "actual_third": 370,
+        "observed_minus_expected": 278.3725301807914,
+        "actual_candidate_frequency": 0.43683589138134593,
+        "baseline_candidate_frequency": 0.10817883095538211
+      },
+      "line_ownership|first_line_only": {
+        "candidate_rows": 1372,
+        "harville_expected_third": 237.29231068138535,
+        "actual_third": 279,
+        "observed_minus_expected": 41.707689318614655,
+        "actual_candidate_frequency": 0.2033527696793003,
+        "baseline_candidate_frequency": 0.17295357921383772
+      },
+      "line_ownership|neither_line": {
+        "candidate_rows": 9761,
+        "harville_expected_third": 1422.2573821586177,
+        "actual_third": 1019,
+        "observed_minus_expected": -403.2573821586177,
+        "actual_candidate_frequency": 0.10439504149165045,
+        "baseline_candidate_frequency": 0.14570816331919043
+      },
+      "line_ownership|second_line_only": {
+        "candidate_rows": 1316,
+        "harville_expected_third": 214.82283734078777,
+        "actual_third": 298,
+        "observed_minus_expected": 83.17716265921223,
+        "actual_candidate_frequency": 0.22644376899696048,
+        "baseline_candidate_frequency": 0.16323923810090257
+      }
+    },
+    "year_2026": {
+      "candidate_role|leader": {
+        "candidate_rows": 2696,
+        "harville_expected_third": 498.00445356494856,
+        "actual_third": 393,
+        "observed_minus_expected": -105.00445356494856,
+        "actual_candidate_frequency": 0.14577151335311572,
+        "baseline_candidate_frequency": 0.18471975280598982
+      },
+      "candidate_role|second": {
+        "candidate_rows": 2599,
+        "harville_expected_third": 477.9257299012929,
+        "actual_third": 379,
+        "observed_minus_expected": -98.92572990129293,
+        "actual_candidate_frequency": 0.1458253174297807,
+        "baseline_candidate_frequency": 0.18388831469845823
+      },
+      "candidate_role|solo": {
+        "candidate_rows": 451,
+        "harville_expected_third": 49.05693058124352,
+        "actual_third": 53,
+        "observed_minus_expected": 3.9430694187564796,
+        "actual_candidate_frequency": 0.11751662971175167,
+        "baseline_candidate_frequency": 0.10877368199832266
+      },
+      "candidate_role|third_or_later": {
+        "candidate_rows": 1589,
+        "harville_expected_third": 56.01288595251585,
+        "actual_third": 256,
+        "observed_minus_expected": 199.98711404748414,
+        "actual_candidate_frequency": 0.16110761485210826,
+        "baseline_candidate_frequency": 0.03525040022184761
+      },
+      "configuration_x_ownership|different_first_second_lines|first_line_only": {
+        "candidate_rows": 722,
+        "harville_expected_third": 124.88641148478087,
+        "actual_third": 143,
+        "observed_minus_expected": 18.113588515219135,
+        "actual_candidate_frequency": 0.19806094182825484,
+        "baseline_candidate_frequency": 0.17297286909249426
+      },
+      "configuration_x_ownership|different_first_second_lines|neither_line": {
+        "candidate_rows": 1981,
+        "harville_expected_third": 259.43726412083856,
+        "actual_third": 212,
+        "observed_minus_expected": -47.43726412083856,
+        "actual_candidate_frequency": 0.10701665825340737,
+        "baseline_candidate_frequency": 0.13096277845574888
+      },
+      "configuration_x_ownership|different_first_second_lines|second_line_only": {
+        "candidate_rows": 718,
+        "harville_expected_third": 121.67632439438086,
+        "actual_third": 151,
+        "observed_minus_expected": 29.323675605619144,
+        "actual_candidate_frequency": 0.21030640668523676,
+        "baseline_candidate_frequency": 0.16946563286125468
+      },
+      "configuration_x_ownership|same_first_second_line|both_line": {
+        "candidate_rows": 443,
+        "harville_expected_third": 44.536440680101535,
+        "actual_third": 192,
+        "observed_minus_expected": 147.46355931989848,
+        "actual_candidate_frequency": 0.43340857787810383,
+        "baseline_candidate_frequency": 0.10053372614018405
+      },
+      "configuration_x_ownership|same_first_second_line|neither_line": {
+        "candidate_rows": 3471,
+        "harville_expected_third": 530.4635593198992,
+        "actual_third": 383,
+        "observed_minus_expected": -147.46355931989922,
+        "actual_candidate_frequency": 0.11034284067991933,
+        "baseline_candidate_frequency": 0.1528273002938344
+      },
+      "configuration_x_position|different_first_second_lines|ahead_of_first": {
+        "candidate_rows": 255,
+        "harville_expected_third": 64.52500202520167,
+        "actual_third": 56,
+        "observed_minus_expected": -8.525002025201672,
+        "actual_candidate_frequency": 0.2196078431372549,
+        "baseline_candidate_frequency": 0.2530392236282418
+      },
+      "configuration_x_position|different_first_second_lines|ahead_of_second": {
+        "candidate_rows": 285,
+        "harville_expected_third": 68.41402339946936,
+        "actual_third": 56,
+        "observed_minus_expected": -12.414023399469357,
+        "actual_candidate_frequency": 0.19649122807017544,
+        "baseline_candidate_frequency": 0.24004920491041878
+      },
+      "configuration_x_position|different_first_second_lines|directly_behind_first": {
+        "candidate_rows": 364,
+        "harville_expected_third": 56.64769412255569,
+        "actual_third": 77,
+        "observed_minus_expected": 20.35230587744431,
+        "actual_candidate_frequency": 0.21153846153846154,
+        "baseline_candidate_frequency": 0.15562553330372442
+      },
+      "configuration_x_position|different_first_second_lines|directly_behind_second": {
+        "candidate_rows": 342,
+        "harville_expected_third": 49.618425356789174,
+        "actual_third": 90,
+        "observed_minus_expected": 40.381574643210826,
+        "actual_candidate_frequency": 0.2631578947368421,
+        "baseline_candidate_frequency": 0.1450831150783309
+      },
+      "configuration_x_position|different_first_second_lines|further_behind_first": {
+        "candidate_rows": 103,
+        "harville_expected_third": 3.713715337023542,
+        "actual_third": 10,
+        "observed_minus_expected": 6.286284662976458,
+        "actual_candidate_frequency": 0.0970873786407767,
+        "baseline_candidate_frequency": 0.03605548870896643
+      },
+      "configuration_x_position|different_first_second_lines|further_behind_second": {
+        "candidate_rows": 91,
+        "harville_expected_third": 3.6438756381222235,
+        "actual_third": 5,
+        "observed_minus_expected": 1.3561243618777765,
+        "actual_candidate_frequency": 0.054945054945054944,
+        "baseline_candidate_frequency": 0.040042589429914545
+      },
+      "configuration_x_position|different_first_second_lines|neither_line": {
+        "candidate_rows": 1981,
+        "harville_expected_third": 259.43726412083856,
+        "actual_third": 212,
+        "observed_minus_expected": -47.43726412083856,
+        "actual_candidate_frequency": 0.10701665825340737,
+        "baseline_candidate_frequency": 0.13096277845574888
+      },
+      "configuration_x_position|same_first_second_line|ahead_of_both": {
+        "candidate_rows": 75,
+        "harville_expected_third": 19.73214563744059,
+        "actual_third": 28,
+        "observed_minus_expected": 8.267854362559412,
+        "actual_candidate_frequency": 0.37333333333333335,
+        "baseline_candidate_frequency": 0.2630952751658745
+      },
+      "configuration_x_position|same_first_second_line|behind_both": {
+        "candidate_rows": 352,
+        "harville_expected_third": 21.019134849411707,
+        "actual_third": 158,
+        "observed_minus_expected": 136.9808651505883,
+        "actual_candidate_frequency": 0.44886363636363635,
+        "baseline_candidate_frequency": 0.0597134512767378
+      },
+      "configuration_x_position|same_first_second_line|between_first_second": {
+        "candidate_rows": 16,
+        "harville_expected_third": 3.785160193249284,
+        "actual_third": 6,
+        "observed_minus_expected": 2.214839806750716,
+        "actual_candidate_frequency": 0.375,
+        "baseline_candidate_frequency": 0.23657251207808025
+      },
+      "configuration_x_position|same_first_second_line|neither_line": {
+        "candidate_rows": 3471,
+        "harville_expected_third": 530.4635593198992,
+        "actual_third": 383,
+        "observed_minus_expected": -147.46355931989922,
+        "actual_candidate_frequency": 0.11034284067991933,
+        "baseline_candidate_frequency": 0.1528273002938344
+      },
+      "directed_position|ahead_of_both": {
+        "candidate_rows": 75,
+        "harville_expected_third": 19.73214563744059,
+        "actual_third": 28,
+        "observed_minus_expected": 8.267854362559412,
+        "actual_candidate_frequency": 0.37333333333333335,
+        "baseline_candidate_frequency": 0.2630952751658745
+      },
+      "directed_position|ahead_of_first": {
+        "candidate_rows": 255,
+        "harville_expected_third": 64.52500202520167,
+        "actual_third": 56,
+        "observed_minus_expected": -8.525002025201672,
+        "actual_candidate_frequency": 0.2196078431372549,
+        "baseline_candidate_frequency": 0.2530392236282418
+      },
+      "directed_position|ahead_of_second": {
+        "candidate_rows": 285,
+        "harville_expected_third": 68.41402339946936,
+        "actual_third": 56,
+        "observed_minus_expected": -12.414023399469357,
+        "actual_candidate_frequency": 0.19649122807017544,
+        "baseline_candidate_frequency": 0.24004920491041878
+      },
+      "directed_position|behind_both": {
+        "candidate_rows": 352,
+        "harville_expected_third": 21.019134849411707,
+        "actual_third": 158,
+        "observed_minus_expected": 136.9808651505883,
+        "actual_candidate_frequency": 0.44886363636363635,
+        "baseline_candidate_frequency": 0.0597134512767378
+      },
+      "directed_position|between_first_second": {
+        "candidate_rows": 16,
+        "harville_expected_third": 3.785160193249284,
+        "actual_third": 6,
+        "observed_minus_expected": 2.214839806750716,
+        "actual_candidate_frequency": 0.375,
+        "baseline_candidate_frequency": 0.23657251207808025
+      },
+      "directed_position|directly_behind_first": {
+        "candidate_rows": 364,
+        "harville_expected_third": 56.64769412255569,
+        "actual_third": 77,
+        "observed_minus_expected": 20.35230587744431,
+        "actual_candidate_frequency": 0.21153846153846154,
+        "baseline_candidate_frequency": 0.15562553330372442
+      },
+      "directed_position|directly_behind_second": {
+        "candidate_rows": 342,
+        "harville_expected_third": 49.618425356789174,
+        "actual_third": 90,
+        "observed_minus_expected": 40.381574643210826,
+        "actual_candidate_frequency": 0.2631578947368421,
+        "baseline_candidate_frequency": 0.1450831150783309
+      },
+      "directed_position|further_behind_first": {
+        "candidate_rows": 103,
+        "harville_expected_third": 3.713715337023542,
+        "actual_third": 10,
+        "observed_minus_expected": 6.286284662976458,
+        "actual_candidate_frequency": 0.0970873786407767,
+        "baseline_candidate_frequency": 0.03605548870896643
+      },
+      "directed_position|further_behind_second": {
+        "candidate_rows": 91,
+        "harville_expected_third": 3.6438756381222235,
+        "actual_third": 5,
+        "observed_minus_expected": 1.3561243618777765,
+        "actual_candidate_frequency": 0.054945054945054944,
+        "baseline_candidate_frequency": 0.040042589429914545
+      },
+      "directed_position|neither_line": {
+        "candidate_rows": 5452,
+        "harville_expected_third": 789.9008234407356,
+        "actual_third": 595,
+        "observed_minus_expected": -194.90082344073562,
+        "actual_candidate_frequency": 0.10913426265590609,
+        "baseline_candidate_frequency": 0.14488276292016428
+      },
+      "first_second_configuration|different_first_second_lines": {
+        "candidate_rows": 3421,
+        "harville_expected_third": 506.00000000000034,
+        "actual_third": 506,
+        "observed_minus_expected": -3.410605131648481e-13,
+        "actual_candidate_frequency": 0.14790996784565916,
+        "baseline_candidate_frequency": 0.14790996784565927
+      },
+      "first_second_configuration|same_first_second_line": {
+        "candidate_rows": 3914,
+        "harville_expected_third": 574.9999999999998,
+        "actual_third": 575,
+        "observed_minus_expected": 2.2737367544323206e-13,
+        "actual_candidate_frequency": 0.14690853346959631,
+        "baseline_candidate_frequency": 0.14690853346959626
+      },
+      "line_ownership|both_line": {
+        "candidate_rows": 443,
+        "harville_expected_third": 44.536440680101535,
+        "actual_third": 192,
+        "observed_minus_expected": 147.46355931989848,
+        "actual_candidate_frequency": 0.43340857787810383,
+        "baseline_candidate_frequency": 0.10053372614018405
+      },
+      "line_ownership|first_line_only": {
+        "candidate_rows": 722,
+        "harville_expected_third": 124.88641148478087,
+        "actual_third": 143,
+        "observed_minus_expected": 18.113588515219135,
+        "actual_candidate_frequency": 0.19806094182825484,
+        "baseline_candidate_frequency": 0.17297286909249426
+      },
+      "line_ownership|neither_line": {
+        "candidate_rows": 5452,
+        "harville_expected_third": 789.9008234407356,
+        "actual_third": 595,
+        "observed_minus_expected": -194.90082344073562,
+        "actual_candidate_frequency": 0.10913426265590609,
+        "baseline_candidate_frequency": 0.14488276292016428
+      },
+      "line_ownership|second_line_only": {
+        "candidate_rows": 718,
+        "harville_expected_third": 121.67632439438086,
+        "actual_third": 151,
+        "observed_minus_expected": 29.323675605619144,
+        "actual_candidate_frequency": 0.21030640668523676,
+        "baseline_candidate_frequency": 0.16946563286125468
+      }
+    }
+  },
+  "no_third_coefficient_fitted": true
+}
