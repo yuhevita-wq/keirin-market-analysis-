@@ -1,0 +1,110 @@
+{
+  "schema": "G3_INDEPENDENT_SECOND_CONDITIONAL_V1",
+  "status": "ADOPTED_AS_G3_RESEARCH_REFERENCE_NOT_EXPECTED_VALUE_BETTING",
+  "scope": "G3開催 S級 only, 5-9 riders; no F1 or other grades",
+  "first_model_source": "research/g3_independent_v1/output/g3_first_win_report.json",
+  "second_model_source": "research/g3_independent_v1/output/g3_second_model_report.json",
+  "first_probability_definition": "G3-only V1 full-plus-line G3 independent win probability q, no betting odds",
+  "fit_target": "Actual second place conditional on actual first place. All other riders in the race compete for second.",
+  "equation": "P(j|i)=q_j^gamma exp(A I(j immediately behind i in same line)+B I(j ahead of i in same line)+C I(j >=2 places behind i in same line)+D I(j is second rider of any >=2 rider line)+E I(j is third or later rider of any line)+F I(j is solo)) / sum_{h!=i} same weights(h)",
+  "coefficients": {
+    "gamma": 0.6389831175236712,
+    "directly_behind_first": 1.6177727765813046,
+    "ahead_of_first": 1.389893006567605,
+    "further_behind_first": 0.2955134610222823,
+    "role_second": 0.057843412663891966,
+    "role_third_or_later": 0.14197999357424215,
+    "role_solo": 0.21295636526257583,
+    "other_line": 0,
+    "role_leader": 0
+  },
+  "variables_are_overlapping_by_design": "Position indicators are mutually exclusive; candidate role dummies provide separate additive effects. Do not introduce redundant same_line term alongside directed position indicators.",
+  "yearly_first_probability_fit": "For each year 2023 onward, G3 data from strictly prior years; 2022 in-sample first probabilities retained for empirical census only, not for second-law fit",
+  "all_G3_second_eligible_races": 8967,
+  "all_G3_second_candidate_rows": 69620,
+  "development_fit_2023_2024": 3959,
+  "family_selection_2025": 1971,
+  "final_second_coefficient_training_2023_2025": 5930,
+  "evaluation_2026h1": 1083,
+  "validation_2025": {
+    "races": 1971,
+    "conditional_second_log_loss": 1.5574915854711817,
+    "top_predicted_second_given_real_first_accuracy": 0.47082699137493655,
+    "uniform_log_loss": 2.0452310487184473
+  },
+  "chronological_evaluation_2026h1": {
+    "races": 1083,
+    "conditional_second_log_loss": 1.5102572859397536,
+    "top_predicted_second_given_real_first_accuracy": 0.4856879039704525,
+    "uniform_log_loss": 2.048477580315598,
+    "line_calibration": {
+      "same_line": {
+        "candidate_rows": 1743,
+        "expected_second": 575.885789925056,
+        "observed_second": 576
+      },
+      "directly_behind_first": {
+        "candidate_rows": 864,
+        "expected_second": 314.6900667177333,
+        "observed_second": 320
+      },
+      "ahead_of_first": {
+        "candidate_rows": 580,
+        "expected_second": 248.70522265820065,
+        "observed_second": 246
+      },
+      "further_behind_first": {
+        "candidate_rows": 299,
+        "expected_second": 12.490500549121943,
+        "observed_second": 10
+      }
+    }
+  },
+  "day_block_comparisons": {
+    "g3_gamma_plus_position_and_role_OVER_harville": {
+      "mean_logloss_improvement_positive_is_better": 0.24829993324330243,
+      "day_block_bootstrap95": [
+        0.1981031116217567,
+        0.30488024541448655
+      ],
+      "days": 87
+    },
+    "g3_gamma_plus_position_and_role_OVER_g3_gamma_only": {
+      "mean_logloss_improvement_positive_is_better": 0.23162903367321966,
+      "day_block_bootstrap95": [
+        0.1845872263509248,
+        0.2827737679852336
+      ],
+      "days": 87
+    },
+    "g3_gamma_plus_position_and_role_OVER_g3_gamma_plus_same_line": {
+      "mean_logloss_improvement_positive_is_better": 0.01838119086564463,
+      "day_block_bootstrap95": [
+        0.00907307014754135,
+        0.027421871223505184
+      ],
+      "days": 87
+    },
+    "g3_gamma_plus_position_and_role_OVER_g3_gamma_plus_directed_position": {
+      "mean_logloss_improvement_positive_is_better": 0.0014036143644435709,
+      "day_block_bootstrap95": [
+        -0.0009092414048214161,
+        0.0036229918882214494
+      ],
+      "days": 87
+    }
+  },
+  "selection_note": "Selected from candidate model families using 2025 validation log-loss before looking at 2026H1 evaluation. The added role terms have only a small improvement vs directed positions alone in 2026H1, CI spans zero. Do not claim independent robust role benefit.",
+  "pre_race_joint": "For every distinct ordered (i,j), P(first=i,second=j)=q_i * P(second=j | first=i). Sum over all other possible winners for marginal second probabilities.",
+  "first_f1_coefficients_imported": false,
+  "second_f1_coefficients_imported": false,
+  "source_asof_certified": false,
+  "model_is_wager_ev": false,
+  "notes": [
+    "All historical G3 racer entries and published lines were downloaded retrospectively in 2026, not proven to be exact original pre-race feature snapshots.",
+    "2022 is reserved as first-model warmup and empirical observation, 2023 onward produces G3 first probabilities from prior calendar years only.",
+    "2026H1 conditional second evaluation knows actual first-place rider; this is not a pre-race exacta accuracy metric.",
+    "1083 evaluation races are below the Benter 1994 3198-race example and should not be called equally sized validation."
+  ],
+  "frozen_at": "2026-10-18"
+}
