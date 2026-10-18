@@ -1,0 +1,38 @@
+name: G3 Benter market bridge validation
+on:
+  push:
+    branches: [research/g3-independent-first-20261018]
+    paths:
+      - .github/workflows/g3-benter-market-bridge-tests.yml
+      - research/g3_independent_v1/market_benter/**
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  strict_market_math:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/g3-independent-first-20261018
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/g3_independent_v1/market_benter/*
+            /research/g3_independent_v1/models/g3_second_conditional_v1.json
+            /research/g3_independent_v1/models/g3_third_conditional_v1.json
+            /research/g3_independent_v1/predict_g3_first_second.py
+            /research/g3_independent_v1/predict_g3_ordered_triples.py
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install statistical inference dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.11,<2'
+      - name: Compile Benter bridge and training code
+        run: |
+          python -m py_compile research/g3_independent_v1/market_benter/engine.py \
+            research/g3_independent_v1/market_benter/run.py \
+            research/g3_independent_v1/market_benter/train_fusion.py
+      - name: Check all seven payoffs and prevent uncertified odds/EV
+        run: |
+          python -m unittest discover -s research/g3_independent_v1/market_benter -p 'test_*.py' -v
