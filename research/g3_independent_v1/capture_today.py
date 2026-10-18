@@ -15,6 +15,7 @@ from keirin_market_analysis.g3_history import (
     discover_races_from_g3_racecard_html,fetch_html,make_session,extract_entries
 )
 from keirin_market_analysis.line_formation_2025 import parse_line_formation_html
+from keirin_market_analysis.s_yosen_2025 import RaceRef
 
 DATE="2026-10-18"
 OUT=ROOT/"research/g3_independent_v1/today_20261018"
@@ -44,6 +45,14 @@ def main():
                 cardrefs[race.url]=race
         except Exception as exc:
             audit["errors"].append({"event_url":event.url,"stage":"discovery","error":str(exc)})
+    if not cardrefs:
+        # Explicitly grounded event: KDreams Keio-kaku G3 started 2026-10-17,
+        # Oct 18 is event day 02. Discover from per-race pages instead of
+        # broad daily page whose G3 DOM may not match historical parser.
+        for race_no in range(1,13):
+            url=f"https://keirin.kdreams.jp/keiokaku/racedetail/272026101702{race_no:04d}/"
+            cardrefs[url]=RaceRef(discovered_on=DATE,race_no=race_no,url=url)
+        audit["fallback"]="12 explicitly constructed KDreams Keio-kaku event-day02 race URLs; each page still separately parsed and verified"
     rows=[];entries=[]
     for ref in sorted(cardrefs.values(),key=lambda r:(r.race_no,r.url)):
         try:
