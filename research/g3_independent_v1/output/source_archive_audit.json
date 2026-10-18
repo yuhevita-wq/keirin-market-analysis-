@@ -1,0 +1,5748 @@
+{
+  "scope": "G3 only, archive original bytes",
+  "zip_count": 18,
+  "source_repo": "yuhevita-wq/keirin-market-analysis-",
+  "research_branch": "research/g3-independent-first-20261018",
+  "status": "SOURCE_LAYOUT_DISCOVERY_BEFORE_MODEL_FITTING",
+  "archives": [
+    {
+      "path": "data/grade_races/g3/2022/g3-all-2022-q1-non-girls.zip",
+      "zip_bytes": 3138945,
+      "zip_sha256": "d21f840ae79865c8e0acee0c7833b066b94a2369b202fdd931d8792a616c098e",
+      "files": [
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/line_summary.json",
+          "size": 424
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/payouts.csv",
+          "size": 1388865
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/q1_report.json",
+          "size": 4399
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/result_failures.csv",
+          "size": 100
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/line_failures.csv",
+          "size": 53
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/odds_summary.json",
+          "size": 503
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/odds_failures.csv",
+          "size": 766
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/races.csv",
+          "size": 140019
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/result_summary.json",
+          "size": 910
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/entries.csv",
+          "size": 2825893
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/summary.json",
+          "size": 1865
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/excluded_girls.csv",
+          "size": 42
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/trio_final_odds.csv",
+          "size": 10484398
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/trifecta_final_odds.csv",
+          "size": 63539395
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/results.csv",
+          "size": 1911965
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/failures.csv",
+          "size": 172
+        }
+      ],
+      "csv_samples": [
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/payouts.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "ticket_type",
+            "bet_code",
+            "combination",
+            "payout_yen",
+            "popularity",
+            "status",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "raw_text"
+          ],
+          "first_record": {
+            "race_id": "2820220104010001",
+            "race_date": "2022-01-04",
+            "track": "立川競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "ticket_type": "2車単",
+            "bet_code": "exacta",
+            "combination": "3-2",
+            "payout_yen": "2820",
+            "popularity": "12",
+            "status": "paid",
+            "result_source_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820220104010001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-02T14:03:15.447063+00:00",
+            "raw_text": "3-2 2,820円 (12)"
+          }
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/result_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/line_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "source_url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/odds_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "odds_source_url",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "2820220104030006",
+            "race_date": "2022-01-06",
+            "track": "立川競輪",
+            "race_no": "6",
+            "race_type": "Ｓ級選抜",
+            "odds_source_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820220104030006/?pageType=odds",
+            "error": "OddsParseError: trifecta fixed-first tables missing for cars [2]; found=[1, 3, 4, 5, 6, 7, 8, 9]"
+          }
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/races.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "entry_count",
+            "source_url",
+            "captured_at_utc",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source"
+          ],
+          "first_record": {
+            "race_id": "2820220104010001",
+            "race_date": "2022-01-04",
+            "track": "立川競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:55",
+            "deadline": "10:50",
+            "entry_count": "9",
+            "source_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820220104010001/?pageType=result",
+            "captured_at_utc": "2026-09-02T13:23:40.735837+00:00",
+            "predicted_line_formation": "1-9/2-7/5-3-6/8-4",
+            "line_status": "published",
+            "line_provider": "アオケイ",
+            "line_source": "楽天Kドリームス 並び予想"
+          }
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/entries.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "source_url",
+            "captured_at_utc",
+            "car_no",
+            "player_name",
+            "player_profile",
+            "prefecture",
+            "age",
+            "term",
+            "class",
+            "style",
+            "gear",
+            "score",
+            "s_count",
+            "b_count",
+            "nige_count",
+            "makuri_count",
+            "sashi_count",
+            "mark_count",
+            "first_count",
+            "second_count",
+            "third_count",
+            "outside_count",
+            "win_rate",
+            "top2_rate",
+            "top3_rate",
+            "prediction_mark",
+            "evaluation",
+            "raw_row_json",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source",
+            "line_id",
+            "line_position",
+            "line_size",
+            "line_role"
+          ],
+          "first_record": {
+            "race_id": "2820220104010001",
+            "race_date": "2022-01-04",
+            "track": "立川競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:55",
+            "deadline": "10:50",
+            "source_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820220104010001/?pageType=result",
+            "captured_at_utc": "2026-09-02T13:23:40.735837+00:00",
+            "car_no": "1",
+            "player_name": "阿部 拓真",
+            "player_profile": "宮 城/31/107",
+            "prefecture": "宮城",
+            "age": "31",
+            "term": "107",
+            "class": "S2",
+            "style": "両",
+            "gear": "3.93",
+            "score": "106.69",
+            "s_count": "3",
+            "b_count": "1",
+            "nige_count": "0",
+            "makuri_count": "4",
+            "sashi_count": "3",
+            "mark_count": "0",
+            "first_count": "6",
+            "second_count": "1",
+            "third_count": "6",
+            "outside_count": "10",
+            "win_rate": "26.0",
+            "top2_rate": "30.4",
+            "top3_rate": "56.5",
+            "prediction_mark": "◎",
+            "evaluation": "3",
+            "raw_row_json": "{\"cells\": [\"◎\", \"\", \"3\", \"1\", \"1\", \"阿部 拓真 宮 城/31/107\", \"S2\", \"両\", \"3.93\", \"106.69\", \"3\", \"1\", \"0\", \"4\", \"3\", \"0\", \"6\", \"1\", \"6\", \"10\", \"26.0\", \"30.4\", \"56.5\"], \"row_class\": [\"n1\"]}",
+            "predicted_line_formation": "1-9/2-7/5-3-6/8-4",
+            "line_status": "published",
+            "line_provider": "アオケイ",
+            "line_source": "楽天Kドリームス 並び予想",
+            "line_id": "1",
+            "line_position": "1",
+            "line_size": "2",
+            "line_role": "自在"
+          }
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/excluded_girls.csv",
+          "columns": [
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "url"
+          ],
+          "first_record": null
+        }
+      ],
+      "json_samples": [
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/line_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/q1_report.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "archive/g3-all-2022-q1-non-girls/odds_summary.json",
+          "first_line": "{\n"
+        }
+      ],
+      "n_zip_members": 16
+    },
+    {
+      "path": "data/grade_races/g3/2022/g3-all-2022-q2-non-girls.zip",
+      "zip_bytes": 2710683,
+      "zip_sha256": "fbe6b33697fdaadfe88d3685560d762e90d7d5ee25ef90caa51077ab14959454",
+      "files": [
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/line_summary.json",
+          "size": 424
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/payouts.csv",
+          "size": 1135697
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/result_failures.csv",
+          "size": 383
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/line_failures.csv",
+          "size": 53
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/odds_summary.json",
+          "size": 502
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/odds_failures.csv",
+          "size": 1180
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/races.csv",
+          "size": 115769
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/result_summary.json",
+          "size": 910
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/entries.csv",
+          "size": 2392674
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/summary.json",
+          "size": 1873
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/excluded_girls.csv",
+          "size": 1637
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/trio_final_odds.csv",
+          "size": 9177021
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/trifecta_final_odds.csv",
+          "size": 55626620
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/results.csv",
+          "size": 1614255
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/q2_report.json",
+          "size": 4405
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/failures.csv",
+          "size": 34
+        }
+      ],
+      "csv_samples": [
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/payouts.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "ticket_type",
+            "bet_code",
+            "combination",
+            "payout_yen",
+            "popularity",
+            "status",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "raw_text"
+          ],
+          "first_record": {
+            "race_id": "3520220407010001",
+            "race_date": "2022-04-07",
+            "track": "平塚競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "ticket_type": "2車単",
+            "bet_code": "exacta",
+            "combination": "1-3",
+            "payout_yen": "290",
+            "popularity": "1",
+            "status": "paid",
+            "result_source_url": "https://keirin.kdreams.jp/hiratsuka/racedetail/3520220407010001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-02T13:51:37.397326+00:00",
+            "raw_text": "1-3 290円 (1)"
+          }
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/result_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "3520220407030006",
+            "race_date": "2022-04-09",
+            "track": "平塚競輪",
+            "race_no": "6",
+            "race_type": "Ｓ級選抜",
+            "result_source_url": "https://keirin.kdreams.jp/hiratsuka/racedetail/3520220407030006/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-02T13:52:32.634629+00:00",
+            "error": "ResultPayoutError: refund table not found"
+          }
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/line_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "source_url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/odds_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "odds_source_url",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "3520220407030004",
+            "race_date": "2022-04-09",
+            "track": "平塚競輪",
+            "race_no": "4",
+            "race_type": "Ｓ級選抜",
+            "odds_source_url": "https://keirin.kdreams.jp/hiratsuka/racedetail/3520220407030004/?pageType=odds",
+            "error": "OddsParseError: trifecta fixed-first tables missing for cars [5]; found=[1, 2, 3, 4, 6, 7, 8, 9]"
+          }
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/races.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "entry_count",
+            "source_url",
+            "captured_at_utc",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source"
+          ],
+          "first_record": {
+            "race_id": "3520220407010001",
+            "race_date": "2022-04-07",
+            "track": "平塚競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:45",
+            "deadline": "10:40",
+            "entry_count": "9",
+            "source_url": "https://keirin.kdreams.jp/hiratsuka/racedetail/3520220407010001/?pageType=result",
+            "captured_at_utc": "2026-09-02T13:23:40.241941+00:00",
+            "predicted_line_formation": "7-2/4/8-1-3/9-5-6",
+            "line_status": "published",
+            "line_provider": "小田競・サイクル",
+            "line_source": "楽天Kドリームス 並び予想"
+          }
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/entries.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "source_url",
+            "captured_at_utc",
+            "car_no",
+            "player_name",
+            "player_profile",
+            "prefecture",
+            "age",
+            "term",
+            "class",
+            "style",
+            "gear",
+            "score",
+            "s_count",
+            "b_count",
+            "nige_count",
+            "makuri_count",
+            "sashi_count",
+            "mark_count",
+            "first_count",
+            "second_count",
+            "third_count",
+            "outside_count",
+            "win_rate",
+            "top2_rate",
+            "top3_rate",
+            "prediction_mark",
+            "evaluation",
+            "raw_row_json",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source",
+            "line_id",
+            "line_position",
+            "line_size",
+            "line_role"
+          ],
+          "first_record": {
+            "race_id": "3520220407010001",
+            "race_date": "2022-04-07",
+            "track": "平塚競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:45",
+            "deadline": "10:40",
+            "source_url": "https://keirin.kdreams.jp/hiratsuka/racedetail/3520220407010001/?pageType=result",
+            "captured_at_utc": "2026-09-02T13:23:40.241941+00:00",
+            "car_no": "1",
+            "player_name": "稲垣 裕之",
+            "player_profile": "京 都/44/86",
+            "prefecture": "京都",
+            "age": "44",
+            "term": "86",
+            "class": "S1",
+            "style": "両",
+            "gear": "3.93",
+            "score": "108.68",
+            "s_count": "4",
+            "b_count": "3",
+            "nige_count": "2",
+            "makuri_count": "2",
+            "sashi_count": "4",
+            "mark_count": "0",
+            "first_count": "5",
+            "second_count": "3",
+            "third_count": "4",
+            "outside_count": "11",
+            "win_rate": "21.7",
+            "top2_rate": "34.7",
+            "top3_rate": "52.1",
+            "prediction_mark": "◎",
+            "evaluation": "3",
+            "raw_row_json": "{\"cells\": [\"◎\", \"\", \"3\", \"1\", \"1\", \"稲垣 裕之 京 都/44/86\", \"S1\", \"両\", \"3.93\", \"108.68\", \"4\", \"3\", \"2\", \"2\", \"4\", \"0\", \"5\", \"3\", \"4\", \"11\", \"21.7\", \"34.7\", \"52.1\"], \"row_class\": [\"n1\"]}",
+            "predicted_line_formation": "7-2/4/8-1-3/9-5-6",
+            "line_status": "published",
+            "line_provider": "小田競・サイクル",
+            "line_source": "楽天Kドリームス 並び予想",
+            "line_id": "3",
+            "line_position": "2",
+            "line_size": "3",
+            "line_role": "追込"
+          }
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/excluded_girls.csv",
+          "columns": [
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "url"
+          ],
+          "first_record": {
+            "race_date": "2022-04-10",
+            "track": "平塚",
+            "race_no": "6",
+            "race_type": "ガールズフレッシュクイーン",
+            "url": "https://keirin.kdreams.jp/hiratsuka/racedetail/3520220407040006/?pageType=result"
+          }
+        }
+      ],
+      "json_samples": [
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/line_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/odds_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "archive/g3-all-2022-q2-non-girls/result_summary.json",
+          "first_line": "{\n"
+        }
+      ],
+      "n_zip_members": 16
+    },
+    {
+      "path": "data/grade_races/g3/2022/g3-all-2022-q3-non-girls.zip",
+      "zip_bytes": 2881683,
+      "zip_sha256": "6082df65ca22ebd2aa013142efca61e160b49b701f31f2c0773309842d633dd0",
+      "files": [
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/line_summary.json",
+          "size": 424
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/payouts.csv",
+          "size": 1314676
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/result_failures.csv",
+          "size": 949
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/line_failures.csv",
+          "size": 53
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/odds_summary.json",
+          "size": 504
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/odds_failures.csv",
+          "size": 4533
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/races.csv",
+          "size": 133472
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/result_summary.json",
+          "size": 910
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/entries.csv",
+          "size": 2686482
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/summary.json",
+          "size": 1880
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/excluded_girls.csv",
+          "size": 1507
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/trio_final_odds.csv",
+          "size": 9606133
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/trifecta_final_odds.csv",
+          "size": 58228187
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/results.csv",
+          "size": 1806539
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/failures.csv",
+          "size": 457
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/q3_report.json",
+          "size": 4414
+        }
+      ],
+      "csv_samples": [
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/payouts.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "ticket_type",
+            "bet_code",
+            "combination",
+            "payout_yen",
+            "popularity",
+            "status",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "raw_text"
+          ],
+          "first_record": {
+            "race_id": "7320220630020001",
+            "race_date": "2022-07-01",
+            "track": "小松島競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級選抜",
+            "ticket_type": "2車単",
+            "bet_code": "exacta",
+            "combination": "5-1",
+            "payout_yen": "660",
+            "popularity": "2",
+            "status": "paid",
+            "result_source_url": "https://keirin.kdreams.jp/komatsushima/racedetail/7320220630020001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-02T13:55:45.598488+00:00",
+            "raw_text": "5-1 660円 (2)"
+          }
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/result_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "5120220707030010",
+            "race_date": "2022-07-09",
+            "track": "福井競輪",
+            "race_no": "10",
+            "race_type": "Ｓ級準決勝",
+            "result_source_url": "https://keirin.kdreams.jp/fukui/racedetail/5120220707030010/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-02T13:57:32.988922+00:00",
+            "error": "ResultPayoutError: refund table not found"
+          }
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/line_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "source_url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/odds_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "odds_source_url",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "5120220707030010",
+            "race_date": "2022-07-09",
+            "track": "福井競輪",
+            "race_no": "10",
+            "race_type": "Ｓ級準決勝",
+            "odds_source_url": "https://keirin.kdreams.jp/fukui/racedetail/5120220707030010/?pageType=odds",
+            "error": "OddsParseError: odds_header not found"
+          }
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/races.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "entry_count",
+            "source_url",
+            "captured_at_utc",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source"
+          ],
+          "first_record": {
+            "race_id": "7320220630020001",
+            "race_date": "2022-07-01",
+            "track": "小松島競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級選抜",
+            "start_time": "10:50",
+            "deadline": "10:45",
+            "entry_count": "9",
+            "source_url": "https://keirin.kdreams.jp/komatsushima/racedetail/7320220630020001/?pageType=result",
+            "captured_at_utc": "2026-09-02T13:23:43.175212+00:00",
+            "predicted_line_formation": "2-7-8/1-5/3-6/4-9",
+            "line_status": "published",
+            "line_provider": "競輪毎日",
+            "line_source": "楽天Kドリームス 並び予想"
+          }
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/entries.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "source_url",
+            "captured_at_utc",
+            "car_no",
+            "player_name",
+            "player_profile",
+            "prefecture",
+            "age",
+            "term",
+            "class",
+            "style",
+            "gear",
+            "score",
+            "s_count",
+            "b_count",
+            "nige_count",
+            "makuri_count",
+            "sashi_count",
+            "mark_count",
+            "first_count",
+            "second_count",
+            "third_count",
+            "outside_count",
+            "win_rate",
+            "top2_rate",
+            "top3_rate",
+            "prediction_mark",
+            "evaluation",
+            "raw_row_json",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source",
+            "line_id",
+            "line_position",
+            "line_size",
+            "line_role"
+          ],
+          "first_record": {
+            "race_id": "7320220630020001",
+            "race_date": "2022-07-01",
+            "track": "小松島競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級選抜",
+            "start_time": "10:50",
+            "deadline": "10:45",
+            "source_url": "https://keirin.kdreams.jp/komatsushima/racedetail/7320220630020001/?pageType=result",
+            "captured_at_utc": "2026-09-02T13:23:43.175212+00:00",
+            "car_no": "1",
+            "player_name": "土生 敦弘",
+            "player_profile": "大 阪/23/117",
+            "prefecture": "大阪",
+            "age": "23",
+            "term": "117",
+            "class": "S2",
+            "style": "逃",
+            "gear": "3.92",
+            "score": "102.04",
+            "s_count": "2",
+            "b_count": "12",
+            "nige_count": "4",
+            "makuri_count": "4",
+            "sashi_count": "0",
+            "mark_count": "0",
+            "first_count": "8",
+            "second_count": "0",
+            "third_count": "3",
+            "outside_count": "11",
+            "win_rate": "36.3",
+            "top2_rate": "36.3",
+            "top3_rate": "50.0",
+            "prediction_mark": "◎",
+            "evaluation": "4",
+            "raw_row_json": "{\"cells\": [\"◎\", \"\", \"4\", \"1\", \"1\", \"土生 敦弘 大 阪/23/117\", \"S2\", \"逃\", \"3.92\", \"102.04\", \"2\", \"12\", \"4\", \"4\", \"0\", \"0\", \"8\", \"0\", \"3\", \"11\", \"36.3\", \"36.3\", \"50.0\"], \"row_class\": [\"n1\"]}",
+            "predicted_line_formation": "2-7-8/1-5/3-6/4-9",
+            "line_status": "published",
+            "line_provider": "競輪毎日",
+            "line_source": "楽天Kドリームス 並び予想",
+            "line_id": "2",
+            "line_position": "1",
+            "line_size": "2",
+            "line_role": "押え先"
+          }
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/excluded_girls.csv",
+          "columns": [
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "url"
+          ],
+          "first_record": {
+            "race_date": "2022-08-04",
+            "track": "函館",
+            "race_no": "1",
+            "race_type": "ガールズ予選１",
+            "url": "https://keirin.kdreams.jp/hakodate/racedetail/1120220804010001/?pageType=result"
+          }
+        }
+      ],
+      "json_samples": [
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/line_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/odds_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "archive/g3-all-2022-q3-non-girls/result_summary.json",
+          "first_line": "{\n"
+        }
+      ],
+      "n_zip_members": 16
+    },
+    {
+      "path": "data/grade_races/g3/2022/g3-all-2022-q4-non-girls.zip",
+      "zip_bytes": 3148008,
+      "zip_sha256": "553527bf4cf4e83bef0626eff0d1706b90b910ac81297b30a2f9ce09a7b30efa",
+      "files": [
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/line_summary.json",
+          "size": 424
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/payouts.csv",
+          "size": 1360540
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/result_failures.csv",
+          "size": 100
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/line_failures.csv",
+          "size": 53
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/odds_summary.json",
+          "size": 503
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/odds_failures.csv",
+          "size": 1673
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/races.csv",
+          "size": 137216
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/result_summary.json",
+          "size": 910
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/entries.csv",
+          "size": 2814835
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/summary.json",
+          "size": 1962
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/excluded_girls.csv",
+          "size": 1684
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/trio_final_odds.csv",
+          "size": 10638469
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/trifecta_final_odds.csv",
+          "size": 64487529
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/results.csv",
+          "size": 1903654
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/failures.csv",
+          "size": 34
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/q4_report.json",
+          "size": 4501
+        }
+      ],
+      "csv_samples": [
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/payouts.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "ticket_type",
+            "bet_code",
+            "combination",
+            "payout_yen",
+            "popularity",
+            "status",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "raw_text"
+          ],
+          "first_record": {
+            "race_id": "8320221001010001",
+            "race_date": "2022-10-01",
+            "track": "久留米競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "ticket_type": "2車単",
+            "bet_code": "exacta",
+            "combination": "1-5",
+            "payout_yen": "170",
+            "popularity": "1",
+            "status": "paid",
+            "result_source_url": "https://keirin.kdreams.jp/kurume/racedetail/8320221001010001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-02T13:59:47.927860+00:00",
+            "raw_text": "1-5 170円 (1)"
+          }
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/result_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/line_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "source_url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/odds_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "odds_source_url",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "6320221103020001",
+            "race_date": "2022-11-04",
+            "track": "防府競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級選抜",
+            "odds_source_url": "https://keirin.kdreams.jp/hofu/racedetail/6320221103020001/?pageType=odds",
+            "error": "OddsParseError: trifecta fixed-first tables missing for cars [1]; found=[2, 3, 4, 5, 6, 7, 8]"
+          }
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/races.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "entry_count",
+            "source_url",
+            "captured_at_utc",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source"
+          ],
+          "first_record": {
+            "race_id": "8320221001010001",
+            "race_date": "2022-10-01",
+            "track": "久留米競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:55",
+            "deadline": "10:50",
+            "entry_count": "8",
+            "source_url": "https://keirin.kdreams.jp/kurume/racedetail/8320221001010001/?pageType=result",
+            "captured_at_utc": "2026-09-02T13:23:44.146220+00:00",
+            "predicted_line_formation": "7-2/1-5-6/8-3-4",
+            "line_status": "published",
+            "line_provider": "コンドル出版社",
+            "line_source": "楽天Kドリームス 並び予想"
+          }
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/entries.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "source_url",
+            "captured_at_utc",
+            "car_no",
+            "player_name",
+            "player_profile",
+            "prefecture",
+            "age",
+            "term",
+            "class",
+            "style",
+            "gear",
+            "score",
+            "s_count",
+            "b_count",
+            "nige_count",
+            "makuri_count",
+            "sashi_count",
+            "mark_count",
+            "first_count",
+            "second_count",
+            "third_count",
+            "outside_count",
+            "win_rate",
+            "top2_rate",
+            "top3_rate",
+            "prediction_mark",
+            "evaluation",
+            "raw_row_json",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source",
+            "line_id",
+            "line_position",
+            "line_size",
+            "line_role"
+          ],
+          "first_record": {
+            "race_id": "8320221001010001",
+            "race_date": "2022-10-01",
+            "track": "久留米競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:55",
+            "deadline": "10:50",
+            "source_url": "https://keirin.kdreams.jp/kurume/racedetail/8320221001010001/?pageType=result",
+            "captured_at_utc": "2026-09-02T13:23:44.146220+00:00",
+            "car_no": "1",
+            "player_name": "松本 秀之介",
+            "player_profile": "熊 本/22/117",
+            "prefecture": "熊本",
+            "age": "22",
+            "term": "117",
+            "class": "S1",
+            "style": "逃",
+            "gear": "3.92",
+            "score": "106.86",
+            "s_count": "0",
+            "b_count": "13",
+            "nige_count": "7",
+            "makuri_count": "5",
+            "sashi_count": "1",
+            "mark_count": "0",
+            "first_count": "10",
+            "second_count": "3",
+            "third_count": "3",
+            "outside_count": "14",
+            "win_rate": "33.3",
+            "top2_rate": "43.3",
+            "top3_rate": "53.3",
+            "prediction_mark": "◎",
+            "evaluation": "3",
+            "raw_row_json": "{\"cells\": [\"◎\", \"\", \"3\", \"1\", \"1\", \"松本 秀之介 熊 本/22/117\", \"S1\", \"逃\", \"3.92\", \"106.86\", \"0\", \"13\", \"7\", \"5\", \"1\", \"0\", \"10\", \"3\", \"3\", \"14\", \"33.3\", \"43.3\", \"53.3\"], \"row_class\": [\"n1\"]}",
+            "predicted_line_formation": "7-2/1-5-6/8-3-4",
+            "line_status": "published",
+            "line_provider": "コンドル出版社",
+            "line_source": "楽天Kドリームス 並び予想",
+            "line_id": "2",
+            "line_position": "1",
+            "line_size": "3",
+            "line_role": "押え先"
+          }
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/excluded_girls.csv",
+          "columns": [
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "url"
+          ],
+          "first_record": {
+            "race_date": "2022-10-13",
+            "track": "松山",
+            "race_no": "1",
+            "race_type": "ガールズ予選１",
+            "url": "https://keirin.kdreams.jp/matsuyama/racedetail/7520221013010001/?pageType=result"
+          }
+        }
+      ],
+      "json_samples": [
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/line_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/odds_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "archive/g3-all-2022-q4-non-girls/result_summary.json",
+          "first_line": "{\n"
+        }
+      ],
+      "n_zip_members": 16
+    },
+    {
+      "path": "data/grade_races/g3/2023/g3-all-2023-q1-non-girls.zip",
+      "zip_bytes": 3009006,
+      "zip_sha256": "c478dbdc21a0f4515109e66143fce667df9e45af48ceb7c9e9a22ba15203b0b4",
+      "files": [
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/line_summary.json",
+          "size": 424
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/payouts.csv",
+          "size": 1262913
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/q1_report.json",
+          "size": 4324
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/result_failures.csv",
+          "size": 100
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/line_failures.csv",
+          "size": 53
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/odds_summary.json",
+          "size": 503
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/odds_failures.csv",
+          "size": 1713
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/races.csv",
+          "size": 127588
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/result_summary.json",
+          "size": 910
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/entries.csv",
+          "size": 2666192
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/summary.json",
+          "size": 1796
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/excluded_girls.csv",
+          "size": 42
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/trio_final_odds.csv",
+          "size": 10275651
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/trifecta_final_odds.csv",
+          "size": 62291578
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/results.csv",
+          "size": 1803105
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/failures.csv",
+          "size": 34
+        }
+      ],
+      "csv_samples": [
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/payouts.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "ticket_type",
+            "bet_code",
+            "combination",
+            "payout_yen",
+            "popularity",
+            "status",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "raw_text"
+          ],
+          "first_record": {
+            "race_id": "2820230104010001",
+            "race_date": "2023-01-04",
+            "track": "立川競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "ticket_type": "2車単",
+            "bet_code": "exacta",
+            "combination": "1-7",
+            "payout_yen": "360",
+            "popularity": "1",
+            "status": "paid",
+            "result_source_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820230104010001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-02T12:54:22.685276+00:00",
+            "raw_text": "1-7 360円 (1)"
+          }
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/result_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/line_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "source_url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/odds_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "odds_source_url",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "2820230104010006",
+            "race_date": "2023-01-04",
+            "track": "立川競輪",
+            "race_no": "6",
+            "race_type": "Ｓ級一予選",
+            "odds_source_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820230104010006/?pageType=odds",
+            "error": "OddsParseError: trifecta fixed-first tables missing for cars [1]; found=[2, 3, 4, 5, 6, 7, 8, 9]"
+          }
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/races.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "entry_count",
+            "source_url",
+            "captured_at_utc",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source"
+          ],
+          "first_record": {
+            "race_id": "2820230104010001",
+            "race_date": "2023-01-04",
+            "track": "立川競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:55",
+            "deadline": "10:50",
+            "entry_count": "9",
+            "source_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820230104010001/?pageType=result",
+            "captured_at_utc": "2026-09-02T12:18:13.318077+00:00",
+            "predicted_line_formation": "1-7-9/2-5-6/8-3-4",
+            "line_status": "published",
+            "line_provider": "アオケイ",
+            "line_source": "楽天Kドリームス 並び予想"
+          }
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/entries.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "source_url",
+            "captured_at_utc",
+            "car_no",
+            "player_name",
+            "player_profile",
+            "prefecture",
+            "age",
+            "term",
+            "class",
+            "style",
+            "gear",
+            "score",
+            "s_count",
+            "b_count",
+            "nige_count",
+            "makuri_count",
+            "sashi_count",
+            "mark_count",
+            "first_count",
+            "second_count",
+            "third_count",
+            "outside_count",
+            "win_rate",
+            "top2_rate",
+            "top3_rate",
+            "prediction_mark",
+            "evaluation",
+            "raw_row_json",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source",
+            "line_id",
+            "line_position",
+            "line_size",
+            "line_role"
+          ],
+          "first_record": {
+            "race_id": "2820230104010001",
+            "race_date": "2023-01-04",
+            "track": "立川競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:55",
+            "deadline": "10:50",
+            "source_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820230104010001/?pageType=result",
+            "captured_at_utc": "2026-09-02T12:18:13.318077+00:00",
+            "car_no": "1",
+            "player_name": "松本 秀之介",
+            "player_profile": "熊 本/22/117",
+            "prefecture": "熊本",
+            "age": "22",
+            "term": "117",
+            "class": "S1",
+            "style": "逃",
+            "gear": "3.92",
+            "score": "108.60",
+            "s_count": "0",
+            "b_count": "14",
+            "nige_count": "6",
+            "makuri_count": "2",
+            "sashi_count": "0",
+            "mark_count": "1",
+            "first_count": "5",
+            "second_count": "4",
+            "third_count": "3",
+            "outside_count": "11",
+            "win_rate": "21.7",
+            "top2_rate": "39.1",
+            "top3_rate": "52.1",
+            "prediction_mark": "◎",
+            "evaluation": "3",
+            "raw_row_json": "{\"cells\": [\"◎\", \"\", \"3\", \"1\", \"1\", \"松本 秀之介 熊 本/22/117\", \"S1\", \"逃\", \"3.92\", \"108.60\", \"0\", \"14\", \"6\", \"2\", \"0\", \"1\", \"5\", \"4\", \"3\", \"11\", \"21.7\", \"39.1\", \"52.1\"], \"row_class\": [\"n1\"]}",
+            "predicted_line_formation": "1-7-9/2-5-6/8-3-4",
+            "line_status": "published",
+            "line_provider": "アオケイ",
+            "line_source": "楽天Kドリームス 並び予想",
+            "line_id": "1",
+            "line_position": "1",
+            "line_size": "3",
+            "line_role": "先行"
+          }
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/excluded_girls.csv",
+          "columns": [
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "url"
+          ],
+          "first_record": null
+        }
+      ],
+      "json_samples": [
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/line_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/q1_report.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "archive/g3-all-2023-q1-non-girls/odds_summary.json",
+          "first_line": "{\n"
+        }
+      ],
+      "n_zip_members": 16
+    },
+    {
+      "path": "data/grade_races/g3/2023/g3-all-2023-q2-non-girls.zip",
+      "zip_bytes": 3079525,
+      "zip_sha256": "a27f1e39f1466e7ac6e01342ef58f70c525f5644bab5db498b528921ffff6a10",
+      "files": [
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/line_summary.json",
+          "size": 424
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/payouts.csv",
+          "size": 1298823
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/result_failures.csv",
+          "size": 100
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/line_failures.csv",
+          "size": 53
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/odds_summary.json",
+          "size": 503
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/odds_failures.csv",
+          "size": 1481
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/races.csv",
+          "size": 132134
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/result_summary.json",
+          "size": 910
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/entries.csv",
+          "size": 2730214
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/summary.json",
+          "size": 1908
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/excluded_girls.csv",
+          "size": 1693
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/trio_final_odds.csv",
+          "size": 10499647
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/trifecta_final_odds.csv",
+          "size": 63636526
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/results.csv",
+          "size": 1846503
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/q2_report.json",
+          "size": 4441
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/failures.csv",
+          "size": 34
+        }
+      ],
+      "csv_samples": [
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/payouts.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "ticket_type",
+            "bet_code",
+            "combination",
+            "payout_yen",
+            "popularity",
+            "status",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "raw_text"
+          ],
+          "first_record": {
+            "race_id": "4820230401010004",
+            "race_date": "2023-04-01",
+            "track": "四日市競輪",
+            "race_no": "4",
+            "race_type": "Ｓ級一予選",
+            "ticket_type": "2車単",
+            "bet_code": "exacta",
+            "combination": "7-1",
+            "payout_yen": "320",
+            "popularity": "1",
+            "status": "paid",
+            "result_source_url": "https://keirin.kdreams.jp/yokkaichi/racedetail/4820230401010004/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-02T12:57:51.318769+00:00",
+            "raw_text": "7-1 320円 (1)"
+          }
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/result_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/line_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "source_url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/odds_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "odds_source_url",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "3620230413030001",
+            "race_date": "2023-04-15",
+            "track": "小田原競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級一般",
+            "odds_source_url": "https://keirin.kdreams.jp/odawara/racedetail/3620230413030001/?pageType=odds",
+            "error": "OddsParseError: trifecta fixed-first tables missing for cars [3]; found=[1, 2, 4, 5, 6, 7, 8, 9]"
+          }
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/races.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "entry_count",
+            "source_url",
+            "captured_at_utc",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source"
+          ],
+          "first_record": {
+            "race_id": "4820230401010004",
+            "race_date": "2023-04-01",
+            "track": "四日市競輪",
+            "meeting_grade": "G3",
+            "race_no": "4",
+            "race_type": "Ｓ級一予選",
+            "start_time": "16:43",
+            "deadline": "16:38",
+            "entry_count": "9",
+            "source_url": "https://keirin.kdreams.jp/yokkaichi/racedetail/4820230401010004/?pageType=result",
+            "captured_at_utc": "2026-09-02T12:18:19.457752+00:00",
+            "predicted_line_formation": "1-7-8/2-5/9-3/6-4",
+            "line_status": "published",
+            "line_provider": "富山中部",
+            "line_source": "楽天Kドリームス 並び予想"
+          }
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/entries.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "source_url",
+            "captured_at_utc",
+            "car_no",
+            "player_name",
+            "player_profile",
+            "prefecture",
+            "age",
+            "term",
+            "class",
+            "style",
+            "gear",
+            "score",
+            "s_count",
+            "b_count",
+            "nige_count",
+            "makuri_count",
+            "sashi_count",
+            "mark_count",
+            "first_count",
+            "second_count",
+            "third_count",
+            "outside_count",
+            "win_rate",
+            "top2_rate",
+            "top3_rate",
+            "prediction_mark",
+            "evaluation",
+            "raw_row_json",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source",
+            "line_id",
+            "line_position",
+            "line_size",
+            "line_role"
+          ],
+          "first_record": {
+            "race_id": "4820230401010004",
+            "race_date": "2023-04-01",
+            "track": "四日市競輪",
+            "meeting_grade": "G3",
+            "race_no": "4",
+            "race_type": "Ｓ級一予選",
+            "start_time": "16:43",
+            "deadline": "16:38",
+            "source_url": "https://keirin.kdreams.jp/yokkaichi/racedetail/4820230401010004/?pageType=result",
+            "captured_at_utc": "2026-09-02T12:18:19.457752+00:00",
+            "car_no": "1",
+            "player_name": "石原 颯",
+            "player_profile": "香 川/23/117",
+            "prefecture": "香川",
+            "age": "23",
+            "term": "117",
+            "class": "S1",
+            "style": "逃",
+            "gear": "3.93",
+            "score": "101.36",
+            "s_count": "1",
+            "b_count": "12",
+            "nige_count": "6",
+            "makuri_count": "1",
+            "sashi_count": "0",
+            "mark_count": "0",
+            "first_count": "5",
+            "second_count": "2",
+            "third_count": "0",
+            "outside_count": "13",
+            "win_rate": "25.0",
+            "top2_rate": "35.0",
+            "top3_rate": "35.0",
+            "prediction_mark": "○",
+            "evaluation": "4",
+            "raw_row_json": "{\"cells\": [\"○\", \"\", \"4\", \"1\", \"1\", \"石原 颯 香 川/23/117\", \"S1\", \"逃\", \"3.93\", \"101.36\", \"1\", \"12\", \"6\", \"1\", \"0\", \"0\", \"5\", \"2\", \"0\", \"13\", \"25.0\", \"35.0\", \"35.0\"], \"row_class\": [\"n1\"]}",
+            "predicted_line_formation": "1-7-8/2-5/9-3/6-4",
+            "line_status": "published",
+            "line_provider": "富山中部",
+            "line_source": "楽天Kドリームス 並び予想",
+            "line_id": "1",
+            "line_position": "1",
+            "line_size": "3",
+            "line_role": "先行"
+          }
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/excluded_girls.csv",
+          "columns": [
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "url"
+          ],
+          "first_record": {
+            "race_date": "2023-04-01",
+            "track": "四日市",
+            "race_no": "1",
+            "race_type": "ガールズ予選１",
+            "url": "https://keirin.kdreams.jp/yokkaichi/racedetail/4820230401010001/?pageType=result"
+          }
+        }
+      ],
+      "json_samples": [
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/line_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/odds_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "archive/g3-all-2023-q2-non-girls/result_summary.json",
+          "first_line": "{\n"
+        }
+      ],
+      "n_zip_members": 16
+    },
+    {
+      "path": "data/grade_races/g3/2023/g3-all-2023-q3-non-girls.zip",
+      "zip_bytes": 3305114,
+      "zip_sha256": "f9b5b0fcbde3262602526b5dc8a3af532893af39f41aca8dffda605aa03d3022",
+      "files": [
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/line_summary.json",
+          "size": 424
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/payouts.csv",
+          "size": 1393772
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/result_failures.csv",
+          "size": 100
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/line_failures.csv",
+          "size": 53
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/odds_summary.json",
+          "size": 503
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/odds_failures.csv",
+          "size": 1658
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/races.csv",
+          "size": 140651
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/result_summary.json",
+          "size": 927
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/entries.csv",
+          "size": 2917360
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/summary.json",
+          "size": 1889
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/excluded_girls.csv",
+          "size": 1710
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/trio_final_odds.csv",
+          "size": 11262681
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/trifecta_final_odds.csv",
+          "size": 68256901
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/results.csv",
+          "size": 1979543
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/failures.csv",
+          "size": 34
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/q3_report.json",
+          "size": 4443
+        }
+      ],
+      "csv_samples": [
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/payouts.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "ticket_type",
+            "bet_code",
+            "combination",
+            "payout_yen",
+            "popularity",
+            "status",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "raw_text"
+          ],
+          "first_record": {
+            "race_id": "2220230629030001",
+            "race_date": "2023-07-01",
+            "track": "前橋競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級一般",
+            "ticket_type": "2車単",
+            "bet_code": "exacta",
+            "combination": "3-4",
+            "payout_yen": "400",
+            "popularity": "1",
+            "status": "paid",
+            "result_source_url": "https://keirin.kdreams.jp/maebashi/racedetail/2220230629030001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-02T12:59:24.361862+00:00",
+            "raw_text": "3-4 400円 (1)"
+          }
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/result_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/line_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "source_url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/odds_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "odds_source_url",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "4220230727020001",
+            "race_date": "2023-07-28",
+            "track": "名古屋競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級選抜",
+            "odds_source_url": "https://keirin.kdreams.jp/nagoya/racedetail/4220230727020001/?pageType=odds",
+            "error": "OddsParseError: trifecta fixed-first tables missing for cars [5]; found=[1, 2, 3, 4, 6, 7, 8]"
+          }
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/races.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "entry_count",
+            "source_url",
+            "captured_at_utc",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source"
+          ],
+          "first_record": {
+            "race_id": "2220230629030001",
+            "race_date": "2023-07-01",
+            "track": "前橋競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一般",
+            "start_time": "10:50",
+            "deadline": "10:45",
+            "entry_count": "8",
+            "source_url": "https://keirin.kdreams.jp/maebashi/racedetail/2220230629030001/?pageType=result",
+            "captured_at_utc": "2026-09-02T12:18:14.842436+00:00",
+            "predicted_line_formation": "1-8/5-2/3-4-7/6",
+            "line_status": "published",
+            "line_provider": "アオケイ",
+            "line_source": "楽天Kドリームス 並び予想"
+          }
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/entries.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "source_url",
+            "captured_at_utc",
+            "car_no",
+            "player_name",
+            "player_profile",
+            "prefecture",
+            "age",
+            "term",
+            "class",
+            "style",
+            "gear",
+            "score",
+            "s_count",
+            "b_count",
+            "nige_count",
+            "makuri_count",
+            "sashi_count",
+            "mark_count",
+            "first_count",
+            "second_count",
+            "third_count",
+            "outside_count",
+            "win_rate",
+            "top2_rate",
+            "top3_rate",
+            "prediction_mark",
+            "evaluation",
+            "raw_row_json",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source",
+            "line_id",
+            "line_position",
+            "line_size",
+            "line_role"
+          ],
+          "first_record": {
+            "race_id": "2220230629030001",
+            "race_date": "2023-07-01",
+            "track": "前橋競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一般",
+            "start_time": "10:50",
+            "deadline": "10:45",
+            "source_url": "https://keirin.kdreams.jp/maebashi/racedetail/2220230629030001/?pageType=result",
+            "captured_at_utc": "2026-09-02T12:18:14.842436+00:00",
+            "car_no": "1",
+            "player_name": "菅谷 隆司",
+            "player_profile": "東 京/38/96",
+            "prefecture": "東京",
+            "age": "38",
+            "term": "96",
+            "class": "S2",
+            "style": "両",
+            "gear": "3.92",
+            "score": "95.13",
+            "s_count": "1",
+            "b_count": "6",
+            "nige_count": "0",
+            "makuri_count": "2",
+            "sashi_count": "0",
+            "mark_count": "2",
+            "first_count": "1",
+            "second_count": "3",
+            "third_count": "2",
+            "outside_count": "24",
+            "win_rate": "3.3",
+            "top2_rate": "13.3",
+            "top3_rate": "20.0",
+            "prediction_mark": "注",
+            "evaluation": "5",
+            "raw_row_json": "{\"cells\": [\"注\", \"\", \"5\", \"1\", \"1\", \"菅谷 隆司 東 京/38/96\", \"S2\", \"両\", \"3.92\", \"95.13\", \"1\", \"6\", \"0\", \"2\", \"0\", \"2\", \"1\", \"3\", \"2\", \"24\", \"3.3\", \"13.3\", \"20.0\"], \"row_class\": [\"n1\"]}",
+            "predicted_line_formation": "1-8/5-2/3-4-7/6",
+            "line_status": "published",
+            "line_provider": "アオケイ",
+            "line_source": "楽天Kドリームス 並び予想",
+            "line_id": "1",
+            "line_position": "1",
+            "line_size": "2",
+            "line_role": "自在"
+          }
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/excluded_girls.csv",
+          "columns": [
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "url"
+          ],
+          "first_record": {
+            "race_date": "2023-08-10",
+            "track": "京王閣",
+            "race_no": "1",
+            "race_type": "ガールズ予選１",
+            "url": "https://keirin.kdreams.jp/keiokaku/racedetail/2720230810010001/?pageType=result"
+          }
+        }
+      ],
+      "json_samples": [
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/line_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/odds_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "archive/g3-all-2023-q3-non-girls/result_summary.json",
+          "first_line": "{\n"
+        }
+      ],
+      "n_zip_members": 16
+    },
+    {
+      "path": "data/grade_races/g3/2023/g3-all-2023-q4-non-girls.zip",
+      "zip_bytes": 3085214,
+      "zip_sha256": "6ef183d93aca496fdcaba1e929c94075a00c016cf8715cdebb590075ea3be02d",
+      "files": [
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/line_summary.json",
+          "size": 424
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/payouts.csv",
+          "size": 1296533
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/result_failures.csv",
+          "size": 100
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/line_failures.csv",
+          "size": 53
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/odds_summary.json",
+          "size": 503
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/odds_failures.csv",
+          "size": 1241
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/races.csv",
+          "size": 131730
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/result_summary.json",
+          "size": 910
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/entries.csv",
+          "size": 2733153
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/summary.json",
+          "size": 1954
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/excluded_girls.csv",
+          "size": 42
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/trio_final_odds.csv",
+          "size": 10516982
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/trifecta_final_odds.csv",
+          "size": 63740073
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/results.csv",
+          "size": 1839788
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/failures.csv",
+          "size": 34
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/q4_report.json",
+          "size": 4490
+        }
+      ],
+      "csv_samples": [
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/payouts.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "ticket_type",
+            "bet_code",
+            "combination",
+            "payout_yen",
+            "popularity",
+            "status",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "raw_text"
+          ],
+          "first_record": {
+            "race_id": "4520230928040001",
+            "race_date": "2023-10-01",
+            "track": "豊橋競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級一般",
+            "ticket_type": "2車単",
+            "bet_code": "exacta",
+            "combination": "7-1",
+            "payout_yen": "350",
+            "popularity": "1",
+            "status": "paid",
+            "result_source_url": "https://keirin.kdreams.jp/toyohashi/racedetail/4520230928040001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-02T12:56:20.364653+00:00",
+            "raw_text": "7-1 350円 (1)"
+          }
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/result_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/line_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "source_url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/odds_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "odds_source_url",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "6120231102010011",
+            "race_date": "2023-11-02",
+            "track": "玉野競輪",
+            "race_no": "11",
+            "race_type": "Ｓ級一予選",
+            "odds_source_url": "https://keirin.kdreams.jp/tamano/racedetail/6120231102010011/?pageType=odds",
+            "error": "OddsParseError: trifecta fixed-first tables missing for cars [5]; found=[1, 2, 3, 4, 6, 7, 8, 9]"
+          }
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/races.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "entry_count",
+            "source_url",
+            "captured_at_utc",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source"
+          ],
+          "first_record": {
+            "race_id": "4520230928040001",
+            "race_date": "2023-10-01",
+            "track": "豊橋競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一般",
+            "start_time": "10:45",
+            "deadline": "10:40",
+            "entry_count": "8",
+            "source_url": "https://keirin.kdreams.jp/toyohashi/racedetail/4520230928040001/?pageType=result",
+            "captured_at_utc": "2026-09-02T12:18:10.746204+00:00",
+            "predicted_line_formation": "7-1-6/3-4/8-5-2",
+            "line_status": "published",
+            "line_provider": "中部競輪",
+            "line_source": "楽天Kドリームス 並び予想"
+          }
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/entries.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "source_url",
+            "captured_at_utc",
+            "car_no",
+            "player_name",
+            "player_profile",
+            "prefecture",
+            "age",
+            "term",
+            "class",
+            "style",
+            "gear",
+            "score",
+            "s_count",
+            "b_count",
+            "nige_count",
+            "makuri_count",
+            "sashi_count",
+            "mark_count",
+            "first_count",
+            "second_count",
+            "third_count",
+            "outside_count",
+            "win_rate",
+            "top2_rate",
+            "top3_rate",
+            "prediction_mark",
+            "evaluation",
+            "raw_row_json",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source",
+            "line_id",
+            "line_position",
+            "line_size",
+            "line_role"
+          ],
+          "first_record": {
+            "race_id": "4520230928040001",
+            "race_date": "2023-10-01",
+            "track": "豊橋競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一般",
+            "start_time": "10:45",
+            "deadline": "10:40",
+            "source_url": "https://keirin.kdreams.jp/toyohashi/racedetail/4520230928040001/?pageType=result",
+            "captured_at_utc": "2026-09-02T12:18:10.746204+00:00",
+            "car_no": "1",
+            "player_name": "和田 誠寿",
+            "player_profile": "広 島/32/103",
+            "prefecture": "広島",
+            "age": "32",
+            "term": "103",
+            "class": "S2",
+            "style": "両",
+            "gear": "3.92",
+            "score": "97.16",
+            "s_count": "13",
+            "b_count": "0",
+            "nige_count": "0",
+            "makuri_count": "0",
+            "sashi_count": "3",
+            "mark_count": "1",
+            "first_count": "3",
+            "second_count": "1",
+            "third_count": "4",
+            "outside_count": "17",
+            "win_rate": "12.0",
+            "top2_rate": "16.0",
+            "top3_rate": "32.0",
+            "prediction_mark": "○",
+            "evaluation": "5",
+            "raw_row_json": "{\"cells\": [\"○\", \"\", \"5\", \"1\", \"1\", \"和田 誠寿 広 島/32/103\", \"S2\", \"両\", \"3.92\", \"97.16\", \"13\", \"0\", \"0\", \"0\", \"3\", \"1\", \"3\", \"1\", \"4\", \"17\", \"12.0\", \"16.0\", \"32.0\"], \"row_class\": [\"n1\"]}",
+            "predicted_line_formation": "7-1-6/3-4/8-5-2",
+            "line_status": "published",
+            "line_provider": "中部競輪",
+            "line_source": "楽天Kドリームス 並び予想",
+            "line_id": "1",
+            "line_position": "2",
+            "line_size": "3",
+            "line_role": "追込"
+          }
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/excluded_girls.csv",
+          "columns": [
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "url"
+          ],
+          "first_record": null
+        }
+      ],
+      "json_samples": [
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/line_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/odds_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "archive/g3-all-2023-q4-non-girls/result_summary.json",
+          "first_line": "{\n"
+        }
+      ],
+      "n_zip_members": 16
+    },
+    {
+      "path": "data/grade_races/g3/2024/g3-2024-q1.zip",
+      "zip_bytes": 3208302,
+      "zip_sha256": "1c7e4ca4b6eea44cec3eb378d673a5a61fa03dd7a6b56653d1f94580097edaac",
+      "files": [
+        {
+          "name": "capacity_report.json",
+          "size": 4940
+        },
+        {
+          "name": "entries.csv",
+          "size": 2859940
+        },
+        {
+          "name": "failures.csv",
+          "size": 34
+        },
+        {
+          "name": "line_failures.csv",
+          "size": 53
+        },
+        {
+          "name": "line_summary.json",
+          "size": 424
+        },
+        {
+          "name": "odds_summary.json",
+          "size": 503
+        },
+        {
+          "name": "odds_failures.csv",
+          "size": 998
+        },
+        {
+          "name": "payouts.csv",
+          "size": 1357778
+        },
+        {
+          "name": "races.csv",
+          "size": 137747
+        },
+        {
+          "name": "result_failures.csv",
+          "size": 100
+        },
+        {
+          "name": "result_summary.json",
+          "size": 910
+        },
+        {
+          "name": "results.csv",
+          "size": 1932351
+        },
+        {
+          "name": "summary.json",
+          "size": 1288
+        },
+        {
+          "name": "trifecta_final_odds.csv",
+          "size": 67285988
+        },
+        {
+          "name": "trio_final_odds.csv",
+          "size": 11101541
+        }
+      ],
+      "csv_samples": [
+        {
+          "name": "entries.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "source_url",
+            "captured_at_utc",
+            "car_no",
+            "player_name",
+            "player_profile",
+            "prefecture",
+            "age",
+            "term",
+            "class",
+            "style",
+            "gear",
+            "score",
+            "s_count",
+            "b_count",
+            "nige_count",
+            "makuri_count",
+            "sashi_count",
+            "mark_count",
+            "first_count",
+            "second_count",
+            "third_count",
+            "outside_count",
+            "win_rate",
+            "top2_rate",
+            "top3_rate",
+            "prediction_mark",
+            "evaluation",
+            "raw_row_json",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source",
+            "line_id",
+            "line_position",
+            "line_size",
+            "line_role"
+          ],
+          "first_record": {
+            "race_id": "2520240105010001",
+            "race_date": "2024-01-05",
+            "track": "大宮競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:45",
+            "deadline": "10:40",
+            "source_url": "https://keirin.kdreams.jp/omiya/racedetail/2520240105010001/?pageType=result",
+            "captured_at_utc": "2026-09-01T01:32:17.144099+00:00",
+            "car_no": "1",
+            "player_name": "中井 俊亮",
+            "player_profile": "奈 良/31/103",
+            "prefecture": "奈良",
+            "age": "31",
+            "term": "103",
+            "class": "S1",
+            "style": "逃",
+            "gear": "3.92",
+            "score": "103.47",
+            "s_count": "0",
+            "b_count": "4",
+            "nige_count": "0",
+            "makuri_count": "5",
+            "sashi_count": "1",
+            "mark_count": "2",
+            "first_count": "4",
+            "second_count": "4",
+            "third_count": "4",
+            "outside_count": "7",
+            "win_rate": "21.0",
+            "top2_rate": "42.1",
+            "top3_rate": "63.1",
+            "prediction_mark": "×",
+            "evaluation": "4",
+            "raw_row_json": "{\"cells\": [\"×\", \"\", \"4\", \"1\", \"1\", \"中井 俊亮 奈 良/31/103\", \"S1\", \"逃\", \"3.92\", \"103.47\", \"0\", \"4\", \"0\", \"5\", \"1\", \"2\", \"4\", \"4\", \"4\", \"7\", \"21.0\", \"42.1\", \"63.1\"], \"row_class\": [\"n1\"]}",
+            "predicted_line_formation": "1-9-3/7-2-5/6-4/8",
+            "line_status": "published",
+            "line_provider": "アオケイ",
+            "line_source": "楽天Kドリームス 並び予想",
+            "line_id": "1",
+            "line_position": "1",
+            "line_size": "3",
+            "line_role": "先行"
+          }
+        },
+        {
+          "name": "failures.csv",
+          "columns": [
+            "stage",
+            "discovered_on",
+            "url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "line_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "source_url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "odds_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "odds_source_url",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "2520240105020001",
+            "race_date": "2024-01-06",
+            "track": "大宮競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級選抜",
+            "odds_source_url": "https://keirin.kdreams.jp/omiya/racedetail/2520240105020001/?pageType=odds",
+            "error": "OddsParseError: trifecta fixed-first tables missing for cars [3]; found=[1, 2, 4, 5, 6, 7, 8]"
+          }
+        },
+        {
+          "name": "payouts.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "ticket_type",
+            "bet_code",
+            "combination",
+            "payout_yen",
+            "popularity",
+            "status",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "raw_text"
+          ],
+          "first_record": {
+            "race_id": "2520240105010001",
+            "race_date": "2024-01-05",
+            "track": "大宮競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "ticket_type": "2車単",
+            "bet_code": "exacta",
+            "combination": "2-5",
+            "payout_yen": "1510",
+            "popularity": "4",
+            "status": "paid",
+            "result_source_url": "https://keirin.kdreams.jp/omiya/racedetail/2520240105010001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-01T03:35:03.838501+00:00",
+            "raw_text": "2-5 1,510円 (4)"
+          }
+        },
+        {
+          "name": "races.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "entry_count",
+            "source_url",
+            "captured_at_utc",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source"
+          ],
+          "first_record": {
+            "race_id": "2520240105010001",
+            "race_date": "2024-01-05",
+            "track": "大宮競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:45",
+            "deadline": "10:40",
+            "entry_count": "9",
+            "source_url": "https://keirin.kdreams.jp/omiya/racedetail/2520240105010001/?pageType=result",
+            "captured_at_utc": "2026-09-01T01:32:17.144099+00:00",
+            "predicted_line_formation": "1-9-3/7-2-5/6-4/8",
+            "line_status": "published",
+            "line_provider": "アオケイ",
+            "line_source": "楽天Kドリームス 並び予想"
+          }
+        },
+        {
+          "name": "result_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "error"
+          ],
+          "first_record": null
+        }
+      ],
+      "json_samples": [
+        {
+          "name": "capacity_report.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "line_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "odds_summary.json",
+          "first_line": "{\n"
+        }
+      ],
+      "n_zip_members": 15
+    },
+    {
+      "path": "data/grade_races/g3/2024/g3-2024-q2.zip",
+      "zip_bytes": 2880495,
+      "zip_sha256": "e89b9768dd331618ab21b4bc3512a48519cd4a795d2b71531b685775ae9554c1",
+      "files": [
+        {
+          "name": "entries.csv",
+          "size": 2591076
+        },
+        {
+          "name": "failures.csv",
+          "size": 1930
+        },
+        {
+          "name": "line_failures.csv",
+          "size": 53
+        },
+        {
+          "name": "line_summary.json",
+          "size": 424
+        },
+        {
+          "name": "odds_failures.csv",
+          "size": 538
+        },
+        {
+          "name": "odds_summary.json",
+          "size": 503
+        },
+        {
+          "name": "payouts.csv",
+          "size": 1226266
+        },
+        {
+          "name": "q2_report.json",
+          "size": 5464
+        },
+        {
+          "name": "races.csv",
+          "size": 124506
+        },
+        {
+          "name": "result_failures.csv",
+          "size": 100
+        },
+        {
+          "name": "result_summary.json",
+          "size": 910
+        },
+        {
+          "name": "results.csv",
+          "size": 1751458
+        },
+        {
+          "name": "summary.json",
+          "size": 1784
+        },
+        {
+          "name": "trifecta_final_odds.csv",
+          "size": 61004838
+        },
+        {
+          "name": "trio_final_odds.csv",
+          "size": 10064084
+        }
+      ],
+      "csv_samples": [
+        {
+          "name": "entries.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "source_url",
+            "captured_at_utc",
+            "car_no",
+            "player_name",
+            "player_profile",
+            "prefecture",
+            "age",
+            "term",
+            "class",
+            "style",
+            "gear",
+            "score",
+            "s_count",
+            "b_count",
+            "nige_count",
+            "makuri_count",
+            "sashi_count",
+            "mark_count",
+            "first_count",
+            "second_count",
+            "third_count",
+            "outside_count",
+            "win_rate",
+            "top2_rate",
+            "top3_rate",
+            "prediction_mark",
+            "evaluation",
+            "raw_row_json",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source",
+            "line_id",
+            "line_position",
+            "line_size",
+            "line_role"
+          ],
+          "first_record": {
+            "race_id": "3420240404010001",
+            "race_date": "2024-04-04",
+            "track": "川崎競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:50",
+            "deadline": "10:45",
+            "source_url": "https://keirin.kdreams.jp/kawasaki/racedetail/3420240404010001/?pageType=result",
+            "captured_at_utc": "2026-09-01T06:42:49.121013+00:00",
+            "car_no": "1",
+            "player_name": "河野 通孝",
+            "player_profile": "茨 城/41/88",
+            "prefecture": "茨城",
+            "age": "41",
+            "term": "88",
+            "class": "S1",
+            "style": "追",
+            "gear": "3.92",
+            "score": "109.05",
+            "s_count": "1",
+            "b_count": "0",
+            "nige_count": "0",
+            "makuri_count": "0",
+            "sashi_count": "3",
+            "mark_count": "3",
+            "first_count": "3",
+            "second_count": "3",
+            "third_count": "2",
+            "outside_count": "12",
+            "win_rate": "15.0",
+            "top2_rate": "30.0",
+            "top3_rate": "40.0",
+            "prediction_mark": "◎",
+            "evaluation": "3",
+            "raw_row_json": "{\"cells\": [\"◎\", \"\", \"3\", \"1\", \"1\", \"河野 通孝 茨 城/41/88\", \"S1\", \"追\", \"3.92\", \"109.05\", \"1\", \"0\", \"0\", \"0\", \"3\", \"3\", \"3\", \"3\", \"2\", \"12\", \"15.0\", \"30.0\", \"40.0\"], \"row_class\": [\"n1\"]}",
+            "predicted_line_formation": "7-1-9/2-4/3-5/6-8",
+            "line_status": "published",
+            "line_provider": "小田競・サイクル",
+            "line_source": "楽天Kドリームス 並び予想",
+            "line_id": "1",
+            "line_position": "2",
+            "line_size": "3",
+            "line_role": "追込"
+          }
+        },
+        {
+          "name": "failures.csv",
+          "columns": [
+            "stage",
+            "discovered_on",
+            "url",
+            "error"
+          ],
+          "first_record": {
+            "stage": "race_parse",
+            "discovered_on": "2024-04-14",
+            "url": "https://keirin.kdreams.jp/kochi/racedetail/7420240411040006/?pageType=result",
+            "error": "CollectorError: race type not found for 6R"
+          }
+        },
+        {
+          "name": "line_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "source_url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "odds_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "odds_source_url",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "3420240404010001",
+            "race_date": "2024-04-04",
+            "track": "川崎競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "odds_source_url": "https://keirin.kdreams.jp/kawasaki/racedetail/3420240404010001/?pageType=odds",
+            "error": "OddsParseError: trifecta fixed-first tables missing for cars [3]; found=[1, 2, 4, 5, 6, 7, 8, 9]"
+          }
+        },
+        {
+          "name": "payouts.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "ticket_type",
+            "bet_code",
+            "combination",
+            "payout_yen",
+            "popularity",
+            "status",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "raw_text"
+          ],
+          "first_record": {
+            "race_id": "3420240404010001",
+            "race_date": "2024-04-04",
+            "track": "川崎競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "ticket_type": "2車単",
+            "bet_code": "exacta",
+            "combination": "1-4",
+            "payout_yen": "2580",
+            "popularity": "6",
+            "status": "paid",
+            "result_source_url": "https://keirin.kdreams.jp/kawasaki/racedetail/3420240404010001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-01T07:17:38.567670+00:00",
+            "raw_text": "1-4 2,580円 (6)"
+          }
+        },
+        {
+          "name": "races.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "entry_count",
+            "source_url",
+            "captured_at_utc",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source"
+          ],
+          "first_record": {
+            "race_id": "3420240404010001",
+            "race_date": "2024-04-04",
+            "track": "川崎競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:50",
+            "deadline": "10:45",
+            "entry_count": "9",
+            "source_url": "https://keirin.kdreams.jp/kawasaki/racedetail/3420240404010001/?pageType=result",
+            "captured_at_utc": "2026-09-01T06:42:49.121013+00:00",
+            "predicted_line_formation": "7-1-9/2-4/3-5/6-8",
+            "line_status": "published",
+            "line_provider": "小田競・サイクル",
+            "line_source": "楽天Kドリームス 並び予想"
+          }
+        },
+        {
+          "name": "result_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "error"
+          ],
+          "first_record": null
+        }
+      ],
+      "json_samples": [
+        {
+          "name": "line_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "odds_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "q2_report.json",
+          "first_line": "{\n"
+        }
+      ],
+      "n_zip_members": 15
+    },
+    {
+      "path": "data/grade_races/g3/2024/g3-2024-q3.zip",
+      "zip_bytes": 2992539,
+      "zip_sha256": "ceee1476c03b7dfa9719ed2800c90604180d6211b80cc2abe954615cffe46b1e",
+      "files": [
+        {
+          "name": "cancelled_races.csv",
+          "size": 465
+        },
+        {
+          "name": "entries.csv",
+          "size": 2738876
+        },
+        {
+          "name": "failures.csv",
+          "size": 898
+        },
+        {
+          "name": "line_failures.csv",
+          "size": 53
+        },
+        {
+          "name": "line_summary.json",
+          "size": 424
+        },
+        {
+          "name": "odds_failures.csv",
+          "size": 715
+        },
+        {
+          "name": "odds_summary.json",
+          "size": 503
+        },
+        {
+          "name": "payouts.csv",
+          "size": 1288764
+        },
+        {
+          "name": "races.csv",
+          "size": 133831
+        },
+        {
+          "name": "q3_report.json",
+          "size": 4579
+        },
+        {
+          "name": "result_failures.csv",
+          "size": 100
+        },
+        {
+          "name": "result_summary.json",
+          "size": 1123
+        },
+        {
+          "name": "results.csv",
+          "size": 1841408
+        },
+        {
+          "name": "summary.json",
+          "size": 1788
+        },
+        {
+          "name": "trifecta_final_odds.csv",
+          "size": 62711072
+        },
+        {
+          "name": "trio_final_odds.csv",
+          "size": 10345480
+        }
+      ],
+      "csv_samples": [
+        {
+          "name": "cancelled_races.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "status",
+            "source_url",
+            "captured_at_utc",
+            "note"
+          ],
+          "first_record": {
+            "race_id": "8620240725030008",
+            "race_date": "2024-07-27",
+            "track": "別府競輪",
+            "race_no": "8",
+            "race_type": "Ｓ級特選",
+            "status": "cancelled",
+            "source_url": "https://keirin.kdreams.jp/beppu/racedetail/8620240725030008/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "captured_at_utc": "2026-09-01T10:14:58.647393+00:00",
+            "note": "2024-07-27 別府G3 3日目8Rは悪天候で中止。KDreams公式インフォメーション等で確認済み。車券は全返還。結果・払戻行は生成しない。"
+          }
+        },
+        {
+          "name": "entries.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "source_url",
+            "captured_at_utc",
+            "car_no",
+            "player_name",
+            "player_profile",
+            "prefecture",
+            "age",
+            "term",
+            "class",
+            "style",
+            "gear",
+            "score",
+            "s_count",
+            "b_count",
+            "nige_count",
+            "makuri_count",
+            "sashi_count",
+            "mark_count",
+            "first_count",
+            "second_count",
+            "third_count",
+            "outside_count",
+            "win_rate",
+            "top2_rate",
+            "top3_rate",
+            "prediction_mark",
+            "evaluation",
+            "raw_row_json",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source",
+            "line_id",
+            "line_position",
+            "line_size",
+            "line_role"
+          ],
+          "first_record": {
+            "race_id": "7320240704010001",
+            "race_date": "2024-07-04",
+            "track": "小松島競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:50",
+            "deadline": "10:45",
+            "source_url": "https://keirin.kdreams.jp/komatsushima/racedetail/7320240704010001/?pageType=result",
+            "captured_at_utc": "2026-09-01T08:44:44.946743+00:00",
+            "car_no": "1",
+            "player_name": "山口 多聞",
+            "player_profile": "埼 玉/22/121",
+            "prefecture": "埼玉",
+            "age": "22",
+            "term": "121",
+            "class": "S2",
+            "style": "逃",
+            "gear": "3.92",
+            "score": "104.10",
+            "s_count": "3",
+            "b_count": "14",
+            "nige_count": "9",
+            "makuri_count": "1",
+            "sashi_count": "0",
+            "mark_count": "0",
+            "first_count": "4",
+            "second_count": "6",
+            "third_count": "3",
+            "outside_count": "7",
+            "win_rate": "20.0",
+            "top2_rate": "50.0",
+            "top3_rate": "65.0",
+            "prediction_mark": "○",
+            "evaluation": "3",
+            "raw_row_json": "{\"cells\": [\"○\", \"\", \"3\", \"1\", \"1\", \"山口 多聞 埼 玉/22/121\", \"S2\", \"逃\", \"3.92\", \"104.10\", \"3\", \"14\", \"9\", \"1\", \"0\", \"0\", \"4\", \"6\", \"3\", \"7\", \"20.0\", \"50.0\", \"65.0\"], \"row_class\": [\"n1\"]}",
+            "predicted_line_formation": "5-2/3-4/1-9-7/8-6",
+            "line_status": "published",
+            "line_provider": "競輪毎日",
+            "line_source": "楽天Kドリームス 並び予想",
+            "line_id": "3",
+            "line_position": "1",
+            "line_size": "3",
+            "line_role": "押え先"
+          }
+        },
+        {
+          "name": "failures.csv",
+          "columns": [
+            "stage",
+            "discovered_on",
+            "url",
+            "error"
+          ],
+          "first_record": {
+            "stage": "race_parse",
+            "discovered_on": "2024-07-16",
+            "url": "https://keirin.kdreams.jp/sasebo/racedetail/8520240716010001/?pageType=result",
+            "error": "CollectorError: race type not found for 1R"
+          }
+        },
+        {
+          "name": "line_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "source_url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "odds_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "odds_source_url",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "7320240704040005",
+            "race_date": "2024-07-07",
+            "track": "小松島競輪",
+            "race_no": "5",
+            "race_type": "Ｓ級選抜",
+            "odds_source_url": "https://keirin.kdreams.jp/komatsushima/racedetail/7320240704040005/?pageType=odds",
+            "error": "OddsParseError: trifecta fixed-first tables missing for cars [3]; found=[1, 2, 4, 5, 6, 7, 8, 9]"
+          }
+        },
+        {
+          "name": "payouts.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "ticket_type",
+            "bet_code",
+            "combination",
+            "payout_yen",
+            "popularity",
+            "status",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "raw_text"
+          ],
+          "first_record": {
+            "race_id": "7320240704010001",
+            "race_date": "2024-07-04",
+            "track": "小松島競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "ticket_type": "2車単",
+            "bet_code": "exacta",
+            "combination": "9-2",
+            "payout_yen": "3390",
+            "popularity": "8",
+            "status": "paid",
+            "result_source_url": "https://keirin.kdreams.jp/komatsushima/racedetail/7320240704010001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-01T09:16:48.947844+00:00",
+            "raw_text": "9-2 3,390円 (8)"
+          }
+        },
+        {
+          "name": "races.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "entry_count",
+            "source_url",
+            "captured_at_utc",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source"
+          ],
+          "first_record": {
+            "race_id": "7320240704010001",
+            "race_date": "2024-07-04",
+            "track": "小松島競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:50",
+            "deadline": "10:45",
+            "entry_count": "9",
+            "source_url": "https://keirin.kdreams.jp/komatsushima/racedetail/7320240704010001/?pageType=result",
+            "captured_at_utc": "2026-09-01T08:44:44.946743+00:00",
+            "predicted_line_formation": "5-2/3-4/1-9-7/8-6",
+            "line_status": "published",
+            "line_provider": "競輪毎日",
+            "line_source": "楽天Kドリームス 並び予想"
+          }
+        }
+      ],
+      "json_samples": [
+        {
+          "name": "line_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "odds_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "q3_report.json",
+          "first_line": "{\n"
+        }
+      ],
+      "n_zip_members": 16
+    },
+    {
+      "path": "data/grade_races/g3/2024/g3-2024-q4.zip",
+      "zip_bytes": 3143641,
+      "zip_sha256": "07799921346f2070f5330425983127e884ce95ba8d13b7dbc02b725a21cb7eef",
+      "files": [
+        {
+          "name": "entries.csv",
+          "size": 2829462
+        },
+        {
+          "name": "failures.csv",
+          "size": 2186
+        },
+        {
+          "name": "line_failures.csv",
+          "size": 53
+        },
+        {
+          "name": "line_summary.json",
+          "size": 424
+        },
+        {
+          "name": "odds_failures.csv",
+          "size": 1013
+        },
+        {
+          "name": "odds_summary.json",
+          "size": 503
+        },
+        {
+          "name": "payouts.csv",
+          "size": 1357232
+        },
+        {
+          "name": "q4_report.json",
+          "size": 5807
+        },
+        {
+          "name": "races.csv",
+          "size": 136687
+        },
+        {
+          "name": "result_failures.csv",
+          "size": 100
+        },
+        {
+          "name": "result_summary.json",
+          "size": 910
+        },
+        {
+          "name": "results.csv",
+          "size": 1916133
+        },
+        {
+          "name": "summary.json",
+          "size": 1996
+        },
+        {
+          "name": "trifecta_final_odds.csv",
+          "size": 65942243
+        },
+        {
+          "name": "trio_final_odds.csv",
+          "size": 10880905
+        }
+      ],
+      "csv_samples": [
+        {
+          "name": "entries.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "source_url",
+            "captured_at_utc",
+            "car_no",
+            "player_name",
+            "player_profile",
+            "prefecture",
+            "age",
+            "term",
+            "class",
+            "style",
+            "gear",
+            "score",
+            "s_count",
+            "b_count",
+            "nige_count",
+            "makuri_count",
+            "sashi_count",
+            "mark_count",
+            "first_count",
+            "second_count",
+            "third_count",
+            "outside_count",
+            "win_rate",
+            "top2_rate",
+            "top3_rate",
+            "prediction_mark",
+            "evaluation",
+            "raw_row_json",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source",
+            "line_id",
+            "line_position",
+            "line_size",
+            "line_role"
+          ],
+          "first_record": {
+            "race_id": "8720241003010001",
+            "race_date": "2024-10-03",
+            "track": "熊本競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:40",
+            "deadline": "10:35",
+            "source_url": "https://keirin.kdreams.jp/kumamoto/racedetail/8720241003010001/?pageType=result",
+            "captured_at_utc": "2026-09-01T12:33:22.351413+00:00",
+            "car_no": "1",
+            "player_name": "東矢 圭吾",
+            "player_profile": "熊 本/25/121",
+            "prefecture": "熊本",
+            "age": "25",
+            "term": "121",
+            "class": "S2",
+            "style": "逃",
+            "gear": "3.92",
+            "score": "103.00",
+            "s_count": "7",
+            "b_count": "13",
+            "nige_count": "6",
+            "makuri_count": "2",
+            "sashi_count": "0",
+            "mark_count": "0",
+            "first_count": "7",
+            "second_count": "1",
+            "third_count": "1",
+            "outside_count": "9",
+            "win_rate": "38.8",
+            "top2_rate": "44.4",
+            "top3_rate": "50.0",
+            "prediction_mark": "○",
+            "evaluation": "4",
+            "raw_row_json": "{\"cells\": [\"○\", \"\", \"4\", \"1\", \"1\", \"東矢 圭吾 熊 本/25/121\", \"S2\", \"逃\", \"3.92\", \"103.00\", \"7\", \"13\", \"6\", \"2\", \"0\", \"0\", \"7\", \"1\", \"1\", \"9\", \"38.8\", \"44.4\", \"50.0\"], \"row_class\": [\"n1\"]}",
+            "predicted_line_formation": "1-9-5/7-2/4-3/8-6",
+            "line_status": "published",
+            "line_provider": "コンドル出版社",
+            "line_source": "楽天Kドリームス 並び予想",
+            "line_id": "1",
+            "line_position": "1",
+            "line_size": "3",
+            "line_role": "先行"
+          }
+        },
+        {
+          "name": "failures.csv",
+          "columns": [
+            "stage",
+            "discovered_on",
+            "url",
+            "error"
+          ],
+          "first_record": {
+            "stage": "race_parse",
+            "discovered_on": "2024-10-11",
+            "url": "https://keirin.kdreams.jp/beppu/racedetail/8620241011010001/?pageType=result",
+            "error": "CollectorError: race type not found for 1R"
+          }
+        },
+        {
+          "name": "line_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "source_url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "odds_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "odds_source_url",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "7520241205030009",
+            "race_date": "2024-12-07",
+            "track": "松山競輪",
+            "race_no": "9",
+            "race_type": "Ｓ級特選",
+            "odds_source_url": "https://keirin.kdreams.jp/matsuyama/racedetail/7520241205030009/?pageType=odds",
+            "error": "OddsParseError: trifecta fixed-first tables missing for cars [1]; found=[2, 3, 4, 5, 6, 7, 8, 9]"
+          }
+        },
+        {
+          "name": "payouts.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "ticket_type",
+            "bet_code",
+            "combination",
+            "payout_yen",
+            "popularity",
+            "status",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "raw_text"
+          ],
+          "first_record": {
+            "race_id": "8720241003010001",
+            "race_date": "2024-10-03",
+            "track": "熊本競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "ticket_type": "2車単",
+            "bet_code": "exacta",
+            "combination": "9-5",
+            "payout_yen": "630",
+            "popularity": "3",
+            "status": "paid",
+            "result_source_url": "https://keirin.kdreams.jp/kumamoto/racedetail/8720241003010001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-01T13:06:20.903240+00:00",
+            "raw_text": "9-5 630円 (3)"
+          }
+        },
+        {
+          "name": "races.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "entry_count",
+            "source_url",
+            "captured_at_utc",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source"
+          ],
+          "first_record": {
+            "race_id": "8720241003010001",
+            "race_date": "2024-10-03",
+            "track": "熊本競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:40",
+            "deadline": "10:35",
+            "entry_count": "9",
+            "source_url": "https://keirin.kdreams.jp/kumamoto/racedetail/8720241003010001/?pageType=result",
+            "captured_at_utc": "2026-09-01T12:33:22.351413+00:00",
+            "predicted_line_formation": "1-9-5/7-2/4-3/8-6",
+            "line_status": "published",
+            "line_provider": "コンドル出版社",
+            "line_source": "楽天Kドリームス 並び予想"
+          }
+        },
+        {
+          "name": "result_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "error"
+          ],
+          "first_record": null
+        }
+      ],
+      "json_samples": [
+        {
+          "name": "line_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "odds_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "q4_report.json",
+          "first_line": "{\n"
+        }
+      ],
+      "n_zip_members": 15
+    },
+    {
+      "path": "data/grade_races/g3/2025/g3-2025-q1.zip",
+      "zip_bytes": 3669588,
+      "zip_sha256": "1edae314aadc767266b6cde860d0eeea67e9f21d16822a80d6b762248c18ed23",
+      "files": [
+        {
+          "name": "entries.csv",
+          "size": 3301702
+        },
+        {
+          "name": "failures.csv",
+          "size": 34
+        },
+        {
+          "name": "line_failures.csv",
+          "size": 53
+        },
+        {
+          "name": "line_summary.json",
+          "size": 424
+        },
+        {
+          "name": "odds_failures.csv",
+          "size": 772
+        },
+        {
+          "name": "odds_summary.json",
+          "size": 503
+        },
+        {
+          "name": "payouts.csv",
+          "size": 1593947
+        },
+        {
+          "name": "q1_report.json",
+          "size": 4722
+        },
+        {
+          "name": "races.csv",
+          "size": 160543
+        },
+        {
+          "name": "result_failures.csv",
+          "size": 100
+        },
+        {
+          "name": "result_summary.json",
+          "size": 910
+        },
+        {
+          "name": "results.csv",
+          "size": 2232320
+        },
+        {
+          "name": "summary.json",
+          "size": 2200
+        },
+        {
+          "name": "trifecta_final_odds.csv",
+          "size": 76213196
+        },
+        {
+          "name": "trio_final_odds.csv",
+          "size": 12579062
+        }
+      ],
+      "csv_samples": [
+        {
+          "name": "entries.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "source_url",
+            "captured_at_utc",
+            "car_no",
+            "player_name",
+            "player_profile",
+            "prefecture",
+            "age",
+            "term",
+            "class",
+            "style",
+            "gear",
+            "score",
+            "s_count",
+            "b_count",
+            "nige_count",
+            "makuri_count",
+            "sashi_count",
+            "mark_count",
+            "first_count",
+            "second_count",
+            "third_count",
+            "outside_count",
+            "win_rate",
+            "top2_rate",
+            "top3_rate",
+            "prediction_mark",
+            "evaluation",
+            "raw_row_json",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source",
+            "line_id",
+            "line_position",
+            "line_size",
+            "line_role"
+          ],
+          "first_record": {
+            "race_id": "2820250104010001",
+            "race_date": "2025-01-04",
+            "track": "立川競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:55",
+            "deadline": "10:50",
+            "source_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820250104010001/?pageType=result",
+            "captured_at_utc": "2026-09-01T15:35:32.836336+00:00",
+            "car_no": "1",
+            "player_name": "青柳 靖起",
+            "player_profile": "佐 賀/24/117",
+            "prefecture": "佐賀",
+            "age": "24",
+            "term": "117",
+            "class": "S2",
+            "style": "逃",
+            "gear": "3.92",
+            "score": "104.29",
+            "s_count": "0",
+            "b_count": "15",
+            "nige_count": "10",
+            "makuri_count": "2",
+            "sashi_count": "1",
+            "mark_count": "1",
+            "first_count": "9",
+            "second_count": "5",
+            "third_count": "6",
+            "outside_count": "7",
+            "win_rate": "33.3",
+            "top2_rate": "51.8",
+            "top3_rate": "74.0",
+            "prediction_mark": "○",
+            "evaluation": "3",
+            "raw_row_json": "{\"cells\": [\"○\", \"\", \"3\", \"1\", \"1\", \"青柳 靖起 佐 賀/24/117\", \"S2\", \"逃\", \"3.92\", \"104.29\", \"0\", \"15\", \"10\", \"2\", \"1\", \"1\", \"9\", \"5\", \"6\", \"7\", \"33.3\", \"51.8\", \"74.0\"], \"row_class\": [\"n1\"]}",
+            "predicted_line_formation": "1-7-5/8-2-4/3-9-6",
+            "line_status": "published",
+            "line_provider": "アオケイ",
+            "line_source": "楽天Kドリームス 並び予想",
+            "line_id": "1",
+            "line_position": "1",
+            "line_size": "3",
+            "line_role": "先行"
+          }
+        },
+        {
+          "name": "failures.csv",
+          "columns": [
+            "stage",
+            "discovered_on",
+            "url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "line_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "source_url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "odds_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "odds_source_url",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "3820250213040009",
+            "race_date": "2025-02-16",
+            "track": "静岡競輪",
+            "race_no": "9",
+            "race_type": "Ｓ級特選",
+            "odds_source_url": "https://keirin.kdreams.jp/shizuoka/racedetail/3820250213040009/?pageType=odds",
+            "error": "OddsParseError: trifecta fixed-first tables missing for cars [7]; found=[1, 2, 3, 4, 5, 6, 8, 9]"
+          }
+        },
+        {
+          "name": "payouts.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "ticket_type",
+            "bet_code",
+            "combination",
+            "payout_yen",
+            "popularity",
+            "status",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "raw_text"
+          ],
+          "first_record": {
+            "race_id": "2820250104010001",
+            "race_date": "2025-01-04",
+            "track": "立川競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "ticket_type": "2車単",
+            "bet_code": "exacta",
+            "combination": "9-7",
+            "payout_yen": "3280",
+            "popularity": "10",
+            "status": "paid",
+            "result_source_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820250104010001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-01T16:13:25.521925+00:00",
+            "raw_text": "9-7 3,280円 (10)"
+          }
+        },
+        {
+          "name": "races.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "entry_count",
+            "source_url",
+            "captured_at_utc",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source"
+          ],
+          "first_record": {
+            "race_id": "2820250104010001",
+            "race_date": "2025-01-04",
+            "track": "立川競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:55",
+            "deadline": "10:50",
+            "entry_count": "9",
+            "source_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820250104010001/?pageType=result",
+            "captured_at_utc": "2026-09-01T15:35:32.836336+00:00",
+            "predicted_line_formation": "1-7-5/8-2-4/3-9-6",
+            "line_status": "published",
+            "line_provider": "アオケイ",
+            "line_source": "楽天Kドリームス 並び予想"
+          }
+        },
+        {
+          "name": "result_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "error"
+          ],
+          "first_record": null
+        }
+      ],
+      "json_samples": [
+        {
+          "name": "line_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "odds_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "q1_report.json",
+          "first_line": "{\n"
+        }
+      ],
+      "n_zip_members": 15
+    },
+    {
+      "path": "data/grade_races/g3/2025/g3-2025-q2.zip",
+      "zip_bytes": 2987572,
+      "zip_sha256": "b83c5cebb7cb5d5c5e589c8bbaa2aaeba8af61ee3c2b0ecd2464cd1a0b7fb679",
+      "files": [
+        {
+          "name": "entries.csv",
+          "size": 2719566
+        },
+        {
+          "name": "failures.csv",
+          "size": 1276
+        },
+        {
+          "name": "line_failures.csv",
+          "size": 53
+        },
+        {
+          "name": "line_summary.json",
+          "size": 424
+        },
+        {
+          "name": "odds_failures.csv",
+          "size": 303
+        },
+        {
+          "name": "odds_summary.json",
+          "size": 502
+        },
+        {
+          "name": "payouts.csv",
+          "size": 1309615
+        },
+        {
+          "name": "q2_report.json",
+          "size": 4604
+        },
+        {
+          "name": "races.csv",
+          "size": 133054
+        },
+        {
+          "name": "result_failures.csv",
+          "size": 100
+        },
+        {
+          "name": "result_summary.json",
+          "size": 910
+        },
+        {
+          "name": "summary.json",
+          "size": 2095
+        },
+        {
+          "name": "results.csv",
+          "size": 1829312
+        },
+        {
+          "name": "trifecta_final_odds.csv",
+          "size": 62358552
+        },
+        {
+          "name": "trio_final_odds.csv",
+          "size": 10292023
+        }
+      ],
+      "csv_samples": [
+        {
+          "name": "entries.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "source_url",
+            "captured_at_utc",
+            "car_no",
+            "player_name",
+            "player_profile",
+            "prefecture",
+            "age",
+            "term",
+            "class",
+            "style",
+            "gear",
+            "score",
+            "s_count",
+            "b_count",
+            "nige_count",
+            "makuri_count",
+            "sashi_count",
+            "mark_count",
+            "first_count",
+            "second_count",
+            "third_count",
+            "outside_count",
+            "win_rate",
+            "top2_rate",
+            "top3_rate",
+            "prediction_mark",
+            "evaluation",
+            "raw_row_json",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source",
+            "line_id",
+            "line_position",
+            "line_size",
+            "line_role"
+          ],
+          "first_record": {
+            "race_id": "7420250403010001",
+            "race_date": "2025-04-03",
+            "track": "高知競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:58",
+            "deadline": "10:53",
+            "source_url": "https://keirin.kdreams.jp/kochi/racedetail/7420250403010001/?pageType=result",
+            "captured_at_utc": "2026-09-01T15:35:51.475736+00:00",
+            "car_no": "1",
+            "player_name": "治田 知也",
+            "player_profile": "新 潟/26/121",
+            "prefecture": "新潟",
+            "age": "26",
+            "term": "121",
+            "class": "S2",
+            "style": "逃",
+            "gear": "3.93",
+            "score": "97.41",
+            "s_count": "4",
+            "b_count": "7",
+            "nige_count": "4",
+            "makuri_count": "5",
+            "sashi_count": "1",
+            "mark_count": "0",
+            "first_count": "10",
+            "second_count": "0",
+            "third_count": "0",
+            "outside_count": "2",
+            "win_rate": "83.3",
+            "top2_rate": "83.3",
+            "top3_rate": "83.3",
+            "prediction_mark": "○",
+            "evaluation": "5",
+            "raw_row_json": "{\"cells\": [\"○\", \"\", \"5\", \"1\", \"1\", \"治田 知也 新 潟/26/121\", \"S2\", \"逃\", \"3.93\", \"97.41\", \"4\", \"7\", \"4\", \"5\", \"1\", \"0\", \"10\", \"0\", \"0\", \"2\", \"83.3\", \"83.3\", \"83.3\"], \"row_class\": [\"n1\"]}",
+            "predicted_line_formation": "1-5-9/6-2/7-3-8-4",
+            "line_status": "published",
+            "line_provider": "福ちゃん出版社",
+            "line_source": "楽天Kドリームス 並び予想",
+            "line_id": "1",
+            "line_position": "1",
+            "line_size": "3",
+            "line_role": "先行"
+          }
+        },
+        {
+          "name": "failures.csv",
+          "columns": [
+            "stage",
+            "discovered_on",
+            "url",
+            "error"
+          ],
+          "first_record": {
+            "stage": "race_parse",
+            "discovered_on": "2025-05-20",
+            "url": "https://keirin.kdreams.jp/takeo/racedetail/8420250520010010/?pageType=result",
+            "error": "CollectorError: page is not marked G3"
+          }
+        },
+        {
+          "name": "line_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "source_url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "odds_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "odds_source_url",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "8420250410020011",
+            "race_date": "2025-04-11",
+            "track": "武雄競輪",
+            "race_no": "11",
+            "race_type": "Ｓ級二予選",
+            "odds_source_url": "https://keirin.kdreams.jp/takeo/racedetail/8420250410020011/?pageType=odds",
+            "error": "OddsParseError: trifecta fixed-first tables missing for cars [7]; found=[1, 2, 3, 4, 5, 6, 8, 9]"
+          }
+        },
+        {
+          "name": "payouts.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "ticket_type",
+            "bet_code",
+            "combination",
+            "payout_yen",
+            "popularity",
+            "status",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "raw_text"
+          ],
+          "first_record": {
+            "race_id": "7420250403010001",
+            "race_date": "2025-04-03",
+            "track": "高知競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "ticket_type": "2車単",
+            "bet_code": "exacta",
+            "combination": "6-5",
+            "payout_yen": "9780",
+            "popularity": "25",
+            "status": "paid",
+            "result_source_url": "https://keirin.kdreams.jp/kochi/racedetail/7420250403010001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-01T16:10:33.550941+00:00",
+            "raw_text": "6-5 9,780円 (25)"
+          }
+        },
+        {
+          "name": "races.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "entry_count",
+            "source_url",
+            "captured_at_utc",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source"
+          ],
+          "first_record": {
+            "race_id": "7420250403010001",
+            "race_date": "2025-04-03",
+            "track": "高知競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:58",
+            "deadline": "10:53",
+            "entry_count": "9",
+            "source_url": "https://keirin.kdreams.jp/kochi/racedetail/7420250403010001/?pageType=result",
+            "captured_at_utc": "2026-09-01T15:35:51.475736+00:00",
+            "predicted_line_formation": "1-5-9/6-2/7-3-8-4",
+            "line_status": "published",
+            "line_provider": "福ちゃん出版社",
+            "line_source": "楽天Kドリームス 並び予想"
+          }
+        },
+        {
+          "name": "result_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "error"
+          ],
+          "first_record": null
+        }
+      ],
+      "json_samples": [
+        {
+          "name": "line_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "odds_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "q2_report.json",
+          "first_line": "{\n"
+        }
+      ],
+      "n_zip_members": 15
+    },
+    {
+      "path": "data/grade_races/g3/2025/g3-2025-q3.zip",
+      "zip_bytes": 3120974,
+      "zip_sha256": "d9ea4b2541d6daf7cb7ff2d9e48c322746a877bf8ba8fcf2b68d42b8317ce1ef",
+      "files": [
+        {
+          "name": "entries.csv",
+          "size": 2910907
+        },
+        {
+          "name": "failures.csv",
+          "size": 457
+        },
+        {
+          "name": "line_failures.csv",
+          "size": 53
+        },
+        {
+          "name": "line_summary.json",
+          "size": 424
+        },
+        {
+          "name": "odds_failures.csv",
+          "size": 1724
+        },
+        {
+          "name": "odds_summary.json",
+          "size": 502
+        },
+        {
+          "name": "payouts.csv",
+          "size": 1424833
+        },
+        {
+          "name": "q3_report.json",
+          "size": 5237
+        },
+        {
+          "name": "races.csv",
+          "size": 144395
+        },
+        {
+          "name": "result_summary.json",
+          "size": 911
+        },
+        {
+          "name": "result_failures.csv",
+          "size": 100
+        },
+        {
+          "name": "results.csv",
+          "size": 1927348
+        },
+        {
+          "name": "summary.json",
+          "size": 2683
+        },
+        {
+          "name": "trifecta_final_odds.csv",
+          "size": 64105265
+        },
+        {
+          "name": "trio_final_odds.csv",
+          "size": 10582277
+        }
+      ],
+      "csv_samples": [
+        {
+          "name": "entries.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "source_url",
+            "captured_at_utc",
+            "car_no",
+            "player_name",
+            "player_profile",
+            "prefecture",
+            "age",
+            "term",
+            "class",
+            "style",
+            "gear",
+            "score",
+            "s_count",
+            "b_count",
+            "nige_count",
+            "makuri_count",
+            "sashi_count",
+            "mark_count",
+            "first_count",
+            "second_count",
+            "third_count",
+            "outside_count",
+            "win_rate",
+            "top2_rate",
+            "top3_rate",
+            "prediction_mark",
+            "evaluation",
+            "raw_row_json",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source",
+            "line_id",
+            "line_position",
+            "line_size",
+            "line_role"
+          ],
+          "first_record": {
+            "race_id": "8320250628040001",
+            "race_date": "2025-07-01",
+            "track": "久留米競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一般",
+            "start_time": "10:58",
+            "deadline": "10:53",
+            "source_url": "https://keirin.kdreams.jp/kurume/racedetail/8320250628040001/?pageType=result",
+            "captured_at_utc": "2026-09-01T15:36:13.096356+00:00",
+            "car_no": "1",
+            "player_name": "磯島 成介",
+            "player_profile": "青 森/25/115",
+            "prefecture": "青森",
+            "age": "25",
+            "term": "115",
+            "class": "S2",
+            "style": "逃",
+            "gear": "3.92",
+            "score": "101.09",
+            "s_count": "5",
+            "b_count": "6",
+            "nige_count": "4",
+            "makuri_count": "2",
+            "sashi_count": "1",
+            "mark_count": "0",
+            "first_count": "4",
+            "second_count": "3",
+            "third_count": "3",
+            "outside_count": "12",
+            "win_rate": "18.1",
+            "top2_rate": "31.8",
+            "top3_rate": "45.4",
+            "prediction_mark": "×",
+            "evaluation": "4",
+            "raw_row_json": "{\"cells\": [\"×\", \"\", \"4\", \"1\", \"1\", \"磯島 成介 青 森/25/115\", \"S2\", \"逃\", \"3.92\", \"101.09\", \"5\", \"6\", \"4\", \"2\", \"1\", \"0\", \"4\", \"3\", \"3\", \"12\", \"18.1\", \"31.8\", \"45.4\"], \"row_class\": [\"n1\"]}",
+            "predicted_line_formation": "1-5-6/7-2/3-4",
+            "line_status": "published",
+            "line_provider": "コンドル出版社",
+            "line_source": "楽天Kドリームス 並び予想",
+            "line_id": "1",
+            "line_position": "1",
+            "line_size": "3",
+            "line_role": "先行"
+          }
+        },
+        {
+          "name": "failures.csv",
+          "columns": [
+            "stage",
+            "discovered_on",
+            "url",
+            "error"
+          ],
+          "first_record": {
+            "stage": "race_parse",
+            "discovered_on": "2025-07-14",
+            "url": "https://keirin.kdreams.jp/keiokaku/racedetail/2720250714010012/?pageType=result",
+            "error": "CollectorError: page is not marked G3"
+          }
+        },
+        {
+          "name": "line_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "source_url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "odds_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "odds_source_url",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "7320250703030006",
+            "race_date": "2025-07-05",
+            "track": "小松島競輪",
+            "race_no": "6",
+            "race_type": "Ｓ級選抜",
+            "odds_source_url": "https://keirin.kdreams.jp/komatsushima/racedetail/7320250703030006/?pageType=odds",
+            "error": "OddsParseError: trifecta fixed-first tables missing for cars [1]; found=[2, 3, 4, 5, 6, 7, 8, 9]"
+          }
+        },
+        {
+          "name": "payouts.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "ticket_type",
+            "bet_code",
+            "combination",
+            "payout_yen",
+            "popularity",
+            "status",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "raw_text"
+          ],
+          "first_record": {
+            "race_id": "8320250628040001",
+            "race_date": "2025-07-01",
+            "track": "久留米競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級一般",
+            "ticket_type": "2車単",
+            "bet_code": "exacta",
+            "combination": "1-2",
+            "payout_yen": "5920",
+            "popularity": "26",
+            "status": "paid",
+            "result_source_url": "https://keirin.kdreams.jp/kurume/racedetail/8320250628040001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-01T16:08:02.963380+00:00",
+            "raw_text": "1-2 5,920円 (26)"
+          }
+        },
+        {
+          "name": "races.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "entry_count",
+            "source_url",
+            "captured_at_utc",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source"
+          ],
+          "first_record": {
+            "race_id": "8320250628040001",
+            "race_date": "2025-07-01",
+            "track": "久留米競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一般",
+            "start_time": "10:58",
+            "deadline": "10:53",
+            "entry_count": "7",
+            "source_url": "https://keirin.kdreams.jp/kurume/racedetail/8320250628040001/?pageType=result",
+            "captured_at_utc": "2026-09-01T15:36:13.096356+00:00",
+            "predicted_line_formation": "1-5-6/7-2/3-4",
+            "line_status": "published",
+            "line_provider": "コンドル出版社",
+            "line_source": "楽天Kドリームス 並び予想"
+          }
+        },
+        {
+          "name": "result_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "error"
+          ],
+          "first_record": null
+        }
+      ],
+      "json_samples": [
+        {
+          "name": "line_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "odds_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "q3_report.json",
+          "first_line": "{\n"
+        }
+      ],
+      "n_zip_members": 15
+    },
+    {
+      "path": "data/grade_races/g3/2025/g3-2025-q4.zip",
+      "zip_bytes": 2932555,
+      "zip_sha256": "893269283f2e1b94de3e5c090fbb8e45c01929ead1b526410ca38cecd7992e64",
+      "files": [
+        {
+          "name": "entries.csv",
+          "size": 2655444
+        },
+        {
+          "name": "failures.csv",
+          "size": 34
+        },
+        {
+          "name": "line_failures.csv",
+          "size": 53
+        },
+        {
+          "name": "line_summary.json",
+          "size": 424
+        },
+        {
+          "name": "odds_failures.csv",
+          "size": 1010
+        },
+        {
+          "name": "odds_summary.json",
+          "size": 503
+        },
+        {
+          "name": "payouts.csv",
+          "size": 1274550
+        },
+        {
+          "name": "q4_report.json",
+          "size": 4561
+        },
+        {
+          "name": "races.csv",
+          "size": 129201
+        },
+        {
+          "name": "result_failures.csv",
+          "size": 100
+        },
+        {
+          "name": "result_summary.json",
+          "size": 910
+        },
+        {
+          "name": "results.csv",
+          "size": 1737092
+        },
+        {
+          "name": "summary.json",
+          "size": 2055
+        },
+        {
+          "name": "trifecta_final_odds.csv",
+          "size": 61562060
+        },
+        {
+          "name": "trio_final_odds.csv",
+          "size": 10162243
+        }
+      ],
+      "csv_samples": [
+        {
+          "name": "entries.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "source_url",
+            "captured_at_utc",
+            "car_no",
+            "player_name",
+            "player_profile",
+            "prefecture",
+            "age",
+            "term",
+            "class",
+            "style",
+            "gear",
+            "score",
+            "s_count",
+            "b_count",
+            "nige_count",
+            "makuri_count",
+            "sashi_count",
+            "mark_count",
+            "first_count",
+            "second_count",
+            "third_count",
+            "outside_count",
+            "win_rate",
+            "top2_rate",
+            "top3_rate",
+            "prediction_mark",
+            "evaluation",
+            "raw_row_json",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source",
+            "line_id",
+            "line_position",
+            "line_size",
+            "line_role"
+          ],
+          "first_record": {
+            "race_id": "2720251002010001",
+            "race_date": "2025-10-02",
+            "track": "京王閣競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:54",
+            "deadline": "10:49",
+            "source_url": "https://keirin.kdreams.jp/keiokaku/racedetail/2720251002010001/?pageType=result",
+            "captured_at_utc": "2026-09-01T15:36:25.826615+00:00",
+            "car_no": "1",
+            "player_name": "山本 伸一",
+            "player_profile": "奈 良/42/101",
+            "prefecture": "奈良",
+            "age": "42",
+            "term": "101",
+            "class": "S1",
+            "style": "両",
+            "gear": "3.92",
+            "score": "106.10",
+            "s_count": "3",
+            "b_count": "1",
+            "nige_count": "0",
+            "makuri_count": "1",
+            "sashi_count": "3",
+            "mark_count": "0",
+            "first_count": "3",
+            "second_count": "1",
+            "third_count": "4",
+            "outside_count": "12",
+            "win_rate": "15.0",
+            "top2_rate": "20.0",
+            "top3_rate": "40.0",
+            "prediction_mark": "○",
+            "evaluation": "3",
+            "raw_row_json": "{\"cells\": [\"○\", \"\", \"3\", \"1\", \"1\", \"山本 伸一 奈 良/42/101\", \"S1\", \"両\", \"3.92\", \"106.10\", \"3\", \"1\", \"0\", \"1\", \"3\", \"0\", \"3\", \"1\", \"4\", \"12\", \"15.0\", \"20.0\", \"40.0\"], \"row_class\": [\"n1\"]}",
+            "predicted_line_formation": "5-1-6/4-2-8/3-7-9",
+            "line_status": "published",
+            "line_provider": "アオケイ",
+            "line_source": "楽天Kドリームス 並び予想",
+            "line_id": "1",
+            "line_position": "2",
+            "line_size": "3",
+            "line_role": "追込"
+          }
+        },
+        {
+          "name": "failures.csv",
+          "columns": [
+            "stage",
+            "discovered_on",
+            "url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "line_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "source_url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "odds_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "odds_source_url",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "4720251010020010",
+            "race_date": "2025-10-11",
+            "track": "松阪競輪",
+            "race_no": "10",
+            "race_type": "Ｓ級二予選",
+            "odds_source_url": "https://keirin.kdreams.jp/matsusaka/racedetail/4720251010020010/?pageType=odds",
+            "error": "OddsParseError: trifecta fixed-first tables missing for cars [1]; found=[2, 3, 4, 5, 6, 7, 8, 9]"
+          }
+        },
+        {
+          "name": "payouts.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "ticket_type",
+            "bet_code",
+            "combination",
+            "payout_yen",
+            "popularity",
+            "status",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "raw_text"
+          ],
+          "first_record": {
+            "race_id": "2720251002010001",
+            "race_date": "2025-10-02",
+            "track": "京王閣競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "ticket_type": "2車単",
+            "bet_code": "exacta",
+            "combination": "2-4",
+            "payout_yen": "3300",
+            "popularity": "13",
+            "status": "paid",
+            "result_source_url": "https://keirin.kdreams.jp/keiokaku/racedetail/2720251002010001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-01T16:10:20.794157+00:00",
+            "raw_text": "2-4 3,300円 (13)"
+          }
+        },
+        {
+          "name": "races.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "entry_count",
+            "source_url",
+            "captured_at_utc",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source"
+          ],
+          "first_record": {
+            "race_id": "2720251002010001",
+            "race_date": "2025-10-02",
+            "track": "京王閣競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:54",
+            "deadline": "10:49",
+            "entry_count": "9",
+            "source_url": "https://keirin.kdreams.jp/keiokaku/racedetail/2720251002010001/?pageType=result",
+            "captured_at_utc": "2026-09-01T15:36:25.826615+00:00",
+            "predicted_line_formation": "5-1-6/4-2-8/3-7-9",
+            "line_status": "published",
+            "line_provider": "アオケイ",
+            "line_source": "楽天Kドリームス 並び予想"
+          }
+        },
+        {
+          "name": "result_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "error"
+          ],
+          "first_record": null
+        }
+      ],
+      "json_samples": [
+        {
+          "name": "line_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "odds_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "q4_report.json",
+          "first_line": "{\n"
+        }
+      ],
+      "n_zip_members": 15
+    },
+    {
+      "path": "data/grade_races/g3/2026_h1/g3-2026-q1.zip",
+      "zip_bytes": 3568674,
+      "zip_sha256": "b8a1a7cc1244123d627e2f597f1372f5b9103c4a3ea51c4fcfa7baab2791ebde",
+      "files": [
+        {
+          "name": "entries.csv",
+          "size": 3141619
+        },
+        {
+          "name": "excluded_girls.csv",
+          "size": 1531
+        },
+        {
+          "name": "failures.csv",
+          "size": 34
+        },
+        {
+          "name": "line_failures.csv",
+          "size": 53
+        },
+        {
+          "name": "line_summary.json",
+          "size": 424
+        },
+        {
+          "name": "odds_failures.csv",
+          "size": 1245
+        },
+        {
+          "name": "odds_summary.json",
+          "size": 503
+        },
+        {
+          "name": "payouts.csv",
+          "size": 1491789
+        },
+        {
+          "name": "q1_report.json",
+          "size": 4505
+        },
+        {
+          "name": "races.csv",
+          "size": 150512
+        },
+        {
+          "name": "result_failures.csv",
+          "size": 100
+        },
+        {
+          "name": "result_summary.json",
+          "size": 910
+        },
+        {
+          "name": "results.csv",
+          "size": 2130201
+        },
+        {
+          "name": "summary.json",
+          "size": 1943
+        },
+        {
+          "name": "trifecta_final_odds.csv",
+          "size": 74248193
+        },
+        {
+          "name": "trio_final_odds.csv",
+          "size": 12258281
+        }
+      ],
+      "csv_samples": [
+        {
+          "name": "entries.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "source_url",
+            "captured_at_utc",
+            "car_no",
+            "player_name",
+            "player_profile",
+            "prefecture",
+            "age",
+            "term",
+            "class",
+            "style",
+            "gear",
+            "score",
+            "s_count",
+            "b_count",
+            "nige_count",
+            "makuri_count",
+            "sashi_count",
+            "mark_count",
+            "first_count",
+            "second_count",
+            "third_count",
+            "outside_count",
+            "win_rate",
+            "top2_rate",
+            "top3_rate",
+            "prediction_mark",
+            "evaluation",
+            "raw_row_json",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source",
+            "line_id",
+            "line_position",
+            "line_size",
+            "line_role"
+          ],
+          "first_record": {
+            "race_id": "2820260104010001",
+            "race_date": "2026-01-04",
+            "track": "立川競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "11:21",
+            "deadline": "11:16",
+            "source_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820260104010001/?pageType=result",
+            "captured_at_utc": "2026-09-01T22:30:58.992707+00:00",
+            "car_no": "1",
+            "player_name": "脇本 勇希",
+            "player_profile": "福 井/27/115",
+            "prefecture": "福井",
+            "age": "27",
+            "term": "115",
+            "class": "S1",
+            "style": "逃",
+            "gear": "3.93",
+            "score": "104.40",
+            "s_count": "2",
+            "b_count": "3",
+            "nige_count": "1",
+            "makuri_count": "2",
+            "sashi_count": "1",
+            "mark_count": "1",
+            "first_count": "2",
+            "second_count": "3",
+            "third_count": "0",
+            "outside_count": "11",
+            "win_rate": "12.5",
+            "top2_rate": "31.2",
+            "top3_rate": "31.2",
+            "prediction_mark": "○",
+            "evaluation": "3",
+            "raw_row_json": "{\"cells\": [\"○\", \"\", \"3\", \"1\", \"1\", \"脇本 勇希 福 井/27/115\", \"S1\", \"逃\", \"3.93\", \"104.40\", \"2\", \"3\", \"1\", \"2\", \"1\", \"1\", \"2\", \"3\", \"0\", \"11\", \"12.5\", \"31.2\", \"31.2\"], \"row_class\": [\"n1\"]}",
+            "predicted_line_formation": "1-7/2-5-8/6-9-3/4",
+            "line_status": "published",
+            "line_provider": "アオケイ",
+            "line_source": "楽天Kドリームス 並び予想",
+            "line_id": "1",
+            "line_position": "1",
+            "line_size": "2",
+            "line_role": "先行"
+          }
+        },
+        {
+          "name": "excluded_girls.csv",
+          "columns": [
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "url"
+          ],
+          "first_record": {
+            "race_date": "2026-03-12",
+            "track": "西武園",
+            "race_no": "1",
+            "race_type": "ガールズ予選１",
+            "url": "https://keirin.kdreams.jp/seibuen/racedetail/2620260312010001/?pageType=result"
+          }
+        },
+        {
+          "name": "failures.csv",
+          "columns": [
+            "stage",
+            "discovered_on",
+            "url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "line_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "source_url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "odds_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "odds_source_url",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "2820260104020002",
+            "race_date": "2026-01-05",
+            "track": "立川競輪",
+            "race_no": "2",
+            "race_type": "Ｓ級選抜",
+            "odds_source_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820260104020002/?pageType=odds",
+            "error": "OddsParseError: trifecta fixed-first tables missing for cars [2]; found=[1, 3, 4, 5, 6, 7, 8, 9]"
+          }
+        },
+        {
+          "name": "payouts.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "ticket_type",
+            "bet_code",
+            "combination",
+            "payout_yen",
+            "popularity",
+            "status",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "raw_text"
+          ],
+          "first_record": {
+            "race_id": "2820260104010001",
+            "race_date": "2026-01-04",
+            "track": "立川競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "ticket_type": "2車単",
+            "bet_code": "exacta",
+            "combination": "9-3",
+            "payout_yen": "1040",
+            "popularity": "4",
+            "status": "paid",
+            "result_source_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820260104010001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-01T23:12:08.479260+00:00",
+            "raw_text": "9-3 1,040円 (4)"
+          }
+        },
+        {
+          "name": "races.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "entry_count",
+            "source_url",
+            "captured_at_utc",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source"
+          ],
+          "first_record": {
+            "race_id": "2820260104010001",
+            "race_date": "2026-01-04",
+            "track": "立川競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "11:21",
+            "deadline": "11:16",
+            "entry_count": "9",
+            "source_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820260104010001/?pageType=result",
+            "captured_at_utc": "2026-09-01T22:30:58.992707+00:00",
+            "predicted_line_formation": "1-7/2-5-8/6-9-3/4",
+            "line_status": "published",
+            "line_provider": "アオケイ",
+            "line_source": "楽天Kドリームス 並び予想"
+          }
+        }
+      ],
+      "json_samples": [
+        {
+          "name": "line_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "odds_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "q1_report.json",
+          "first_line": "{\n"
+        }
+      ],
+      "n_zip_members": 16
+    },
+    {
+      "path": "data/grade_races/g3/2026_h1/g3-2026-q2.zip",
+      "zip_bytes": 3139901,
+      "zip_sha256": "ebdf5ff21f13e56518921c1dd56b181411715dfde108b6757ebf091dc14f97fc",
+      "files": [
+        {
+          "name": "entries.csv",
+          "size": 2867644
+        },
+        {
+          "name": "excluded_girls.csv",
+          "size": 3680
+        },
+        {
+          "name": "failures.csv",
+          "size": 34
+        },
+        {
+          "name": "line_failures.csv",
+          "size": 53
+        },
+        {
+          "name": "line_summary.json",
+          "size": 424
+        },
+        {
+          "name": "odds_failures.csv",
+          "size": 538
+        },
+        {
+          "name": "odds_summary.json",
+          "size": 503
+        },
+        {
+          "name": "payouts.csv",
+          "size": 1381730
+        },
+        {
+          "name": "q2_report.json",
+          "size": 4619
+        },
+        {
+          "name": "races.csv",
+          "size": 140007
+        },
+        {
+          "name": "result_failures.csv",
+          "size": 100
+        },
+        {
+          "name": "result_summary.json",
+          "size": 910
+        },
+        {
+          "name": "results.csv",
+          "size": 1929248
+        },
+        {
+          "name": "summary.json",
+          "size": 2049
+        },
+        {
+          "name": "trifecta_final_odds.csv",
+          "size": 65558325
+        },
+        {
+          "name": "trio_final_odds.csv",
+          "size": 10818104
+        }
+      ],
+      "csv_samples": [
+        {
+          "name": "entries.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "source_url",
+            "captured_at_utc",
+            "car_no",
+            "player_name",
+            "player_profile",
+            "prefecture",
+            "age",
+            "term",
+            "class",
+            "style",
+            "gear",
+            "score",
+            "s_count",
+            "b_count",
+            "nige_count",
+            "makuri_count",
+            "sashi_count",
+            "mark_count",
+            "first_count",
+            "second_count",
+            "third_count",
+            "outside_count",
+            "win_rate",
+            "top2_rate",
+            "top3_rate",
+            "prediction_mark",
+            "evaluation",
+            "raw_row_json",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source",
+            "line_id",
+            "line_position",
+            "line_size",
+            "line_role"
+          ],
+          "first_record": {
+            "race_id": "3720260402010001",
+            "race_date": "2026-04-02",
+            "track": "伊東競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:53",
+            "deadline": "10:48",
+            "source_url": "https://keirin.kdreams.jp/ito/racedetail/3720260402010001/?pageType=result",
+            "captured_at_utc": "2026-09-01T22:31:15.395180+00:00",
+            "car_no": "1",
+            "player_name": "岩谷 拓磨",
+            "player_profile": "福 岡/28/115",
+            "prefecture": "福岡",
+            "age": "28",
+            "term": "115",
+            "class": "S1",
+            "style": "逃",
+            "gear": "3.92",
+            "score": "103.73",
+            "s_count": "5",
+            "b_count": "6",
+            "nige_count": "0",
+            "makuri_count": "5",
+            "sashi_count": "3",
+            "mark_count": "0",
+            "first_count": "5",
+            "second_count": "3",
+            "third_count": "4",
+            "outside_count": "14",
+            "win_rate": "19.2",
+            "top2_rate": "30.7",
+            "top3_rate": "46.1",
+            "prediction_mark": "×",
+            "evaluation": "4",
+            "raw_row_json": "{\"cells\": [\"×\", \"\", \"4\", \"1\", \"1\", \"岩谷 拓磨 福 岡/28/115\", \"S1\", \"逃\", \"3.92\", \"103.73\", \"5\", \"6\", \"0\", \"5\", \"3\", \"0\", \"5\", \"3\", \"4\", \"14\", \"19.2\", \"30.7\", \"46.1\"], \"row_class\": [\"n1\"]}",
+            "predicted_line_formation": "7-3/1-9/2-5/4/6-8",
+            "line_status": "published",
+            "line_provider": "ひかり・小田競",
+            "line_source": "楽天Kドリームス 並び予想",
+            "line_id": "2",
+            "line_position": "1",
+            "line_size": "2",
+            "line_role": "押え先"
+          }
+        },
+        {
+          "name": "excluded_girls.csv",
+          "columns": [
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "url"
+          ],
+          "first_record": {
+            "race_date": "2026-05-09",
+            "track": "松阪",
+            "race_no": "1",
+            "race_type": "ガールズ予選１",
+            "url": "https://keirin.kdreams.jp/matsusaka/racedetail/4720260509010001/?pageType=result"
+          }
+        },
+        {
+          "name": "failures.csv",
+          "columns": [
+            "stage",
+            "discovered_on",
+            "url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "line_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "source_url",
+            "error"
+          ],
+          "first_record": null
+        },
+        {
+          "name": "odds_failures.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "odds_source_url",
+            "error"
+          ],
+          "first_record": {
+            "race_id": "4720260509010007",
+            "race_date": "2026-05-09",
+            "track": "松阪競輪",
+            "race_no": "7",
+            "race_type": "Ｓ級一予選",
+            "odds_source_url": "https://keirin.kdreams.jp/matsusaka/racedetail/4720260509010007/?pageType=odds",
+            "error": "OddsParseError: trifecta fixed-first tables missing for cars [6]; found=[1, 2, 3, 4, 5, 7, 8, 9]"
+          }
+        },
+        {
+          "name": "payouts.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "race_no",
+            "race_type",
+            "ticket_type",
+            "bet_code",
+            "combination",
+            "payout_yen",
+            "popularity",
+            "status",
+            "result_source_url",
+            "result_source",
+            "captured_at_utc",
+            "raw_text"
+          ],
+          "first_record": {
+            "race_id": "3720260402010001",
+            "race_date": "2026-04-02",
+            "track": "伊東競輪",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "ticket_type": "2車単",
+            "bet_code": "exacta",
+            "combination": "2-5",
+            "payout_yen": "3270",
+            "popularity": "11",
+            "status": "paid",
+            "result_source_url": "https://keirin.kdreams.jp/ito/racedetail/3720260402010001/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT",
+            "result_source": "楽天Kドリームス 結果・払戻金",
+            "captured_at_utc": "2026-09-01T23:02:34.317837+00:00",
+            "raw_text": "2-5 3,270円 (11)"
+          }
+        },
+        {
+          "name": "races.csv",
+          "columns": [
+            "race_id",
+            "race_date",
+            "track",
+            "meeting_grade",
+            "race_no",
+            "race_type",
+            "start_time",
+            "deadline",
+            "entry_count",
+            "source_url",
+            "captured_at_utc",
+            "predicted_line_formation",
+            "line_status",
+            "line_provider",
+            "line_source"
+          ],
+          "first_record": {
+            "race_id": "3720260402010001",
+            "race_date": "2026-04-02",
+            "track": "伊東競輪",
+            "meeting_grade": "G3",
+            "race_no": "1",
+            "race_type": "Ｓ級一予選",
+            "start_time": "10:53",
+            "deadline": "10:48",
+            "entry_count": "9",
+            "source_url": "https://keirin.kdreams.jp/ito/racedetail/3720260402010001/?pageType=result",
+            "captured_at_utc": "2026-09-01T22:31:15.395180+00:00",
+            "predicted_line_formation": "7-3/1-9/2-5/4/6-8",
+            "line_status": "published",
+            "line_provider": "ひかり・小田競",
+            "line_source": "楽天Kドリームス 並び予想"
+          }
+        }
+      ],
+      "json_samples": [
+        {
+          "name": "line_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "odds_summary.json",
+          "first_line": "{\n"
+        },
+        {
+          "name": "q2_report.json",
+          "first_line": "{\n"
+        }
+      ],
+      "n_zip_members": 16
+    }
+  ]
+}
