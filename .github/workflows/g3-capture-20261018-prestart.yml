@@ -1,0 +1,41 @@
+name: Capture Keio-kaku G3 2026-10-18 pre-start racecards
+on:
+  push:
+    branches: [research/g3-independent-first-20261018]
+    paths:
+      - .github/workflows/g3-capture-20261018-prestart.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  capture_before_results:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/g3-independent-first-20261018
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/g3_independent_v1/capture_today.py
+            /src/keirin_market_analysis/__init__.py
+            /src/keirin_market_analysis/g3_history.py
+            /src/keirin_market_analysis/s_yosen_2025.py
+            /src/keirin_market_analysis/line_formation_2025.py
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install independent pre-racecard capture dependencies
+        run: python -m pip install requests beautifulsoup4 lxml
+      - name: Record only future G3 races and their published lineups with UTC capture time
+        run: python -u research/g3_independent_v1/capture_today.py
+      - name: Freeze today's cards before the races
+        run: |
+          set -euo pipefail
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add -f --sparse research/g3_independent_v1/today_20261018/
+          git commit -m "Freeze G3 Keio-kaku Oct18 racecards with actual timestamp before finish [skip ci]"
+          git pull --rebase origin research/g3-independent-first-20261018
+          git push origin HEAD:research/g3-independent-first-20261018
