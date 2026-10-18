@@ -20,6 +20,7 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /research/benter_walkforward_v7/research_first_win.py
+            /research/benter_walkforward_v7/audit_first_win_tails.py
             /research/benter_fundamental_v1/train_v1.py
             /research/benter_structural_discovery_v2/discover_v2.py
             /research/benter_walkforward_v7/freeze_prior_win.py
@@ -50,13 +51,15 @@ jobs:
         run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.11,<2'
       - name: Evaluate 1st-win probabilities and time-ordered calibration
         run: python -u research/benter_walkforward_v7/research_first_win.py
+      - name: Diagnose extreme first-place probabilities without refitting
+        run: python -u research/benter_walkforward_v7/audit_first_win_tails.py
       - name: Commit reproducible first-place evaluation
         run: |
           set -euo pipefail
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
           git add -f --sparse research/benter_walkforward_v7/first_win_research/
-          git commit -m "Archive 1st-win F1 S-class 14k sample residual and calibration research [skip ci]"
+          git diff --cached --quiet || git commit -m "Archive 1st-win F1 S-class 14k sample residual and calibration research [skip ci]"
           git pull --rebase origin research/benter-minimal-line-v7-20261018
           git push origin HEAD:research/benter-minimal-line-v7-20261018
       - uses: actions/upload-artifact@v4
