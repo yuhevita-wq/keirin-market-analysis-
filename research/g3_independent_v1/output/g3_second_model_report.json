@@ -1,0 +1,389 @@
+{
+  "status": "G3_INDEPENDENT_SECOND_CONDITIONAL_MODEL_ESTIMATED_AND_EVALUATED",
+  "scope": "G3 S級 only. NOT F1.",
+  "formulas": {
+    "general": "P(j second|i first)=q_j^gamma * exp(line_role_offset(i,j)) / sum_{h!=i} q_h^gamma * exp(line_role_offset(i,h))",
+    "pre_race_joint": "P(i first,j second)=q_i P(j second|i first), for each ordered distinct pair",
+    "same_line_is_sum_of_mutually_exclusive_directions": "same=directly_behind + ahead_of_first + further_behind; do not fit both together"
+  },
+  "empirical_reference_file": "g3_second_empirical.json",
+  "all_eligible_g3_races": 8995,
+  "eligible_2nd_races": 8967,
+  "candidate_second_rows": 69620,
+  "cohort_for_conditional_second_fit_2023_24": 3959,
+  "cohort_for_family_selection_2025": 1971,
+  "cohort_for_chronology_evaluation_2026h1": 1083,
+  "first_probabilities_are_from_g3_only_expanding_prior_years": true,
+  "2022_in_sample_first_predictions_excluded_from_second_fitting": true,
+  "results_prior_to_2023_only_used_for_first_probability_warmup": true,
+  "model_families": {
+    "harville": {
+      "feature_names": [
+        "log_q"
+      ],
+      "fitted_on_2023_2024": [
+        1.0
+      ],
+      "validation_2025": {
+        "races": 1971,
+        "conditional_second_log_loss": 1.8222029189277156,
+        "top_predicted_second_given_real_first_accuracy": 0.3394216133942161,
+        "uniform_log_loss": 2.0452310487184473
+      },
+      "fit_on_2023_2025": [
+        1.0
+      ],
+      "evaluation_2026h1": {
+        "races": 1083,
+        "conditional_second_log_loss": 1.758557219183056,
+        "top_predicted_second_given_real_first_accuracy": 0.36472760849492153,
+        "uniform_log_loss": 2.048477580315598,
+        "line_calibration": {
+          "same_line": {
+            "candidate_rows": 1743,
+            "expected_second": 290.99239763107687,
+            "observed_second": 576
+          },
+          "directly_behind_first": {
+            "candidate_rows": 864,
+            "expected_second": 129.2577977147892,
+            "observed_second": 320
+          },
+          "ahead_of_first": {
+            "candidate_rows": 580,
+            "expected_second": 151.69040000682156,
+            "observed_second": 246
+          },
+          "further_behind_first": {
+            "candidate_rows": 299,
+            "expected_second": 10.044199909466132,
+            "observed_second": 10
+          }
+        }
+      }
+    },
+    "benter_horse_gamma_081": {
+      "feature_names": [
+        "log_q"
+      ],
+      "fitted_on_2023_2024": [
+        0.81
+      ],
+      "validation_2025": {
+        "races": 1971,
+        "conditional_second_log_loss": 1.7897529208637477,
+        "top_predicted_second_given_real_first_accuracy": 0.3394216133942161,
+        "uniform_log_loss": 2.0452310487184473
+      },
+      "fit_on_2023_2025": [
+        0.81
+      ],
+      "evaluation_2026h1": {
+        "races": 1083,
+        "conditional_second_log_loss": 1.7412336667080643,
+        "top_predicted_second_given_real_first_accuracy": 0.36472760849492153,
+        "uniform_log_loss": 2.048477580315598,
+        "line_calibration": {
+          "same_line": {
+            "candidate_rows": 1743,
+            "expected_second": 275.9842732419253,
+            "observed_second": 576
+          },
+          "directly_behind_first": {
+            "candidate_rows": 864,
+            "expected_second": 124.04804798031147,
+            "observed_second": 320
+          },
+          "ahead_of_first": {
+            "candidate_rows": 580,
+            "expected_second": 138.36685608952618,
+            "observed_second": 246
+          },
+          "further_behind_first": {
+            "candidate_rows": 299,
+            "expected_second": 13.56936917208765,
+            "observed_second": 10
+          }
+        }
+      }
+    },
+    "g3_gamma_only": {
+      "feature_names": [
+        "log_q"
+      ],
+      "fitted_on_2023_2024": [
+        0.762638607138365
+      ],
+      "validation_2025": {
+        "races": 1971,
+        "conditional_second_log_loss": 1.7860575521138,
+        "top_predicted_second_given_real_first_accuracy": 0.3394216133942161,
+        "uniform_log_loss": 2.0452310487184473
+      },
+      "fit_on_2023_2025": [
+        0.740370529178136
+      ],
+      "evaluation_2026h1": {
+        "races": 1083,
+        "conditional_second_log_loss": 1.7418863196129732,
+        "top_predicted_second_given_real_first_accuracy": 0.36472760849492153,
+        "uniform_log_loss": 2.048477580315598,
+        "line_calibration": {
+          "same_line": {
+            "candidate_rows": 1743,
+            "expected_second": 270.42512647331273,
+            "observed_second": 576
+          },
+          "directly_behind_first": {
+            "candidate_rows": 864,
+            "expected_second": 122.21684742494006,
+            "observed_second": 320
+          },
+          "ahead_of_first": {
+            "candidate_rows": 580,
+            "expected_second": 133.1174739700286,
+            "observed_second": 246
+          },
+          "further_behind_first": {
+            "candidate_rows": 299,
+            "expected_second": 15.090805078344097,
+            "observed_second": 10
+          }
+        }
+      }
+    },
+    "g3_gamma_plus_same_line": {
+      "feature_names": [
+        "log_q",
+        "same_line"
+      ],
+      "fitted_on_2023_2024": [
+        0.6687624825474573,
+        1.4637045124115236
+      ],
+      "validation_2025": {
+        "races": 1971,
+        "conditional_second_log_loss": 1.5668861421764193,
+        "top_predicted_second_given_real_first_accuracy": 0.47082699137493655,
+        "uniform_log_loss": 2.0452310487184473
+      },
+      "fit_on_2023_2025": [
+        0.6528083960335891,
+        1.4629747372583846
+      ],
+      "evaluation_2026h1": {
+        "races": 1083,
+        "conditional_second_log_loss": 1.5286384768053982,
+        "top_predicted_second_given_real_first_accuracy": 0.4801477377654663,
+        "uniform_log_loss": 2.048477580315598,
+        "line_calibration": {
+          "same_line": {
+            "candidate_rows": 1743,
+            "expected_second": 574.7734511826443,
+            "observed_second": 576
+          },
+          "directly_behind_first": {
+            "candidate_rows": 864,
+            "expected_second": 269.74840939848207,
+            "observed_second": 320
+          },
+          "ahead_of_first": {
+            "candidate_rows": 580,
+            "expected_second": 269.72299898104205,
+            "observed_second": 246
+          },
+          "further_behind_first": {
+            "candidate_rows": 299,
+            "expected_second": 35.302042803120116,
+            "observed_second": 10
+          }
+        }
+      }
+    },
+    "g3_gamma_plus_directed_position": {
+      "feature_names": [
+        "log_q",
+        "immediately_behind_first",
+        "ahead_of_first",
+        "further_behind_first"
+      ],
+      "fitted_on_2023_2024": [
+        0.6385693346333037,
+        1.6780642904177205,
+        1.3164180434577457,
+        0.2519270191017553
+      ],
+      "validation_2025": {
+        "races": 1971,
+        "conditional_second_log_loss": 1.558085897075686,
+        "top_predicted_second_given_real_first_accuracy": 0.4703196347031963,
+        "uniform_log_loss": 2.0452310487184473
+      },
+      "fit_on_2023_2025": [
+        0.6217158124636044,
+        1.6492394231259975,
+        1.3458603600728813,
+        0.36856256541115395
+      ],
+      "evaluation_2026h1": {
+        "races": 1083,
+        "conditional_second_log_loss": 1.5116609003041972,
+        "top_predicted_second_given_real_first_accuracy": 0.4838411819021237,
+        "uniform_log_loss": 2.048477580315598,
+        "line_calibration": {
+          "same_line": {
+            "candidate_rows": 1743,
+            "expected_second": 576.2117383456284,
+            "observed_second": 576
+          },
+          "directly_behind_first": {
+            "candidate_rows": 864,
+            "expected_second": 315.0311079631301,
+            "observed_second": 320
+          },
+          "ahead_of_first": {
+            "candidate_rows": 580,
+            "expected_second": 248.70274296952857,
+            "observed_second": 246
+          },
+          "further_behind_first": {
+            "candidate_rows": 299,
+            "expected_second": 12.477887412969794,
+            "observed_second": 10
+          }
+        }
+      }
+    },
+    "g3_gamma_plus_position_and_role": {
+      "feature_names": [
+        "log_q",
+        "immediately_behind_first",
+        "ahead_of_first",
+        "further_behind_first",
+        "role_second",
+        "role_third_or_later",
+        "role_solo"
+      ],
+      "fitted_on_2023_2024": [
+        0.6534878953171143,
+        1.646830194158996,
+        1.360981434238834,
+        0.19284194017605763,
+        0.06631788288125454,
+        0.12978257828295006,
+        0.2223452366848074
+      ],
+      "validation_2025": {
+        "races": 1971,
+        "conditional_second_log_loss": 1.5574915854711817,
+        "top_predicted_second_given_real_first_accuracy": 0.47082699137493655,
+        "uniform_log_loss": 2.0452310487184473
+      },
+      "fit_on_2023_2025": [
+        0.6389831175236712,
+        1.6177727765813046,
+        1.389893006567605,
+        0.2955134610222823,
+        0.057843412663891966,
+        0.14197999357424215,
+        0.21295636526257583
+      ],
+      "evaluation_2026h1": {
+        "races": 1083,
+        "conditional_second_log_loss": 1.5102572859397536,
+        "top_predicted_second_given_real_first_accuracy": 0.4856879039704525,
+        "uniform_log_loss": 2.048477580315598,
+        "line_calibration": {
+          "same_line": {
+            "candidate_rows": 1743,
+            "expected_second": 575.885789925056,
+            "observed_second": 576
+          },
+          "directly_behind_first": {
+            "candidate_rows": 864,
+            "expected_second": 314.6900667177333,
+            "observed_second": 320
+          },
+          "ahead_of_first": {
+            "candidate_rows": 580,
+            "expected_second": 248.70522265820065,
+            "observed_second": 246
+          },
+          "further_behind_first": {
+            "candidate_rows": 299,
+            "expected_second": 12.490500549121943,
+            "observed_second": 10
+          }
+        }
+      }
+    }
+  },
+  "model_selection": "Lowest conditional second log-loss on 2025; then refit 2023-25 and evaluate on 2026H1",
+  "old_F1_coefficients_reused": false,
+  "source_snapshots_predeadline_verified": false,
+  "validation_ranking": [
+    "g3_gamma_plus_position_and_role",
+    "g3_gamma_plus_directed_position",
+    "g3_gamma_plus_same_line",
+    "g3_gamma_only",
+    "benter_horse_gamma_081",
+    "harville"
+  ],
+  "selected_family": "g3_gamma_plus_position_and_role",
+  "selected_2026h1_evaluation": {
+    "races": 1083,
+    "conditional_second_log_loss": 1.5102572859397536,
+    "top_predicted_second_given_real_first_accuracy": 0.4856879039704525,
+    "uniform_log_loss": 2.048477580315598,
+    "line_calibration": {
+      "same_line": {
+        "candidate_rows": 1743,
+        "expected_second": 575.885789925056,
+        "observed_second": 576
+      },
+      "directly_behind_first": {
+        "candidate_rows": 864,
+        "expected_second": 314.6900667177333,
+        "observed_second": 320
+      },
+      "ahead_of_first": {
+        "candidate_rows": 580,
+        "expected_second": 248.70522265820065,
+        "observed_second": 246
+      },
+      "further_behind_first": {
+        "candidate_rows": 299,
+        "expected_second": 12.490500549121943,
+        "observed_second": 10
+      }
+    }
+  },
+  "daily_cluster_comparisons": {
+    "g3_gamma_plus_position_and_role_OVER_harville": {
+      "mean_logloss_improvement_positive_is_better": 0.24829993324330243,
+      "day_block_bootstrap95": [
+        0.1981031116217567,
+        0.30488024541448655
+      ],
+      "days": 87
+    },
+    "g3_gamma_plus_position_and_role_OVER_g3_gamma_only": {
+      "mean_logloss_improvement_positive_is_better": 0.23162903367321966,
+      "day_block_bootstrap95": [
+        0.1845872263509248,
+        0.2827737679852336
+      ],
+      "days": 87
+    },
+    "g3_gamma_plus_position_and_role_OVER_g3_gamma_plus_same_line": {
+      "mean_logloss_improvement_positive_is_better": 0.01838119086564463,
+      "day_block_bootstrap95": [
+        0.00907307014754135,
+        0.027421871223505184
+      ],
+      "days": 87
+    }
+  },
+  "conditional_2nd_given_actual_1st_is_not_unconditional_exacta_accuracy": true,
+  "pre_race_no_actual_first_or_second_inputs": true
+}
