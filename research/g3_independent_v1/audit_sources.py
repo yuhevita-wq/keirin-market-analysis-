@@ -33,7 +33,7 @@ def main():
             for entry in z.infolist():
                 if entry.is_dir():continue
                 name=entry.filename.lower()
-                if name.endswith(".csv") and len(summary["csv_samples"])<7:
+                if name.endswith(".csv") and (len(summary["csv_samples"])<7 or entry.filename.rsplit("/",1)[-1] in ("entries.csv","results.csv","races.csv")):
                     with z.open(entry) as f:
                         reader=csv.DictReader(io.TextIOWrapper(f,encoding="utf-8-sig",errors="replace"))
                         first=next(reader,None)
