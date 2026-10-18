@@ -1,0 +1,84 @@
+name: V7 F1 S-class past-only independent win freezes
+on:
+  push:
+    branches:
+      - research/benter-minimal-line-v7-20261018
+    paths:
+      - .github/workflows/benter-v7-walkforward-freeze.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: benter-v7-walkforward-freeze
+  cancel-in-progress: false
+jobs:
+  freeze_forecasts_then_audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/benter-minimal-line-v7-20261018
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.github/workflows/benter-v7-walkforward-freeze.yml
+            /research/benter_fundamental_v1/train_v1.py
+            /research/benter_structural_discovery_v2/discover_v2.py
+            /research/benter_walkforward_v7/freeze_prior_win.py
+            /research/benter_walkforward_v7/audit_frozen_sample.py
+            /research/benter_walkforward_v7/frozen/*
+            /data/2023/s_class_f1_all_parts/*/entries.csv
+            /data/2023/s_class_f1_all_parts/*/races.csv
+            /data/2023/s_class_f1_all_parts/*/results.csv
+            /data/2024/s_class_f1_all_parts/*/entries.csv
+            /data/2024/s_class_f1_all_parts/*/races.csv
+            /data/2024/s_class_f1_all_parts/*/results.csv
+            /data/2025/s_class_f1_all_parts/*/entries.csv
+            /data/2025/s_class_f1_all_parts/*/races.csv
+            /data/2025/s_class_f1_all_parts/*/results.csv
+            /data/2026_h1/s_class_f1_all/entries.csv
+            /data/2026_h1/s_class_f1_all/races.csv
+            /data/2026_h1/s_class_f1_all/results.csv
+            /data/2026_future_block1/s_class_f1_20260701_20260830/entries.csv
+            /data/2026_future_block1/s_class_f1_20260701_20260830/races.csv
+            /data/2026_future_block1/s_class_f1_20260701_20260830/results.csv
+            /research/benter_calibration_v4/sep_holdout/entries.csv
+            /research/benter_calibration_v4/sep_holdout/races.csv
+            /research/benter_calibration_v4/sep_holdout/results.csv
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install existing V2 numeric dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.11,<2'
+      - name: Freeze each period before moving to later outcomes
+        run: |
+          set -euo pipefail
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          for period in 2024q1 2024q2 2024q3 2024q4 2025q1 2025q2 2025q3 2025q4 2026q1 2026q2 2026julaug 2026sep
+          do
+            echo "FREEZING independent first-place probabilities for $period"
+            if [ -f "research/benter_walkforward_v7/frozen/independent_win_$period.csv" ]; then
+              echo "Existing frozen output: $period; do not overwrite"
+              continue
+            fi
+            python -u research/benter_walkforward_v7/freeze_prior_win.py --period "$period"
+            git add -f --sparse "research/benter_walkforward_v7/frozen/independent_win_$period.csv" "research/benter_walkforward_v7/frozen/manifest_$period.json"
+            git commit -m "Freeze V2 historical independent win forecast $period [skip ci]"
+            git pull --rebase origin research/benter-minimal-line-v7-20261018
+          git push origin HEAD:research/benter-minimal-line-v7-20261018
+          done
+      - name: Check labels only after all prior forecasts frozen
+        run: |
+          python -u research/benter_walkforward_v7/audit_frozen_sample.py
+          git add -f --sparse research/benter_walkforward_v7/frozen_sample_audit.json
+          git commit -m "Audit frozen F1 S-class sample gates without changing predictions [skip ci]"
+          git pull --rebase origin research/benter-minimal-line-v7-20261018
+          git push origin HEAD:research/benter-minimal-line-v7-20261018
+      - uses: actions/upload-artifact@v4
+        with:
+          name: benter-v7-f1s-past-only-win-forecasts
+          path: |
+            research/benter_walkforward_v7/frozen/
+            research/benter_walkforward_v7/frozen_sample_audit.json

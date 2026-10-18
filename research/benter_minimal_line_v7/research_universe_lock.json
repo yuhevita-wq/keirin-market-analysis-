@@ -1,0 +1,74 @@
+{
+  "schema": "benter_v7_research_universe_lock_v1",
+  "status": "FIXED_REQUIREMENTS_NOT_YET_CERTIFIED_DATASET",
+  "scope_id": "F1_S_CLASS",
+  "current_v7_branch": "research/benter-minimal-line-v7-20261018",
+  "universe": {
+    "meeting_grade": "F1",
+    "race_class": "S級",
+    "prohibit_mixing": [
+      "F2",
+      "G1",
+      "G2",
+      "G3",
+      "A級",
+      "A級チャレンジ",
+      "ガールズ"
+    ],
+    "all_race_subtypes_within_f1_s_class": true,
+    "all_valid_field_sizes": true,
+    "venues": "all",
+    "race_key": "unique race_id",
+    "no_preselected_formation_or_rider_rank": true
+  },
+  "benchmark": {
+    "source": "W. Benter (1994), Computer Based Horse Race Handicapping and Wagering Systems, Tables 9 and 10, p.193",
+    "benter_races": 3198,
+    "benter_second_conditional_candidate_rows": 29679,
+    "benter_third_conditional_candidate_rows": 26481,
+    "minima_for_each_partition": {
+      "eligible_unique_races": 3198,
+      "second_conditional_candidate_rows": 29679,
+      "third_conditional_candidate_rows": 26481
+    },
+    "minima_are_at_least_not_exact_capping": true,
+    "candidate_row_counting": {
+      "second": "sum_over_eligible_races(field_size - 1)",
+      "third": "sum_over_eligible_races(field_size - 2)",
+      "treatment": "One alternative rider per race and conditional finishing slot, including nonwinning alternatives; a race counts once"
+    },
+    "explanation": "Equating 3198 races alone does not equate the conditional candidate sample sizes when field sizes differ. Expand exclusively inside F1 S級 until all three minima pass."
+  },
+  "independent_partitions": {
+    "required": [
+      "fit",
+      "heldout_evaluation"
+    ],
+    "both_must_individually_meet_full_benchmark": true,
+    "disjoint_race_ids": true,
+    "strictly_chronological": true,
+    "never_fit_or_select_hyperparameters_on_heldout": true,
+    "avoid_using_previously_inspected_dates_as_virgin_holdout": true
+  },
+  "integrity": {
+    "unique_and_traceable_race_id": true,
+    "finish_positions_1_2_3_known_and_distinct": true,
+    "omit_cancelled_tied_or_missing_results_from_eligible_count": true,
+    "must_prove_source_inputs_were_available_pre_race_for_final_blind_claim": true,
+    "no_using_actual_finishing_place_as_a_prediction_feature": true,
+    "no_using_final_odds_as_predeadline_snapshot": true,
+    "report_actual_counts_by_partition_and_field_size": true,
+    "assert_all_minima_before_claiming_benter_equivalent": true
+  },
+  "v7_model_frozen": {
+    "independent_win_probability": "V2 + V4 calibration; do not retrain or modify as part of this scope lock",
+    "gamma": 0.7837784969662068,
+    "delta": 0.29282925890631,
+    "same_line_2nd_coefficient": 1.159076608829774,
+    "line_union_3rd_coefficient": 0.8605376375074845,
+    "existing_v7_code_unchanged": true,
+    "old_keirin_shogi_v7_excluded": true
+  },
+  "expansion_rule": "When a new target (e.g. A級 or G grade) is studied, create a separate scope/model/manifest; never pool its races into F1 S級.",
+  "audit_status": "No assertion that existing stored datasets or frozen q_i already satisfy these thresholds; an explicit ID-level eligibility audit is required."
+}

@@ -1,0 +1,530 @@
+{
+  "status": "FIRST_WIN_REESTIMATED_ON_FROZEN_F1_S_CLASS_WALKFORWARD_PROBABILITIES",
+  "model_scope": "F1 S級 only",
+  "input": "V2 full_plus_line, past-only quarterly forecasts: predictions committed before this study",
+  "excluded_podium_reasons": {
+    "ambiguous_or_missing_places": 134
+  },
+  "subpartitions": {
+    "2024_development_training": 5155,
+    "2025q1_development_validation": 1238,
+    "fit_calibrator_until_2025_03": 6393,
+    "evaluation_from_2025_04": 7688
+  },
+  "constraints": {
+    "no_market_odds": true,
+    "no_future_outcome_in_individual_forecast": true,
+    "V7_gamma_delta_a_b_modified": false,
+    "pre_race_asof_verified": false,
+    "untouched_global_blind_period": false
+  },
+  "calibration_candidates": {
+    "raw": {
+      "selection_training_coefficients": [],
+      "development_validation_loss": 1.596972011231925
+    },
+    "temperature": {
+      "selection_training_coefficients": [
+        0.9953365574412748
+      ],
+      "development_validation_loss": 1.5968715387091592
+    },
+    "high_hinge": {
+      "selection_training_coefficients": [
+        0.45145836573153947
+      ],
+      "development_validation_loss": 1.5960522642751718
+    },
+    "combined": {
+      "selection_training_coefficients": [
+        1.0141179631309607,
+        0.6004148508406364
+      ],
+      "development_validation_loss": 1.596053801579647
+    }
+  },
+  "selection": "Lowest 2025Q1 validation log loss only, trained initially on 2024",
+  "selected_method": "high_hinge",
+  "selected_parameters_from_development": [
+    0.6397982992671788
+  ],
+  "raw_fit_summary": {
+    "races": 6393,
+    "mean_log_loss": 1.5755746559300248,
+    "mean_brier": 0.7376401946099019,
+    "top1_accuracy": 0.3833880807132802
+  },
+  "selected_fit_summary": {
+    "races": 6393,
+    "mean_log_loss": 1.5752269931008016,
+    "mean_brier": 0.7373291639853902,
+    "top1_accuracy": 0.3833880807132802
+  },
+  "raw_evaluation": {
+    "races": 7688,
+    "rider_candidate_rows": 53208,
+    "mean_log_loss": 1.5809397996554955,
+    "uniform_mean_log_loss": 1.9334187826080909,
+    "benter_pseudo_r2_vs_uniform": 0.1823086576603532,
+    "mean_brier": 0.7367570775185598,
+    "top1_accuracy": 0.3861862643080125,
+    "top2_includes_winner": 0.6300728407908429,
+    "periods": {
+      "2025q2": {
+        "races": 1248,
+        "log_loss": 1.556818988281732,
+        "top1_accuracy": 0.3838141025641026
+      },
+      "2025q3": {
+        "races": 1291,
+        "log_loss": 1.5563881307788354,
+        "top1_accuracy": 0.39659178931061195
+      },
+      "2025q4": {
+        "races": 1300,
+        "log_loss": 1.55850510981062,
+        "top1_accuracy": 0.3923076923076923
+      },
+      "2026julaug": {
+        "races": 892,
+        "log_loss": 1.6828945348660376,
+        "top1_accuracy": 0.3778026905829596
+      },
+      "2026q1": {
+        "races": 1242,
+        "log_loss": 1.541597588492308,
+        "top1_accuracy": 0.392914653784219
+      },
+      "2026q2": {
+        "races": 1296,
+        "log_loss": 1.6241046540592197,
+        "top1_accuracy": 0.37962962962962965
+      },
+      "2026sep": {
+        "races": 419,
+        "log_loss": 1.5640945134077953,
+        "top1_accuracy": 0.360381861575179
+      }
+    },
+    "calibration": [
+      {
+        "range": [
+          0,
+          0.01
+        ],
+        "riders": 1014,
+        "predicted_mean": 0.005424121403192114,
+        "actual_win_rate": 0.021696252465483234,
+        "expected_winners": 5.500059102836803,
+        "actual_winners": 22
+      },
+      {
+        "range": [
+          0.01,
+          0.025
+        ],
+        "riders": 5095,
+        "predicted_mean": 0.018140920285485345,
+        "actual_win_rate": 0.01295387634936212,
+        "expected_winners": 92.42798885454783,
+        "actual_winners": 66
+      },
+      {
+        "range": [
+          0.025,
+          0.05
+        ],
+        "riders": 8649,
+        "predicted_mean": 0.03687920892526546,
+        "actual_win_rate": 0.03352988784830616,
+        "expected_winners": 318.96827799462096,
+        "actual_winners": 290
+      },
+      {
+        "range": [
+          0.05,
+          0.075
+        ],
+        "riders": 6483,
+        "predicted_mean": 0.06216020261512268,
+        "actual_win_rate": 0.06139133117383927,
+        "expected_winners": 402.98459355384034,
+        "actual_winners": 398
+      },
+      {
+        "range": [
+          0.075,
+          0.1
+        ],
+        "riders": 5230,
+        "predicted_mean": 0.08705930901419094,
+        "actual_win_rate": 0.08604206500956023,
+        "expected_winners": 455.3201861442186,
+        "actual_winners": 450
+      },
+      {
+        "range": [
+          0.1,
+          0.15
+        ],
+        "riders": 7742,
+        "predicted_mean": 0.12363674127274389,
+        "actual_win_rate": 0.12089899250839577,
+        "expected_winners": 957.1956509335832,
+        "actual_winners": 936
+      },
+      {
+        "range": [
+          0.15,
+          0.2
+        ],
+        "riders": 5482,
+        "predicted_mean": 0.17340909616825528,
+        "actual_win_rate": 0.1804086099963517,
+        "expected_winners": 950.6286651943755,
+        "actual_winners": 989
+      },
+      {
+        "range": [
+          0.2,
+          0.25
+        ],
+        "riders": 3980,
+        "predicted_mean": 0.22387591852015262,
+        "actual_win_rate": 0.2364321608040201,
+        "expected_winners": 891.0261557102075,
+        "actual_winners": 941
+      },
+      {
+        "range": [
+          0.25,
+          0.3
+        ],
+        "riders": 2769,
+        "predicted_mean": 0.27381695001112427,
+        "actual_win_rate": 0.29252437703141926,
+        "expected_winners": 758.199134580803,
+        "actual_winners": 810
+      },
+      {
+        "range": [
+          0.3,
+          0.4
+        ],
+        "riders": 3591,
+        "predicted_mean": 0.3444639262764784,
+        "actual_win_rate": 0.34280144806460594,
+        "expected_winners": 1236.969959258834,
+        "actual_winners": 1231
+      },
+      {
+        "range": [
+          0.4,
+          0.5
+        ],
+        "riders": 1843,
+        "predicted_mean": 0.4442762211789832,
+        "actual_win_rate": 0.4460119370591427,
+        "expected_winners": 818.8010756328661,
+        "actual_winners": 822
+      },
+      {
+        "range": [
+          0.5,
+          0.6
+        ],
+        "riders": 826,
+        "predicted_mean": 0.5430895746024187,
+        "actual_win_rate": 0.4939467312348668,
+        "expected_winners": 448.59198862159786,
+        "actual_winners": 408
+      },
+      {
+        "range": [
+          0.6,
+          0.7
+        ],
+        "riders": 329,
+        "predicted_mean": 0.6434948560661148,
+        "actual_win_rate": 0.6322188449848024,
+        "expected_winners": 211.70980764575177,
+        "actual_winners": 208
+      },
+      {
+        "range": [
+          0.7,
+          0.8
+        ],
+        "riders": 117,
+        "predicted_mean": 0.7388016913573989,
+        "actual_win_rate": 0.6581196581196581,
+        "expected_winners": 86.43979788881568,
+        "actual_winners": 77
+      },
+      {
+        "range": [
+          0.8,
+          1.0
+        ],
+        "riders": 58,
+        "predicted_mean": 0.9178734290189807,
+        "actual_win_rate": 0.6896551724137931,
+        "expected_winners": 53.23665888310088,
+        "actual_winners": 40
+      }
+    ]
+  },
+  "selected_evaluation": {
+    "races": 7688,
+    "rider_candidate_rows": 53208,
+    "mean_log_loss": 1.5799172146521523,
+    "uniform_mean_log_loss": 1.9334187826080909,
+    "benter_pseudo_r2_vs_uniform": 0.1828375575616792,
+    "mean_brier": 0.7364081461482409,
+    "top1_accuracy": 0.3861862643080125,
+    "top2_includes_winner": 0.6300728407908429,
+    "periods": {
+      "2025q2": {
+        "races": 1248,
+        "log_loss": 1.5571553001978187,
+        "top1_accuracy": 0.3838141025641026
+      },
+      "2025q3": {
+        "races": 1291,
+        "log_loss": 1.5561041224690169,
+        "top1_accuracy": 0.39659178931061195
+      },
+      "2025q4": {
+        "races": 1300,
+        "log_loss": 1.5585927563716608,
+        "top1_accuracy": 0.3923076923076923
+      },
+      "2026julaug": {
+        "races": 892,
+        "log_loss": 1.6764470052363873,
+        "top1_accuracy": 0.3778026905829596
+      },
+      "2026q1": {
+        "races": 1242,
+        "log_loss": 1.541171465959834,
+        "top1_accuracy": 0.392914653784219
+      },
+      "2026q2": {
+        "races": 1296,
+        "log_loss": 1.6229438271949153,
+        "top1_accuracy": 0.37962962962962965
+      },
+      "2026sep": {
+        "races": 419,
+        "log_loss": 1.5635127369227384,
+        "top1_accuracy": 0.360381861575179
+      }
+    },
+    "calibration": [
+      {
+        "range": [
+          0,
+          0.01
+        ],
+        "riders": 955,
+        "predicted_mean": 0.005379444197838836,
+        "actual_win_rate": 0.023036649214659685,
+        "expected_winners": 5.1373692089360885,
+        "actual_winners": 22
+      },
+      {
+        "range": [
+          0.01,
+          0.025
+        ],
+        "riders": 4898,
+        "predicted_mean": 0.018200072051746202,
+        "actual_win_rate": 0.01245406288280931,
+        "expected_winners": 89.1439529094529,
+        "actual_winners": 61
+      },
+      {
+        "range": [
+          0.025,
+          0.05
+        ],
+        "riders": 8594,
+        "predicted_mean": 0.03689468624216353,
+        "actual_win_rate": 0.032464510123341866,
+        "expected_winners": 317.07293356515333,
+        "actual_winners": 279
+      },
+      {
+        "range": [
+          0.05,
+          0.075
+        ],
+        "riders": 6514,
+        "predicted_mean": 0.062110356840905226,
+        "actual_win_rate": 0.059717531470678535,
+        "expected_winners": 404.58686446165666,
+        "actual_winners": 389
+      },
+      {
+        "range": [
+          0.075,
+          0.1
+        ],
+        "riders": 5286,
+        "predicted_mean": 0.08701472284780797,
+        "actual_win_rate": 0.08550889141127507,
+        "expected_winners": 459.9598249735129,
+        "actual_winners": 452
+      },
+      {
+        "range": [
+          0.1,
+          0.15
+        ],
+        "riders": 7804,
+        "predicted_mean": 0.12365281336661799,
+        "actual_win_rate": 0.1194259354177345,
+        "expected_winners": 964.9865555130867,
+        "actual_winners": 932
+      },
+      {
+        "range": [
+          0.15,
+          0.2
+        ],
+        "riders": 5529,
+        "predicted_mean": 0.1734599299030551,
+        "actual_win_rate": 0.17941761620546212,
+        "expected_winners": 959.0599524339916,
+        "actual_winners": 992
+      },
+      {
+        "range": [
+          0.2,
+          0.25
+        ],
+        "riders": 4012,
+        "predicted_mean": 0.22387037859412937,
+        "actual_win_rate": 0.2337986041874377,
+        "expected_winners": 898.167958919647,
+        "actual_winners": 938
+      },
+      {
+        "range": [
+          0.25,
+          0.3
+        ],
+        "riders": 2806,
+        "predicted_mean": 0.27365082677473296,
+        "actual_win_rate": 0.29579472558802566,
+        "expected_winners": 767.8642199299007,
+        "actual_winners": 830
+      },
+      {
+        "range": [
+          0.3,
+          0.4
+        ],
+        "riders": 3634,
+        "predicted_mean": 0.34442648592893715,
+        "actual_win_rate": 0.3403962575674188,
+        "expected_winners": 1251.6458498657576,
+        "actual_winners": 1237
+      },
+      {
+        "range": [
+          0.4,
+          0.5
+        ],
+        "riders": 2049,
+        "predicted_mean": 0.4427528297675079,
+        "actual_win_rate": 0.44167886774036114,
+        "expected_winners": 907.2005481936237,
+        "actual_winners": 905
+      },
+      {
+        "range": [
+          0.5,
+          0.6
+        ],
+        "riders": 770,
+        "predicted_mean": 0.5398525200628571,
+        "actual_win_rate": 0.5376623376623376,
+        "expected_winners": 415.68644044839994,
+        "actual_winners": 414
+      },
+      {
+        "range": [
+          0.6,
+          0.7
+        ],
+        "riders": 250,
+        "predicted_mean": 0.6402848213371986,
+        "actual_win_rate": 0.632,
+        "expected_winners": 160.07120533429963,
+        "actual_winners": 158
+      },
+      {
+        "range": [
+          0.7,
+          0.8
+        ],
+        "riders": 66,
+        "predicted_mean": 0.7355339816030907,
+        "actual_win_rate": 0.7727272727272727,
+        "expected_winners": 48.545242785803985,
+        "actual_winners": 51
+      },
+      {
+        "range": [
+          0.8,
+          1.0
+        ],
+        "riders": 41,
+        "predicted_mean": 0.9480751574823693,
+        "actual_win_rate": 0.6829268292682927,
+        "expected_winners": 38.87108145677714,
+        "actual_winners": 28
+      }
+    ]
+  },
+  "paired_day_bootstrap": {
+    "improvement_positive_is_better": 0.001022585003343398,
+    "day_cluster_95_interval": [
+      0.00033761125316107905,
+      0.0017591509437452372
+    ],
+    "days": 539
+  },
+  "other_methods_evaluation_diagnostic_only": {
+    "raw": {
+      "coefficients_fitted_before_eval": [],
+      "evaluation_log_loss_exploratory": 1.5809397996554955,
+      "calibration_candidate_only": true
+    },
+    "temperature": {
+      "coefficients_fitted_before_eval": [
+        0.9882047087479401
+      ],
+      "evaluation_log_loss_exploratory": 1.5807585368884904,
+      "calibration_candidate_only": true
+    },
+    "high_hinge": {
+      "coefficients_fitted_before_eval": [
+        0.6397982992671788
+      ],
+      "evaluation_log_loss_exploratory": 1.5799172146521523,
+      "calibration_candidate_only": false
+    },
+    "combined": {
+      "coefficients_fitted_before_eval": [
+        1.0123950266240238,
+        0.7681190023334126
+      ],
+      "evaluation_log_loss_exploratory": 1.5799012096002958,
+      "calibration_candidate_only": true
+    }
+  },
+  "provenance": "Historical racecards are dated to races, but are not certified original live pre-race captures",
+  "caveat": "Feature set / ridge alpha were chosen in earlier research. This is retrospective chronological replication; not virgin first-time model selection. Only selected calibration may proceed as a candidate, not an automatic replacement for V7 q."
+}

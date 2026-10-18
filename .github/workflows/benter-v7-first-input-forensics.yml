@@ -1,0 +1,40 @@
+name: V7 1st-place input anomaly forensics
+on:
+  push:
+    branches:
+      - research/benter-minimal-line-v7-20261018
+    paths:
+      - .github/workflows/benter-v7-first-input-forensics.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  inspect_h2_input_distribution:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/benter-minimal-line-v7-20261018
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/benter_walkforward_v7/forensic_first_win_h2.py
+            /research/benter_walkforward_v7/frozen/independent_win_2026julaug.csv
+            /research/benter_walkforward_v7/first_win_research/first_win_tail_audit.json
+            /data/2026_h1/s_class_f1_all/entries.csv
+            /data/2026_future_block1/s_class_f1_20260701_20260830/entries.csv
+            /data/2026_future_block1/s_class_f1_20260701_20260830/races.csv
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Inspect July-Aug source inputs for extreme V2 probabilities
+        run: python -u research/benter_walkforward_v7/forensic_first_win_h2.py
+      - name: Preserve source-input forensic evidence
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add -f --sparse research/benter_walkforward_v7/first_win_research/first_win_input_forensics_2026julaug.json
+          git commit -m "Preserve source-input evidence for extreme 1st place forecast errors [skip ci]"
+          git pull --rebase origin research/benter-minimal-line-v7-20261018
+          git push origin HEAD:research/benter-minimal-line-v7-20261018

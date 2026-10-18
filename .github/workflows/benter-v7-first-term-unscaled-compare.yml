@@ -1,0 +1,66 @@
+name: Compare F1 1st win after unscaled term999 correction
+on:
+  push:
+    branches:
+      - research/benter-minimal-line-v7-20261018
+    paths:
+      - research/benter_walkforward_v7/frozen_term_unscaled/manifest_2026sep.json
+      - .github/workflows/benter-v7-first-term-unscaled-compare.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  compare_same_14081_races:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/benter-minimal-line-v7-20261018
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/benter_walkforward_v7/research_first_win_term_unscaled.py
+            /research/benter_walkforward_v7/compare_first_win_unscaled.py
+            /research/benter_walkforward_v7/freeze_prior_win.py
+            /research/benter_walkforward_v7/frozen_term_unscaled/*
+            /research/benter_walkforward_v7/frozen_sample_audit.json
+            /research/benter_walkforward_v7/first_win_research/*
+            /research/benter_fundamental_v1/train_v1.py
+            /research/benter_structural_discovery_v2/discover_v2.py
+            /data/2023/s_class_f1_all_parts/*/entries.csv
+            /data/2023/s_class_f1_all_parts/*/races.csv
+            /data/2023/s_class_f1_all_parts/*/results.csv
+            /data/2024/s_class_f1_all_parts/*/entries.csv
+            /data/2024/s_class_f1_all_parts/*/races.csv
+            /data/2024/s_class_f1_all_parts/*/results.csv
+            /data/2025/s_class_f1_all_parts/*/entries.csv
+            /data/2025/s_class_f1_all_parts/*/races.csv
+            /data/2025/s_class_f1_all_parts/*/results.csv
+            /data/2026_h1/s_class_f1_all/entries.csv
+            /data/2026_h1/s_class_f1_all/races.csv
+            /data/2026_h1/s_class_f1_all/results.csv
+            /data/2026_future_block1/s_class_f1_20260701_20260830/entries.csv
+            /data/2026_future_block1/s_class_f1_20260701_20260830/races.csv
+            /data/2026_future_block1/s_class_f1_20260701_20260830/results.csv
+            /research/benter_calibration_v4/sep_holdout/entries.csv
+            /research/benter_calibration_v4/sep_holdout/races.csv
+            /research/benter_calibration_v4/sep_holdout/results.csv
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install numerical dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.11,<2'
+      - name: Re-evaluate corrected first place probability on all 14081 races
+        run: python -u research/benter_walkforward_v7/research_first_win_term_unscaled.py
+      - name: Compare identical evaluation cases with original model
+        run: python -u research/benter_walkforward_v7/compare_first_win_unscaled.py
+      - name: Commit comparison and corrected model report
+        run: |
+          set -euo pipefail
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add -f --sparse research/benter_walkforward_v7/first_win_research_term_unscaled/ research/benter_walkforward_v7/first_win_term_unscaled_comparison.json
+          git commit -m "Compare corrected foreign-term first-place model on identical 7688 F1 S races [skip ci]"
+          git pull --rebase origin research/benter-minimal-line-v7-20261018
+          git push origin HEAD:research/benter-minimal-line-v7-20261018

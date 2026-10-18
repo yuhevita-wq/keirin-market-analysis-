@@ -1,0 +1,219 @@
+{
+  "title": "Benter independent 1st win + conditional exponents + minimum empirical line indicators",
+  "fit_period": "2026-07-02..2026-08-30",
+  "train_races": 867,
+  "training_audit": {
+    "forecast_count": 875,
+    "n": 867,
+    "excluded": {
+      "tie_or_missing_places": 8
+    },
+    "second_relationships": {
+      "different_line": 418,
+      "same_line": 449
+    },
+    "third_relationships": {
+      "first_third_same_second_diff": 129,
+      "first_second_same_third_diff": 316,
+      "second_third_same_first_diff": 134,
+      "all_different": 155,
+      "all_same": 133
+    }
+  },
+  "choose": "July for candidate coefficients; August for selecting 3rd feature count and L2 penalty; Jul+Aug refit",
+  "gamma": 0.7837784969662068,
+  "delta": 0.29282925890631,
+  "feature_candidates": {
+    "second": "1(same i/j line)",
+    "third_union": "1(k in line of i OR j)",
+    "third_split": [
+      "1(k in line i)",
+      "1(k in line j)"
+    ]
+  },
+  "selected": {
+    "second": {
+      "which": "second",
+      "penalty": 0.01,
+      "july_loss": 1.407260582042112,
+      "august_loss": 1.3908681901877127,
+      "july_coefficients": [
+        1.1295220992906463
+      ]
+    },
+    "third": {
+      "which": "third_union",
+      "penalty": 0.01,
+      "july_loss": 1.481408804540354,
+      "august_loss": 1.490341250342397,
+      "july_coefficients": [
+        0.8448528257104608
+      ]
+    }
+  },
+  "fitted": {
+    "second": {
+      "kind": "second",
+      "penalty": 0.01,
+      "coefficients": [
+        1.159076608829774
+      ],
+      "training_conditional_loss": 1.3988364162816804,
+      "baseline_loss": 1.5400391951552306
+    },
+    "third": {
+      "kind": "third_union",
+      "penalty": 0.01,
+      "coefficients": [
+        0.8605376375074845
+      ],
+      "training_conditional_loss": 1.4856121199453358,
+      "baseline_loss": 1.5524388784355072
+    }
+  },
+  "sweep": [
+    {
+      "which": "second",
+      "penalty": 0.01,
+      "july_loss": 1.407260582042112,
+      "august_loss": 1.3908681901877127,
+      "july_coefficients": [
+        1.1295220992906463
+      ]
+    },
+    {
+      "which": "second",
+      "penalty": 0.05,
+      "july_loss": 1.4127177714689603,
+      "august_loss": 1.398667920491042,
+      "july_coefficients": [
+        0.9426542067581037
+      ]
+    },
+    {
+      "which": "second",
+      "penalty": 0.2,
+      "july_loss": 1.442331821386373,
+      "august_loss": 1.4331382997453135,
+      "july_coefficients": [
+        0.5803527438629505
+      ]
+    },
+    {
+      "which": "second",
+      "penalty": 1.0,
+      "july_loss": 1.5021218486804346,
+      "august_loss": 1.4986943405266007,
+      "july_coefficients": [
+        0.1874512630144098
+      ]
+    },
+    {
+      "which": "second",
+      "penalty": 5.0,
+      "july_loss": 1.5311138294033995,
+      "august_loss": 1.5299435969847859,
+      "july_coefficients": [
+        0.04246505759324288
+      ]
+    },
+    {
+      "which": "third_union",
+      "penalty": 0.01,
+      "july_loss": 1.481408804540354,
+      "august_loss": 1.490341250342397,
+      "july_coefficients": [
+        0.8448528257104608
+      ]
+    },
+    {
+      "which": "third_union",
+      "penalty": 0.05,
+      "july_loss": 1.4848381627465972,
+      "august_loss": 1.4946854008028077,
+      "july_coefficients": [
+        0.6839417520595491
+      ]
+    },
+    {
+      "which": "third_union",
+      "penalty": 0.2,
+      "july_loss": 1.5010945574147778,
+      "august_loss": 1.512725901417401,
+      "july_coefficients": [
+        0.3988056697419591
+      ]
+    },
+    {
+      "which": "third_union",
+      "penalty": 1.0,
+      "july_loss": 1.5290839103399976,
+      "august_loss": 1.5426531555852303,
+      "july_coefficients": [
+        0.12296794327360669
+      ]
+    },
+    {
+      "which": "third_union",
+      "penalty": 5.0,
+      "july_loss": 1.5415202253676294,
+      "august_loss": 1.5558113367088275,
+      "july_coefficients": [
+        0.027513121852998448
+      ]
+    },
+    {
+      "which": "third_split",
+      "penalty": 0.01,
+      "july_loss": 1.4621631384085283,
+      "august_loss": 1.494595320604488,
+      "july_coefficients": [
+        0.4781550550733726,
+        0.7654605052293117
+      ]
+    },
+    {
+      "which": "third_split",
+      "penalty": 0.05,
+      "july_loss": 1.4656246844945173,
+      "august_loss": 1.4943689429991356,
+      "july_coefficients": [
+        0.4050701820127979,
+        0.636865777277951
+      ]
+    },
+    {
+      "which": "third_split",
+      "penalty": 0.2,
+      "july_loss": 1.484790468048221,
+      "august_loss": 1.5070980915364123,
+      "july_coefficients": [
+        0.253512804757183,
+        0.38567670521026304
+      ]
+    },
+    {
+      "which": "third_split",
+      "penalty": 1.0,
+      "july_loss": 1.5225470424755472,
+      "august_loss": 1.5392265089849597,
+      "july_coefficients": [
+        0.0815502840756873,
+        0.12055632491259695
+      ]
+    },
+    {
+      "which": "third_split",
+      "penalty": 5.0,
+      "july_loss": 1.53997775833941,
+      "august_loss": 1.5549476009430987,
+      "july_coefficients": [
+        0.018358675695747877,
+        0.02690991126908793
+      ]
+    }
+  ],
+  "sept_or_h1_outcome_used_to_fit": false,
+  "v5_v6_status": "exploratory challenger models; not promoted on basis of greater feature complexity",
+  "note": "No race-type dummies, rider role dummies, line size, third-survivor counts, or 322-specific formula"
+}
