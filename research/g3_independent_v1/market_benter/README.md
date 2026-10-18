@@ -41,6 +41,7 @@ c_i = \frac{\exp(\alpha\log f_i + \beta\log p_i)}{\sum_j\exp(\alpha\log f_j+\bet
 ## 実装済みコード
 
 - [`engine.py`](engine.py)：G3の1・2・3着順序確率を全券種事象へ集約し、完全なオッズブックを検査。係数未学習時は**EV欄をnull**。
+- [`stage_matched.py`](stage_matched.py)：**同一レースIDの事前G3独立確率・全券種オッズ・確定1〜3着を検査して券種別の学習JSONLを生成**。
 - [`train_fusion.py`](train_fusion.py)：G3のレースID・確定オッズ・実着順・事前独立確率を照合済みのJSONLから、券種別または**1着市場代理**の α,β を最尤推定、日付で分離して評価。
 - [`run.py`](run.py)：**新しい会話から呼ぶ入口**。締切15分前の時刻照合・市場欠損の強制検出・保存用JSON出力。
 - [`test_market_bridge.py`](test_market_bridge.py)：人工データによる排他性・確率正規化・オッズ欠損・時間窓・学習・漏洩防止のテスト。
@@ -66,7 +67,17 @@ python research/g3_independent_v1/market_benter/run.py \
 
 必要入力：G3の同一レースIDで、(a)各候補への**当時以前の情報だけから算出した**独立勝率由来の券種別確率、(b)同時点の全選択肢の確定オッズ、(c)実際の当たり買い目、(d)レース日付、(e)出所・抽出時刻。
 
-入力JSONLは1行1レース1券種、例（**書式だけの概念例**。実レースで全候補・全オッズに置換必須）：
+結合済みの元入力は1行1レースで、`scope, race_id, race_date, fundamental_provenance, price_phase, card, finish, markets` を持つ。`card` は独立G3モデルから得た全車の事前1着確率と予想ラインのみ。`finish` は確定1〜3着、`markets` は完全な市場オッズブックであり、G3係数モデルは`stage_matched.py`がGitHubの凍結ファイルから読み込む。
+
+```bash
+python research/g3_independent_v1/market_benter/stage_matched.py \\
+  --input /path/to/g3_joined_history.jsonl \\
+  --output-dir /path/to/g3_staged_market_books
+```
+
+このステージングはレースIDや欠損オッズを自動で補完せず、排他的市場ブックに穴があれば失敗する。出力は `3連単.jsonl`、`3連複.jsonl`、`1着市場代理_3連単.jsonl` 等の**市場別ファイル**となる。原始オッズ・結果・独自予測のレースID結合は、この前の工程で監査すること。
+
+その市場別の**学習入力JSONL**は1行1レース1券種、例（**書式だけの概念例**。実レースで全候補・全オッズに置換必須）：
 
 ```json
 {
@@ -85,7 +96,7 @@ python research/g3_independent_v1/market_benter/run.py \
 
 ```bash
 python research/g3_independent_v1/market_benter/train_fusion.py \
-  --input /path/to/validated_g3_market_history.jsonl \
+  --input /path/to/g3_staged_market_books/3連単.jsonl \
   --market 3連単 \
   --training-before 2026-01-01 \
   --evaluation-from 2026-01-01 \
