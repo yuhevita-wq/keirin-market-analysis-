@@ -1,0 +1,1085 @@
+{
+  "research_stage": "A1/A2 first place locked coefficient audit; odds excluded",
+  "as_of": "2026-10-18",
+  "training": {
+    "races": 24199,
+    "validation_races": 11633,
+    "ridge_selected_in_2025": {
+      "score_only": 0.01,
+      "no_line": 0.01,
+      "full": 0.001
+    }
+  },
+  "audits": {
+    "h1": {
+      "accepted": 41398,
+      "no_unique_first_place": 101,
+      "missing_line": 30,
+      "incomplete_results": 1
+    },
+    "h2": {
+      "accepted": 2975,
+      "invalid_winner": 4
+    },
+    "field_completeness": {
+      "rows": 302577,
+      "missing_counts": {}
+    }
+  },
+  "holdouts": {
+    "2026_h1_primary": {
+      "range": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "metrics": {
+        "score_only": {
+          "races": 5566,
+          "first_place_hits": 2051,
+          "first_place_accuracy": 0.368487,
+          "log_loss": 1.716675,
+          "race_brier": 0.765457,
+          "entrants": 38832
+        },
+        "no_line": {
+          "races": 5566,
+          "first_place_hits": 2324,
+          "first_place_accuracy": 0.417535,
+          "log_loss": 1.573449,
+          "race_brier": 0.7238,
+          "entrants": 38832
+        },
+        "full": {
+          "races": 5566,
+          "first_place_hits": 2370,
+          "first_place_accuracy": 0.425799,
+          "log_loss": 1.522131,
+          "race_brier": 0.708719,
+          "entrants": 38832
+        }
+      },
+      "full_vs_score": {
+        "days": 181,
+        "cluster_unit": "race_date",
+        "confidence": 0.95,
+        "bootstrap_repetitions": 3000,
+        "top1_improvement_pp": 5.731,
+        "top1_improvement_pp_ci95": [
+          4.345,
+          7.119
+        ],
+        "logloss_reduction": 0.194543,
+        "logloss_reduction_ci95": [
+          0.1721,
+          0.216831
+        ]
+      },
+      "full_vs_no_line": {
+        "days": 181,
+        "cluster_unit": "race_date",
+        "confidence": 0.95,
+        "bootstrap_repetitions": 3000,
+        "top1_improvement_pp": 0.826,
+        "top1_improvement_pp_ci95": [
+          -0.22,
+          1.888
+        ],
+        "logloss_reduction": 0.051318,
+        "logloss_reduction_ci95": [
+          0.041711,
+          0.060367
+        ]
+      },
+      "calibration": {
+        "score_only": [
+          {
+            "range": "0.0-0.1",
+            "count": 16434,
+            "mean_predicted": 0.0604,
+            "observed_wins": 850,
+            "observed_rate": 0.05172
+          },
+          {
+            "range": "0.1-0.2",
+            "count": 13531,
+            "mean_predicted": 0.14265,
+            "observed_wins": 1847,
+            "observed_rate": 0.1365
+          },
+          {
+            "range": "0.2-0.3",
+            "count": 5498,
+            "mean_predicted": 0.24259,
+            "observed_wins": 1437,
+            "observed_rate": 0.26137
+          },
+          {
+            "range": "0.3-0.4",
+            "count": 2232,
+            "mean_predicted": 0.34243,
+            "observed_wins": 879,
+            "observed_rate": 0.39382
+          },
+          {
+            "range": "0.4-0.5",
+            "count": 800,
+            "mean_predicted": 0.44014,
+            "observed_wins": 386,
+            "observed_rate": 0.4825
+          },
+          {
+            "range": "0.5-0.6",
+            "count": 246,
+            "mean_predicted": 0.54081,
+            "observed_wins": 116,
+            "observed_rate": 0.47154
+          },
+          {
+            "range": "0.6-0.7",
+            "count": 77,
+            "mean_predicted": 0.64341,
+            "observed_wins": 43,
+            "observed_rate": 0.55844
+          },
+          {
+            "range": "0.7-0.8",
+            "count": 12,
+            "mean_predicted": 0.73009,
+            "observed_wins": 8,
+            "observed_rate": 0.66667
+          },
+          {
+            "range": "0.8-0.9",
+            "count": 2,
+            "mean_predicted": 0.80145,
+            "observed_wins": 0,
+            "observed_rate": 0.0
+          }
+        ],
+        "full": [
+          {
+            "range": "0.0-0.1",
+            "count": 20918,
+            "mean_predicted": 0.04262,
+            "observed_wins": 889,
+            "observed_rate": 0.0425
+          },
+          {
+            "range": "0.1-0.2",
+            "count": 8370,
+            "mean_predicted": 0.14415,
+            "observed_wins": 1259,
+            "observed_rate": 0.15042
+          },
+          {
+            "range": "0.2-0.3",
+            "count": 4193,
+            "mean_predicted": 0.24543,
+            "observed_wins": 1053,
+            "observed_rate": 0.25113
+          },
+          {
+            "range": "0.3-0.4",
+            "count": 2289,
+            "mean_predicted": 0.34426,
+            "observed_wins": 790,
+            "observed_rate": 0.34513
+          },
+          {
+            "range": "0.4-0.5",
+            "count": 1458,
+            "mean_predicted": 0.44625,
+            "observed_wins": 643,
+            "observed_rate": 0.44102
+          },
+          {
+            "range": "0.5-0.6",
+            "count": 788,
+            "mean_predicted": 0.54568,
+            "observed_wins": 407,
+            "observed_rate": 0.5165
+          },
+          {
+            "range": "0.6-0.7",
+            "count": 487,
+            "mean_predicted": 0.64285,
+            "observed_wins": 282,
+            "observed_rate": 0.57906
+          },
+          {
+            "range": "0.7-0.8",
+            "count": 219,
+            "mean_predicted": 0.7476,
+            "observed_wins": 157,
+            "observed_rate": 0.71689
+          },
+          {
+            "range": "0.8-0.9",
+            "count": 96,
+            "mean_predicted": 0.83944,
+            "observed_wins": 75,
+            "observed_rate": 0.78125
+          },
+          {
+            "range": "0.9-1.0",
+            "count": 14,
+            "mean_predicted": 0.91719,
+            "observed_wins": 11,
+            "observed_rate": 0.78571
+          }
+        ]
+      },
+      "full_strata": {
+        "entry_count": {
+          "6": {
+            "races": 102,
+            "first_place_hits": 45,
+            "first_place_accuracy": 0.441176,
+            "log_loss": 1.458881,
+            "race_brier": 0.71108,
+            "entrants": 612
+          },
+          "7": {
+            "races": 5448,
+            "first_place_hits": 2317,
+            "first_place_accuracy": 0.425294,
+            "log_loss": 1.523583,
+            "race_brier": 0.708612,
+            "entrants": 38136
+          }
+        },
+        "meeting_grade": {
+          "F1": {
+            "races": 1979,
+            "first_place_hits": 846,
+            "first_place_accuracy": 0.427489,
+            "log_loss": 1.524159,
+            "race_brier": 0.711551,
+            "entrants": 13813
+          },
+          "F2": {
+            "races": 3586,
+            "first_place_hits": 1523,
+            "first_place_accuracy": 0.424707,
+            "log_loss": 1.521053,
+            "race_brier": 0.70717,
+            "entrants": 25010
+          }
+        },
+        "month": {
+          "2026-01": {
+            "races": 994,
+            "first_place_hits": 397,
+            "first_place_accuracy": 0.399396,
+            "log_loss": 1.635243,
+            "race_brier": 0.721004,
+            "entrants": 6931
+          },
+          "2026-02": {
+            "races": 880,
+            "first_place_hits": 380,
+            "first_place_accuracy": 0.431818,
+            "log_loss": 1.499932,
+            "race_brier": 0.70505,
+            "entrants": 6141
+          },
+          "2026-03": {
+            "races": 950,
+            "first_place_hits": 422,
+            "first_place_accuracy": 0.444211,
+            "log_loss": 1.45785,
+            "race_brier": 0.697401,
+            "entrants": 6634
+          },
+          "2026-04": {
+            "races": 912,
+            "first_place_hits": 389,
+            "first_place_accuracy": 0.426535,
+            "log_loss": 1.481762,
+            "race_brier": 0.705846,
+            "entrants": 6363
+          },
+          "2026-05": {
+            "races": 940,
+            "first_place_hits": 420,
+            "first_place_accuracy": 0.446809,
+            "log_loss": 1.471243,
+            "race_brier": 0.692847,
+            "entrants": 6557
+          },
+          "2026-06": {
+            "races": 890,
+            "first_place_hits": 362,
+            "first_place_accuracy": 0.406742,
+            "log_loss": 1.581481,
+            "race_brier": 0.730414,
+            "entrants": 6206
+          }
+        },
+        "race_type": {
+          "Ａ級一般": {
+            "races": 992,
+            "first_place_hits": 399,
+            "first_place_accuracy": 0.402218,
+            "log_loss": 1.579253,
+            "race_brier": 0.731742,
+            "entrants": 6848
+          },
+          "Ａ級予選": {
+            "races": 1086,
+            "first_place_hits": 508,
+            "first_place_accuracy": 0.467772,
+            "log_loss": 1.445314,
+            "race_brier": 0.680326,
+            "entrants": 7601
+          },
+          "Ａ級初日特選": {
+            "races": 330,
+            "first_place_hits": 106,
+            "first_place_accuracy": 0.321212,
+            "log_loss": 1.744859,
+            "race_brier": 0.801144,
+            "entrants": 2310
+          },
+          "Ａ級決勝": {
+            "races": 339,
+            "first_place_hits": 120,
+            "first_place_accuracy": 0.353982,
+            "log_loss": 1.785072,
+            "race_brier": 0.759198,
+            "entrants": 2373
+          },
+          "Ａ級準決勝": {
+            "races": 987,
+            "first_place_hits": 462,
+            "first_place_accuracy": 0.468085,
+            "log_loss": 1.45596,
+            "race_brier": 0.676517,
+            "entrants": 6909
+          },
+          "Ａ級特一般": {
+            "races": 438,
+            "first_place_hits": 177,
+            "first_place_accuracy": 0.40411,
+            "log_loss": 1.562477,
+            "race_brier": 0.728208,
+            "entrants": 3032
+          },
+          "Ａ級特予選": {
+            "races": 457,
+            "first_place_hits": 236,
+            "first_place_accuracy": 0.516411,
+            "log_loss": 1.281537,
+            "race_brier": 0.621164,
+            "entrants": 3198
+          },
+          "Ａ級特選": {
+            "races": 753,
+            "first_place_hits": 286,
+            "first_place_accuracy": 0.379814,
+            "log_loss": 1.550634,
+            "race_brier": 0.736176,
+            "entrants": 5271
+          },
+          "Ａ級選抜": {
+            "races": 183,
+            "first_place_hits": 75,
+            "first_place_accuracy": 0.409836,
+            "log_loss": 1.524288,
+            "race_brier": 0.725215,
+            "entrants": 1281
+          }
+        }
+      },
+      "score_strata": {
+        "entry_count": {
+          "6": {
+            "races": 102,
+            "first_place_hits": 34,
+            "first_place_accuracy": 0.333333,
+            "log_loss": 1.675475,
+            "race_brier": 0.784031,
+            "entrants": 612
+          },
+          "7": {
+            "races": 5448,
+            "first_place_hits": 2010,
+            "first_place_accuracy": 0.368943,
+            "log_loss": 1.717522,
+            "race_brier": 0.765067,
+            "entrants": 38136
+          }
+        },
+        "meeting_grade": {
+          "F1": {
+            "races": 1979,
+            "first_place_hits": 735,
+            "first_place_accuracy": 0.3714,
+            "log_loss": 1.697734,
+            "race_brier": 0.761272,
+            "entrants": 13813
+          },
+          "F2": {
+            "races": 3586,
+            "first_place_hits": 1315,
+            "first_place_accuracy": 0.366704,
+            "log_loss": 1.727061,
+            "race_brier": 0.767747,
+            "entrants": 25010
+          }
+        },
+        "month": {
+          "2026-01": {
+            "races": 994,
+            "first_place_hits": 334,
+            "first_place_accuracy": 0.336016,
+            "log_loss": 1.92186,
+            "race_brier": 0.79246,
+            "entrants": 6931
+          },
+          "2026-02": {
+            "races": 880,
+            "first_place_hits": 293,
+            "first_place_accuracy": 0.332955,
+            "log_loss": 1.707388,
+            "race_brier": 0.778056,
+            "entrants": 6141
+          },
+          "2026-03": {
+            "races": 950,
+            "first_place_hits": 350,
+            "first_place_accuracy": 0.368421,
+            "log_loss": 1.636301,
+            "race_brier": 0.758026,
+            "entrants": 6634
+          },
+          "2026-04": {
+            "races": 912,
+            "first_place_hits": 361,
+            "first_place_accuracy": 0.395833,
+            "log_loss": 1.607848,
+            "race_brier": 0.744926,
+            "entrants": 6363
+          },
+          "2026-05": {
+            "races": 940,
+            "first_place_hits": 394,
+            "first_place_accuracy": 0.419149,
+            "log_loss": 1.655622,
+            "race_brier": 0.745038,
+            "entrants": 6557
+          },
+          "2026-06": {
+            "races": 890,
+            "first_place_hits": 319,
+            "first_place_accuracy": 0.358427,
+            "log_loss": 1.758486,
+            "race_brier": 0.773375,
+            "entrants": 6206
+          }
+        },
+        "race_type": {
+          "Ａ級一般": {
+            "races": 992,
+            "first_place_hits": 355,
+            "first_place_accuracy": 0.357863,
+            "log_loss": 1.766516,
+            "race_brier": 0.777299,
+            "entrants": 6848
+          },
+          "Ａ級予選": {
+            "races": 1086,
+            "first_place_hits": 438,
+            "first_place_accuracy": 0.403315,
+            "log_loss": 1.639089,
+            "race_brier": 0.732728,
+            "entrants": 7601
+          },
+          "Ａ級初日特選": {
+            "races": 330,
+            "first_place_hits": 85,
+            "first_place_accuracy": 0.257576,
+            "log_loss": 1.874415,
+            "race_brier": 0.835357,
+            "entrants": 2310
+          },
+          "Ａ級決勝": {
+            "races": 339,
+            "first_place_hits": 94,
+            "first_place_accuracy": 0.277286,
+            "log_loss": 2.047608,
+            "race_brier": 0.828431,
+            "entrants": 2373
+          },
+          "Ａ級準決勝": {
+            "races": 987,
+            "first_place_hits": 379,
+            "first_place_accuracy": 0.383992,
+            "log_loss": 1.687507,
+            "race_brier": 0.756938,
+            "entrants": 6909
+          },
+          "Ａ級特一般": {
+            "races": 438,
+            "first_place_hits": 167,
+            "first_place_accuracy": 0.381279,
+            "log_loss": 1.724941,
+            "race_brier": 0.771674,
+            "entrants": 3032
+          },
+          "Ａ級特予選": {
+            "races": 457,
+            "first_place_hits": 198,
+            "first_place_accuracy": 0.43326,
+            "log_loss": 1.558759,
+            "race_brier": 0.715001,
+            "entrants": 3198
+          },
+          "Ａ級特選": {
+            "races": 753,
+            "first_place_hits": 282,
+            "first_place_accuracy": 0.374502,
+            "log_loss": 1.663547,
+            "race_brier": 0.768573,
+            "entrants": 5271
+          },
+          "Ａ級選抜": {
+            "races": 183,
+            "first_place_hits": 52,
+            "first_place_accuracy": 0.284153,
+            "log_loss": 1.758637,
+            "race_brier": 0.796655,
+            "entrants": 1281
+          }
+        }
+      }
+    },
+    "2026_h2_extra": {
+      "range": [
+        "2026-07-01",
+        "2026-10-02"
+      ],
+      "metrics": {
+        "score_only": {
+          "races": 2975,
+          "first_place_hits": 1076,
+          "first_place_accuracy": 0.361681,
+          "log_loss": 1.660014,
+          "race_brier": 0.763081,
+          "entrants": 20764
+        },
+        "no_line": {
+          "races": 2975,
+          "first_place_hits": 1182,
+          "first_place_accuracy": 0.397311,
+          "log_loss": 1.557478,
+          "race_brier": 0.733816,
+          "entrants": 20764
+        },
+        "full": {
+          "races": 2975,
+          "first_place_hits": 1206,
+          "first_place_accuracy": 0.405378,
+          "log_loss": 1.49882,
+          "race_brier": 0.717511,
+          "entrants": 20764
+        }
+      },
+      "full_vs_score": {
+        "days": 94,
+        "cluster_unit": "race_date",
+        "confidence": 0.95,
+        "bootstrap_repetitions": 3000,
+        "top1_improvement_pp": 4.37,
+        "top1_improvement_pp_ci95": [
+          2.501,
+          6.246
+        ],
+        "logloss_reduction": 0.161193,
+        "logloss_reduction_ci95": [
+          0.136997,
+          0.185628
+        ]
+      },
+      "full_vs_no_line": {
+        "days": 94,
+        "cluster_unit": "race_date",
+        "confidence": 0.95,
+        "bootstrap_repetitions": 3000,
+        "top1_improvement_pp": 0.807,
+        "top1_improvement_pp_ci95": [
+          -0.434,
+          2.084
+        ],
+        "logloss_reduction": 0.058658,
+        "logloss_reduction_ci95": [
+          0.046613,
+          0.070812
+        ]
+      },
+      "calibration": {
+        "score_only": [
+          {
+            "range": "0.0-0.1",
+            "count": 9294,
+            "mean_predicted": 0.05698,
+            "observed_wins": 492,
+            "observed_rate": 0.05294
+          },
+          {
+            "range": "0.1-0.2",
+            "count": 6593,
+            "mean_predicted": 0.1417,
+            "observed_wins": 893,
+            "observed_rate": 0.13545
+          },
+          {
+            "range": "0.2-0.3",
+            "count": 2777,
+            "mean_predicted": 0.2429,
+            "observed_wins": 724,
+            "observed_rate": 0.26071
+          },
+          {
+            "range": "0.3-0.4",
+            "count": 1327,
+            "mean_predicted": 0.34358,
+            "observed_wins": 491,
+            "observed_rate": 0.37001
+          },
+          {
+            "range": "0.4-0.5",
+            "count": 502,
+            "mean_predicted": 0.44175,
+            "observed_wins": 232,
+            "observed_rate": 0.46215
+          },
+          {
+            "range": "0.5-0.6",
+            "count": 183,
+            "mean_predicted": 0.54386,
+            "observed_wins": 90,
+            "observed_rate": 0.4918
+          },
+          {
+            "range": "0.6-0.7",
+            "count": 66,
+            "mean_predicted": 0.64703,
+            "observed_wins": 39,
+            "observed_rate": 0.59091
+          },
+          {
+            "range": "0.7-0.8",
+            "count": 19,
+            "mean_predicted": 0.74124,
+            "observed_wins": 12,
+            "observed_rate": 0.63158
+          },
+          {
+            "range": "0.8-0.9",
+            "count": 3,
+            "mean_predicted": 0.86371,
+            "observed_wins": 2,
+            "observed_rate": 0.66667
+          }
+        ],
+        "full": [
+          {
+            "range": "0.0-0.1",
+            "count": 11085,
+            "mean_predicted": 0.04203,
+            "observed_wins": 455,
+            "observed_rate": 0.04105
+          },
+          {
+            "range": "0.1-0.2",
+            "count": 4489,
+            "mean_predicted": 0.1442,
+            "observed_wins": 700,
+            "observed_rate": 0.15594
+          },
+          {
+            "range": "0.2-0.3",
+            "count": 2306,
+            "mean_predicted": 0.24482,
+            "observed_wins": 602,
+            "observed_rate": 0.26106
+          },
+          {
+            "range": "0.3-0.4",
+            "count": 1316,
+            "mean_predicted": 0.34532,
+            "observed_wins": 453,
+            "observed_rate": 0.34422
+          },
+          {
+            "range": "0.4-0.5",
+            "count": 740,
+            "mean_predicted": 0.4459,
+            "observed_wins": 314,
+            "observed_rate": 0.42432
+          },
+          {
+            "range": "0.5-0.6",
+            "count": 416,
+            "mean_predicted": 0.54337,
+            "observed_wins": 186,
+            "observed_rate": 0.44712
+          },
+          {
+            "range": "0.6-0.7",
+            "count": 247,
+            "mean_predicted": 0.64295,
+            "observed_wins": 147,
+            "observed_rate": 0.59514
+          },
+          {
+            "range": "0.7-0.8",
+            "count": 115,
+            "mean_predicted": 0.7407,
+            "observed_wins": 80,
+            "observed_rate": 0.69565
+          },
+          {
+            "range": "0.8-0.9",
+            "count": 41,
+            "mean_predicted": 0.84176,
+            "observed_wins": 29,
+            "observed_rate": 0.70732
+          },
+          {
+            "range": "0.9-1.0",
+            "count": 9,
+            "mean_predicted": 0.92389,
+            "observed_wins": 9,
+            "observed_rate": 1.0
+          }
+        ]
+      },
+      "full_strata": {
+        "entry_count": {
+          "6": {
+            "races": 55,
+            "first_place_hits": 20,
+            "first_place_accuracy": 0.363636,
+            "log_loss": 1.511122,
+            "race_brier": 0.750927,
+            "entrants": 330
+          },
+          "7": {
+            "races": 2917,
+            "first_place_hits": 1184,
+            "first_place_accuracy": 0.405896,
+            "log_loss": 1.499006,
+            "race_brier": 0.716966,
+            "entrants": 20419
+          }
+        },
+        "meeting_grade": {
+          "(missing)": {
+            "races": 997,
+            "first_place_hits": 399,
+            "first_place_accuracy": 0.400201,
+            "log_loss": 1.494174,
+            "race_brier": 0.71652,
+            "entrants": 6963
+          },
+          "F1": {
+            "races": 715,
+            "first_place_hits": 292,
+            "first_place_accuracy": 0.408392,
+            "log_loss": 1.466797,
+            "race_brier": 0.705336,
+            "entrants": 4993
+          },
+          "F2": {
+            "races": 1248,
+            "first_place_hits": 511,
+            "first_place_accuracy": 0.409455,
+            "log_loss": 1.518287,
+            "race_brier": 0.723555,
+            "entrants": 8703
+          }
+        },
+        "month": {
+          "2026-07": {
+            "races": 1047,
+            "first_place_hits": 448,
+            "first_place_accuracy": 0.427889,
+            "log_loss": 1.481067,
+            "race_brier": 0.705601,
+            "entrants": 7308
+          },
+          "2026-08": {
+            "races": 931,
+            "first_place_hits": 359,
+            "first_place_accuracy": 0.385607,
+            "log_loss": 1.523761,
+            "race_brier": 0.731966,
+            "entrants": 6493
+          },
+          "2026-09": {
+            "races": 940,
+            "first_place_hits": 370,
+            "first_place_accuracy": 0.393617,
+            "log_loss": 1.50234,
+            "race_brier": 0.719742,
+            "entrants": 6567
+          },
+          "2026-10": {
+            "races": 57,
+            "first_place_hits": 29,
+            "first_place_accuracy": 0.508772,
+            "log_loss": 1.359511,
+            "race_brier": 0.663387,
+            "entrants": 396
+          }
+        },
+        "race_type": {
+          "(missing)": {
+            "races": 997,
+            "first_place_hits": 399,
+            "first_place_accuracy": 0.400201,
+            "log_loss": 1.494174,
+            "race_brier": 0.71652,
+            "entrants": 6963
+          },
+          "Ａ級一般": {
+            "races": 347,
+            "first_place_hits": 124,
+            "first_place_accuracy": 0.357349,
+            "log_loss": 1.628366,
+            "race_brier": 0.764736,
+            "entrants": 2406
+          },
+          "Ａ級予選": {
+            "races": 384,
+            "first_place_hits": 169,
+            "first_place_accuracy": 0.440104,
+            "log_loss": 1.333147,
+            "race_brier": 0.660974,
+            "entrants": 2688
+          },
+          "Ａ級初日特選": {
+            "races": 121,
+            "first_place_hits": 42,
+            "first_place_accuracy": 0.347107,
+            "log_loss": 1.754496,
+            "race_brier": 0.807304,
+            "entrants": 847
+          },
+          "Ａ級決勝": {
+            "races": 118,
+            "first_place_hits": 47,
+            "first_place_accuracy": 0.398305,
+            "log_loss": 1.602931,
+            "race_brier": 0.747624,
+            "entrants": 826
+          },
+          "Ａ級準決勝": {
+            "races": 356,
+            "first_place_hits": 169,
+            "first_place_accuracy": 0.474719,
+            "log_loss": 1.435867,
+            "race_brier": 0.683237,
+            "entrants": 2492
+          },
+          "Ａ級特一般": {
+            "races": 158,
+            "first_place_hits": 60,
+            "first_place_accuracy": 0.379747,
+            "log_loss": 1.526297,
+            "race_brier": 0.741445,
+            "entrants": 1085
+          },
+          "Ａ級特予選": {
+            "races": 164,
+            "first_place_hits": 70,
+            "first_place_accuracy": 0.426829,
+            "log_loss": 1.450167,
+            "race_brier": 0.701165,
+            "entrants": 1147
+          },
+          "Ａ級特選": {
+            "races": 267,
+            "first_place_hits": 101,
+            "first_place_accuracy": 0.378277,
+            "log_loss": 1.541829,
+            "race_brier": 0.737083,
+            "entrants": 1869
+          },
+          "Ａ級選抜": {
+            "races": 63,
+            "first_place_hits": 25,
+            "first_place_accuracy": 0.396825,
+            "log_loss": 1.413782,
+            "race_brier": 0.68209,
+            "entrants": 441
+          }
+        }
+      },
+      "score_strata": {
+        "entry_count": {
+          "6": {
+            "races": 55,
+            "first_place_hits": 12,
+            "first_place_accuracy": 0.218182,
+            "log_loss": 1.803303,
+            "race_brier": 0.838625,
+            "entrants": 330
+          },
+          "7": {
+            "races": 2917,
+            "first_place_hits": 1063,
+            "first_place_accuracy": 0.364415,
+            "log_loss": 1.657781,
+            "race_brier": 0.761757,
+            "entrants": 20419
+          }
+        },
+        "meeting_grade": {
+          "(missing)": {
+            "races": 997,
+            "first_place_hits": 378,
+            "first_place_accuracy": 0.379137,
+            "log_loss": 1.623669,
+            "race_brier": 0.752478,
+            "entrants": 6963
+          },
+          "F1": {
+            "races": 715,
+            "first_place_hits": 264,
+            "first_place_accuracy": 0.369231,
+            "log_loss": 1.661416,
+            "race_brier": 0.759541,
+            "entrants": 4993
+          },
+          "F2": {
+            "races": 1248,
+            "first_place_hits": 431,
+            "first_place_accuracy": 0.345353,
+            "log_loss": 1.684875,
+            "race_brier": 0.772365,
+            "entrants": 8703
+          }
+        },
+        "month": {
+          "2026-07": {
+            "races": 1047,
+            "first_place_hits": 374,
+            "first_place_accuracy": 0.357211,
+            "log_loss": 1.690376,
+            "race_brier": 0.770639,
+            "entrants": 7308
+          },
+          "2026-08": {
+            "races": 931,
+            "first_place_hits": 324,
+            "first_place_accuracy": 0.348013,
+            "log_loss": 1.66479,
+            "race_brier": 0.765937,
+            "entrants": 6493
+          },
+          "2026-09": {
+            "races": 940,
+            "first_place_hits": 354,
+            "first_place_accuracy": 0.376596,
+            "log_loss": 1.63236,
+            "race_brier": 0.755039,
+            "entrants": 6567
+          },
+          "2026-10": {
+            "races": 57,
+            "first_place_hits": 24,
+            "first_place_accuracy": 0.421053,
+            "log_loss": 1.480341,
+            "race_brier": 0.710233,
+            "entrants": 396
+          }
+        },
+        "race_type": {
+          "(missing)": {
+            "races": 997,
+            "first_place_hits": 378,
+            "first_place_accuracy": 0.379137,
+            "log_loss": 1.623669,
+            "race_brier": 0.752478,
+            "entrants": 6963
+          },
+          "Ａ級一般": {
+            "races": 347,
+            "first_place_hits": 107,
+            "first_place_accuracy": 0.308357,
+            "log_loss": 1.816788,
+            "race_brier": 0.807203,
+            "entrants": 2406
+          },
+          "Ａ級予選": {
+            "races": 384,
+            "first_place_hits": 157,
+            "first_place_accuracy": 0.408854,
+            "log_loss": 1.56359,
+            "race_brier": 0.726287,
+            "entrants": 2688
+          },
+          "Ａ級初日特選": {
+            "races": 121,
+            "first_place_hits": 25,
+            "first_place_accuracy": 0.206612,
+            "log_loss": 1.846625,
+            "race_brier": 0.830607,
+            "entrants": 847
+          },
+          "Ａ級決勝": {
+            "races": 118,
+            "first_place_hits": 36,
+            "first_place_accuracy": 0.305085,
+            "log_loss": 1.87604,
+            "race_brier": 0.826599,
+            "entrants": 826
+          },
+          "Ａ級準決勝": {
+            "races": 356,
+            "first_place_hits": 132,
+            "first_place_accuracy": 0.370787,
+            "log_loss": 1.593063,
+            "race_brier": 0.745812,
+            "entrants": 2492
+          },
+          "Ａ級特一般": {
+            "races": 158,
+            "first_place_hits": 54,
+            "first_place_accuracy": 0.341772,
+            "log_loss": 1.634915,
+            "race_brier": 0.769376,
+            "entrants": 1085
+          },
+          "Ａ級特予選": {
+            "races": 164,
+            "first_place_hits": 72,
+            "first_place_accuracy": 0.439024,
+            "log_loss": 1.574632,
+            "race_brier": 0.735607,
+            "entrants": 1147
+          },
+          "Ａ級特選": {
+            "races": 267,
+            "first_place_hits": 97,
+            "first_place_accuracy": 0.363296,
+            "log_loss": 1.689436,
+            "race_brier": 0.768107,
+            "entrants": 1869
+          },
+          "Ａ級選抜": {
+            "races": 63,
+            "first_place_hits": 18,
+            "first_place_accuracy": 0.285714,
+            "log_loss": 1.735223,
+            "race_brier": 0.795484,
+            "entrants": 441
+          }
+        }
+      }
+    }
+  }
+}
