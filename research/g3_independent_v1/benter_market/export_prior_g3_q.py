@@ -7,8 +7,9 @@ NO odds are inserted: a separate verified 2車単 book is required for Benter
 stage-two fitting. Enforce once-per-race and freeze SHA256 audit.
 """
 from __future__ import annotations
-import gzip,hashlib,json,collections
+import gzip,hashlib,json,collections,sys
 from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from train_g3_first import load,OUT
 from train_g3_second import first_by_calendar
 
