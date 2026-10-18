@@ -1,0 +1,42 @@
+name: G3 Keio-kaku 2026-10-18 pre-start independent win forecast
+on:
+  push:
+    branches: [research/g3-independent-first-20261018]
+    paths:
+      - .github/workflows/g3-independent-today-forecast.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  freeze_12_races:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/g3-independent-first-20261018
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/g3_independent_v1/output/g3_first_win_report.json
+            /research/g3_independent_v1/today_20261018/*
+            /research/g3_independent_v1/predict_today.py
+            /research/g3_independent_v1/train_g3_first.py
+            /research/g3_independent_v1/vendor/train_v1.py
+            /research/g3_independent_v1/vendor/discover_v2.py
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Numerical runtime for frozen G3 classifier
+        run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.11,<2'
+      - name: Compute and freeze G3 independent first-win probabilities before races
+        run: python -u research/g3_independent_v1/predict_today.py
+      - name: Commit full G3 Oct18 pre-race forecasts
+        run: |
+          set -euo pipefail
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add -f --sparse research/g3_independent_v1/today_20261018/g3_first_independent_probabilities.csv research/g3_independent_v1/today_20261018/forecast_audit.json
+          git commit -m "Freeze Oct 18 Keio-kaku G3 independent first probabilities before race starts [skip ci]"
+          git pull --rebase origin research/g3-independent-first-20261018
+          git push origin HEAD:research/g3-independent-first-20261018
