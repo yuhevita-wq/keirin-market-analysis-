@@ -66,13 +66,15 @@ jobs:
             python -u research/benter_walkforward_v7/freeze_prior_win.py --period "$period"
             git add -f --sparse "research/benter_walkforward_v7/frozen/independent_win_$period.csv" "research/benter_walkforward_v7/frozen/manifest_$period.json"
             git commit -m "Freeze V2 historical independent win forecast $period [skip ci]"
-            git push origin HEAD:research/benter-minimal-line-v7-20261018
+            git pull --rebase origin research/benter-minimal-line-v7-20261018
+          git push origin HEAD:research/benter-minimal-line-v7-20261018
           done
       - name: Check labels only after all prior forecasts frozen
         run: |
           python -u research/benter_walkforward_v7/audit_frozen_sample.py
           git add -f --sparse research/benter_walkforward_v7/frozen_sample_audit.json
           git commit -m "Audit frozen F1 S-class sample gates without changing predictions [skip ci]"
+          git pull --rebase origin research/benter-minimal-line-v7-20261018
           git push origin HEAD:research/benter-minimal-line-v7-20261018
       - uses: actions/upload-artifact@v4
         with:
