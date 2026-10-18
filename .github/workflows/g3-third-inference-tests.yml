@@ -1,0 +1,35 @@
+name: Verify independent G3 1st 2nd 3rd probability math
+on:
+  push:
+    branches: [research/g3-independent-first-20261018]
+    paths:
+      - .github/workflows/g3-third-inference-tests.yml
+      - research/g3_independent_v1/predict_g3_ordered_triples.py
+      - research/g3_independent_v1/test_g3_third.py
+      - research/g3_independent_v1/models/g3_third_conditional_v1.json
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify_full_ordered_triple_distribution:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/g3-independent-first-20261018
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/g3_independent_v1/predict_g3_first_second.py
+            /research/g3_independent_v1/predict_g3_ordered_triples.py
+            /research/g3_independent_v1/test_g3_second.py
+            /research/g3_independent_v1/test_g3_third.py
+            /research/g3_independent_v1/models/g3_second_conditional_v1.json
+            /research/g3_independent_v1/models/g3_third_conditional_v1.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile G3 2nd and 3rd inference
+        run: python -m py_compile research/g3_independent_v1/predict_g3_ordered_triples.py research/g3_independent_v1/predict_g3_first_second.py
+      - name: Verify every G3 first second third permutation and no result leakage
+        run: python -m unittest discover -s research/g3_independent_v1 -p 'test_g3_*.py' -v
