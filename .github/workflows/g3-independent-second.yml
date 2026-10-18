@@ -1,0 +1,57 @@
+name: G3 independent second-place actual-results-first discovery
+on:
+  push:
+    branches: [research/g3-independent-first-20261018]
+    paths:
+      - .github/workflows/g3-independent-second.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: g3-independent-second-model
+  cancel-in-progress: false
+jobs:
+  g3_second_real_results_then_math:
+    runs-on: ubuntu-latest
+    timeout-minutes: 110
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/g3-independent-first-20261018
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /data/grade_races/g3/*/*.zip
+            /research/g3_independent_v1/train_g3_first.py
+            /research/g3_independent_v1/train_g3_second.py
+            /research/g3_independent_v1/vendor/train_v1.py
+            /research/g3_independent_v1/vendor/discover_v2.py
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install mathematical runtime
+        run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.11,<2'
+      - name: FIRST observe all actual G3 second finishers and first-model baseline residuals
+        run: |
+          python -u research/g3_independent_v1/train_g3_second.py --phase empirical
+          test -s research/g3_independent_v1/output/g3_second_empirical.json
+      - name: THEN derive G3 second-place mathematical rule and compare on later period
+        run: |
+          python -u research/g3_independent_v1/train_g3_second.py --phase fit
+          test -s research/g3_independent_v1/output/g3_second_model_report.json
+      - name: Preserve actual G3 second-place study and coefficients
+        run: |
+          set -euo pipefail
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add -f --sparse research/g3_independent_v1/output/g3_second_empirical.json research/g3_independent_v1/output/g3_second_model_report.json
+          git commit -m "Fit independent G3 2nd-place conditional model based on real result residuals [skip ci]"
+          git pull --rebase origin research/g3-independent-first-20261018
+          git push origin HEAD:research/g3-independent-first-20261018
+      - uses: actions/upload-artifact@v4
+        with:
+          name: g3-independent-second-research
+          path: |
+            research/g3_independent_v1/output/g3_second_empirical.json
+            research/g3_independent_v1/output/g3_second_model_report.json
+          retention-days: 30
