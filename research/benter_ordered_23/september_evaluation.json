@@ -1,0 +1,968 @@
+{
+  "status": "FIXED_MODEL_INDEPENDENT_OUT_OF_PERIOD_TEST",
+  "scope": "F1 S級 2026年9月, 1st-2nd-3rd uniquely ranked finishers only",
+  "source": "Benter 1994 First Second and Third section pp192-194; Harville, and corrected exponents 0.81,0.65",
+  "train_period": "2026-07-02 to 2026-08-30",
+  "test_period": "2026-09-01 to 2026-09-30",
+  "train_audit": {
+    "forecast_races": 875,
+    "eligible": 867,
+    "excluded": {
+      "tie_or_missing_finish_1_2_3": 8
+    }
+  },
+  "test_audit": {
+    "forecast_races": 422,
+    "eligible": 419,
+    "excluded": {
+      "tie_or_missing_finish_1_2_3": 3
+    }
+  },
+  "fitted_exponents": {
+    "p": {
+      "gamma": 0.7666192428057735,
+      "second_loss": 1.5412747915436111,
+      "second_harville": 1.5576413873705064,
+      "second_benter": 1.5418747073496886,
+      "delta": 0.28999279746572465,
+      "third_loss": 1.5525055030072503,
+      "third_harville": 1.7172819898485367,
+      "third_benter": 1.5982613875715894
+    },
+    "q": {
+      "gamma": 0.7837784969662068,
+      "second_loss": 1.5400391891729914,
+      "second_harville": 1.5536512427017106,
+      "second_benter": 1.540251162145458,
+      "delta": 0.29282925890631,
+      "third_loss": 1.552438878138091,
+      "third_harville": 1.7128049543593968,
+      "third_benter": 1.5965735328227946
+    }
+  },
+  "benter_exponents": {
+    "gamma": 0.81,
+    "delta": 0.65
+  },
+  "comparisons": {
+    "raw_harville": {
+      "races": 419,
+      "conditional_second_mean_logloss": 1.5762946932312112,
+      "conditional_third_mean_logloss": 1.660162669615828,
+      "joint_first_second_third_mean_logloss": 4.800693296582129,
+      "conditional_second_top1_hits": 143,
+      "conditional_third_top1_hits": 142,
+      "mean_uniform_ordered_logloss": 5.299785036336676,
+      "ordered_pseudo_R2_vs_uniform": 0.09417207232607483
+    },
+    "raw_benter_1994": {
+      "races": 419,
+      "conditional_second_mean_logloss": 1.562965897839739,
+      "conditional_third_mean_logloss": 1.5662995737653025,
+      "joint_first_second_third_mean_logloss": 4.693501405340132,
+      "conditional_second_top1_hits": 143,
+      "conditional_third_top1_hits": 142,
+      "mean_uniform_ordered_logloss": 5.299785036336676,
+      "ordered_pseudo_R2_vs_uniform": 0.11439777780413907
+    },
+    "raw_keirin_mle": {
+      "races": 419,
+      "conditional_second_mean_logloss": 1.5627803218205636,
+      "conditional_third_mean_logloss": 1.5438965280090353,
+      "joint_first_second_third_mean_logloss": 4.670912783564689,
+      "conditional_second_top1_hits": 143,
+      "conditional_third_top1_hits": 142,
+      "mean_uniform_ordered_logloss": 5.299785036336676,
+      "ordered_pseudo_R2_vs_uniform": 0.11865995478312397
+    },
+    "calibrated_harville": {
+      "races": 419,
+      "conditional_second_mean_logloss": 1.5721171337669886,
+      "conditional_third_mean_logloss": 1.6566660970035383,
+      "joint_first_second_third_mean_logloss": 4.792110635312148,
+      "conditional_second_top1_hits": 143,
+      "conditional_third_top1_hits": 142,
+      "mean_uniform_ordered_logloss": 5.299785036336676,
+      "ordered_pseudo_R2_vs_uniform": 0.09579150806000303
+    },
+    "calibrated_benter_1994": {
+      "races": 419,
+      "conditional_second_mean_logloss": 1.5608175454247613,
+      "conditional_third_mean_logloss": 1.5651701920261474,
+      "joint_first_second_third_mean_logloss": 4.689315141992529,
+      "conditional_second_top1_hits": 143,
+      "conditional_third_top1_hits": 142,
+      "mean_uniform_ordered_logloss": 5.299785036336676,
+      "ordered_pseudo_R2_vs_uniform": 0.11518767085053627
+    },
+    "calibrated_keirin_mle": {
+      "races": 419,
+      "conditional_second_mean_logloss": 1.5608167109582853,
+      "conditional_third_mean_logloss": 1.5438635301378705,
+      "joint_first_second_third_mean_logloss": 4.668007645637776,
+      "conditional_second_top1_hits": 143,
+      "conditional_third_top1_hits": 142,
+      "mean_uniform_ordered_logloss": 5.299785036336676,
+      "ordered_pseudo_R2_vs_uniform": 0.11920811624759742
+    }
+  },
+  "pairwise": {
+    "raw_benter_1994_versus_raw_harville": {
+      "conditional_second": {
+        "gain_positive_better": 0.01332879539147227,
+        "date_bootstrap_95pct": [
+          -0.000327737713708464,
+          0.025786198618047537
+        ]
+      },
+      "conditional_third": {
+        "gain_positive_better": 0.09386309585052573,
+        "date_bootstrap_95pct": [
+          0.06401412890699845,
+          0.1241231840423446
+        ]
+      },
+      "first_second_third_ordered": {
+        "gain_positive_better": 0.10719189124199797,
+        "date_bootstrap_95pct": [
+          0.07407112341386261,
+          0.14193271135486635
+        ]
+      }
+    },
+    "raw_keirin_mle_versus_raw_harville": {
+      "conditional_second": {
+        "gain_positive_better": 0.013514371410647342,
+        "date_bootstrap_95pct": [
+          -0.0032345430039195672,
+          0.028838747393718552
+        ]
+      },
+      "conditional_third": {
+        "gain_positive_better": 0.11626614160679255,
+        "date_bootstrap_95pct": [
+          0.0561326450853935,
+          0.1776155897112414
+        ]
+      },
+      "first_second_third_ordered": {
+        "gain_positive_better": 0.12978051301743987,
+        "date_bootstrap_95pct": [
+          0.06613224681610672,
+          0.19597002825982807
+        ]
+      }
+    },
+    "raw_keirin_mle_versus_raw_benter_1994": {
+      "conditional_second": {
+        "gain_positive_better": 0.0001855760191750704,
+        "date_bootstrap_95pct": [
+          -0.002972620834481716,
+          0.0030218533452351965
+        ]
+      },
+      "conditional_third": {
+        "gain_positive_better": 0.02240304575626682,
+        "date_bootstrap_95pct": [
+          -0.00838592736242999,
+          0.053545441945556126
+        ]
+      },
+      "first_second_third_ordered": {
+        "gain_positive_better": 0.022588621775441894,
+        "date_bootstrap_95pct": [
+          -0.008221720551217442,
+          0.05465539227053585
+        ]
+      }
+    },
+    "calibrated_benter_1994_versus_calibrated_harville": {
+      "conditional_second": {
+        "gain_positive_better": 0.011299588342227048,
+        "date_bootstrap_95pct": [
+          -0.0021465588849531045,
+          0.023561216720791273
+        ]
+      },
+      "conditional_third": {
+        "gain_positive_better": 0.09149590497739092,
+        "date_bootstrap_95pct": [
+          0.061653063458994524,
+          0.12159869444314608
+        ]
+      },
+      "first_second_third_ordered": {
+        "gain_positive_better": 0.10279549331961792,
+        "date_bootstrap_95pct": [
+          0.07023293572534206,
+          0.13701397421413689
+        ]
+      }
+    },
+    "calibrated_keirin_mle_versus_calibrated_harville": {
+      "conditional_second": {
+        "gain_positive_better": 0.01130042280870321,
+        "date_bootstrap_95pct": [
+          -0.0040132930274962885,
+          0.025237347975567825
+        ]
+      },
+      "conditional_third": {
+        "gain_positive_better": 0.11280256686566772,
+        "date_bootstrap_95pct": [
+          0.0534352131280865,
+          0.1737229885116058
+        ]
+      },
+      "first_second_third_ordered": {
+        "gain_positive_better": 0.12410298967437092,
+        "date_bootstrap_95pct": [
+          0.06203494619150564,
+          0.18889507205920228
+        ]
+      }
+    },
+    "calibrated_keirin_mle_versus_calibrated_benter_1994": {
+      "conditional_second": {
+        "gain_positive_better": 8.344664761612727e-07,
+        "date_bootstrap_95pct": [
+          -0.0018676092151015883,
+          0.0016729484727519913
+        ]
+      },
+      "conditional_third": {
+        "gain_positive_better": 0.021306661888276818,
+        "date_bootstrap_95pct": [
+          -0.009108459914419973,
+          0.05217898519306171
+        ]
+      },
+      "first_second_third_ordered": {
+        "gain_positive_better": 0.021307496354752986,
+        "date_bootstrap_95pct": [
+          -0.009088655070533346,
+          0.05271244026309623
+        ]
+      }
+    },
+    "calibrated_keirin_mle_versus_raw_keirin_mle": {
+      "conditional_second": {
+        "gain_positive_better": 0.001963610862278755,
+        "date_bootstrap_95pct": [
+          -0.0002628615416672583,
+          0.00409773874180912
+        ]
+      },
+      "conditional_third": {
+        "gain_positive_better": 3.29978711648744e-05,
+        "date_bootstrap_95pct": [
+          -0.000651612544853115,
+          0.0006527992570836548
+        ]
+      },
+      "first_second_third_ordered": {
+        "gain_positive_better": 0.0029051379269123146,
+        "date_bootstrap_95pct": [
+          -0.0009239776388308843,
+          0.006903000161204471
+        ]
+      }
+    }
+  },
+  "conditional_calibration": {
+    "raw_harville": {
+      "second": [
+        {
+          "bin": [
+            0,
+            0.025
+          ],
+          "n": 151,
+          "average_predicted": 0.017368967190150353,
+          "actual": 0.033112582781456956
+        },
+        {
+          "bin": [
+            0.025,
+            0.05
+          ],
+          "n": 334,
+          "average_predicted": 0.037471848571452256,
+          "actual": 0.05688622754491018
+        },
+        {
+          "bin": [
+            0.05,
+            0.1
+          ],
+          "n": 534,
+          "average_predicted": 0.0736784958076029,
+          "actual": 0.07677902621722846
+        },
+        {
+          "bin": [
+            0.1,
+            0.15
+          ],
+          "n": 414,
+          "average_predicted": 0.12479597404601338,
+          "actual": 0.12077294685990338
+        },
+        {
+          "bin": [
+            0.15,
+            0.2
+          ],
+          "n": 307,
+          "average_predicted": 0.17471463850205732,
+          "actual": 0.23452768729641693
+        },
+        {
+          "bin": [
+            0.2,
+            0.25
+          ],
+          "n": 190,
+          "average_predicted": 0.22326535749882048,
+          "actual": 0.26842105263157895
+        },
+        {
+          "bin": [
+            0.25,
+            0.3
+          ],
+          "n": 136,
+          "average_predicted": 0.27341781139653737,
+          "actual": 0.22794117647058823
+        },
+        {
+          "bin": [
+            0.3,
+            0.4
+          ],
+          "n": 194,
+          "average_predicted": 0.3427629086712306,
+          "actual": 0.30927835051546393
+        },
+        {
+          "bin": [
+            0.4,
+            0.5
+          ],
+          "n": 121,
+          "average_predicted": 0.4451031819248055,
+          "actual": 0.36363636363636365
+        },
+        {
+          "bin": [
+            0.5,
+            1.000000001
+          ],
+          "n": 99,
+          "average_predicted": 0.5985425750015755,
+          "actual": 0.46464646464646464
+        }
+      ],
+      "third": [
+        {
+          "bin": [
+            0,
+            0.025
+          ],
+          "n": 71,
+          "average_predicted": 0.018542859242895355,
+          "actual": 0.09859154929577464
+        },
+        {
+          "bin": [
+            0.025,
+            0.05
+          ],
+          "n": 209,
+          "average_predicted": 0.038734030250713536,
+          "actual": 0.15789473684210525
+        },
+        {
+          "bin": [
+            0.05,
+            0.1
+          ],
+          "n": 372,
+          "average_predicted": 0.07482338884462887,
+          "actual": 0.16129032258064516
+        },
+        {
+          "bin": [
+            0.1,
+            0.15
+          ],
+          "n": 314,
+          "average_predicted": 0.12347054047480717,
+          "actual": 0.14331210191082802
+        },
+        {
+          "bin": [
+            0.15,
+            0.2
+          ],
+          "n": 289,
+          "average_predicted": 0.17315082467696716,
+          "actual": 0.1972318339100346
+        },
+        {
+          "bin": [
+            0.2,
+            0.25
+          ],
+          "n": 200,
+          "average_predicted": 0.2237938818908176,
+          "actual": 0.21
+        },
+        {
+          "bin": [
+            0.25,
+            0.3
+          ],
+          "n": 146,
+          "average_predicted": 0.27469166709753584,
+          "actual": 0.17123287671232876
+        },
+        {
+          "bin": [
+            0.3,
+            0.4
+          ],
+          "n": 201,
+          "average_predicted": 0.34504348207431373,
+          "actual": 0.23880597014925373
+        },
+        {
+          "bin": [
+            0.4,
+            0.5
+          ],
+          "n": 115,
+          "average_predicted": 0.44613652847064533,
+          "actual": 0.3391304347826087
+        },
+        {
+          "bin": [
+            0.5,
+            1.000000001
+          ],
+          "n": 144,
+          "average_predicted": 0.6070847606594124,
+          "actual": 0.4375
+        }
+      ]
+    },
+    "raw_benter_1994": {
+      "second": [
+        {
+          "bin": [
+            0,
+            0.025
+          ],
+          "n": 37,
+          "average_predicted": 0.019795596224292465,
+          "actual": 0.05405405405405406
+        },
+        {
+          "bin": [
+            0.025,
+            0.05
+          ],
+          "n": 235,
+          "average_predicted": 0.03821064452806672,
+          "actual": 0.03829787234042553
+        },
+        {
+          "bin": [
+            0.05,
+            0.1
+          ],
+          "n": 592,
+          "average_predicted": 0.0747466821873429,
+          "actual": 0.07432432432432433
+        },
+        {
+          "bin": [
+            0.1,
+            0.15
+          ],
+          "n": 482,
+          "average_predicted": 0.12453606645936136,
+          "actual": 0.0912863070539419
+        },
+        {
+          "bin": [
+            0.15,
+            0.2
+          ],
+          "n": 389,
+          "average_predicted": 0.17407728730751543,
+          "actual": 0.22879177377892032
+        },
+        {
+          "bin": [
+            0.2,
+            0.25
+          ],
+          "n": 233,
+          "average_predicted": 0.22365231065993607,
+          "actual": 0.2446351931330472
+        },
+        {
+          "bin": [
+            0.25,
+            0.3
+          ],
+          "n": 157,
+          "average_predicted": 0.27296148601337233,
+          "actual": 0.24203821656050956
+        },
+        {
+          "bin": [
+            0.3,
+            0.4
+          ],
+          "n": 212,
+          "average_predicted": 0.3433162976373464,
+          "actual": 0.3443396226415094
+        },
+        {
+          "bin": [
+            0.4,
+            0.5
+          ],
+          "n": 95,
+          "average_predicted": 0.4435115711034662,
+          "actual": 0.3894736842105263
+        },
+        {
+          "bin": [
+            0.5,
+            1.000000001
+          ],
+          "n": 48,
+          "average_predicted": 0.5711037663094073,
+          "actual": 0.5416666666666666
+        }
+      ],
+      "third": [
+        {
+          "bin": [
+            0,
+            0.025
+          ],
+          "n": 1,
+          "average_predicted": 0.01841375914059057,
+          "actual": 0.0
+        },
+        {
+          "bin": [
+            0.025,
+            0.05
+          ],
+          "n": 31,
+          "average_predicted": 0.0425851136566467,
+          "actual": 0.06451612903225806
+        },
+        {
+          "bin": [
+            0.05,
+            0.1
+          ],
+          "n": 330,
+          "average_predicted": 0.07797110994514005,
+          "actual": 0.1606060606060606
+        },
+        {
+          "bin": [
+            0.1,
+            0.15
+          ],
+          "n": 396,
+          "average_predicted": 0.1255726742532218,
+          "actual": 0.14646464646464646
+        },
+        {
+          "bin": [
+            0.15,
+            0.2
+          ],
+          "n": 422,
+          "average_predicted": 0.17489456712724266,
+          "actual": 0.17061611374407584
+        },
+        {
+          "bin": [
+            0.2,
+            0.25
+          ],
+          "n": 308,
+          "average_predicted": 0.22346959720206966,
+          "actual": 0.19480519480519481
+        },
+        {
+          "bin": [
+            0.25,
+            0.3
+          ],
+          "n": 216,
+          "average_predicted": 0.2740421843020132,
+          "actual": 0.23148148148148148
+        },
+        {
+          "bin": [
+            0.3,
+            0.4
+          ],
+          "n": 220,
+          "average_predicted": 0.3435203723667122,
+          "actual": 0.2909090909090909
+        },
+        {
+          "bin": [
+            0.4,
+            0.5
+          ],
+          "n": 101,
+          "average_predicted": 0.4392789825166485,
+          "actual": 0.43564356435643564
+        },
+        {
+          "bin": [
+            0.5,
+            1.000000001
+          ],
+          "n": 36,
+          "average_predicted": 0.5676468944806786,
+          "actual": 0.4444444444444444
+        }
+      ]
+    },
+    "raw_keirin_mle": {
+      "second": [
+        {
+          "bin": [
+            0,
+            0.025
+          ],
+          "n": 26,
+          "average_predicted": 0.02073246808515335,
+          "actual": 0.038461538461538464
+        },
+        {
+          "bin": [
+            0.025,
+            0.05
+          ],
+          "n": 201,
+          "average_predicted": 0.03894372117634603,
+          "actual": 0.03482587064676617
+        },
+        {
+          "bin": [
+            0.05,
+            0.1
+          ],
+          "n": 585,
+          "average_predicted": 0.07488808205007051,
+          "actual": 0.0735042735042735
+        },
+        {
+          "bin": [
+            0.1,
+            0.15
+          ],
+          "n": 510,
+          "average_predicted": 0.12400879760344183,
+          "actual": 0.09019607843137255
+        },
+        {
+          "bin": [
+            0.15,
+            0.2
+          ],
+          "n": 412,
+          "average_predicted": 0.17382697374561848,
+          "actual": 0.22330097087378642
+        },
+        {
+          "bin": [
+            0.2,
+            0.25
+          ],
+          "n": 251,
+          "average_predicted": 0.22389704586895035,
+          "actual": 0.23904382470119523
+        },
+        {
+          "bin": [
+            0.25,
+            0.3
+          ],
+          "n": 158,
+          "average_predicted": 0.27371229049269025,
+          "actual": 0.25316455696202533
+        },
+        {
+          "bin": [
+            0.3,
+            0.4
+          ],
+          "n": 216,
+          "average_predicted": 0.3434808066934295,
+          "actual": 0.3472222222222222
+        },
+        {
+          "bin": [
+            0.4,
+            0.5
+          ],
+          "n": 85,
+          "average_predicted": 0.4454416755696357,
+          "actual": 0.3764705882352941
+        },
+        {
+          "bin": [
+            0.5,
+            1.000000001
+          ],
+          "n": 36,
+          "average_predicted": 0.5684289675818793,
+          "actual": 0.6388888888888888
+        }
+      ],
+      "third": [
+        {
+          "bin": [
+            0.05,
+            0.1
+          ],
+          "n": 7,
+          "average_predicted": 0.09276383891805673,
+          "actual": 0.0
+        },
+        {
+          "bin": [
+            0.1,
+            0.15
+          ],
+          "n": 308,
+          "average_predicted": 0.13349673687603622,
+          "actual": 0.16558441558441558
+        },
+        {
+          "bin": [
+            0.15,
+            0.2
+          ],
+          "n": 762,
+          "average_predicted": 0.17700965814474828,
+          "actual": 0.15091863517060367
+        },
+        {
+          "bin": [
+            0.2,
+            0.25
+          ],
+          "n": 624,
+          "average_predicted": 0.22219753822886718,
+          "actual": 0.20512820512820512
+        },
+        {
+          "bin": [
+            0.25,
+            0.3
+          ],
+          "n": 266,
+          "average_predicted": 0.2715484904333635,
+          "actual": 0.31203007518796994
+        },
+        {
+          "bin": [
+            0.3,
+            0.4
+          ],
+          "n": 85,
+          "average_predicted": 0.3244214674742028,
+          "actual": 0.4823529411764706
+        },
+        {
+          "bin": [
+            0.4,
+            0.5
+          ],
+          "n": 9,
+          "average_predicted": 0.432590179784579,
+          "actual": 0.1111111111111111
+        }
+      ]
+    },
+    "calibrated_keirin_mle": {
+      "second": [
+        {
+          "bin": [
+            0,
+            0.025
+          ],
+          "n": 27,
+          "average_predicted": 0.02012885978684285,
+          "actual": 0.07407407407407407
+        },
+        {
+          "bin": [
+            0.025,
+            0.05
+          ],
+          "n": 212,
+          "average_predicted": 0.03872022153130109,
+          "actual": 0.0330188679245283
+        },
+        {
+          "bin": [
+            0.05,
+            0.1
+          ],
+          "n": 590,
+          "average_predicted": 0.07518426536382633,
+          "actual": 0.06949152542372881
+        },
+        {
+          "bin": [
+            0.1,
+            0.15
+          ],
+          "n": 503,
+          "average_predicted": 0.12470432244115258,
+          "actual": 0.09542743538767395
+        },
+        {
+          "bin": [
+            0.15,
+            0.2
+          ],
+          "n": 398,
+          "average_predicted": 0.17436662547156728,
+          "actual": 0.2236180904522613
+        },
+        {
+          "bin": [
+            0.2,
+            0.25
+          ],
+          "n": 249,
+          "average_predicted": 0.22408943611191043,
+          "actual": 0.2289156626506024
+        },
+        {
+          "bin": [
+            0.25,
+            0.3
+          ],
+          "n": 156,
+          "average_predicted": 0.2738600148654154,
+          "actual": 0.2692307692307692
+        },
+        {
+          "bin": [
+            0.3,
+            0.4
+          ],
+          "n": 212,
+          "average_predicted": 0.3425459703371131,
+          "actual": 0.3443396226415094
+        },
+        {
+          "bin": [
+            0.4,
+            0.5
+          ],
+          "n": 100,
+          "average_predicted": 0.44111824746953615,
+          "actual": 0.39
+        },
+        {
+          "bin": [
+            0.5,
+            1.000000001
+          ],
+          "n": 33,
+          "average_predicted": 0.5609976897450378,
+          "actual": 0.6363636363636364
+        }
+      ],
+      "third": [
+        {
+          "bin": [
+            0.05,
+            0.1
+          ],
+          "n": 7,
+          "average_predicted": 0.09254845758088368,
+          "actual": 0.0
+        },
+        {
+          "bin": [
+            0.1,
+            0.15
+          ],
+          "n": 306,
+          "average_predicted": 0.13310600713260168,
+          "actual": 0.16013071895424835
+        },
+        {
+          "bin": [
+            0.15,
+            0.2
+          ],
+          "n": 765,
+          "average_predicted": 0.17686627810156194,
+          "actual": 0.1542483660130719
+        },
+        {
+          "bin": [
+            0.2,
+            0.25
+          ],
+          "n": 618,
+          "average_predicted": 0.22229239574437684,
+          "actual": 0.20388349514563106
+        },
+        {
+          "bin": [
+            0.25,
+            0.3
+          ],
+          "n": 270,
+          "average_predicted": 0.27161529957313,
+          "actual": 0.3111111111111111
+        },
+        {
+          "bin": [
+            0.3,
+            0.4
+          ],
+          "n": 87,
+          "average_predicted": 0.3235199032686044,
+          "actual": 0.47126436781609193
+        },
+        {
+          "bin": [
+            0.4,
+            0.5
+          ],
+          "n": 8,
+          "average_predicted": 0.4324946034405302,
+          "actual": 0.125
+        }
+      ]
+    }
+  },
+  "days": 30,
+  "limitation": "Line-dependent second/third correlations beyond first win probability are not modeled.",
+  "no_market_odds_used": true,
+  "forecasts_frozen_before_september_outcomes": true
+}
