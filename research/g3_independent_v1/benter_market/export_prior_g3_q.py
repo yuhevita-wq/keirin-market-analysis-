@@ -13,7 +13,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from train_g3_first import load,OUT
 from train_g3_second import first_by_calendar
 
-DEST=Path(__file__).resolve().parent/"data"
+DEST=Path(__file__).resolve().parents[1]/"data"
 OUTPUT=DEST/"g3_prior_year_first_q_2023_2026h1.jsonl.gz"
 AUDIT=OUT/"g3_prior_year_first_market_input_audit.json"
 
