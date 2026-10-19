@@ -1,0 +1,555 @@
+{
+  "title": "全世代共通の完全未学習試験（固定2023年6月）",
+  "created_by": "frozen and deterministic audit; strictly no checkpoint updates",
+  "status": "COMPLETE",
+  "holdout_start": "2023-06-01",
+  "holdout_end": "2023-06-07",
+  "no_training_or_policy_tuning_on_holdout": true,
+  "holdout_is_reusable_only_for_fixed_evaluation_not_model_selection": true,
+  "race_count": 133,
+  "raw_racecards": 465,
+  "excluded": {
+    "missing_complete_odds": 329,
+    "missing_result": 3
+  },
+  "race_id_set_sha256": "cf2691f21da4f5e21da12799c096e538b000a736f2a8288cc7d7e8833c032850",
+  "generation_count": 5,
+  "shared_test_starting_paper_wallet_yen": 10000,
+  "metrics": [
+    {
+      "race_count": 133,
+      "skipped_races": 0,
+      "skip_rate": 0.0,
+      "mark_count": 133,
+      "sheets": 133,
+      "marks_per_race": 1.0,
+      "sheets_per_race": 1.0,
+      "hit_races": 3,
+      "hit_rate": 0.022556390977443608,
+      "stakes_yen": 13300,
+      "payout_proxy_yen": 3390,
+      "net_proxy_yen": -9910,
+      "roi_proxy_percent": 25.48872180451128,
+      "net_per_race_yen": -74.51127819548873,
+      "logloss_tan": 4.675287126778142,
+      "logloss_fuku": 3.048901071946045,
+      "market_logloss_tan": 4.4356130780282665,
+      "market_logloss_fuku": 2.916465398061214,
+      "brier_tan": 0.9806283450529625,
+      "brier_fuku": 0.9138210940989493,
+      "market_brier_tan": 0.9716497691349943,
+      "market_brier_fuku": 0.8983014121604713,
+      "top1_hit_tan": 0.06766917293233082,
+      "top1_hit_fuku": 0.21052631578947367,
+      "top1_confidence_tan": 0.0353566529962243,
+      "top1_confidence_fuku": 0.12911642038939794,
+      "generation": "GEN-001",
+      "last_training_date": "2023-01-07",
+      "frozen_checkpoint_sha256": "986eee51901cd35b7d899969eac239de3a79c62cb84bf9e628bddf9a8d18bd2e",
+      "learned_stop_or_skip_policy": false,
+      "refill_events": 1,
+      "reward_yen": 1590,
+      "ending_wallet_yen": 8500,
+      "behavior_policy": "GEN-001 one-mark stochastic"
+    },
+    {
+      "race_count": 133,
+      "skipped_races": 0,
+      "skip_rate": 0.0,
+      "mark_count": 1004,
+      "sheets": 275,
+      "marks_per_race": 7.548872180451128,
+      "sheets_per_race": 2.0676691729323307,
+      "hit_races": 32,
+      "hit_rate": 0.24060150375939848,
+      "stakes_yen": 100400,
+      "payout_proxy_yen": 146450,
+      "net_proxy_yen": 46050,
+      "roi_proxy_percent": 145.86653386454182,
+      "net_per_race_yen": 346.2406015037594,
+      "logloss_tan": 4.534462924655757,
+      "logloss_fuku": 2.9621161458345706,
+      "market_logloss_tan": 4.4356130780282665,
+      "market_logloss_fuku": 2.916465398061214,
+      "brier_tan": 0.9749676965301783,
+      "brier_fuku": 0.9037882946955234,
+      "market_brier_tan": 0.9716497691349943,
+      "market_brier_fuku": 0.8983014121604713,
+      "top1_hit_tan": 0.09774436090225563,
+      "top1_hit_fuku": 0.19548872180451127,
+      "top1_confidence_tan": 0.05921959616453098,
+      "top1_confidence_fuku": 0.17480197565617012,
+      "generation": "GEN-002",
+      "last_training_date": "2023-01-14",
+      "frozen_checkpoint_sha256": "e60a02a078eaeb204a35cb28780c7172cab556c8acc3211a98616667dc29cba4",
+      "learned_stop_or_skip_policy": false,
+      "refill_events": 4,
+      "reward_yen": 91890,
+      "ending_wallet_yen": 4160,
+      "behavior_policy": "GEN-002 fixed neutral 50-percent page stopping; never learns skipping"
+    },
+    {
+      "race_count": 133,
+      "skipped_races": 0,
+      "skip_rate": 0.0,
+      "mark_count": 1000,
+      "sheets": 275,
+      "marks_per_race": 7.518796992481203,
+      "sheets_per_race": 2.0676691729323307,
+      "hit_races": 37,
+      "hit_rate": 0.2781954887218045,
+      "stakes_yen": 100000,
+      "payout_proxy_yen": 370730,
+      "net_proxy_yen": 270730,
+      "roi_proxy_percent": 370.73,
+      "net_per_race_yen": 2035.563909774436,
+      "logloss_tan": 4.4726770235869395,
+      "logloss_fuku": 2.9115686773396634,
+      "market_logloss_tan": 4.4356130780282665,
+      "market_logloss_fuku": 2.916465398061214,
+      "brier_tan": 0.9736689310537783,
+      "brier_fuku": 0.8974989965361497,
+      "market_brier_tan": 0.9716497691349943,
+      "market_brier_fuku": 0.8983014121604713,
+      "top1_hit_tan": 0.09774436090225563,
+      "top1_hit_fuku": 0.24812030075187969,
+      "top1_confidence_tan": 0.06915728760948275,
+      "top1_confidence_fuku": 0.18628364731330385,
+      "generation": "GEN-003",
+      "last_training_date": "2023-01-21",
+      "frozen_checkpoint_sha256": "6c9d12c18f1ec1baa319cb09c8b37a9d9dff523da69fdd525c197930f8facb1a",
+      "learned_stop_or_skip_policy": false,
+      "refill_events": 2,
+      "reward_yen": 295250,
+      "ending_wallet_yen": 5480,
+      "behavior_policy": "GEN-002 fixed neutral 50-percent page stopping; never learns skipping"
+    },
+    {
+      "race_count": 133,
+      "skipped_races": 0,
+      "skip_rate": 0.0,
+      "mark_count": 967,
+      "sheets": 275,
+      "marks_per_race": 7.2706766917293235,
+      "sheets_per_race": 2.0676691729323307,
+      "hit_races": 32,
+      "hit_rate": 0.24060150375939848,
+      "stakes_yen": 96700,
+      "payout_proxy_yen": 245930,
+      "net_proxy_yen": 149230,
+      "roi_proxy_percent": 254.32264736297827,
+      "net_per_race_yen": 1122.03007518797,
+      "logloss_tan": 4.445125805488778,
+      "logloss_fuku": 2.9127792009110633,
+      "market_logloss_tan": 4.4356130780282665,
+      "market_logloss_fuku": 2.916465398061214,
+      "brier_tan": 0.9709567100295597,
+      "brier_fuku": 0.8982467930213422,
+      "market_brier_tan": 0.9716497691349943,
+      "market_brier_fuku": 0.8983014121604713,
+      "top1_hit_tan": 0.09774436090225563,
+      "top1_hit_fuku": 0.22556390977443608,
+      "top1_confidence_tan": 0.08083500546999049,
+      "top1_confidence_fuku": 0.20944305566165491,
+      "generation": "GEN-004",
+      "last_training_date": "2023-01-28",
+      "frozen_checkpoint_sha256": "3a3ad5c4d170e47c44460a392cd8706f7712979e05291f9f570bf94cf9f4b045",
+      "learned_stop_or_skip_policy": false,
+      "refill_events": 4,
+      "reward_yen": 194230,
+      "ending_wallet_yen": 5000,
+      "behavior_policy": "GEN-002 fixed neutral 50-percent page stopping; never learns skipping"
+    },
+    {
+      "race_count": 133,
+      "skipped_races": 0,
+      "skip_rate": 0.0,
+      "mark_count": 941,
+      "sheets": 275,
+      "marks_per_race": 7.075187969924812,
+      "sheets_per_race": 2.0676691729323307,
+      "hit_races": 38,
+      "hit_rate": 0.2857142857142857,
+      "stakes_yen": 94100,
+      "payout_proxy_yen": 106710,
+      "net_proxy_yen": 12610,
+      "roi_proxy_percent": 113.40063761955366,
+      "net_per_race_yen": 94.81203007518798,
+      "logloss_tan": 4.453741461865901,
+      "logloss_fuku": 2.8932158594973068,
+      "market_logloss_tan": 4.4356130780282665,
+      "market_logloss_fuku": 2.916465398061214,
+      "brier_tan": 0.9718617041866847,
+      "brier_fuku": 0.8969775521619078,
+      "market_brier_tan": 0.9716497691349943,
+      "market_brier_fuku": 0.8983014121604713,
+      "top1_hit_tan": 0.08270676691729323,
+      "top1_hit_fuku": 0.22556390977443608,
+      "top1_confidence_tan": 0.08727286234675154,
+      "top1_confidence_fuku": 0.21062294427273784,
+      "generation": "GEN-005",
+      "last_training_date": "2023-02-04",
+      "frozen_checkpoint_sha256": "353155e06d3a0ea6492e0a6895208f99c35fce6a1a6bed230e8a8c1d1d0c69fd",
+      "learned_stop_or_skip_policy": false,
+      "refill_events": 3,
+      "reward_yen": 51420,
+      "ending_wallet_yen": 1190,
+      "behavior_policy": "GEN-002 fixed neutral 50-percent page stopping; never learns skipping"
+    }
+  ],
+  "paired_comparisons": {
+    "GEN-002": {
+      "vs_GEN-001_tan_logloss": {
+        "mean_difference": -0.14082420212238514,
+        "paired_bootstrap_95_percentile_interval": [
+          -0.21789647324438285,
+          -0.07172630157492661
+        ]
+      },
+      "vs_GEN-001_fuku_logloss": {
+        "mean_difference": -0.08678492611147434,
+        "paired_bootstrap_95_percentile_interval": [
+          -0.13882114382694416,
+          -0.04259559249714337
+        ]
+      },
+      "vs_GEN-001_net_per_race_yen": {
+        "mean_difference": 420.7518796992481,
+        "paired_bootstrap_95_percentile_interval": [
+          -320.9191729323308,
+          1249.46992481203
+        ]
+      },
+      "vs_GEN-001_marks_per_race": {
+        "mean_difference": 6.548872180451128,
+        "paired_bootstrap_95_percentile_interval": [
+          5.209962406015038,
+          7.9116541353383445
+        ]
+      }
+    },
+    "GEN-003": {
+      "vs_GEN-001_tan_logloss": {
+        "mean_difference": -0.20261010319120237,
+        "paired_bootstrap_95_percentile_interval": [
+          -0.2903165685420126,
+          -0.11656214437089502
+        ]
+      },
+      "vs_GEN-001_fuku_logloss": {
+        "mean_difference": -0.1373323946063817,
+        "paired_bootstrap_95_percentile_interval": [
+          -0.1988797105886596,
+          -0.07910525028614351
+        ]
+      },
+      "vs_GEN-001_net_per_race_yen": {
+        "mean_difference": 2110.0751879699246,
+        "paired_bootstrap_95_percentile_interval": [
+          36.86278195488725,
+          5170.107142857142
+        ]
+      },
+      "vs_GEN-001_marks_per_race": {
+        "mean_difference": 6.518796992481203,
+        "paired_bootstrap_95_percentile_interval": [
+          5.232142857142858,
+          7.790601503759397
+        ]
+      }
+    },
+    "GEN-004": {
+      "vs_GEN-001_tan_logloss": {
+        "mean_difference": -0.23016132128936406,
+        "paired_bootstrap_95_percentile_interval": [
+          -0.3426595972736363,
+          -0.12301031959938903
+        ]
+      },
+      "vs_GEN-001_fuku_logloss": {
+        "mean_difference": -0.13612187103498194,
+        "paired_bootstrap_95_percentile_interval": [
+          -0.20594330260383448,
+          -0.0560587524939389
+        ]
+      },
+      "vs_GEN-001_net_per_race_yen": {
+        "mean_difference": 1196.5413533834587,
+        "paired_bootstrap_95_percentile_interval": [
+          -365.3778195488722,
+          3866.140977443608
+        ]
+      },
+      "vs_GEN-001_marks_per_race": {
+        "mean_difference": 6.2706766917293235,
+        "paired_bootstrap_95_percentile_interval": [
+          5.059774436090226,
+          7.609210526315789
+        ]
+      }
+    },
+    "GEN-005": {
+      "vs_GEN-001_tan_logloss": {
+        "mean_difference": -0.22154566491224095,
+        "paired_bootstrap_95_percentile_interval": [
+          -0.33050798062819414,
+          -0.11115520954771828
+        ]
+      },
+      "vs_GEN-001_fuku_logloss": {
+        "mean_difference": -0.15568521244873812,
+        "paired_bootstrap_95_percentile_interval": [
+          -0.22575439967514263,
+          -0.0721738179001554
+        ]
+      },
+      "vs_GEN-001_net_per_race_yen": {
+        "mean_difference": 169.3233082706767,
+        "paired_bootstrap_95_percentile_interval": [
+          -342.8101503759398,
+          921.1146616541351
+        ]
+      },
+      "vs_GEN-001_marks_per_race": {
+        "mean_difference": 6.075187969924812,
+        "paired_bootstrap_95_percentile_interval": [
+          4.879511278195489,
+          7.436842105263158
+        ]
+      }
+    }
+  },
+  "parent_comparisons": {
+    "GEN-002": {
+      "parent": "GEN-001",
+      "tan_logloss": {
+        "mean_difference": -0.14082420212238514,
+        "paired_bootstrap_95_percentile_interval": [
+          -0.21789647324438285,
+          -0.07172630157492661
+        ]
+      },
+      "fuku_logloss": {
+        "mean_difference": -0.08678492611147434,
+        "paired_bootstrap_95_percentile_interval": [
+          -0.13882114382694416,
+          -0.04259559249714337
+        ]
+      },
+      "net_per_race_yen": {
+        "mean_difference": 420.7518796992481,
+        "paired_bootstrap_95_percentile_interval": [
+          -320.9191729323308,
+          1249.46992481203
+        ]
+      },
+      "marks_per_race": {
+        "mean_difference": 6.548872180451128,
+        "paired_bootstrap_95_percentile_interval": [
+          5.209962406015038,
+          7.9116541353383445
+        ]
+      },
+      "sheets_per_race": {
+        "mean_difference": 1.0676691729323309,
+        "paired_bootstrap_95_percentile_interval": [
+          0.7892857142857143,
+          1.3761278195488722
+        ]
+      },
+      "skip_rate": {
+        "mean_difference": 0.0,
+        "paired_bootstrap_95_percentile_interval": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "GEN-003": {
+      "parent": "GEN-002",
+      "tan_logloss": {
+        "mean_difference": -0.06178590106881723,
+        "paired_bootstrap_95_percentile_interval": [
+          -0.10001617253952433,
+          -0.023663054731995543
+        ]
+      },
+      "fuku_logloss": {
+        "mean_difference": -0.05054746849490737,
+        "paired_bootstrap_95_percentile_interval": [
+          -0.07761904672834789,
+          -0.018653101785490418
+        ]
+      },
+      "net_per_race_yen": {
+        "mean_difference": 1689.3233082706768,
+        "paired_bootstrap_95_percentile_interval": [
+          -272.70676691729324,
+          4836.911654135338
+        ]
+      },
+      "marks_per_race": {
+        "mean_difference": -0.03007518796992481,
+        "paired_bootstrap_95_percentile_interval": [
+          -0.5342105263157895,
+          0.4437969924812028
+        ]
+      },
+      "sheets_per_race": {
+        "mean_difference": 0.0,
+        "paired_bootstrap_95_percentile_interval": [
+          0.0,
+          0.0
+        ]
+      },
+      "skip_rate": {
+        "mean_difference": 0.0,
+        "paired_bootstrap_95_percentile_interval": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "GEN-004": {
+      "parent": "GEN-003",
+      "tan_logloss": {
+        "mean_difference": -0.02755121809816167,
+        "paired_bootstrap_95_percentile_interval": [
+          -0.06609327924018649,
+          0.009263314905487286
+        ]
+      },
+      "fuku_logloss": {
+        "mean_difference": 0.0012105235713997852,
+        "paired_bootstrap_95_percentile_interval": [
+          -0.030099136467292148,
+          0.036453472859109964
+        ]
+      },
+      "net_per_race_yen": {
+        "mean_difference": -913.5338345864661,
+        "paired_bootstrap_95_percentile_interval": [
+          -2545.1203007518798,
+          61.483082706766666
+        ]
+      },
+      "marks_per_race": {
+        "mean_difference": -0.24812030075187969,
+        "paired_bootstrap_95_percentile_interval": [
+          -0.6545112781954887,
+          0.1806390977443607
+        ]
+      },
+      "sheets_per_race": {
+        "mean_difference": 0.0,
+        "paired_bootstrap_95_percentile_interval": [
+          0.0,
+          0.0
+        ]
+      },
+      "skip_rate": {
+        "mean_difference": 0.0,
+        "paired_bootstrap_95_percentile_interval": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "GEN-005": {
+      "parent": "GEN-004",
+      "tan_logloss": {
+        "mean_difference": 0.008615656377123098,
+        "paired_bootstrap_95_percentile_interval": [
+          -0.01833639693499031,
+          0.03704283069251051
+        ]
+      },
+      "fuku_logloss": {
+        "mean_difference": -0.019563341413756163,
+        "paired_bootstrap_95_percentile_interval": [
+          -0.045460070332465456,
+          0.007091752769381933
+        ]
+      },
+      "net_per_race_yen": {
+        "mean_difference": -1027.218045112782,
+        "paired_bootstrap_95_percentile_interval": [
+          -3463.434210526316,
+          318.95676691729324
+        ]
+      },
+      "marks_per_race": {
+        "mean_difference": -0.19548872180451127,
+        "paired_bootstrap_95_percentile_interval": [
+          -0.5340225563909775,
+          0.20300751879699247
+        ]
+      },
+      "sheets_per_race": {
+        "mean_difference": 0.0,
+        "paired_bootstrap_95_percentile_interval": [
+          0.0,
+          0.0
+        ]
+      },
+      "skip_rate": {
+        "mean_difference": 0.0,
+        "paired_bootstrap_95_percentile_interval": [
+          0.0,
+          0.0
+        ]
+      }
+    }
+  },
+  "learning_verdict": {
+    "GEN-001": {
+      "classification": "baseline",
+      "description": "Original infant starting generation"
+    },
+    "GEN-002": {
+      "prediction_tan": "improvement",
+      "prediction_fuku": "improvement",
+      "paper_utility": "undetermined",
+      "observed_behavior_distribution_changed": true,
+      "stop_skip_policy_actually_trained": false,
+      "causal_behavior_learning_proven": false,
+      "note": "Paired bootstrap on frozen shared history; this cannot alone establish a causal effect of training. A changed paper count is not a trained stop/skip policy if the control still uses a fixed 50-percent coin."
+    },
+    "GEN-003": {
+      "prediction_tan": "improvement",
+      "prediction_fuku": "improvement",
+      "paper_utility": "undetermined",
+      "observed_behavior_distribution_changed": false,
+      "stop_skip_policy_actually_trained": false,
+      "causal_behavior_learning_proven": false,
+      "note": "Paired bootstrap on frozen shared history; this cannot alone establish a causal effect of training. A changed paper count is not a trained stop/skip policy if the control still uses a fixed 50-percent coin."
+    },
+    "GEN-004": {
+      "prediction_tan": "undetermined",
+      "prediction_fuku": "undetermined",
+      "paper_utility": "undetermined",
+      "observed_behavior_distribution_changed": false,
+      "stop_skip_policy_actually_trained": false,
+      "causal_behavior_learning_proven": false,
+      "note": "Paired bootstrap on frozen shared history; this cannot alone establish a causal effect of training. A changed paper count is not a trained stop/skip policy if the control still uses a fixed 50-percent coin."
+    },
+    "GEN-005": {
+      "prediction_tan": "undetermined",
+      "prediction_fuku": "undetermined",
+      "paper_utility": "undetermined",
+      "observed_behavior_distribution_changed": false,
+      "stop_skip_policy_actually_trained": false,
+      "causal_behavior_learning_proven": false,
+      "note": "Paired bootstrap on frozen shared history; this cannot alone establish a causal effect of training. A changed paper count is not a trained stop/skip policy if the control still uses a fixed 50-percent coin."
+    }
+  },
+  "interpretation": {
+    "prediction_scores": "All checkpoints predict identical future races; proper conditional-market log loss and Brier; lower is better.",
+    "behavior_scores": "Frozen papers under same per-race seed. Older generations lack learned stop/skip policies: changes in counts do not prove learning of those actions.",
+    "utility_scores": "Paper odds and stakes; mark count and exposure differ by generation, making naive total wins incomparable.",
+    "market_baseline": "within each market, normalized inverse final odds, as a comparator not as the baby's training signal.",
+    "statistical_uncertainty": "paired race-level bootstrap percentiles with 400 resamples; not causal attribution.",
+    "no_proof": "Results are final-odds backtest only. No confirmed pre-close price or profitable live betting.",
+    "holdout_policy": "Do not train, adjust thresholds, select hyperparameters or otherwise tune on June 1-7 data. If violated, create a new untouched holdout."
+  }
+}
