@@ -1,0 +1,49 @@
+name: Baby AI growth audit and behavior-learning quality gate
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/ai_nursery/growth_audit.py'
+      - 'research/ai_nursery/behavior_policy.py'
+      - 'research/ai_nursery/test_growth_audit.py'
+      - 'research/ai_nursery/test_behavior_policy.py'
+      - 'research/ai_nursery/test_future_generation_contract.py'
+      - 'research/ai_nursery/outputs/GEN-*/checkpoint.json'
+      - 'research/ai_nursery/outputs/GEN-*/behavior_policy.json'
+      - '.github/workflows/baby-ai-growth-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: baby-ai-growth-audit
+  cancel-in-progress: false
+jobs:
+  frozen-growth-test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numeric library
+        run: python -m pip install 'numpy>=1.26'
+      - name: Test that behavioral choices learn from realized outcomes
+        run: OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python research/ai_nursery/test_behavior_policy.py
+      - name: Run FROZEN identical-race exam for all generation checkpoints
+        run: OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python research/ai_nursery/growth_audit.py
+      - name: Verify test-sample identity and frozen checkpoints
+        run: OPENBLAS_NUM_THREADS=1 python research/ai_nursery/test_growth_audit.py
+      - name: Verify new-generation promotion requirements
+        run: OPENBLAS_NUM_THREADS=1 python research/ai_nursery/test_future_generation_contract.py
+      - name: Persist comparisons without touching frozen generations
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ai_nursery/growth_audit/ docs/ai-lab/nursery-growth-audit.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "data: save fixed shared-race out-of-sample growth audit"
+          git pull --rebase origin main
+          git push origin HEAD:main

@@ -135,6 +135,20 @@ footer{border-top:1px solid var(--line);color:var(--soft);font-size:12px;margin-
 <a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery/outputs/GEN-005">保存した用紙・履歴（GitHub）</a>
 </div>
 </section>
+<section class="section">
+<h2>🧪 成長試験：同じ未学習レースで全世代を比較</h2>
+<p>予測・行動・収支は別の能力。過去の各世代の重みを凍結し、2023年6月1〜7日の同じレースを同じ乱数条件で試験します。試験中の学習・購入点数調整はありません。</p>
+<div class="grid">
+<div class="card"><small>共通試験のレース</small><strong id="growthN">—</strong><span>全世代で同一</span></div>
+<div class="card"><small>試験した世代数</small><strong id="growthGens">—</strong><span>重みは固定</span></div>
+<div class="card"><small>新しい行動学習</small><strong>GEN-006以降</strong><span>参加／見送り・用紙続行／終了</span></div>
+<div class="card"><small>先見性・学習漏洩</small><strong id="growthFrozen">—</strong><span>試験データで再学習しない</span></div>
+</div>
+<div class="scroll"><table><thead><tr><th>世代</th><th>3連単の予測損失↓</th><th>3連複の予測損失↓</th><th>平均点数/R</th><th>純損益（紙上）</th><th>ROI</th><th>行動を学習？</th></tr></thead><tbody id="growthTable"></tbody></table></div>
+<div><b>成長の評価</b><div id="growthVerdicts"></div></div>
+<p class="warning">過去の確定オッズを利用した紙上試験です。GEN-001〜005には学習済みの見送り・終了規則がありません。回収率の差がそのまま進化を証明するわけではありません。単純的中率だけで世代を比較しません。</p>
+<div class="links"><a class="btn" href="nursery-growth-audit.json">共通試験・全数値</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery/growth_audit">全世代の1Rごとの試験履歴</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/blob/main/research/ai_nursery/GROWTH_AUDIT_PROTOCOL.md">新しい学習の規約</a></div>
+</section>
 <section class="section"><h2>保存と次の世代</h2><div class="row"><span>出生時の学習重み</span><b>すべて0</b></div><div class="row"><span>1週間後の学習重み</span><b id="checkpoint">—</b></div><div class="row"><span>次の段階</span><b>GEN-003が資金管理を学習中</b></div><p>新しい能力を得た時点でGEN-001からGEN-002へ世代交代。GEN-002は親の学習重みを継承しています。</p><div class="links"><a class="btn" href="nursery-summary.json">1週間の全体成績</a><a class="btn" href="nursery-history.json">全レースのマーク履歴</a><a class="btn" href="nursery-checkpoint.json">学習した重み</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery">GitHub保存先 ↗</a></div></section>
 <footer>過去実験の価格はレース終了後の確定オッズです。締切前の価格と同じではないため、この練習成績を実購入可能な収益と見なせません。入力に足りないレースは欠損として記録。</footer>
 </main>
@@ -305,5 +319,38 @@ start();
    });$("g5Daily").append(tr);
   }
  }catch(e){$("g5Parent").textContent="データ待ち："+e.message;}
+})();
+</script><script>
+(async()=>{
+ const el=id=>document.getElementById(id);
+ const f=(n,d=2)=>Number(n).toFixed(d);
+ const y=n=>Number(n).toLocaleString("ja-JP")+"円";
+ try{
+ const r=await fetch("nursery-growth-audit.json",{cache:"no-store"});
+ if(!r.ok)throw Error("共通試験の結果を取得できません");
+ const x=await r.json();
+ el("growthN").textContent=x.race_count.toLocaleString("ja-JP");
+ el("growthGens").textContent=x.generation_count;
+ el("growthFrozen").textContent=x.no_training_or_policy_tuning_on_holdout?"凍結して試験":"要確認";
+ for(const g of x.metrics){
+   const tr=document.createElement("tr");
+   [g.generation,f(g.logloss_tan,3),f(g.logloss_fuku,3),
+    f(g.marks_per_race,2),y(g.net_proxy_yen),f(g.roi_proxy_percent,1)+"%",
+    g.learned_stop_or_skip_policy?"あり":"なし"].forEach(v=>{
+      const td=document.createElement("td");td.textContent=v;tr.append(td);
+   });el("growthTable").append(tr);
+ }
+ const text=document.createElement("p");
+ text.textContent="各世代の親との差には、同一レースのペア比較と不確実性区間を使用しています。単独の的中率や別日程のROIで進化を判定しません。";
+ el("growthVerdicts").append(text);
+ for(const [g,v] of Object.entries(x.learning_verdict)){
+    if(g==="GEN-001")continue;
+    const p=document.createElement("p");
+    p.textContent=g+"：予測（3連単）"+v.prediction_tan+" ／ 紙上効用 "+v.paper_utility+
+      " ／ 用紙/参加の分布変化 "+(v.observed_behavior_distribution_changed?"検出":"未検出")+
+      " ／ 停止・見送りの学習 "+(v.stop_skip_policy_actually_trained?"あり":"なし");
+    el("growthVerdicts").append(p);
+ }
+ }catch(err){el("growthFrozen").textContent="公開待ち："+err.message;}
 })();
 </script></body></html>
