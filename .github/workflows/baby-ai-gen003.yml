@@ -1,0 +1,45 @@
+name: Baby AI GEN-003 ten-thousand-yen bankroll experiment
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/ai_nursery/train_week3.py'
+      - 'research/ai_nursery/test_week3.py'
+      - '.github/workflows/baby-ai-gen003.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: baby-ai-gen003
+  cancel-in-progress: false
+jobs:
+  learn:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Start from GEN-002 checkpoint and train GEN-003 with replenishing paper wallet
+        run: |
+          python -m pip install 'numpy>=1.26'
+          if [ -f research/ai_nursery/outputs/GEN-003/summary.json ]; then
+            echo "GEN-003 already saved: verify without retraining."
+          else
+            OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python research/ai_nursery/train_week3.py
+          fi
+      - name: Check no future-result exposure, parent checksum and every wallet refill
+        run: |
+          OPENBLAS_NUM_THREADS=1 python research/ai_nursery/test_week3.py
+      - name: Commit frozen GEN-003 learner and paper wallet history
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ai_nursery/outputs/GEN-003/ docs/ai-lab/nursery-gen003-*.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "data: record GEN-003 historical bankroll experiment"
+          git pull --rebase origin main
+          git push origin HEAD:main

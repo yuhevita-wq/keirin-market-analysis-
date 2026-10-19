@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ja"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#101a25"><title>競輪AI育成室 — GEN-001からGEN-002へ</title>
+<meta name="theme-color" content="#101a25"><title>競輪AI育成室 — GEN-001 → GEN-002 → GEN-003</title>
 <style>
 :root{color-scheme:dark;--bg:#0c1520;--panel:#172534;--panel2:#1d2e40;--line:#334659;--light:#edf5fb;--soft:#a7becd;--mint:#67e3b6;--yellow:#efcc7b}
 *{box-sizing:border-box}body{margin:0;color:var(--light);background:radial-gradient(circle at 80% -10%,#2c443d,transparent 42%),var(--bg);font:15px/1.65 system-ui,-apple-system,"Noto Sans JP",sans-serif}
@@ -26,9 +26,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;colo
 footer{border-top:1px solid var(--line);color:var(--soft);font-size:12px;margin-top:22px;padding-top:17px}
 @media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.split{grid-template-columns:1fr}.days{grid-template-columns:repeat(4,1fr)}.section{padding:16px}}
 </style></head><body><main>
-<div class="top"><div><div class="eyebrow">BABY AI · GENERATION 001</div><h1>🐣 競輪AI育成室</h1><p>先入観ゼロ。出走表とオッズを見る → マークシートに書く → 結果を見る → 学習する。</p></div><span class="pill">第2世代 ／ フォーメーションを習得</span></div>
+<div class="top"><div><div class="eyebrow">BABY AI · GENERATION 001</div><h1>🐣 競輪AI育成室</h1><p>先入観ゼロ。出走表とオッズを見る → マークシートに書く → 結果を見る → 学習する。</p></div><span class="pill">第3世代 ／ 仮想資金1万円</span></div>
 <div class="grid">
-<div class="card"><small>現在の世代</small><strong>GEN-002</strong><span>GEN-001の記憶を継承</span></div>
+<div class="card"><small>現在の世代</small><strong>GEN-003</strong><span>GEN-002の学習重みを継承</span></div>
 <div class="card"><small>親GEN-001の経験</small><strong id="races">—</strong><span>欠損を推測せず除外</span></div>
 <div class="card"><small>親GEN-001の的中</small><strong class="mint" id="hits">—</strong><span>全券種合計</span></div>
 <div class="card"><small>親GEN-001の学習期間</small><strong id="days">—</strong><span>予想後に1レースずつ学習</span></div>
@@ -58,7 +58,29 @@ footer{border-top:1px solid var(--line);color:var(--soft);font-size:12px;margin-
 <p class="warning">的中が増えても、点数と投資額の増加を必ず併記します。2023年の確定オッズによる練習であり、実際に当時購入できたオッズとは限りません。</p>
 <div class="links"><a class="btn" href="nursery-gen002-summary.json">2週目の成績</a><a class="btn" href="nursery-gen002-history.json">1Rごとの学習履歴</a><a class="btn" href="nursery-gen002-checkpoint.json">2週目の学習重み</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery/outputs/GEN-002">フォーメーション原本（GitHub） ↗</a></div>
 </section>
-<section class="section"><h2>保存と次の世代</h2><div class="row"><span>出生時の学習重み</span><b>すべて0</b></div><div class="row"><span>1週間後の学習重み</span><b id="checkpoint">—</b></div><div class="row"><span>次の段階</span><b>GEN-002 が学習を完了</b></div><p>新しい能力を得た時点でGEN-001からGEN-002へ世代交代。GEN-002は親の学習重みを継承しています。</p><div class="links"><a class="btn" href="nursery-summary.json">1週間の全体成績</a><a class="btn" href="nursery-history.json">全レースのマーク履歴</a><a class="btn" href="nursery-checkpoint.json">学習した重み</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery">GitHub保存先 ↗</a></div></section>
+<section class="section">
+<h2>💴 GEN-003：初めての1万円と補充</h2>
+<p>2023年1月15〜21日。GEN-002の記憶を引き継ぎ、1万円を仮の財布として渡しました。次の100円のマークを支払えなくなると1万円を補充します。フォーメーション用紙は無制限のままです。</p>
+<div class="grid">
+<div class="card"><small>体験したレース</small><strong id="g3Races">—</strong><span>結果開示後に学習</span></div>
+<div class="card"><small>補充回数</small><strong id="g3Refills">—</strong><span>1回10,000円</span></div>
+<div class="card"><small>最後の財布</small><strong id="g3Bank">—</strong><span>仮想残高</span></div>
+<div class="card"><small>車券の純損益</small><strong id="g3Profit">—</strong><span>補充は利益に含めない</span></div>
+</div>
+<div class="row"><span>最初に渡した資金</span><b>10,000円</b></div>
+<div class="row"><span>補充した総額</span><b id="g3Deposits">—</b></div>
+<div class="row"><span>用紙の合計</span><b id="g3Sheets">—</b></div>
+<div class="row"><span>総購入点数</span><b id="g3Marks">—</b></div>
+<div class="row"><span>紙上賭け金</span><b id="g3Stake">—</b></div>
+<div class="row"><span>払戻換算額</span><b id="g3Payout">—</b></div>
+<div class="row"><span>参考回収率</span><b id="g3ROI">—</b></div>
+<div class="row"><span>親GEN-002の記憶を継承</span><b id="g3Parent">—</b></div>
+<h2 style="margin-top:20px">日別の資金推移</h2>
+<div class="scroll"><table><thead><tr><th>日付</th><th>レース</th><th>用紙</th><th>補充</th><th>終了残高</th></tr></thead><tbody id="g3Daily"></tbody></table></div>
+<div class="warning">これは過去の確定オッズによる仮想財布です。補充した資金を収益として扱いません。実際の賭けの追加入金を勧めるものではありません。</div>
+<div class="links"><a class="btn" href="nursery-gen003-summary.json">GEN-003集計・資金台帳</a><a class="btn" href="nursery-gen003-history.json">全レースの結果</a><a class="btn" href="nursery-gen003-checkpoint.json">学習重み</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery/outputs/GEN-003">保存した全用紙（GitHub） ↗</a></div>
+</section>
+<section class="section"><h2>保存と次の世代</h2><div class="row"><span>出生時の学習重み</span><b>すべて0</b></div><div class="row"><span>1週間後の学習重み</span><b id="checkpoint">—</b></div><div class="row"><span>次の段階</span><b>GEN-003が資金管理を学習中</b></div><p>新しい能力を得た時点でGEN-001からGEN-002へ世代交代。GEN-002は親の学習重みを継承しています。</p><div class="links"><a class="btn" href="nursery-summary.json">1週間の全体成績</a><a class="btn" href="nursery-history.json">全レースのマーク履歴</a><a class="btn" href="nursery-checkpoint.json">学習した重み</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery">GitHub保存先 ↗</a></div></section>
 <footer>過去実験の価格はレース終了後の確定オッズです。締切前の価格と同じではないため、この練習成績を実購入可能な収益と見なせません。入力に足りないレースは欠損として記録。</footer>
 </main>
 <script>
@@ -138,5 +160,35 @@ start();
       } else section.append(make("p","マークシート原本はGitHubから閲覧できます。"));
     }
   }catch(e){$("w2State").textContent="表示データを確認中："+e.message;}
+})();
+</script><script>
+(async()=>{
+  const $=id=>document.getElementById(id);
+  const yen=n=>Number(n).toLocaleString("ja-JP")+"円";
+  try {
+    const [s,c]=await Promise.all(["nursery-gen003-summary.json","nursery-gen003-checkpoint.json"].map(async f=>{
+      const r=await fetch(f,{cache:"no-store"});
+      if(!r.ok)throw Error("第3世代のデータ公開待ち");
+      return r.json();
+    }));
+    $("g3Races").textContent=s.races.toLocaleString("ja-JP");
+    $("g3Refills").textContent=s.replenishment_events.toLocaleString("ja-JP");
+    $("g3Bank").textContent=yen(s.final_balance_yen);
+    $("g3Profit").textContent=yen(s.net_betting_proxy_yen);
+    $("g3Deposits").textContent=yen(s.replenishment_amount_yen);
+    $("g3Sheets").textContent=s.sheets.toLocaleString("ja-JP");
+    $("g3Marks").textContent=s.marks.toLocaleString("ja-JP");
+    $("g3Stake").textContent=yen(s.total_spent_yen);
+    $("g3Payout").textContent=yen(s.total_payout_proxy_yen);
+    $("g3ROI").textContent=s.roi_proxy_percent.toFixed(1)+"%";
+    $("g3Parent").textContent=s.prior_checkpoint_sha256===c.parent_weights_sha256?"✓ GEN-002":"検証が必要";
+    for(const d of s.daily){
+      const tr=document.createElement("tr");
+      [d.date.slice(5),d.races,d.sheets,d.replenishments,d.closing_balance_yen==null?"—":yen(d.closing_balance_yen)].forEach(v=>{
+        const td=document.createElement("td");td.textContent=String(v);tr.append(td);
+      });
+      $("g3Daily").append(tr);
+    }
+  }catch(err){$("g3Parent").textContent="読み込み待ち："+err.message;}
 })();
 </script></body></html>
