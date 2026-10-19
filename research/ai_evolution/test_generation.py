@@ -64,7 +64,7 @@ def test():
         raise AssertionError("Final odds were accepted as live")
     except ValueError:
         pass
-    reg=json.loads((ROOT/"docs/ai-lab/generations.json").read_text(encoding="utf-8"))
+    reg=json.loads((ROOT/"docs/ai-lab/legacy-generations.json").read_text(encoding="utf-8"))
     assert reg["current_generation"]=="GEN-001"
     assert reg["generations"][0]["gain"]>0
     print("PASS: GEN-001 frozen checkpoint, paper inference, leakage gate, dashboard registry")

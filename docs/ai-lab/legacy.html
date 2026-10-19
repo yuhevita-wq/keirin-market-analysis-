@@ -97,7 +97,7 @@ async function select(g){
 }
 async function start(){
   try{
-    const response=await fetch("generations.json",{cache:"no-store"});if(!response.ok)throw Error("HTTP "+response.status);
+    const response=await fetch("legacy-generations.json",{cache:"no-store"});if(!response.ok)throw Error("HTTP "+response.status);
     const reg=await response.json(),target=$("generations");target.replaceChildren();
     for(const g of reg.generations){
       const btn=make("button","gen");btn.type="button";btn.dataset.id=g.id;
