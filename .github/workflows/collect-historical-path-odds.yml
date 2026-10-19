@@ -1,0 +1,57 @@
+name: Collect historical time-series odds (three pools)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/collect-historical-path-odds.yml'
+      - 'research/odds_path_archive/**'
+  workflow_dispatch:
+  schedule:
+    - cron: '13 */4 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: historical-path-odds-three-pools-v1
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: research/odds_path_archive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify scope, official payout axes and future-date rejection
+        run: python research/odds_path_archive/collect.py --self-test
+      - name: Resume historical acquisition and save durable checkpoints
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          python -u research/odds_path_archive/collect.py \
+            --github --start 2021-01-01 --end 2026-10-18 \
+            --minutes 45 --pause 1.5 --checkpoint-every 5
+      - name: Write acquisition counts to run summary
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=Path('work/path_odds_archive/progress.json')
+          if p.exists():
+              x=json.loads(p.read_text())
+              with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
+                  f.write('## Historical three-pool odds acquisition\n\n')
+                  f.write('Durable data: authenticated draft Releases `path-odds-YYYY-MM`.\n\n')
+                  f.write('Next date: '+x['next_date']+'\n\n')
+                  f.write('```json\n'+json.dumps(x['totals'],ensure_ascii=False,indent=2)+'\n```\n')
+                  f.write('\nPending dates: '+str(len(x.get('pending_dates',[])))+'\n')
+          PY
