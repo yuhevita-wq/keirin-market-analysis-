@@ -1,4 +1,4 @@
-"""GEN-001 / week 2: add FORMATION mark sheets, with no fixed number of sheets.
+"""GEN-002 / week 2: add FORMATION mark sheets, with no fixed number of sheets.
 
 Continue exactly from frozen 2023-01-07 zero-born learner's checkpoint.
 Input to learner: racecard + full available odds + only the instruction
@@ -21,7 +21,7 @@ import numpy as np
 from train_week import ROOT, D, LR, OUT as W1, WEB, load_cards, load_results
 from train_week import load_odds, eligible, feature_matrix, softmax
 
-OUT=ROOT/"research/ai_nursery/outputs/GEN-001/week2"
+OUT=ROOT/"research/ai_nursery/outputs/GEN-002"
 WEEK_FIRST=date(2023,1,8)
 WEEK_LAST=WEEK_FIRST+timedelta(days=6)
 SEED=20261020
@@ -197,9 +197,9 @@ def train():
                       "payout_proxy_yen":sum(x["payout_proxy_yen"] for x in rr),
                       "mean_loss":float(np.mean([x["loss_before_update"] for x in rr])) if rr else None})
     summary={
-        "id":"GEN-001","learning_week":2,
+        "id":"GEN-002","parent_id":"GEN-001","learning_week":2,
         "dates":[WEEK_FIRST.isoformat(),WEEK_LAST.isoformat()],
-        "status":"WEEK2_FORMATION_LEARNING_COMPLETE",
+        "status":"GEN002_FORMATION_WEEK_COMPLETE",
         "parent_checkpoint_sha256":parent_hash,"first_week_steps":w1_checkpoint["after_step"],
         "total_steps":w1_checkpoint["after_step"]+len(history),"races":len(history),
         "available_racecards_in_week":sum(all_days.values()),
@@ -240,21 +240,21 @@ def train():
         ]
     }
     checkpoint={
-        "id":"GEN-001","learning_week":2,"after_step":summary["total_steps"],
+        "id":"GEN-002","parent_id":"GEN-001","learning_week":2,"after_step":summary["total_steps"],
         "weights":[float(x) for x in weights],"dimension":D,
         "weights_sha256":hashlib.sha256(weights.tobytes()).hexdigest(),
         "parent_weights_sha256":parent_hash,
         "random_seed":SEED,"training_span":[WEEK_FIRST.isoformat(),WEEK_LAST.isoformat()]
     }
     for path,data in ((OUT/"summary.json",summary),(OUT/"checkpoint.json",checkpoint),
-                      (WEB/"nursery-week2-summary.json",summary),
-                      (WEB/"nursery-week2-checkpoint.json",checkpoint),
-                      (WEB/"nursery-week2-history.json",history)):
+                      (WEB/"nursery-gen002-summary.json",summary),
+                      (WEB/"nursery-gen002-checkpoint.json",checkpoint),
+                      (WEB/"nursery-gen002-history.json",history)):
         path.write_text(json.dumps(data,ensure_ascii=False,indent=2 if path.name=="summary.json" else None)+"\n",encoding="utf-8")
     with (OUT/"learning_history.jsonl").open("w",encoding="utf-8") as f:
         for record in history:
             f.write(json.dumps(record,ensure_ascii=False,separators=(",",":"))+"\n")
-    print("GEN001_FORMATION_WEEK2_COMPLETE",json.dumps({
+    print("GEN002_FORMATION_WEEK_COMPLETE",json.dumps({
         "races":summary["races"],"sheets":summary["sheets"],
         "marks":summary["expanded_marks"],"multi_sheet_races":summary["multiple_sheet_races"],
         "hit_races":summary["hit_races"],"roi_proxy_percent":summary["roi_proxy_percent"],

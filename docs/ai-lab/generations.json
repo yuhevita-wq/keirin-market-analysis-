@@ -1,9 +1,36 @@
 {
-  "schema_version": 2,
-  "current_generation": "GEN-001",
-  "generation_type": "BABY_ONLINE_LEARNING",
-  "pretrained_model": false,
-  "training_days": 7,
-  "latest_summary": "nursery-summary.json",
-  "archive_note": "previous mature market checkpoint remains as unrelated archived research, not the infant's parent"
+  "schema_version": 3,
+  "kind": "KEIRIN_AI_INFANT_GENERATIONS",
+  "current_generation": "GEN-002",
+  "generations": [
+    {
+      "id": "GEN-001",
+      "parent_id": null,
+      "dates": [
+        "2023-01-01",
+        "2023-01-07"
+      ],
+      "races": 547,
+      "skill": "通常マークシート／1レース1点",
+      "training_records": "research/ai_nursery/outputs/GEN-001/",
+      "checkpoint": "research/ai_nursery/outputs/GEN-001/checkpoint.json",
+      "summary": "nursery-summary.json"
+    },
+    {
+      "id": "GEN-002",
+      "parent_id": "GEN-001",
+      "dates": [
+        "2023-01-08",
+        "2023-01-14"
+      ],
+      "races": 482,
+      "skill": "フォーメーションマークシート／用紙・点数に固定上限なし",
+      "parent_checkpoint_sha256": "986eee51901cd35b7d899969eac239de3a79c62cb84bf9e628bddf9a8d18bd2e",
+      "training_records": "research/ai_nursery/outputs/GEN-002/",
+      "checkpoint": "research/ai_nursery/outputs/GEN-002/checkpoint.json",
+      "summary": "nursery-gen002-summary.json"
+    }
+  ],
+  "archived_older_unrelated_checkpoint": "research/ai_evolution/generations/g001/",
+  "note": "古い完成型の市場モデルはこの系譜の親ではない。GEN-002は赤ちゃんGEN-001のみを継承した。"
 }

@@ -1,4 +1,4 @@
-name: Baby AI GEN-001 week 2 formation training
+name: Baby AI GEN-002 formation generation validation
 on:
   push:
     branches: [main]
@@ -10,7 +10,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: baby-ai-formation-week2
+  group: baby-ai-gen-002
   cancel-in-progress: false
 jobs:
   learn:
@@ -26,15 +26,19 @@ jobs:
       - name: Learn 2023-01-08 to 2023-01-14 from saved week-one weights
         run: |
           python -m pip install 'numpy>=1.26'
-          OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python research/ai_nursery/train_week2.py
+          if [ -f research/ai_nursery/outputs/GEN-002/summary.json ]; then
+            echo 'Frozen GEN-002 output exists, preserving it and verifying only.'
+          else
+            OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python research/ai_nursery/train_week2.py
+          fi
       - name: Verify formation marks and parent-child weight continuity
         run: python research/ai_nursery/test_week2.py
       - name: Save the second-week learning diary and checkpoint
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add research/ai_nursery/outputs/GEN-001/week2/ docs/ai-lab/nursery-week2-*.json
+          git add research/ai_nursery/outputs/GEN-002/ docs/ai-lab/nursery-gen002-*.json
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "data: save GEN-001 second-week formation-sheet learning"
+          git commit -m "data: save GEN-002 second-generation formation-sheet learning"
           git pull --rebase origin main
           git push origin HEAD:main

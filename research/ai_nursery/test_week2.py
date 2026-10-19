@@ -1,4 +1,4 @@
-"""Verify the formation week is an extension, not a new model or contaminated foresight."""
+"""Verify GEN-002: the formation week is an extension, not a new model or contaminated foresight."""
 from __future__ import annotations
 import hashlib
 import itertools
@@ -17,6 +17,8 @@ def main():
     forms=[json.loads(x) for x in (OUT/"formation_mark_sheets.jsonl").read_text(encoding="utf-8").splitlines()]
     records=[json.loads(x) for x in (OUT/"learning_history.jsonl").read_text(encoding="utf-8").splitlines()]
     assert len(forms)==len(records)==summary["races"]>0
+    assert summary["id"]==state["id"]=="GEN-002"
+    assert summary["parent_id"]==state["parent_id"]=="GEN-001"
     assert summary["dates"]==["2023-01-08","2023-01-14"]
     assert summary["first_week_steps"]==parent["after_step"]==547
     assert summary["parent_checkpoint_sha256"]==parent["weights_sha256"]
@@ -70,9 +72,9 @@ def main():
     odds={"3連単":{"1-2-3":15.0,"1-3-2":18.0},"3連複":{"1=2=3":5.0}}
     assert set(form_expand("3連単",[[1],[2,3],[2,3]],odds))=={"1-2-3","1-3-2"}
     assert set(form_expand("3連複",[[1,2],[2,3],[3]],odds))=={"1=2=3"}
-    dashboard=load(ROOT/"docs/ai-lab/nursery-week2-summary.json")
+    dashboard=load(ROOT/"docs/ai-lab/nursery-gen002-summary.json")
     assert dashboard["races"]==summary["races"]
-    print("GEN-001 WEEK2 VERIFIED",summary["races"],"races",sheet_count,"sheets",mark_count,"marks")
+    print("GEN-002 VERIFIED",summary["races"],"races",sheet_count,"sheets",mark_count,"marks")
 
 
 if __name__=="__main__":

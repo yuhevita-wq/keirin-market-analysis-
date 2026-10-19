@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ja"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#101a25"><title>競輪AI育成室 — ひよこ第1世代</title>
+<meta name="theme-color" content="#101a25"><title>競輪AI育成室 — GEN-001からGEN-002へ</title>
 <style>
 :root{color-scheme:dark;--bg:#0c1520;--panel:#172534;--panel2:#1d2e40;--line:#334659;--light:#edf5fb;--soft:#a7becd;--mint:#67e3b6;--yellow:#efcc7b}
 *{box-sizing:border-box}body{margin:0;color:var(--light);background:radial-gradient(circle at 80% -10%,#2c443d,transparent 42%),var(--bg);font:15px/1.65 system-ui,-apple-system,"Noto Sans JP",sans-serif}
@@ -26,21 +26,21 @@ table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;colo
 footer{border-top:1px solid var(--line);color:var(--soft);font-size:12px;margin-top:22px;padding-top:17px}
 @media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.split{grid-template-columns:1fr}.days{grid-template-columns:repeat(4,1fr)}.section{padding:16px}}
 </style></head><body><main>
-<div class="top"><div><div class="eyebrow">BABY AI · GENERATION 001</div><h1>🐣 競輪AI育成室</h1><p>先入観ゼロ。出走表とオッズを見る → マークシートに書く → 結果を見る → 学習する。</p></div><span class="pill">第1世代 ／ 2週目も成長中</span></div>
+<div class="top"><div><div class="eyebrow">BABY AI · GENERATION 001</div><h1>🐣 競輪AI育成室</h1><p>先入観ゼロ。出走表とオッズを見る → マークシートに書く → 結果を見る → 学習する。</p></div><span class="pill">第2世代 ／ フォーメーションを習得</span></div>
 <div class="grid">
-<div class="card"><small>今の世代</small><strong>GEN-001</strong><span>白紙から学習開始</span></div>
-<div class="card"><small>体験したレース</small><strong id="races">—</strong><span>欠損を推測せず除外</span></div>
-<div class="card"><small>的中したマーク</small><strong class="mint" id="hits">—</strong><span>全券種合計</span></div>
-<div class="card"><small>1週間の進行</small><strong id="days">—</strong><span>予想後に1レースずつ学習</span></div>
+<div class="card"><small>現在の世代</small><strong>GEN-002</strong><span>GEN-001の記憶を継承</span></div>
+<div class="card"><small>親GEN-001の経験</small><strong id="races">—</strong><span>欠損を推測せず除外</span></div>
+<div class="card"><small>親GEN-001の的中</small><strong class="mint" id="hits">—</strong><span>全券種合計</span></div>
+<div class="card"><small>親GEN-001の学習期間</small><strong id="days">—</strong><span>予想後に1レースずつ学習</span></div>
 </div>
-<section class="section"><h2>🌱 成長の記録</h2><p id="span" class="note">過去データの結合・学習結果を取得中…</p><div id="daily" class="days"></div><div class="row"><span>最初の30レースの平均損失</span><b id="firstLoss">—</b></div><div class="row"><span>最後の30レースの平均損失</span><b id="lastLoss">—</b></div><p style="font-size:12px">損失が小さければ予測確率の学習が進んだ可能性があります。ただし短期の上下だけで成長を断定しません。</p></section>
+<section class="section"><h2>🐣 親世代 GEN-001 の学習記録</h2><p id="span" class="note">過去データの結合・学習結果を取得中…</p><div id="daily" class="days"></div><div class="row"><span>最初の30レースの平均損失</span><b id="firstLoss">—</b></div><div class="row"><span>最後の30レースの平均損失</span><b id="lastLoss">—</b></div><p style="font-size:12px">損失が小さければ予測確率の学習が進んだ可能性があります。ただし短期の上下だけで成長を断定しません。</p></section>
 <div class="split">
-<section class="section"><h2>📝 赤ちゃんに教えたこと</h2><p>「出走表とオッズを見て、マークシートに券種・車番・金額を書く。3連単は1着–2着–3着の順番を指定。3連複は3車を順不同で指定。結果は書いた後で教えてもらう。」</p><p>最初の学習重みはすべて0。的中パターン、人気の買い方、ライン理論、狙い目、期待値計算、既存モデルは教えていません。</p><div class="warning">モデル内部には、入力を読み取るための汎用的な数値処理と、結果を受けて重みを更新する学習処理だけがあります。</div></section>
-<section class="section"><h2>📋 初めて書いたマークシート</h2><div id="sheet" class="mark">学習結果を読み込み中…</div><p style="font-size:12px">この記入結果は、該当レースの着順を見る前に保存したものです。</p></section>
+<section class="section"><h2>📝 GEN-001 に教えたこと</h2><p>「出走表とオッズを見て、マークシートに券種・車番・金額を書く。3連単は1着–2着–3着の順番を指定。3連複は3車を順不同で指定。結果は書いた後で教えてもらう。」</p><p>最初の学習重みはすべて0。的中パターン、人気の買い方、ライン理論、狙い目、期待値計算、既存モデルは教えていません。</p><div class="warning">モデル内部には、入力を読み取るための汎用的な数値処理と、結果を受けて重みを更新する学習処理だけがあります。</div></section>
+<section class="section"><h2>📋 GEN-001 が初めて書いたマークシート</h2><div id="sheet" class="mark">学習結果を読み込み中…</div><p style="font-size:12px">この記入結果は、該当レースの着順を見る前に保存したものです。</p></section>
 </div>
-<section class="section"><h2>1レースずつの学習日記</h2><p>予想時点の買い目と、結果発表後の照合。最初の20レースを掲載。全件はJSONで保存しています。</p><div class="scroll"><table><thead><tr><th>順番</th><th>日付</th><th>開催</th><th>種別</th><th>マーク</th><th>結果</th><th>成否</th></tr></thead><tbody id="history"></tbody></table></div></section>
+<section class="section"><h2>GEN-001 の学習日記</h2><p>予想時点の買い目と、結果発表後の照合。最初の20レースを掲載。全件はJSONで保存しています。</p><div class="scroll"><table><thead><tr><th>順番</th><th>日付</th><th>開催</th><th>種別</th><th>マーク</th><th>結果</th><th>成否</th></tr></thead><tbody id="history"></tbody></table></div></section>
 <section class="section">
-<h2>📚 2週目：フォーメーション用紙が無制限に</h2>
+<h2>🧬 GEN-002：新能力・フォーメーション用紙が無制限に</h2>
 <p>2023年1月8日〜14日。第1週の学習重みをそのまま引き継ぎ、1Rごとに自由な枚数のフォーメーション用紙を書いてから結果を見ます。枚数・購入点数の上限はありません。</p>
 <div class="grid">
 <div class="card"><small>2週目のレース</small><strong id="w2Races">—</strong><span>全級班・全開催</span></div>
@@ -52,13 +52,13 @@ footer{border-top:1px solid var(--line);color:var(--soft);font-size:12px;margin-
 <div class="row"><span>2週目の紙上払戻（確定オッズ換算）</span><b id="w2Return">—</b></div>
 <div class="row"><span>2週目の参考回収率</span><b id="w2ROI">—</b></div>
 <div class="row"><span>2枚以上書いたレース</span><b id="w2Multi">—</b></div>
-<div class="row"><span>学習重みの継承</span><b id="w2State">—</b></div>
+<div class="row"><span>親GEN-001の学習重みを継承</span><b id="w2State">—</b></div>
 <h2 style="margin-top:20px">2週目の日別記録</h2><div id="w2Daily" class="days"></div>
 <h2 style="margin-top:20px">最初のレースで使ったフォーメーション</h2><div id="w2Forms"></div>
 <p class="warning">的中が増えても、点数と投資額の増加を必ず併記します。2023年の確定オッズによる練習であり、実際に当時購入できたオッズとは限りません。</p>
-<div class="links"><a class="btn" href="nursery-week2-summary.json">2週目の成績</a><a class="btn" href="nursery-week2-history.json">1Rごとの学習履歴</a><a class="btn" href="nursery-week2-checkpoint.json">2週目の学習重み</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery/outputs/GEN-001/week2">フォーメーション原本（GitHub） ↗</a></div>
+<div class="links"><a class="btn" href="nursery-gen002-summary.json">2週目の成績</a><a class="btn" href="nursery-gen002-history.json">1Rごとの学習履歴</a><a class="btn" href="nursery-gen002-checkpoint.json">2週目の学習重み</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery/outputs/GEN-002">フォーメーション原本（GitHub） ↗</a></div>
 </section>
-<section class="section"><h2>保存と次の世代</h2><div class="row"><span>出生時の学習重み</span><b>すべて0</b></div><div class="row"><span>1週間後の学習重み</span><b id="checkpoint">—</b></div><div class="row"><span>次の段階</span><b>GEN-001 の連続学習中</b></div><p>何世代も育てる前に、まずこの赤ちゃんに続きを学ばせます。世代更新は学習の積み重ねに基づいて区別します。</p><div class="links"><a class="btn" href="nursery-summary.json">1週間の全体成績</a><a class="btn" href="nursery-history.json">全レースのマーク履歴</a><a class="btn" href="nursery-checkpoint.json">学習した重み</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery">GitHub保存先 ↗</a></div></section>
+<section class="section"><h2>保存と次の世代</h2><div class="row"><span>出生時の学習重み</span><b>すべて0</b></div><div class="row"><span>1週間後の学習重み</span><b id="checkpoint">—</b></div><div class="row"><span>次の段階</span><b>GEN-002 が学習を完了</b></div><p>新しい能力を得た時点でGEN-001からGEN-002へ世代交代。GEN-002は親の学習重みを継承しています。</p><div class="links"><a class="btn" href="nursery-summary.json">1週間の全体成績</a><a class="btn" href="nursery-history.json">全レースのマーク履歴</a><a class="btn" href="nursery-checkpoint.json">学習した重み</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery">GitHub保存先 ↗</a></div></section>
 <footer>過去実験の価格はレース終了後の確定オッズです。締切前の価格と同じではないため、この練習成績を実購入可能な収益と見なせません。入力に足りないレースは欠損として記録。</footer>
 </main>
 <script>
@@ -102,7 +102,7 @@ start();
   const format=(x)=>Number(x).toLocaleString("ja-JP");
   const make=(tag,text)=>{const e=document.createElement(tag);e.textContent=String(text);return e;};
   try{
-    const req=await Promise.all(["nursery-week2-summary.json","nursery-week2-history.json","nursery-week2-checkpoint.json"].map(async u=>{
+    const req=await Promise.all(["nursery-gen002-summary.json","nursery-gen002-history.json","nursery-gen002-checkpoint.json"].map(async u=>{
       const r=await fetch(u,{cache:"no-store"});if(!r.ok)throw Error(u+" の公開待ち");return r.json();
     }));
     const [s,records,checkpoint]=req;
@@ -124,7 +124,7 @@ start();
     if(records.length){
       const r=records[0]; const section=$("w2Forms");
       section.append(make("p",r.date+" "+r.track+" "+r.race_no+"R ／ "+r.sheet_count+"枚 ／ "+r.expanded_marks+"点 ／ "+format(r.total_yen)+"円"));
-      const sheetList=await fetch("https://raw.githubusercontent.com/yuhevita-wq/keirin-market-analysis-/main/research/ai_nursery/outputs/GEN-001/week2/formation_mark_sheets.jsonl",{cache:"no-store"});
+      const sheetList=await fetch("https://raw.githubusercontent.com/yuhevita-wq/keirin-market-analysis-/main/research/ai_nursery/outputs/GEN-002/formation_mark_sheets.jsonl",{cache:"no-store"});
       if(sheetList.ok){
         const text=await sheetList.text();
         const first=JSON.parse(text.split("\n")[0]);
