@@ -234,7 +234,7 @@ def main():
         "roi_proxy_percent":100*total_paid/capital_spent if capital_spent else None,
         "mean_loss":float(np.mean([x["loss_before_update"] for x in journal])),
         "first_30_loss":float(np.mean([x["loss_before_update"] for x in journal[:30]])),
-        "last_30_loss":float(np.mean([x["loss_before_update"] for x in journal[-30:])),
+        "last_30_loss":float(np.mean([x["loss_before_update"] for x in journal[-30:]])),
         "daily":daily,
         "limitations":[
             "No monetary transfers: all capital, replenishment, stakes and payouts are hypothetical.",
