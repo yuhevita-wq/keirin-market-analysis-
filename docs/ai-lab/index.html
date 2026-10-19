@@ -1,111 +1,80 @@
 <!doctype html>
-<html lang="ja">
-<head>
+<html lang="ja"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0a1121">
-<title>KEIRIN AI EVOLUTION LAB — 競輪AI進化研究所</title>
+<meta name="theme-color" content="#101a25"><title>競輪AI育成室 — ひよこ第1世代</title>
 <style>
-:root{color-scheme:dark;--bg:#0a1121;--card:#121d32;--line:#2e4060;--text:#ecf3ff;--muted:#9bb1ce;--mint:#54e5c9;--blue:#72a7ff;--gold:#ffcc76}*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(circle at 80% -15%,#263a65,transparent 48%),var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,sans-serif}
-main{max-width:1050px;margin:auto;padding:30px 20px 80px}
-header{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:22px;display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}
-.eyebrow{font:600 11px monospace;letter-spacing:.18em;color:var(--mint)}h1{font-size:clamp(27px,5vw,46px);line-height:1.2;letter-spacing:-.03em;margin:9px 0}h2{font-size:19px;margin:0 0 16px}p{color:var(--muted);margin:7px 0}
-.status{font-size:12px;padding:6px 12px;border:1px solid #72582d;background:#5841183a;border-radius:99px;color:var(--gold)}
-.summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.tile,.panel{border:1px solid var(--line);background:linear-gradient(145deg,#182843,var(--card));border-radius:17px}
-.tile{padding:16px}.tile small{font-size:12px;color:var(--muted)}.tile strong{display:block;font-size:clamp(20px,3vw,31px);font-weight:750;font-variant-numeric:tabular-nums;margin:6px 0}.tile .foot{font-size:11px;color:var(--muted)}
-.accent{color:var(--mint)}.panel{padding:22px;margin-top:16px}
-.columns{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
-.gens{display:flex;gap:11px;flex-wrap:wrap;margin-top:15px}
-.gen{background:#203452;border:1px solid var(--line);border-radius:13px;text-align:left;padding:15px 19px;color:var(--text);cursor:pointer;min-width:175px}
-.gen[aria-pressed=true]{border-color:var(--mint);box-shadow:0 0 0 1px #54e5c944}.gen strong{display:block;font-size:19px}.gen span{font-size:12px;color:var(--muted)}
-.keyrow{display:flex;gap:10px;justify-content:space-between;border-bottom:1px solid #30405a;padding:9px 0;font-size:13px}.keyrow:last-child{border:0}.keyrow span{color:var(--muted)}.keyrow b{font-variant-numeric:tabular-nums}
-.bar{display:grid;grid-template-columns:68px 1fr 72px;gap:8px;align-items:center;margin:12px 0;font-size:12px}.bar label{color:var(--muted)}
-.track{height:13px;background:#253955;border-radius:6px;overflow:hidden}.fill{background:var(--blue);height:100%;border-radius:6px}.fill.genfill{background:var(--mint)}
-.bar output{font-variant-numeric:tabular-nums;text-align:right}
-.note{font-size:12px;color:var(--muted)}.warning{color:#f8dca7;background:#5a3f162e;border-left:3px solid var(--gold);padding:12px;font-size:12px;border-radius:3px}
-.coef{display:grid;grid-template-columns:minmax(120px,1fr) 2fr 68px;gap:8px;align-items:center;margin:8px 0;font-size:11px}
-.coef label{color:var(--muted);overflow-wrap:anywhere}.coef .track{height:9px}.coef .fill{background:var(--blue)}.coef .fill.neg{background:#ef947e}.coef output{text-align:right;font-variant-numeric:tabular-nums}
-.links{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}a.link{display:inline-block;background:#233754;border:1px solid var(--line);border-radius:9px;padding:8px 13px;color:var(--text);font-size:13px;text-decoration:none}a.link:hover{border-color:var(--mint)}
-footer{border-top:1px solid var(--line);padding-top:19px;margin-top:26px;color:var(--muted);font-size:12px}
-@media(max-width:780px){.summary{grid-template-columns:repeat(2,1fr)}.columns{grid-template-columns:1fr}.panel{padding:17px}}
-</style></head>
-<body><main>
-<header><div><div class="eyebrow">KEIRIN / ARTIFICIAL EVOLUTION</div><h1>競輪AI進化研究所</h1><p>学習済みのAIを世代として保存。次世代の性能を同じ基準で比べる。</p></div><span class="status">研究専用 / 自動購入なし</span></header>
-<div class="summary">
-<div class="tile"><small>現行世代</small><strong id="id">GEN-001</strong><div class="foot">最初の凍結モデル</div></div>
-<div class="tile"><small>過去検証レース</small><strong id="races">—</strong><div class="foot">時系列で後の期間</div></div>
-<div class="tile"><small>Log Loss 改善</small><strong id="gain" class="accent">—</strong><div class="foot">対・オッズ市場</div></div>
-<div class="tile"><small>本番の収益性</small><strong>未証明</strong><div class="foot">T-15独立検証 0件</div></div>
+:root{color-scheme:dark;--bg:#0c1520;--panel:#172534;--panel2:#1d2e40;--line:#334659;--light:#edf5fb;--soft:#a7becd;--mint:#67e3b6;--yellow:#efcc7b}
+*{box-sizing:border-box}body{margin:0;color:var(--light);background:radial-gradient(circle at 80% -10%,#2c443d,transparent 42%),var(--bg);font:15px/1.65 system-ui,-apple-system,"Noto Sans JP",sans-serif}
+main{max-width:1030px;margin:auto;padding:25px 20px 72px}.eyebrow{font:700 11px monospace;letter-spacing:.17em;color:var(--mint)}
+h1{font-size:clamp(30px,5vw,49px);margin:8px 0;line-height:1.2}h2{margin:0 0 12px;font-size:19px}p{color:var(--soft);margin:7px 0}
+.top{display:flex;gap:15px;justify-content:space-between;flex-wrap:wrap;padding-bottom:25px;border-bottom:1px solid var(--line)}
+.pill{padding:6px 13px;border:1px solid #68865a;color:#d4e7b4;border-radius:40px;height:fit-content;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0}
+.card{border:1px solid var(--line);border-radius:15px;padding:17px;background:linear-gradient(130deg,var(--panel2),var(--panel))}
+.card small{display:block;font-size:12px;color:var(--soft)}.card strong{display:block;margin:5px 0;font-size:clamp(22px,3vw,32px);font-variant-numeric:tabular-nums}.card span{font-size:11px;color:var(--soft)}.mint{color:var(--mint)}
+.section{margin-top:16px;border-radius:18px;border:1px solid var(--line);background:var(--panel);padding:20px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;margin-top:13px}.day{border:1px solid var(--line);background:var(--panel2);border-radius:11px;padding:12px;text-align:center}.day b{font-size:20px;display:block}.day small{font-size:11px;color:var(--soft)}
+.row{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #314354;padding:9px 0}.row:last-child{border-bottom:0}.row span{color:var(--soft)}.row b{font-variant-numeric:tabular-nums}
+.mark{border:1px dashed #668879;background:#132c2b;border-radius:12px;padding:15px;margin-top:11px;font-variant-numeric:tabular-nums}
+.markhead{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--soft)}
+.markline{font-size:clamp(22px,4vw,32px);font-weight:800;margin:9px 0;color:var(--mint)}
+.badge{background:#2a3c48;border:1px solid #4d6777;padding:3px 8px;border-radius:10px;font-size:12px}
+.warning{border-left:3px solid var(--yellow);background:#52411b40;color:#f4d99c;padding:12px;font-size:12px;border-radius:5px;margin-top:14px}
+table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;color:var(--soft);font-weight:500}td,th{padding:9px 7px;border-bottom:1px solid #34485a}td{font-variant-numeric:tabular-nums}
+.scroll{overflow:auto}.links{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}a.btn{text-decoration:none;color:var(--light);border:1px solid var(--line);background:var(--panel2);padding:9px 14px;border-radius:9px;font-size:12px}
+footer{border-top:1px solid var(--line);color:var(--soft);font-size:12px;margin-top:22px;padding-top:17px}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.split{grid-template-columns:1fr}.days{grid-template-columns:repeat(4,1fr)}.section{padding:16px}}
+</style></head><body><main>
+<div class="top"><div><div class="eyebrow">BABY AI · GENERATION 001</div><h1>🐣 競輪AI育成室</h1><p>先入観ゼロ。出走表とオッズを見る → マークシートに書く → 結果を見る → 学習する。</p></div><span class="pill">第1世代 ／ 1週間の初歩学習</span></div>
+<div class="grid">
+<div class="card"><small>今の世代</small><strong>GEN-001</strong><span>白紙から学習開始</span></div>
+<div class="card"><small>体験したレース</small><strong id="races">—</strong><span>欠損を推測せず除外</span></div>
+<div class="card"><small>的中したマーク</small><strong class="mint" id="hits">—</strong><span>全券種合計</span></div>
+<div class="card"><small>1週間の進行</small><strong id="days">—</strong><span>予想後に1レースずつ学習</span></div>
 </div>
-<section class="panel"><h2>🧬 世代の系譜</h2><p class="note">新世代が追加されるとここに並びます。クリックで世代別の凍結結果を切り替えられます。</p><div class="gens" id="generations">読み込み中…</div><p class="note" id="lineage"></p></section>
-<div class="columns">
-<section class="panel"><h2>予測精度</h2><p class="note" id="period"></p>
-<div class="keyrow"><span>市場 Log Loss</span><b id="baseLoss">—</b></div><div class="keyrow"><span>AI Log Loss</span><b id="aiLoss" class="accent">—</b></div>
-<div class="bar"><label>市場</label><div class="track"><div id="baseBar" class="fill"></div></div><output id="baseNum">—</output></div>
-<div class="bar"><label>GEN</label><div class="track"><div id="aiBar" class="fill genfill"></div></div><output id="aiNum">—</output></div>
-<p class="note">Log Lossは小さいほど優秀。棒は両者のスコア比を表示。</p>
-<div class="keyrow"><span>市場 Brier</span><b id="baseBrier">—</b></div><div class="keyrow"><span>AI Brier</span><b id="aiBrier">—</b></div><div class="keyrow"><span>Log Loss改善幅 95%近似区間</span><b id="ci">—</b></div>
-</section>
-<section class="panel"><h2>収支・研究段階</h2>
-<div class="keyrow"><span>対象券種</span><b id="bets">—</b></div>
-<div class="keyrow"><span>仮想的な購入回数</span><b id="plays">—</b></div>
-<div class="keyrow"><span>的中数</span><b id="hits">—</b></div>
-<div class="keyrow"><span>確定オッズでの仮想回収率</span><b id="roi">—</b></div>
-<p class="warning">確定オッズは発売締切後に確定します。これは実際に買える価格で検証した回収率ではありません。現段階で勝てるとは判断できません。</p>
-<p class="note">過去の仮想収支は、各レースで最大推定EVの3連単1点を選び、EVが1.10以上のレースのみを対象とした既存研究の参考値です。</p></section>
+<section class="section"><h2>🌱 成長の記録</h2><p id="span" class="note">過去データの結合・学習結果を取得中…</p><div id="daily" class="days"></div><div class="row"><span>最初の30レースの平均損失</span><b id="firstLoss">—</b></div><div class="row"><span>最後の30レースの平均損失</span><b id="lastLoss">—</b></div><p style="font-size:12px">損失が小さければ予測確率の学習が進んだ可能性があります。ただし短期の上下だけで成長を断定しません。</p></section>
+<div class="split">
+<section class="section"><h2>📝 赤ちゃんに教えたこと</h2><p>「出走表とオッズを見て、マークシートに券種・車番・金額を書く。3連単は1着–2着–3着の順番を指定。3連複は3車を順不同で指定。結果は書いた後で教えてもらう。」</p><p>最初の学習重みはすべて0。的中パターン、人気の買い方、ライン理論、狙い目、期待値計算、既存モデルは教えていません。</p><div class="warning">モデル内部には、入力を読み取るための汎用的な数値処理と、結果を受けて重みを更新する学習処理だけがあります。</div></section>
+<section class="section"><h2>📋 初めて書いたマークシート</h2><div id="sheet" class="mark">学習結果を読み込み中…</div><p style="font-size:12px">この記入結果は、該当レースの着順を見る前に保存したものです。</p></section>
 </div>
-<section class="panel"><h2>モデルの内部：45個の係数</h2><p class="note">係数絶対値の大きい順に16項目表示。尺度が異なるため、数値の大小は特徴量の重要度を意味しません。</p><div id="weights">読み込み中…</div></section>
-<section class="panel"><h2>次世代の進化ルール</h2>
-<p>第1世代のモデルと評価記録を改変せず保存します。第2世代以降は新しい予測構造・変数・券種を試し、親と同じ期間・指標で比較したうえで、さらに新しい期間で再検証します。</p>
-<p class="note">GEN-001は既に学習済みのモデルを初代として採用したものです。自律的なモデル生成・進化ループはまだ稼働していません。</p>
-<div class="links"><a class="link" id="manifest" href="g001-manifest.json">世代仕様 JSON</a><a class="link" id="audit" href="g001-audit.json">監査全文 JSON</a><a class="link" id="source" href="https://github.com/yuhevita-wq/keirin-market-analysis-" target="_blank" rel="noopener">保存済みモデル ↗</a></div>
-</section>
-<footer>2026-10-19 / データは GitHub の凍結済み市場確率研究から。運用成績・利益保証ではありません。</footer>
+<section class="section"><h2>1レースずつの学習日記</h2><p>予想時点の買い目と、結果発表後の照合。最初の20レースを掲載。全件はJSONで保存しています。</p><div class="scroll"><table><thead><tr><th>順番</th><th>日付</th><th>開催</th><th>種別</th><th>マーク</th><th>結果</th><th>成否</th></tr></thead><tbody id="history"></tbody></table></div></section>
+<section class="section"><h2>保存と次の世代</h2><div class="row"><span>出生時の学習重み</span><b>すべて0</b></div><div class="row"><span>1週間後の学習重み</span><b id="checkpoint">—</b></div><div class="row"><span>次の段階</span><b>GEN-002ではなくGEN-001の次週</b></div><p>何世代も育てる前に、まずこの赤ちゃんに続きを学ばせます。世代更新は学習の積み重ねに基づいて区別します。</p><div class="links"><a class="btn" href="nursery-summary.json">1週間の全体成績</a><a class="btn" href="nursery-history.json">全レースのマーク履歴</a><a class="btn" href="nursery-checkpoint.json">学習した重み</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery">GitHub保存先 ↗</a></div></section>
+<footer>過去実験の価格はレース終了後の確定オッズです。締切前の価格と同じではないため、この練習成績を実購入可能な収益と見なせません。入力に足りないレースは欠損として記録。</footer>
 </main>
 <script>
-"use strict";
 const $=id=>document.getElementById(id);
-const n=(x,d=5)=>Number(x).toFixed(d);
-const make=(tag,cls,value)=>{const a=document.createElement(tag);if(cls)a.className=cls;if(value!==undefined)a.textContent=value;return a;};
-async function select(g){
-  $("id").textContent=g.id;$("races").textContent=Number(g.races).toLocaleString("ja-JP");
-  $("gain").textContent="+"+n(g.gain);$("lineage").textContent="親世代: "+(g.parent||"なし（第1世代）")+" → "+g.id;
-  $("period").textContent="学習 "+g.train+" ／ 検証 "+g.test;
-  $("baseLoss").textContent=n(g.market_logloss);$("aiLoss").textContent=n(g.model_logloss);
-  $("baseBrier").textContent=n(g.market_brier,6);$("aiBrier").textContent=n(g.model_brier,6);
-  $("baseNum").textContent=n(g.market_logloss);$("aiNum").textContent=n(g.model_logloss);
-  const max=Math.max(g.market_logloss,g.model_logloss);
-  $("baseBar").style.width=(100*g.market_logloss/max)+"%";$("aiBar").style.width=(100*g.model_logloss/max)+"%";
-  $("ci").textContent=g.ci95.map(x=>n(x)).join(" ～ ");
-  $("bets").textContent=g.bet_types.join(", ");$("plays").textContent=g.demo_bets+"件";
-  $("hits").textContent=g.demo_wins+"件";$("roi").textContent=n(g.demo_roi,2)+"%";
-  $("manifest").href=g.manifest_url;$("audit").href=g.audit_url;$("source").href=g.github_url;
-  $("generations").querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.id===g.id)));
-  const root=$("weights");root.replaceChildren();
-  try{
-    const response=await fetch(g.model_url,{cache:"no-store"});if(!response.ok)throw Error("HTTP "+response.status);
-    const model=await response.json();
-    const items=model.features.map((label,i)=>({label,value:model.coefficients[i]})).sort((a,b)=>Math.abs(b.value)-Math.abs(a.value));
-    const high=Math.max(...items.map(w=>Math.abs(w.value)));
-    for(const w of items.slice(0,16)){
-      const row=make("div","coef"),label=make("label","",w.label),track=make("div","track"),fill=make("div","fill"+(w.value<0?" neg":"")),value=make("output","",n(w.value,4));
-      fill.style.width=(100*Math.abs(w.value)/high)+"%";track.append(fill);row.append(label,track,value);root.append(row);
-    }
-    root.append(make("p","note",model.coefficients.length+"係数を凍結保存済み。"));
-  }catch(err){root.textContent="係数を読み込めませんでした: "+err.message;}
-}
+const node=(tag,text)=>{const e=document.createElement(tag);e.textContent=String(text??"");return e;};
 async function start(){
   try{
-    const response=await fetch("generations.json",{cache:"no-store"});if(!response.ok)throw Error("HTTP "+response.status);
-    const reg=await response.json(),target=$("generations");target.replaceChildren();
-    for(const g of reg.generations){
-      const btn=make("button","gen");btn.type="button";btn.dataset.id=g.id;
-      btn.append(make("strong","",g.id),make("span","",g.title));
-      btn.addEventListener("click",()=>select(g));target.append(btn);
+    const [s,h,c]=await Promise.all(["nursery-summary.json","nursery-history.json","nursery-checkpoint.json"].map(async p=>{
+      const x=await fetch(p,{cache:"no-store"});if(!x.ok)throw Error(p+" is not published yet");return x.json();
+    }));
+    $("races").textContent=s.races.toLocaleString("ja-JP");$("hits").textContent=s.hits;
+    $("days").textContent="7日";$("span").textContent=s.date_first+" 〜 "+s.date_last+" ｜ "+s.races+"レース";
+    $("firstLoss").textContent=Number(s.first_30_loss).toFixed(3);
+    $("lastLoss").textContent=Number(s.last_30_loss).toFixed(3);
+    $("checkpoint").textContent="保存済み（256次元）";
+    for(const day of s.daily){
+      const el=node("div","");el.className="day";
+      el.append(node("small",day.date.slice(5)),node("b",day.races),node("small","レース / 的中"+day.hits));
+      $("daily").append(el);
     }
-    await select(reg.generations.find(g=>g.id===reg.current_generation)||reg.generations[0]);
-  }catch(err){$("generations").textContent="世代データの読み込みに失敗: "+err.message;}
+    if(h.length){
+      const a=h[0];const wrap=$("sheet");wrap.replaceChildren();
+      const hdr=node("div","");hdr.className="markhead";hdr.append(node("span",a.date+" "+a.track+" "+a.race_no+"R"),node("span",a.race_type));
+      const combo=node("div",a.selection);combo.className="markline";
+      const final=node("div",a.type+" ／ "+a.yen+"円 ／ 1点");final.className="badge";
+      wrap.append(hdr,combo,final);
+    }
+    for(const a of h.slice(0,20)){
+      const tr=document.createElement("tr");
+      for(const value of [a.step,a.date.slice(5),a.track+" "+a.race_no+"R",a.type,a.selection,a.finish_order,a.hit?"○":"×"]){
+        tr.append(node("td",value));
+      }
+      $("history").append(tr);
+    }
+  }catch(err){$("span").textContent="学習データ未公開："+err.message; $("sheet").textContent="学習実行・保存後に自動で表示されます。";}
 }
 start();
 </script></body></html>
