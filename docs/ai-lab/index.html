@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ja"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#101a25"><title>競輪AI育成室 — GEN-001 → GEN-002 → GEN-003 → GEN-004 → GEN-005</title>
+<meta name="theme-color" content="#101a25"><title>競輪AI育成室 — GEN-001 → GEN-002 → GEN-003 → GEN-004 → GEN-005 → GEN-006</title>
 <style>
 :root{color-scheme:dark;--bg:#0c1520;--panel:#172534;--panel2:#1d2e40;--line:#334659;--light:#edf5fb;--soft:#a7becd;--mint:#67e3b6;--yellow:#efcc7b}
 *{box-sizing:border-box}body{margin:0;color:var(--light);background:radial-gradient(circle at 80% -10%,#2c443d,transparent 42%),var(--bg);font:15px/1.65 system-ui,-apple-system,"Noto Sans JP",sans-serif}
@@ -26,9 +26,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;colo
 footer{border-top:1px solid var(--line);color:var(--soft);font-size:12px;margin-top:22px;padding-top:17px}
 @media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.split{grid-template-columns:1fr}.days{grid-template-columns:repeat(4,1fr)}.section{padding:16px}}
 </style></head><body><main>
-<div class="top"><div><div class="eyebrow">BABY AI · GENERATION 001</div><h1>🐣 競輪AI育成室</h1><p>先入観ゼロ。出走表とオッズを見る → マークシートに書く → 結果を見る → 学習する。</p></div><span class="pill">第5世代 ／ 1万円を失ったらストレス</span></div>
+<div class="top"><div><div class="eyebrow">BABY AI · GENERATION 001</div><h1>🐣 競輪AI育成室</h1><p>先入観ゼロ。出走表とオッズを見る → マークシートに書く → 結果を見る → 学習する。</p></div><span class="pill">第6世代 ／ 自律的な行動学習を28日間</span></div>
 <div class="grid">
-<div class="card"><small>現在の世代</small><strong>GEN-005</strong><span>GEN-004のご褒美と財布を継承</span></div>
+<div class="card"><small>現在の世代</small><strong>GEN-006</strong><span>GEN-005の予想・ご褒美・財布を継承</span></div>
 <div class="card"><small>親GEN-001の経験</small><strong id="races">—</strong><span>欠損を推測せず除外</span></div>
 <div class="card"><small>親GEN-001の的中</small><strong class="mint" id="hits">—</strong><span>全券種合計</span></div>
 <div class="card"><small>親GEN-001の学習期間</small><strong id="days">—</strong><span>予想後に1レースずつ学習</span></div>
@@ -149,6 +149,29 @@ footer{border-top:1px solid var(--line);color:var(--soft);font-size:12px;margin-
 <div><b>成長の評価</b><div id="growthVerdicts"></div></div>
 <p class="warning">過去の確定オッズを利用した紙上試験です。GEN-001〜005には学習済みの見送り・終了規則がありません。回収率の差がそのまま進化を証明するわけではありません。単純的中率だけで世代を比較しません。</p>
 <div class="links"><a class="btn" href="nursery-growth-audit.json">共通試験・全数値</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery/growth_audit">全世代の1Rごとの試験履歴</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/blob/main/research/ai_nursery/GROWTH_AUDIT_PROTOCOL.md">新しい学習の規約</a></div>
+</section>
+<section class="section">
+<h2>🧠 GEN-006：自分で行動を変える28日間</h2>
+<p>2023年2月5日〜3月4日。GEN-005を引き継ぎ、参加・見送りと、用紙を続けるか終了するかを学習します。予想・用紙を記録した後に結果を教え、行動方針の重みを更新します。</p>
+<div class="grid">
+<div class="card"><small>経験したレース</small><strong id="g6Races">学習開始待ち</strong><span>28暦日分を処理</span></div>
+<div class="card"><small>参加／見送り</small><strong id="g6Enter">—</strong><span>固定ではなく自分で学習</span></div>
+<div class="card"><small>行動方針の学習更新</small><strong id="g6Updates">—</strong><span>用紙続行・終了を含む</span></div>
+<div class="card"><small>参考車券収支</small><strong id="g6Profit">—</strong><span>財布への入金を除いた紙上値</span></div>
+</div>
+<div class="row"><span>継承した財布</span><b>2,170円</b></div>
+<div class="row"><span>前世代までのご褒美累計</span><b>111,120円</b></div>
+<div class="row"><span>購入点数</span><b id="g6Marks">—</b></div>
+<div class="row"><span>新たなご褒美</span><b id="g6Reward">—</b></div>
+<div class="row"><span>ストレス・資金補充回数</span><b id="g6Stress">—</b></div>
+<div class="row"><span>最終財布</span><b id="g6Wallet">—</b></div>
+<div class="row"><span>同じ未学習レースでの成長試験</span><b id="g6Exam">訓練終了後に自動起動</b></div>
+<p class="warning">この28日間は訓練用であり成長試験ではありません。GEN-005との優劣は2023年6月の同一未学習レースで判定します。レース予想方法や買い目の型は教えていません。</p>
+<div class="links">
+<a class="btn" href="nursery-gen006-summary.json">GEN-006の学習成果</a>
+<a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery/outputs/GEN-006">記入用紙・行動履歴・学習済み重み</a>
+<a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/actions/workflows/baby-ai-gen006-month.yml">学習実行状況</a>
+</div>
 </section>
 <section class="section"><h2>保存と次の世代</h2><div class="row"><span>出生時の学習重み</span><b>すべて0</b></div><div class="row"><span>1週間後の学習重み</span><b id="checkpoint">—</b></div><div class="row"><span>次の段階</span><b>GEN-003が資金管理を学習中</b></div><p>新しい能力を得た時点でGEN-001からGEN-002へ世代交代。GEN-002は親の学習重みを継承しています。</p><div class="links"><a class="btn" href="nursery-summary.json">1週間の全体成績</a><a class="btn" href="nursery-history.json">全レースのマーク履歴</a><a class="btn" href="nursery-checkpoint.json">学習した重み</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery">GitHub保存先 ↗</a></div></section>
 <footer>過去実験の価格はレース終了後の確定オッズです。締切前の価格と同じではないため、この練習成績を実購入可能な収益と見なせません。入力に足りないレースは欠損として記録。</footer>
@@ -356,5 +379,31 @@ start();
     el("growthVerdicts").append(p);
  }
  }catch(err){el("growthFrozen").textContent="公開待ち："+err.message;}
+})();
+</script><script>
+(async()=>{
+ const $=id=>document.getElementById(id);
+ const fmt=n=>Number(n).toLocaleString("ja-JP");
+ const yen=n=>fmt(n)+"円";
+ try{
+  const r=await fetch("nursery-gen006-summary.json",{cache:"no-store"});
+  if(!r.ok)throw Error("未完了");
+  const x=await r.json();
+  $("g6Races").textContent=fmt(x.races);
+  $("g6Enter").textContent=fmt(x.races_entered)+"／"+fmt(x.races_skipped);
+  $("g6Updates").textContent=fmt(x.action_count_enter+x.action_count_continue);
+  $("g6Profit").textContent=yen(x.net_proxy_yen);
+  $("g6Marks").textContent=fmt(x.marks)+"点";
+  $("g6Reward").textContent=yen(x.new_reward_yen);
+  $("g6Stress").textContent=fmt(x.stress_events)+"回";
+  $("g6Wallet").textContent=yen(x.ending_wallet_yen);
+  try{
+    const v=await fetch("nursery-growth-audit.json",{cache:"no-store"});
+    if(v.ok){
+      const report=await v.json();
+      $("g6Exam").textContent=report.metrics.some(m=>m.generation==="GEN-006")?"試験済み・成長試験欄へ":"訓練終了／試験を実行中";
+    }
+  }catch(e){}
+ }catch(e){$("g6Races").textContent="学習中・保存待ち";}
 })();
 </script></body></html>

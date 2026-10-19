@@ -1,0 +1,50 @@
+name: Baby AI GEN-006 one-month self-learning
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/ai_nursery/train_month6.py'
+      - 'research/ai_nursery/test_month6.py'
+      - '.github/workflows/baby-ai-gen006-month.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: baby-ai-gen006-month
+  cancel-in-progress: false
+jobs:
+  learn-month:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numeric library
+        run: python -m pip install 'numpy>=1.26'
+      - name: Run GEN-006 sequential 28-day paper learning
+        run: |
+          if [ -f research/ai_nursery/outputs/GEN-006/summary.json ]; then
+            echo "Frozen GEN-006 exists. Will verify and not retrain."
+          else
+            OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python research/ai_nursery/train_month6.py
+          fi
+      - name: Audit entire month and both learned action policies
+        run: |
+          OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python research/ai_nursery/test_month6.py
+      - name: Commit frozen checkpoint, pre-result forms, per-race actions and result history
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ai_nursery/outputs/GEN-006/ docs/ai-lab/nursery-gen006-*.json docs/ai-lab/generations.json
+          if git diff --cached --quiet; then
+            echo "No fresh training data to commit"
+            exit 0
+          fi
+          git commit -m "data: freeze GEN-006 28-day sequential learning with trained actions"
+          git pull --rebase origin main
+          git push origin HEAD:main
+          echo "Follow-on shared June growth audit is triggered by committed checkpoint"
