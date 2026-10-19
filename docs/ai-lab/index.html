@@ -144,6 +144,7 @@ footer{border-top:1px solid var(--line);color:var(--soft);font-size:12px;margin-
 <div class="card"><small>新しい行動学習</small><strong>GEN-006以降</strong><span>参加／見送り・用紙続行／終了</span></div>
 <div class="card"><small>先見性・学習漏洩</small><strong id="growthFrozen">—</strong><span>試験データで再学習しない</span></div>
 </div>
+<div class="row"><span>期間内の出走表</span><b id="growthRaw">—</b></div><div class="row"><span>完全オッズ欠損による除外</span><b id="growthMissing">—</b></div><div class="row"><span>確定オッズの市場基準：3連単／3連複の予測損失</span><b id="growthMarket">—</b></div>
 <div class="scroll"><table><thead><tr><th>世代</th><th>3連単の予測損失↓</th><th>3連複の予測損失↓</th><th>平均点数/R</th><th>純損益（紙上）</th><th>ROI</th><th>行動を学習？</th></tr></thead><tbody id="growthTable"></tbody></table></div>
 <div><b>成長の評価</b><div id="growthVerdicts"></div></div>
 <p class="warning">過去の確定オッズを利用した紙上試験です。GEN-001〜005には学習済みの見送り・終了規則がありません。回収率の差がそのまま進化を証明するわけではありません。単純的中率だけで世代を比較しません。</p>
@@ -331,6 +332,9 @@ start();
  const x=await r.json();
  el("growthN").textContent=x.race_count.toLocaleString("ja-JP");
  el("growthGens").textContent=x.generation_count;
+ el("growthRaw").textContent=x.raw_racecards.toLocaleString("ja-JP")+"レース";
+ el("growthMissing").textContent=(x.excluded.missing_complete_odds??0).toLocaleString("ja-JP")+"レース";
+ if(x.metrics.length)el("growthMarket").textContent=Number(x.metrics[0].market_logloss_tan).toFixed(3)+" ／ "+Number(x.metrics[0].market_logloss_fuku).toFixed(3);
  el("growthFrozen").textContent=x.no_training_or_policy_tuning_on_holdout?"凍結して試験":"要確認";
  for(const g of x.metrics){
    const tr=document.createElement("tr");
