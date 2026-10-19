@@ -87,7 +87,7 @@ def choice_history(arms,p,row,gen,rng,bank_yen,learned):
     if gen=="GEN-001":
         k=int(rng.choice(len(arms),p=p))
         a=arms[k]
-        return [{"type":a["market"],"picks":[a["selection"]]}]
+        return [{"type":a["market"],"picks":[a["selection"]],"sheet_number":1}]
     if gen in ("GEN-002","GEN-003","GEN-004","GEN-005"):
         return make_sheets(arms,p,row["odds"],row["entries"],rng)
     if learned is not None:
