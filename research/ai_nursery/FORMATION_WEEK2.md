@@ -1,0 +1,23 @@
+# 🐣 GEN-001 Week 2 — formation marks, unlimited sheets
+
+Continue previous checkpoint: 2023-01-08 through 2023-01-14. No training reset or inherited older market models.
+
+## What the baby gets
+
+A formation sheet permits any number of marks in each of three columns. For a 3連単 formation the columns designate 1st, 2nd, 3rd position. Every ordered triplet with distinct racers is a mark. For 3連複 the triplets are unordered and counted once per sheet. Each expanded mark has the same 100-yen paper denomination as the first week. It may fill as many sheets for a race as it wants. No fixed point count and no predetermined structure.
+
+## What the simulation actually does
+
+Each formation begins from a candidate sampled from the continuing learned probability scores. Optional additional marks in each column are sampled using the model's current marginals. After a sheet, an initially neutral, random 50/50 stop/continue decision is made. This is a mechanical starting policy (not something GEN-001 discovered or learned), and there is NO maximum sheet count or fixed point cap. Physical combinations are finite. Overlapping marks across multiple sheets count as multiple 100-yen exposures.
+
+Racecard and full recorded odds are shown before sealing every entire bundle of sheets. Only then is the actual historical result revealed and the same 256-dimensional online model updated. The weight checksum is chained race-by-race to the 2023-01-07 previous checkpoint.
+
+## Artifacts
+
+- outputs/GEN-001/week2/formation_mark_sheets.jsonl: full paper bundles, sealed before outcome.
+- outputs/GEN-001/week2/learning_history.jsonl: true result, hit/miss, stakes, model updates.
+- outputs/GEN-001/week2/checkpoint.json: final learned weights, parent checksum.
+- outputs/GEN-001/week2/summary.json: full summary, missing data, sheet and mark counts.
+- docs/ai-lab/nursery-week2-*.json: interactive dashboard data.
+
+Actual live returns are NOT established. Only archived final odds and retrospective racecards are available, with just 3連単 and 3連複 on the joined public dataset. The payout used is odds * 100 per purchased mark, not a verified official paid ticket. This is educational historical sequential training, not future prediction evidence.
