@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0a1121">
+<title>KEIRIN AI EVOLUTION LAB — 競輪AI進化研究所</title>
+<style>
+:root{color-scheme:dark;--bg:#0a1121;--card:#121d32;--line:#2e4060;--text:#ecf3ff;--muted:#9bb1ce;--mint:#54e5c9;--blue:#72a7ff;--gold:#ffcc76}*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 80% -15%,#263a65,transparent 48%),var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,sans-serif}
+main{max-width:1050px;margin:auto;padding:30px 20px 80px}
+header{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:22px;display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.eyebrow{font:600 11px monospace;letter-spacing:.18em;color:var(--mint)}h1{font-size:clamp(27px,5vw,46px);line-height:1.2;letter-spacing:-.03em;margin:9px 0}h2{font-size:19px;margin:0 0 16px}p{color:var(--muted);margin:7px 0}
+.status{font-size:12px;padding:6px 12px;border:1px solid #72582d;background:#5841183a;border-radius:99px;color:var(--gold)}
+.summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tile,.panel{border:1px solid var(--line);background:linear-gradient(145deg,#182843,var(--card));border-radius:17px}
+.tile{padding:16px}.tile small{font-size:12px;color:var(--muted)}.tile strong{display:block;font-size:clamp(20px,3vw,31px);font-weight:750;font-variant-numeric:tabular-nums;margin:6px 0}.tile .foot{font-size:11px;color:var(--muted)}
+.accent{color:var(--mint)}.panel{padding:22px;margin-top:16px}
+.columns{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.gens{display:flex;gap:11px;flex-wrap:wrap;margin-top:15px}
+.gen{background:#203452;border:1px solid var(--line);border-radius:13px;text-align:left;padding:15px 19px;color:var(--text);cursor:pointer;min-width:175px}
+.gen[aria-pressed=true]{border-color:var(--mint);box-shadow:0 0 0 1px #54e5c944}.gen strong{display:block;font-size:19px}.gen span{font-size:12px;color:var(--muted)}
+.keyrow{display:flex;gap:10px;justify-content:space-between;border-bottom:1px solid #30405a;padding:9px 0;font-size:13px}.keyrow:last-child{border:0}.keyrow span{color:var(--muted)}.keyrow b{font-variant-numeric:tabular-nums}
+.bar{display:grid;grid-template-columns:68px 1fr 72px;gap:8px;align-items:center;margin:12px 0;font-size:12px}.bar label{color:var(--muted)}
+.track{height:13px;background:#253955;border-radius:6px;overflow:hidden}.fill{background:var(--blue);height:100%;border-radius:6px}.fill.genfill{background:var(--mint)}
+.bar output{font-variant-numeric:tabular-nums;text-align:right}
+.note{font-size:12px;color:var(--muted)}.warning{color:#f8dca7;background:#5a3f162e;border-left:3px solid var(--gold);padding:12px;font-size:12px;border-radius:3px}
+.coef{display:grid;grid-template-columns:minmax(120px,1fr) 2fr 68px;gap:8px;align-items:center;margin:8px 0;font-size:11px}
+.coef label{color:var(--muted);overflow-wrap:anywhere}.coef .track{height:9px}.coef .fill{background:var(--blue)}.coef .fill.neg{background:#ef947e}.coef output{text-align:right;font-variant-numeric:tabular-nums}
+.links{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}a.link{display:inline-block;background:#233754;border:1px solid var(--line);border-radius:9px;padding:8px 13px;color:var(--text);font-size:13px;text-decoration:none}a.link:hover{border-color:var(--mint)}
+footer{border-top:1px solid var(--line);padding-top:19px;margin-top:26px;color:var(--muted);font-size:12px}
+@media(max-width:780px){.summary{grid-template-columns:repeat(2,1fr)}.columns{grid-template-columns:1fr}.panel{padding:17px}}
+</style></head>
+<body><main>
+<header><div><div class="eyebrow">KEIRIN / ARTIFICIAL EVOLUTION</div><h1>競輪AI進化研究所</h1><p>学習済みのAIを世代として保存。次世代の性能を同じ基準で比べる。</p></div><span class="status">研究専用 / 自動購入なし</span></header>
+<div class="summary">
+<div class="tile"><small>現行世代</small><strong id="id">GEN-001</strong><div class="foot">最初の凍結モデル</div></div>
+<div class="tile"><small>過去検証レース</small><strong id="races">—</strong><div class="foot">時系列で後の期間</div></div>
+<div class="tile"><small>Log Loss 改善</small><strong id="gain" class="accent">—</strong><div class="foot">対・オッズ市場</div></div>
+<div class="tile"><small>本番の収益性</small><strong>未証明</strong><div class="foot">T-15独立検証 0件</div></div>
+</div>
+<section class="panel"><h2>🧬 世代の系譜</h2><p class="note">新世代が追加されるとここに並びます。クリックで世代別の凍結結果を切り替えられます。</p><div class="gens" id="generations">読み込み中…</div><p class="note" id="lineage"></p></section>
+<div class="columns">
+<section class="panel"><h2>予測精度</h2><p class="note" id="period"></p>
+<div class="keyrow"><span>市場 Log Loss</span><b id="baseLoss">—</b></div><div class="keyrow"><span>AI Log Loss</span><b id="aiLoss" class="accent">—</b></div>
+<div class="bar"><label>市場</label><div class="track"><div id="baseBar" class="fill"></div></div><output id="baseNum">—</output></div>
+<div class="bar"><label>GEN</label><div class="track"><div id="aiBar" class="fill genfill"></div></div><output id="aiNum">—</output></div>
+<p class="note">Log Lossは小さいほど優秀。棒は両者のスコア比を表示。</p>
+<div class="keyrow"><span>市場 Brier</span><b id="baseBrier">—</b></div><div class="keyrow"><span>AI Brier</span><b id="aiBrier">—</b></div><div class="keyrow"><span>Log Loss改善幅 95%近似区間</span><b id="ci">—</b></div>
+</section>
+<section class="panel"><h2>収支・研究段階</h2>
+<div class="keyrow"><span>対象券種</span><b id="bets">—</b></div>
+<div class="keyrow"><span>仮想的な購入回数</span><b id="plays">—</b></div>
+<div class="keyrow"><span>的中数</span><b id="hits">—</b></div>
+<div class="keyrow"><span>確定オッズでの仮想回収率</span><b id="roi">—</b></div>
+<p class="warning">確定オッズは発売締切後に確定します。これは実際に買える価格で検証した回収率ではありません。現段階で勝てるとは判断できません。</p>
+<p class="note">過去の仮想収支は、各レースで最大推定EVの3連単1点を選び、EVが1.10以上のレースのみを対象とした既存研究の参考値です。</p></section>
+</div>
+<section class="panel"><h2>モデルの内部：45個の係数</h2><p class="note">係数絶対値の大きい順に16項目表示。尺度が異なるため、数値の大小は特徴量の重要度を意味しません。</p><div id="weights">読み込み中…</div></section>
+<section class="panel"><h2>次世代の進化ルール</h2>
+<p>第1世代のモデルと評価記録を改変せず保存します。第2世代以降は新しい予測構造・変数・券種を試し、親と同じ期間・指標で比較したうえで、さらに新しい期間で再検証します。</p>
+<p class="note">GEN-001は既に学習済みのモデルを初代として採用したものです。自律的なモデル生成・進化ループはまだ稼働していません。</p>
+<div class="links"><a class="link" id="manifest" href="g001-manifest.json">世代仕様 JSON</a><a class="link" id="audit" href="g001-audit.json">監査全文 JSON</a><a class="link" id="source" href="https://github.com/yuhevita-wq/keirin-market-analysis-" target="_blank" rel="noopener">保存済みモデル ↗</a></div>
+</section>
+<footer>2026-10-19 / データは GitHub の凍結済み市場確率研究から。運用成績・利益保証ではありません。</footer>
+</main>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const n=(x,d=5)=>Number(x).toFixed(d);
+const make=(tag,cls,value)=>{const a=document.createElement(tag);if(cls)a.className=cls;if(value!==undefined)a.textContent=value;return a;};
+async function select(g){
+  $("id").textContent=g.id;$("races").textContent=Number(g.races).toLocaleString("ja-JP");
+  $("gain").textContent="+"+n(g.gain);$("lineage").textContent="親世代: "+(g.parent||"なし（第1世代）")+" → "+g.id;
+  $("period").textContent="学習 "+g.train+" ／ 検証 "+g.test;
+  $("baseLoss").textContent=n(g.market_logloss);$("aiLoss").textContent=n(g.model_logloss);
+  $("baseBrier").textContent=n(g.market_brier,6);$("aiBrier").textContent=n(g.model_brier,6);
+  $("baseNum").textContent=n(g.market_logloss);$("aiNum").textContent=n(g.model_logloss);
+  const max=Math.max(g.market_logloss,g.model_logloss);
+  $("baseBar").style.width=(100*g.market_logloss/max)+"%";$("aiBar").style.width=(100*g.model_logloss/max)+"%";
+  $("ci").textContent=g.ci95.map(x=>n(x)).join(" ～ ");
+  $("bets").textContent=g.bet_types.join(", ");$("plays").textContent=g.demo_bets+"件";
+  $("hits").textContent=g.demo_wins+"件";$("roi").textContent=n(g.demo_roi,2)+"%";
+  $("manifest").href=g.manifest_url;$("audit").href=g.audit_url;$("source").href=g.github_url;
+  $("generations").querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.id===g.id)));
+  const root=$("weights");root.replaceChildren();
+  try{
+    const response=await fetch(g.model_url,{cache:"no-store"});if(!response.ok)throw Error("HTTP "+response.status);
+    const model=await response.json();
+    const items=model.features.map((label,i)=>({label,value:model.coefficients[i]})).sort((a,b)=>Math.abs(b.value)-Math.abs(a.value));
+    const high=Math.max(...items.map(w=>Math.abs(w.value)));
+    for(const w of items.slice(0,16)){
+      const row=make("div","coef"),label=make("label","",w.label),track=make("div","track"),fill=make("div","fill"+(w.value<0?" neg":"")),value=make("output","",n(w.value,4));
+      fill.style.width=(100*Math.abs(w.value)/high)+"%";track.append(fill);row.append(label,track,value);root.append(row);
+    }
+    root.append(make("p","note",model.coefficients.length+"係数を凍結保存済み。"));
+  }catch(err){root.textContent="係数を読み込めませんでした: "+err.message;}
+}
+async function start(){
+  try{
+    const response=await fetch("generations.json",{cache:"no-store"});if(!response.ok)throw Error("HTTP "+response.status);
+    const reg=await response.json(),target=$("generations");target.replaceChildren();
+    for(const g of reg.generations){
+      const btn=make("button","gen");btn.type="button";btn.dataset.id=g.id;
+      btn.append(make("strong","",g.id),make("span","",g.title));
+      btn.addEventListener("click",()=>select(g));target.append(btn);
+    }
+    await select(reg.generations.find(g=>g.id===reg.current_generation)||reg.generations[0]);
+  }catch(err){$("generations").textContent="世代データの読み込みに失敗: "+err.message;}
+}
+start();
+</script></body></html>

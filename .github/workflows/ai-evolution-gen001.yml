@@ -1,0 +1,23 @@
+name: AI Evolution GEN-001 quality gate
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/ai_evolution/**'
+      - 'docs/ai-lab/**'
+      - '.github/workflows/ai-evolution-gen001.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'numpy>=1.26' 'scipy>=1.13'
+      - run: python research/market_probability_v1/t15_decision.py --self-test
+      - run: python research/ai_evolution/test_generation.py

@@ -1,0 +1,53 @@
+{
+  "id": "GEN-001",
+  "created_jst": "2026-10-19",
+  "parent": null,
+  "status": "ARCHIVAL_RESEARCH_PAPER_ONLY",
+  "origin": "EXISTING_CHECKPOINT_ADOPTED_AS_FIRST_GENERATION_NOT_NEW_TRAINING",
+  "model_type": "Race-normalized market-anchored 3連単 probability calibration",
+  "scope": "S級・5〜7車・完全な3連単確定オッズ",
+  "bet_types": [
+    "3連単"
+  ],
+  "train_through": "2025-12-31",
+  "training_period": "2023-2025",
+  "evaluation_period": "2026-01 to 2026-06",
+  "feature_count": 45,
+  "source_code": "research/market_probability_v1/train.py",
+  "parent_model_blob": "4087ddae77bcf575d1fc81f86edfaa1dab01e551",
+  "parent_audit_blob": "f2aac3ed52cdf1b1d113138e124a23e235dc9973",
+  "source_audit_key": "2026_h1_out_of_time_not_untouched",
+  "metrics": {
+    "races": 2523,
+    "market": {
+      "logloss": 4.190309524536133,
+      "brier": 0.9640495181083679,
+      "top1_pct": 10.46373365041617
+    },
+    "corrected": {
+      "logloss": 4.178952217102051,
+      "brier": 0.9634259343147278,
+      "top1_pct": 10.344827586206897
+    },
+    "logloss_gain": 0.011357299983501434,
+    "approx_ci95": [
+      0.00631185295060277,
+      0.016402747482061386
+    ],
+    "archival_max_ev_1_10": {
+      "single_ticket_per_race": true,
+      "races_bet": 378,
+      "wins": 3,
+      "roi_percent": 92.40740417803406
+    }
+  },
+  "t15_validated_races": 0,
+  "purchases_enabled": false,
+  "limitations": [
+    "Existing trained checkpoint adopted, not retrained or invented by an AI agent in this release.",
+    "2026H1 is after training but has been inspected in past research; not an untouched blind holdout.",
+    "All performance statistics use final odds only. Final odds are not available before the betting deadline.",
+    "No certified full T-15 independent tests or live profitability; 3連単 only.",
+    "PAPER ONLY: no automated buying and no actual stakes."
+  ]
+}
