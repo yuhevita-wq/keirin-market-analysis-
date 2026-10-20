@@ -274,6 +274,8 @@ footer{border-top:1px solid var(--line);color:var(--soft);font-size:12px;margin-
 <div class="links"><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/blob/main/research/ai_nursery/outputs/GEN-008-PARALLEL/week-01/summary.json">1週間の完全比較成績</a>
 <a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/actions/workflows/baby-ai-gen008-one-week.yml">学習の実行状況</a>
 <a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/blob/main/research/ai_nursery/GEN-008.md">学習方法と継承規約</a></div>
+<div class="row"><span>第2週（8月8〜14日）の進捗</span><b id="week8stage2">学習実行待ち</b></div>
+<div class="row"><span>第2週の旧版／新版の純収支</span><b id="week8stage2Net">—</b></div>
 </section>
 <section class="section"><h2>保存と次の世代</h2><div class="row"><span>出生時の学習重み</span><b>すべて0</b></div><div class="row"><span>1週間後の学習重み</span><b id="checkpoint">—</b></div><div class="row"><span>次の段階</span><b>GEN-003が資金管理を学習中</b></div><p>新しい能力を得た時点でGEN-001からGEN-002へ世代交代。GEN-002は親の学習重みを継承しています。</p><div class="links"><a class="btn" href="nursery-summary.json">1週間の全体成績</a><a class="btn" href="nursery-history.json">全レースのマーク履歴</a><a class="btn" href="nursery-checkpoint.json">学習した重み</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery">GitHub保存先 ↗</a></div></section>
 <footer>過去実験の価格はレース終了後の確定オッズです。締切前の価格と同じではないため、この練習成績を実購入可能な収益と見なせません。入力に足りないレースは欠損として記録。</footer>
@@ -609,5 +611,17 @@ $("week8old").textContent=num(v.old.pure_net_yen??v.old.actual_net_yen)+"円";
 $("week8new").textContent=num(v.new.pure_net_yen??v.new.actual_net_yen)+"円";
 $("week8miss").textContent=num(v.new.shadow_profitable_skipped_races??v.new.profitable_skipped_shadows)+"R";
 }catch(e){$("week8races").textContent="学習処理待ち";}
+})();
+</script><script>
+(async()=>{
+const $=id=>document.getElementById(id);
+try{
+const url="https://raw.githubusercontent.com/yuhevita-wq/keirin-market-analysis-/main/research/ai_nursery/outputs/GEN-008-PARALLEL/week-02/summary.json";
+const r=await fetch(url,{cache:"no-store"});
+if(!r.ok)throw Error("未保存");
+const a=await r.json();
+$("week8stage2").textContent=Number(a.races).toLocaleString("ja-JP")+"R完了";
+$("week8stage2Net").textContent="旧："+Number(a.comparison.old.actual_net_yen).toLocaleString("ja-JP")+"円／新："+Number(a.comparison.new.actual_net_yen).toLocaleString("ja-JP")+"円";
+}catch(e){$("week8stage2").textContent="学習・監査中";}
 })();
 </script></body></html>

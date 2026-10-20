@@ -11,7 +11,7 @@ on:
       week:
         description: 'Sequential week number 1 to 9; weeks 2+ inherit the prior checkpoint'
         required: true
-        default: '1'
+        default: '2'
         type: string
 permissions:
   contents: write
@@ -26,7 +26,7 @@ jobs:
       PYTHONUNBUFFERED: '1'
       OPENBLAS_NUM_THREADS: '1'
       OMP_NUM_THREADS: '1'
-      WEEK_NUMBER: ${{ github.event.inputs.week || '1' }}
+      WEEK_NUMBER: ${{ github.event.inputs.week || '2' }}
     steps:
       - uses: actions/checkout@v4
         with:
