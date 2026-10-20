@@ -1,0 +1,65 @@
+name: GEN-008 V3 | recover full November odds and extend frozen comparison
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/ai_nursery/recover_gen008_v3_nov_odds.py'
+      - 'research/ai_nursery/run_gen008_v3_expanded.py'
+      - '.github/workflows/baby-ai-gen008-v3-extend-nov.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: baby-ai-gen008-v3-november-expanded-original-prices
+  cancel-in-progress: false
+jobs:
+  recover-and-evaluate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install source parser and numerical research
+        run: python -m pip install -e '.[scrape]' 'numpy>=1.26'
+      - name: Verify original V3 source and 308-race immutable test
+        run: |
+          python -m py_compile research/ai_nursery/recover_gen008_v3_nov_odds.py research/ai_nursery/run_gen008_v3_expanded.py
+          python research/ai_nursery/test_gen008_v3.py
+          python research/ai_nursery/verify_gen008_v3.py
+      - name: Restore original complete November historical prices
+        run: |
+          if [ -f data/holdout_odds_recovery/gen008-v3-2023-11-01-to-14/coverage.json ]; then
+            echo 'Reuse previously authenticated immutable odds records'
+          else
+            python research/ai_nursery/recover_gen008_v3_nov_odds.py
+          fi
+      - name: Evaluate unmodified V3 alpha alongside original old and new
+        run: |
+          if [ -f research/ai_nursery/outputs/GEN-008-V3/november-2023-expanded-original-odds/summary.json ]; then
+            python -c "import sys;sys.path.insert(0,'research/ai_nursery');from run_gen008_v3_expanded import audit;audit()"
+          else
+            python research/ai_nursery/run_gen008_v3_expanded.py
+          fi
+      - name: Publish exact original odds evidence and extended sealed results
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/holdout_odds_recovery/gen008-v3-2023-11-01-to-14/
+          git add research/ai_nursery/outputs/GEN-008-V3/november-2023-expanded-original-odds/
+          git add docs/ai-lab/gen008-v3-november-expanded.json
+          if git diff --cached --quiet; then echo 'No new archive'; exit 0; fi
+          git commit -m 'data: persist recovered November markets and unmodified GEN-008 V3 exam'
+          for i in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
