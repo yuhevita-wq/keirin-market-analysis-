@@ -84,3 +84,27 @@ assert np.isclose(goal2["trifecta"],0.13)
 assert not lab.hypothesis_eligible(result,goal)  # only 2 races
 assert lab.rank_candidate({"winner_top1":.44,"trifecta_top1":.3}) > lab.rank_candidate({"winner_top1":.43,"trifecta_top1":.9})
 print("CHAPTER1_ACCURACY_AI_TESTS_PASSED")
+
+
+# Derived race-relative statistics must be unchanged when ONLY outcomes vary.
+def mock_race(order):
+    names=["1","2","3","4"]
+    cards={n:np.asarray([int(n),29+int(n),97,2.9,91+2*int(n),2,1,2,
+            0,1,0,3,4,2,0,15,40,65],dtype=np.float32)
+           for n in names}
+    positions={"1":(0,1,2),"2":(0,2,2),"3":(1,1,2),"4":(1,2,2)}
+    return {"cars":cards,"positions":positions,"order":order}
+t1={"x":mock_race(("1","2","3"))}
+t2={"x":mock_race(("4","3","2"))}
+x1=lab.race_relative_features(t1)
+x2=lab.race_relative_features(t2)
+assert x1.shape==(4,lab.REL_EXTRA_DIMENSIONS)
+assert np.allclose(x1,x2)
+assert np.isfinite(x1).all()
+raw=np.zeros((4,22),dtype=np.float32)
+cfg={"mask":"all","engineering":"relative_v1"}
+aug=lab.candidate_inputs(raw,x1,cfg)
+assert aug.shape==(4,22+lab.REL_EXTRA_DIMENSIONS)
+assert len(lab.selected_columns(cfg))==22+lab.REL_EXTRA_DIMENSIONS
+assert lab.candidate_inputs(raw,x1,{"mask":"all","engineering":"raw"}).shape==(4,22)
+print("ACCURACY_RACE_RELATIVE_FEATURES_TESTS_PASSED")
