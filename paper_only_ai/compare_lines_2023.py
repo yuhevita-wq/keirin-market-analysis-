@@ -231,7 +231,7 @@ def normalise(raw,group_ids):
 def infer_chunk(chunk,models):
     # All four model variants are evaluated on precisely the same hypothetical
     # first/second outcomes; actual finish order does not enter feature generation.
-    template={}
+    probs={}
     for branch in BRANCHES:
         stage_vectors={1:[],2:[],3:[]}
         group_ids={1:[],2:[],3:[]}
@@ -254,8 +254,6 @@ def infer_chunk(chunk,models):
                         keys[3].append((rid,a,b,c))
                         stage_vectors[3].append(feature(race,c,a,b,use_line=branch=='with_line'))
                         group_ids[3].append((rid,a,b))
-        group_int={}
-        probs={}
         for kind in ALGORITHMS:
             p_by_stage={}
             for stage in (1,2,3):
@@ -302,6 +300,26 @@ def aggregates(rows):
     return {k:float(np.mean([row[k] for row in rows]))
             for k in ('nll','top1','top3','brier','p_true')}|{'races':len(rows)}
 
+def restore_or_fit(training):
+    prefitted=os.environ.get('PRETRAINED_AB_DIR','')
+    if not prefitted:
+        return fit_all(training)
+    root=Path(prefitted)
+    models={}
+    for kind in ALGORITHMS:
+        for branch in BRANCHES:
+            for stage in (1,2,3):
+                choices=[
+                    root/'models'/kind/branch/f'stage_{stage}.joblib',
+                    root/'docs/paper-only-ai-2023/line_ab_2023/models'/kind/branch/f'stage_{stage}.joblib'
+                ]
+                path=next((p for p in choices if p.is_file()),None)
+                if path is None:
+                    raise RuntimeError('Expected prefitted model absent from artifact: '+kind+' '+branch+' '+str(stage))
+                models[(kind,branch,stage)]=joblib.load(path)
+                print('RESTORED',kind,branch,stage,str(path),flush=True)
+    return models
+
 def main():
     OUT.mkdir(parents=True,exist_ok=True)
     started=datetime.now(timezone.utc).isoformat()
@@ -310,7 +328,7 @@ def main():
     tr,te,audit=load()
     (OUT/'progress.json').write_text(json.dumps({'state':'RUNNING','phase':'training',
           'training_races':len(tr),'holdout_races':len(te),'started_at':started},ensure_ascii=False)+'\n')
-    models=fit_all(tr)
+    models=restore_or_fit(tr)
     rows={alg:{branch:{t:[] for t in TYPES} for branch in BRANCHES} for alg in ALGORITHMS}
     subsets=defaultdict(lambda:{alg:{branch:{t:[] for t in TYPES} for branch in BRANCHES} for alg in ALGORITHMS})
     sample=list(te.items())
@@ -360,6 +378,7 @@ def main():
           'LR':{'solver':'liblinear','C':1.0,'max_iter':350,'preprocessing':'StandardScaler'},
           'RF':{'trees':90,'depth':10,'min_samples_leaf':12,'max_features':0.7,'n_jobs':2}},
       'retraining_not_comparable_directly_to_earlier_2023_full_year_model':True,
+      'prefitted_models_reused_from_run':39374716272 if os.environ.get('PRETRAINED_AB_DIR') else None,
       'baseline_features':FEATURES,
       'extra_line_features':'line position, line length, line counts, within-line distance, same-line flags and relations among hypothetical 1/2/3 finishers',
       'fair_same_training_samples':True,
