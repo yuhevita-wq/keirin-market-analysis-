@@ -1,0 +1,168 @@
+{
+  "schema": "chapter1-accuracy-learner-v1",
+  "generated_at": "2026-10-20T10:37:27.922773+00:00",
+  "status": "CONFIRMED_HISTORICAL_GOAL",
+  "generation": 8,
+  "training_races": 12999,
+  "october_development_races": 1876,
+  "october_frozen_baseline": {
+    "races": 1876,
+    "winner_hits": 792,
+    "trifecta_hits": 232,
+    "winner_top1": 0.42217484008528783,
+    "trifecta_top1": 0.12366737739872068
+  },
+  "thresholds_strictly_greater_than": {
+    "winner": 0.45,
+    "trifecta": 0.12866737739872067
+  },
+  "current_best": {
+    "id": "acc-g08-c01",
+    "generation": 8,
+    "config": {
+      "family": "hgb",
+      "max_iter": 250,
+      "max_leaf_nodes": 30,
+      "learning_rate": 0.08,
+      "min_samples_leaf": 80,
+      "l2_regularization": 20.0,
+      "mask": "all",
+      "engineering": "relative_v1"
+    },
+    "temperature": 1.0,
+    "october": {
+      "races": 1876,
+      "winner_hits": 850,
+      "trifecta_hits": 244,
+      "winner_top1": 0.453091684434968,
+      "trifecta_top1": 0.1300639658848614,
+      "one_pick_per_race_each_metric": true,
+      "temperature": 1.0
+    },
+    "alternative_temperatures": [
+      {
+        "races": 1876,
+        "winner_hits": 850,
+        "trifecta_hits": 243,
+        "winner_top1": 0.453091684434968,
+        "trifecta_top1": 0.12953091684434967,
+        "one_pick_per_race_each_metric": true,
+        "temperature": 0.75
+      },
+      {
+        "races": 1876,
+        "winner_hits": 850,
+        "trifecta_hits": 244,
+        "winner_top1": 0.453091684434968,
+        "trifecta_top1": 0.1300639658848614,
+        "one_pick_per_race_each_metric": true,
+        "temperature": 1.0
+      },
+      {
+        "races": 1876,
+        "winner_hits": 850,
+        "trifecta_hits": 244,
+        "winner_top1": 0.453091684434968,
+        "trifecta_top1": 0.1300639658848614,
+        "one_pick_per_race_each_metric": true,
+        "temperature": 1.25
+      },
+      {
+        "races": 1876,
+        "winner_hits": 850,
+        "trifecta_hits": 242,
+        "winner_top1": 0.453091684434968,
+        "trifecta_top1": 0.12899786780383796,
+        "one_pick_per_race_each_metric": true,
+        "temperature": 1.5
+      }
+    ],
+    "model_asset": {
+      "file": "docs/paper-only-ai-2023/chapter1_accuracy_ai/accuracy_champion_acc-g08-c01.joblib",
+      "sha256": "d5e9385d4f8eb5df321df27f52781b60b6a461a64249fb1daf42e90bc1e6e0f0",
+      "generation": 8,
+      "candidate_id": "acc-g08-c01"
+    }
+  },
+  "confirmation_used": true,
+  "confirmation": {
+    "candidate_id": "acc-g08-c01",
+    "already_consulted_historical_months": true,
+    "monthly_scores": {
+      "2023-11": {
+        "races": 1828,
+        "winner_hits": 865,
+        "trifecta_hits": 242,
+        "winner_top1": 0.47319474835886216,
+        "trifecta_top1": 0.1323851203501094,
+        "one_pick_per_race_each_metric": true,
+        "baseline": {
+          "races": 1828,
+          "winner_hits": 806,
+          "trifecta_hits": 234,
+          "winner_top1": 0.44091903719912473,
+          "trifecta_top1": 0.12800875273522977
+        },
+        "passes_predeclared_goal": true
+      },
+      "2023-12": {
+        "races": 1863,
+        "winner_hits": 840,
+        "trifecta_hits": 240,
+        "winner_top1": 0.45088566827697263,
+        "trifecta_top1": 0.1288244766505636,
+        "one_pick_per_race_each_metric": true,
+        "baseline": {
+          "races": 1863,
+          "winner_hits": 805,
+          "trifecta_hits": 237,
+          "winner_top1": 0.43209876543209874,
+          "trifecta_top1": 0.12721417069243157
+        },
+        "passes_predeclared_goal": true
+      }
+    },
+    "both_months_passed": true,
+    "no_second_try_on_same_2023_nov_dec": true
+  },
+  "model_promotions_this_run": [
+    {
+      "file": "docs/paper-only-ai-2023/chapter1_accuracy_ai/accuracy_champion_acc-g05-c01.joblib",
+      "sha256": "ccfe52c99b5bd86b21d2269bc1db8e4f47be20aaca5c1a15029b1035d9f409bd",
+      "generation": 5,
+      "candidate_id": "acc-g05-c01"
+    },
+    {
+      "file": "docs/paper-only-ai-2023/chapter1_accuracy_ai/accuracy_champion_acc-g05-c03.joblib",
+      "sha256": "17333c0425b869d9c5055f42d87c8cacb1888864eecc5bdf0c2325daf2b89723",
+      "generation": 5,
+      "candidate_id": "acc-g05-c03"
+    },
+    {
+      "file": "docs/paper-only-ai-2023/chapter1_accuracy_ai/accuracy_champion_acc-g07-c01.joblib",
+      "sha256": "a2ea020887268e7637f8b5589f388b52627e3316f0618ee1991a1c7f164ce943",
+      "generation": 7,
+      "candidate_id": "acc-g07-c01"
+    },
+    {
+      "file": "docs/paper-only-ai-2023/chapter1_accuracy_ai/accuracy_champion_acc-g08-c01.joblib",
+      "sha256": "d5e9385d4f8eb5df321df27f52781b60b6a461a64249fb1daf42e90bc1e6e0f0",
+      "generation": 8,
+      "candidate_id": "acc-g08-c01"
+    }
+  ],
+  "conditional_2023_foundation_immutable_release_sha": "10f5cc3c4b1adaf73cdd60fdf21f70247dcd3627576461f7457522ec61dc00b8",
+  "market_odds_used": false,
+  "roi_used_for_optimization": false,
+  "2024plus_results_used": false,
+  "paper_accuracy_branch_equivalence": "winner top1 accuracy is the closest keirin analogue; exact trifecta top1 is an additional metric",
+  "limitations": [
+    "Only first-place rider model is trainable; 2nd/3rd conditional models remain frozen from the earlier 2023 AI, so it is not a fully end-to-end independent architecture.",
+    "Generations 5+ add pre-race race-relative/rider-rank/line-strength features, fitted without seeing future outcomes.",
+    "October 2023 is reused across candidates and generations; only development targets can be claimed from repeated October scoring.",
+    "Nov-Dec 2023 are scored once per state; these months were consulted in earlier project research and are NOT a pristine holdout.",
+    "Never guarantee reaching 45 percent by repeating the same fixed historical data; stop after 24 generations and demand a newly designed chronology.",
+    "One exact 1st rider and one exact ordered trifecta, not a box or expanded formation.",
+    "Prediction accuracy is not equivalent to positive expected value or profitable betting."
+  ]
+}
