@@ -1,0 +1,135 @@
+{
+  "id": "GEN-008-PARALLEL-MONTH-01",
+  "status": "COMPLETE",
+  "stage": "GEN-008-PARALLEL-MONTH-01",
+  "week": 3,
+  "days": 31,
+  "dates": [
+    "2023-08-15",
+    "2023-09-14"
+  ],
+  "races": 631,
+  "source_reports": [
+    {
+      "year": 2023,
+      "date_start": "2023-08-15",
+      "date_end": "2023-09-14",
+      "source_count": {
+        "source_containers": 44,
+        "race_rows": 2140,
+        "duplicate_race_id": 122,
+        "unique_cards": 2018
+      },
+      "selected_racecard_sources": {
+        "data/2023/s_class_f1_all_parts/2023_q3": 430,
+        "data/a_class_12/2023_07_08": 489,
+        "data/a_class_12/2023_09_10": 429,
+        "data/a3_challenge/2023_07_08": 264,
+        "data/a3_challenge/2023_09_10": 200,
+        "data/grade_races/g1g2/g1-g2-2023-non-girls.zip": 63,
+        "data/grade_races/g3/2023/g3-all-2023-q3-non-girls.zip": 143
+      },
+      "label_source": "data/result_universe_v2/combined/results_2023.jsonl.gz",
+      "result_count": {
+        "source_records": 25365
+      },
+      "odds_source": "data/odds_only/odds_2023.jsonl.gz",
+      "market_count": {
+        "archive_complete_races": 9987,
+        "hash_verified": true,
+        "archive_sha256": "6718ee164aaef41a1002a7c1cdf680e5b46c44f57e012f7c815b429aa4325637",
+        "matched_candidate_ids": 635,
+        "invalid": {}
+      },
+      "join_status": {
+        "no_result": 20,
+        "no_complete_market": 1383,
+        "joined_and_eligible": 631
+      },
+      "joined_race_ids_sha256": "c9ebb0428b82481e9b45cba445ec08cb0e85041591a7edff8a68a3939a482a2c",
+      "complete_races": 631,
+      "date_data_origin": "racecard race_date ONLY; never decoded meeting-start ID",
+      "price_phase": "FINAL (historical), NOT certified pre-close",
+      "markets": [
+        "3連単",
+        "3連複"
+      ],
+      "result_used_only_as_label": true,
+      "original_training_checkpoints_untouched": true
+    }
+  ],
+  "race_ids_sha256": "c9ebb0428b82481e9b45cba445ec08cb0e85041591a7edff8a68a3939a482a2c",
+  "parent": {
+    "origin": "GEN-008-PARALLEL-week-02",
+    "inherited_hashes": {
+      "old": {
+        "prediction": "4fdd8e841f563cee90676bd6cfb2cbc1715be23bd9856fe466cb728e37f54a7c",
+        "behavior": "7eb711d747c1b7179aef09a3d219f4f8f7179b23247ffac2a69037804ded7aed"
+      },
+      "new": {
+        "prediction": "746146048ecec5866eb3304551ed6bcbe8a0bd9a4cab38710ec03bd6a1d5b1c7",
+        "behavior": "056ead2f88081f71699de44e111d4fc918537257d4ee293b3b897e4ec05b42ca"
+      }
+    },
+    "parent_end_date": "2023-08-14"
+  },
+  "models": {
+    "old": "unchanged GEN-007 training rule; independent cloned weights",
+    "new": "shadow-on-skip + coherent outcomes + online past-only calibration"
+  },
+  "comparison": {
+    "old": {
+      "races": 631,
+      "entered": 85,
+      "skipped": 546,
+      "actual_marks": 373,
+      "hit_races": 23,
+      "actual_staked_yen": 37300,
+      "actual_payout_proxy_yen": 52220,
+      "actual_net_yen": 14920,
+      "paper_roi_percent": 140.0,
+      "mean_trifecta_logloss": 4.404212115388792,
+      "mean_trio_logloss": 2.9337499263670637
+    },
+    "new": {
+      "races": 631,
+      "entered": 90,
+      "skipped": 541,
+      "actual_marks": 450,
+      "hit_races": 20,
+      "actual_staked_yen": 45000,
+      "actual_payout_proxy_yen": 46950,
+      "actual_net_yen": 1950,
+      "paper_roi_percent": 104.33333333333333,
+      "mean_trifecta_logloss": 4.424654670570043,
+      "mean_trio_logloss": 2.9429873687320676,
+      "skipped_with_presealed_shadow": 541,
+      "profitable_skipped_shadows": 62,
+      "missed_profitable_shadow_yen": 116500,
+      "shadow_net_on_skips_yen": -52300,
+      "shadow_net_is_not_realized_payout": true
+    }
+  },
+  "training_only": true,
+  "independent_held_out_exam_completed": false,
+  "reserved_never_trained_exam_dates": [
+    "2023-10-01",
+    "2023-10-14"
+  ],
+  "previously_reserved_exams_preserved": [
+    [
+      "2023-06-01",
+      "2023-06-07"
+    ],
+    [
+      "2023-07-01",
+      "2023-07-07"
+    ]
+  ],
+  "real_cash_excludes_shadow": true,
+  "price_phase": "historical FINAL odds (not deadline quotes)",
+  "paper_only": true,
+  "old_model_files_modified": false,
+  "next_stage_must_inherit_each_branch_separately": true,
+  "note": "In-sample online paper profits are descriptive, NOT forward evidence."
+}
