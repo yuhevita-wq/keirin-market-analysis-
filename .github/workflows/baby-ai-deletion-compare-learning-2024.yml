@@ -1,0 +1,67 @@
+name: GEN008 Deletion AI | quantify 2024 incremental learning gain
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/deletion_ai/compare_2024_learning_gain.py'
+      - '.github/workflows/baby-ai-deletion-compare-learning-2024.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: gen008-deletion-2024-learning-gain-matched-2025-replay
+  cancel-in-progress: false
+jobs:
+  same_races_before_after_2024:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    env:
+      PYTHONUNBUFFERED: '1'
+      PYTHONHASHSEED: '0'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing research dependencies
+        run: python -m pip install -e '.[scrape]' 'numpy>=1.26'
+      - name: Check archived 2023 and 2024 checkpoints
+        run: |
+          python -m py_compile research/deletion_ai/compare_2024_learning_gain.py
+          python research/deletion_ai/test_continue_2024.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          base=Path('research/deletion_ai/outputs/GEN-008-DELETION-CONTINUE-2024')
+          c=json.loads((base/'checkpoint.json').read_text())
+          s=json.loads((base/'summary.json').read_text())
+          assert s['status']=='COMPLETE'
+          assert c['2024_training_races']==9594
+          assert c['2025_test_races']==1061
+          assert c['2025_outcomes_never_used_for_training_or_policy_tuning']
+          print('BOTH_FROZEN_MODEL_SNAPSHOTS_VALIDATED')
+          PY
+      - name: Measure learning gains on identical 2025 races without retraining
+        run: |
+          if [ -f research/deletion_ai/outputs/GEN-008-DELETION-CONTINUE-2024/2024_learning_gain_ablation_2025.json ]; then
+            echo 'Existing immutable ablation record found'
+          else
+            python research/deletion_ai/compare_2024_learning_gain.py
+          fi
+      - name: Publish matched 2024 contribution audit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/deletion_ai/outputs/GEN-008-DELETION-CONTINUE-2024/2024_learning_gain_ablation_2025.json
+          if git diff --cached --quiet; then echo 'No new report'; exit 0; fi
+          git commit -m 'data: preserve matched 2025 replay of 2023 base versus 2024-trained deletion models'
+          for i in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
