@@ -1,6 +1,6 @@
 {
   "schema": "chapter1-autonomous-research-v1",
-  "generation": 5,
+  "generation": 6,
   "max_generations_before_fresh_data_review": 24,
   "champions": {
     "accuracy": {
@@ -1071,8 +1071,186 @@
         "2023-10-01",
         "2023-10-31"
       ]
+    },
+    {
+      "generation": 6,
+      "candidates": [
+        {
+          "id": "g06-c01",
+          "config": {
+            "algorithm": "RF",
+            "n_estimators": 60,
+            "max_depth": 15,
+            "min_samples_leaf": 6,
+            "max_features": 0.7,
+            "mask": "drop_age",
+            "origin": "autonomous-mutation"
+          },
+          "development": {
+            "stagewise_mean_accuracy_proxy": 0.4504264392324094,
+            "ordered_finish_joint_nll": 4.291843680458241,
+            "mean_conditional_positive_ece20": 0.010962522068199976,
+            "all_three_80pct_occupancy_proxies_passed": true,
+            "stage_evaluations": [
+              {
+                "stage": 1,
+                "temperature_fitted_on_september_only": 0.8780353584692988,
+                "september_calibration_nll": 1.5289119060456426,
+                "october_before": {
+                  "conditional_nll": 1.5478113025911724,
+                  "conditional_top1_accuracy": 0.4147121535181237,
+                  "conditional_positive_ece20": 0.01587587644264502,
+                  "occupied_bins_20": 15,
+                  "paper_80pct_bin_occupancy_proxy_passed": false
+                },
+                "october_after": {
+                  "conditional_nll": 1.5468068444828105,
+                  "conditional_top1_accuracy": 0.4147121535181237,
+                  "conditional_positive_ece20": 0.013648250113657319,
+                  "occupied_bins_20": 17,
+                  "paper_80pct_bin_occupancy_proxy_passed": true
+                }
+              },
+              {
+                "stage": 2,
+                "temperature_fitted_on_september_only": 1.031509919465821,
+                "september_calibration_nll": 1.378456322535122,
+                "october_before": {
+                  "conditional_nll": 1.3624197603539943,
+                  "conditional_top1_accuracy": 0.5031982942430704,
+                  "conditional_positive_ece20": 0.008556034453785055,
+                  "occupied_bins_20": 18,
+                  "paper_80pct_bin_occupancy_proxy_passed": true
+                },
+                "october_after": {
+                  "conditional_nll": 1.3626260525819316,
+                  "conditional_top1_accuracy": 0.5031982942430704,
+                  "conditional_positive_ece20": 0.007329865126206889,
+                  "occupied_bins_20": 17,
+                  "paper_80pct_bin_occupancy_proxy_passed": true
+                }
+              },
+              {
+                "stage": 3,
+                "temperature_fitted_on_september_only": 0.9926692987599328,
+                "september_calibration_nll": 1.4131156763872512,
+                "october_before": {
+                  "conditional_nll": 1.3825861816787515,
+                  "conditional_top1_accuracy": 0.43336886993603413,
+                  "conditional_positive_ece20": 0.013337939494408074,
+                  "occupied_bins_20": 16,
+                  "paper_80pct_bin_occupancy_proxy_passed": true
+                },
+                "october_after": {
+                  "conditional_nll": 1.3824107833934982,
+                  "conditional_top1_accuracy": 0.43336886993603413,
+                  "conditional_positive_ece20": 0.01190945096473572,
+                  "occupied_bins_20": 16,
+                  "paper_80pct_bin_occupancy_proxy_passed": true
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "g06-c02",
+          "config": {
+            "algorithm": "LR",
+            "C": 2.0,
+            "mask": "drop_term",
+            "origin": "autonomous-mutation"
+          },
+          "development": {
+            "stagewise_mean_accuracy_proxy": 0.4362117981520967,
+            "ordered_finish_joint_nll": 4.331430123648979,
+            "mean_conditional_positive_ece20": 0.011762748123226445,
+            "all_three_80pct_occupancy_proxies_passed": true,
+            "stage_evaluations": [
+              {
+                "stage": 1,
+                "temperature_fitted_on_september_only": 0.7781850768957559,
+                "september_calibration_nll": 1.549395269989581,
+                "october_before": {
+                  "conditional_nll": 1.5715919163101233,
+                  "conditional_top1_accuracy": 0.38486140724946694,
+                  "conditional_positive_ece20": 0.01588478932863295,
+                  "occupied_bins_20": 14,
+                  "paper_80pct_bin_occupancy_proxy_passed": false
+                },
+                "october_after": {
+                  "conditional_nll": 1.5603845663059261,
+                  "conditional_top1_accuracy": 0.38486140724946694,
+                  "conditional_positive_ece20": 0.012755224425813302,
+                  "occupied_bins_20": 16,
+                  "paper_80pct_bin_occupancy_proxy_passed": true
+                }
+              },
+              {
+                "stage": 2,
+                "temperature_fitted_on_september_only": 0.9550341264810625,
+                "september_calibration_nll": 1.3709902189952121,
+                "october_before": {
+                  "conditional_nll": 1.3738711615369108,
+                  "conditional_top1_accuracy": 0.4984008528784648,
+                  "conditional_positive_ece20": 0.012057718675668688,
+                  "occupied_bins_20": 17,
+                  "paper_80pct_bin_occupancy_proxy_passed": true
+                },
+                "october_after": {
+                  "conditional_nll": 1.373522200681606,
+                  "conditional_top1_accuracy": 0.4984008528784648,
+                  "conditional_positive_ece20": 0.011608774243127139,
+                  "occupied_bins_20": 17,
+                  "paper_80pct_bin_occupancy_proxy_passed": true
+                }
+              },
+              {
+                "stage": 3,
+                "temperature_fitted_on_september_only": 0.896515541639895,
+                "september_calibration_nll": 1.40375595855255,
+                "october_before": {
+                  "conditional_nll": 1.399643799533071,
+                  "conditional_top1_accuracy": 0.4253731343283582,
+                  "conditional_positive_ece20": 0.016430186227560314,
+                  "occupied_bins_20": 15,
+                  "paper_80pct_bin_occupancy_proxy_passed": false
+                },
+                "october_after": {
+                  "conditional_nll": 1.397523356661447,
+                  "conditional_top1_accuracy": 0.4253731343283582,
+                  "conditional_positive_ece20": 0.010924245700738891,
+                  "occupied_bins_20": 16,
+                  "paper_80pct_bin_occupancy_proxy_passed": true
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "promotions": {},
+      "trained_max_date": "2023-08-31",
+      "calibration_only": [
+        "2023-09-01",
+        "2023-09-30"
+      ],
+      "selection_only": [
+        "2023-10-01",
+        "2023-10-31"
+      ]
     }
   ],
   "locked_external_test_executed": false,
-  "locked_external_test_policy": "2024 Q1 and Q2 are already observed. Never optimize on their odds, results, payouts or ROI. Run a genuinely unseen future test only ONCE after model/selection policy is frozen; never tune after seeing that holdout."
+  "locked_external_test_policy": "2024 Q1 and Q2 are already observed. Never optimize on their odds, results, payouts or ROI. Run a genuinely unseen future test only ONCE after model/selection policy is frozen; never tune after seeing that holdout.",
+  "historical_roi_checks": {
+    "g01-c01": {
+      "passed": false,
+      "report": "docs/paper-only-ai-2023/autonomous_chapter1/historical_gate_g01-c01.json",
+      "qualified_races": 848,
+      "calibration_combined_return_percent": 69.67421290933979,
+      "frozen_champions": {
+        "accuracy": "g01-c01",
+        "calibration": "g01-c01"
+      }
+    }
+  }
 }
