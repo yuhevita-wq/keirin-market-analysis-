@@ -1,0 +1,70 @@
+name: Baby AI GEN-008 | recover October 2023 odds then retest
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/ai_nursery/recover_gen008_oct_odds.py'
+      - 'research/ai_nursery/gen008_recovered_exam.py'
+      - '.github/workflows/baby-ai-gen008-recover-oct-odds.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: baby-ai-gen008-oct-holdout-odds-recovery
+  cancel-in-progress: false
+jobs:
+  recover-and-compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install official historical scraper and numeric dependencies
+        run: |
+          python -m pip install -e '.[scrape]' 'numpy>=1.26'
+      - name: Verify original 31-day checkpoints and 267-race untouched holdout
+        run: |
+          python -m py_compile research/ai_nursery/recover_gen008_oct_odds.py research/ai_nursery/gen008_recovered_exam.py
+          python research/ai_nursery/verify_parallel_month.py
+          python research/ai_nursery/verify_gen008_frozen_exam.py
+      - name: Recover exact-ID October odds from local original S and historical KDreams
+        run: |
+          if [ -f data/holdout_odds_recovery/gen008-2023-10-01-to-14/coverage.json ]; then
+            echo "Recovery archive is immutable; reuse and audit"
+          else
+            python research/ai_nursery/recover_gen008_oct_odds.py
+          fi
+      - name: Freeze expanded October exam without modifying trained models
+        run: |
+          if [ -f research/ai_nursery/outputs/GEN-008-PARALLEL/frozen-exam-2023-10-01-to-14-odds-recovered/summary.json ]; then
+            python -c "import sys; sys.path.insert(0,'research/ai_nursery'); from gen008_recovered_exam import audit; audit()"
+          else
+            python research/ai_nursery/gen008_recovered_exam.py
+          fi
+      - name: Commit original-page evidence and expanded frozen old/new results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/holdout_odds_recovery/gen008-2023-10-01-to-14/
+          git add research/ai_nursery/outputs/GEN-008-PARALLEL/frozen-exam-2023-10-01-to-14-odds-recovered/
+          git add docs/ai-lab/gen008-frozen-exam-2023-10-recovered.json
+          if git diff --cached --quiet; then
+            echo "No new files"
+            exit 0
+          fi
+          git commit -m "data: archive October 2023 authentic odds backfill and frozen GEN-008 comparison"
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          echo "Could not publish recovered results" >&2
+          exit 1
