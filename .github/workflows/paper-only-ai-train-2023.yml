@@ -1,0 +1,58 @@
+name: Paper-only AI | 2023 year learning
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'paper_only_ai/train_2023.py'
+      - '.github/workflows/paper-only-ai-train-2023.yml'
+permissions:
+  contents: write
+concurrency:
+  group: paper-only-ai-train-2023
+  cancel-in-progress: false
+jobs:
+  train-paper-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 320
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            paper_only_ai
+            docs/paper-only-ai-2023
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install paper-only ML dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install 'numpy<3' 'pandas<3' 'scipy<2' 'scikit-learn<2' 'optuna<5' 'joblib<2'
+      - name: Verify isolated learner syntax
+        run: python -m py_compile paper_only_ai/train_2023.py
+      - name: Train on archived 2023 source data; reserve later dates for validation
+        env:
+          OMP_NUM_THREADS: '2'
+          OPENBLAS_NUM_THREADS: '2'
+          MKL_NUM_THREADS: '2'
+          PYTHONUNBUFFERED: '1'
+        run: python paper_only_ai/train_2023.py
+      - name: Upload research model files and complete audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-only-2023-research-models
+          path: docs/paper-only-ai-2023/training/
+          if-no-files-found: warn
+          retention-days: 60
+      - name: Publish 2023 training status for observer
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/paper-only-ai-2023/training/progress.json docs/paper-only-ai-2023/training/report.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record independent 2023 training run and audit"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
