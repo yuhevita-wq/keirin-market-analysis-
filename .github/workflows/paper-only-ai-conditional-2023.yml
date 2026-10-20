@@ -1,0 +1,70 @@
+name: Paper-only AI | 2023 conditional finish-order learning
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'paper_only_ai/train_conditional_2023.py'
+      - '.github/workflows/paper-only-ai-conditional-2023.yml'
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: paper-only-ai-conditional-2023
+  cancel-in-progress: false
+jobs:
+  train-conditionals:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            paper_only_ai
+            docs/paper-only-ai-2023
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install model requirements
+        run: |
+          python -m pip install 'numpy<3' 'pandas<3' 'scipy<2' 'scikit-learn<2' 'optuna<5' 'joblib<2'
+      - name: Retrieve original immutable first-place probability AI
+        uses: actions/download-artifact@v4
+        with:
+          name: paper-only-2023-research-models
+          path: frozen_2023
+          run-id: 39354641293
+          github-token: ${{ github.token }}
+      - name: Verify original frozen model and learner syntax
+        run: |
+          python -m py_compile paper_only_ai/train_conditional_2023.py
+          test -s frozen_2023/calibration.joblib
+      - name: Learn 2023 second and third-place conditional probabilities
+        env:
+          FROZEN_MODEL_DIR: frozen_2023
+          OMP_NUM_THREADS: '2'
+          OPENBLAS_NUM_THREADS: '2'
+          MKL_NUM_THREADS: '2'
+          PYTHONUNBUFFERED: '1'
+        run: python paper_only_ai/train_conditional_2023.py
+      - name: Retain integrated three-stage model bundle and 2023 research report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-only-2023-conditional-finish-order-models
+          path: |
+            frozen_2023/calibration.joblib
+            docs/paper-only-ai-2023/conditional_2023/
+          if-no-files-found: warn
+          retention-days: 60
+      - name: Publish conditional learning report and probability integrity audit
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/paper-only-ai-2023/conditional_2023/report.json docs/paper-only-ai-2023/conditional_2023/progress.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record 2023 conditional second/third finish-order learning"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
