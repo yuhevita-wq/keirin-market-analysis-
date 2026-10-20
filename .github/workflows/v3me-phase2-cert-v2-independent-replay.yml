@@ -1,0 +1,101 @@
+name: V3-ME-R | independent CERT-V2 exact six-year replay certification
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/v3me-phase2-cert-v2-independent-replay.yml'
+      - 'research/deletion_ai/outputs/GEN-008-V3-ME-R-PHASE2-DAY-FROZEN-PLAIN-CERT-V2-2021-2026/2026/checkpoint.json'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: v3me-phase2-certified-v2-independent-audit
+  cancel-in-progress: false
+jobs:
+  full_replay_without_fitting_saved_checkpoints:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      PYTHONUNBUFFERED: '1'
+      PYTHONHASHSEED: '0'
+      PYTHONPATH: '.:research/deletion_ai'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e '.[scrape]' 'numpy==2.5.4'
+      - name: Require all six original immutable candidate checkpoint records
+        run: |
+          set -euo pipefail
+          root='research/deletion_ai/outputs/GEN-008-V3-ME-R-PHASE2-DAY-FROZEN-PLAIN-CERT-V2-2021-2026'
+          for year in 2021 2022 2023 2024 2025 2026; do
+            test -s "$root/$year/checkpoint.json"
+            test -s "$root/$year/summary.json"
+          done
+      - name: Independently rebuild entire source-to-model chain and compare daily hashes exactly
+        run: |
+          set -euo pipefail
+          python research/deletion_ai/test_v3me_phase2_certified_v2.py
+          for year in 2021 2022 2023 2024 2025 2026; do
+            python research/deletion_ai/v3me_phase2_certified_v2.py --source plain --year "$year" --verify
+          done
+      - name: Publish immutable certificate ONLY if every saved model and daily ledger matches
+        run: |
+          python - <<'PY'
+          import json,pathlib
+          p=pathlib.Path('research/deletion_ai/outputs/GEN-008-V3-ME-R-PHASE2-DAY-FROZEN-PLAIN-CERT-V2-2021-2026')
+          cert=pathlib.Path('data/audits/v3me_phase2_cert_v2_independent_replay_verified.json')
+          if cert.exists():raise RuntimeError('IMMUTABLE_V2_CERT_ALREADY_EXISTS')
+          years={}
+          parent=None
+          for year in range(2021,2027):
+            cp=json.loads((p/str(year)/'checkpoint.json').read_text())
+            s=json.loads((p/str(year)/'summary.json').read_text())
+            assert cp['weight_sha256']==s['weight_end_sha256']
+            assert cp['daily_ledger_sha256']==s['daily_ledger_sha256']
+            assert cp['race_count']==s['actual_supervised_usable_races']
+            if parent is not None: assert cp['start_weights_sha256']==parent
+            parent=cp['weight_sha256']
+            years[str(year)]={'actual_races':cp['race_count'],
+                  'source_result_sha256':cp['official_result_input_sha256'],
+                  'odds_input_sha256':cp['plain_odds_input_sha256'],
+                  'all_days_sha256':cp['daily_ledger_sha256'],
+                  'end_weights_sha256':cp['weight_sha256']}
+          assert sum(x['actual_races'] for x in years.values())==40164
+          assert years['2026']['actual_races']==5720
+          cplast=json.loads((p/'2026/checkpoint.json').read_text())
+          assert not cplast['training']
+          assert cplast['start_weights_sha256']==cplast['weight_sha256']
+          cert.parent.mkdir(parents=True,exist_ok=True)
+          cert.write_text(json.dumps({
+            'status':'INDEPENDENT_EXACT_REPLAY_PASSED',
+            'model':'V3-ME-R','stage':'PHASE2_CERT_V2',
+            'years':years,'training_count':34444,'frozen_2026_test':5720,
+            'data_source':'two_market_plain_archive_only',
+            'not_seven_market_encrypted_original':True,
+            'source_sha256_comparison':True,
+            'all_day_predictions_before_results_sha256_verified':True,
+            'yearly_model_weights_bit_identical':True,
+            'original_phase2_failed_checkpoints_not_overwritten':True,
+            'numerical_update_quantization_digits':9,
+            'frozen_2026_no_fit':True,
+            'no_claim_of_positive_EV_or_roi':True
+          },ensure_ascii=False,indent=2)+'\n')
+          print('V3ME_PHASE2_CERTV2_ALL_40164_RACES_INDEPENDENTLY_VERIFIED')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/audits/v3me_phase2_cert_v2_independent_replay_verified.json
+          git commit -m 'audit: certify independent source-to-prediction-to-weight replay across 40164 races'
+          for n in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 2
+          done
+          exit 1
