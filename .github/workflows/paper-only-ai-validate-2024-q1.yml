@@ -1,0 +1,71 @@
+name: Paper-only AI | 2024 Q1 frozen-model validation
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'paper_only_ai/evaluate_2024_q1.py'
+      - '.github/workflows/paper-only-ai-validate-2024-q1.yml'
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: paper-only-ai-validate-2024-q1
+  cancel-in-progress: false
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            paper_only_ai
+            docs/paper-only-ai-2023
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install same ML libraries as 2023 training
+        run: |
+          python -m pip install 'numpy<3' 'pandas<3' 'scipy<2' 'scikit-learn<2' 'optuna<5' 'joblib<2'
+      - name: Retrieve frozen models from original 2023 GitHub Actions run
+        uses: actions/download-artifact@v4
+        with:
+          name: paper-only-2023-research-models
+          path: frozen_2023
+          run-id: 39354641293
+          github-token: ${{ github.token }}
+      - name: Check frozen research models exist
+        run: |
+          ls -lah frozen_2023
+          test -s frozen_2023/calibration.joblib
+          test -s frozen_2023/accuracy.joblib
+      - name: Evaluate untouched models on 2024-01-01 through 2024-03-31
+        env:
+          FROZEN_MODEL_DIR: frozen_2023
+          OMP_NUM_THREADS: '2'
+          OPENBLAS_NUM_THREADS: '2'
+          MKL_NUM_THREADS: '2'
+          PYTHONUNBUFFERED: '1'
+        run: |
+          python -m py_compile paper_only_ai/evaluate_2024_q1.py
+          python paper_only_ai/evaluate_2024_q1.py
+      - name: Retain full report as Actions artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-only-2024-q1-validation-report
+          path: docs/paper-only-ai-2023/validation_2024_q1/
+          if-no-files-found: warn
+          retention-days: 60
+      - name: Publish metrics for GitHub observer
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/paper-only-ai-2023/validation_2024_q1/progress.json docs/paper-only-ai-2023/validation_2024_q1/report.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Store 2024 Q1 strict frozen-model validation results"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
