@@ -1,0 +1,62 @@
+name: Baby AI GEN-008 | parallel 31-day additional learning
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/ai_nursery/train_gen008_month01.py'
+      - 'research/ai_nursery/verify_gen008_month01.py'
+      - '.github/workflows/baby-ai-gen008-month01.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: baby-ai-gen008-month01-sequential
+  cancel-in-progress: false
+jobs:
+  advance-both:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numeric runtime
+        run: python -m pip install 'numpy>=1.26'
+      - name: Require both complete immutable August 14 parents
+        run: |
+          test -f research/ai_nursery/outputs/GEN-008-PARALLEL/week-02/summary.json
+          test -f research/ai_nursery/outputs/GEN-008-PARALLEL/week-02/old/checkpoint.json
+          test -f research/ai_nursery/outputs/GEN-008-PARALLEL/week-02/new/checkpoint.json
+      - name: Verify source code compiles and original GEN-008 contract
+        run: |
+          python -m py_compile research/ai_nursery/train_gen008_month01.py research/ai_nursery/verify_gen008_month01.py
+          python research/ai_nursery/test_gen008.py
+          python research/ai_nursery/train_gen008_month01.py
+      - name: Train both OLD and NEW further from Aug 15 to Sep 14
+        run: |
+          if [ -f research/ai_nursery/outputs/GEN-008-PARALLEL/month-01/summary.json ]; then
+            echo "Month checkpoint already frozen; audit only"
+          else
+            python research/ai_nursery/train_gen008_month01.py --run-training
+          fi
+      - name: Audit every pre-result seal, inheritance and separate profit accounting
+        run: python research/ai_nursery/verify_gen008_month01.py
+      - name: Commit immutable monthly checkpoints and two paper journals
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ai_nursery/outputs/GEN-008-PARALLEL/month-01/
+          if git diff --cached --quiet; then
+            echo "Month already stored"
+            exit 0
+          fi
+          git commit -m "data: freeze GEN-008 OLD and NEW parallel additional month"
+          git pull --rebase origin main
+          git push origin HEAD:main
