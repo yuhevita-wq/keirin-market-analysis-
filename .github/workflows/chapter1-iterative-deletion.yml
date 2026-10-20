@@ -1,0 +1,86 @@
+name: Chapter 1 | Continuously learn what to delete
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'paper_only_ai/chapter1_iterative_deletion.py'
+      - 'paper_only_ai/test_chapter1_iterative_deletion.py'
+      - '.github/workflows/chapter1-iterative-deletion.yml'
+permissions:
+  contents: write
+concurrency:
+  group: chapter1-iterative-deletion-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  advance-quarter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            paper_only_ai
+            docs/paper-only-ai-2023/chapter1_accuracy_ai
+            docs/paper-only-ai-2023/autonomous_chapter1
+            docs/paper-only-ai-2023/chapter1_full_sheet_deletion
+            docs/paper-only-ai-2023/chapter1_deletion_continual
+          sparse-checkout-cone-mode: false
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install compatible analysis packages
+        run: python -m pip install 'numpy<3' 'pandas<3' 'scipy<2' 'scikit-learn<2' 'joblib<2' 'optuna<5'
+      - name: Run safety tests for no outcome leakage, all marks and cash reconciliation
+        run: |
+          python -m py_compile paper_only_ai/chapter1_iterative_deletion.py
+          python paper_only_ai/test_chapter1_iterative_deletion.py
+      - name: Advance up to three chronological quarters with durable checkpoint after each
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PYTHONUNBUFFERED: '1'
+          OMP_NUM_THREADS: '2'
+          OPENBLAS_NUM_THREADS: '2'
+          MKL_NUM_THREADS: '2'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for step in 1 2 3; do
+            echo "ADVANCE_DELETE_LEARNING_STEP=$step"
+            python paper_only_ai/chapter1_iterative_deletion.py
+            git add docs/paper-only-ai-2023/chapter1_deletion_continual/checkpoint.json
+            shopt -s nullglob
+            for f in docs/paper-only-ai-2023/chapter1_deletion_continual/quarter_2024_q*.json; do
+              git add "$f"
+            done
+            if ! git diff --cached --quiet; then
+              git commit -m "Advance one prequential historical deletion-learning quarter"
+              git pull --rebase origin "$GITHUB_REF_NAME"
+              git push origin "HEAD:$GITHUB_REF_NAME"
+            fi
+          done
+      - name: Preserve checkpoint and all scores even on a failing run
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chapter1-online-deletion-${{ github.run_id }}
+          path: |
+            docs/paper-only-ai-2023/chapter1_deletion_continual/checkpoint.json
+            docs/paper-only-ai-2023/chapter1_deletion_continual/quarter_*.json
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Persist single-quarter checkpoint and exact audit in GitHub
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          shopt -s nullglob
+          git add docs/paper-only-ai-2023/chapter1_deletion_continual/checkpoint.json
+          for f in docs/paper-only-ai-2023/chapter1_deletion_continual/quarter_2024_q*.json; do
+            git add "$f"
+          done
+          if ! git diff --cached --quiet; then
+            git commit -m "Advance 2024 prequential delete-learning by one sealed quarter"
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
