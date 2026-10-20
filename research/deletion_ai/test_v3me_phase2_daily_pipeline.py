@@ -37,7 +37,7 @@ def w0():
 def containers():
     return (
         defaultdict(lambda:defaultdict(float)),
-        defaultdict(lambda:defaultdict(float)),
+        defaultdict(lambda:defaultdict(lambda:defaultdict(float))),
         defaultdict(lambda:defaultdict(float)),
         defaultdict(lambda:defaultdict(float)),
     )
