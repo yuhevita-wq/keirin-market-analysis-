@@ -208,6 +208,93 @@ def conditional_cache(races, frozen):
     return output
 
 
+REL_INPUTS = (1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 17)
+REL_EXTRA_DIMENSIONS = len(REL_INPUTS)*2 + 10
+
+
+def race_relative_features(races):
+    """Only information known from pre-race cards; never uses finishing positions.
+
+    Relative athlete standing, line strength, rank and neighboring competitors
+    often carry more signal than one athlete's absolute stats. The exact same
+    method is applied to train, development and held-out races.
+    """
+    all_rows = []
+    for race in races.values():
+        cars = sorted(race["cars"],key=int)
+        raw = np.stack([race["cars"][k] for k in cars]).astype(float)
+        selected = raw[:,REL_INPUTS]
+        avg = selected.mean(axis=0)
+        sd = selected.std(axis=0)+1.0
+        centered = np.clip((selected-avg)/sd,-4.0,4.0)
+        percentiles = np.empty_like(selected)
+        for j in range(selected.shape[1]):
+            vals = selected[:,j]
+            for i in range(len(cars)):
+                percentiles[i,j] = (np.sum(vals<vals[i])+
+                                    0.5*np.sum(vals==vals[i]))/len(vals)
+        scores=raw[:,4]
+        total=float(np.maximum(scores.sum(),1.0))
+        maximum=float(np.max(scores))
+        race_avg=float(np.mean(scores))
+        positions=race["positions"]
+        members={}
+        for k in cars:
+            group,rank,size = positions[k]
+            members.setdefault(group,[]).append(k)
+        idx={car:i for i,car in enumerate(cars)}
+        line_best=[]
+        for group, names in members.items():
+            line_best.append((group,max(float(scores[idx[k]]) for k in names)))
+        line_best.sort(key=lambda x:x[1],reverse=True)
+        best_line_rank={group:rank for rank,(group,_) in enumerate(line_best)}
+        extra=np.empty((len(cars),10),dtype=float)
+        for i,k in enumerate(cars):
+            group,rank,size=positions[k]
+            teammates=members[group]
+            line_scores=np.asarray([float(scores[idx[t]]) for t in teammates])
+            best_tm=float(line_scores.max())
+            leader=next((t for t in teammates if positions[t][1]==1),teammates[0])
+            lead_score=float(scores[idx[leader]])
+            others=np.asarray([float(scores[idx[t]]) for t in teammates if t!=k])
+            other_best=float(others.max()) if len(others) else race_avg
+            extra[i,:]=[
+                len(teammates)/len(cars),
+                (float(line_scores.mean())-race_avg)/15.0,
+                (lead_score-maximum)/15.0,
+                float(line_scores.sum())/total,
+                (other_best-maximum)/15.0,
+                (best_tm-maximum)/15.0,
+                rank/max(len(teammates),1),
+                float(rank==1),
+                best_line_rank[group]/max(len(members)-1,1),
+                len(cars)/9.0
+            ]
+        all_rows.append(np.column_stack((centered,percentiles,extra)))
+    answer=np.asarray(np.concatenate(all_rows,axis=0),dtype=np.float32)
+    if not np.isfinite(answer).all() or answer.shape[1]!=REL_EXTRA_DIMENSIONS:
+        raise RuntimeError("Invalid relative-feature matrix")
+    return answer
+
+
+def selected_columns(config):
+    cols=keep_columns(1,config["mask"])
+    mode=config.get("engineering","raw")
+    if mode=="relative_v1":
+        cols=np.concatenate((cols,np.arange(22,22+REL_EXTRA_DIMENSIONS)))
+    elif mode!="raw":
+        raise ValueError("Unsupported accuracy feature architecture")
+    return cols
+
+
+def candidate_inputs(raw,relative,config):
+    if config.get("engineering","raw")=="relative_v1":
+        if len(raw)!=len(relative):
+            raise ValueError("Relative/rider rows do not align")
+        return np.column_stack((raw,relative))
+    return raw
+
+
 def winner_matrix(races):
     X, y, gid = matrix(races, 1, use_line=True)
     expected = sum(len(r["cars"]) for r in races.values())
@@ -275,7 +362,7 @@ def rank_candidate(score):
 def save_champion(model, rec):
     OUT.mkdir(parents=True, exist_ok=True)
     asset = OUT / ("accuracy_champion_" + rec["id"] + ".joblib")
-    joblib.dump({"model": model, "columns": keep_columns(1,rec["config"]["mask"]),
+    joblib.dump({"model": model, "columns": selected_columns(rec["config"]),
                  "temperature": rec["temperature"],
                  "config": rec["config"],
                  "selection": rec["october"]}, asset, compress=3)
@@ -284,11 +371,13 @@ def save_champion(model, rec):
             "generation": rec["generation"], "candidate_id": rec["id"]}
 
 
-def candidate_scores(config, iteration, index, fit, dev, dev_races, dev_cache):
+def candidate_scores(config, iteration, index, fit, dev, fit_relative, dev_relative, dev_races, dev_cache):
     Xtrain, ytrain, _ = fit
     Xdev, _, _ = dev
-    cols = keep_columns(1, config["mask"])
+    cols = selected_columns(config)
     model = make_estimator(config, iteration, index)
+    Xtrain = candidate_inputs(Xtrain,fit_relative,config)
+    Xdev = candidate_inputs(Xdev,dev_relative,config)
     model.fit(Xtrain[:,cols],ytrain)
     raw = model.predict_proba(Xdev[:,cols])[:,1]
     trials = [evaluate(raw, dev_races, dev_cache, t) | {"temperature":t}
@@ -325,6 +414,8 @@ def main():
         "trifecta_target":goal["trifecta"]}), flush=True)
     fit = winner_matrix(train)
     develop = winner_matrix(dev)
+    rel_fit = race_relative_features(train)
+    rel_dev = race_relative_features(dev)
     new_assets = []
     pending_holdout = None
     for g in range(state["generation"]+1,
@@ -333,8 +424,11 @@ def main():
         generation_results = []
         for i in range(1,n_candidates+1):
             config = generate_config(g,i,state["champion"])
+            # New feature-engineering architecture introduced at generation 5;
+            # the formerly frozen goal and historical confirmation stay intact.
+            config["engineering"]="relative_v1" if g >= 5 else "raw"
             model,score,alternatives = candidate_scores(
-                config,g,i,fit,develop,dev,frozen_oct)
+                config,g,i,fit,develop,rel_fit,rel_dev,dev,frozen_oct)
             rec={"id":f"acc-g{g:02d}-c{i:02d}", "generation":g,
                  "config":config,"temperature":score["temperature"],
                  "october":score,"alternative_temperatures":alternatives}
@@ -372,7 +466,8 @@ def main():
                 raise RuntimeError("Incomplete confirmation cohort")
             cache = conditional_cache(subset, foundation)
             X,_,_=winner_matrix(subset)
-            cols=keep_columns(1,rec["config"]["mask"])
+            cols=selected_columns(rec["config"])
+            X=candidate_inputs(X,race_relative_features(subset),rec["config"])
             raw=model.predict_proba(X[:,cols])[:,1]
             check=evaluate(raw,subset,cache,rec["temperature"])
             check["baseline"]=baseline_metrics(subset,cache)
@@ -408,6 +503,7 @@ def main():
         "paper_accuracy_branch_equivalence":"winner top1 accuracy is the closest keirin analogue; exact trifecta top1 is an additional metric",
         "limitations":[
             "Only first-place rider model is trainable; 2nd/3rd conditional models remain frozen from the earlier 2023 AI, so it is not a fully end-to-end independent architecture.",
+            "Generations 5+ add pre-race race-relative/rider-rank/line-strength features, fitted without seeing future outcomes.",
             "October 2023 is reused across candidates and generations; only development targets can be claimed from repeated October scoring.",
             "Nov-Dec 2023 are scored once per state; these months were consulted in earlier project research and are NOT a pristine holdout.",
             "Never guarantee reaching 45 percent by repeating the same fixed historical data; stop after 24 generations and demand a newly designed chronology.",
