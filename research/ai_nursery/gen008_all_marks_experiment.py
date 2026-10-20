@@ -228,8 +228,8 @@ def run():
     perday=defaultdict(lambda:defaultdict(lambda:defaultdict(float)))
     changes=[]
     stage_data=[]
-    with gzip.open(OUT/"all_combinations_mark_sheets.jsonl.gz","wt",encoding="utf-8",compresslevel=6) as papers, \\
-         (OUT/"sealed_four_predictions.jsonl").open("x",encoding="utf-8") as decisions, \\
+    with gzip.open(OUT/"all_combinations_mark_sheets.jsonl.gz","wt",encoding="utf-8",compresslevel=6) as papers, \
+         (OUT/"sealed_four_predictions.jsonl").open("x",encoding="utf-8") as decisions, \
          (OUT/"outcomes_and_learning.jsonl").open("x",encoding="utf-8") as settled:
         for index,(stage,row) in enumerate(all_rows,1):
             pre={"race_id":row["race_id"],"entries":row["entries"],
