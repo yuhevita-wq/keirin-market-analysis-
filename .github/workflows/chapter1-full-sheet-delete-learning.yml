@@ -1,11 +1,6 @@
 name: Chapter 1 | Learn what to delete from a full mark sheet
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'paper_only_ai/chapter1_full_sheet_deletion.py'
-      - 'paper_only_ai/test_chapter1_full_sheet_deletion.py'
-      - '.github/workflows/chapter1-full-sheet-delete-learning.yml'
 permissions:
   contents: write
 concurrency:
@@ -57,8 +52,8 @@ jobs:
         run: |
           TAG=chapter1-full-sheet-deletion-2023-v1
           if gh release view "$TAG" >/dev/null 2>&1; then
-            echo "Refusing overwrite of existing deletion learner release"
-            exit 1
+            echo "Immutable trained weights already saved; refusing overwrite"
+            exit 0
           fi
           gh release create "$TAG" \
             docs/paper-only-ai-2023/chapter1_full_sheet_deletion/delete_*.joblib \
