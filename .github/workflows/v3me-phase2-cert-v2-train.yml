@@ -1,0 +1,79 @@
+name: V3-ME-R | Phase2 CERT-V2 stable CPU-independent 2021-2026
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/v3me-phase2-cert-v2-train.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: v3me-phase2-certified-v2-yearchain
+  cancel-in-progress: false
+jobs:
+  train_and_verify_candidate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      PYTHONUNBUFFERED: '1'
+      PYTHONHASHSEED: '0'
+      PYTHONPATH: '.:research/deletion_ai'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e '.[scrape]' 'numpy==2.5.4'
+      - name: Check version-isolation and no look-ahead in synthetic fixtures
+        run: |
+          python -m py_compile research/deletion_ai/v3me_phase2_certified_v2.py
+          python research/deletion_ai/test_v3me_phase2_certified_v2.py
+          python research/deletion_ai/test_deletion_2023.py
+          python research/deletion_ai/test_secure_seven_bet_bridge.py
+      - name: Fit and verify by year, original 2021-2025, frozen 2026 H1
+        shell: bash
+        run: |
+          set -euo pipefail
+          export OPENBLAS_NUM_THREADS=1
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          output='research/deletion_ai/outputs/GEN-008-V3-ME-R-PHASE2-DAY-FROZEN-PLAIN-CERT-V2-2021-2026'
+          for year in 2021 2022 2023 2024 2025 2026; do
+            if [ ! -f "$output/$year/checkpoint.json" ]; then
+              python research/deletion_ai/v3me_phase2_certified_v2.py --source plain --year "$year"
+            fi
+            python research/deletion_ai/v3me_phase2_certified_v2.py --source plain --year "$year" --verify
+            git add "$output/$year/"
+            if ! git diff --cached --quiet; then
+              git commit -m "data: V3ME Phase2 numerical-stable v2 day-frozen year $year"
+              for retry in 1 2 3 4 5 6; do
+                git pull --rebase origin main
+                if git push origin HEAD:main; then break; fi
+                if [ "$retry" -eq 6 ]; then exit 1; fi
+                sleep 2
+              done
+            fi
+          done
+      - name: Inspect intact chain, exact frozen-year weights and source counts
+        run: |
+          python - <<'PY'
+          import json,pathlib
+          p=pathlib.Path('research/deletion_ai/outputs/GEN-008-V3-ME-R-PHASE2-DAY-FROZEN-PLAIN-CERT-V2-2021-2026')
+          cp=[json.loads((p/str(y)/'checkpoint.json').read_text()) for y in range(2021,2027)]
+          sm=[json.loads((p/str(y)/'summary.json').read_text()) for y in range(2021,2027)]
+          assert [v['race_count'] for v in cp]==[2133,3019,9996,9594,9702,5720]
+          assert all(v['stage']=='GEN008-V3ME-PHASE2-DAY-FROZEN-CERT-V2' for v in cp)
+          assert cp[-1]['start_weights_sha256']==cp[-1]['weight_sha256']
+          assert all(cp[i]['start_weights_sha256']==cp[i-1]['weight_sha256'] for i in range(1,6))
+          assert all(cp[i]['daily_ledger_sha256']==sm[i]['daily_ledger_sha256'] for i in range(6))
+          assert sum(v['race_count'] for v in cp)==40164
+          print('CERTV2_TRAIN_AND_ON_RUNNER_REPLAY_PASS',json.dumps({
+              'train':sum(v['race_count'] for v in cp[:5]),'frozen_test':cp[-1]['race_count'],
+              'frozen_roi':{k:round(v['roi_pct'],6) for k,v in sm[-1]['accounting'].items()}
+          }))
+          PY
