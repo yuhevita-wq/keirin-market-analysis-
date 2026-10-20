@@ -1,0 +1,226 @@
+{
+  "status": "FORK_2025_PREQUENTIAL_LEARNING_QUARTER",
+  "year": 2025,
+  "quarter": 3,
+  "races": 1297,
+  "base_2024": {
+    "checkpoint_sha256": "008938be91209f2e412422251f85689946eb18d5a136b212317e4fab0fdb3124",
+    "weight_model_sha256": "d99e43fc8b0165f670fe5be811c5a5bdfa5e0d5bcc802f41f339fda160f49f28",
+    "2024_end": "2024-12-31",
+    "parent_ids": {
+      "accuracy": "acc-g08-c01",
+      "calibration": "g01-c01"
+    },
+    "coverage": {
+      "accuracy": 0.35,
+      "calibration": 0.5
+    }
+  },
+  "weights_before": "13dd11031d3edff4cf59d340c9798939bb3e8802a60f2dca9c5e5f94adc715f4",
+  "training_during_scoring": true,
+  "2025_has_already_been_examined": true,
+  "2026_has_already_been_examined_in_other_project_work": true,
+  "2026_only_A_class": false,
+  "final_odds_only": true,
+  "fixed_fractional_bankroll_budget_per_market": 0.02,
+  "probability_objective": "online full-book categorical log loss",
+  "price_objective": "online fixed-risk cash-option log wealth (not NLL)",
+  "no_fixed_number_of_tickets": true,
+  "data_audit": {
+    "from": "2025-07-01",
+    "to": "2025-09-30",
+    "cards": 5599,
+    "aligned_races": 1297,
+    "cards_audit": {
+      "files": [
+        {
+          "path": "data/a_class_12/2025_07_08/entries.csv",
+          "race_manifests_with_line": 1960,
+          "entry_rows": 13621
+        },
+        {
+          "path": "data/a_class_12/2025_09_10/entries.csv",
+          "race_manifests_with_line": 949,
+          "entry_rows": 6594
+        },
+        {
+          "path": "data/a3_challenge/2025_07_08/entries.csv",
+          "race_manifests_with_line": 1021,
+          "entry_rows": 6914
+        },
+        {
+          "path": "data/a3_challenge/2025_09_10/entries.csv",
+          "race_manifests_with_line": 491,
+          "entry_rows": 3356
+        },
+        {
+          "path": "data/2025/s_class_f1_all_parts/2025_q3/entries.csv",
+          "race_manifests_with_line": 1297,
+          "entry_rows": 8993
+        },
+        {
+          "path": "data/2025/s_class_yosen/entries.csv",
+          "race_manifests_with_line": 6,
+          "entry_rows": 42
+        }
+      ],
+      "exclusions": {
+        "race_manifest_line_missing": 10,
+        "entry_rows_missing_numeric": 130,
+        "duplicate_manifest_rows": 363,
+        "duplicate_entry_rows": 2537,
+        "exclude_line_coverage_mismatch": 85,
+        "exclude_podium_not_in_card": 40
+      },
+      "complete_podium_with_line_races": 5599,
+      "months": {
+        "2025-07": 1974,
+        "2025-08": 1781,
+        "2025-09": 1844
+      },
+      "categories": {
+        "A1_A2": 2861,
+        "A3": 1455,
+        "S": 1283
+      }
+    },
+    "odds_audit": {
+      "full_year_odds_records": 9781
+    },
+    "dropped": {
+      "missing_odds": 4301,
+      "ValueError:invalid_odd": 1
+    },
+    "year_specific_result_path": "data/result_universe_v2/combined/results_2025.jsonl.gz",
+    "year_specific_odds_path": "data/odds_only/odds_2025.jsonl.gz"
+  },
+  "metrics": {
+    "accuracy": {
+      "3連単": {
+        "races": 1297,
+        "probability_nll_sum": 5370.878616373776,
+        "frozen2024_nll_sum": 5526.650855360484,
+        "market_nll_sum": 5373.4016707944875,
+        "probability_brier_sum": 1246.048804593159,
+        "market_brier_sum": 1246.4256569451538,
+        "probability_top1_hits": 145,
+        "market_top1_hits": 144,
+        "price_log_wealth_sum": -2.55547639940398,
+        "price_expected_staked_bankroll_fraction": 10.345390197557425,
+        "price_realized_payout_bankroll_fraction": 7.79268659569639,
+        "price_cash_allocation_sum": 779.7304901221289,
+        "price_positive_signal_bets": 799,
+        "price_positive_signal_payout_yen": 99060.0,
+        "probability_mean_nll": 4.141001246240382,
+        "frozen2024_mean_nll": 4.261103203824582,
+        "market_mean_nll": 4.1429465464876545,
+        "probability_mean_brier": 0.9607161176508551,
+        "market_mean_brier": 0.9610066745914833,
+        "probability_top1_accuracy_percent": 11.17964533538936,
+        "market_top1_accuracy_percent": 11.10254433307633,
+        "price_total_fractional_bankroll_invested": 10.345390197557425,
+        "price_total_fractional_bankroll_returned": 7.79268659569639,
+        "price_portfolio_roi_percent": 75.3252071394684,
+        "price_mean_log_growth_per_race": -0.0019702979178134,
+        "price_compound_wealth_multiplier": 0.07765522834922609,
+        "price_mean_cash_fraction": 0.6011800232244633,
+        "price_positive_signal_flat100_roi_percent": 123.97997496871089
+      },
+      "3連複": {
+        "races": 1297,
+        "probability_nll_sum": 3479.259697261435,
+        "frozen2024_nll_sum": 3562.1792195405665,
+        "market_nll_sum": 3482.996113658189,
+        "probability_brier_sum": 1137.1165020514711,
+        "market_brier_sum": 1137.4888236662798,
+        "probability_top1_hits": 324,
+        "market_top1_hits": 325,
+        "price_log_wealth_sum": -2.750083571193098,
+        "price_expected_staked_bankroll_fraction": 10.840077488348198,
+        "price_realized_payout_bankroll_fraction": 8.093068799388607,
+        "price_cash_allocation_sum": 754.9961255825908,
+        "price_positive_signal_bets": 123,
+        "price_positive_signal_payout_yen": 15590.0,
+        "probability_mean_nll": 2.682544099661862,
+        "frozen2024_mean_nll": 2.746475882452249,
+        "market_mean_nll": 2.685424914154348,
+        "probability_mean_brier": 0.8767282205485514,
+        "market_mean_brier": 0.8770152842453969,
+        "probability_top1_accuracy_percent": 24.980724749421743,
+        "market_top1_accuracy_percent": 25.05782575173477,
+        "price_total_fractional_bankroll_invested": 10.840077488348198,
+        "price_total_fractional_bankroll_returned": 8.093068799388607,
+        "price_portfolio_roi_percent": 74.65877257877261,
+        "price_mean_log_growth_per_race": -0.0021203419978358504,
+        "price_compound_wealth_multiplier": 0.0639225189023088,
+        "price_mean_cash_fraction": 0.5821095802487207,
+        "price_positive_signal_flat100_roi_percent": 126.7479674796748
+      }
+    },
+    "calibration": {
+      "3連単": {
+        "races": 1297,
+        "probability_nll_sum": 5372.088243786284,
+        "frozen2024_nll_sum": 5516.043508023556,
+        "market_nll_sum": 5373.4016707944875,
+        "probability_brier_sum": 1246.0664348917853,
+        "market_brier_sum": 1246.4256569451538,
+        "probability_top1_hits": 143,
+        "market_top1_hits": 144,
+        "price_log_wealth_sum": -2.5843020902504787,
+        "price_expected_staked_bankroll_fraction": 10.390812970102647,
+        "price_realized_payout_bankroll_fraction": 7.809329731416226,
+        "price_cash_allocation_sum": 777.4593514948682,
+        "price_positive_signal_bets": 931,
+        "price_positive_signal_payout_yen": 89130.0,
+        "probability_mean_nll": 4.141933881099679,
+        "frozen2024_mean_nll": 4.252924832708986,
+        "market_mean_nll": 4.1429465464876545,
+        "probability_mean_brier": 0.9607297107878068,
+        "market_mean_brier": 0.9610066745914833,
+        "probability_top1_accuracy_percent": 11.0254433307633,
+        "market_top1_accuracy_percent": 11.10254433307633,
+        "price_total_fractional_bankroll_invested": 10.390812970102647,
+        "price_total_fractional_bankroll_returned": 7.809329731416226,
+        "price_portfolio_roi_percent": 75.15609946869326,
+        "price_mean_log_growth_per_race": -0.001992522814379706,
+        "price_compound_wealth_multiplier": 0.075448717626316,
+        "price_mean_cash_fraction": 0.5994289525789269,
+        "price_positive_signal_flat100_roi_percent": 95.73576799140709
+      },
+      "3連複": {
+        "races": 1297,
+        "probability_nll_sum": 3478.99156015848,
+        "frozen2024_nll_sum": 3558.4667242731043,
+        "market_nll_sum": 3482.996113658189,
+        "probability_brier_sum": 1136.8954239427069,
+        "market_brier_sum": 1137.4888236662798,
+        "probability_top1_hits": 322,
+        "market_top1_hits": 325,
+        "price_log_wealth_sum": -2.7438727436424295,
+        "price_expected_staked_bankroll_fraction": 10.843320871087489,
+        "price_realized_payout_bankroll_fraction": 8.10250822683275,
+        "price_cash_allocation_sum": 754.8339564456262,
+        "price_positive_signal_bets": 225,
+        "price_positive_signal_payout_yen": 0.0,
+        "probability_mean_nll": 2.6823373632679104,
+        "frozen2024_mean_nll": 2.7436135113902114,
+        "market_mean_nll": 2.685424914154348,
+        "probability_mean_brier": 0.8765577671107995,
+        "market_mean_brier": 0.8770152842453969,
+        "probability_top1_accuracy_percent": 24.82652274479568,
+        "market_top1_accuracy_percent": 25.05782575173477,
+        "price_total_fractional_bankroll_invested": 10.843320871087489,
+        "price_total_fractional_bankroll_returned": 8.10250822683275,
+        "price_portfolio_roi_percent": 74.72349405833032,
+        "price_mean_log_growth_per_race": -0.002115553387542351,
+        "price_compound_wealth_multiplier": 0.06432076608592807,
+        "price_mean_cash_fraction": 0.5819845462186787,
+        "price_positive_signal_flat100_roi_percent": 0.0
+      }
+    }
+  },
+  "weights_after": "63a0098a8b1a4dd971a932640a2bd906f6375a925dab53be05b281e5d2cb6e7a",
+  "updated_after_each_race": true,
+  "completed_at": "2026-10-20T14:49:24.493033+00:00"
+}
