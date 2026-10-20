@@ -4,6 +4,7 @@ Only the independent 2023+ data streams are accessed. Source reports are not tra
 import argparse, gzip, hashlib, json, tempfile
 from pathlib import Path
 from datetime import datetime, timezone
+from collections import Counter
 from urllib.request import urlopen, Request
 
 REPO = 'yuhevita-wq/keirin-market-analysis-'
@@ -33,6 +34,19 @@ def survey_gzip(data):
             unique.add(key)
     return {'records':count,'unique_races':len(unique),'duplicates':duplicates,'fields':sorted(fields)},unique
 
+def month_from_id(race_id, year):
+    # Mechanical date decode for the stored 16-digit archive ID;
+    # unrecognised IDs are excluded from monthly plots, never guessed.
+    ident = str(race_id)
+    if len(ident) != 16 or not ident.isdigit():
+        return None
+    candidate = ident[2:10]
+    try:
+        date = datetime.strptime(candidate, '%Y%m%d')
+    except ValueError:
+        return None
+    return date.strftime('%Y-%m') if date.year == year else None
+
 def connect(year):
     if year < 2023 or year > 2026:
         raise ValueError('Only 2023 onward through archived 2026 supported')
@@ -48,6 +62,12 @@ def connect(year):
     if odds['unique_races']!=info['complete_races']:
         raise ValueError('Audit complete-races does not match archive')
     results,rid=survey_gzip(get(results_path))
+    oc = Counter(month_from_id(i, year) for i in oid)
+    mc = Counter(month_from_id(i, year) for i in (oid & rid))
+    monthly = [{'month': f'{year}-{m:02d}',
+                'odds_races': oc[f'{year}-{m:02d}'],
+                'matched_races': mc[f'{year}-{m:02d}']}
+               for m in range(1, 13)]
     report={
         'source_status':'CONNECTED_AWAITING_TARGET',
         'model_status':'UNTRAINED',
@@ -58,6 +78,9 @@ def connect(year):
         'odds_path':odds_path,
         'results_path':results_path,
         'odds_races':odds['unique_races'],
+        'monthly':monthly,
+        'undated_odds_races':oc[None],
+        'undated_matched_races':mc[None],
         'result_races':results['unique_races'],
         'matched_races':len(oid&rid),
         'unmatched_odds_races':len(oid-rid),
