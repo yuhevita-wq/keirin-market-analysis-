@@ -108,6 +108,20 @@ def metrics(record):
 def collect(args):
     store=Store(args.output,args.github);source=Source(args.pause)
     state=store.load(INDEX,'state.json.gz',dict(schema=1,next_date=args.end,start_date=args.start,end_date=args.end,pending_dates=[],days={},totals={k:0 for k in ['races','interim_races','frames','observations','official_complete']},warnings=[]))
+    sample_plan={};sample_days={};sample_helpers=None
+    if args.sample_gate:
+        sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'odds_path_power'))
+        import sample_size as sample_helpers
+        sample_plan=store.load(sample_helpers.POWER_TAG,'sample_plan.json.gz',{})
+        sample_status=store.load(sample_helpers.POWER_TAG,'sample_status.json.gz',{})
+        if sample_plan.get('frozen'):
+            if sample_status.get('plan_id')!=sample_plan.get('plan_id'):
+                raise ValueError('Frozen sample plan and audited coverage do not match')
+            sample_days={p:dict(sample_status['coverage'][p].get('date_counts',{})) for p in POOLS}
+            if sample_helpers.gate(sample_plan,sample_status['coverage']):
+                print(json.dumps({'event':'sample_target_already_met','plan_id':sample_plan['plan_id'],'coverage':sample_status['coverage']},ensure_ascii=False),flush=True)
+                return
+        print(json.dumps({'event':'sample_gate','plan_frozen':sample_plan.get('frozen',False),'targets':sample_plan.get('targets',{}),'reason':'Collect more nuisance-variance pilot data until plan can be frozen; never stop on significance.'},ensure_ascii=False),flush=True)
     if state['start_date']!=args.start:raise ValueError('Existing archive start differs; do not silently reset')
     if args.end>state['end_date']:
         # Queue newly requested days without losing the historical cursor.
@@ -137,6 +151,17 @@ def collect(args):
             state['totals']={k:sum(v.get(k,0) for v in state['day_totals'].values()) for k in totals}
             state['updated_at']=datetime.now(JST).isoformat();store.save(INDEX,'state.json.gz',state)
             local=store.root/'progress.json';local.write_text(json.dumps(state,ensure_ascii=False,indent=2))
+            if sample_plan.get('frozen'):
+                local_counts=sample_helpers.counts(records.values(),sample_plan)
+                for pool in POOLS:
+                    count=local_counts[pool]['races']
+                    if count:sample_days[pool][day]=count
+                    else:sample_days[pool].pop(day,None)
+                coverage={p:{'races':sum(sample_days[p].values()),'days':len(sample_days[p]),'date_counts':sample_days[p]} for p in POOLS}
+                state['sample_collection_sufficient']=sample_helpers.gate(sample_plan,coverage)
+                state['sample_plan_id']=sample_plan['plan_id'];state['sample_coverage']=coverage
+                store.save(INDEX,'state.json.gz',state)
+                print(json.dumps({'event':'sample_progress','coverage':coverage,'sufficient':state['sample_collection_sufficient']},ensure_ascii=False),flush=True)
         try:
             catalog,_=source.api(day);tracks=catalog['kr_info'].get('track_info') or []
             if not tracks:raise ValueError('No explicit meeting list returned for requested date')
@@ -167,7 +192,10 @@ def collect(args):
                         new_count+=1
                         if rec['official']['status']!='complete':errors.append({'day':day,'track':track,'race':number,'error':'official_pending'})
                         print(json.dumps({'event':'race_saved','date':day,'track':track,'race':number,'interim':metrics(rec)['interim_races'],'observations':metrics(rec)['observations'],'official':rec['official']['status'],'totals':state['totals']},ensure_ascii=False),flush=True)
-                        if new_count==1 or new_count%args.checkpoint_every==0:checkpoint()
+                        if new_count==1 or new_count%args.checkpoint_every==0:
+                            checkpoint()
+                            if state.get('sample_collection_sufficient'):
+                                interrupted=True;break
                     except Exception as e:errors.append({'day':day,'track':track,'race':number,'error':str(e)});print(json.dumps(errors[-1],ensure_ascii=False),flush=True)
                 if interrupted:break
         except Exception as e:errors.append({'day':day,'error':str(e)})
@@ -196,8 +224,9 @@ def self_test():
     print('PASS: official payout axes, cutoff, pool scope, actual roster cardinality, fallback-date rejection')
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--self-test',action='store_true');p.add_argument('--github',action='store_true');p.add_argument('--start',default='2021-01-01');p.add_argument('--end',default=(datetime.now(JST).date()-timedelta(days=1)).isoformat());p.add_argument('--minutes',type=float,default=45);p.add_argument('--pause',type=float,default=1.5);p.add_argument('--checkpoint-every',type=int,default=5);p.add_argument('--max-races',type=int,default=0);p.add_argument('--output',default='work/path_odds_archive');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--self-test',action='store_true');p.add_argument('--sample-gate',action='store_true');p.add_argument('--github',action='store_true');p.add_argument('--start',default='2021-01-01');p.add_argument('--end',default=(datetime.now(JST).date()-timedelta(days=1)).isoformat());p.add_argument('--minutes',type=float,default=45);p.add_argument('--pause',type=float,default=1.5);p.add_argument('--checkpoint-every',type=int,default=5);p.add_argument('--max-races',type=int,default=0);p.add_argument('--output',default='work/path_odds_archive');a=p.parse_args()
     if a.self_test:self_test()
     else:collect(a)
 
 if __name__=='__main__':main()
+

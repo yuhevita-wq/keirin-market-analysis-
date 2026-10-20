@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/collect-historical-path-odds.yml'
       - 'research/odds_path_archive/**'
+      - 'research/odds_path_power/**'
   workflow_dispatch:
   schedule:
     - cron: '13 */4 * * *'
@@ -25,20 +26,35 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
-          sparse-checkout: research/odds_path_archive
+          sparse-checkout: |
+            research/odds_path_archive
+            research/odds_path_power
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - name: Verify scope, official payout axes and future-date rejection
         run: python research/odds_path_archive/collect.py --self-test
+      - name: Install numerical dependency for sample-size planning
+        run: python -m pip install numpy
+      - name: Audit usable races and freeze independent sample-size targets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: python -u research/odds_path_power/sample_size.py
       - name: Resume historical acquisition and save durable checkpoints
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
           python -u research/odds_path_archive/collect.py \
-            --github --start 2021-01-01 --end 2026-10-18 \
+            --github --sample-gate --start 2021-01-01 --end 2026-10-18 \
             --minutes 45 --pause 1.5 --checkpoint-every 5
+      - name: Update sufficiency audit after acquisition
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: python -u research/odds_path_power/sample_size.py
       - name: Write acquisition counts to run summary
         if: always()
         run: |
@@ -55,3 +71,4 @@ jobs:
                   f.write('```json\n'+json.dumps(x['totals'],ensure_ascii=False,indent=2)+'\n```\n')
                   f.write('\nPending dates: '+str(len(x.get('pending_dates',[])))+'\n')
           PY
+
