@@ -212,7 +212,9 @@ def run(source):
                if source == "sealed" else
                "GEN-008-V3-ME-R-ALL-PLAIN-2021-2026-CHRONO")
     out = ROOT / "research/deletion_ai/outputs" / dirname
-    web = ROOT / "docs/ai-lab" / f"gen008-v3me-archive-scale-{source}{'-chrono' if source == 'plain' else ''} .json".replace(" ", "")
+    web = ROOT / "docs/ai-lab" / (
+        "gen008-v3me-archive-scale-plain-chrono.json" if source == "plain"
+        else "gen008-v3me-archive-scale-sealed.json")
     if out.exists() or web.exists():
         raise RuntimeError("Immutable archive-scale run already exists: " + source)
     old, recent = baselines()
