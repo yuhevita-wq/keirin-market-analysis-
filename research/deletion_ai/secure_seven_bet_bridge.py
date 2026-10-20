@@ -20,6 +20,7 @@ import hashlib
 import json
 import math
 import os
+import re
 import subprocess
 import tempfile
 from collections import Counter,defaultdict
@@ -36,6 +37,7 @@ RESULTS=ROOT/"data/result_universe_v2/combined"
 SECRET_ENV="KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM"
 MODELED={"3rentan":"3連単","3renpuku":"3連複"}
 SEVEN=set(ALL_TYPES)
+GIRLS_RX=re.compile(r"ガールズ|女子|[ＬL]級",re.I)
 
 
 def race_day(rid):
@@ -175,6 +177,8 @@ def normalize_book(rid,day,rows):
     rtype={r[1] for r in rows}
     if len(rtype)!=1 or not next(iter(rtype)):
         return None,"race_type_missing"
+    if GIRLS_RX.search(next(iter(rtype))):
+        return None,"girls_excluded"
     bytype=defaultdict(dict)
     cars=set()
     for r in rows:
