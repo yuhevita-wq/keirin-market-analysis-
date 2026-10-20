@@ -1,0 +1,74 @@
+name: Paper-only AI | Adopted LINE RF full-year 2023 refit
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'paper_only_ai/train_line_full_2023.py'
+      - '.github/workflows/paper-only-ai-train-line-full-2023.yml'
+permissions:
+  contents: write
+concurrency:
+  group: paper-only-ai-line-full-year-2023
+  cancel-in-progress: false
+jobs:
+  line-full-refit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            paper_only_ai
+            docs/paper-only-ai-2023
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install fixed paper-only experiment libraries
+        run: |
+          python -m pip install 'numpy<3' 'pandas<3' 'scipy<2' 'scikit-learn<2' 'optuna<5' 'joblib<2'
+      - name: Validate code syntax before training
+        run: |
+          python -m py_compile paper_only_ai/train_line_full_2023.py
+          python -m py_compile paper_only_ai/compare_lines_2023.py
+      - name: Full 2023 refit of selected LINE-aware RF first second and third probability stages
+        env:
+          PYTHONUNBUFFERED: '1'
+          OMP_NUM_THREADS: '2'
+          OPENBLAS_NUM_THREADS: '2'
+          MKL_NUM_THREADS: '2'
+        run: python paper_only_ai/train_line_full_2023.py
+      - name: Keep complete trained model files and audit in Actions artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-only-line-aware-rf-full-2023-models
+          path: docs/paper-only-ai-2023/line_full_2023/
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Publish immutable model manifest and audit to repository
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/paper-only-ai-2023/line_full_2023/report.json docs/paper-only-ai-2023/line_full_2023/progress.json docs/paper-only-ai-2023/line_full_2023/manifest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record full-year 2023 adopted LINE-aware RF model refit"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Keep actual model weights permanently as a versioned GitHub Release
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="paper-only-line-rf-2023-v1"
+          ARCHIVE="docs/paper-only-ai-2023/line_full_2023/line_aware_rf_2023.tar.gz"
+          test -s "$ARCHIVE"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists; not overwriting existing model weights"
+          else
+            gh release create "$TAG" "$ARCHIVE#2023-line-aware-RF-three-stage-models.tar.gz" \
+              --title "2023 line-aware RF three-stage frozen probability AI (v1)" \
+              --notes "Three-stage first/second/third conditional probability RF fitted on all 2023 eligible races with recorded published line formation. Model-selection comparison was performed with Nov-Dec 2023 and these outcomes are now used for full-year refit; an independent 2024 validation is still required. Training script and SHA256 manifest are committed under docs/paper-only-ai-2023/line_full_2023/."
+          fi
