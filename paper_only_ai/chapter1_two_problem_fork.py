@@ -290,6 +290,8 @@ def quarter(q,train):
     theta,anchor=frozen.frozen_state()
     if state["source_frozen_2024"]!=anchor:
         raise RuntimeError("Model ancestry changed")
+    weights=state["weights"]
+    weights_before=hash_weights(weights)
     year=2025 if train else 2026
     records,audit=load_aligned(year,q)
     if not train and len(records)<100:
@@ -315,8 +317,6 @@ def quarter(q,train):
     parents=previous.frozen_deletion_parents()
     accuracy_asset,calibrated,_=duel.fetch_immutable_weights()
     metrics={role:{kind:empty_metrics() for kind in KINDS} for role in ROLES}
-    weights=state["weights"]
-    weights_before=hash_weights(weights)
     seen=0
     for start in range(0,len(records),16):
         batch=records[start:start+16]
