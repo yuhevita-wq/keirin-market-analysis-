@@ -1,0 +1,382 @@
+{
+  "state": "RESEARCH_ONLY",
+  "methodology": "Walsh and Joshi (2024), arXiv:2303.06021v4",
+  "started_at": "2026-10-20T01:39:48.625914+00:00",
+  "finished_at": "2026-10-20T01:40:23.534874+00:00",
+  "start_date": "2023-01-01",
+  "end_date": "2023-12-31",
+  "pretrained_models": false,
+  "existing_keirin_models_used": false,
+  "dataset": {
+    "duplicate_entries": 10234,
+    "missing_numeric": 738,
+    "absent_first_place_races": 68,
+    "files": {
+      "data/a_class_12/2023_01_02/entries.csv": 13902,
+      "data/a_class_12/2023_03_04/entries.csv": 13867,
+      "data/a_class_12/2023_05_06/entries.csv": 14315,
+      "data/a_class_12/2023_07_08/entries.csv": 13655,
+      "data/a_class_12/2023_09_10/entries.csv": 13815,
+      "data/a_class_12/2023_11_12/entries.csv": 13711,
+      "data/a3_challenge/2023_01_02/entries.csv": 6265,
+      "data/a3_challenge/2023_05_06/entries.csv": 5997,
+      "data/a3_challenge/2023_07_08/entries.csv": 6631,
+      "data/a3_challenge/2023_09_10/entries.csv": 6544,
+      "data/a3_challenge/2023_11_12/entries.csv": 6473,
+      "data/2023/s_class_f1_all_parts/2023_q1/entries.csv": 9289,
+      "data/2023/s_class_f1_all_parts/2023_q2/entries.csv": 8820,
+      "data/2023/s_class_f1_all_parts/2023_q3/entries.csv": 8569,
+      "data/2023/s_class_f1_all_parts/2023_q4/entries.csv": 9054,
+      "data/2023/s_class_yosen/entries.csv": 153
+    },
+    "races": 21876,
+    "rows": 150670,
+    "outcome_1": 21876,
+    "outcome_0": 128794,
+    "source_result": "data/result_universe_v2/combined/results_2023.jsonl.gz",
+    "a3_missing_period": "2023-03-01 to 2023-04-30 (dedicated archive absent)",
+    "pre_race_feature_verification": "Historical entries snapshots; retrospective source capture, availability at race time not independently certified"
+  },
+  "chronological_partitions": {
+    "train": {
+      "range": [
+        "2023-01-01",
+        "2023-06-30"
+      ],
+      "rows": 72247,
+      "races": 10502
+    },
+    "validation": {
+      "range": [
+        "2023-07-01",
+        "2023-08-31"
+      ],
+      "rows": 26258,
+      "races": 3820
+    },
+    "selection_test": {
+      "range": [
+        "2023-09-01",
+        "2023-10-31"
+      ],
+      "rows": 25977,
+      "races": 3759
+    },
+    "holdout": {
+      "range": [
+        "2023-11-01",
+        "2023-12-31"
+      ],
+      "rows": 26188,
+      "races": 3795
+    }
+  },
+  "feature_filter": {
+    "retained": [
+      "car_no",
+      "gear",
+      "s_count",
+      "b_count",
+      "sashi_count",
+      "mark_count",
+      "first_count",
+      "second_count",
+      "third_count",
+      "outside_count"
+    ],
+    "excluded": {
+      "age": "KS p<0.01",
+      "term": "KS p<0.01",
+      "score": "KS p<0.01",
+      "nige_count": "Spearman >0.7 with b_count",
+      "makuri_count": "Spearman >0.7 with b_count",
+      "win_rate": "Spearman >0.7 with first_count",
+      "top2_rate": "Spearman >0.7 with first_count",
+      "top3_rate": "KS p<0.01"
+    }
+  },
+  "branches": {
+    "calibration": {
+      "metric": "calibration",
+      "features": [
+        "first_count",
+        "car_no",
+        "second_count"
+      ],
+      "sfs": [
+        {
+          "feature": "first_count",
+          "objective": 0.021800971280372214
+        },
+        {
+          "feature": "car_no",
+          "objective": 0.015059308688558063
+        },
+        {
+          "feature": "second_count",
+          "objective": 0.01416273046112971
+        },
+        {
+          "feature": "s_count",
+          "objective": 0.014188609644815251
+        },
+        {
+          "feature": "third_count",
+          "objective": 0.014373715468025414
+        },
+        {
+          "feature": "gear",
+          "objective": 0.014567880299852502
+        },
+        {
+          "feature": "sashi_count",
+          "objective": 0.014375860975022562
+        },
+        {
+          "feature": "b_count",
+          "objective": 0.0151272782625104
+        }
+      ],
+      "candidates": [
+        {
+          "algorithm": "LR",
+          "params": {
+            "C": 0.013422015695828295
+          },
+          "validation_score": 0.012138885881244841,
+          "test_accuracy": 0.8571043615506024,
+          "test_ece_strict": 0.010343105402080922,
+          "test_occupied_bins": [
+            17,
+            17
+          ],
+          "test_loss": 0.010343105402080922
+        },
+        {
+          "algorithm": "RF",
+          "params": {
+            "trees": 95,
+            "depth": 8,
+            "leaf": 3
+          },
+          "validation_score": 0.008929947535961841,
+          "test_accuracy": 0.8566424144435462,
+          "test_ece_strict": 0.0062771936820625995,
+          "test_occupied_bins": [
+            17,
+            17
+          ],
+          "test_loss": 0.0062771936820625995
+        },
+        {
+          "algorithm": "SVM",
+          "params": {
+            "C": 0.03756717534925374,
+            "kernel": "linear",
+            "gamma": "scale"
+          },
+          "validation_score": 1.0,
+          "test_accuracy": 0.8552950687146321,
+          "test_ece_strict": 1.0,
+          "test_occupied_bins": [
+            1,
+            1
+          ],
+          "test_loss": 1.0
+        },
+        {
+          "algorithm": "MLP",
+          "params": {
+            "hidden": 16,
+            "alpha": 0.0004885611498284675,
+            "lr": 0.00032398535702273944
+          },
+          "validation_score": 0.013530675866604981,
+          "test_accuracy": 0.8567579012203103,
+          "test_ece_strict": 1.0,
+          "test_occupied_bins": [
+            15,
+            15
+          ],
+          "test_loss": 1.0
+        }
+      ],
+      "selection": {
+        "algorithm": "RF",
+        "params": {
+          "trees": 95,
+          "depth": 8,
+          "leaf": 3
+        },
+        "validation_score": 0.008929947535961841,
+        "test_accuracy": 0.8566424144435462,
+        "test_ece_strict": 0.0062771936820625995,
+        "test_occupied_bins": [
+          17,
+          17
+        ],
+        "test_loss": 0.0062771936820625995
+      },
+      "passes_paper_coverage": true,
+      "holdout": {
+        "accuracy": 0.8566900870627768,
+        "ece_unconstrained": 0.008548872446697877,
+        "ece_20bin_80pct_rule": 0.008548872446697877,
+        "bins_per_class": [
+          18,
+          18
+        ],
+        "rows": 26188
+      },
+      "final_fit_rows": 80000
+    },
+    "accuracy": {
+      "metric": "accuracy",
+      "features": [
+        "car_no",
+        "gear",
+        "mark_count",
+        "outside_count",
+        "sashi_count",
+        "s_count"
+      ],
+      "sfs": [
+        {
+          "feature": "car_no",
+          "objective": 0.14366666666666672
+        },
+        {
+          "feature": "gear",
+          "objective": 0.14366666666666672
+        },
+        {
+          "feature": "mark_count",
+          "objective": 0.14366666666666672
+        },
+        {
+          "feature": "outside_count",
+          "objective": 0.14366666666666672
+        },
+        {
+          "feature": "sashi_count",
+          "objective": 0.14366666666666672
+        },
+        {
+          "feature": "s_count",
+          "objective": 0.1433333333333333
+        },
+        {
+          "feature": "third_count",
+          "objective": 0.14341666666666664
+        },
+        {
+          "feature": "b_count",
+          "objective": 0.14416666666666667
+        }
+      ],
+      "candidates": [
+        {
+          "algorithm": "LR",
+          "params": {
+            "C": 3.158946410902786
+          },
+          "validation_score": 0.14521288750095207,
+          "test_accuracy": 0.8555260422681603,
+          "test_ece_strict": 1.0,
+          "test_occupied_bins": [
+            13,
+            13
+          ],
+          "test_loss": 0.1444739577318397
+        },
+        {
+          "algorithm": "RF",
+          "params": {
+            "trees": 95,
+            "depth": 8,
+            "leaf": 3
+          },
+          "validation_score": 0.1447178002894356,
+          "test_accuracy": 0.8563344497055088,
+          "test_ece_strict": 1.0,
+          "test_occupied_bins": [
+            15,
+            15
+          ],
+          "test_loss": 0.14366555029449124
+        },
+        {
+          "algorithm": "SVM",
+          "params": {
+            "C": 0.03756717534925374,
+            "kernel": "linear",
+            "gamma": "scale"
+          },
+          "validation_score": 0.14547947292253793,
+          "test_accuracy": 0.8552950687146321,
+          "test_ece_strict": 1.0,
+          "test_occupied_bins": [
+            2,
+            2
+          ],
+          "test_loss": 0.14470493128536788
+        },
+        {
+          "algorithm": "MLP",
+          "params": {
+            "hidden": 16,
+            "alpha": 0.0004885611498284675,
+            "lr": 0.00032398535702273944
+          },
+          "validation_score": 0.14479396755274587,
+          "test_accuracy": 0.8562574585209993,
+          "test_ece_strict": 1.0,
+          "test_occupied_bins": [
+            15,
+            15
+          ],
+          "test_loss": 0.14374254147900067
+        }
+      ],
+      "selection": {
+        "algorithm": "RF",
+        "params": {
+          "trees": 95,
+          "depth": 8,
+          "leaf": 3
+        },
+        "validation_score": 0.1447178002894356,
+        "test_accuracy": 0.8563344497055088,
+        "test_ece_strict": 1.0,
+        "test_occupied_bins": [
+          15,
+          15
+        ],
+        "test_loss": 0.14366555029449124
+      },
+      "passes_paper_coverage": true,
+      "holdout": {
+        "accuracy": 0.8579120207728731,
+        "ece_unconstrained": 0.011871485740638696,
+        "ece_20bin_80pct_rule": 0.011871485740638696,
+        "bins_per_class": [
+          16,
+          16
+        ],
+        "rows": 26188
+      },
+      "final_fit_rows": 80000
+    }
+  },
+  "no_odds_comparison": true,
+  "no_roi_computed": true,
+  "limitations": [
+    "Binary target = individual rider wins versus does not win",
+    "No published odds exist for the constructed binary target",
+    "Time availability of historically captured pre-race statistics is not independently certified",
+    "2023 A3 March-Apr dedicated entry file is absent",
+    "Forward selection capped at 8 features; tuning uses 3 trials/model",
+    "SVM fitting capped at 8000 records, other fitting capped at 80000 records",
+    "20-bin 80%-coverage rule must pass for a calibrated model to be validated"
+  ]
+}
