@@ -1,7 +1,7 @@
 """Paper-only AI: source bridge. Data provenance only, no knowledge, no model training.
 Only the independent 2023+ data streams are accessed. Source reports are not training features.
 """
-import argparse, gzip, hashlib, json, tempfile
+import argparse, csv, gzip, hashlib, io, json
 from pathlib import Path
 from datetime import datetime, timezone
 from collections import Counter
@@ -50,6 +50,66 @@ def month_from_id(race_id, year):
         return None
     return date.strftime('%Y-%m') if date.year == year else None
 
+
+def read_race_manifests(paths, year):
+    ids = set()
+    by_month = Counter()
+    duplicates = 0
+    file_counts = []
+    for path in paths:
+        raw = get(path).decode('utf-8-sig')
+        rows = csv.DictReader(io.StringIO(raw))
+        if not rows.fieldnames or 'race_id' not in rows.fieldnames or 'race_date' not in rows.fieldnames:
+            raise ValueError('Missing race_id/race_date in '+path)
+        n = 0
+        for row in rows:
+            race_id = str(row['race_id']).strip()
+            date = str(row['race_date']).strip()
+            if not race_id or not date.startswith(str(year)+'-'):
+                raise ValueError('Missing or out-of-year race id/date in '+path)
+            try:
+                date_obj = datetime.strptime(date,'%Y-%m-%d')
+            except ValueError:
+                raise ValueError('Invalid date in '+path)
+            n += 1
+            if race_id in ids:
+                duplicates += 1
+                continue
+            ids.add(race_id)
+            by_month[date_obj.strftime('%Y-%m')] += 1
+        file_counts.append({'path':path,'rows':n})
+    return {'unique_races':len(ids),'duplicate_rows':duplicates,'files':file_counts,
+            'monthly':[{'month':f'{year}-{m:02d}','races':by_month[f'{year}-{m:02d}']}
+                       for m in range(1,13)]}, ids
+
+def load_2023_all_a_inventory(result_ids, odds_ids):
+    year=2023
+    intervals=['01_02','03_04','05_06','07_08','09_10','11_12']
+    a12_paths=[f'data/a_class_12/2023_{interval}/races.csv' for interval in intervals]
+    # 2023_03_04 is absent in the A3 archive; report the missing interval explicitly.
+    a3_intervals=['01_02','05_06','07_08','09_10','11_12']
+    a3_paths=[f'data/a3_challenge/2023_{interval}/races.csv' for interval in a3_intervals]
+    a12,a12_ids=read_race_manifests(a12_paths,year)
+    a3,a3_ids=read_race_manifests(a3_paths,year)
+    overlap=a12_ids&a3_ids
+    if overlap:
+        raise ValueError('A1/A2 and A3 manifests contain overlapping race IDs')
+    identified=a12_ids|a3_ids
+    matched=identified & result_ids
+    return {
+        'scope':'Race-entry manifests, not odds-only records; distinct race IDs',
+        'a1_a2':a12,
+        'a3':a3,
+        'a3_missing_intervals':['2023-03-01/2023-04-30'],
+        'identified_a_races':len(identified),
+        'identified_a_with_results':len(matched),
+        'identified_a_with_odds':len(identified&odds_ids),
+        'identified_a_missing_results':len(identified-result_ids),
+        'results_not_in_identified_a':len(result_ids-matched),
+        'result_universe_a_majority_confirmed':len(matched)>len(result_ids-matched),
+        'notes':'Source inventory only. No race type or result label is used as a model input.'
+    }
+
 def connect(year):
     if year < 2023 or year > 2026:
         raise ValueError('Only 2023 onward through archived 2026 supported')
@@ -71,6 +131,7 @@ def connect(year):
                 'odds_races': oc[f'{year}-{m:02d}'],
                 'matched_races': mc[f'{year}-{m:02d}']}
                for m in range(1, 13)]
+    all_a = load_2023_all_a_inventory(rid, oid) if year == 2023 else None
     report={
         'source_status':'CONNECTED_AWAITING_TARGET',
         'model_status':'UNTRAINED',
@@ -85,6 +146,7 @@ def connect(year):
         'undated_odds_races':oc[None],
         'undated_matched_races':mc[None],
         'result_races':results['unique_races'],
+        'a_class_inventory':all_a,
         'matched_races':len(oid&rid),
         'unmatched_odds_races':len(oid-rid),
         'unmatched_result_races':len(rid-oid),
