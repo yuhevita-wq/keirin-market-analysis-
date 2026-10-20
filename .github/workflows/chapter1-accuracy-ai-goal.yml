@@ -1,0 +1,83 @@
+name: Chapter 1 | Self-learning accuracy AI target
+on:
+  workflow_dispatch:
+  schedule:
+    # 09:00 and 21:00 JST, GitHub schedule is active only on main.
+    - cron: '0 0,12 * * *'
+  push:
+    paths:
+      - 'paper_only_ai/chapter1_accuracy_ai.py'
+      - 'paper_only_ai/test_chapter1_accuracy_ai.py'
+      - '.github/workflows/chapter1-accuracy-ai-goal.yml'
+permissions:
+  contents: write
+concurrency:
+  group: chapter1-accuracy-target-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  accuracy-research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            paper_only_ai
+            docs/paper-only-ai-2023/autonomous_chapter1
+            docs/paper-only-ai-2023/chapter1_accuracy_ai
+          sparse-checkout-cone-mode: false
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install stable scientific dependencies
+        run: python -m pip install 'numpy<3' 'pandas<3' 'scipy<2' 'scikit-learn<2' 'joblib<2' 'optuna<5'
+      - name: Check strict goal thresholds, scoring and source invariants
+        run: |
+          python -m py_compile paper_only_ai/chapter1_accuracy_ai.py
+          python paper_only_ai/test_chapter1_accuracy_ai.py
+      - name: Advance independent accuracy AI by four generations
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PYTHONUNBUFFERED: '1'
+          OMP_NUM_THREADS: '2'
+          OPENBLAS_NUM_THREADS: '2'
+          MKL_NUM_THREADS: '2'
+        run: python paper_only_ai/chapter1_accuracy_ai.py
+      - name: Always preserve development history and model weights
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: accuracy-ai-research-${{ github.run_id }}
+          path: docs/paper-only-ai-2023/chapter1_accuracy_ai/
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Archive promoted accuracy AI weights without overwriting
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          shopt -s nullglob
+          for asset in docs/paper-only-ai-2023/chapter1_accuracy_ai/accuracy_champion_acc-g*.joblib; do
+            base=$(basename "$asset" .joblib)
+            tag="chapter1-$base"
+            if gh release view "$tag" >/dev/null 2>&1; then
+              echo "Already archived $tag, retaining original"
+              continue
+            fi
+            gh release create "$tag" "$asset" \
+              --target "$GITHUB_SHA" \
+              --title "Accuracy-focused winner AI research $base" \
+              --notes "2023 Jan-Aug trained. October development model selection, historical Nov-Dec verification once. NOT guaranteed profitable or validated on future races."
+          done
+      - name: Commit research state and failed experiments permanently
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/paper-only-ai-2023/chapter1_accuracy_ai/state.json docs/paper-only-ai-2023/chapter1_accuracy_ai/latest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Store independent chapter1 accuracy AI candidates and historical checks"
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
