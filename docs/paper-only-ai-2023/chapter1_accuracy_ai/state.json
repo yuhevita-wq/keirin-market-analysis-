@@ -1,0 +1,911 @@
+{
+  "schema": "chapter1-accuracy-learner-v1",
+  "generation": 4,
+  "goal": {
+    "winner_top1": 0.45,
+    "exact_trifecta_top1": 0.115,
+    "minimum_gain_vs_october_frozen_baseline_winner": 0.01,
+    "minimum_gain_vs_october_frozen_baseline_trifecta": 0.005,
+    "min_october_races": 1200,
+    "confirm_nov_dec_winner": 0.44,
+    "confirm_nov_dec_trifecta": 0.1
+  },
+  "champion": {
+    "id": "acc-g02-c03",
+    "generation": 2,
+    "config": {
+      "family": "hgb",
+      "max_iter": 250,
+      "max_leaf_nodes": 20,
+      "learning_rate": 0.08,
+      "min_samples_leaf": 120,
+      "l2_regularization": 8.0,
+      "mask": "all"
+    },
+    "temperature": 1.5,
+    "october": {
+      "races": 1876,
+      "winner_hits": 798,
+      "trifecta_hits": 239,
+      "winner_top1": 0.4253731343283582,
+      "trifecta_top1": 0.12739872068230276,
+      "one_pick_per_race_each_metric": true,
+      "temperature": 1.5
+    },
+    "alternative_temperatures": [
+      {
+        "races": 1876,
+        "winner_hits": 798,
+        "trifecta_hits": 231,
+        "winner_top1": 0.4253731343283582,
+        "trifecta_top1": 0.12313432835820895,
+        "one_pick_per_race_each_metric": true,
+        "temperature": 0.75
+      },
+      {
+        "races": 1876,
+        "winner_hits": 798,
+        "trifecta_hits": 234,
+        "winner_top1": 0.4253731343283582,
+        "trifecta_top1": 0.12473347547974413,
+        "one_pick_per_race_each_metric": true,
+        "temperature": 1.0
+      },
+      {
+        "races": 1876,
+        "winner_hits": 798,
+        "trifecta_hits": 237,
+        "winner_top1": 0.4253731343283582,
+        "trifecta_top1": 0.1263326226012793,
+        "one_pick_per_race_each_metric": true,
+        "temperature": 1.25
+      },
+      {
+        "races": 1876,
+        "winner_hits": 798,
+        "trifecta_hits": 239,
+        "winner_top1": 0.4253731343283582,
+        "trifecta_top1": 0.12739872068230276,
+        "one_pick_per_race_each_metric": true,
+        "temperature": 1.5
+      }
+    ],
+    "model_asset": {
+      "file": "docs/paper-only-ai-2023/chapter1_accuracy_ai/accuracy_champion_acc-g02-c03.joblib",
+      "sha256": "57d78360ec0eec09fd61bae1c36fddd2e87bd83c9c7a2ecfb4072451816da4d1",
+      "generation": 2,
+      "candidate_id": "acc-g02-c03"
+    }
+  },
+  "attempts": [
+    {
+      "generation": 1,
+      "results": [
+        {
+          "id": "acc-g01-c01",
+          "generation": 1,
+          "config": {
+            "family": "extra_trees",
+            "n_estimators": 160,
+            "max_depth": 12,
+            "min_samples_leaf": 8,
+            "max_features": 0.8,
+            "mask": "all"
+          },
+          "temperature": 1.0,
+          "october": {
+            "races": 1876,
+            "winner_hits": 761,
+            "trifecta_hits": 234,
+            "winner_top1": 0.4056503198294243,
+            "trifecta_top1": 0.12473347547974413,
+            "one_pick_per_race_each_metric": true,
+            "temperature": 1.0
+          },
+          "alternative_temperatures": [
+            {
+              "races": 1876,
+              "winner_hits": 761,
+              "trifecta_hits": 233,
+              "winner_top1": 0.4056503198294243,
+              "trifecta_top1": 0.1242004264392324,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 0.75
+            },
+            {
+              "races": 1876,
+              "winner_hits": 761,
+              "trifecta_hits": 234,
+              "winner_top1": 0.4056503198294243,
+              "trifecta_top1": 0.12473347547974413,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.0
+            },
+            {
+              "races": 1876,
+              "winner_hits": 761,
+              "trifecta_hits": 233,
+              "winner_top1": 0.4056503198294243,
+              "trifecta_top1": 0.1242004264392324,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.25
+            },
+            {
+              "races": 1876,
+              "winner_hits": 761,
+              "trifecta_hits": 234,
+              "winner_top1": 0.4056503198294243,
+              "trifecta_top1": 0.12473347547974413,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.5
+            }
+          ],
+          "model_asset": {
+            "file": "docs/paper-only-ai-2023/chapter1_accuracy_ai/accuracy_champion_acc-g01-c01.joblib",
+            "sha256": "89026f69a2e198c2caddb4e556fddfb1a46dfed198a994516c37c68981c14846",
+            "generation": 1,
+            "candidate_id": "acc-g01-c01"
+          }
+        },
+        {
+          "id": "acc-g01-c02",
+          "generation": 1,
+          "config": {
+            "family": "hgb",
+            "max_iter": 180,
+            "max_leaf_nodes": 20,
+            "learning_rate": 0.045,
+            "min_samples_leaf": 60,
+            "l2_regularization": 12.0,
+            "mask": "all"
+          },
+          "temperature": 1.5,
+          "october": {
+            "races": 1876,
+            "winner_hits": 787,
+            "trifecta_hits": 243,
+            "winner_top1": 0.4195095948827292,
+            "trifecta_top1": 0.12953091684434967,
+            "one_pick_per_race_each_metric": true,
+            "temperature": 1.5
+          },
+          "alternative_temperatures": [
+            {
+              "races": 1876,
+              "winner_hits": 787,
+              "trifecta_hits": 238,
+              "winner_top1": 0.4195095948827292,
+              "trifecta_top1": 0.12686567164179105,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 0.75
+            },
+            {
+              "races": 1876,
+              "winner_hits": 787,
+              "trifecta_hits": 239,
+              "winner_top1": 0.4195095948827292,
+              "trifecta_top1": 0.12739872068230276,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.0
+            },
+            {
+              "races": 1876,
+              "winner_hits": 787,
+              "trifecta_hits": 238,
+              "winner_top1": 0.4195095948827292,
+              "trifecta_top1": 0.12686567164179105,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.25
+            },
+            {
+              "races": 1876,
+              "winner_hits": 787,
+              "trifecta_hits": 243,
+              "winner_top1": 0.4195095948827292,
+              "trifecta_top1": 0.12953091684434967,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.5
+            }
+          ],
+          "model_asset": {
+            "file": "docs/paper-only-ai-2023/chapter1_accuracy_ai/accuracy_champion_acc-g01-c02.joblib",
+            "sha256": "30174f113f5c2104a47a50846f735c9840bbec0b7560a0e2448786aa02b5565c",
+            "generation": 1,
+            "candidate_id": "acc-g01-c02"
+          }
+        },
+        {
+          "id": "acc-g01-c03",
+          "generation": 1,
+          "config": {
+            "family": "rf",
+            "n_estimators": 150,
+            "max_depth": 12,
+            "min_samples_leaf": 10,
+            "max_features": 0.75,
+            "mask": "all"
+          },
+          "temperature": 1.25,
+          "october": {
+            "races": 1876,
+            "winner_hits": 777,
+            "trifecta_hits": 240,
+            "winner_top1": 0.4141791044776119,
+            "trifecta_top1": 0.1279317697228145,
+            "one_pick_per_race_each_metric": true,
+            "temperature": 1.25
+          },
+          "alternative_temperatures": [
+            {
+              "races": 1876,
+              "winner_hits": 777,
+              "trifecta_hits": 238,
+              "winner_top1": 0.4141791044776119,
+              "trifecta_top1": 0.12686567164179105,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 0.75
+            },
+            {
+              "races": 1876,
+              "winner_hits": 777,
+              "trifecta_hits": 239,
+              "winner_top1": 0.4141791044776119,
+              "trifecta_top1": 0.12739872068230276,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.0
+            },
+            {
+              "races": 1876,
+              "winner_hits": 777,
+              "trifecta_hits": 240,
+              "winner_top1": 0.4141791044776119,
+              "trifecta_top1": 0.1279317697228145,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.25
+            },
+            {
+              "races": 1876,
+              "winner_hits": 777,
+              "trifecta_hits": 239,
+              "winner_top1": 0.4141791044776119,
+              "trifecta_top1": 0.12739872068230276,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.5
+            }
+          ]
+        },
+        {
+          "id": "acc-g01-c04",
+          "generation": 1,
+          "config": {
+            "family": "lr",
+            "C": 0.75,
+            "mask": "all"
+          },
+          "temperature": 1.5,
+          "october": {
+            "races": 1876,
+            "winner_hits": 725,
+            "trifecta_hits": 220,
+            "winner_top1": 0.38646055437100213,
+            "trifecta_top1": 0.11727078891257996,
+            "one_pick_per_race_each_metric": true,
+            "temperature": 1.5
+          },
+          "alternative_temperatures": [
+            {
+              "races": 1876,
+              "winner_hits": 725,
+              "trifecta_hits": 218,
+              "winner_top1": 0.38646055437100213,
+              "trifecta_top1": 0.1162046908315565,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 0.75
+            },
+            {
+              "races": 1876,
+              "winner_hits": 725,
+              "trifecta_hits": 219,
+              "winner_top1": 0.38646055437100213,
+              "trifecta_top1": 0.11673773987206823,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.0
+            },
+            {
+              "races": 1876,
+              "winner_hits": 725,
+              "trifecta_hits": 219,
+              "winner_top1": 0.38646055437100213,
+              "trifecta_top1": 0.11673773987206823,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.25
+            },
+            {
+              "races": 1876,
+              "winner_hits": 725,
+              "trifecta_hits": 220,
+              "winner_top1": 0.38646055437100213,
+              "trifecta_top1": 0.11727078891257996,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "generation": 2,
+      "results": [
+        {
+          "id": "acc-g02-c01",
+          "generation": 2,
+          "config": {
+            "family": "extra_trees",
+            "n_estimators": 140,
+            "max_depth": 26,
+            "min_samples_leaf": 3,
+            "max_features": 0.7,
+            "mask": "drop_rates"
+          },
+          "temperature": 0.75,
+          "october": {
+            "races": 1876,
+            "winner_hits": 746,
+            "trifecta_hits": 233,
+            "winner_top1": 0.3976545842217484,
+            "trifecta_top1": 0.1242004264392324,
+            "one_pick_per_race_each_metric": true,
+            "temperature": 0.75
+          },
+          "alternative_temperatures": [
+            {
+              "races": 1876,
+              "winner_hits": 746,
+              "trifecta_hits": 233,
+              "winner_top1": 0.3976545842217484,
+              "trifecta_top1": 0.1242004264392324,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 0.75
+            },
+            {
+              "races": 1876,
+              "winner_hits": 746,
+              "trifecta_hits": 232,
+              "winner_top1": 0.3976545842217484,
+              "trifecta_top1": 0.12366737739872068,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.0
+            },
+            {
+              "races": 1876,
+              "winner_hits": 746,
+              "trifecta_hits": 230,
+              "winner_top1": 0.3976545842217484,
+              "trifecta_top1": 0.12260127931769722,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.25
+            },
+            {
+              "races": 1876,
+              "winner_hits": 746,
+              "trifecta_hits": 232,
+              "winner_top1": 0.3976545842217484,
+              "trifecta_top1": 0.12366737739872068,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.5
+            }
+          ]
+        },
+        {
+          "id": "acc-g02-c02",
+          "generation": 2,
+          "config": {
+            "family": "hgb",
+            "max_iter": 140,
+            "max_leaf_nodes": 12,
+            "learning_rate": 0.045,
+            "min_samples_leaf": 80,
+            "l2_regularization": 50.0,
+            "mask": "all"
+          },
+          "temperature": 1.0,
+          "october": {
+            "races": 1876,
+            "winner_hits": 790,
+            "trifecta_hits": 240,
+            "winner_top1": 0.4211087420042644,
+            "trifecta_top1": 0.1279317697228145,
+            "one_pick_per_race_each_metric": true,
+            "temperature": 1.0
+          },
+          "alternative_temperatures": [
+            {
+              "races": 1876,
+              "winner_hits": 790,
+              "trifecta_hits": 232,
+              "winner_top1": 0.4211087420042644,
+              "trifecta_top1": 0.12366737739872068,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 0.75
+            },
+            {
+              "races": 1876,
+              "winner_hits": 790,
+              "trifecta_hits": 240,
+              "winner_top1": 0.4211087420042644,
+              "trifecta_top1": 0.1279317697228145,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.0
+            },
+            {
+              "races": 1876,
+              "winner_hits": 790,
+              "trifecta_hits": 239,
+              "winner_top1": 0.4211087420042644,
+              "trifecta_top1": 0.12739872068230276,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.25
+            },
+            {
+              "races": 1876,
+              "winner_hits": 790,
+              "trifecta_hits": 239,
+              "winner_top1": 0.4211087420042644,
+              "trifecta_top1": 0.12739872068230276,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.5
+            }
+          ],
+          "model_asset": {
+            "file": "docs/paper-only-ai-2023/chapter1_accuracy_ai/accuracy_champion_acc-g02-c02.joblib",
+            "sha256": "1c6e3775f993922d6d42c7dbbd149c8bfd438e7c5af6038e241770d4636b637e",
+            "generation": 2,
+            "candidate_id": "acc-g02-c02"
+          }
+        },
+        {
+          "id": "acc-g02-c03",
+          "generation": 2,
+          "config": {
+            "family": "hgb",
+            "max_iter": 250,
+            "max_leaf_nodes": 20,
+            "learning_rate": 0.08,
+            "min_samples_leaf": 120,
+            "l2_regularization": 8.0,
+            "mask": "all"
+          },
+          "temperature": 1.5,
+          "october": {
+            "races": 1876,
+            "winner_hits": 798,
+            "trifecta_hits": 239,
+            "winner_top1": 0.4253731343283582,
+            "trifecta_top1": 0.12739872068230276,
+            "one_pick_per_race_each_metric": true,
+            "temperature": 1.5
+          },
+          "alternative_temperatures": [
+            {
+              "races": 1876,
+              "winner_hits": 798,
+              "trifecta_hits": 231,
+              "winner_top1": 0.4253731343283582,
+              "trifecta_top1": 0.12313432835820895,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 0.75
+            },
+            {
+              "races": 1876,
+              "winner_hits": 798,
+              "trifecta_hits": 234,
+              "winner_top1": 0.4253731343283582,
+              "trifecta_top1": 0.12473347547974413,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.0
+            },
+            {
+              "races": 1876,
+              "winner_hits": 798,
+              "trifecta_hits": 237,
+              "winner_top1": 0.4253731343283582,
+              "trifecta_top1": 0.1263326226012793,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.25
+            },
+            {
+              "races": 1876,
+              "winner_hits": 798,
+              "trifecta_hits": 239,
+              "winner_top1": 0.4253731343283582,
+              "trifecta_top1": 0.12739872068230276,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.5
+            }
+          ],
+          "model_asset": {
+            "file": "docs/paper-only-ai-2023/chapter1_accuracy_ai/accuracy_champion_acc-g02-c03.joblib",
+            "sha256": "57d78360ec0eec09fd61bae1c36fddd2e87bd83c9c7a2ecfb4072451816da4d1",
+            "generation": 2,
+            "candidate_id": "acc-g02-c03"
+          }
+        }
+      ]
+    },
+    {
+      "generation": 3,
+      "results": [
+        {
+          "id": "acc-g03-c01",
+          "generation": 3,
+          "config": {
+            "family": "hgb",
+            "max_iter": 180,
+            "max_leaf_nodes": 12,
+            "learning_rate": 0.12,
+            "min_samples_leaf": 120,
+            "l2_regularization": 8.0,
+            "mask": "drop_age"
+          },
+          "temperature": 1.5,
+          "october": {
+            "races": 1876,
+            "winner_hits": 792,
+            "trifecta_hits": 242,
+            "winner_top1": 0.42217484008528783,
+            "trifecta_top1": 0.12899786780383796,
+            "one_pick_per_race_each_metric": true,
+            "temperature": 1.5
+          },
+          "alternative_temperatures": [
+            {
+              "races": 1876,
+              "winner_hits": 792,
+              "trifecta_hits": 240,
+              "winner_top1": 0.42217484008528783,
+              "trifecta_top1": 0.1279317697228145,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 0.75
+            },
+            {
+              "races": 1876,
+              "winner_hits": 792,
+              "trifecta_hits": 239,
+              "winner_top1": 0.42217484008528783,
+              "trifecta_top1": 0.12739872068230276,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.0
+            },
+            {
+              "races": 1876,
+              "winner_hits": 792,
+              "trifecta_hits": 241,
+              "winner_top1": 0.42217484008528783,
+              "trifecta_top1": 0.12846481876332622,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.25
+            },
+            {
+              "races": 1876,
+              "winner_hits": 792,
+              "trifecta_hits": 242,
+              "winner_top1": 0.42217484008528783,
+              "trifecta_top1": 0.12899786780383796,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.5
+            }
+          ]
+        },
+        {
+          "id": "acc-g03-c02",
+          "generation": 3,
+          "config": {
+            "family": "hgb",
+            "max_iter": 90,
+            "max_leaf_nodes": 30,
+            "learning_rate": 0.045,
+            "min_samples_leaf": 80,
+            "l2_regularization": 8.0,
+            "mask": "all"
+          },
+          "temperature": 1.5,
+          "october": {
+            "races": 1876,
+            "winner_hits": 782,
+            "trifecta_hits": 242,
+            "winner_top1": 0.4168443496801706,
+            "trifecta_top1": 0.12899786780383796,
+            "one_pick_per_race_each_metric": true,
+            "temperature": 1.5
+          },
+          "alternative_temperatures": [
+            {
+              "races": 1876,
+              "winner_hits": 782,
+              "trifecta_hits": 241,
+              "winner_top1": 0.4168443496801706,
+              "trifecta_top1": 0.12846481876332622,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 0.75
+            },
+            {
+              "races": 1876,
+              "winner_hits": 782,
+              "trifecta_hits": 240,
+              "winner_top1": 0.4168443496801706,
+              "trifecta_top1": 0.1279317697228145,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.0
+            },
+            {
+              "races": 1876,
+              "winner_hits": 782,
+              "trifecta_hits": 240,
+              "winner_top1": 0.4168443496801706,
+              "trifecta_top1": 0.1279317697228145,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.25
+            },
+            {
+              "races": 1876,
+              "winner_hits": 782,
+              "trifecta_hits": 242,
+              "winner_top1": 0.4168443496801706,
+              "trifecta_top1": 0.12899786780383796,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.5
+            }
+          ]
+        },
+        {
+          "id": "acc-g03-c03",
+          "generation": 3,
+          "config": {
+            "family": "extra_trees",
+            "n_estimators": 250,
+            "max_depth": 8,
+            "min_samples_leaf": 10,
+            "max_features": 0.7,
+            "mask": "all"
+          },
+          "temperature": 1.25,
+          "october": {
+            "races": 1876,
+            "winner_hits": 760,
+            "trifecta_hits": 236,
+            "winner_top1": 0.4051172707889126,
+            "trifecta_top1": 0.1257995735607676,
+            "one_pick_per_race_each_metric": true,
+            "temperature": 1.25
+          },
+          "alternative_temperatures": [
+            {
+              "races": 1876,
+              "winner_hits": 760,
+              "trifecta_hits": 235,
+              "winner_top1": 0.4051172707889126,
+              "trifecta_top1": 0.12526652452025586,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 0.75
+            },
+            {
+              "races": 1876,
+              "winner_hits": 760,
+              "trifecta_hits": 235,
+              "winner_top1": 0.4051172707889126,
+              "trifecta_top1": 0.12526652452025586,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.0
+            },
+            {
+              "races": 1876,
+              "winner_hits": 760,
+              "trifecta_hits": 236,
+              "winner_top1": 0.4051172707889126,
+              "trifecta_top1": 0.1257995735607676,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.25
+            },
+            {
+              "races": 1876,
+              "winner_hits": 760,
+              "trifecta_hits": 232,
+              "winner_top1": 0.4051172707889126,
+              "trifecta_top1": 0.12366737739872068,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "generation": 4,
+      "results": [
+        {
+          "id": "acc-g04-c01",
+          "generation": 4,
+          "config": {
+            "family": "hgb",
+            "max_iter": 250,
+            "max_leaf_nodes": 12,
+            "learning_rate": 0.045,
+            "min_samples_leaf": 120,
+            "l2_regularization": 50.0,
+            "mask": "drop_style"
+          },
+          "temperature": 1.5,
+          "october": {
+            "races": 1876,
+            "winner_hits": 781,
+            "trifecta_hits": 243,
+            "winner_top1": 0.4163113006396588,
+            "trifecta_top1": 0.12953091684434967,
+            "one_pick_per_race_each_metric": true,
+            "temperature": 1.5
+          },
+          "alternative_temperatures": [
+            {
+              "races": 1876,
+              "winner_hits": 781,
+              "trifecta_hits": 235,
+              "winner_top1": 0.4163113006396588,
+              "trifecta_top1": 0.12526652452025586,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 0.75
+            },
+            {
+              "races": 1876,
+              "winner_hits": 781,
+              "trifecta_hits": 236,
+              "winner_top1": 0.4163113006396588,
+              "trifecta_top1": 0.1257995735607676,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.0
+            },
+            {
+              "races": 1876,
+              "winner_hits": 781,
+              "trifecta_hits": 240,
+              "winner_top1": 0.4163113006396588,
+              "trifecta_top1": 0.1279317697228145,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.25
+            },
+            {
+              "races": 1876,
+              "winner_hits": 781,
+              "trifecta_hits": 243,
+              "winner_top1": 0.4163113006396588,
+              "trifecta_top1": 0.12953091684434967,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.5
+            }
+          ]
+        },
+        {
+          "id": "acc-g04-c02",
+          "generation": 4,
+          "config": {
+            "family": "lr",
+            "C": 0.1,
+            "mask": "all"
+          },
+          "temperature": 1.5,
+          "october": {
+            "races": 1876,
+            "winner_hits": 725,
+            "trifecta_hits": 220,
+            "winner_top1": 0.38646055437100213,
+            "trifecta_top1": 0.11727078891257996,
+            "one_pick_per_race_each_metric": true,
+            "temperature": 1.5
+          },
+          "alternative_temperatures": [
+            {
+              "races": 1876,
+              "winner_hits": 725,
+              "trifecta_hits": 218,
+              "winner_top1": 0.38646055437100213,
+              "trifecta_top1": 0.1162046908315565,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 0.75
+            },
+            {
+              "races": 1876,
+              "winner_hits": 725,
+              "trifecta_hits": 219,
+              "winner_top1": 0.38646055437100213,
+              "trifecta_top1": 0.11673773987206823,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.0
+            },
+            {
+              "races": 1876,
+              "winner_hits": 725,
+              "trifecta_hits": 219,
+              "winner_top1": 0.38646055437100213,
+              "trifecta_top1": 0.11673773987206823,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.25
+            },
+            {
+              "races": 1876,
+              "winner_hits": 725,
+              "trifecta_hits": 220,
+              "winner_top1": 0.38646055437100213,
+              "trifecta_top1": 0.11727078891257996,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.5
+            }
+          ]
+        },
+        {
+          "id": "acc-g04-c03",
+          "generation": 4,
+          "config": {
+            "family": "hgb",
+            "max_iter": 140,
+            "max_leaf_nodes": 20,
+            "learning_rate": 0.08,
+            "min_samples_leaf": 50,
+            "l2_regularization": 50.0,
+            "mask": "all"
+          },
+          "temperature": 0.75,
+          "october": {
+            "races": 1876,
+            "winner_hits": 793,
+            "trifecta_hits": 242,
+            "winner_top1": 0.4227078891257996,
+            "trifecta_top1": 0.12899786780383796,
+            "one_pick_per_race_each_metric": true,
+            "temperature": 0.75
+          },
+          "alternative_temperatures": [
+            {
+              "races": 1876,
+              "winner_hits": 793,
+              "trifecta_hits": 242,
+              "winner_top1": 0.4227078891257996,
+              "trifecta_top1": 0.12899786780383796,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 0.75
+            },
+            {
+              "races": 1876,
+              "winner_hits": 793,
+              "trifecta_hits": 239,
+              "winner_top1": 0.4227078891257996,
+              "trifecta_top1": 0.12739872068230276,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.0
+            },
+            {
+              "races": 1876,
+              "winner_hits": 793,
+              "trifecta_hits": 241,
+              "winner_top1": 0.4227078891257996,
+              "trifecta_top1": 0.12846481876332622,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.25
+            },
+            {
+              "races": 1876,
+              "winner_hits": 793,
+              "trifecta_hits": 239,
+              "winner_top1": 0.4227078891257996,
+              "trifecta_top1": 0.12739872068230276,
+              "one_pick_per_race_each_metric": true,
+              "temperature": 1.5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "confirmation_used": false,
+  "confirmation": null,
+  "status": "SEARCHING",
+  "max_generations_on_same_october_data": 24
+}

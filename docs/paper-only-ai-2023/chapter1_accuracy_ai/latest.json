@@ -1,0 +1,127 @@
+{
+  "schema": "chapter1-accuracy-learner-v1",
+  "generated_at": "2026-10-20T10:29:59.219030+00:00",
+  "status": "SEARCHING",
+  "generation": 4,
+  "training_races": 12999,
+  "october_development_races": 1876,
+  "october_frozen_baseline": {
+    "races": 1876,
+    "winner_hits": 792,
+    "trifecta_hits": 232,
+    "winner_top1": 0.42217484008528783,
+    "trifecta_top1": 0.12366737739872068
+  },
+  "thresholds_strictly_greater_than": {
+    "winner": 0.45,
+    "trifecta": 0.12866737739872067
+  },
+  "current_best": {
+    "id": "acc-g02-c03",
+    "generation": 2,
+    "config": {
+      "family": "hgb",
+      "max_iter": 250,
+      "max_leaf_nodes": 20,
+      "learning_rate": 0.08,
+      "min_samples_leaf": 120,
+      "l2_regularization": 8.0,
+      "mask": "all"
+    },
+    "temperature": 1.5,
+    "october": {
+      "races": 1876,
+      "winner_hits": 798,
+      "trifecta_hits": 239,
+      "winner_top1": 0.4253731343283582,
+      "trifecta_top1": 0.12739872068230276,
+      "one_pick_per_race_each_metric": true,
+      "temperature": 1.5
+    },
+    "alternative_temperatures": [
+      {
+        "races": 1876,
+        "winner_hits": 798,
+        "trifecta_hits": 231,
+        "winner_top1": 0.4253731343283582,
+        "trifecta_top1": 0.12313432835820895,
+        "one_pick_per_race_each_metric": true,
+        "temperature": 0.75
+      },
+      {
+        "races": 1876,
+        "winner_hits": 798,
+        "trifecta_hits": 234,
+        "winner_top1": 0.4253731343283582,
+        "trifecta_top1": 0.12473347547974413,
+        "one_pick_per_race_each_metric": true,
+        "temperature": 1.0
+      },
+      {
+        "races": 1876,
+        "winner_hits": 798,
+        "trifecta_hits": 237,
+        "winner_top1": 0.4253731343283582,
+        "trifecta_top1": 0.1263326226012793,
+        "one_pick_per_race_each_metric": true,
+        "temperature": 1.25
+      },
+      {
+        "races": 1876,
+        "winner_hits": 798,
+        "trifecta_hits": 239,
+        "winner_top1": 0.4253731343283582,
+        "trifecta_top1": 0.12739872068230276,
+        "one_pick_per_race_each_metric": true,
+        "temperature": 1.5
+      }
+    ],
+    "model_asset": {
+      "file": "docs/paper-only-ai-2023/chapter1_accuracy_ai/accuracy_champion_acc-g02-c03.joblib",
+      "sha256": "57d78360ec0eec09fd61bae1c36fddd2e87bd83c9c7a2ecfb4072451816da4d1",
+      "generation": 2,
+      "candidate_id": "acc-g02-c03"
+    }
+  },
+  "confirmation_used": false,
+  "confirmation": null,
+  "model_promotions_this_run": [
+    {
+      "file": "docs/paper-only-ai-2023/chapter1_accuracy_ai/accuracy_champion_acc-g01-c01.joblib",
+      "sha256": "89026f69a2e198c2caddb4e556fddfb1a46dfed198a994516c37c68981c14846",
+      "generation": 1,
+      "candidate_id": "acc-g01-c01"
+    },
+    {
+      "file": "docs/paper-only-ai-2023/chapter1_accuracy_ai/accuracy_champion_acc-g01-c02.joblib",
+      "sha256": "30174f113f5c2104a47a50846f735c9840bbec0b7560a0e2448786aa02b5565c",
+      "generation": 1,
+      "candidate_id": "acc-g01-c02"
+    },
+    {
+      "file": "docs/paper-only-ai-2023/chapter1_accuracy_ai/accuracy_champion_acc-g02-c02.joblib",
+      "sha256": "1c6e3775f993922d6d42c7dbbd149c8bfd438e7c5af6038e241770d4636b637e",
+      "generation": 2,
+      "candidate_id": "acc-g02-c02"
+    },
+    {
+      "file": "docs/paper-only-ai-2023/chapter1_accuracy_ai/accuracy_champion_acc-g02-c03.joblib",
+      "sha256": "57d78360ec0eec09fd61bae1c36fddd2e87bd83c9c7a2ecfb4072451816da4d1",
+      "generation": 2,
+      "candidate_id": "acc-g02-c03"
+    }
+  ],
+  "conditional_2023_foundation_immutable_release_sha": "10f5cc3c4b1adaf73cdd60fdf21f70247dcd3627576461f7457522ec61dc00b8",
+  "market_odds_used": false,
+  "roi_used_for_optimization": false,
+  "2024plus_results_used": false,
+  "paper_accuracy_branch_equivalence": "winner top1 accuracy is the closest keirin analogue; exact trifecta top1 is an additional metric",
+  "limitations": [
+    "Only first-place rider model is trainable; 2nd/3rd conditional models remain frozen from the earlier 2023 AI, so it is not a fully end-to-end independent architecture.",
+    "October 2023 is reused across candidates and generations; only development targets can be claimed from repeated October scoring.",
+    "Nov-Dec 2023 are scored once per state; these months were consulted in earlier project research and are NOT a pristine holdout.",
+    "Never guarantee reaching 45 percent by repeating the same fixed historical data; stop after 24 generations and demand a newly designed chronology.",
+    "One exact 1st rider and one exact ordered trifecta, not a box or expanded formation.",
+    "Prediction accuracy is not equivalent to positive expected value or profitable betting."
+  ]
+}
