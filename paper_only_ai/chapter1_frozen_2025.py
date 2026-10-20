@@ -19,7 +19,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-from collections import defaultdict
+from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -72,6 +72,43 @@ def configure_year():
     )
 
 
+def load_2025_aligned(quarter):
+    """Separate evaluator: old 2024 loader hardcodes its labels and odds."""
+    start = f"{YEAR}-{(quarter - 1) * 3 + 1:02d}-01"
+    end = f"{YEAR}-{quarter * 3:02d}-{31 if quarter in (1, 4) else 30:02d}"
+    learner.bt.LABELS = f"data/result_universe_v2/combined/results_{YEAR}.jsonl.gz"
+    learner.bt.START, learner.bt.END = start, end
+    learner.bt.sources = lambda: learner.source_entries(quarter)
+    learner.prices.ODDS = f"data/odds_only/odds_{YEAR}.jsonl.gz"
+    cards, card_audit = learner.bt.load_2024_line_cards()
+    odds, odds_audit = learner.prices.collect_2024_books()
+    failures = Counter()
+    matched = []
+    for rid, race in cards.items():
+        if rid not in odds:
+            failures["missing_odds"] += 1
+            continue
+        try:
+            book = learner.prices.decode_odds(
+                odds[rid], rid, set(race["cars"])
+            )
+        except (TypeError, ValueError, KeyError) as exc:
+            failures[type(exc).__name__ + ":" + str(exc)[:55]] += 1
+            continue
+        matched.append((rid, race, book))
+    matched.sort(key=lambda entry: (entry[1]["date"], entry[0]))
+    if len(matched) < 100:
+        raise RuntimeError("Insufficient aligned 2025 races; no score will be claimed")
+    return matched, {
+        "from": start, "to": end,
+        "cards": len(cards), "aligned_races": len(matched),
+        "cards_audit": card_audit, "odds_audit": odds_audit,
+        "dropped": dict(failures),
+        "year_specific_result_path": learner.bt.LABELS,
+        "year_specific_odds_path": learner.prices.ODDS,
+    }
+
+
 def score_quarter(quarter):
     if quarter not in (1, 2, 3, 4):
         raise ValueError("quarter must be 1, 2, 3, or 4")
@@ -80,7 +117,7 @@ def score_quarter(quarter):
         raise RuntimeError("Already scored: refusing to overwrite the frozen exam")
     theta, fingerprint = frozen_state()
     configure_year()
-    aligned, audit = learner.valid_quarter_rows(quarter)
+    aligned, audit = load_2025_aligned(quarter)
     parents = learner.frozen_deletion_parents()
     original_weights = duel.fetch_immutable_weights()
     if not aligned:
