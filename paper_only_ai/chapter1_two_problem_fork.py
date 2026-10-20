@@ -268,10 +268,10 @@ def load_aligned(year,q):
             continue
         matched.append((rid,race,book))
     matched.sort(key=lambda row:(row[1]["date"],row[0]))
-    if len(matched)<100:
-        raise RuntimeError("Too few 2026 complete A-class races")
     return matched,{"from":start,"to":end,"eligible_cards":len(cards),
                     "qualified_races":len(matched),"classes":"A1/A2/A3 only",
+                    "minimum_qualified_races":100,
+                    "sufficient_for_scoring":len(matched)>=100,
                     "complete_odds":True,"card_audit":card_audit,
                     "odds_audit":odds_audit,"excluded":dict(failures)}
 
@@ -292,6 +292,26 @@ def quarter(q,train):
         raise RuntimeError("Model ancestry changed")
     year=2025 if train else 2026
     records,audit=load_aligned(year,q)
+    if not train and len(records)<100:
+        # Never silently lower coverage standards or invent missing odds.
+        # Preserve this period as INELIGIBLE, not as a zero-return test.
+        ROOT.mkdir(parents=True,exist_ok=True)
+        report={
+            "status":"2026_A_CLASS_Q_INELIGIBLE_INSUFFICIENT_ALIGNED_RACES",
+            "year":year,"quarter":q,"qualified_races":len(records),
+            "required_races":100,"training_during_scoring":False,
+            "model_weights_sha256":weights_before,
+            "original_2024_fingerprint":anchor,
+            "data_audit":audit,
+            "treated_as_measured_roi":False,
+            "excluded_from_aggregate":True,
+            "reason":"Not enough complete and alignable result-entry-final-odds books",
+            "created_at":datetime.now(timezone.utc).isoformat(),
+        }
+        target.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+        print("TWO_PROBLEM_INELIGIBLE_QUARTER",year,q,
+              len(records),"required",100,flush=True)
+        return
     parents=previous.frozen_deletion_parents()
     accuracy_asset,calibrated,_=duel.fetch_immutable_weights()
     metrics={role:{kind:empty_metrics() for kind in KINDS} for role in ROLES}
@@ -375,11 +395,20 @@ def audit():
     if s["status"]!="2025_TRAINING_COMPLETE":
         raise RuntimeError("Four 2025 learning quarters required")
     filenames=[ROOT/f"frozen_2026_q{q}.json" for q in (1,2)]
-    docs=[json.loads(p.read_text("utf-8")) for p in filenames]
+    original_docs=[json.loads(p.read_text("utf-8")) for p in filenames]
+    docs=[d for d in original_docs if d["status"]=="FORK_2026_FROZEN_A_CLASS_VALIDATION"]
+    ineligible=[d for d in original_docs if d["status"]=="2026_A_CLASS_Q_INELIGIBLE_INSUFFICIENT_ALIGNED_RACES"]
+    if len(docs)+len(ineligible)!=2:
+        raise RuntimeError("Unknown 2026 evaluation report status")
+    if not docs:
+        raise RuntimeError("No eligible 2026 quarter; do not publish an evaluation")
     digest=hash_weights(s["weights"])
     if any(x["training_during_scoring"] or x["weights_before"]!=digest or
            x["weights_after"]!=digest for x in docs):
         raise RuntimeError("2026 test was refitted or model versions changed")
+    if any(d["training_during_scoring"] or d["model_weights_sha256"]!=digest
+           for d in ineligible):
+        raise RuntimeError("Unavailable period is not model-frozen")
     summary={}
     for role in ROLES:
         summary[role]={}
@@ -391,7 +420,10 @@ def audit():
                     metrics[name]+=source[name]
             summary[role][kind]=summarize(metrics)
     result={
-        "status":"FOUR_FORKS_TRAINED_2025_AND_FROZEN_2026_H1_A_CLASS_EVALUATED",
+        "status":("FOUR_FORKS_TRAINED_AND_PARTIAL_2026_A_CLASS_EVALUATED"
+                  if ineligible else "FOUR_FORKS_TRAINED_2025_AND_FROZEN_2026_H1_A_CLASS_EVALUATED"),
+        "2026_unscorable_quarters":ineligible,
+        "2026_is_full_H1":not bool(ineligible),
         "training":"2025_Q1_Q4_chronological_prequential",
         "training_2025_previously_examined":True,
         "out_of_time_year":"2026_H1",
@@ -412,6 +444,7 @@ def audit():
             "The price branch maximizes realized cash-inclusive log wealth with strictly pre-result actions.",
             "Price ROI measures continuous allocation across ALL tickets; it is not the ROI of purchasing every positive-EV 100-yen mark.",
             "There is no clean unexamined 2026 project-wide holdout, and the 2026 data has only A-class verified entries.",
+            "Insufficient or unavailable quarters are not included as zero-return data; partial H1 is NOT full H1.",
             "A 2025 prequential model is not a 2025 out-of-time test. Negative results must remain visible.",
             "Historical final odds do not establish 15-minute preclose execution feasibility.",
         ]
