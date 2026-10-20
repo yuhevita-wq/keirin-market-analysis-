@@ -33,7 +33,7 @@ jobs:
         run: |
           mkdir -p frozen_line_full
           gh release download paper-only-line-rf-2023-v1 --pattern '*.tar.gz' --dir frozen_line_full
-          tar -xzf frozen_line_full/2023-line-aware-RF-three-stage-models.tar.gz -C frozen_line_full
+          tar -xzf frozen_line_full/line_aware_rf_2023.tar.gz -C frozen_line_full
           for i in 1 2 3; do test -s "frozen_line_full/stage_${i}.joblib"; done
           test -s frozen_line_full/manifest.json
       - name: Verify Python source before any training
