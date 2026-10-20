@@ -1,0 +1,87 @@
+name: V3-ME-R | Phase2 deterministic full-history replay audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/deletion_ai/outputs/GEN-008-V3-ME-R-PHASE2-DAY-FROZEN-PLAIN-2021-2026/2026/summary.json'
+permissions:
+  contents: write
+concurrency:
+  group: v3me-phase2-full-replay
+  cancel-in-progress: false
+jobs:
+  replay_all_years_source_and_daily_predictions:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      PYTHONUNBUFFERED: '1'
+      PYTHONHASHSEED: '0'
+      PYTHONPATH: '.:research/deletion_ai'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e '.[scrape]' 'numpy>=1.26'
+      - name: Verify mathematical invariants and source manifest
+        run: |
+          python research/deletion_ai/test_v3me_phase2_daily_pipeline.py
+          python research/deletion_ai/test_secure_seven_bet_bridge.py
+      - name: Replay EVERY pre-outcome prediction and weight update from 2021 to 2026
+        run: |
+          set -euo pipefail
+          for year in 2021 2022 2023 2024 2025 2026; do
+            python research/deletion_ai/v3me_phase2_daily_pipeline.py --source plain --year "$year" --verify
+          done
+      - name: Publish nonsecret pass-only replay certificate
+        run: |
+          python - <<'PY'
+          import json, hashlib, pathlib
+          root=pathlib.Path('research/deletion_ai/outputs/GEN-008-V3-ME-R-PHASE2-DAY-FROZEN-PLAIN-2021-2026')
+          annual={}
+          prev=None
+          for year in range(2021,2027):
+              cp=json.loads((root/str(year)/'checkpoint.json').read_text())
+              sm=json.loads((root/str(year)/'summary.json').read_text())
+              assert cp['weight_sha256']==sm['weight_end_sha256']
+              assert cp['daily_ledger_sha256']==sm['daily_ledger_sha256']
+              assert sm['actual_supervised_usable_races']==cp['race_count']
+              if prev:assert cp['start_weights_sha256']==prev
+              prev=cp['weight_sha256']
+              annual[str(year)]={'races':cp['race_count'],
+                                 'days':sm['days_with_eligible_books'],
+                                 'weight_sha256':prev,
+                                 'daily_pre_result_digest':cp['daily_ledger_sha256']}
+          assert sum(item['races'] for item in annual.values())==40164
+          output=pathlib.Path('data/audits/v3me_phase2_plain_full_replay_certificate.json')
+          if output.exists():
+              raise RuntimeError('IMMUTABLE_REPLAY_CERTIFICATE_ALREADY_EXISTS')
+          output.write_text(json.dumps({
+             'status':'VERIFIED_ALL_SIX_YEARS',
+             'mode':'PLAIN_TWO_MARKETS_NOT_SEALED_ORIGINAL',
+             'day_frozen_pre_outcome_replay_passed':True,
+             'checkpoint_bit_exact_replay_passed':True,
+             'source_checksums_verified_by_training_loader':True,
+             'same_day_labels_not_used_during_forecast':True,
+             '2026_frozen_no_fit':True,
+             'years':annual,
+             'archived_ciphertexts_not_decrypted_in_this_workflow':True,
+          },indent=2,ensure_ascii=False)+'\n')
+          print('VERIFIED_PHASE2_ALL_YEAR_CHAIN',sum(item['races'] for item in annual.values()))
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/audits/v3me_phase2_plain_full_replay_certificate.json
+          git commit -m 'audit: bit-identical six-year Phase2 source replay with future-label isolation'
+          for i in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
