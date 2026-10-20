@@ -54,6 +54,9 @@ def check():
                 assert len(rec["odds"]["3連複"])==35
                 assert all(p==37. for p in rec["odds"]["3連単"].values())
                 assert all(p==37. for p in rec["odds"]["3連複"].values())
+                girls_records = [tuple(("ガールズ" if idx == 1 else value) for idx, value in enumerate(rec)) for rec in records[rid]]
+                girls, why = bridge.normalize_book(rid, day, girls_records)
+                assert girls is None and why == "girls_excluded"
                 assert not any(Path(plain_dir).iterdir()),"Cleartext residue"
                 mismatch,why=bridge.normalize_book(rid,"2024-07-05",records[rid])
                 assert mismatch is None and why=="race_date_id_conflict"
