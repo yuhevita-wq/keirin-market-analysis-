@@ -1,0 +1,81 @@
+name: Paper-only AI | 2024 Q1 LINE RF real final-odds PnL
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'paper_only_ai/backtest_line_rf_2024_q1.py'
+      - '.github/workflows/paper-only-ai-backtest-line-rf-2024-q1.yml'
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: paper-only-line-rf-2024-q1
+  cancel-in-progress: false
+jobs:
+  full-year-line-rf-out-of-time:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            paper_only_ai
+            docs/paper-only-ai-2023
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install evaluation-only ML dependencies
+        run: |
+          python -m pip install 'numpy<3' 'pandas<3' 'scipy<2' 'scikit-learn<2' 'optuna<5' 'joblib<2'
+      - name: Retrieve complete frozen 2023 LINE-aware AI (untouched)
+        uses: actions/download-artifact@v4
+        with:
+          name: paper-only-line-aware-rf-full-2023-models
+          path: frozen_line_full
+          run-id: 39376331186
+          github-token: ${{ github.token }}
+      - name: Retrieve original frozen 2023 no-LINE AI (matched race comparison)
+        uses: actions/download-artifact@v4
+        with:
+          name: paper-only-2023-conditional-finish-order-models
+          path: frozen_conditional_bundle
+          run-id: 39362270286
+          github-token: ${{ github.token }}
+      - name: Verify scripts, three frozen model stages and manifest
+        run: |
+          python -m py_compile paper_only_ai/backtest_line_rf_2024_q1.py
+          python -m py_compile paper_only_ai/compare_lines_2023.py
+          test -s frozen_line_full/docs/paper-only-ai-2023/line_full_2023/stage_1.joblib
+          test -s frozen_line_full/docs/paper-only-ai-2023/line_full_2023/stage_2.joblib
+          test -s frozen_line_full/docs/paper-only-ai-2023/line_full_2023/stage_3.joblib
+          test -s frozen_line_full/docs/paper-only-ai-2023/line_full_2023/manifest.json
+          test -s frozen_conditional_bundle/frozen_2023/calibration.joblib
+      - name: Evaluate actual 2024 Q1 3連単 and 3連複 final odds on all positive EV combinations
+        env:
+          FROZEN_LINE_FULL_DIR: frozen_line_full
+          FROZEN_TICKET_MODEL_DIR: frozen_conditional_bundle
+          PYTHONUNBUFFERED: '1'
+          OMP_NUM_THREADS: '2'
+          OPENBLAS_NUM_THREADS: '2'
+          MKL_NUM_THREADS: '2'
+        run: python paper_only_ai/backtest_line_rf_2024_q1.py
+      - name: Save full report as GitHub Actions artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-only-line-aware-2024-q1-genuine-final-odds-pnl-report
+          path: docs/paper-only-ai-2023/line_roi_2024_q1/
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Commit 2024 Q1 untouched-model PnL and matching audits
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/paper-only-ai-2023/line_roi_2024_q1/report.json docs/paper-only-ai-2023/line_roi_2024_q1/progress.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record 2024 Q1 LINE-aware RF out-of-time real final-odds PnL"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
