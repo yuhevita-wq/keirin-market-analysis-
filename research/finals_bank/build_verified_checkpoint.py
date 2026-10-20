@@ -8,6 +8,7 @@ def digest(path):
     return h.hexdigest()
 
 def include(path):
+    if path.suffix=='.sqlite' and path!=pathlib.Path('data/finals.sqlite'):return False
     return not any(p.startswith('.') or p=='__pycache__' for p in path.parts) and path.suffix!='.pyc' and not path.name.endswith(('-journal','-wal','-shm'))
 
 def build(root,output):
