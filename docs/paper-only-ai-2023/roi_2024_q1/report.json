@@ -1,0 +1,574 @@
+{
+  "status": "COMPLETED_HISTORICAL_FINAL_ODDS_BACKTEST",
+  "completed_at": "2026-10-20T05:06:43.486064+00:00",
+  "started_at": "2026-10-20T05:06:27.868075+00:00",
+  "period": [
+    "2024-01-01",
+    "2024-03-31"
+  ],
+  "training_data_end": "2023-12-31",
+  "frozen_model_bundle_run": 39362270286,
+  "2024_model_fit_calls": 0,
+  "2024_threshold_fit_calls": 0,
+  "cutoff_selected_in_advance": 0.0,
+  "fixed_stake_yen": 100,
+  "selection_rule": "For EVERY ticket in 3連単 and 3連複, include if (P_model*decimal_final_odds-1)>0. Strict greater-than.",
+  "invested_unlimited_100yen_bets": true,
+  "no_bet_if_all_tickets_nonpositive_ev": true,
+  "odds_source": "data/odds_only/odds_2024.jsonl.gz",
+  "odds_phase": "final (retrospective, NOT 15-minute pre-close)",
+  "pricing_and_execution_not_guaranteed": true,
+  "included_ticket_types": [
+    "3連単",
+    "3連複"
+  ],
+  "excluded_ticket_types_without_verified_odds": [
+    "2車単",
+    "2車複"
+  ],
+  "data_join": {
+    "q1_full_podium_with_entries_races": 5588,
+    "2024_full_year_complete_odds_races": 9542,
+    "q1_races_with_both_sources": 3243,
+    "q1_no_odds_available_count": 2345,
+    "full_odds_book_aligned_races": 3197,
+    "q1_book_mismatch_reasons": {
+      "excluded_odds_car_not_in_source_entry": 44,
+      "excluded_invalid_odd": 2
+    },
+    "mismatch_examples": [
+      {
+        "race_id": "5620231231020007",
+        "reason": "odds_car_not_in_source_entry"
+      },
+      {
+        "race_id": "8320231231020002",
+        "reason": "invalid_odd"
+      },
+      {
+        "race_id": "2420240101020004",
+        "reason": "odds_car_not_in_source_entry"
+      },
+      {
+        "race_id": "5620231231030002",
+        "reason": "odds_car_not_in_source_entry"
+      },
+      {
+        "race_id": "2720240101030006",
+        "reason": "odds_car_not_in_source_entry"
+      },
+      {
+        "race_id": "7420240103020010",
+        "reason": "odds_car_not_in_source_entry"
+      },
+      {
+        "race_id": "6120240104030003",
+        "reason": "odds_car_not_in_source_entry"
+      },
+      {
+        "race_id": "8620240109020001",
+        "reason": "odds_car_not_in_source_entry"
+      },
+      {
+        "race_id": "4820240111010002",
+        "reason": "odds_car_not_in_source_entry"
+      },
+      {
+        "race_id": "8320240110020008",
+        "reason": "odds_car_not_in_source_entry"
+      },
+      {
+        "race_id": "6120240110030002",
+        "reason": "odds_car_not_in_source_entry"
+      },
+      {
+        "race_id": "2420240113010005",
+        "reason": "odds_car_not_in_source_entry"
+      },
+      {
+        "race_id": "4720240113010003",
+        "reason": "invalid_odd"
+      },
+      {
+        "race_id": "1320240116010006",
+        "reason": "odds_car_not_in_source_entry"
+      },
+      {
+        "race_id": "2620240116030003",
+        "reason": "odds_car_not_in_source_entry"
+      }
+    ],
+    "2024_card_audit": {
+      "entry_rows_with_missing_fields": 199,
+      "entry_rows_without_complete_top_three_result": 284,
+      "duplicate_entry_rows": 2438,
+      "races_excluded_missing_podium_in_card": 39,
+      "files": {
+        "data/a_class_12/2024_01_02/entries.csv": 13278,
+        "data/a_class_12/2024_03_04/entries.csv": 6914,
+        "data/a3_challenge/2024_01_02/entries.csv": 6265,
+        "data/a3_challenge/2024_03_04/entries.csv": 3171,
+        "data/2024/s_class_f1_all_parts/2024_q1/entries.csv": 9066,
+        "data/2024/s_class_yosen/entries.csv": 0
+      },
+      "race_count": 5588,
+      "rider_rows": 38465,
+      "months": {
+        "2024-01": 1903,
+        "2024-02": 1790,
+        "2024-03": 1895
+      },
+      "categories": {
+        "A3": 1383,
+        "A1_A2": 2890,
+        "S": 1315
+      }
+    },
+    "odds_archive_audit": {
+      "full_year_odds_records": 9542
+    }
+  },
+  "by_ticket_type": {
+    "3連単": {
+      "eligible_races": 3197,
+      "betting_races": 3197,
+      "winning_races": 596,
+      "tickets_purchased": 449482,
+      "winning_tickets": 596,
+      "hit_rate_per_bet": 0.0013259707841470848,
+      "stake_yen": 44948200,
+      "return_yen": 26184280.0,
+      "net_yen": -18763920.0,
+      "roi": -0.41745653886028805,
+      "return_rate": 0.5825434611397119,
+      "model_expected_net_yen": 127220421.66,
+      "model_expected_roi": 2.830378561613138,
+      "max_drawdown_yen_unconstrained_flat_stake": 19220560.0,
+      "losing_races": 2744,
+      "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+      "negative_bankroll_protection": false
+    },
+    "3連複": {
+      "eligible_races": 3197,
+      "betting_races": 3197,
+      "winning_races": 611,
+      "tickets_purchased": 70548,
+      "winning_tickets": 611,
+      "hit_rate_per_bet": 0.008660769972217498,
+      "stake_yen": 7054800,
+      "return_yen": 3949370.0,
+      "net_yen": -3105430.0,
+      "roi": -0.4401868231558655,
+      "return_rate": 0.5598131768441345,
+      "model_expected_net_yen": 10431715.6,
+      "model_expected_roi": 1.4786692176699632,
+      "max_drawdown_yen_unconstrained_flat_stake": 3122200.0,
+      "losing_races": 2687,
+      "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+      "negative_bankroll_protection": false
+    }
+  },
+  "both_types_combined": {
+    "eligible_races": 3197,
+    "betting_races": 3197,
+    "winning_races": 811,
+    "tickets_purchased": 520030,
+    "winning_tickets": 1207,
+    "hit_rate_per_bet": 0.002321019941157241,
+    "stake_yen": 52003000,
+    "return_yen": 30133650.0,
+    "net_yen": -21869350.0,
+    "roi": -0.42054016114454934,
+    "return_rate": 0.5794598388554506,
+    "model_expected_net_yen": 137652137.26,
+    "model_expected_roi": 2.647003774011455,
+    "max_drawdown_yen_unconstrained_flat_stake": 22306730.0,
+    "losing_races": 2745,
+    "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+    "negative_bankroll_protection": false
+  },
+  "sensitivity_only_not_tuned": {
+    "0.05": {
+      "3連単": {
+        "eligible_races": 3197,
+        "betting_races": 3197,
+        "winning_races": 563,
+        "tickets_purchased": 440219,
+        "winning_tickets": 563,
+        "hit_rate_per_bet": 0.0012789089067032546,
+        "stake_yen": 44021900,
+        "return_yen": 25483890.0,
+        "net_yen": -18538010.0,
+        "roi": -0.42110881175051507,
+        "return_rate": 0.5788911882494849,
+        "model_expected_net_yen": 127197524.97,
+        "model_expected_roi": 2.8894146996254992,
+        "max_drawdown_yen_unconstrained_flat_stake": 18985720.0,
+        "losing_races": 2757,
+        "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+        "negative_bankroll_protection": false
+      },
+      "3連複": {
+        "eligible_races": 3197,
+        "betting_races": 3197,
+        "winning_races": 558,
+        "tickets_purchased": 68449,
+        "winning_tickets": 558,
+        "hit_rate_per_bet": 0.008152054814533448,
+        "stake_yen": 6844900,
+        "return_yen": 3795570.0,
+        "net_yen": -3049330.0,
+        "roi": -0.44548934243013044,
+        "return_rate": 0.5545106575698695,
+        "model_expected_net_yen": 10426568.26,
+        "model_expected_roi": 1.5232608593710781,
+        "max_drawdown_yen_unconstrained_flat_stake": 3066100.0,
+        "losing_races": 2707,
+        "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+        "negative_bankroll_protection": false
+      }
+    },
+    "0.1": {
+      "3連単": {
+        "eligible_races": 3197,
+        "betting_races": 3197,
+        "winning_races": 534,
+        "tickets_purchased": 431146,
+        "winning_tickets": 534,
+        "hit_rate_per_bet": 0.0012385595598706702,
+        "stake_yen": 43114600,
+        "return_yen": 24867640.0,
+        "net_yen": -18246960.0,
+        "roi": -0.42321997652767274,
+        "return_rate": 0.5767800234723273,
+        "model_expected_net_yen": 127129540.74,
+        "model_expected_roi": 2.948642472372283,
+        "max_drawdown_yen_unconstrained_flat_stake": 18641880.0,
+        "losing_races": 2770,
+        "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+        "negative_bankroll_protection": false
+      },
+      "3連複": {
+        "eligible_races": 3197,
+        "betting_races": 3197,
+        "winning_races": 523,
+        "tickets_purchased": 66453,
+        "winning_tickets": 523,
+        "hit_rate_per_bet": 0.007870224068138384,
+        "stake_yen": 6645300,
+        "return_yen": 3671720.0,
+        "net_yen": -2973580.0,
+        "roi": -0.4474711450197884,
+        "return_rate": 0.5525288549802115,
+        "model_expected_net_yen": 10411617.06,
+        "model_expected_roi": 1.5667640372627536,
+        "max_drawdown_yen_unconstrained_flat_stake": 2990350.0,
+        "losing_races": 2724,
+        "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+        "negative_bankroll_protection": false
+      }
+    },
+    "0.2": {
+      "3連単": {
+        "eligible_races": 3197,
+        "betting_races": 3197,
+        "winning_races": 469,
+        "tickets_purchased": 413373,
+        "winning_tickets": 469,
+        "hit_rate_per_bet": 0.001134568537374236,
+        "stake_yen": 41337300,
+        "return_yen": 23624970.0,
+        "net_yen": -17712330.0,
+        "roi": -0.4284829923579915,
+        "return_rate": 0.5715170076420085,
+        "model_expected_net_yen": 126863663.85,
+        "model_expected_roi": 3.0689876660392397,
+        "max_drawdown_yen_unconstrained_flat_stake": 18147730.0,
+        "losing_races": 2798,
+        "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+        "negative_bankroll_protection": false
+      },
+      "3連複": {
+        "eligible_races": 3197,
+        "betting_races": 3197,
+        "winning_races": 458,
+        "tickets_purchased": 62575,
+        "winning_tickets": 458,
+        "hit_rate_per_bet": 0.007319216939672393,
+        "stake_yen": 6257500,
+        "return_yen": 3426610.0,
+        "net_yen": -2830890.0,
+        "roi": -0.45239952057530963,
+        "return_rate": 0.5476004794246904,
+        "model_expected_net_yen": 10353404.67,
+        "model_expected_roi": 1.654559276554841,
+        "max_drawdown_yen_unconstrained_flat_stake": 2847660.0,
+        "losing_races": 2770,
+        "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+        "negative_bankroll_protection": false
+      }
+    }
+  },
+  "by_class_main_cutoff": {
+    "3連単": {
+      "A1_A2": {
+        "eligible_races": 991,
+        "betting_races": 991,
+        "winning_races": 196,
+        "tickets_purchased": 139766,
+        "winning_tickets": 196,
+        "hit_rate_per_bet": 0.0014023439176909978,
+        "stake_yen": 13976600,
+        "return_yen": 8499330.0,
+        "net_yen": -5477270.0,
+        "roi": -0.3918885852067026,
+        "return_rate": 0.6081114147932973,
+        "model_expected_net_yen": 36127312.12,
+        "model_expected_roi": 2.5848426743592454,
+        "max_drawdown_yen_unconstrained_flat_stake": 5567270.0,
+        "losing_races": 849,
+        "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+        "negative_bankroll_protection": false
+      },
+      "A3": {
+        "eligible_races": 934,
+        "betting_races": 934,
+        "winning_races": 158,
+        "tickets_purchased": 135174,
+        "winning_tickets": 158,
+        "hit_rate_per_bet": 0.0011688638347611227,
+        "stake_yen": 13517400,
+        "return_yen": 6272240.0,
+        "net_yen": -7245160.0,
+        "roi": -0.5359876899403732,
+        "return_rate": 0.46401231005962684,
+        "model_expected_net_yen": 46701860.5,
+        "model_expected_roi": 3.45494403532632,
+        "max_drawdown_yen_unconstrained_flat_stake": 7245160.0,
+        "losing_races": 821,
+        "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+        "negative_bankroll_protection": false
+      },
+      "S": {
+        "eligible_races": 1272,
+        "betting_races": 1272,
+        "winning_races": 242,
+        "tickets_purchased": 174542,
+        "winning_tickets": 242,
+        "hit_rate_per_bet": 0.0013864857741976142,
+        "stake_yen": 17454200,
+        "return_yen": 11412710.0,
+        "net_yen": -6041490.0,
+        "roi": -0.34613388181641097,
+        "return_rate": 0.6538661181835891,
+        "model_expected_net_yen": 44391249.04,
+        "model_expected_roi": 2.5432989789007725,
+        "max_drawdown_yen_unconstrained_flat_stake": 6498130.0,
+        "losing_races": 1074,
+        "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+        "negative_bankroll_protection": false
+      }
+    },
+    "3連複": {
+      "A1_A2": {
+        "eligible_races": 991,
+        "betting_races": 991,
+        "winning_races": 186,
+        "tickets_purchased": 21969,
+        "winning_tickets": 186,
+        "hit_rate_per_bet": 0.008466475488187901,
+        "stake_yen": 2196900,
+        "return_yen": 1243930.0,
+        "net_yen": -952970.0,
+        "roi": -0.4337794164504529,
+        "return_rate": 0.5662205835495471,
+        "model_expected_net_yen": 3007955.14,
+        "model_expected_roi": 1.3691816355014779,
+        "max_drawdown_yen_unconstrained_flat_stake": 974480.0,
+        "losing_races": 836,
+        "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+        "negative_bankroll_protection": false
+      },
+      "A3": {
+        "eligible_races": 934,
+        "betting_races": 934,
+        "winning_races": 195,
+        "tickets_purchased": 21492,
+        "winning_tickets": 195,
+        "hit_rate_per_bet": 0.009073143495254048,
+        "stake_yen": 2149200,
+        "return_yen": 1195240.0,
+        "net_yen": -953960.0,
+        "roi": -0.4438674855760283,
+        "return_rate": 0.5561325144239717,
+        "model_expected_net_yen": 3682046.2,
+        "model_expected_roi": 1.7132171033258847,
+        "max_drawdown_yen_unconstrained_flat_stake": 953960.0,
+        "losing_races": 783,
+        "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+        "negative_bankroll_protection": false
+      },
+      "S": {
+        "eligible_races": 1272,
+        "betting_races": 1272,
+        "winning_races": 230,
+        "tickets_purchased": 27087,
+        "winning_tickets": 230,
+        "hit_rate_per_bet": 0.008491158120131428,
+        "stake_yen": 2708700,
+        "return_yen": 1510200.0,
+        "net_yen": -1198500.0,
+        "roi": -0.4424631742164138,
+        "return_rate": 0.5575368257835862,
+        "model_expected_net_yen": 3741714.26,
+        "model_expected_roi": 1.381369019572804,
+        "max_drawdown_yen_unconstrained_flat_stake": 1217330.0,
+        "losing_races": 1068,
+        "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+        "negative_bankroll_protection": false
+      }
+    }
+  },
+  "by_month_main_cutoff": {
+    "3連単": {
+      "2024-01": {
+        "eligible_races": 1839,
+        "betting_races": 1839,
+        "winning_races": 339,
+        "tickets_purchased": 256031,
+        "winning_tickets": 339,
+        "hit_rate_per_bet": 0.0013240584148013327,
+        "stake_yen": 25603100,
+        "return_yen": 14184420.0,
+        "net_yen": -11418680.0,
+        "roi": -0.44598818111869265,
+        "return_rate": 0.5540118188813073,
+        "model_expected_net_yen": 71605441.63,
+        "model_expected_roi": 2.796748894793374,
+        "max_drawdown_yen_unconstrained_flat_stake": 11444150.0,
+        "losing_races": 1585,
+        "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+        "negative_bankroll_protection": false
+      },
+      "2024-02": {
+        "eligible_races": 851,
+        "betting_races": 851,
+        "winning_races": 156,
+        "tickets_purchased": 121469,
+        "winning_tickets": 156,
+        "hit_rate_per_bet": 0.0012842782932270785,
+        "stake_yen": 12146900,
+        "return_yen": 7005240.0,
+        "net_yen": -5141660.0,
+        "roi": -0.4232898928944834,
+        "return_rate": 0.5767101071055166,
+        "model_expected_net_yen": 35652779.87,
+        "model_expected_roi": 2.9351340568086015,
+        "max_drawdown_yen_unconstrained_flat_stake": 5195200.0,
+        "losing_races": 736,
+        "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+        "negative_bankroll_protection": false
+      },
+      "2024-03": {
+        "eligible_races": 507,
+        "betting_races": 507,
+        "winning_races": 101,
+        "tickets_purchased": 71982,
+        "winning_tickets": 101,
+        "hit_rate_per_bet": 0.0014031285599177571,
+        "stake_yen": 7198200,
+        "return_yen": 4994620.0,
+        "net_yen": -2203580.0,
+        "roi": -0.3061293101053041,
+        "return_rate": 0.6938706898946959,
+        "model_expected_net_yen": 19962200.16,
+        "model_expected_roi": 2.773221105299502,
+        "max_drawdown_yen_unconstrained_flat_stake": 2756640.0,
+        "losing_races": 423,
+        "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+        "negative_bankroll_protection": false
+      }
+    },
+    "3連複": {
+      "2024-01": {
+        "eligible_races": 1839,
+        "betting_races": 1839,
+        "winning_races": 344,
+        "tickets_purchased": 40262,
+        "winning_tickets": 344,
+        "hit_rate_per_bet": 0.008544036560528538,
+        "stake_yen": 4026200,
+        "return_yen": 2198010.0,
+        "net_yen": -1828190.0,
+        "roi": -0.45407331975560083,
+        "return_rate": 0.5459266802443992,
+        "model_expected_net_yen": 5807696.86,
+        "model_expected_roi": 1.4424759981138626,
+        "max_drawdown_yen_unconstrained_flat_stake": 1838750.0,
+        "losing_races": 1552,
+        "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+        "negative_bankroll_protection": false
+      },
+      "2024-02": {
+        "eligible_races": 851,
+        "betting_races": 851,
+        "winning_races": 171,
+        "tickets_purchased": 19095,
+        "winning_tickets": 171,
+        "hit_rate_per_bet": 0.008955223880597015,
+        "stake_yen": 1909500,
+        "return_yen": 1128830.0,
+        "net_yen": -780670.0,
+        "roi": -0.40883477350091646,
+        "return_rate": 0.5911652264990835,
+        "model_expected_net_yen": 2955950.71,
+        "model_expected_roi": 1.5480234157517254,
+        "max_drawdown_yen_unconstrained_flat_stake": 787060.0,
+        "losing_races": 713,
+        "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+        "negative_bankroll_protection": false
+      },
+      "2024-03": {
+        "eligible_races": 507,
+        "betting_races": 507,
+        "winning_races": 96,
+        "tickets_purchased": 11191,
+        "winning_tickets": 96,
+        "hit_rate_per_bet": 0.008578321865785006,
+        "stake_yen": 1119100,
+        "return_yen": 622530.0,
+        "net_yen": -496570.0,
+        "roi": -0.44372263425967295,
+        "return_rate": 0.556277365740327,
+        "model_expected_net_yen": 1668068.02,
+        "model_expected_roi": 1.490544205910201,
+        "max_drawdown_yen_unconstrained_flat_stake": 517440.0,
+        "losing_races": 422,
+        "assumed_staking": "fixed JPY100 on each ticket with EV above threshold; unrestricted stake budget",
+        "negative_bankroll_protection": false
+      }
+    }
+  },
+  "probability_logloss_market_comparison": {
+    "3連単": {
+      "avg_model_nll_realized_ticket": 4.77095622756322,
+      "avg_normalized_market_nll_realized_ticket": 3.96953051848551,
+      "mean_final_odds_market_overround": 1.3375899740715798,
+      "market_normalization_method": "(1/decimal_odd)/sum_all_tickets(1/decimal_odd)"
+    },
+    "3連複": {
+      "avg_model_nll_realized_ticket": 3.104274896141333,
+      "avg_normalized_market_nll_realized_ticket": 2.5882070753090725,
+      "mean_final_odds_market_overround": 1.3447757599018184,
+      "market_normalization_method": "(1/decimal_odd)/sum_all_tickets(1/decimal_odd)"
+    }
+  },
+  "caveats": [
+    "The model has NOT passed the strict calibration gate for 2nd and 3rd conditional models or final-ticket odds in the 2023 holdout/2024 validation.",
+    "Even a historical positive net does not establish deployable positive EV. Final odds are unknowable 15 minutes before start and settlement may differ if scratched.",
+    "Flat-stake all-positive-EV strategy is NOT capital constrained: it can exceed available bankroll and stake many correlated bets in same race.",
+    "Only races with completely matching 2024 Q1 card, 1st-3rd result and two complete final-odds books enter. Missing price is never guessed.",
+    "The upper EV threshold tables are diagnostic only, not a strategy fitted or chosen from 2024 results.",
+    "Odds do not include transaction timing, cancellations, takeout changes, or slippage; this experiment should not be labeled real live performance."
+  ]
+}
