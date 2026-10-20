@@ -360,6 +360,31 @@ def run(source, year, verify=False):
         saved = read(out / "checkpoint.json")
         old_summary = read(out / "summary.json")
         if final_cp != saved or summary != old_summary:
+            cp_diffs=[k for k in set(final_cp)|set(saved)
+                      if final_cp.get(k)!=saved.get(k)]
+            summary_diffs=[k for k in set(summary)|set(old_summary)
+                           if summary.get(k)!=old_summary.get(k)]
+            day_mismatch=None
+            old_days=old_summary.get("day_level_pre_result_ledger",[])
+            for index,(actual,original) in enumerate(itertools.zip_longest(
+                    day_proofs,old_days)):
+                if actual!=original:
+                    day_mismatch={
+                        "index":index,
+                        "actual":actual,
+                        "saved":original,
+                    }
+                    break
+            # Date, aggregate hashes and field names only. No original prices,
+            # secrets, race IDs or raw bet selections leave the runner.
+            print("PHASE2_REPLAY_DIAGNOSTICS",json.dumps({
+                "year":year,"source":source,
+                "changed_checkpoint_fields":sorted(cp_diffs),
+                "changed_summary_fields":sorted(summary_diffs),
+                "first_day_difference":day_mismatch,
+                "previous_weight_sha256":saved.get("weight_sha256"),
+                "replayed_weight_sha256":final_cp.get("weight_sha256"),
+            },ensure_ascii=False),flush=True)
             raise RuntimeError("NONREPRODUCIBLE_YEARLY_CHECKPOINT_OR_LEDGER")
         print("PHASE2_YEAR_REPLAY_VERIFIED", json.dumps({
             "source": source, "year": year, "count": total,
