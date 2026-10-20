@@ -1,0 +1,63 @@
+name: GEN-008 V3 | September calibration and November frozen test
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/ai_nursery/gen008_v3.py'
+      - 'research/ai_nursery/run_gen008_v3.py'
+      - 'research/ai_nursery/verify_gen008_v3.py'
+      - 'research/ai_nursery/test_gen008_v3.py'
+      - '.github/workflows/baby-ai-gen008-v3.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: baby-ai-gen008-v3-first-independent-test
+  cancel-in-progress: false
+jobs:
+  v3-experiment:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numeric research model
+        run: python -m pip install -e '.[scrape]' 'numpy>=1.26'
+      - name: Check algorithms before research run
+        run: |
+          python -m py_compile research/ai_nursery/gen008_v3.py research/ai_nursery/run_gen008_v3.py research/ai_nursery/verify_gen008_v3.py research/ai_nursery/test_gen008_v3.py
+          python research/ai_nursery/test_gen008_v3.py
+          python research/ai_nursery/verify_parallel_month.py
+          python research/ai_nursery/verify_gen008_frozen_exam.py
+      - name: Calibrate only September, then compare on never-trained November
+        run: |
+          if [ -f research/ai_nursery/outputs/GEN-008-V3/first-independent-november-2023/summary.json ]; then
+            echo "Archived report found; audit it without re-training"
+          else
+            python research/ai_nursery/run_gen008_v3.py
+          fi
+      - name: Audit all three branches from sealed decisions
+        run: python research/ai_nursery/verify_gen008_v3.py
+      - name: Publish frozen V3 checkpoint and November evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/ai_nursery/outputs/GEN-008-V3/first-independent-november-2023/
+          git add docs/ai-lab/gen008-v3-first-november.json
+          if git diff --cached --quiet; then echo 'No new evidence'; exit 0; fi
+          git commit -m 'data: archive GEN008 V3 calibrated checkpoint and frozen November 3-way test'
+          for attempt in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          echo "Publishing failed after six attempts" >&2
+          exit 1
