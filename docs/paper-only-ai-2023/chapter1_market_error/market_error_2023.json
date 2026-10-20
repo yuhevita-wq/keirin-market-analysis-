@@ -1,0 +1,488 @@
+{
+  "schema": "market-residual-learner-2023-v1",
+  "generated_at": "2026-10-20T10:00:28.203290+00:00",
+  "training": {
+    "3連単": {
+      "selected_lambda_on_september": 0.05,
+      "september_options": [
+        {
+          "reg": 0.05,
+          "validation_nll": 4.178439766258168,
+          "weights": [
+            0.08810415493952632,
+            -0.032874028637801575,
+            -4.0140898937820345e-17,
+            0.0026971820218100657,
+            0.03184405694031175,
+            0.03328276414755875,
+            -0.008481381277293169,
+            0.07073078534473609,
+            0.019840668570611612,
+            -0.022284001222353692,
+            -0.03873640553722241,
+            0.013654268760818431,
+            -0.07677053419664225,
+            -0.06060928976540534,
+            -0.015587658988066954,
+            0.004298148711949823,
+            0.022414883531770756
+          ]
+        },
+        {
+          "reg": 0.5,
+          "validation_nll": 4.178749682753001,
+          "weights": [
+            0.0364015466775939,
+            -0.012684847660915374,
+            1.3273889360320692e-20,
+            0.015315858356314473,
+            0.01699870498365151,
+            0.020439490720501045,
+            0.002604706723317777,
+            0.027951917356677344,
+            0.01247940133190039,
+            -0.010649409760103016,
+            -0.01738922840581699,
+            0.004134347467256052,
+            -0.017038002380753627,
+            -0.012348675065080037,
+            -0.0019682950889615214,
+            0.0015168874449280325,
+            0.004710368191299779
+          ]
+        },
+        {
+          "reg": 5.0,
+          "validation_nll": 4.1799319479434836,
+          "weights": [
+            0.006025074799025659,
+            -0.0020581009532608823,
+            -4.977259026646258e-19,
+            0.0032685353419694076,
+            0.0031827008328651893,
+            0.003804496819193322,
+            0.0012179877336954566,
+            0.004525617953380982,
+            0.001964942279774301,
+            -0.0017790121654324101,
+            -0.0028962738488398443,
+            0.000562280239306799,
+            -0.001861045696391184,
+            -0.0011499701792111454,
+            -0.00015926227699182975,
+            0.0002643875368121047,
+            0.0006782059268345039
+          ]
+        }
+      ],
+      "features": [
+        "price_shape_log_odds_center",
+        "price_rank_percentile",
+        "market_probability_concentration",
+        "three_same_line",
+        "same_line_pair_count",
+        "first_second_same_line",
+        "first_third_same_line",
+        "second_third_same_line",
+        "first_is_line_leader",
+        "second_is_line_leader",
+        "third_is_line_leader",
+        "sum_relative_score",
+        "first_minus_second_score",
+        "first_minus_third_score",
+        "mean_age_diff_race",
+        "three_line_sizes",
+        "first_second_position_relation"
+      ],
+      "coefficient": [
+        0.08810415493952632,
+        -0.032874028637801575,
+        -4.0140898937820345e-17,
+        0.0026971820218100657,
+        0.03184405694031175,
+        0.03328276414755875,
+        -0.008481381277293169,
+        0.07073078534473609,
+        0.019840668570611612,
+        -0.022284001222353692,
+        -0.03873640553722241,
+        0.013654268760818431,
+        -0.07677053419664225,
+        -0.06060928976540534,
+        -0.015587658988066954,
+        0.004298148711949823,
+        0.022414883531770756
+      ]
+    },
+    "3連複": {
+      "selected_lambda_on_september": 0.05,
+      "september_options": [
+        {
+          "reg": 0.05,
+          "validation_nll": 2.7139602365480107,
+          "weights": [
+            0.13327588983952735,
+            -0.06372094286156288,
+            3.4586139412235144e-17,
+            0.030835027420398353,
+            0.11252879262505756,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.04709888424575162,
+            0.0,
+            0.0,
+            -0.007531615767385257,
+            0.011214851181069727,
+            0.0
+          ]
+        },
+        {
+          "reg": 0.5,
+          "validation_nll": 2.7160808619616064,
+          "weights": [
+            0.051314224796515776,
+            -0.026566326131393484,
+            4.6185012767908475e-18,
+            0.02860620422802859,
+            0.0342139667332523,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.009521817573173058,
+            0.0,
+            0.0,
+            -0.002575351294835982,
+            0.0028271981090399775,
+            0.0
+          ]
+        },
+        {
+          "reg": 5.0,
+          "validation_nll": 2.718370934193533,
+          "weights": [
+            0.00733613858475173,
+            -0.0038198191994078174,
+            9.276092690765804e-20,
+            0.004557957358806,
+            0.004870963709952742,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.001199171211106925,
+            0.0,
+            0.0,
+            -0.00035181984930896464,
+            0.0003901660215022202,
+            0.0
+          ]
+        }
+      ],
+      "features": [
+        "price_shape_log_odds_center",
+        "price_rank_percentile",
+        "market_probability_concentration",
+        "three_same_line",
+        "same_line_pair_count",
+        "first_second_same_line",
+        "first_third_same_line",
+        "second_third_same_line",
+        "first_is_line_leader",
+        "second_is_line_leader",
+        "third_is_line_leader",
+        "sum_relative_score",
+        "first_minus_second_score",
+        "first_minus_third_score",
+        "mean_age_diff_race",
+        "three_line_sizes",
+        "first_second_position_relation"
+      ],
+      "coefficient": [
+        0.13327588983952735,
+        -0.06372094286156288,
+        3.4586139412235144e-17,
+        0.030835027420398353,
+        0.11252879262505756,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.04709888424575162,
+        0.0,
+        0.0,
+        -0.007531615767385257,
+        0.011214851181069727,
+        0.0
+      ]
+    }
+  },
+  "candidate_selection_october": [
+    {
+      "margin": 0.0,
+      "passes_sample_rule": false,
+      "october_metrics": {
+        "qualified_market_observations": 882,
+        "purchased_tickets": 0,
+        "winning_tickets": 0,
+        "investment_yen": 0.0,
+        "payout_yen": 0.0,
+        "net_profit_yen": 0.0,
+        "return_percent": null,
+        "model_expected_return_percent": null,
+        "months": {
+          "2023-10": {
+            "investment_yen": 0.0,
+            "payout_yen": 0.0,
+            "tickets": 0,
+            "hits": 0,
+            "return_percent": null
+          }
+        }
+      }
+    },
+    {
+      "margin": 0.05,
+      "passes_sample_rule": false,
+      "october_metrics": {
+        "qualified_market_observations": 882,
+        "purchased_tickets": 0,
+        "winning_tickets": 0,
+        "investment_yen": 0.0,
+        "payout_yen": 0.0,
+        "net_profit_yen": 0.0,
+        "return_percent": null,
+        "model_expected_return_percent": null,
+        "months": {
+          "2023-10": {
+            "investment_yen": 0.0,
+            "payout_yen": 0.0,
+            "tickets": 0,
+            "hits": 0,
+            "return_percent": null
+          }
+        }
+      }
+    },
+    {
+      "margin": 0.1,
+      "passes_sample_rule": false,
+      "october_metrics": {
+        "qualified_market_observations": 882,
+        "purchased_tickets": 0,
+        "winning_tickets": 0,
+        "investment_yen": 0.0,
+        "payout_yen": 0.0,
+        "net_profit_yen": 0.0,
+        "return_percent": null,
+        "model_expected_return_percent": null,
+        "months": {
+          "2023-10": {
+            "investment_yen": 0.0,
+            "payout_yen": 0.0,
+            "tickets": 0,
+            "hits": 0,
+            "return_percent": null
+          }
+        }
+      }
+    },
+    {
+      "margin": 0.2,
+      "passes_sample_rule": false,
+      "october_metrics": {
+        "qualified_market_observations": 882,
+        "purchased_tickets": 0,
+        "winning_tickets": 0,
+        "investment_yen": 0.0,
+        "payout_yen": 0.0,
+        "net_profit_yen": 0.0,
+        "return_percent": null,
+        "model_expected_return_percent": null,
+        "months": {
+          "2023-10": {
+            "investment_yen": 0.0,
+            "payout_yen": 0.0,
+            "tickets": 0,
+            "hits": 0,
+            "return_percent": null
+          }
+        }
+      }
+    }
+  ],
+  "frozen_historical_test": null,
+  "audit": {
+    "cards": {
+      "files": [
+        {
+          "path": "data/a_class_12/2023_01_02/entries.csv",
+          "race_manifests_with_line": 2027,
+          "entry_rows": 13902
+        },
+        {
+          "path": "data/a_class_12/2023_03_04/entries.csv",
+          "race_manifests_with_line": 2003,
+          "entry_rows": 13867
+        },
+        {
+          "path": "data/a_class_12/2023_05_06/entries.csv",
+          "race_manifests_with_line": 2065,
+          "entry_rows": 14315
+        },
+        {
+          "path": "data/a_class_12/2023_07_08/entries.csv",
+          "race_manifests_with_line": 1973,
+          "entry_rows": 13655
+        },
+        {
+          "path": "data/a_class_12/2023_09_10/entries.csv",
+          "race_manifests_with_line": 1993,
+          "entry_rows": 13815
+        },
+        {
+          "path": "data/a_class_12/2023_11_12/entries.csv",
+          "race_manifests_with_line": 1973,
+          "entry_rows": 13693
+        },
+        {
+          "path": "data/a3_challenge/2023_01_02/entries.csv",
+          "race_manifests_with_line": 0,
+          "entry_rows": 0
+        },
+        {
+          "path": "data/a3_challenge/2023_05_06/entries.csv",
+          "race_manifests_with_line": 881,
+          "entry_rows": 5997
+        },
+        {
+          "path": "data/a3_challenge/2023_07_08/entries.csv",
+          "race_manifests_with_line": 986,
+          "entry_rows": 6631
+        },
+        {
+          "path": "data/a3_challenge/2023_09_10/entries.csv",
+          "race_manifests_with_line": 953,
+          "entry_rows": 6532
+        },
+        {
+          "path": "data/a3_challenge/2023_11_12/entries.csv",
+          "race_manifests_with_line": 948,
+          "entry_rows": 6449
+        },
+        {
+          "path": "data/2023/s_class_f1_all_parts/2023_q1/entries.csv",
+          "race_manifests_with_line": 1353,
+          "entry_rows": 9289
+        },
+        {
+          "path": "data/2023/s_class_f1_all_parts/2023_q2/entries.csv",
+          "race_manifests_with_line": 1280,
+          "entry_rows": 8820
+        },
+        {
+          "path": "data/2023/s_class_f1_all_parts/2023_q3/entries.csv",
+          "race_manifests_with_line": 1241,
+          "entry_rows": 8569
+        },
+        {
+          "path": "data/2023/s_class_f1_all_parts/2023_q4/entries.csv",
+          "race_manifests_with_line": 1313,
+          "entry_rows": 9054
+        },
+        {
+          "path": "data/2023/s_class_yosen/entries.csv",
+          "race_manifests_with_line": 17,
+          "entry_rows": 153
+        }
+      ],
+      "exclusions": {
+        "entry_rows_missing_numeric": 700,
+        "race_manifest_line_missing": 938,
+        "duplicate_manifest_rows": 1472,
+        "duplicate_entry_rows": 10234,
+        "exclude_line_coverage_mismatch": 475,
+        "exclude_podium_not_in_card": 182
+      },
+      "complete_podium_with_line_races": 20349,
+      "months": {
+        "2023-01": 1420,
+        "2023-02": 1381,
+        "2023-03": 1435,
+        "2023-04": 1387,
+        "2023-05": 1891,
+        "2023-06": 1777,
+        "2023-07": 1960,
+        "2023-08": 1748,
+        "2023-09": 1783,
+        "2023-10": 1876,
+        "2023-11": 1828,
+        "2023-12": 1863
+      },
+      "categories": {
+        "A1_A2": 11661,
+        "S": 5074,
+        "A3": 3614
+      }
+    },
+    "odds": {
+      "full_year_odds_records": 9987
+    },
+    "alignment": {
+      "joined_races": 6428,
+      "month_2023-01": 1420,
+      "month_2023-02": 548,
+      "invalid_book": 3,
+      "missing_book": 13918,
+      "month_2023-03": 463,
+      "month_2023-04": 416,
+      "month_2023-05": 668,
+      "month_2023-06": 393,
+      "month_2023-07": 461,
+      "month_2023-08": 400,
+      "month_2023-09": 361,
+      "month_2023-10": 441,
+      "month_2023-11": 428,
+      "month_2023-12": 429
+    },
+    "record_counts": {
+      "3連単": {
+        "train": 4769,
+        "validation": 361,
+        "develop": 441,
+        "test": 857
+      },
+      "3連複": {
+        "train": 4769,
+        "validation": 361,
+        "develop": 441,
+        "test": 857
+      }
+    }
+  },
+  "weights_learned_from": "2023-01-01 through 2023-08-31",
+  "hyperparameters_selected_using": "2023-09-01 through 2023-09-30",
+  "purchase_policy_selected_using": "2023-10-01 through 2023-10-31",
+  "prospective_hist_check": "2023-11-01 through 2023-12-31",
+  "no_2024plus_results_or_odds_used": true,
+  "won_real_money": false,
+  "proves_forward_profit": false,
+  "limitations": [
+    "All prices are final odds; this is a retrospective simulation.",
+    "2023 Nov-Dec has already been used by earlier LINE model selection, so it is not a pristine holdout.",
+    "Optimization maximizes conditional likelihood, not backfitted realized ROI; October is used only to choose a pre-listed entry margin.",
+    "Prior market-predicted probability is the normalized inverse of odds; residual weights learn market errors from historical outcomes.",
+    "No fixed ticket count and no predetermined formation.",
+    "A profitable 2023 test cannot establish repeatable profitability."
+  ]
+}

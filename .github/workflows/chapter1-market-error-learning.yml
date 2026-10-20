@@ -1,0 +1,60 @@
+name: Chapter 1 | Train racewise market-pricing error AI
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'paper_only_ai/chapter1_market_error.py'
+      - 'paper_only_ai/test_chapter1_market_error.py'
+      - '.github/workflows/chapter1-market-error-learning.yml'
+permissions:
+  contents: write
+concurrency:
+  group: chapter1-market-error-learning-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  learn-historical-pricing-errors:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            paper_only_ai
+            docs/paper-only-ai-2023/chapter1_market_error
+          sparse-checkout-cone-mode: false
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install reproducible major Python dependencies
+        run: python -m pip install 'numpy<3' 'pandas<3' 'scipy<2' 'scikit-learn<2' 'joblib<2' 'optuna<5'
+      - name: Verify conditional probabilities and training
+        run: |
+          python -m py_compile paper_only_ai/chapter1_market_error.py
+          python paper_only_ai/test_chapter1_market_error.py
+      - name: Fit the historical market error model and check real race payouts
+        env:
+          PYTHONUNBUFFERED: '1'
+          OMP_NUM_THREADS: '2'
+          OPENBLAS_NUM_THREADS: '2'
+          MKL_NUM_THREADS: '2'
+        run: python paper_only_ai/chapter1_market_error.py
+      - name: Preserve numerical coefficients and PnL report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chapter1-market-error-study-${{ github.run_id }}
+          path: docs/paper-only-ai-2023/chapter1_market_error/
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Persist unaltered study output
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/paper-only-ai-2023/chapter1_market_error/market_error_2023.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record 2023 actual-outcome market residual AI research"
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
