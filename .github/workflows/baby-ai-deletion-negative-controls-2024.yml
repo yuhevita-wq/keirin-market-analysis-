@@ -1,0 +1,68 @@
+name: GEN008 Deletion AI | audited random and favorite baselines
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/deletion_ai/negative_controls_2024.py'
+      - '.github/workflows/baby-ai-deletion-negative-controls-2024.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: gen008-deletion-2024-matched-mark-negative-controls
+  cancel-in-progress: false
+jobs:
+  negative_controls:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    env:
+      PYTHONUNBUFFERED: '1'
+      PYTHONHASHSEED: '0'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numeric dependencies
+        run: python -m pip install -e '.[scrape]' 'numpy>=1.26'
+      - name: Recheck frozen 2023 learning and 2024 exam
+        run: |
+          python -m py_compile research/deletion_ai/negative_controls_2024.py
+          python research/deletion_ai/test_deletion_2023.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=Path('research/deletion_ai/outputs/GEN-008-DELETION-RESET-2023')
+          s=json.loads((d/'summary.json').read_text())
+          c=json.loads((d/'checkpoint.json').read_text())
+          assert s['status']=='COMPLETE'
+          assert s['train_races']==8088 and s['validation_races']==1908
+          assert s['test_races']==970
+          assert c['2024_test_did_not_train_or_tune']
+          assert s['no_2024_outcome_impact_on_weights_or_policy']
+          print('FROZEN_DELETION_MODEL_ISOLATED_FROM_NEGATIVE_CONTROLS')
+          PY
+      - name: Evaluate same number of 2024 tickets against random and favorite deletion
+        run: |
+          if [ -f research/deletion_ai/outputs/GEN-008-DELETION-RESET-2023/deletion_negative_controls.json ]; then
+            echo 'Read-only negative control already exists'
+          else
+            python research/deletion_ai/negative_controls_2024.py
+          fi
+      - name: Archive frozen, post-sealed negative control results
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/deletion_ai/outputs/GEN-008-DELETION-RESET-2023/deletion_negative_controls.json
+          if git diff --cached --quiet; then echo 'No changes'; exit 0; fi
+          git commit -m 'data: preserve matching-count random and favorite deletion controls for GEN008 January 2024'
+          for i in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
