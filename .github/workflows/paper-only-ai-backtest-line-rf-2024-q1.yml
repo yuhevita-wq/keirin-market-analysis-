@@ -46,10 +46,15 @@ jobs:
         run: |
           python -m py_compile paper_only_ai/backtest_line_rf_2024_q1.py
           python -m py_compile paper_only_ai/compare_lines_2023.py
-          test -s frozen_line_full/docs/paper-only-ai-2023/line_full_2023/stage_1.joblib
-          test -s frozen_line_full/docs/paper-only-ai-2023/line_full_2023/stage_2.joblib
-          test -s frozen_line_full/docs/paper-only-ai-2023/line_full_2023/stage_3.joblib
-          test -s frozen_line_full/docs/paper-only-ai-2023/line_full_2023/manifest.json
+          find frozen_line_full -maxdepth 5 -type f | sort | head -30
+          find frozen_conditional_bundle -maxdepth 6 -type f | sort | head -30
+          if test -s frozen_line_full/stage_1.joblib; then
+            for i in 1 2 3; do test -s "frozen_line_full/stage_${i}.joblib"; done
+            test -s frozen_line_full/manifest.json
+          else
+            for i in 1 2 3; do test -s "frozen_line_full/docs/paper-only-ai-2023/line_full_2023/stage_${i}.joblib"; done
+            test -s frozen_line_full/docs/paper-only-ai-2023/line_full_2023/manifest.json
+          fi
           test -s frozen_conditional_bundle/frozen_2023/calibration.joblib
       - name: Evaluate actual 2024 Q1 3連単 and 3連複 final odds on all positive EV combinations
         env:
