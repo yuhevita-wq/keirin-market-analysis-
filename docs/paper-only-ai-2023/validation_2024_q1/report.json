@@ -1,0 +1,385 @@
+{
+  "state": "VALIDATED_2024_Q1",
+  "prediction_period": [
+    "2024-01-01",
+    "2024-03-31"
+  ],
+  "training_data_end": "2023-12-31",
+  "model_source_run": 39354641293,
+  "models_changed": false,
+  "fit_calls_2024": 0,
+  "feature_selection_2024": false,
+  "source_result": "data/result_universe_v2/combined/results_2024.jsonl.gz",
+  "started_at": "2026-10-20T02:21:26.318153+00:00",
+  "finished_at": "2026-10-20T02:21:31.581368+00:00",
+  "dataset": {
+    "files": {
+      "data/a_class_12/2024_01_02/entries.csv": 13278,
+      "data/a_class_12/2024_03_04/entries.csv": 6914,
+      "data/a3_challenge/2024_01_02/entries.csv": 6265,
+      "data/a3_challenge/2024_03_04/entries.csv": 3171,
+      "data/2024/s_class_f1_all_parts/2024_q1/entries.csv": 9066,
+      "data/2024/s_class_yosen/entries.csv": 0
+    },
+    "duplicated_entry_rows": 2438,
+    "numeric_missing": 199,
+    "race_labels_absent": 284,
+    "race_with_missing_winner": 15,
+    "excluded_other_dates": 18121,
+    "pre_race_feature_certified": false,
+    "evaluation_races": 5612,
+    "evaluation_rider_rows": 38606,
+    "winners": 5612,
+    "outcome_prevalence": 0.14536600528415272,
+    "periods": [
+      {
+        "month": "2024-01",
+        "races": 1909,
+        "rider_rows": 13080
+      },
+      {
+        "month": "2024-02",
+        "races": 1799,
+        "rider_rows": 12395
+      },
+      {
+        "month": "2024-03",
+        "races": 1904,
+        "rider_rows": 13131
+      }
+    ],
+    "categories": [
+      {
+        "source_category": "A1_A2",
+        "races": 2905,
+        "rows": 20144
+      },
+      {
+        "source_category": "A3",
+        "races": 1388,
+        "rows": 9401
+      },
+      {
+        "source_category": "S",
+        "races": 1319,
+        "rows": 9061
+      }
+    ]
+  },
+  "branches": {
+    "calibration": {
+      "overall": {
+        "rider_binary_accuracy": 0.8577164171372326,
+        "all_negative_baseline_accuracy": 0.8546339947158472,
+        "brier": 0.11281516544466588,
+        "base_rate_brier": 0.12423472979188038,
+        "log_loss": 0.3735679383602285,
+        "roc_auc": 0.7200770828502437,
+        "ece_20bin_classwise": 0.0053400942672692095,
+        "ece_20bin_unconstrained": 0.0053400942672692095,
+        "ece_occupied_bins": [
+          17,
+          17
+        ],
+        "ece_gate_passed": true,
+        "top1_race_win_rate": 0.36582323592302207,
+        "top1_random_rider_reference": 0.14591691273801036,
+        "top1_races": 5612,
+        "winner_mean_predicted_probability": 0.218894670132565,
+        "rider_rows": 38606
+      },
+      "months": {
+        "2024-01": {
+          "rider_binary_accuracy": 0.8558868501529052,
+          "all_negative_baseline_accuracy": 0.8540519877675841,
+          "brier": 0.11519762372505692,
+          "base_rate_brier": 0.12464718995782247,
+          "log_loss": 0.3816131003757879,
+          "roc_auc": 0.7042498163812713,
+          "ece_20bin_classwise": 0.008497353302617687,
+          "ece_20bin_unconstrained": 0.008497353302617687,
+          "ece_occupied_bins": [
+            17,
+            17
+          ],
+          "ece_gate_passed": true,
+          "top1_race_win_rate": 0.3378732320586695,
+          "top1_random_rider_reference": 0.1465813564818279,
+          "top1_races": 1909,
+          "winner_mean_predicted_probability": 0.2093270893993382,
+          "rider_rows": 13080
+        },
+        "2024-02": {
+          "rider_binary_accuracy": 0.8584913271480435,
+          "all_negative_baseline_accuracy": 0.8548608309802339,
+          "brier": 0.11132814181487963,
+          "base_rate_brier": 0.12407379063601782,
+          "log_loss": 0.3687811735100307,
+          "roc_auc": 0.7297500068722378,
+          "ece_20bin_classwise": 0.008902450677403568,
+          "ece_20bin_unconstrained": 0.008902450677403568,
+          "ece_occupied_bins": [
+            17,
+            17
+          ],
+          "ece_gate_passed": true,
+          "top1_race_win_rate": 0.3802112284602557,
+          "top1_random_rider_reference": 0.14566822838084648,
+          "top1_races": 1799,
+          "winner_mean_predicted_probability": 0.22359016301722123,
+          "rider_rows": 12395
+        },
+        "2024-03": {
+          "rider_binary_accuracy": 0.8588074023303632,
+          "all_negative_baseline_accuracy": 0.8549996192216891,
+          "brier": 0.11184563559801948,
+          "base_rate_brier": 0.12397527035245574,
+          "log_loss": 0.37007248722586583,
+          "roc_auc": 0.7266809202081118,
+          "ece_20bin_classwise": 0.005914908523104335,
+          "ece_20bin_unconstrained": 0.005914908523104335,
+          "ece_occupied_bins": [
+            17,
+            17
+          ],
+          "ece_gate_passed": true,
+          "top1_race_win_rate": 0.3802521008403361,
+          "top1_random_rider_reference": 0.14548569427771105,
+          "top1_races": 1904,
+          "winner_mean_predicted_probability": 0.22405082555285571,
+          "rider_rows": 13131
+        }
+      },
+      "categories": {
+        "A1_A2": {
+          "rider_binary_accuracy": 0.857873312152502,
+          "all_negative_baseline_accuracy": 0.8557883240667196,
+          "brier": 0.11308819574959246,
+          "base_rate_brier": 0.12341466845779493,
+          "log_loss": 0.37456362874942456,
+          "roc_auc": 0.7144578113569688,
+          "ece_20bin_classwise": 0.008323171715463904,
+          "ece_20bin_unconstrained": 0.008323171715463904,
+          "ece_occupied_bins": [
+            17,
+            17
+          ],
+          "ece_gate_passed": true,
+          "top1_race_win_rate": 0.35559380378657485,
+          "top1_random_rider_reference": 0.14447504302925987,
+          "top1_races": 2905,
+          "winner_mean_predicted_probability": 0.21146408374815384,
+          "rider_rows": 20144
+        },
+        "A3": {
+          "rider_binary_accuracy": 0.8622486969471332,
+          "all_negative_baseline_accuracy": 0.8523561323263482,
+          "brier": 0.10590733814348585,
+          "base_rate_brier": 0.12584515601201696,
+          "log_loss": 0.3530409938261625,
+          "roc_auc": 0.7688264854913359,
+          "ece_20bin_classwise": 0.01684034246428508,
+          "ece_20bin_unconstrained": 0.01684034246428508,
+          "ece_occupied_bins": [
+            17,
+            17
+          ],
+          "ece_gate_passed": true,
+          "top1_race_win_rate": 0.4668587896253602,
+          "top1_random_rider_reference": 0.1486791546589817,
+          "top1_races": 1388,
+          "winner_mean_predicted_probability": 0.2558070678720893,
+          "rider_rows": 9401
+        },
+        "S": {
+          "rider_binary_accuracy": 0.8526652687341353,
+          "all_negative_baseline_accuracy": 0.854431078247434,
+          "brier": 0.11937520981018328,
+          "base_rate_brier": 0.12437861077236124,
+          "log_loss": 0.39265155146747815,
+          "roc_auc": 0.6719203309772772,
+          "ece_20bin_classwise": 0.014798400913960291,
+          "ece_20bin_unconstrained": 0.014798400913960291,
+          "ece_occupied_bins": [
+            17,
+            17
+          ],
+          "ece_gate_passed": true,
+          "top1_race_win_rate": 0.28203184230477635,
+          "top1_random_rider_reference": 0.14618578288024836,
+          "top1_races": 1319,
+          "winner_mean_predicted_probability": 0.19641661507892955,
+          "rider_rows": 9061
+        }
+      },
+      "features": [
+        "first_count",
+        "car_no",
+        "second_count"
+      ]
+    },
+    "accuracy": {
+      "overall": {
+        "rider_binary_accuracy": 0.8572501683676113,
+        "all_negative_baseline_accuracy": 0.8546339947158472,
+        "brier": 0.11484697394696405,
+        "base_rate_brier": 0.12423472979188038,
+        "log_loss": 0.3813093351633741,
+        "roc_auc": 0.6957715394461881,
+        "ece_20bin_classwise": 1.0,
+        "ece_20bin_unconstrained": 0.007446989583843374,
+        "ece_occupied_bins": [
+          15,
+          15
+        ],
+        "ece_gate_passed": false,
+        "top1_race_win_rate": 0.3305416963649323,
+        "top1_random_rider_reference": 0.14591691273801036,
+        "top1_races": 5612,
+        "winner_mean_predicted_probability": 0.20481152860972848,
+        "rider_rows": 38606
+      },
+      "months": {
+        "2024-01": {
+          "rider_binary_accuracy": 0.855428134556575,
+          "all_negative_baseline_accuracy": 0.8540519877675841,
+          "brier": 0.1169677684315801,
+          "base_rate_brier": 0.12464718995782247,
+          "log_loss": 0.3884516839565716,
+          "roc_auc": 0.6747464143645532,
+          "ece_20bin_classwise": 1.0,
+          "ece_20bin_unconstrained": 0.005090285296031974,
+          "ece_occupied_bins": [
+            15,
+            15
+          ],
+          "ece_gate_passed": false,
+          "top1_race_win_rate": 0.3069669984284966,
+          "top1_random_rider_reference": 0.1465813564818279,
+          "top1_races": 1909,
+          "winner_mean_predicted_probability": 0.1989672732089595,
+          "rider_rows": 13080
+        },
+        "2024-02": {
+          "rider_binary_accuracy": 0.8580879386849536,
+          "all_negative_baseline_accuracy": 0.8548608309802339,
+          "brier": 0.1141263083241151,
+          "base_rate_brier": 0.12407379063601782,
+          "log_loss": 0.37950378454043027,
+          "roc_auc": 0.6990952357870055,
+          "ece_20bin_classwise": 1.0,
+          "ece_20bin_unconstrained": 0.01168578757625294,
+          "ece_occupied_bins": [
+            15,
+            15
+          ],
+          "ece_gate_passed": false,
+          "top1_race_win_rate": 0.33073929961089493,
+          "top1_random_rider_reference": 0.14566822838084648,
+          "top1_races": 1799,
+          "winner_mean_predicted_probability": 0.20702195763879142,
+          "rider_rows": 12395
+        },
+        "2024-03": {
+          "rider_binary_accuracy": 0.8582743126951489,
+          "all_negative_baseline_accuracy": 0.8549996192216891,
+          "brier": 0.11341468840408347,
+          "base_rate_brier": 0.12397527035245574,
+          "log_loss": 0.3758990753017007,
+          "roc_auc": 0.7133238271259337,
+          "ece_20bin_classwise": 1.0,
+          "ece_20bin_unconstrained": 0.013774897678971304,
+          "ece_occupied_bins": [
+            15,
+            15
+          ],
+          "ece_gate_passed": false,
+          "top1_race_win_rate": 0.3539915966386555,
+          "top1_random_rider_reference": 0.14548569427771105,
+          "top1_races": 1904,
+          "winner_mean_predicted_probability": 0.20858260095047632,
+          "rider_rows": 13131
+        }
+      },
+      "categories": {
+        "A1_A2": {
+          "rider_binary_accuracy": 0.8569301032565528,
+          "all_negative_baseline_accuracy": 0.8557883240667196,
+          "brier": 0.11505946673615473,
+          "base_rate_brier": 0.12341466845779493,
+          "log_loss": 0.3815725703895192,
+          "roc_auc": 0.6934968533402877,
+          "ece_20bin_classwise": 1.0,
+          "ece_20bin_unconstrained": 0.009717116445539254,
+          "ece_occupied_bins": [
+            14,
+            14
+          ],
+          "ece_gate_passed": false,
+          "top1_race_win_rate": 0.32461273666092944,
+          "top1_random_rider_reference": 0.14447504302925987,
+          "top1_races": 2905,
+          "winner_mean_predicted_probability": 0.1986030651607383,
+          "rider_rows": 20144
+        },
+        "A3": {
+          "rider_binary_accuracy": 0.8612913519838316,
+          "all_negative_baseline_accuracy": 0.8523561323263482,
+          "brier": 0.10835788477450546,
+          "base_rate_brier": 0.12584515601201696,
+          "log_loss": 0.36299437825777203,
+          "roc_auc": 0.7432988936206331,
+          "ece_20bin_classwise": 1.0,
+          "ece_20bin_unconstrained": 0.016635931933631633,
+          "ece_occupied_bins": [
+            15,
+            15
+          ],
+          "ece_gate_passed": false,
+          "top1_race_win_rate": 0.43587896253602304,
+          "top1_random_rider_reference": 0.1486791546589817,
+          "top1_races": 1388,
+          "winner_mean_predicted_probability": 0.24900074529437763,
+          "rider_rows": 9401
+        },
+        "S": {
+          "rider_binary_accuracy": 0.8537688996799471,
+          "all_negative_baseline_accuracy": 0.854431078247434,
+          "brier": 0.12110715191460847,
+          "base_rate_brier": 0.12437861077236124,
+          "log_loss": 0.3997263199855901,
+          "roc_auc": 0.6424437933828439,
+          "ece_20bin_classwise": 1.0,
+          "ece_20bin_unconstrained": 0.014935723365249098,
+          "ece_occupied_bins": [
+            13,
+            13
+          ],
+          "ece_gate_passed": false,
+          "top1_race_win_rate": 0.23275208491281274,
+          "top1_random_rider_reference": 0.14618578288024836,
+          "top1_races": 1319,
+          "winner_mean_predicted_probability": 0.17198435162794193,
+          "rider_rows": 9061
+        }
+      },
+      "features": [
+        "car_no",
+        "gear",
+        "mark_count",
+        "outside_count",
+        "sashi_count",
+        "s_count"
+      ]
+    }
+  },
+  "betting_roi": null,
+  "reason_roi_unavailable": "No single-rider win bet/decimal odds match in keirin; simulated ROI unsupported",
+  "limitations": [
+    "Single rider one-vs-rest classification; no market-odds testing",
+    "2023 model had been fitted on retrospective snapshots whose race-time availability is not certified",
+    "A3 March-Apr 2023 missing; 2023 S-class source incomplete",
+    "2023 model final fit capped at 80000 sampled rows",
+    "Binary classification accuracy is strongly influenced by nonwinner prevalence"
+  ]
+}
