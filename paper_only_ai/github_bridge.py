@@ -22,6 +22,7 @@ def survey_gzip(data):
     count=0
     fields=set()
     duplicates=0
+    race_types = Counter()
     with gzip.open(io.BytesIO(data),'rt',encoding='utf-8') as stream:
         for line in stream:
             if not line.strip():continue
@@ -30,9 +31,11 @@ def survey_gzip(data):
                 raise ValueError('invalid record: missing race_id')
             key=str(row['race_id'])
             fields.update(row)
+            if 'race_type' in row and row['race_type']:
+                race_types[str(row['race_type'])] += 1
             if key in unique:duplicates+=1
             unique.add(key)
-    return {'records':count,'unique_races':len(unique),'duplicates':duplicates,'fields':sorted(fields)},unique
+    return {'records':count,'unique_races':len(unique),'duplicates':duplicates,'fields':sorted(fields),'race_types':dict(race_types)},unique
 
 def month_from_id(race_id, year):
     # Mechanical date decode for the stored 16-digit archive ID;
@@ -86,6 +89,7 @@ def connect(year):
         'unmatched_odds_races':len(oid-rid),
         'unmatched_result_races':len(rid-oid),
         'odds_fields':odds['fields'],
+        'odds_race_types':odds['race_types'],
         'result_fields':results['fields'],
         'odds_sha256_verified':True,
         'price_phase':'final',
