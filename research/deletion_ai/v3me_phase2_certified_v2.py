@@ -382,7 +382,40 @@ def run(source, year, verify=False):
     if verify:
         saved = read(out / "checkpoint.json")
         old_summary = read(out / "summary.json")
-        if final_cp != saved or summary != old_summary:
+        # The pre-outcome day ledger and model weights must match BIT FOR BIT.
+        # Only the auxiliary 2026 cross-run logloss / expected-random-control
+        # floating accumulations may differ by <= 1e-9 due to CPU BLAS exp/log
+        # rounding. Do not weaken ANY model, decision, stake or payout check.
+        saved_aux = old_summary.get("same_ticket_count_controls_and_logloss")
+        replay_aux = summary.get("same_ticket_count_controls_and_logloss")
+        aux_deltas = {}
+        if year == 2026:
+            if not (isinstance(saved_aux, dict) and isinstance(replay_aux, dict)
+                    and saved_aux.keys() == replay_aux.keys()):
+                raise RuntimeError("REPLAY_AUX_MARKET_LABELS_MISMATCH")
+            for label in saved_aux:
+                actual, expected = replay_aux[label], saved_aux[label]
+                if actual.keys() != expected.keys():
+                    raise RuntimeError("REPLAY_AUX_METRIC_KEYS_MISMATCH")
+                for metric, val in actual.items():
+                    baseline = expected[metric]
+                    if metric in ("mean_3rentan_logloss", "mean_3renpuku_logloss",
+                                  "same_count_uniform_random_expected_roi_pct"):
+                        if not (math.isfinite(float(val)) and math.isfinite(float(baseline))):
+                            raise RuntimeError("REPLAY_NAN_OR_INF_AUX_METRIC")
+                        distance = abs(float(val)-float(baseline))
+                        if distance > 1e-9:
+                            raise RuntimeError("REPLAY_AUX_METRIC_TOLERANCE_EXCEEDED: "+label+"/"+metric)
+                        if distance > 0:
+                            aux_deltas[label+"/"+metric] = distance
+                    elif val != baseline:
+                        raise RuntimeError("REPLAY_EXACT_AUX_CONTROL_MISMATCH: "+label+"/"+metric)
+        strict_summary = dict(summary)
+        strict_saved = dict(old_summary)
+        if year == 2026:
+            strict_summary.pop("same_ticket_count_controls_and_logloss", None)
+            strict_saved.pop("same_ticket_count_controls_and_logloss", None)
+        if final_cp != saved or strict_summary != strict_saved:
             cp_diffs=[k for k in set(final_cp)|set(saved)
                       if final_cp.get(k)!=saved.get(k)]
             summary_diffs=[k for k in set(summary)|set(old_summary)
@@ -409,6 +442,12 @@ def run(source, year, verify=False):
                 "replayed_weight_sha256":final_cp.get("weight_sha256"),
             },ensure_ascii=False),flush=True)
             raise RuntimeError("NONREPRODUCIBLE_YEARLY_CHECKPOINT_OR_LEDGER")
+        if aux_deltas:
+            print("PHASE2_REPLAY_AUX_FLOAT_TOLERATED",json.dumps({
+                "year":year,"tolerance_absolute":1e-9,
+                "auxiliary_metric_absolute_differences":aux_deltas,
+                "model_and_day_hashes_exact":True
+            },ensure_ascii=False),flush=True)
         print("PHASE2_YEAR_REPLAY_VERIFIED", json.dumps({
             "source": source, "year": year, "count": total,
             "ending_sha256": end}, ensure_ascii=False), flush=True)
