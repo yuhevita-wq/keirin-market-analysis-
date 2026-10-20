@@ -1,0 +1,57 @@
+name: Paper-only AI | 2023 LINE A/B same-race comparison
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'paper_only_ai/compare_lines_2023.py'
+      - '.github/workflows/paper-only-ai-compare-lines-2023.yml'
+permissions:
+  contents: write
+concurrency:
+  group: paper-only-ai-compare-lines-2023
+  cancel-in-progress: false
+jobs:
+  paired-line-ab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            paper_only_ai
+            docs/paper-only-ai-2023
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install required ML packages
+        run: |
+          python -m pip install 'numpy<3' 'pandas<3' 'scipy<2' 'scikit-learn<2' 'optuna<5' 'joblib<2'
+      - name: Verify 2023 paired experiment syntax
+        run: python -m py_compile paper_only_ai/compare_lines_2023.py
+      - name: Train LINE and NO-LINE AI on precisely matched 2023 races; compare Nov-Dec
+        env:
+          PYTHONUNBUFFERED: '1'
+          OMP_NUM_THREADS: '2'
+          OPENBLAS_NUM_THREADS: '2'
+          MKL_NUM_THREADS: '2'
+        run: python paper_only_ai/compare_lines_2023.py
+      - name: Store both branches' 2023 models and A/B evaluation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-only-2023-line-ab-models-and-metrics
+          path: docs/paper-only-ai-2023/line_ab_2023/
+          if-no-files-found: warn
+          retention-days: 60
+      - name: Publish stable 2023 line-ab result metrics
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/paper-only-ai-2023/line_ab_2023/report.json docs/paper-only-ai-2023/line_ab_2023/progress.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record 2023 matched-race line-aware versus line-blind holdout experiment"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
