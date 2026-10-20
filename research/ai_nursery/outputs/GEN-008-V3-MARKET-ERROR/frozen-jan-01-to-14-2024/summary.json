@@ -1,0 +1,393 @@
+{
+  "stage": "GEN008-V3-MARKET-ERROR-FROZEN-JAN-2024",
+  "status": "COMPLETE",
+  "model_objective": "Infer systematic past-result/market-pricing residuals without treating odds outliers as proven edge",
+  "train_period": [
+    "2023-09-15",
+    "2023-10-07"
+  ],
+  "train_races": 761,
+  "diagnostic_period": [
+    "2023-10-08",
+    "2023-10-14"
+  ],
+  "diagnostic_races": 473,
+  "test_period": [
+    "2024-01-01",
+    "2024-01-14"
+  ],
+  "test_races": 970,
+  "former_october_holdout_now_dev": true,
+  "december_outcomes_never_used_to_fit": true,
+  "january_2024_outcomes_never_used_to_fit": true,
+  "frozen_prior_market_error_parameters": true,
+  "pre_result_decisions_sealed_before_outcomes": true,
+  "old_new_v3_frozen_unchanged": true,
+  "same_races_for_all_four": true,
+  "historical_final_odds_only": true,
+  "actual_real_bets": false,
+  "market_baseline_and_no_refit_diagnostic": {
+    "market_trifecta": 4.050032245726077,
+    "market_trio": 2.671820875808137,
+    "frozen_v3_trifecta": 4.0511414195234865,
+    "frozen_v3_trio": 2.670986768878784,
+    "corrected_trifecta": 4.0453765849342345,
+    "corrected_trio": 2.669239184227729
+  },
+  "fitted_model_sha256": "48c37ededf914ddffe3f20a5e85bbe18343d8206d6f116db0fdf147221c28cfe",
+  "market_mispricing_detection": {
+    "race_with_positive_ev": 22,
+    "positive_trifecta_tickets": 5,
+    "positive_trio_tickets": 22,
+    "max_ev": 0.21389623898711108
+  },
+  "frozen_parent_start": {
+    "old": {
+      "prediction": "bda09bd84b117c2520db98ec50750f35dae7396e9a94ef1445c720539d02c963",
+      "behavior": "ad49143d6bf82c97a2d1ae7d6cda13be13863e547a7c4fd198772235cef8be75",
+      "temperature": 1.0
+    },
+    "new": {
+      "prediction": "01afec6d9cdd7df82d5310b3c7af2f1d80ff11d9f110b1b430f4b041f4a3425a",
+      "behavior": "9c494049f3181b3b0cd2e72afcc3ef609dd0a477406fbc806e1df9030fa4b3f6",
+      "temperature": 1.0942554149337542
+    }
+  },
+  "frozen_parent_end": {
+    "old": {
+      "prediction": "bda09bd84b117c2520db98ec50750f35dae7396e9a94ef1445c720539d02c963",
+      "behavior": "ad49143d6bf82c97a2d1ae7d6cda13be13863e547a7c4fd198772235cef8be75",
+      "temperature": 1.0
+    },
+    "new": {
+      "prediction": "01afec6d9cdd7df82d5310b3c7af2f1d80ff11d9f110b1b430f4b041f4a3425a",
+      "behavior": "9c494049f3181b3b0cd2e72afcc3ef609dd0a477406fbc806e1df9030fa4b3f6",
+      "temperature": 1.0942554149337542
+    }
+  },
+  "source_reports": {
+    "september": {
+      "year": 2023,
+      "date_start": "2023-09-15",
+      "date_end": "2023-09-30",
+      "source_count": {
+        "source_containers": 45,
+        "race_rows": 1229,
+        "duplicate_race_id": 60,
+        "unique_cards": 1169
+      },
+      "selected_racecard_sources": {
+        "data/2023/s_class_f1_all_parts/2023_q3": 193,
+        "data/a_class_12/2023_09_10": 589,
+        "data/a3_challenge/2023_09_10": 256,
+        "data/grade_races/g1g2/g1-g2-2023-non-girls.zip": 47,
+        "data/grade_races/g3/2023/g3-all-2023-q3-non-girls.zip": 84
+      },
+      "label_source": "data/result_universe_v2/combined/results_2023.jsonl.gz",
+      "result_count": {
+        "source_records": 25365
+      },
+      "odds_source": "data/odds_only/odds_2023.jsonl.gz",
+      "market_count": {
+        "archive_complete_races": 9987,
+        "hash_verified": true,
+        "archive_sha256": "6718ee164aaef41a1002a7c1cdf680e5b46c44f57e012f7c815b429aa4325637",
+        "matched_candidate_ids": 321,
+        "invalid": {}
+      },
+      "join_status": {
+        "no_complete_market": 848,
+        "no_result": 8,
+        "joined_and_eligible": 317
+      },
+      "joined_race_ids_sha256": "3479b82f1b46b9d9287512cad20b83c5dd45f1bde83aa9c2fd7f5233a65f55ba",
+      "complete_races": 317,
+      "date_data_origin": "racecard race_date ONLY; never decoded meeting-start ID",
+      "price_phase": "FINAL (historical), NOT certified pre-close",
+      "markets": [
+        "3連単",
+        "3連複"
+      ],
+      "result_used_only_as_label": true,
+      "original_training_checkpoints_untouched": true
+    },
+    "october": {
+      "year": 2023,
+      "date_start": "2023-10-01",
+      "date_end": "2023-10-14",
+      "source_count": {
+        "source_containers": 45,
+        "race_rows": 977,
+        "duplicate_race_id": 50,
+        "unique_cards": 927
+      },
+      "selected_racecard_sources": {
+        "data/2023/s_class_f1_all_parts/2023_q4": 174,
+        "data/a_class_12/2023_09_10": 444,
+        "data/a3_challenge/2023_09_10": 213,
+        "data/grade_races/g3/2023/g3-all-2023-q4-non-girls.zip": 96
+      },
+      "label_source": "data/result_universe_v2/combined/results_2023.jsonl.gz",
+      "result_count": {
+        "source_records": 25365
+      },
+      "odds_source": "data/odds_only/odds_2023.jsonl.gz",
+      "market_count": {
+        "archive_complete_races": 9987,
+        "hash_verified": true,
+        "archive_sha256": "6718ee164aaef41a1002a7c1cdf680e5b46c44f57e012f7c815b429aa4325637",
+        "matched_candidate_ids": 269,
+        "invalid": {}
+      },
+      "join_status": {
+        "no_result": 5,
+        "no_complete_market": 658,
+        "joined_and_eligible": 917
+      },
+      "joined_race_ids_sha256": "9a6f37435d4704dae044765552fa00fc498ac8574e258fb8409cc1c7354cf7c1",
+      "complete_races": 917,
+      "date_data_origin": "racecard race_date ONLY; never decoded meeting-start ID",
+      "price_phase": "FINAL (historical), NOT certified pre-close",
+      "markets": [
+        "3連単",
+        "3連複"
+      ],
+      "result_used_only_as_label": true,
+      "original_training_checkpoints_untouched": true,
+      "historical_odds_backfill": {
+        "prior_eligible": 267,
+        "recovered_price_books": 653,
+        "new_eligible": 650,
+        "recovered_without_outcome": 3,
+        "recovered_ineligible": 0,
+        "remaining_odds_missing": 5,
+        "no_imputation": true,
+        "books_sha256": "804df64523c199cd737d8eb01a7544a85c8075311d18ba73f95b9682bceef2a1",
+        "recovery_manifest": "data/holdout_odds_recovery/gen008-2023-10-01-to-14/coverage.json"
+      }
+    },
+    "january_2024": {
+      "year": 2024,
+      "date_start": "2024-01-01",
+      "date_end": "2024-01-14",
+      "source_count": {
+        "source_containers": 46,
+        "race_rows": 1043,
+        "duplicate_race_id": 54,
+        "unique_cards": 989
+      },
+      "selected_racecard_sources": {
+        "data/2024/s_class_f1_all_parts/2024_q1": 234,
+        "data/a_class_12/2024_01_02": 437,
+        "data/a3_challenge/2024_01_02": 222,
+        "data/grade_races/g3/2024/g3-2024-q1.zip": 96
+      },
+      "label_source": "data/result_universe_v2/combined/results_2024.jsonl.gz",
+      "result_count": {
+        "source_records": 25482
+      },
+      "odds_source": "data/odds_only/odds_2024.jsonl.gz",
+      "market_count": {
+        "archive_complete_races": 9542,
+        "hash_verified": true,
+        "archive_sha256": "7ca1e7859c0cbad0b56167e2ecab8957c570ce3c8e82ce1c8280fc022bb50df5",
+        "matched_candidate_ids": 973,
+        "invalid": {}
+      },
+      "join_status": {
+        "no_complete_market": 16,
+        "no_result": 3,
+        "joined_and_eligible": 970
+      },
+      "joined_race_ids_sha256": "1fa7fc15c8448dc34d5c8816fba277a44f61c81f631c8339671b4e38db1173d1",
+      "complete_races": 970,
+      "date_data_origin": "racecard race_date ONLY; never decoded meeting-start ID",
+      "price_phase": "FINAL (historical), NOT certified pre-close",
+      "markets": [
+        "3連単",
+        "3連複"
+      ],
+      "result_used_only_as_label": true,
+      "original_training_checkpoints_untouched": true,
+      "expanded_original_odds": {
+        "original_available_races": 970,
+        "newly_recovered_books": 0,
+        "additional_eligible": 0,
+        "missing_labels": 0,
+        "invalid_race": 0,
+        "market_parse_failures": 16,
+        "original_sha256": "9674ba66abdc478edeb714b4e5474b4a512682e870e3f4ea6e947ebd42e12944",
+        "no_imputation": true
+      }
+    }
+  },
+  "comparison": {
+    "old": {
+      "races": 970,
+      "entered": 149,
+      "skipped": 821,
+      "hit_races": 34,
+      "marks": 661,
+      "stake_yen": 66100,
+      "payout_yen": 55570,
+      "net_yen": -10530,
+      "roi_pct": 84.0695915279879,
+      "mean_trifecta_logloss": 3.9987363536758176,
+      "mean_trio_logloss": 2.6008302264918863
+    },
+    "new": {
+      "races": 970,
+      "entered": 131,
+      "skipped": 839,
+      "hit_races": 26,
+      "marks": 633,
+      "stake_yen": 63300,
+      "payout_yen": 29870,
+      "net_yen": -33430,
+      "roi_pct": 47.187993680884674,
+      "mean_trifecta_logloss": 4.022196549617804,
+      "mean_trio_logloss": 2.5769982574375767
+    },
+    "v3": {
+      "races": 970,
+      "entered": 34,
+      "skipped": 936,
+      "hit_races": 2,
+      "marks": 43,
+      "stake_yen": 4300,
+      "payout_yen": 2470,
+      "net_yen": -1830,
+      "roi_pct": 57.44186046511628,
+      "mean_trifecta_logloss": 3.9827036129549898,
+      "mean_trio_logloss": 2.568598208454265
+    },
+    "v3_market_error": {
+      "races": 970,
+      "entered": 2,
+      "skipped": 968,
+      "hit_races": 0,
+      "marks": 2,
+      "stake_yen": 200,
+      "payout_yen": 0,
+      "net_yen": -200,
+      "roi_pct": 0.0,
+      "mean_trifecta_logloss": 3.9804727661021446,
+      "mean_trio_logloss": 2.568618907065712
+    }
+  },
+  "daily": [
+    {
+      "date": "2024-01-01",
+      "races": 91,
+      "old_net": -4520,
+      "new_net": -5190,
+      "v3_net": -600,
+      "v3_market_error_net": 0
+    },
+    {
+      "date": "2024-01-02",
+      "races": 91,
+      "old_net": -2760,
+      "new_net": -3060,
+      "v3_net": -100,
+      "v3_market_error_net": 0
+    },
+    {
+      "date": "2024-01-03",
+      "races": 90,
+      "old_net": -740,
+      "new_net": -3400,
+      "v3_net": -300,
+      "v3_market_error_net": 0
+    },
+    {
+      "date": "2024-01-04",
+      "races": 64,
+      "old_net": -4110,
+      "new_net": -4110,
+      "v3_net": -100,
+      "v3_market_error_net": 0
+    },
+    {
+      "date": "2024-01-05",
+      "races": 62,
+      "old_net": -4800,
+      "new_net": -4100,
+      "v3_net": -400,
+      "v3_market_error_net": 0
+    },
+    {
+      "date": "2024-01-06",
+      "races": 50,
+      "old_net": 3680,
+      "new_net": 1840,
+      "v3_net": -100,
+      "v3_market_error_net": 0
+    },
+    {
+      "date": "2024-01-07",
+      "races": 71,
+      "old_net": -2280,
+      "new_net": -3300,
+      "v3_net": 0,
+      "v3_market_error_net": 0
+    },
+    {
+      "date": "2024-01-08",
+      "races": 81,
+      "old_net": 2660,
+      "new_net": -3570,
+      "v3_net": -200,
+      "v3_market_error_net": 0
+    },
+    {
+      "date": "2024-01-09",
+      "races": 54,
+      "old_net": 1740,
+      "new_net": 1840,
+      "v3_net": 1500,
+      "v3_market_error_net": 0
+    },
+    {
+      "date": "2024-01-10",
+      "races": 44,
+      "old_net": -4630,
+      "new_net": -3030,
+      "v3_net": -100,
+      "v3_market_error_net": 0
+    },
+    {
+      "date": "2024-01-11",
+      "races": 57,
+      "old_net": 11460,
+      "new_net": 750,
+      "v3_net": 0,
+      "v3_market_error_net": 0
+    },
+    {
+      "date": "2024-01-12",
+      "races": 65,
+      "old_net": -2010,
+      "new_net": -810,
+      "v3_net": -500,
+      "v3_market_error_net": 0
+    },
+    {
+      "date": "2024-01-13",
+      "races": 73,
+      "old_net": -3600,
+      "new_net": -5970,
+      "v3_net": 170,
+      "v3_market_error_net": -100
+    },
+    {
+      "date": "2024-01-14",
+      "races": 77,
+      "old_net": -620,
+      "new_net": -1320,
+      "v3_net": -1100,
+      "v3_market_error_net": -100
+    }
+  ],
+  "limitation": "A statistically learned residual is not a demonstrated profitable exploitable market error. This is paper settlement on historical FINAL prices only."
+}

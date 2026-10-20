@@ -1,0 +1,90 @@
+{
+  "model": "GEN-008-V3-ME",
+  "status": "FIT_COMPLETE",
+  "feature_names": [
+    "trio_vs_trifecta_log_market_gap",
+    "frozen_NEW_vs_trifecta_market_log_gap",
+    "trifecta_relative_log_popularity",
+    "within_trio_order_log_concentration",
+    "trio_gap_x_relative_popularity"
+  ],
+  "coefficients": [
+    0.2980359556590686,
+    0.06906586244828218,
+    0.06876948437060734,
+    -0.015815825212707458,
+    0.10029280063687371
+  ],
+  "ridge": 5.0,
+  "coefficient_bounds": [
+    -1.5,
+    1.5
+  ],
+  "optimizer": "L-BFGS-B analytical gradient",
+  "optimizer_success": true,
+  "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+  "train_races": 761,
+  "train_dates": [
+    "2023-09-15",
+    "2023-10-07"
+  ],
+  "train_market_logloss_per_race": 4.168251524129447,
+  "train_fitted_penalized_logloss_per_race": 4.163611600529353,
+  "race_ids_sha256": "f439e7cec41cf9368c9e8b8cf16527adef4404fc6e5cc807a2bef679c5e9b23d",
+  "model_uses_real_finish_labels_to_fit": true,
+  "market_inputs": [
+    "3連単 final full price grid",
+    "3連複 final full price grid",
+    "frozen NEW model probabilities"
+  ],
+  "no_october_holdout_claim": true,
+  "future_december_labels_used_in_fit": false,
+  "input_NEW_weights_sha256": "01afec6d9cdd7df82d5310b3c7af2f1d80ff11d9f110b1b430f4b041f4a3425a",
+  "input_NEW_policy_sha256": "9c494049f3181b3b0cd2e72afcc3ef609dd0a477406fbc806e1df9030fa4b3f6",
+  "input_NEW_temperature": 1.0942554149337542,
+  "frozen_v3_alpha": 0.2,
+  "used_previously_examined_october_as_development": true,
+  "september_training_and_october_training_are_only_development": true,
+  "december_2023_untouched_forward_period": [
+    "2023-12-01",
+    "2023-12-14"
+  ],
+  "diagnostic_races": 473,
+  "diagnostic_dates": [
+    "2023-10-08",
+    "2023-10-14"
+  ],
+  "diagnostic_no_refit": {
+    "races": 473,
+    "mean_logloss": {
+      "market_trifecta": 4.050032245726077,
+      "market_trio": 2.671820875808137,
+      "frozen_v3_trifecta": 4.0511414195234865,
+      "frozen_v3_trio": 2.670986768878784,
+      "corrected_trifecta": 4.0453765849342345,
+      "corrected_trio": 2.669239184227729
+    },
+    "corrected_winner_loglik_gain_over_market_per_race": 0.004655660791844745,
+    "true_winners_given_greater_probability_than_market": 264,
+    "no_refit_on_this_period": true
+  },
+  "train_logloss": {
+    "races": 761,
+    "mean_logloss": {
+      "market_trifecta": 4.168251524129447,
+      "market_trio": 2.728485405406824,
+      "frozen_v3_trifecta": 4.169071661477661,
+      "frozen_v3_trio": 2.728144657014137,
+      "corrected_trifecta": 4.1632547228933845,
+      "corrected_trio": 2.72285064262962
+    },
+    "corrected_winner_loglik_gain_over_market_per_race": 0.004996801236052965,
+    "true_winners_given_greater_probability_than_market": 423,
+    "no_refit_on_this_period": true
+  },
+  "algorithm_sha256": "48c37ededf914ddffe3f20a5e85bbe18343d8206d6f116db0fdf147221c28cfe",
+  "january_2024_untouched_forward_period": [
+    "2024-01-01",
+    "2024-01-14"
+  ]
+}
