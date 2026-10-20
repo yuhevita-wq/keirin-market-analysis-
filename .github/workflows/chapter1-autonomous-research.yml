@@ -7,6 +7,8 @@ on:
     paths:
       - 'paper_only_ai/chapter1_autonomous.py'
       - 'paper_only_ai/test_chapter1_autonomous.py'
+      - 'paper_only_ai/chapter1_blind_exam.py'
+      - 'paper_only_ai/test_chapter1_blind_exam.py'
       - '.github/workflows/chapter1-autonomous-research.yml'
 permissions:
   contents: write
@@ -53,6 +55,18 @@ jobs:
           OPENBLAS_NUM_THREADS: '2'
           MKL_NUM_THREADS: '2'
         run: python paper_only_ai/chapter1_autonomous.py
+      - name: Run one-way frozen out-of-period exam only when generation guard permits
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PYTHONUNBUFFERED: '1'
+          OMP_NUM_THREADS: '2'
+          OPENBLAS_NUM_THREADS: '2'
+          MKL_NUM_THREADS: '2'
+        run: |
+          python -m py_compile paper_only_ai/chapter1_blind_exam.py
+          python paper_only_ai/test_chapter1_blind_exam.py
+          python paper_only_ai/chapter1_blind_exam.py
       - name: Preserve weights and research reports as run artifact
         if: always()
         uses: actions/upload-artifact@v4
@@ -88,6 +102,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/paper-only-ai-2023/autonomous_chapter1/state.json docs/paper-only-ai-2023/autonomous_chapter1/latest.json
+          shopt -s nullglob
+          for file in docs/paper-only-ai-2023/autonomous_chapter1/blind_exam_*.json; do git add "$file"; done
           if ! git diff --cached --quiet; then
             git commit -m "Record next autonomous chapter 1 model research generation"
             git pull --rebase origin "$GITHUB_REF_NAME"
