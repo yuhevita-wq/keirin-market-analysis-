@@ -53,14 +53,14 @@ jobs:
         run: |
           if [ -n "$KEY" ]; then
             echo 'available=true' >> "$GITHUB_OUTPUT"
-            echo 'Authorized private-key secret detected; executing secure training.' >> "$GITHUB_STEP_SUMMARY"
+            echo 'Private-key secret detected. Full archive re-training is allowed ONLY on explicitly dispatched workflow runs.' >> "$GITHUB_STEP_SUMMARY"
           else
             echo 'available=false' >> "$GITHUB_OUTPUT"
             echo 'FULL-ARCHIVE TRAINING NOT RUN: the owner has not configured repository Actions secret KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM.' >> "$GITHUB_STEP_SUMMARY"
             echo 'Existing sealed odds were audited but NOT decrypted. No prices have been guessed.' >> "$GITHUB_STEP_SUMMARY"
           fi
       - name: Privately train on all seven-bet sealed sources from 2023 and 2024
-        if: steps.key_gate.outputs.available == 'true'
+        if: steps.key_gate.outputs.available == 'true' && github.event_name == 'workflow_dispatch'
         env:
           KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
         run: |
