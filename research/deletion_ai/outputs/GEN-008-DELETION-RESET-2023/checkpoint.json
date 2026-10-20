@@ -1,0 +1,664 @@
+{
+  "model_family": "GEN-008-DELETION-RESET",
+  "created_as_scratch_models": true,
+  "initial_weights_all_zero": true,
+  "inherited_old_new_v3_v3me_checkpoint_weights": false,
+  "features": [
+    "relative_log_price_popularity",
+    "within_market_log_odds_rank",
+    "cross_market_price_gap",
+    "within_trio_order_imbalance",
+    "price_gap_x_popularity",
+    "order_imbalance_x_rank",
+    "relative_trio_order_concentration",
+    "trio_order_concentration_x_price_gap"
+  ],
+  "feature_masks": {
+    "OLD-R": [
+      0,
+      1
+    ],
+    "NEW-R": [
+      0,
+      1,
+      4
+    ],
+    "V3-R": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "V3-ME-R": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "initial_sha256": {
+    "OLD-R": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+    "NEW-R": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+    "V3-R": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+    "V3-ME-R": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca"
+  },
+  "after_training_sha256": {
+    "OLD-R": "7f855b49e27c020ca458cdf83e254c29ad9d93db15ae67e0f900015493e46f40",
+    "NEW-R": "7bbf52365b0feeac0f08f8a18d84d8ffceef2ad337f0b80601a44fcc5b546970",
+    "V3-R": "b56ecfe0ef5ac79ab8e0de6caa72490717e0709bf0b439c45b80f3af2f6288fe",
+    "V3-ME-R": "25200029853ed8e1640c61e6f2982609f7b0126a26c0ad056bc5c94f661855b4"
+  },
+  "weights": {
+    "OLD-R": {
+      "3連単": [
+        -0.018145841295468448,
+        0.11730616408221625,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "3連複": [
+        0.04566466545148094,
+        0.07932971176126163,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "NEW-R": {
+      "3連単": [
+        -0.012989491028477886,
+        0.09561802545883405,
+        0.0,
+        0.0,
+        0.18817955259792135,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "3連複": [
+        0.04525413744599667,
+        0.06542983108944506,
+        0.0,
+        0.0,
+        -0.17824604171803532,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "V3-R": {
+      "3連単": [
+        0.0019991190920110747,
+        0.07335674738322837,
+        0.12834108497966545,
+        0.06321884440055062,
+        0.1864766480065937,
+        -0.11169045408117098,
+        0.0,
+        0.0
+      ],
+      "3連複": [
+        0.038286851649176154,
+        0.045036084518155696,
+        0.3303022760212055,
+        0.0033545866341232102,
+        -0.19256419735074878,
+        -0.037515189694292,
+        0.0,
+        0.0
+      ]
+    },
+    "V3-ME-R": {
+      "3連単": [
+        0.0072457608647172045,
+        0.07498245376910158,
+        0.10971465569685637,
+        0.05723323281509872,
+        0.18205739123882914,
+        -0.10403204929391385,
+        -0.0643448790093058,
+        0.12397649328337115
+      ],
+      "3連複": [
+        0.0378848774001735,
+        0.04386850566593557,
+        0.2579463747533081,
+        0.0019842274872785876,
+        -0.20845598718006234,
+        -0.0372233694107445,
+        0.0019842274872785876,
+        0.13531434162197045
+      ]
+    }
+  },
+  "training_dates": [
+    "2023-01-01",
+    "2023-09-30"
+  ],
+  "validation_dates": [
+    "2023-10-01",
+    "2023-12-31"
+  ],
+  "test_dates": [
+    "2024-01-01",
+    "2024-01-14"
+  ],
+  "training_races": 8088,
+  "validation_races": 1908,
+  "test_races": 970,
+  "trained_only_in_2023_01_to_09": true,
+  "validation_2023_10_to_12_did_not_train": true,
+  "2024_test_did_not_train_or_tune": true,
+  "policy_selected_only_from_2023_validation": {
+    "OLD-R": 0.7,
+    "NEW-R": 0.9,
+    "V3-R": 0.25,
+    "V3-ME-R": 0.25
+  },
+  "policy_selection_tables": {
+    "OLD-R": {
+      "chosen": {
+        "coverage": 0.7,
+        "monthly_roi_uplift_points": [
+          15.401856289051318,
+          11.731588322625564,
+          11.522601514341368
+        ],
+        "minimum_monthly_uplift_points": 11.522601514341368,
+        "overall_roi_uplift_points": 12.932643111851084,
+        "removed_marks": 521853.0,
+        "forfeited_payout_yen": 30067490.0,
+        "saved_stake_yen": 52185300.0
+      },
+      "candidate_table": [
+        {
+          "coverage": 0.25,
+          "monthly_roi_uplift_points": [
+            16.893237387554983,
+            4.5860972401205125,
+            5.911220226077751
+          ],
+          "minimum_monthly_uplift_points": 4.5860972401205125,
+          "overall_roi_uplift_points": 9.185492583844868,
+          "removed_marks": 604616.0,
+          "forfeited_payout_yen": 36332890.0,
+          "saved_stake_yen": 60461600.0
+        },
+        {
+          "coverage": 0.4,
+          "monthly_roi_uplift_points": [
+            20.17092906191055,
+            9.387075766981724,
+            5.715449622162094
+          ],
+          "minimum_monthly_uplift_points": 5.715449622162094,
+          "overall_roi_uplift_points": 11.877865369787644,
+          "removed_marks": 579687.0,
+          "forfeited_payout_yen": 34402740.0,
+          "saved_stake_yen": 57968700.0
+        },
+        {
+          "coverage": 0.55,
+          "monthly_roi_uplift_points": [
+            20.242914049836102,
+            8.209702290814292,
+            14.385423075142533
+          ],
+          "minimum_monthly_uplift_points": 8.209702290814292,
+          "overall_roi_uplift_points": 14.308645592427782,
+          "removed_marks": 553804.0,
+          "forfeited_payout_yen": 32291360.0,
+          "saved_stake_yen": 55380400.0
+        },
+        {
+          "coverage": 0.7,
+          "monthly_roi_uplift_points": [
+            15.401856289051318,
+            11.731588322625564,
+            11.522601514341368
+          ],
+          "minimum_monthly_uplift_points": 11.522601514341368,
+          "overall_roi_uplift_points": 12.932643111851084,
+          "removed_marks": 521853.0,
+          "forfeited_payout_yen": 30067490.0,
+          "saved_stake_yen": 52185300.0
+        },
+        {
+          "coverage": 0.8,
+          "monthly_roi_uplift_points": [
+            17.05658032548222,
+            10.93486582823504,
+            15.916473029533929
+          ],
+          "minimum_monthly_uplift_points": 10.93486582823504,
+          "overall_roi_uplift_points": 14.64331971150722,
+          "removed_marks": 487703.0,
+          "forfeited_payout_yen": 27274950.0,
+          "saved_stake_yen": 48770300.0
+        },
+        {
+          "coverage": 0.9,
+          "monthly_roi_uplift_points": [
+            12.00362591004146,
+            8.958951894581546,
+            14.11724040175345
+          ],
+          "minimum_monthly_uplift_points": 8.958951894581546,
+          "overall_roi_uplift_points": 11.651924665782488,
+          "removed_marks": 398917.0,
+          "forfeited_payout_yen": 21327520.0,
+          "saved_stake_yen": 39891700.0
+        },
+        {
+          "coverage": 0.95,
+          "monthly_roi_uplift_points": [
+            9.395152181002342,
+            7.604206566031014,
+            9.87890555934553
+          ],
+          "minimum_monthly_uplift_points": 7.604206566031014,
+          "overall_roi_uplift_points": 8.95305032578807,
+          "removed_marks": 299768.0,
+          "forfeited_payout_yen": 15089690.0,
+          "saved_stake_yen": 29976800.0
+        },
+        {
+          "coverage": 1.0,
+          "monthly_roi_uplift_points": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "minimum_monthly_uplift_points": 0.0,
+          "overall_roi_uplift_points": 0.0,
+          "removed_marks": 0.0,
+          "forfeited_payout_yen": 0.0,
+          "saved_stake_yen": 0.0
+        }
+      ],
+      "no_selection_by_2024_outcomes": true
+    },
+    "NEW-R": {
+      "chosen": {
+        "coverage": 0.9,
+        "monthly_roi_uplift_points": [
+          8.343015402825193,
+          8.377150537164058,
+          7.018091309154495
+        ],
+        "minimum_monthly_uplift_points": 7.018091309154495,
+        "overall_roi_uplift_points": 7.947390811201771,
+        "removed_marks": 352519.0,
+        "forfeited_payout_yen": 19065460.0,
+        "saved_stake_yen": 35251900.0
+      },
+      "candidate_table": [
+        {
+          "coverage": 0.25,
+          "monthly_roi_uplift_points": [
+            14.432822647280219,
+            -2.398041132961848,
+            26.897360972867588
+          ],
+          "minimum_monthly_uplift_points": -2.398041132961848,
+          "overall_roi_uplift_points": 12.820542871688401,
+          "removed_marks": 595604.0,
+          "forfeited_payout_yen": 35508760.0,
+          "saved_stake_yen": 59560400.0
+        },
+        {
+          "coverage": 0.4,
+          "monthly_roi_uplift_points": [
+            15.899192887519542,
+            4.443541607612955,
+            1.0976209935257608
+          ],
+          "minimum_monthly_uplift_points": 1.0976209935257608,
+          "overall_roi_uplift_points": 7.277798505839328,
+          "removed_marks": 553260.0,
+          "forfeited_payout_yen": 32922950.0,
+          "saved_stake_yen": 55326000.0
+        },
+        {
+          "coverage": 0.55,
+          "monthly_roi_uplift_points": [
+            20.227388539299106,
+            1.5217593883559255,
+            15.76245129727658
+          ],
+          "minimum_monthly_uplift_points": 1.5217593883559255,
+          "overall_roi_uplift_points": 12.480519853478034,
+          "removed_marks": 504689.0,
+          "forfeited_payout_yen": 28867740.0,
+          "saved_stake_yen": 50468900.0
+        },
+        {
+          "coverage": 0.7,
+          "monthly_roi_uplift_points": [
+            13.855350533403898,
+            3.6973192149895806,
+            15.460317585963612
+          ],
+          "minimum_monthly_uplift_points": 3.6973192149895806,
+          "overall_roi_uplift_points": 10.948310666091142,
+          "removed_marks": 450848.0,
+          "forfeited_payout_yen": 25227570.0,
+          "saved_stake_yen": 45084800.0
+        },
+        {
+          "coverage": 0.8,
+          "monthly_roi_uplift_points": [
+            12.737076039823258,
+            3.5349127931742386,
+            5.22998738862539
+          ],
+          "minimum_monthly_uplift_points": 3.5349127931742386,
+          "overall_roi_uplift_points": 7.2345291485024,
+          "removed_marks": 408248.0,
+          "forfeited_payout_yen": 23066300.0,
+          "saved_stake_yen": 40824800.0
+        },
+        {
+          "coverage": 0.9,
+          "monthly_roi_uplift_points": [
+            8.343015402825193,
+            8.377150537164058,
+            7.018091309154495
+          ],
+          "minimum_monthly_uplift_points": 7.018091309154495,
+          "overall_roi_uplift_points": 7.947390811201771,
+          "removed_marks": 352519.0,
+          "forfeited_payout_yen": 19065460.0,
+          "saved_stake_yen": 35251900.0
+        },
+        {
+          "coverage": 0.95,
+          "monthly_roi_uplift_points": [
+            6.0770086340897205,
+            0.9962523277613378,
+            10.338579083239562
+          ],
+          "minimum_monthly_uplift_points": 0.9962523277613378,
+          "overall_roi_uplift_points": 5.718797972104317,
+          "removed_marks": 279984.0,
+          "forfeited_payout_yen": 14903550.0,
+          "saved_stake_yen": 27998400.0
+        },
+        {
+          "coverage": 1.0,
+          "monthly_roi_uplift_points": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "minimum_monthly_uplift_points": 0.0,
+          "overall_roi_uplift_points": 0.0,
+          "removed_marks": 0.0,
+          "forfeited_payout_yen": 0.0,
+          "saved_stake_yen": 0.0
+        }
+      ],
+      "no_selection_by_2024_outcomes": true
+    },
+    "V3-R": {
+      "chosen": {
+        "coverage": 0.25,
+        "monthly_roi_uplift_points": [
+          14.622794361717927,
+          13.186413420151855,
+          22.866111027352222
+        ],
+        "minimum_monthly_uplift_points": 13.186413420151855,
+        "overall_roi_uplift_points": 16.77574297523924,
+        "removed_marks": 594357.0,
+        "forfeited_payout_yen": 35201270.0,
+        "saved_stake_yen": 59435700.0
+      },
+      "candidate_table": [
+        {
+          "coverage": 0.25,
+          "monthly_roi_uplift_points": [
+            14.622794361717927,
+            13.186413420151855,
+            22.866111027352222
+          ],
+          "minimum_monthly_uplift_points": 13.186413420151855,
+          "overall_roi_uplift_points": 16.77574297523924,
+          "removed_marks": 594357.0,
+          "forfeited_payout_yen": 35201270.0,
+          "saved_stake_yen": 59435700.0
+        },
+        {
+          "coverage": 0.4,
+          "monthly_roi_uplift_points": [
+            12.09049324271242,
+            9.635363211828274,
+            23.015238793022885
+          ],
+          "minimum_monthly_uplift_points": 9.635363211828274,
+          "overall_roi_uplift_points": 14.754490863371073,
+          "removed_marks": 548827.0,
+          "forfeited_payout_yen": 31873100.0,
+          "saved_stake_yen": 54882700.0
+        },
+        {
+          "coverage": 0.55,
+          "monthly_roi_uplift_points": [
+            11.87311639526395,
+            9.780508055803772,
+            19.859123256271594
+          ],
+          "minimum_monthly_uplift_points": 9.780508055803772,
+          "overall_roi_uplift_points": 13.7232186294042,
+          "removed_marks": 496183.0,
+          "forfeited_payout_yen": 28054930.0,
+          "saved_stake_yen": 49618300.0
+        },
+        {
+          "coverage": 0.7,
+          "monthly_roi_uplift_points": [
+            12.320184286576975,
+            9.44601386495224,
+            15.682686348898967
+          ],
+          "minimum_monthly_uplift_points": 9.44601386495224,
+          "overall_roi_uplift_points": 12.431930218277376,
+          "removed_marks": 438870.0,
+          "forfeited_payout_yen": 24056980.0,
+          "saved_stake_yen": 43887000.0
+        },
+        {
+          "coverage": 0.8,
+          "monthly_roi_uplift_points": [
+            9.34365686980686,
+            5.741971202551599,
+            13.449582120340686
+          ],
+          "minimum_monthly_uplift_points": 5.741971202551599,
+          "overall_roi_uplift_points": 9.441602121759807,
+          "removed_marks": 396002.0,
+          "forfeited_payout_yen": 21675410.0,
+          "saved_stake_yen": 39600200.0
+        },
+        {
+          "coverage": 0.9,
+          "monthly_roi_uplift_points": [
+            3.5539736051384607,
+            5.608256941399969,
+            11.307337116108918
+          ],
+          "minimum_monthly_uplift_points": 3.5539736051384607,
+          "overall_roi_uplift_points": 6.710917410038697,
+          "removed_marks": 340429.0,
+          "forfeited_payout_yen": 18616140.0,
+          "saved_stake_yen": 34042900.0
+        },
+        {
+          "coverage": 0.95,
+          "monthly_roi_uplift_points": [
+            8.325187490105302,
+            3.4707793905482953,
+            10.343176309378322
+          ],
+          "minimum_monthly_uplift_points": 3.4707793905482953,
+          "overall_roi_uplift_points": 7.335313339116222,
+          "removed_marks": 283328.0,
+          "forfeited_payout_yen": 14534920.0,
+          "saved_stake_yen": 28332800.0
+        },
+        {
+          "coverage": 1.0,
+          "monthly_roi_uplift_points": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "minimum_monthly_uplift_points": 0.0,
+          "overall_roi_uplift_points": 0.0,
+          "removed_marks": 0.0,
+          "forfeited_payout_yen": 0.0,
+          "saved_stake_yen": 0.0
+        }
+      ],
+      "no_selection_by_2024_outcomes": true
+    },
+    "V3-ME-R": {
+      "chosen": {
+        "coverage": 0.25,
+        "monthly_roi_uplift_points": [
+          18.583973372277807,
+          8.377849725758335,
+          17.99126232509397
+        ],
+        "minimum_monthly_uplift_points": 8.377849725758335,
+        "overall_roi_uplift_points": 14.933693673299642,
+        "removed_marks": 591430.0,
+        "forfeited_payout_yen": 35080170.0,
+        "saved_stake_yen": 59143000.0
+      },
+      "candidate_table": [
+        {
+          "coverage": 0.25,
+          "monthly_roi_uplift_points": [
+            18.583973372277807,
+            8.377849725758335,
+            17.99126232509397
+          ],
+          "minimum_monthly_uplift_points": 8.377849725758335,
+          "overall_roi_uplift_points": 14.933693673299642,
+          "removed_marks": 591430.0,
+          "forfeited_payout_yen": 35080170.0,
+          "saved_stake_yen": 59143000.0
+        },
+        {
+          "coverage": 0.4,
+          "monthly_roi_uplift_points": [
+            18.55756234492819,
+            6.602459370962766,
+            23.610139675202547
+          ],
+          "minimum_monthly_uplift_points": 6.602459370962766,
+          "overall_roi_uplift_points": 16.094739942250758,
+          "removed_marks": 547100.0,
+          "forfeited_payout_yen": 31606240.0,
+          "saved_stake_yen": 54710000.0
+        },
+        {
+          "coverage": 0.55,
+          "monthly_roi_uplift_points": [
+            10.599876754048909,
+            7.057564886058043,
+            15.912218696243096
+          ],
+          "minimum_monthly_uplift_points": 7.057564886058043,
+          "overall_roi_uplift_points": 11.113287124301364,
+          "removed_marks": 492073.0,
+          "forfeited_payout_yen": 28158090.0,
+          "saved_stake_yen": 49207300.0
+        },
+        {
+          "coverage": 0.7,
+          "monthly_roi_uplift_points": [
+            7.619846590123203,
+            3.4376034758923146,
+            13.688716175701332
+          ],
+          "minimum_monthly_uplift_points": 3.4376034758923146,
+          "overall_roi_uplift_points": 8.152096100067773,
+          "removed_marks": 429267.0,
+          "forfeited_payout_yen": 24294060.0,
+          "saved_stake_yen": 42926700.0
+        },
+        {
+          "coverage": 0.8,
+          "monthly_roi_uplift_points": [
+            5.547509912266079,
+            5.212063384502774,
+            12.423695216057695
+          ],
+          "minimum_monthly_uplift_points": 5.212063384502774,
+          "overall_roi_uplift_points": 7.633815264448196,
+          "removed_marks": 381064.0,
+          "forfeited_payout_yen": 21110850.0,
+          "saved_stake_yen": 38106400.0
+        },
+        {
+          "coverage": 0.9,
+          "monthly_roi_uplift_points": [
+            6.077109737927877,
+            7.95379099968192,
+            11.985963278098332
+          ],
+          "minimum_monthly_uplift_points": 6.077109737927877,
+          "overall_roi_uplift_points": 8.61061738869643,
+          "removed_marks": 320060.0,
+          "forfeited_payout_yen": 16617020.0,
+          "saved_stake_yen": 32006000.0
+        },
+        {
+          "coverage": 0.95,
+          "monthly_roi_uplift_points": [
+            4.827499268180768,
+            6.4409786546931524,
+            6.869232461572905
+          ],
+          "minimum_monthly_uplift_points": 4.827499268180768,
+          "overall_roi_uplift_points": 6.042539677702474,
+          "removed_marks": 267233.0,
+          "forfeited_payout_yen": 13932250.0,
+          "saved_stake_yen": 26723300.0
+        },
+        {
+          "coverage": 1.0,
+          "monthly_roi_uplift_points": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "minimum_monthly_uplift_points": 0.0,
+          "overall_roi_uplift_points": 0.0,
+          "removed_marks": 0.0,
+          "forfeited_payout_yen": 0.0,
+          "saved_stake_yen": 0.0
+        }
+      ],
+      "no_selection_by_2024_outcomes": true
+    }
+  },
+  "learning_rate": 0.017,
+  "per_step_weight_shrink": 0.00035,
+  "max_absolute_coefficient": 1.5
+}

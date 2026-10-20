@@ -1,0 +1,2824 @@
+{
+  "stage": "GEN008-2023-FROM-ZERO-DELETION-RESTART",
+  "status": "COMPLETE",
+  "2023_from_zero": true,
+  "learning_goal": "Learn which tickets to DELETE from full books",
+  "original_old_new_v3_v3me_untouched": true,
+  "fresh_child_models": [
+    "OLD-R",
+    "NEW-R",
+    "V3-R",
+    "V3-ME-R"
+  ],
+  "full_books_both_3rentan_and_3renpuku": true,
+  "every_kept_market_has_at_least_one_real_ticket": true,
+  "100_yen_per_mark": true,
+  "no_real_money_bets": true,
+  "historical_final_odds_not_pre_close": true,
+  "train_period": [
+    "2023-01-01",
+    "2023-09-30"
+  ],
+  "validation_period": [
+    "2023-10-01",
+    "2023-12-31"
+  ],
+  "test_period": [
+    "2024-01-01",
+    "2024-01-14"
+  ],
+  "train_races": 8088,
+  "validation_races": 1908,
+  "test_races": 970,
+  "checkpoints": {
+    "OLD-R": {
+      "before_training": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "after_training": "7f855b49e27c020ca458cdf83e254c29ad9d93db15ae67e0f900015493e46f40"
+    },
+    "NEW-R": {
+      "before_training": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "after_training": "7bbf52365b0feeac0f08f8a18d84d8ffceef2ad337f0b80601a44fcc5b546970"
+    },
+    "V3-R": {
+      "before_training": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "after_training": "b56ecfe0ef5ac79ab8e0de6caa72490717e0709bf0b439c45b80f3af2f6288fe"
+    },
+    "V3-ME-R": {
+      "before_training": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "after_training": "25200029853ed8e1640c61e6f2982609f7b0126a26c0ad056bc5c94f661855b4"
+    }
+  },
+  "selected_probability_coverage": {
+    "OLD-R": 0.7,
+    "NEW-R": 0.9,
+    "V3-R": 0.25,
+    "V3-ME-R": 0.25
+  },
+  "validation_tuning": {
+    "OLD-R": {
+      "chosen": {
+        "coverage": 0.7,
+        "monthly_roi_uplift_points": [
+          15.401856289051318,
+          11.731588322625564,
+          11.522601514341368
+        ],
+        "minimum_monthly_uplift_points": 11.522601514341368,
+        "overall_roi_uplift_points": 12.932643111851084,
+        "removed_marks": 521853.0,
+        "forfeited_payout_yen": 30067490.0,
+        "saved_stake_yen": 52185300.0
+      },
+      "candidate_table": [
+        {
+          "coverage": 0.25,
+          "monthly_roi_uplift_points": [
+            16.893237387554983,
+            4.5860972401205125,
+            5.911220226077751
+          ],
+          "minimum_monthly_uplift_points": 4.5860972401205125,
+          "overall_roi_uplift_points": 9.185492583844868,
+          "removed_marks": 604616.0,
+          "forfeited_payout_yen": 36332890.0,
+          "saved_stake_yen": 60461600.0
+        },
+        {
+          "coverage": 0.4,
+          "monthly_roi_uplift_points": [
+            20.17092906191055,
+            9.387075766981724,
+            5.715449622162094
+          ],
+          "minimum_monthly_uplift_points": 5.715449622162094,
+          "overall_roi_uplift_points": 11.877865369787644,
+          "removed_marks": 579687.0,
+          "forfeited_payout_yen": 34402740.0,
+          "saved_stake_yen": 57968700.0
+        },
+        {
+          "coverage": 0.55,
+          "monthly_roi_uplift_points": [
+            20.242914049836102,
+            8.209702290814292,
+            14.385423075142533
+          ],
+          "minimum_monthly_uplift_points": 8.209702290814292,
+          "overall_roi_uplift_points": 14.308645592427782,
+          "removed_marks": 553804.0,
+          "forfeited_payout_yen": 32291360.0,
+          "saved_stake_yen": 55380400.0
+        },
+        {
+          "coverage": 0.7,
+          "monthly_roi_uplift_points": [
+            15.401856289051318,
+            11.731588322625564,
+            11.522601514341368
+          ],
+          "minimum_monthly_uplift_points": 11.522601514341368,
+          "overall_roi_uplift_points": 12.932643111851084,
+          "removed_marks": 521853.0,
+          "forfeited_payout_yen": 30067490.0,
+          "saved_stake_yen": 52185300.0
+        },
+        {
+          "coverage": 0.8,
+          "monthly_roi_uplift_points": [
+            17.05658032548222,
+            10.93486582823504,
+            15.916473029533929
+          ],
+          "minimum_monthly_uplift_points": 10.93486582823504,
+          "overall_roi_uplift_points": 14.64331971150722,
+          "removed_marks": 487703.0,
+          "forfeited_payout_yen": 27274950.0,
+          "saved_stake_yen": 48770300.0
+        },
+        {
+          "coverage": 0.9,
+          "monthly_roi_uplift_points": [
+            12.00362591004146,
+            8.958951894581546,
+            14.11724040175345
+          ],
+          "minimum_monthly_uplift_points": 8.958951894581546,
+          "overall_roi_uplift_points": 11.651924665782488,
+          "removed_marks": 398917.0,
+          "forfeited_payout_yen": 21327520.0,
+          "saved_stake_yen": 39891700.0
+        },
+        {
+          "coverage": 0.95,
+          "monthly_roi_uplift_points": [
+            9.395152181002342,
+            7.604206566031014,
+            9.87890555934553
+          ],
+          "minimum_monthly_uplift_points": 7.604206566031014,
+          "overall_roi_uplift_points": 8.95305032578807,
+          "removed_marks": 299768.0,
+          "forfeited_payout_yen": 15089690.0,
+          "saved_stake_yen": 29976800.0
+        },
+        {
+          "coverage": 1.0,
+          "monthly_roi_uplift_points": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "minimum_monthly_uplift_points": 0.0,
+          "overall_roi_uplift_points": 0.0,
+          "removed_marks": 0.0,
+          "forfeited_payout_yen": 0.0,
+          "saved_stake_yen": 0.0
+        }
+      ],
+      "no_selection_by_2024_outcomes": true
+    },
+    "NEW-R": {
+      "chosen": {
+        "coverage": 0.9,
+        "monthly_roi_uplift_points": [
+          8.343015402825193,
+          8.377150537164058,
+          7.018091309154495
+        ],
+        "minimum_monthly_uplift_points": 7.018091309154495,
+        "overall_roi_uplift_points": 7.947390811201771,
+        "removed_marks": 352519.0,
+        "forfeited_payout_yen": 19065460.0,
+        "saved_stake_yen": 35251900.0
+      },
+      "candidate_table": [
+        {
+          "coverage": 0.25,
+          "monthly_roi_uplift_points": [
+            14.432822647280219,
+            -2.398041132961848,
+            26.897360972867588
+          ],
+          "minimum_monthly_uplift_points": -2.398041132961848,
+          "overall_roi_uplift_points": 12.820542871688401,
+          "removed_marks": 595604.0,
+          "forfeited_payout_yen": 35508760.0,
+          "saved_stake_yen": 59560400.0
+        },
+        {
+          "coverage": 0.4,
+          "monthly_roi_uplift_points": [
+            15.899192887519542,
+            4.443541607612955,
+            1.0976209935257608
+          ],
+          "minimum_monthly_uplift_points": 1.0976209935257608,
+          "overall_roi_uplift_points": 7.277798505839328,
+          "removed_marks": 553260.0,
+          "forfeited_payout_yen": 32922950.0,
+          "saved_stake_yen": 55326000.0
+        },
+        {
+          "coverage": 0.55,
+          "monthly_roi_uplift_points": [
+            20.227388539299106,
+            1.5217593883559255,
+            15.76245129727658
+          ],
+          "minimum_monthly_uplift_points": 1.5217593883559255,
+          "overall_roi_uplift_points": 12.480519853478034,
+          "removed_marks": 504689.0,
+          "forfeited_payout_yen": 28867740.0,
+          "saved_stake_yen": 50468900.0
+        },
+        {
+          "coverage": 0.7,
+          "monthly_roi_uplift_points": [
+            13.855350533403898,
+            3.6973192149895806,
+            15.460317585963612
+          ],
+          "minimum_monthly_uplift_points": 3.6973192149895806,
+          "overall_roi_uplift_points": 10.948310666091142,
+          "removed_marks": 450848.0,
+          "forfeited_payout_yen": 25227570.0,
+          "saved_stake_yen": 45084800.0
+        },
+        {
+          "coverage": 0.8,
+          "monthly_roi_uplift_points": [
+            12.737076039823258,
+            3.5349127931742386,
+            5.22998738862539
+          ],
+          "minimum_monthly_uplift_points": 3.5349127931742386,
+          "overall_roi_uplift_points": 7.2345291485024,
+          "removed_marks": 408248.0,
+          "forfeited_payout_yen": 23066300.0,
+          "saved_stake_yen": 40824800.0
+        },
+        {
+          "coverage": 0.9,
+          "monthly_roi_uplift_points": [
+            8.343015402825193,
+            8.377150537164058,
+            7.018091309154495
+          ],
+          "minimum_monthly_uplift_points": 7.018091309154495,
+          "overall_roi_uplift_points": 7.947390811201771,
+          "removed_marks": 352519.0,
+          "forfeited_payout_yen": 19065460.0,
+          "saved_stake_yen": 35251900.0
+        },
+        {
+          "coverage": 0.95,
+          "monthly_roi_uplift_points": [
+            6.0770086340897205,
+            0.9962523277613378,
+            10.338579083239562
+          ],
+          "minimum_monthly_uplift_points": 0.9962523277613378,
+          "overall_roi_uplift_points": 5.718797972104317,
+          "removed_marks": 279984.0,
+          "forfeited_payout_yen": 14903550.0,
+          "saved_stake_yen": 27998400.0
+        },
+        {
+          "coverage": 1.0,
+          "monthly_roi_uplift_points": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "minimum_monthly_uplift_points": 0.0,
+          "overall_roi_uplift_points": 0.0,
+          "removed_marks": 0.0,
+          "forfeited_payout_yen": 0.0,
+          "saved_stake_yen": 0.0
+        }
+      ],
+      "no_selection_by_2024_outcomes": true
+    },
+    "V3-R": {
+      "chosen": {
+        "coverage": 0.25,
+        "monthly_roi_uplift_points": [
+          14.622794361717927,
+          13.186413420151855,
+          22.866111027352222
+        ],
+        "minimum_monthly_uplift_points": 13.186413420151855,
+        "overall_roi_uplift_points": 16.77574297523924,
+        "removed_marks": 594357.0,
+        "forfeited_payout_yen": 35201270.0,
+        "saved_stake_yen": 59435700.0
+      },
+      "candidate_table": [
+        {
+          "coverage": 0.25,
+          "monthly_roi_uplift_points": [
+            14.622794361717927,
+            13.186413420151855,
+            22.866111027352222
+          ],
+          "minimum_monthly_uplift_points": 13.186413420151855,
+          "overall_roi_uplift_points": 16.77574297523924,
+          "removed_marks": 594357.0,
+          "forfeited_payout_yen": 35201270.0,
+          "saved_stake_yen": 59435700.0
+        },
+        {
+          "coverage": 0.4,
+          "monthly_roi_uplift_points": [
+            12.09049324271242,
+            9.635363211828274,
+            23.015238793022885
+          ],
+          "minimum_monthly_uplift_points": 9.635363211828274,
+          "overall_roi_uplift_points": 14.754490863371073,
+          "removed_marks": 548827.0,
+          "forfeited_payout_yen": 31873100.0,
+          "saved_stake_yen": 54882700.0
+        },
+        {
+          "coverage": 0.55,
+          "monthly_roi_uplift_points": [
+            11.87311639526395,
+            9.780508055803772,
+            19.859123256271594
+          ],
+          "minimum_monthly_uplift_points": 9.780508055803772,
+          "overall_roi_uplift_points": 13.7232186294042,
+          "removed_marks": 496183.0,
+          "forfeited_payout_yen": 28054930.0,
+          "saved_stake_yen": 49618300.0
+        },
+        {
+          "coverage": 0.7,
+          "monthly_roi_uplift_points": [
+            12.320184286576975,
+            9.44601386495224,
+            15.682686348898967
+          ],
+          "minimum_monthly_uplift_points": 9.44601386495224,
+          "overall_roi_uplift_points": 12.431930218277376,
+          "removed_marks": 438870.0,
+          "forfeited_payout_yen": 24056980.0,
+          "saved_stake_yen": 43887000.0
+        },
+        {
+          "coverage": 0.8,
+          "monthly_roi_uplift_points": [
+            9.34365686980686,
+            5.741971202551599,
+            13.449582120340686
+          ],
+          "minimum_monthly_uplift_points": 5.741971202551599,
+          "overall_roi_uplift_points": 9.441602121759807,
+          "removed_marks": 396002.0,
+          "forfeited_payout_yen": 21675410.0,
+          "saved_stake_yen": 39600200.0
+        },
+        {
+          "coverage": 0.9,
+          "monthly_roi_uplift_points": [
+            3.5539736051384607,
+            5.608256941399969,
+            11.307337116108918
+          ],
+          "minimum_monthly_uplift_points": 3.5539736051384607,
+          "overall_roi_uplift_points": 6.710917410038697,
+          "removed_marks": 340429.0,
+          "forfeited_payout_yen": 18616140.0,
+          "saved_stake_yen": 34042900.0
+        },
+        {
+          "coverage": 0.95,
+          "monthly_roi_uplift_points": [
+            8.325187490105302,
+            3.4707793905482953,
+            10.343176309378322
+          ],
+          "minimum_monthly_uplift_points": 3.4707793905482953,
+          "overall_roi_uplift_points": 7.335313339116222,
+          "removed_marks": 283328.0,
+          "forfeited_payout_yen": 14534920.0,
+          "saved_stake_yen": 28332800.0
+        },
+        {
+          "coverage": 1.0,
+          "monthly_roi_uplift_points": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "minimum_monthly_uplift_points": 0.0,
+          "overall_roi_uplift_points": 0.0,
+          "removed_marks": 0.0,
+          "forfeited_payout_yen": 0.0,
+          "saved_stake_yen": 0.0
+        }
+      ],
+      "no_selection_by_2024_outcomes": true
+    },
+    "V3-ME-R": {
+      "chosen": {
+        "coverage": 0.25,
+        "monthly_roi_uplift_points": [
+          18.583973372277807,
+          8.377849725758335,
+          17.99126232509397
+        ],
+        "minimum_monthly_uplift_points": 8.377849725758335,
+        "overall_roi_uplift_points": 14.933693673299642,
+        "removed_marks": 591430.0,
+        "forfeited_payout_yen": 35080170.0,
+        "saved_stake_yen": 59143000.0
+      },
+      "candidate_table": [
+        {
+          "coverage": 0.25,
+          "monthly_roi_uplift_points": [
+            18.583973372277807,
+            8.377849725758335,
+            17.99126232509397
+          ],
+          "minimum_monthly_uplift_points": 8.377849725758335,
+          "overall_roi_uplift_points": 14.933693673299642,
+          "removed_marks": 591430.0,
+          "forfeited_payout_yen": 35080170.0,
+          "saved_stake_yen": 59143000.0
+        },
+        {
+          "coverage": 0.4,
+          "monthly_roi_uplift_points": [
+            18.55756234492819,
+            6.602459370962766,
+            23.610139675202547
+          ],
+          "minimum_monthly_uplift_points": 6.602459370962766,
+          "overall_roi_uplift_points": 16.094739942250758,
+          "removed_marks": 547100.0,
+          "forfeited_payout_yen": 31606240.0,
+          "saved_stake_yen": 54710000.0
+        },
+        {
+          "coverage": 0.55,
+          "monthly_roi_uplift_points": [
+            10.599876754048909,
+            7.057564886058043,
+            15.912218696243096
+          ],
+          "minimum_monthly_uplift_points": 7.057564886058043,
+          "overall_roi_uplift_points": 11.113287124301364,
+          "removed_marks": 492073.0,
+          "forfeited_payout_yen": 28158090.0,
+          "saved_stake_yen": 49207300.0
+        },
+        {
+          "coverage": 0.7,
+          "monthly_roi_uplift_points": [
+            7.619846590123203,
+            3.4376034758923146,
+            13.688716175701332
+          ],
+          "minimum_monthly_uplift_points": 3.4376034758923146,
+          "overall_roi_uplift_points": 8.152096100067773,
+          "removed_marks": 429267.0,
+          "forfeited_payout_yen": 24294060.0,
+          "saved_stake_yen": 42926700.0
+        },
+        {
+          "coverage": 0.8,
+          "monthly_roi_uplift_points": [
+            5.547509912266079,
+            5.212063384502774,
+            12.423695216057695
+          ],
+          "minimum_monthly_uplift_points": 5.212063384502774,
+          "overall_roi_uplift_points": 7.633815264448196,
+          "removed_marks": 381064.0,
+          "forfeited_payout_yen": 21110850.0,
+          "saved_stake_yen": 38106400.0
+        },
+        {
+          "coverage": 0.9,
+          "monthly_roi_uplift_points": [
+            6.077109737927877,
+            7.95379099968192,
+            11.985963278098332
+          ],
+          "minimum_monthly_uplift_points": 6.077109737927877,
+          "overall_roi_uplift_points": 8.61061738869643,
+          "removed_marks": 320060.0,
+          "forfeited_payout_yen": 16617020.0,
+          "saved_stake_yen": 32006000.0
+        },
+        {
+          "coverage": 0.95,
+          "monthly_roi_uplift_points": [
+            4.827499268180768,
+            6.4409786546931524,
+            6.869232461572905
+          ],
+          "minimum_monthly_uplift_points": 4.827499268180768,
+          "overall_roi_uplift_points": 6.042539677702474,
+          "removed_marks": 267233.0,
+          "forfeited_payout_yen": 13932250.0,
+          "saved_stake_yen": 26723300.0
+        },
+        {
+          "coverage": 1.0,
+          "monthly_roi_uplift_points": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "minimum_monthly_uplift_points": 0.0,
+          "overall_roi_uplift_points": 0.0,
+          "removed_marks": 0.0,
+          "forfeited_payout_yen": 0.0,
+          "saved_stake_yen": 0.0
+        }
+      ],
+      "no_selection_by_2024_outcomes": true
+    }
+  },
+  "train_provisional_coverage": 0.8,
+  "train_prequential": {
+    "summary": {
+      "OLD-R": {
+        "net_yen": -34211470.0,
+        "stake_yen": 89883000.0,
+        "payout_yen": 55671530.0,
+        "saved_stake_yen": 159344300.0,
+        "forfeited_payout_yen": 89375030.0,
+        "deleted_winning_tickets": 3343.0,
+        "deleted_marks": 1593443.0,
+        "races": 8088.0
+      },
+      "NEW-R": {
+        "net_yen": -33299850.0,
+        "stake_yen": 89348700.0,
+        "payout_yen": 56048850.0,
+        "saved_stake_yen": 159878600.0,
+        "forfeited_payout_yen": 88997710.0,
+        "deleted_winning_tickets": 3309.0,
+        "deleted_marks": 1598786.0,
+        "races": 8088.0
+      },
+      "V3-R": {
+        "net_yen": -34971720.0,
+        "stake_yen": 95643300.0,
+        "payout_yen": 60671580.0,
+        "saved_stake_yen": 153584000.0,
+        "forfeited_payout_yen": 84374980.0,
+        "deleted_winning_tickets": 3424.0,
+        "deleted_marks": 1535840.0,
+        "races": 8088.0
+      },
+      "V3-ME-R": {
+        "net_yen": -35384000.0,
+        "stake_yen": 96573300.0,
+        "payout_yen": 61189300.0,
+        "saved_stake_yen": 152654000.0,
+        "forfeited_payout_yen": 83857260.0,
+        "deleted_winning_tickets": 3440.0,
+        "deleted_marks": 1526540.0,
+        "races": 8088.0
+      },
+      "full": {
+        "net_yen": -104180740.0,
+        "stake_yen": 249227300.0,
+        "payout_yen": 145046560.0,
+        "races": 8088.0
+      }
+    },
+    "monthly": {
+      "2023-01": {
+        "OLD-R": {
+          "net_yen": -6924390.0,
+          "stake_yen": 19501100.0,
+          "payout_yen": 12576710.0,
+          "saved_stake_yen": 35458000.0,
+          "forfeited_payout_yen": 18095240.0,
+          "deleted_winning_tickets": 840.0,
+          "deleted_marks": 354580.0
+        },
+        "NEW-R": {
+          "net_yen": -6489970.0,
+          "stake_yen": 19329900.0,
+          "payout_yen": 12839930.0,
+          "saved_stake_yen": 35629200.0,
+          "forfeited_payout_yen": 17832020.0,
+          "deleted_winning_tickets": 832.0,
+          "deleted_marks": 356292.0
+        },
+        "V3-R": {
+          "net_yen": -7342840.0,
+          "stake_yen": 21079400.0,
+          "payout_yen": 13736560.0,
+          "saved_stake_yen": 33879700.0,
+          "forfeited_payout_yen": 16935390.0,
+          "deleted_winning_tickets": 900.0,
+          "deleted_marks": 338797.0
+        },
+        "V3-ME-R": {
+          "net_yen": -7357160.0,
+          "stake_yen": 21136100.0,
+          "payout_yen": 13778940.0,
+          "saved_stake_yen": 33823000.0,
+          "forfeited_payout_yen": 16893010.0,
+          "deleted_winning_tickets": 896.0,
+          "deleted_marks": 338230.0
+        }
+      },
+      "2023-02": {
+        "OLD-R": {
+          "net_yen": -3765440.0,
+          "stake_yen": 10505400.0,
+          "payout_yen": 6739960.0,
+          "saved_stake_yen": 24688500.0,
+          "forfeited_payout_yen": 11873070.0,
+          "deleted_winning_tickets": 494.0,
+          "deleted_marks": 246885.0
+        },
+        "NEW-R": {
+          "net_yen": -4037540.0,
+          "stake_yen": 10432400.0,
+          "payout_yen": 6394860.0,
+          "saved_stake_yen": 24761500.0,
+          "forfeited_payout_yen": 12218170.0,
+          "deleted_winning_tickets": 501.0,
+          "deleted_marks": 247615.0
+        },
+        "V3-R": {
+          "net_yen": -3856270.0,
+          "stake_yen": 11013600.0,
+          "payout_yen": 7157330.0,
+          "saved_stake_yen": 24180300.0,
+          "forfeited_payout_yen": 11455700.0,
+          "deleted_winning_tickets": 531.0,
+          "deleted_marks": 241803.0
+        },
+        "V3-ME-R": {
+          "net_yen": -3917930.0,
+          "stake_yen": 11249500.0,
+          "payout_yen": 7331570.0,
+          "saved_stake_yen": 23944400.0,
+          "forfeited_payout_yen": 11281460.0,
+          "deleted_winning_tickets": 527.0,
+          "deleted_marks": 239444.0
+        }
+      },
+      "2023-03": {
+        "OLD-R": {
+          "net_yen": -3018680.0,
+          "stake_yen": 9121500.0,
+          "payout_yen": 6102820.0,
+          "saved_stake_yen": 12726200.0,
+          "forfeited_payout_yen": 8070120.0,
+          "deleted_winning_tickets": 278.0,
+          "deleted_marks": 127262.0
+        },
+        "NEW-R": {
+          "net_yen": -3029430.0,
+          "stake_yen": 9128500.0,
+          "payout_yen": 6099070.0,
+          "saved_stake_yen": 12719200.0,
+          "forfeited_payout_yen": 8073870.0,
+          "deleted_winning_tickets": 278.0,
+          "deleted_marks": 127192.0
+        },
+        "V3-R": {
+          "net_yen": -2133980.0,
+          "stake_yen": 9384200.0,
+          "payout_yen": 7250220.0,
+          "saved_stake_yen": 12463500.0,
+          "forfeited_payout_yen": 6922720.0,
+          "deleted_winning_tickets": 265.0,
+          "deleted_marks": 124635.0
+        },
+        "V3-ME-R": {
+          "net_yen": -2331850.0,
+          "stake_yen": 9441500.0,
+          "payout_yen": 7109650.0,
+          "saved_stake_yen": 12406200.0,
+          "forfeited_payout_yen": 7063290.0,
+          "deleted_winning_tickets": 274.0,
+          "deleted_marks": 124062.0
+        }
+      },
+      "2023-04": {
+        "OLD-R": {
+          "net_yen": -3124750.0,
+          "stake_yen": 7687700.0,
+          "payout_yen": 4562950.0,
+          "saved_stake_yen": 14734000.0,
+          "forfeited_payout_yen": 9372010.0,
+          "deleted_winning_tickets": 266.0,
+          "deleted_marks": 147340.0
+        },
+        "NEW-R": {
+          "net_yen": -3174710.0,
+          "stake_yen": 7746000.0,
+          "payout_yen": 4571290.0,
+          "saved_stake_yen": 14675700.0,
+          "forfeited_payout_yen": 9363670.0,
+          "deleted_winning_tickets": 265.0,
+          "deleted_marks": 146757.0
+        },
+        "V3-R": {
+          "net_yen": -3848940.0,
+          "stake_yen": 8379400.0,
+          "payout_yen": 4530460.0,
+          "saved_stake_yen": 14042300.0,
+          "forfeited_payout_yen": 9404500.0,
+          "deleted_winning_tickets": 290.0,
+          "deleted_marks": 140423.0
+        },
+        "V3-ME-R": {
+          "net_yen": -3964680.0,
+          "stake_yen": 8538200.0,
+          "payout_yen": 4573520.0,
+          "saved_stake_yen": 13883500.0,
+          "forfeited_payout_yen": 9361440.0,
+          "deleted_winning_tickets": 290.0,
+          "deleted_marks": 138835.0
+        }
+      },
+      "2023-05": {
+        "OLD-R": {
+          "net_yen": -2362330.0,
+          "stake_yen": 7554800.0,
+          "payout_yen": 5192470.0,
+          "saved_stake_yen": 18841500.0,
+          "forfeited_payout_yen": 8873470.0,
+          "deleted_winning_tickets": 363.0,
+          "deleted_marks": 188415.0
+        },
+        "NEW-R": {
+          "net_yen": -2371430.0,
+          "stake_yen": 7527400.0,
+          "payout_yen": 5155970.0,
+          "saved_stake_yen": 18868900.0,
+          "forfeited_payout_yen": 8909970.0,
+          "deleted_winning_tickets": 368.0,
+          "deleted_marks": 188689.0
+        },
+        "V3-R": {
+          "net_yen": -2505250.0,
+          "stake_yen": 8204100.0,
+          "payout_yen": 5698850.0,
+          "saved_stake_yen": 18192200.0,
+          "forfeited_payout_yen": 8367090.0,
+          "deleted_winning_tickets": 362.0,
+          "deleted_marks": 181922.0
+        },
+        "V3-ME-R": {
+          "net_yen": -2607380.0,
+          "stake_yen": 8376700.0,
+          "payout_yen": 5769320.0,
+          "saved_stake_yen": 18019600.0,
+          "forfeited_payout_yen": 8296620.0,
+          "deleted_winning_tickets": 369.0,
+          "deleted_marks": 180196.0
+        }
+      },
+      "2023-06": {
+        "OLD-R": {
+          "net_yen": -4244240.0,
+          "stake_yen": 10136100.0,
+          "payout_yen": 5891860.0,
+          "saved_stake_yen": 12155400.0,
+          "forfeited_payout_yen": 8044500.0,
+          "deleted_winning_tickets": 270.0,
+          "deleted_marks": 121554.0
+        },
+        "NEW-R": {
+          "net_yen": -4188250.0,
+          "stake_yen": 10096500.0,
+          "payout_yen": 5908250.0,
+          "saved_stake_yen": 12195000.0,
+          "forfeited_payout_yen": 8028110.0,
+          "deleted_winning_tickets": 268.0,
+          "deleted_marks": 121950.0
+        },
+        "V3-R": {
+          "net_yen": -4435580.0,
+          "stake_yen": 10878000.0,
+          "payout_yen": 6442420.0,
+          "saved_stake_yen": 11413500.0,
+          "forfeited_payout_yen": 7493940.0,
+          "deleted_winning_tickets": 271.0,
+          "deleted_marks": 114135.0
+        },
+        "V3-ME-R": {
+          "net_yen": -4488150.0,
+          "stake_yen": 10938200.0,
+          "payout_yen": 6450050.0,
+          "saved_stake_yen": 11353300.0,
+          "forfeited_payout_yen": 7486310.0,
+          "deleted_winning_tickets": 278.0,
+          "deleted_marks": 113533.0
+        }
+      },
+      "2023-07": {
+        "OLD-R": {
+          "net_yen": -4020720.0,
+          "stake_yen": 9934700.0,
+          "payout_yen": 5913980.0,
+          "saved_stake_yen": 11597300.0,
+          "forfeited_payout_yen": 8383380.0,
+          "deleted_winning_tickets": 298.0,
+          "deleted_marks": 115973.0
+        },
+        "NEW-R": {
+          "net_yen": -4045370.0,
+          "stake_yen": 9871400.0,
+          "payout_yen": 5826030.0,
+          "saved_stake_yen": 11660600.0,
+          "forfeited_payout_yen": 8471330.0,
+          "deleted_winning_tickets": 291.0,
+          "deleted_marks": 116606.0
+        },
+        "V3-R": {
+          "net_yen": -4045440.0,
+          "stake_yen": 10260100.0,
+          "payout_yen": 6214660.0,
+          "saved_stake_yen": 11271900.0,
+          "forfeited_payout_yen": 8082700.0,
+          "deleted_winning_tickets": 277.0,
+          "deleted_marks": 112719.0
+        },
+        "V3-ME-R": {
+          "net_yen": -3878270.0,
+          "stake_yen": 10267000.0,
+          "payout_yen": 6388730.0,
+          "saved_stake_yen": 11265000.0,
+          "forfeited_payout_yen": 7908630.0,
+          "deleted_winning_tickets": 276.0,
+          "deleted_marks": 112650.0
+        }
+      },
+      "2023-08": {
+        "OLD-R": {
+          "net_yen": -3103260.0,
+          "stake_yen": 7736400.0,
+          "payout_yen": 4633140.0,
+          "saved_stake_yen": 16016000.0,
+          "forfeited_payout_yen": 8875340.0,
+          "deleted_winning_tickets": 284.0,
+          "deleted_marks": 160160.0
+        },
+        "NEW-R": {
+          "net_yen": -2650660.0,
+          "stake_yen": 7485200.0,
+          "payout_yen": 4834540.0,
+          "saved_stake_yen": 16267200.0,
+          "forfeited_payout_yen": 8673940.0,
+          "deleted_winning_tickets": 273.0,
+          "deleted_marks": 162672.0
+        },
+        "V3-R": {
+          "net_yen": -3660750.0,
+          "stake_yen": 8468500.0,
+          "payout_yen": 4807750.0,
+          "saved_stake_yen": 15283900.0,
+          "forfeited_payout_yen": 8700730.0,
+          "deleted_winning_tickets": 282.0,
+          "deleted_marks": 152839.0
+        },
+        "V3-ME-R": {
+          "net_yen": -3621300.0,
+          "stake_yen": 8493100.0,
+          "payout_yen": 4871800.0,
+          "saved_stake_yen": 15259300.0,
+          "forfeited_payout_yen": 8636680.0,
+          "deleted_winning_tickets": 287.0,
+          "deleted_marks": 152593.0
+        }
+      },
+      "2023-09": {
+        "OLD-R": {
+          "net_yen": -3647660.0,
+          "stake_yen": 7705300.0,
+          "payout_yen": 4057640.0,
+          "saved_stake_yen": 13127400.0,
+          "forfeited_payout_yen": 7787900.0,
+          "deleted_winning_tickets": 250.0,
+          "deleted_marks": 131274.0
+        },
+        "NEW-R": {
+          "net_yen": -3312490.0,
+          "stake_yen": 7731400.0,
+          "payout_yen": 4418910.0,
+          "saved_stake_yen": 13101300.0,
+          "forfeited_payout_yen": 7426630.0,
+          "deleted_winning_tickets": 233.0,
+          "deleted_marks": 131013.0
+        },
+        "V3-R": {
+          "net_yen": -3142670.0,
+          "stake_yen": 7976000.0,
+          "payout_yen": 4833330.0,
+          "saved_stake_yen": 12856700.0,
+          "forfeited_payout_yen": 7012210.0,
+          "deleted_winning_tickets": 246.0,
+          "deleted_marks": 128567.0
+        },
+        "V3-ME-R": {
+          "net_yen": -3217280.0,
+          "stake_yen": 8133000.0,
+          "payout_yen": 4915720.0,
+          "saved_stake_yen": 12699700.0,
+          "forfeited_payout_yen": 6929820.0,
+          "deleted_winning_tickets": 243.0,
+          "deleted_marks": 126997.0
+        }
+      }
+    }
+  },
+  "validation_scores": {
+    "monthly": {
+      "2023-10": {
+        "OLD-R": {
+          "0.25": {
+            "races": 647.0,
+            "stake_yen": 1497600.0,
+            "payout_yen": 1136150.0,
+            "net_yen": -361450.0,
+            "deleted_marks": 204971.0,
+            "saved_stake_yen": 20497100.0,
+            "forfeited_payout_yen": 11834450.0,
+            "deleted_winning_tickets": 925.0,
+            "retained_winning_tickets": 369.0,
+            "delta_net_vs_all_marks": 8662650.0
+          },
+          "0.4": {
+            "races": 647.0,
+            "stake_yen": 2356600.0,
+            "payout_yen": 1865070.0,
+            "net_yen": -491530.0,
+            "deleted_marks": 196381.0,
+            "saved_stake_yen": 19638100.0,
+            "forfeited_payout_yen": 11105530.0,
+            "deleted_winning_tickets": 726.0,
+            "retained_winning_tickets": 568.0,
+            "delta_net_vs_all_marks": 8532570.0
+          },
+          "0.55": {
+            "races": 647.0,
+            "stake_yen": 3245900.0,
+            "payout_yen": 2571220.0,
+            "net_yen": -674680.0,
+            "deleted_marks": 187488.0,
+            "saved_stake_yen": 18748800.0,
+            "forfeited_payout_yen": 10399380.0,
+            "deleted_winning_tickets": 544.0,
+            "retained_winning_tickets": 750.0,
+            "delta_net_vs_all_marks": 8349420.0
+          },
+          "0.7": {
+            "races": 647.0,
+            "stake_yen": 4356400.0,
+            "payout_yen": 3240000.0,
+            "net_yen": -1116400.0,
+            "deleted_marks": 176383.0,
+            "saved_stake_yen": 17638300.0,
+            "forfeited_payout_yen": 9730600.0,
+            "deleted_winning_tickets": 362.0,
+            "retained_winning_tickets": 932.0,
+            "delta_net_vs_all_marks": 7907700.0
+          },
+          "0.8": {
+            "races": 647.0,
+            "stake_yen": 5623700.0,
+            "payout_yen": 4275590.0,
+            "net_yen": -1348110.0,
+            "deleted_marks": 163710.0,
+            "saved_stake_yen": 16371000.0,
+            "forfeited_payout_yen": 8695010.0,
+            "deleted_winning_tickets": 222.0,
+            "retained_winning_tickets": 1072.0,
+            "delta_net_vs_all_marks": 7675990.0
+          },
+          "0.9": {
+            "races": 647.0,
+            "stake_yen": 8704700.0,
+            "payout_yen": 6178170.0,
+            "net_yen": -2526530.0,
+            "deleted_marks": 132900.0,
+            "saved_stake_yen": 13290000.0,
+            "forfeited_payout_yen": 6792430.0,
+            "deleted_winning_tickets": 113.0,
+            "retained_winning_tickets": 1181.0,
+            "delta_net_vs_all_marks": 6497570.0
+          },
+          "0.95": {
+            "races": 647.0,
+            "stake_yen": 12097700.0,
+            "payout_yen": 8270790.0,
+            "net_yen": -3826910.0,
+            "deleted_marks": 98970.0,
+            "saved_stake_yen": 9897000.0,
+            "forfeited_payout_yen": 4699810.0,
+            "deleted_winning_tickets": 51.0,
+            "retained_winning_tickets": 1243.0,
+            "delta_net_vs_all_marks": 5197190.0
+          },
+          "1.0": {
+            "races": 647.0,
+            "stake_yen": 21994700.0,
+            "payout_yen": 12970600.0,
+            "net_yen": -9024100.0,
+            "deleted_marks": 0.0,
+            "saved_stake_yen": 0.0,
+            "forfeited_payout_yen": 0.0,
+            "deleted_winning_tickets": 0.0,
+            "retained_winning_tickets": 1294.0,
+            "delta_net_vs_all_marks": 0.0
+          }
+        },
+        "NEW-R": {
+          "0.25": {
+            "races": 647.0,
+            "stake_yen": 1817700.0,
+            "payout_yen": 1334270.0,
+            "net_yen": -483430.0,
+            "deleted_marks": 201770.0,
+            "saved_stake_yen": 20177000.0,
+            "forfeited_payout_yen": 11636330.0,
+            "deleted_winning_tickets": 937.0,
+            "retained_winning_tickets": 357.0,
+            "delta_net_vs_all_marks": 8540670.0
+          },
+          "0.4": {
+            "races": 647.0,
+            "stake_yen": 3243700.0,
+            "payout_yen": 2428580.0,
+            "net_yen": -815120.0,
+            "deleted_marks": 187510.0,
+            "saved_stake_yen": 18751000.0,
+            "forfeited_payout_yen": 10542020.0,
+            "deleted_winning_tickets": 748.0,
+            "retained_winning_tickets": 546.0,
+            "delta_net_vs_all_marks": 8208980.0
+          },
+          "0.55": {
+            "races": 647.0,
+            "stake_yen": 4911800.0,
+            "payout_yen": 3890090.0,
+            "net_yen": -1021710.0,
+            "deleted_marks": 170829.0,
+            "saved_stake_yen": 17082900.0,
+            "forfeited_payout_yen": 9080510.0,
+            "deleted_winning_tickets": 568.0,
+            "retained_winning_tickets": 726.0,
+            "delta_net_vs_all_marks": 8002390.0
+          },
+          "0.7": {
+            "races": 647.0,
+            "stake_yen": 6758100.0,
+            "payout_yen": 4921710.0,
+            "net_yen": -1836390.0,
+            "deleted_marks": 152366.0,
+            "saved_stake_yen": 15236600.0,
+            "forfeited_payout_yen": 8048890.0,
+            "deleted_winning_tickets": 370.0,
+            "retained_winning_tickets": 924.0,
+            "delta_net_vs_all_marks": 7187710.0
+          },
+          "0.8": {
+            "races": 647.0,
+            "stake_yen": 8232100.0,
+            "payout_yen": 5903120.0,
+            "net_yen": -2328980.0,
+            "deleted_marks": 137626.0,
+            "saved_stake_yen": 13762600.0,
+            "forfeited_payout_yen": 7067480.0,
+            "deleted_winning_tickets": 233.0,
+            "retained_winning_tickets": 1061.0,
+            "delta_net_vs_all_marks": 6695120.0
+          },
+          "0.9": {
+            "races": 647.0,
+            "stake_yen": 10216700.0,
+            "payout_yen": 6877320.0,
+            "net_yen": -3339380.0,
+            "deleted_marks": 117780.0,
+            "saved_stake_yen": 11778000.0,
+            "forfeited_payout_yen": 6093280.0,
+            "deleted_winning_tickets": 117.0,
+            "retained_winning_tickets": 1177.0,
+            "delta_net_vs_all_marks": 5684720.0
+          },
+          "0.95": {
+            "races": 647.0,
+            "stake_yen": 12755700.0,
+            "payout_yen": 8297390.0,
+            "net_yen": -4458310.0,
+            "deleted_marks": 92390.0,
+            "saved_stake_yen": 9239000.0,
+            "forfeited_payout_yen": 4673210.0,
+            "deleted_winning_tickets": 58.0,
+            "retained_winning_tickets": 1236.0,
+            "delta_net_vs_all_marks": 4565790.0
+          },
+          "1.0": {
+            "races": 647.0,
+            "stake_yen": 21994700.0,
+            "payout_yen": 12970600.0,
+            "net_yen": -9024100.0,
+            "deleted_marks": 0.0,
+            "saved_stake_yen": 0.0,
+            "forfeited_payout_yen": 0.0,
+            "deleted_winning_tickets": 0.0,
+            "retained_winning_tickets": 1294.0,
+            "delta_net_vs_all_marks": 0.0
+          }
+        },
+        "V3-R": {
+          "0.25": {
+            "races": 647.0,
+            "stake_yen": 1879100.0,
+            "payout_yen": 1382910.0,
+            "net_yen": -496190.0,
+            "deleted_marks": 201156.0,
+            "saved_stake_yen": 20115600.0,
+            "forfeited_payout_yen": 11587690.0,
+            "deleted_winning_tickets": 938.0,
+            "retained_winning_tickets": 356.0,
+            "delta_net_vs_all_marks": 8527910.0
+          },
+          "0.4": {
+            "races": 647.0,
+            "stake_yen": 3425700.0,
+            "payout_yen": 2434370.0,
+            "net_yen": -991330.0,
+            "deleted_marks": 185690.0,
+            "saved_stake_yen": 18569000.0,
+            "forfeited_payout_yen": 10536230.0,
+            "deleted_winning_tickets": 753.0,
+            "retained_winning_tickets": 541.0,
+            "delta_net_vs_all_marks": 8032770.0
+          },
+          "0.55": {
+            "races": 647.0,
+            "stake_yen": 5223800.0,
+            "payout_yen": 3700780.0,
+            "net_yen": -1523020.0,
+            "deleted_marks": 167709.0,
+            "saved_stake_yen": 16770900.0,
+            "forfeited_payout_yen": 9269820.0,
+            "deleted_winning_tickets": 569.0,
+            "retained_winning_tickets": 725.0,
+            "delta_net_vs_all_marks": 7501080.0
+          },
+          "0.7": {
+            "races": 647.0,
+            "stake_yen": 7215500.0,
+            "payout_yen": 5144050.0,
+            "net_yen": -2071450.0,
+            "deleted_marks": 147792.0,
+            "saved_stake_yen": 14779200.0,
+            "forfeited_payout_yen": 7826550.0,
+            "deleted_winning_tickets": 379.0,
+            "retained_winning_tickets": 915.0,
+            "delta_net_vs_all_marks": 6952650.0
+          },
+          "0.8": {
+            "races": 647.0,
+            "stake_yen": 8719400.0,
+            "payout_yen": 5956670.0,
+            "net_yen": -2762730.0,
+            "deleted_marks": 132753.0,
+            "saved_stake_yen": 13275300.0,
+            "forfeited_payout_yen": 7013930.0,
+            "deleted_winning_tickets": 241.0,
+            "retained_winning_tickets": 1053.0,
+            "delta_net_vs_all_marks": 6261370.0
+          },
+          "0.9": {
+            "races": 647.0,
+            "stake_yen": 10676500.0,
+            "payout_yen": 6675530.0,
+            "net_yen": -4000970.0,
+            "deleted_marks": 113182.0,
+            "saved_stake_yen": 11318200.0,
+            "forfeited_payout_yen": 6295070.0,
+            "deleted_winning_tickets": 121.0,
+            "retained_winning_tickets": 1173.0,
+            "delta_net_vs_all_marks": 5023130.0
+          },
+          "0.95": {
+            "races": 647.0,
+            "stake_yen": 12649200.0,
+            "payout_yen": 8512490.0,
+            "net_yen": -4136710.0,
+            "deleted_marks": 93455.0,
+            "saved_stake_yen": 9345500.0,
+            "forfeited_payout_yen": 4458110.0,
+            "deleted_winning_tickets": 57.0,
+            "retained_winning_tickets": 1237.0,
+            "delta_net_vs_all_marks": 4887390.0
+          },
+          "1.0": {
+            "races": 647.0,
+            "stake_yen": 21994700.0,
+            "payout_yen": 12970600.0,
+            "net_yen": -9024100.0,
+            "deleted_marks": 0.0,
+            "saved_stake_yen": 0.0,
+            "forfeited_payout_yen": 0.0,
+            "deleted_winning_tickets": 0.0,
+            "retained_winning_tickets": 1294.0,
+            "delta_net_vs_all_marks": 0.0
+          }
+        },
+        "V3-ME-R": {
+          "0.25": {
+            "races": 647.0,
+            "stake_yen": 1947600.0,
+            "payout_yen": 1510470.0,
+            "net_yen": -437130.0,
+            "deleted_marks": 200471.0,
+            "saved_stake_yen": 20047100.0,
+            "forfeited_payout_yen": 11460130.0,
+            "deleted_winning_tickets": 932.0,
+            "retained_winning_tickets": 362.0,
+            "delta_net_vs_all_marks": 8586970.0
+          },
+          "0.4": {
+            "races": 647.0,
+            "stake_yen": 3434700.0,
+            "payout_yen": 2662890.0,
+            "net_yen": -771810.0,
+            "deleted_marks": 185600.0,
+            "saved_stake_yen": 18560000.0,
+            "forfeited_payout_yen": 10307710.0,
+            "deleted_winning_tickets": 756.0,
+            "retained_winning_tickets": 538.0,
+            "delta_net_vs_all_marks": 8252290.0
+          },
+          "0.55": {
+            "races": 647.0,
+            "stake_yen": 5333100.0,
+            "payout_yen": 3710310.0,
+            "net_yen": -1622790.0,
+            "deleted_marks": 166616.0,
+            "saved_stake_yen": 16661600.0,
+            "forfeited_payout_yen": 9260290.0,
+            "deleted_winning_tickets": 567.0,
+            "retained_winning_tickets": 727.0,
+            "delta_net_vs_all_marks": 7401310.0
+          },
+          "0.7": {
+            "races": 647.0,
+            "stake_yen": 7521400.0,
+            "payout_yen": 5008600.0,
+            "net_yen": -2512800.0,
+            "deleted_marks": 144733.0,
+            "saved_stake_yen": 14473300.0,
+            "forfeited_payout_yen": 7962000.0,
+            "deleted_winning_tickets": 380.0,
+            "retained_winning_tickets": 914.0,
+            "delta_net_vs_all_marks": 6511300.0
+          },
+          "0.8": {
+            "races": 647.0,
+            "stake_yen": 9202500.0,
+            "payout_yen": 5937360.0,
+            "net_yen": -3265140.0,
+            "deleted_marks": 127922.0,
+            "saved_stake_yen": 12792200.0,
+            "forfeited_payout_yen": 7033240.0,
+            "deleted_winning_tickets": 249.0,
+            "retained_winning_tickets": 1045.0,
+            "delta_net_vs_all_marks": 5758960.0
+          },
+          "0.9": {
+            "races": 647.0,
+            "stake_yen": 11298800.0,
+            "payout_yen": 7349710.0,
+            "net_yen": -3949090.0,
+            "deleted_marks": 106959.0,
+            "saved_stake_yen": 10695900.0,
+            "forfeited_payout_yen": 5620890.0,
+            "deleted_winning_tickets": 121.0,
+            "retained_winning_tickets": 1173.0,
+            "delta_net_vs_all_marks": 5075010.0
+          },
+          "0.95": {
+            "races": 647.0,
+            "stake_yen": 13140900.0,
+            "payout_yen": 8383760.0,
+            "net_yen": -4757140.0,
+            "deleted_marks": 88538.0,
+            "saved_stake_yen": 8853800.0,
+            "forfeited_payout_yen": 4586840.0,
+            "deleted_winning_tickets": 66.0,
+            "retained_winning_tickets": 1228.0,
+            "delta_net_vs_all_marks": 4266960.0
+          },
+          "1.0": {
+            "races": 647.0,
+            "stake_yen": 21994700.0,
+            "payout_yen": 12970600.0,
+            "net_yen": -9024100.0,
+            "deleted_marks": 0.0,
+            "saved_stake_yen": 0.0,
+            "forfeited_payout_yen": 0.0,
+            "deleted_winning_tickets": 0.0,
+            "retained_winning_tickets": 1294.0,
+            "delta_net_vs_all_marks": 0.0
+          }
+        },
+        "full": {
+          "all": {
+            "races": 647.0,
+            "stake_yen": 21994700.0,
+            "payout_yen": 12970600.0,
+            "net_yen": -9024100.0
+          }
+        }
+      },
+      "2023-11": {
+        "OLD-R": {
+          "0.25": {
+            "races": 638.0,
+            "stake_yen": 1495300.0,
+            "payout_yen": 1036820.0,
+            "net_yen": -458480.0,
+            "deleted_marks": 203307.0,
+            "saved_stake_yen": 20330700.0,
+            "forfeited_payout_yen": 13096060.0,
+            "deleted_winning_tickets": 893.0,
+            "retained_winning_tickets": 383.0,
+            "delta_net_vs_all_marks": 7234640.0
+          },
+          "0.4": {
+            "races": 638.0,
+            "stake_yen": 2331400.0,
+            "payout_yen": 1728490.0,
+            "net_yen": -602910.0,
+            "deleted_marks": 194946.0,
+            "saved_stake_yen": 19494600.0,
+            "forfeited_payout_yen": 12404390.0,
+            "deleted_winning_tickets": 729.0,
+            "retained_winning_tickets": 547.0,
+            "delta_net_vs_all_marks": 7090210.0
+          },
+          "0.55": {
+            "races": 638.0,
+            "stake_yen": 3201000.0,
+            "payout_yen": 2335520.0,
+            "net_yen": -865480.0,
+            "deleted_marks": 186250.0,
+            "saved_stake_yen": 18625000.0,
+            "forfeited_payout_yen": 11797360.0,
+            "deleted_winning_tickets": 552.0,
+            "retained_winning_tickets": 724.0,
+            "delta_net_vs_all_marks": 6827640.0
+          },
+          "0.7": {
+            "races": 638.0,
+            "stake_yen": 4288500.0,
+            "payout_yen": 3280020.0,
+            "net_yen": -1008480.0,
+            "deleted_marks": 175375.0,
+            "saved_stake_yen": 17537500.0,
+            "forfeited_payout_yen": 10852860.0,
+            "deleted_winning_tickets": 363.0,
+            "retained_winning_tickets": 913.0,
+            "delta_net_vs_all_marks": 6684640.0
+          },
+          "0.8": {
+            "races": 638.0,
+            "stake_yen": 5422900.0,
+            "payout_yen": 4104450.0,
+            "net_yen": -1318450.0,
+            "deleted_marks": 164031.0,
+            "saved_stake_yen": 16403100.0,
+            "forfeited_payout_yen": 10028430.0,
+            "deleted_winning_tickets": 227.0,
+            "retained_winning_tickets": 1049.0,
+            "delta_net_vs_all_marks": 6374670.0
+          },
+          "0.9": {
+            "races": 638.0,
+            "stake_yen": 8440100.0,
+            "payout_yen": 6221320.0,
+            "net_yen": -2218780.0,
+            "deleted_marks": 133859.0,
+            "saved_stake_yen": 13385900.0,
+            "forfeited_payout_yen": 7911560.0,
+            "deleted_winning_tickets": 107.0,
+            "retained_winning_tickets": 1169.0,
+            "delta_net_vs_all_marks": 5474340.0
+          },
+          "0.95": {
+            "races": 638.0,
+            "stake_yen": 11772800.0,
+            "payout_yen": 8518410.0,
+            "net_yen": -3254390.0,
+            "deleted_marks": 100532.0,
+            "saved_stake_yen": 10053200.0,
+            "forfeited_payout_yen": 5614470.0,
+            "deleted_winning_tickets": 48.0,
+            "retained_winning_tickets": 1228.0,
+            "delta_net_vs_all_marks": 4438730.0
+          },
+          "1.0": {
+            "races": 638.0,
+            "stake_yen": 21826000.0,
+            "payout_yen": 14132880.0,
+            "net_yen": -7693120.0,
+            "deleted_marks": 0.0,
+            "saved_stake_yen": 0.0,
+            "forfeited_payout_yen": 0.0,
+            "deleted_winning_tickets": 0.0,
+            "retained_winning_tickets": 1276.0,
+            "delta_net_vs_all_marks": 0.0
+          }
+        },
+        "NEW-R": {
+          "0.25": {
+            "races": 638.0,
+            "stake_yen": 1786400.0,
+            "payout_yen": 1113900.0,
+            "net_yen": -672500.0,
+            "deleted_marks": 200396.0,
+            "saved_stake_yen": 20039600.0,
+            "forfeited_payout_yen": 13018980.0,
+            "deleted_winning_tickets": 929.0,
+            "retained_winning_tickets": 347.0,
+            "delta_net_vs_all_marks": 7020620.0
+          },
+          "0.4": {
+            "races": 638.0,
+            "stake_yen": 3251400.0,
+            "payout_yen": 2249840.0,
+            "net_yen": -1001560.0,
+            "deleted_marks": 185746.0,
+            "saved_stake_yen": 18574600.0,
+            "forfeited_payout_yen": 11883040.0,
+            "deleted_winning_tickets": 756.0,
+            "retained_winning_tickets": 520.0,
+            "delta_net_vs_all_marks": 6691560.0
+          },
+          "0.55": {
+            "races": 638.0,
+            "stake_yen": 4875000.0,
+            "payout_yen": 3230870.0,
+            "net_yen": -1644130.0,
+            "deleted_marks": 169510.0,
+            "saved_stake_yen": 16951000.0,
+            "forfeited_payout_yen": 10902010.0,
+            "deleted_winning_tickets": 584.0,
+            "retained_winning_tickets": 692.0,
+            "delta_net_vs_all_marks": 6048990.0
+          },
+          "0.7": {
+            "races": 638.0,
+            "stake_yen": 6693400.0,
+            "payout_yen": 4581620.0,
+            "net_yen": -2111780.0,
+            "deleted_marks": 151326.0,
+            "saved_stake_yen": 15132600.0,
+            "forfeited_payout_yen": 9551260.0,
+            "deleted_winning_tickets": 364.0,
+            "retained_winning_tickets": 912.0,
+            "delta_net_vs_all_marks": 5581340.0
+          },
+          "0.8": {
+            "races": 638.0,
+            "stake_yen": 8122200.0,
+            "payout_yen": 5546440.0,
+            "net_yen": -2575760.0,
+            "deleted_marks": 137038.0,
+            "saved_stake_yen": 13703800.0,
+            "forfeited_payout_yen": 8586440.0,
+            "deleted_winning_tickets": 242.0,
+            "retained_winning_tickets": 1034.0,
+            "delta_net_vs_all_marks": 5117360.0
+          },
+          "0.9": {
+            "races": 638.0,
+            "stake_yen": 10018700.0,
+            "payout_yen": 7326640.0,
+            "net_yen": -2692060.0,
+            "deleted_marks": 118073.0,
+            "saved_stake_yen": 11807300.0,
+            "forfeited_payout_yen": 6806240.0,
+            "deleted_winning_tickets": 105.0,
+            "retained_winning_tickets": 1171.0,
+            "delta_net_vs_all_marks": 5001060.0
+          },
+          "0.95": {
+            "races": 638.0,
+            "stake_yen": 12493500.0,
+            "payout_yen": 8214320.0,
+            "net_yen": -4279180.0,
+            "deleted_marks": 93325.0,
+            "saved_stake_yen": 9332500.0,
+            "forfeited_payout_yen": 5918560.0,
+            "deleted_winning_tickets": 54.0,
+            "retained_winning_tickets": 1222.0,
+            "delta_net_vs_all_marks": 3413940.0
+          },
+          "1.0": {
+            "races": 638.0,
+            "stake_yen": 21826000.0,
+            "payout_yen": 14132880.0,
+            "net_yen": -7693120.0,
+            "deleted_marks": 0.0,
+            "saved_stake_yen": 0.0,
+            "forfeited_payout_yen": 0.0,
+            "deleted_winning_tickets": 0.0,
+            "retained_winning_tickets": 1276.0,
+            "delta_net_vs_all_marks": 0.0
+          }
+        },
+        "V3-R": {
+          "0.25": {
+            "races": 638.0,
+            "stake_yen": 1830100.0,
+            "payout_yen": 1426360.0,
+            "net_yen": -403740.0,
+            "deleted_marks": 199959.0,
+            "saved_stake_yen": 19995900.0,
+            "forfeited_payout_yen": 12706520.0,
+            "deleted_winning_tickets": 926.0,
+            "retained_winning_tickets": 350.0,
+            "delta_net_vs_all_marks": 7289380.0
+          },
+          "0.4": {
+            "races": 638.0,
+            "stake_yen": 3397100.0,
+            "payout_yen": 2527030.0,
+            "net_yen": -870070.0,
+            "deleted_marks": 184289.0,
+            "saved_stake_yen": 18428900.0,
+            "forfeited_payout_yen": 11605850.0,
+            "deleted_winning_tickets": 747.0,
+            "retained_winning_tickets": 529.0,
+            "delta_net_vs_all_marks": 6823050.0
+          },
+          "0.55": {
+            "races": 638.0,
+            "stake_yen": 5199200.0,
+            "payout_yen": 3875120.0,
+            "net_yen": -1324080.0,
+            "deleted_marks": 166268.0,
+            "saved_stake_yen": 16626800.0,
+            "forfeited_payout_yen": 10257760.0,
+            "deleted_winning_tickets": 557.0,
+            "retained_winning_tickets": 719.0,
+            "delta_net_vs_all_marks": 6369040.0
+          },
+          "0.7": {
+            "races": 638.0,
+            "stake_yen": 7104900.0,
+            "payout_yen": 5271730.0,
+            "net_yen": -1833170.0,
+            "deleted_marks": 147211.0,
+            "saved_stake_yen": 14721100.0,
+            "forfeited_payout_yen": 8861150.0,
+            "deleted_winning_tickets": 376.0,
+            "retained_winning_tickets": 900.0,
+            "delta_net_vs_all_marks": 5859950.0
+          },
+          "0.8": {
+            "races": 638.0,
+            "stake_yen": 8550600.0,
+            "payout_yen": 6027700.0,
+            "net_yen": -2522900.0,
+            "deleted_marks": 132754.0,
+            "saved_stake_yen": 13275400.0,
+            "forfeited_payout_yen": 8105180.0,
+            "deleted_winning_tickets": 248.0,
+            "retained_winning_tickets": 1028.0,
+            "delta_net_vs_all_marks": 5170220.0
+          },
+          "0.9": {
+            "races": 638.0,
+            "stake_yen": 10414300.0,
+            "payout_yen": 7327580.0,
+            "net_yen": -3086720.0,
+            "deleted_marks": 114117.0,
+            "saved_stake_yen": 11411700.0,
+            "forfeited_payout_yen": 6805300.0,
+            "deleted_winning_tickets": 124.0,
+            "retained_winning_tickets": 1152.0,
+            "delta_net_vs_all_marks": 4606400.0
+          },
+          "0.95": {
+            "races": 638.0,
+            "stake_yen": 12373900.0,
+            "payout_yen": 8441880.0,
+            "net_yen": -3932020.0,
+            "deleted_marks": 94521.0,
+            "saved_stake_yen": 9452100.0,
+            "forfeited_payout_yen": 5691000.0,
+            "deleted_winning_tickets": 55.0,
+            "retained_winning_tickets": 1221.0,
+            "delta_net_vs_all_marks": 3761100.0
+          },
+          "1.0": {
+            "races": 638.0,
+            "stake_yen": 21826000.0,
+            "payout_yen": 14132880.0,
+            "net_yen": -7693120.0,
+            "deleted_marks": 0.0,
+            "saved_stake_yen": 0.0,
+            "forfeited_payout_yen": 0.0,
+            "deleted_winning_tickets": 0.0,
+            "retained_winning_tickets": 1276.0,
+            "delta_net_vs_all_marks": 0.0
+          }
+        },
+        "V3-ME-R": {
+          "0.25": {
+            "races": 638.0,
+            "stake_yen": 1975500.0,
+            "payout_yen": 1444690.0,
+            "net_yen": -530810.0,
+            "deleted_marks": 198505.0,
+            "saved_stake_yen": 19850500.0,
+            "forfeited_payout_yen": 12688190.0,
+            "deleted_winning_tickets": 929.0,
+            "retained_winning_tickets": 347.0,
+            "delta_net_vs_all_marks": 7162310.0
+          },
+          "0.4": {
+            "races": 638.0,
+            "stake_yen": 3508600.0,
+            "payout_yen": 2503560.0,
+            "net_yen": -1005040.0,
+            "deleted_marks": 183174.0,
+            "saved_stake_yen": 18317400.0,
+            "forfeited_payout_yen": 11629320.0,
+            "deleted_winning_tickets": 755.0,
+            "retained_winning_tickets": 521.0,
+            "delta_net_vs_all_marks": 6688080.0
+          },
+          "0.55": {
+            "races": 638.0,
+            "stake_yen": 5362800.0,
+            "payout_yen": 3851030.0,
+            "net_yen": -1511770.0,
+            "deleted_marks": 164632.0,
+            "saved_stake_yen": 16463200.0,
+            "forfeited_payout_yen": 10281850.0,
+            "deleted_winning_tickets": 573.0,
+            "retained_winning_tickets": 703.0,
+            "delta_net_vs_all_marks": 6181350.0
+          },
+          "0.7": {
+            "races": 638.0,
+            "stake_yen": 7452900.0,
+            "payout_yen": 5082140.0,
+            "net_yen": -2370760.0,
+            "deleted_marks": 143731.0,
+            "saved_stake_yen": 14373100.0,
+            "forfeited_payout_yen": 9050740.0,
+            "deleted_winning_tickets": 377.0,
+            "retained_winning_tickets": 899.0,
+            "delta_net_vs_all_marks": 5322360.0
+          },
+          "0.8": {
+            "races": 638.0,
+            "stake_yen": 9114100.0,
+            "payout_yen": 6376640.0,
+            "net_yen": -2737460.0,
+            "deleted_marks": 127119.0,
+            "saved_stake_yen": 12711900.0,
+            "forfeited_payout_yen": 7756240.0,
+            "deleted_winning_tickets": 252.0,
+            "retained_winning_tickets": 1024.0,
+            "delta_net_vs_all_marks": 4955660.0
+          },
+          "0.9": {
+            "races": 638.0,
+            "stake_yen": 11194300.0,
+            "payout_yen": 8138960.0,
+            "net_yen": -3055340.0,
+            "deleted_marks": 106317.0,
+            "saved_stake_yen": 10631700.0,
+            "forfeited_payout_yen": 5993920.0,
+            "deleted_winning_tickets": 123.0,
+            "retained_winning_tickets": 1153.0,
+            "delta_net_vs_all_marks": 4637780.0
+          },
+          "0.95": {
+            "races": 638.0,
+            "stake_yen": 12954600.0,
+            "payout_yen": 9222830.0,
+            "net_yen": -3731770.0,
+            "deleted_marks": 88714.0,
+            "saved_stake_yen": 8871400.0,
+            "forfeited_payout_yen": 4910050.0,
+            "deleted_winning_tickets": 51.0,
+            "retained_winning_tickets": 1225.0,
+            "delta_net_vs_all_marks": 3961350.0
+          },
+          "1.0": {
+            "races": 638.0,
+            "stake_yen": 21826000.0,
+            "payout_yen": 14132880.0,
+            "net_yen": -7693120.0,
+            "deleted_marks": 0.0,
+            "saved_stake_yen": 0.0,
+            "forfeited_payout_yen": 0.0,
+            "deleted_winning_tickets": 0.0,
+            "retained_winning_tickets": 1276.0,
+            "delta_net_vs_all_marks": 0.0
+          }
+        },
+        "full": {
+          "all": {
+            "races": 638.0,
+            "stake_yen": 21826000.0,
+            "payout_yen": 14132880.0,
+            "net_yen": -7693120.0
+          }
+        }
+      },
+      "2023-12": {
+        "OLD-R": {
+          "0.25": {
+            "races": 623.0,
+            "stake_yen": 1435500.0,
+            "payout_yen": 924730.0,
+            "net_yen": -510770.0,
+            "deleted_marks": 196338.0,
+            "saved_stake_yen": 19633800.0,
+            "forfeited_payout_yen": 11402380.0,
+            "deleted_winning_tickets": 887.0,
+            "retained_winning_tickets": 359.0,
+            "delta_net_vs_all_marks": 8231420.0
+          },
+          "0.4": {
+            "races": 623.0,
+            "stake_yen": 2233300.0,
+            "payout_yen": 1434290.0,
+            "net_yen": -799010.0,
+            "deleted_marks": 188360.0,
+            "saved_stake_yen": 18836000.0,
+            "forfeited_payout_yen": 10892820.0,
+            "deleted_winning_tickets": 738.0,
+            "retained_winning_tickets": 508.0,
+            "delta_net_vs_all_marks": 7943180.0
+          },
+          "0.55": {
+            "races": 623.0,
+            "stake_yen": 3062700.0,
+            "payout_yen": 2232490.0,
+            "net_yen": -830210.0,
+            "deleted_marks": 180066.0,
+            "saved_stake_yen": 18006600.0,
+            "forfeited_payout_yen": 10094620.0,
+            "deleted_winning_tickets": 545.0,
+            "retained_winning_tickets": 701.0,
+            "delta_net_vs_all_marks": 7911980.0
+          },
+          "0.7": {
+            "races": 623.0,
+            "stake_yen": 4059800.0,
+            "payout_yen": 2843080.0,
+            "net_yen": -1216720.0,
+            "deleted_marks": 170095.0,
+            "saved_stake_yen": 17009500.0,
+            "forfeited_payout_yen": 9484030.0,
+            "deleted_winning_tickets": 388.0,
+            "retained_winning_tickets": 858.0,
+            "delta_net_vs_all_marks": 7525470.0
+          },
+          "0.8": {
+            "races": 623.0,
+            "stake_yen": 5073100.0,
+            "payout_yen": 3775600.0,
+            "net_yen": -1297500.0,
+            "deleted_marks": 159962.0,
+            "saved_stake_yen": 15996200.0,
+            "forfeited_payout_yen": 8551510.0,
+            "deleted_winning_tickets": 240.0,
+            "retained_winning_tickets": 1006.0,
+            "delta_net_vs_all_marks": 7444690.0
+          },
+          "0.9": {
+            "races": 623.0,
+            "stake_yen": 7853500.0,
+            "payout_yen": 5703580.0,
+            "net_yen": -2149920.0,
+            "deleted_marks": 132158.0,
+            "saved_stake_yen": 13215800.0,
+            "forfeited_payout_yen": 6623530.0,
+            "deleted_winning_tickets": 120.0,
+            "retained_winning_tickets": 1126.0,
+            "delta_net_vs_all_marks": 6592270.0
+          },
+          "0.95": {
+            "races": 623.0,
+            "stake_yen": 11042700.0,
+            "payout_yen": 7551700.0,
+            "net_yen": -3491000.0,
+            "deleted_marks": 100266.0,
+            "saved_stake_yen": 10026600.0,
+            "forfeited_payout_yen": 4775410.0,
+            "deleted_winning_tickets": 64.0,
+            "retained_winning_tickets": 1182.0,
+            "delta_net_vs_all_marks": 5251190.0
+          },
+          "1.0": {
+            "races": 623.0,
+            "stake_yen": 21069300.0,
+            "payout_yen": 12327110.0,
+            "net_yen": -8742190.0,
+            "deleted_marks": 0.0,
+            "saved_stake_yen": 0.0,
+            "forfeited_payout_yen": 0.0,
+            "deleted_winning_tickets": 0.0,
+            "retained_winning_tickets": 1246.0,
+            "delta_net_vs_all_marks": 0.0
+          }
+        },
+        "NEW-R": {
+          "0.25": {
+            "races": 623.0,
+            "stake_yen": 1725500.0,
+            "payout_yen": 1473660.0,
+            "net_yen": -251840.0,
+            "deleted_marks": 193438.0,
+            "saved_stake_yen": 19343800.0,
+            "forfeited_payout_yen": 10853450.0,
+            "deleted_winning_tickets": 906.0,
+            "retained_winning_tickets": 340.0,
+            "delta_net_vs_all_marks": 8490350.0
+          },
+          "0.4": {
+            "races": 623.0,
+            "stake_yen": 3068900.0,
+            "payout_yen": 1829220.0,
+            "net_yen": -1239680.0,
+            "deleted_marks": 180004.0,
+            "saved_stake_yen": 18000400.0,
+            "forfeited_payout_yen": 10497890.0,
+            "deleted_winning_tickets": 763.0,
+            "retained_winning_tickets": 483.0,
+            "delta_net_vs_all_marks": 7502510.0
+          },
+          "0.55": {
+            "races": 623.0,
+            "stake_yen": 4634300.0,
+            "payout_yen": 3441890.0,
+            "net_yen": -1192410.0,
+            "deleted_marks": 164350.0,
+            "saved_stake_yen": 16435000.0,
+            "forfeited_payout_yen": 8885220.0,
+            "deleted_winning_tickets": 569.0,
+            "retained_winning_tickets": 677.0,
+            "delta_net_vs_all_marks": 7549780.0
+          },
+          "0.7": {
+            "races": 623.0,
+            "stake_yen": 6353700.0,
+            "payout_yen": 4699690.0,
+            "net_yen": -1654010.0,
+            "deleted_marks": 147156.0,
+            "saved_stake_yen": 14715600.0,
+            "forfeited_payout_yen": 7627420.0,
+            "deleted_winning_tickets": 377.0,
+            "retained_winning_tickets": 869.0,
+            "delta_net_vs_all_marks": 7088180.0
+          },
+          "0.8": {
+            "races": 623.0,
+            "stake_yen": 7710900.0,
+            "payout_yen": 4914730.0,
+            "net_yen": -2796170.0,
+            "deleted_marks": 133584.0,
+            "saved_stake_yen": 13358400.0,
+            "forfeited_payout_yen": 7412380.0,
+            "deleted_winning_tickets": 250.0,
+            "retained_winning_tickets": 996.0,
+            "delta_net_vs_all_marks": 5946020.0
+          },
+          "0.9": {
+            "races": 623.0,
+            "stake_yen": 9402700.0,
+            "payout_yen": 6161170.0,
+            "net_yen": -3241530.0,
+            "deleted_marks": 116666.0,
+            "saved_stake_yen": 11666600.0,
+            "forfeited_payout_yen": 6165940.0,
+            "deleted_winning_tickets": 132.0,
+            "retained_winning_tickets": 1114.0,
+            "delta_net_vs_all_marks": 5500660.0
+          },
+          "0.95": {
+            "races": 623.0,
+            "stake_yen": 11642400.0,
+            "payout_yen": 8015330.0,
+            "net_yen": -3627070.0,
+            "deleted_marks": 94269.0,
+            "saved_stake_yen": 9426900.0,
+            "forfeited_payout_yen": 4311780.0,
+            "deleted_winning_tickets": 66.0,
+            "retained_winning_tickets": 1180.0,
+            "delta_net_vs_all_marks": 5115120.0
+          },
+          "1.0": {
+            "races": 623.0,
+            "stake_yen": 21069300.0,
+            "payout_yen": 12327110.0,
+            "net_yen": -8742190.0,
+            "deleted_marks": 0.0,
+            "saved_stake_yen": 0.0,
+            "forfeited_payout_yen": 0.0,
+            "deleted_winning_tickets": 0.0,
+            "retained_winning_tickets": 1246.0,
+            "delta_net_vs_all_marks": 0.0
+          }
+        },
+        "V3-R": {
+          "0.25": {
+            "races": 623.0,
+            "stake_yen": 1745100.0,
+            "payout_yen": 1420050.0,
+            "net_yen": -325050.0,
+            "deleted_marks": 193242.0,
+            "saved_stake_yen": 19324200.0,
+            "forfeited_payout_yen": 10907060.0,
+            "deleted_winning_tickets": 892.0,
+            "retained_winning_tickets": 354.0,
+            "delta_net_vs_all_marks": 8417140.0
+          },
+          "0.4": {
+            "races": 623.0,
+            "stake_yen": 3184500.0,
+            "payout_yen": 2596090.0,
+            "net_yen": -588410.0,
+            "deleted_marks": 178848.0,
+            "saved_stake_yen": 17884800.0,
+            "forfeited_payout_yen": 9731020.0,
+            "deleted_winning_tickets": 728.0,
+            "retained_winning_tickets": 518.0,
+            "delta_net_vs_all_marks": 8153780.0
+          },
+          "0.55": {
+            "races": 623.0,
+            "stake_yen": 4848700.0,
+            "payout_yen": 3799760.0,
+            "net_yen": -1048940.0,
+            "deleted_marks": 162206.0,
+            "saved_stake_yen": 16220600.0,
+            "forfeited_payout_yen": 8527350.0,
+            "deleted_winning_tickets": 560.0,
+            "retained_winning_tickets": 686.0,
+            "delta_net_vs_all_marks": 7693250.0
+          },
+          "0.7": {
+            "races": 623.0,
+            "stake_yen": 6682600.0,
+            "payout_yen": 4957830.0,
+            "net_yen": -1724770.0,
+            "deleted_marks": 143867.0,
+            "saved_stake_yen": 14386700.0,
+            "forfeited_payout_yen": 7369280.0,
+            "deleted_winning_tickets": 370.0,
+            "retained_winning_tickets": 876.0,
+            "delta_net_vs_all_marks": 7017420.0
+          },
+          "0.8": {
+            "races": 623.0,
+            "stake_yen": 8019800.0,
+            "payout_yen": 5770810.0,
+            "net_yen": -2248990.0,
+            "deleted_marks": 130495.0,
+            "saved_stake_yen": 13049500.0,
+            "forfeited_payout_yen": 6556300.0,
+            "deleted_winning_tickets": 247.0,
+            "retained_winning_tickets": 999.0,
+            "delta_net_vs_all_marks": 6493200.0
+          },
+          "0.9": {
+            "races": 623.0,
+            "stake_yen": 9756300.0,
+            "payout_yen": 6811340.0,
+            "net_yen": -2944960.0,
+            "deleted_marks": 113130.0,
+            "saved_stake_yen": 11313000.0,
+            "forfeited_payout_yen": 5515770.0,
+            "deleted_winning_tickets": 121.0,
+            "retained_winning_tickets": 1125.0,
+            "delta_net_vs_all_marks": 5797230.0
+          },
+          "0.95": {
+            "races": 623.0,
+            "stake_yen": 11534100.0,
+            "payout_yen": 7941300.0,
+            "net_yen": -3592800.0,
+            "deleted_marks": 95352.0,
+            "saved_stake_yen": 9535200.0,
+            "forfeited_payout_yen": 4385810.0,
+            "deleted_winning_tickets": 61.0,
+            "retained_winning_tickets": 1185.0,
+            "delta_net_vs_all_marks": 5149390.0
+          },
+          "1.0": {
+            "races": 623.0,
+            "stake_yen": 21069300.0,
+            "payout_yen": 12327110.0,
+            "net_yen": -8742190.0,
+            "deleted_marks": 0.0,
+            "saved_stake_yen": 0.0,
+            "forfeited_payout_yen": 0.0,
+            "deleted_winning_tickets": 0.0,
+            "retained_winning_tickets": 1246.0,
+            "delta_net_vs_all_marks": 0.0
+          }
+        },
+        "V3-ME-R": {
+          "0.25": {
+            "races": 623.0,
+            "stake_yen": 1823900.0,
+            "payout_yen": 1395260.0,
+            "net_yen": -428640.0,
+            "deleted_marks": 192454.0,
+            "saved_stake_yen": 19245400.0,
+            "forfeited_payout_yen": 10931850.0,
+            "deleted_winning_tickets": 889.0,
+            "retained_winning_tickets": 357.0,
+            "delta_net_vs_all_marks": 8313550.0
+          },
+          "0.4": {
+            "races": 623.0,
+            "stake_yen": 3236700.0,
+            "payout_yen": 2657900.0,
+            "net_yen": -578800.0,
+            "deleted_marks": 178326.0,
+            "saved_stake_yen": 17832600.0,
+            "forfeited_payout_yen": 9669210.0,
+            "deleted_winning_tickets": 735.0,
+            "retained_winning_tickets": 511.0,
+            "delta_net_vs_all_marks": 8163390.0
+          },
+          "0.55": {
+            "races": 623.0,
+            "stake_yen": 4986800.0,
+            "payout_yen": 3711160.0,
+            "net_yen": -1275640.0,
+            "deleted_marks": 160825.0,
+            "saved_stake_yen": 16082500.0,
+            "forfeited_payout_yen": 8615950.0,
+            "deleted_winning_tickets": 564.0,
+            "retained_winning_tickets": 682.0,
+            "delta_net_vs_all_marks": 7466550.0
+          },
+          "0.7": {
+            "races": 623.0,
+            "stake_yen": 6989000.0,
+            "payout_yen": 5045790.0,
+            "net_yen": -1943210.0,
+            "deleted_marks": 140803.0,
+            "saved_stake_yen": 14080300.0,
+            "forfeited_payout_yen": 7281320.0,
+            "deleted_winning_tickets": 370.0,
+            "retained_winning_tickets": 876.0,
+            "delta_net_vs_all_marks": 6798980.0
+          },
+          "0.8": {
+            "races": 623.0,
+            "stake_yen": 8467000.0,
+            "payout_yen": 6005740.0,
+            "net_yen": -2461260.0,
+            "deleted_marks": 126023.0,
+            "saved_stake_yen": 12602300.0,
+            "forfeited_payout_yen": 6321370.0,
+            "deleted_winning_tickets": 245.0,
+            "retained_winning_tickets": 1001.0,
+            "delta_net_vs_all_marks": 6280930.0
+          },
+          "0.9": {
+            "races": 623.0,
+            "stake_yen": 10390900.0,
+            "payout_yen": 7324900.0,
+            "net_yen": -3066000.0,
+            "deleted_marks": 106784.0,
+            "saved_stake_yen": 10678400.0,
+            "forfeited_payout_yen": 5002210.0,
+            "deleted_winning_tickets": 122.0,
+            "retained_winning_tickets": 1124.0,
+            "delta_net_vs_all_marks": 5676190.0
+          },
+          "0.95": {
+            "races": 623.0,
+            "stake_yen": 12071200.0,
+            "payout_yen": 7891750.0,
+            "net_yen": -4179450.0,
+            "deleted_marks": 89981.0,
+            "saved_stake_yen": 8998100.0,
+            "forfeited_payout_yen": 4435360.0,
+            "deleted_winning_tickets": 64.0,
+            "retained_winning_tickets": 1182.0,
+            "delta_net_vs_all_marks": 4562740.0
+          },
+          "1.0": {
+            "races": 623.0,
+            "stake_yen": 21069300.0,
+            "payout_yen": 12327110.0,
+            "net_yen": -8742190.0,
+            "deleted_marks": 0.0,
+            "saved_stake_yen": 0.0,
+            "forfeited_payout_yen": 0.0,
+            "deleted_winning_tickets": 0.0,
+            "retained_winning_tickets": 1246.0,
+            "delta_net_vs_all_marks": 0.0
+          }
+        },
+        "full": {
+          "all": {
+            "races": 623.0,
+            "stake_yen": 21069300.0,
+            "payout_yen": 12327110.0,
+            "net_yen": -8742190.0
+          }
+        }
+      }
+    },
+    "totals": {
+      "OLD-R": {
+        "0.25": {
+          "races": 1908.0,
+          "stake_yen": 4428400.0,
+          "payout_yen": 3097700.0,
+          "net_yen": -1330700.0,
+          "deleted_marks": 604616.0,
+          "saved_stake_yen": 60461600.0,
+          "forfeited_payout_yen": 36332890.0,
+          "deleted_winning_tickets": 2705.0,
+          "retained_winning_tickets": 1111.0,
+          "delta_net_vs_all_marks": 24128710.0
+        },
+        "0.4": {
+          "races": 1908.0,
+          "stake_yen": 6921300.0,
+          "payout_yen": 5027850.0,
+          "net_yen": -1893450.0,
+          "deleted_marks": 579687.0,
+          "saved_stake_yen": 57968700.0,
+          "forfeited_payout_yen": 34402740.0,
+          "deleted_winning_tickets": 2193.0,
+          "retained_winning_tickets": 1623.0,
+          "delta_net_vs_all_marks": 23565960.0
+        },
+        "0.55": {
+          "races": 1908.0,
+          "stake_yen": 9509600.0,
+          "payout_yen": 7139230.0,
+          "net_yen": -2370370.0,
+          "deleted_marks": 553804.0,
+          "saved_stake_yen": 55380400.0,
+          "forfeited_payout_yen": 32291360.0,
+          "deleted_winning_tickets": 1641.0,
+          "retained_winning_tickets": 2175.0,
+          "delta_net_vs_all_marks": 23089040.0
+        },
+        "0.7": {
+          "races": 1908.0,
+          "stake_yen": 12704700.0,
+          "payout_yen": 9363100.0,
+          "net_yen": -3341600.0,
+          "deleted_marks": 521853.0,
+          "saved_stake_yen": 52185300.0,
+          "forfeited_payout_yen": 30067490.0,
+          "deleted_winning_tickets": 1113.0,
+          "retained_winning_tickets": 2703.0,
+          "delta_net_vs_all_marks": 22117810.0
+        },
+        "0.8": {
+          "races": 1908.0,
+          "stake_yen": 16119700.0,
+          "payout_yen": 12155640.0,
+          "net_yen": -3964060.0,
+          "deleted_marks": 487703.0,
+          "saved_stake_yen": 48770300.0,
+          "forfeited_payout_yen": 27274950.0,
+          "deleted_winning_tickets": 689.0,
+          "retained_winning_tickets": 3127.0,
+          "delta_net_vs_all_marks": 21495350.0
+        },
+        "0.9": {
+          "races": 1908.0,
+          "stake_yen": 24998300.0,
+          "payout_yen": 18103070.0,
+          "net_yen": -6895230.0,
+          "deleted_marks": 398917.0,
+          "saved_stake_yen": 39891700.0,
+          "forfeited_payout_yen": 21327520.0,
+          "deleted_winning_tickets": 340.0,
+          "retained_winning_tickets": 3476.0,
+          "delta_net_vs_all_marks": 18564180.0
+        },
+        "0.95": {
+          "races": 1908.0,
+          "stake_yen": 34913200.0,
+          "payout_yen": 24340900.0,
+          "net_yen": -10572300.0,
+          "deleted_marks": 299768.0,
+          "saved_stake_yen": 29976800.0,
+          "forfeited_payout_yen": 15089690.0,
+          "deleted_winning_tickets": 163.0,
+          "retained_winning_tickets": 3653.0,
+          "delta_net_vs_all_marks": 14887110.0
+        },
+        "1.0": {
+          "races": 1908.0,
+          "stake_yen": 64890000.0,
+          "payout_yen": 39430590.0,
+          "net_yen": -25459410.0,
+          "deleted_marks": 0.0,
+          "saved_stake_yen": 0.0,
+          "forfeited_payout_yen": 0.0,
+          "deleted_winning_tickets": 0.0,
+          "retained_winning_tickets": 3816.0,
+          "delta_net_vs_all_marks": 0.0
+        }
+      },
+      "NEW-R": {
+        "0.25": {
+          "races": 1908.0,
+          "stake_yen": 5329600.0,
+          "payout_yen": 3921830.0,
+          "net_yen": -1407770.0,
+          "deleted_marks": 595604.0,
+          "saved_stake_yen": 59560400.0,
+          "forfeited_payout_yen": 35508760.0,
+          "deleted_winning_tickets": 2772.0,
+          "retained_winning_tickets": 1044.0,
+          "delta_net_vs_all_marks": 24051640.0
+        },
+        "0.4": {
+          "races": 1908.0,
+          "stake_yen": 9564000.0,
+          "payout_yen": 6507640.0,
+          "net_yen": -3056360.0,
+          "deleted_marks": 553260.0,
+          "saved_stake_yen": 55326000.0,
+          "forfeited_payout_yen": 32922950.0,
+          "deleted_winning_tickets": 2267.0,
+          "retained_winning_tickets": 1549.0,
+          "delta_net_vs_all_marks": 22403050.0
+        },
+        "0.55": {
+          "races": 1908.0,
+          "stake_yen": 14421100.0,
+          "payout_yen": 10562850.0,
+          "net_yen": -3858250.0,
+          "deleted_marks": 504689.0,
+          "saved_stake_yen": 50468900.0,
+          "forfeited_payout_yen": 28867740.0,
+          "deleted_winning_tickets": 1721.0,
+          "retained_winning_tickets": 2095.0,
+          "delta_net_vs_all_marks": 21601160.0
+        },
+        "0.7": {
+          "races": 1908.0,
+          "stake_yen": 19805200.0,
+          "payout_yen": 14203020.0,
+          "net_yen": -5602180.0,
+          "deleted_marks": 450848.0,
+          "saved_stake_yen": 45084800.0,
+          "forfeited_payout_yen": 25227570.0,
+          "deleted_winning_tickets": 1111.0,
+          "retained_winning_tickets": 2705.0,
+          "delta_net_vs_all_marks": 19857230.0
+        },
+        "0.8": {
+          "races": 1908.0,
+          "stake_yen": 24065200.0,
+          "payout_yen": 16364290.0,
+          "net_yen": -7700910.0,
+          "deleted_marks": 408248.0,
+          "saved_stake_yen": 40824800.0,
+          "forfeited_payout_yen": 23066300.0,
+          "deleted_winning_tickets": 725.0,
+          "retained_winning_tickets": 3091.0,
+          "delta_net_vs_all_marks": 17758500.0
+        },
+        "0.9": {
+          "races": 1908.0,
+          "stake_yen": 29638100.0,
+          "payout_yen": 20365130.0,
+          "net_yen": -9272970.0,
+          "deleted_marks": 352519.0,
+          "saved_stake_yen": 35251900.0,
+          "forfeited_payout_yen": 19065460.0,
+          "deleted_winning_tickets": 354.0,
+          "retained_winning_tickets": 3462.0,
+          "delta_net_vs_all_marks": 16186440.0
+        },
+        "0.95": {
+          "races": 1908.0,
+          "stake_yen": 36891600.0,
+          "payout_yen": 24527040.0,
+          "net_yen": -12364560.0,
+          "deleted_marks": 279984.0,
+          "saved_stake_yen": 27998400.0,
+          "forfeited_payout_yen": 14903550.0,
+          "deleted_winning_tickets": 178.0,
+          "retained_winning_tickets": 3638.0,
+          "delta_net_vs_all_marks": 13094850.0
+        },
+        "1.0": {
+          "races": 1908.0,
+          "stake_yen": 64890000.0,
+          "payout_yen": 39430590.0,
+          "net_yen": -25459410.0,
+          "deleted_marks": 0.0,
+          "saved_stake_yen": 0.0,
+          "forfeited_payout_yen": 0.0,
+          "deleted_winning_tickets": 0.0,
+          "retained_winning_tickets": 3816.0,
+          "delta_net_vs_all_marks": 0.0
+        }
+      },
+      "V3-R": {
+        "0.25": {
+          "races": 1908.0,
+          "stake_yen": 5454300.0,
+          "payout_yen": 4229320.0,
+          "net_yen": -1224980.0,
+          "deleted_marks": 594357.0,
+          "saved_stake_yen": 59435700.0,
+          "forfeited_payout_yen": 35201270.0,
+          "deleted_winning_tickets": 2756.0,
+          "retained_winning_tickets": 1060.0,
+          "delta_net_vs_all_marks": 24234430.0
+        },
+        "0.4": {
+          "races": 1908.0,
+          "stake_yen": 10007300.0,
+          "payout_yen": 7557490.0,
+          "net_yen": -2449810.0,
+          "deleted_marks": 548827.0,
+          "saved_stake_yen": 54882700.0,
+          "forfeited_payout_yen": 31873100.0,
+          "deleted_winning_tickets": 2228.0,
+          "retained_winning_tickets": 1588.0,
+          "delta_net_vs_all_marks": 23009600.0
+        },
+        "0.55": {
+          "races": 1908.0,
+          "stake_yen": 15271700.0,
+          "payout_yen": 11375660.0,
+          "net_yen": -3896040.0,
+          "deleted_marks": 496183.0,
+          "saved_stake_yen": 49618300.0,
+          "forfeited_payout_yen": 28054930.0,
+          "deleted_winning_tickets": 1686.0,
+          "retained_winning_tickets": 2130.0,
+          "delta_net_vs_all_marks": 21563370.0
+        },
+        "0.7": {
+          "races": 1908.0,
+          "stake_yen": 21003000.0,
+          "payout_yen": 15373610.0,
+          "net_yen": -5629390.0,
+          "deleted_marks": 438870.0,
+          "saved_stake_yen": 43887000.0,
+          "forfeited_payout_yen": 24056980.0,
+          "deleted_winning_tickets": 1125.0,
+          "retained_winning_tickets": 2691.0,
+          "delta_net_vs_all_marks": 19830020.0
+        },
+        "0.8": {
+          "races": 1908.0,
+          "stake_yen": 25289800.0,
+          "payout_yen": 17755180.0,
+          "net_yen": -7534620.0,
+          "deleted_marks": 396002.0,
+          "saved_stake_yen": 39600200.0,
+          "forfeited_payout_yen": 21675410.0,
+          "deleted_winning_tickets": 736.0,
+          "retained_winning_tickets": 3080.0,
+          "delta_net_vs_all_marks": 17924790.0
+        },
+        "0.9": {
+          "races": 1908.0,
+          "stake_yen": 30847100.0,
+          "payout_yen": 20814450.0,
+          "net_yen": -10032650.0,
+          "deleted_marks": 340429.0,
+          "saved_stake_yen": 34042900.0,
+          "forfeited_payout_yen": 18616140.0,
+          "deleted_winning_tickets": 366.0,
+          "retained_winning_tickets": 3450.0,
+          "delta_net_vs_all_marks": 15426760.0
+        },
+        "0.95": {
+          "races": 1908.0,
+          "stake_yen": 36557200.0,
+          "payout_yen": 24895670.0,
+          "net_yen": -11661530.0,
+          "deleted_marks": 283328.0,
+          "saved_stake_yen": 28332800.0,
+          "forfeited_payout_yen": 14534920.0,
+          "deleted_winning_tickets": 173.0,
+          "retained_winning_tickets": 3643.0,
+          "delta_net_vs_all_marks": 13797880.0
+        },
+        "1.0": {
+          "races": 1908.0,
+          "stake_yen": 64890000.0,
+          "payout_yen": 39430590.0,
+          "net_yen": -25459410.0,
+          "deleted_marks": 0.0,
+          "saved_stake_yen": 0.0,
+          "forfeited_payout_yen": 0.0,
+          "deleted_winning_tickets": 0.0,
+          "retained_winning_tickets": 3816.0,
+          "delta_net_vs_all_marks": 0.0
+        }
+      },
+      "V3-ME-R": {
+        "0.25": {
+          "races": 1908.0,
+          "stake_yen": 5747000.0,
+          "payout_yen": 4350420.0,
+          "net_yen": -1396580.0,
+          "deleted_marks": 591430.0,
+          "saved_stake_yen": 59143000.0,
+          "forfeited_payout_yen": 35080170.0,
+          "deleted_winning_tickets": 2750.0,
+          "retained_winning_tickets": 1066.0,
+          "delta_net_vs_all_marks": 24062830.0
+        },
+        "0.4": {
+          "races": 1908.0,
+          "stake_yen": 10180000.0,
+          "payout_yen": 7824350.0,
+          "net_yen": -2355650.0,
+          "deleted_marks": 547100.0,
+          "saved_stake_yen": 54710000.0,
+          "forfeited_payout_yen": 31606240.0,
+          "deleted_winning_tickets": 2246.0,
+          "retained_winning_tickets": 1570.0,
+          "delta_net_vs_all_marks": 23103760.0
+        },
+        "0.55": {
+          "races": 1908.0,
+          "stake_yen": 15682700.0,
+          "payout_yen": 11272500.0,
+          "net_yen": -4410200.0,
+          "deleted_marks": 492073.0,
+          "saved_stake_yen": 49207300.0,
+          "forfeited_payout_yen": 28158090.0,
+          "deleted_winning_tickets": 1704.0,
+          "retained_winning_tickets": 2112.0,
+          "delta_net_vs_all_marks": 21049210.0
+        },
+        "0.7": {
+          "races": 1908.0,
+          "stake_yen": 21963300.0,
+          "payout_yen": 15136530.0,
+          "net_yen": -6826770.0,
+          "deleted_marks": 429267.0,
+          "saved_stake_yen": 42926700.0,
+          "forfeited_payout_yen": 24294060.0,
+          "deleted_winning_tickets": 1127.0,
+          "retained_winning_tickets": 2689.0,
+          "delta_net_vs_all_marks": 18632640.0
+        },
+        "0.8": {
+          "races": 1908.0,
+          "stake_yen": 26783600.0,
+          "payout_yen": 18319740.0,
+          "net_yen": -8463860.0,
+          "deleted_marks": 381064.0,
+          "saved_stake_yen": 38106400.0,
+          "forfeited_payout_yen": 21110850.0,
+          "deleted_winning_tickets": 746.0,
+          "retained_winning_tickets": 3070.0,
+          "delta_net_vs_all_marks": 16995550.0
+        },
+        "0.9": {
+          "races": 1908.0,
+          "stake_yen": 32884000.0,
+          "payout_yen": 22813570.0,
+          "net_yen": -10070430.0,
+          "deleted_marks": 320060.0,
+          "saved_stake_yen": 32006000.0,
+          "forfeited_payout_yen": 16617020.0,
+          "deleted_winning_tickets": 366.0,
+          "retained_winning_tickets": 3450.0,
+          "delta_net_vs_all_marks": 15388980.0
+        },
+        "0.95": {
+          "races": 1908.0,
+          "stake_yen": 38166700.0,
+          "payout_yen": 25498340.0,
+          "net_yen": -12668360.0,
+          "deleted_marks": 267233.0,
+          "saved_stake_yen": 26723300.0,
+          "forfeited_payout_yen": 13932250.0,
+          "deleted_winning_tickets": 181.0,
+          "retained_winning_tickets": 3635.0,
+          "delta_net_vs_all_marks": 12791050.0
+        },
+        "1.0": {
+          "races": 1908.0,
+          "stake_yen": 64890000.0,
+          "payout_yen": 39430590.0,
+          "net_yen": -25459410.0,
+          "deleted_marks": 0.0,
+          "saved_stake_yen": 0.0,
+          "forfeited_payout_yen": 0.0,
+          "deleted_winning_tickets": 0.0,
+          "retained_winning_tickets": 3816.0,
+          "delta_net_vs_all_marks": 0.0
+        }
+      },
+      "full": {
+        "all": {
+          "races": 1908.0,
+          "stake_yen": 64890000.0,
+          "payout_yen": 39430590.0,
+          "net_yen": -25459410.0
+        }
+      }
+    },
+    "model_start": {
+      "OLD-R": "7f855b49e27c020ca458cdf83e254c29ad9d93db15ae67e0f900015493e46f40",
+      "NEW-R": "7bbf52365b0feeac0f08f8a18d84d8ffceef2ad337f0b80601a44fcc5b546970",
+      "V3-R": "b56ecfe0ef5ac79ab8e0de6caa72490717e0709bf0b439c45b80f3af2f6288fe",
+      "V3-ME-R": "25200029853ed8e1640c61e6f2982609f7b0126a26c0ad056bc5c94f661855b4"
+    },
+    "model_end": {
+      "OLD-R": "7f855b49e27c020ca458cdf83e254c29ad9d93db15ae67e0f900015493e46f40",
+      "NEW-R": "7bbf52365b0feeac0f08f8a18d84d8ffceef2ad337f0b80601a44fcc5b546970",
+      "V3-R": "b56ecfe0ef5ac79ab8e0de6caa72490717e0709bf0b439c45b80f3af2f6288fe",
+      "V3-ME-R": "25200029853ed8e1640c61e6f2982609f7b0126a26c0ad056bc5c94f661855b4"
+    }
+  },
+  "test_scores": {
+    "monthly": {
+      "2024-01": {
+        "OLD-R": {
+          "0.7": {
+            "races": 970.0,
+            "stake_yen": 4951400.0,
+            "payout_yen": 3703070.0,
+            "net_yen": -1248330.0,
+            "deleted_marks": 201541.0,
+            "saved_stake_yen": 20154100.0,
+            "forfeited_payout_yen": 12172170.0,
+            "deleted_winning_tickets": 543.0,
+            "retained_winning_tickets": 1397.0,
+            "delta_net_vs_all_marks": 7981930.0
+          }
+        },
+        "NEW-R": {
+          "0.9": {
+            "races": 970.0,
+            "stake_yen": 11265500.0,
+            "payout_yen": 8693110.0,
+            "net_yen": -2572390.0,
+            "deleted_marks": 138400.0,
+            "saved_stake_yen": 13840000.0,
+            "forfeited_payout_yen": 7182130.0,
+            "deleted_winning_tickets": 139.0,
+            "retained_winning_tickets": 1801.0,
+            "delta_net_vs_all_marks": 6657870.0
+          }
+        },
+        "V3-R": {
+          "0.25": {
+            "races": 970.0,
+            "stake_yen": 1942700.0,
+            "payout_yen": 1435240.0,
+            "net_yen": -507460.0,
+            "deleted_marks": 231628.0,
+            "saved_stake_yen": 23162800.0,
+            "forfeited_payout_yen": 14440000.0,
+            "deleted_winning_tickets": 1400.0,
+            "retained_winning_tickets": 540.0,
+            "delta_net_vs_all_marks": 8722800.0
+          }
+        },
+        "V3-ME-R": {
+          "0.25": {
+            "races": 970.0,
+            "stake_yen": 2074100.0,
+            "payout_yen": 1463670.0,
+            "net_yen": -610430.0,
+            "deleted_marks": 230314.0,
+            "saved_stake_yen": 23031400.0,
+            "forfeited_payout_yen": 14411570.0,
+            "deleted_winning_tickets": 1406.0,
+            "retained_winning_tickets": 534.0,
+            "delta_net_vs_all_marks": 8619830.0
+          }
+        },
+        "full": {
+          "all": {
+            "races": 970.0,
+            "stake_yen": 25105500.0,
+            "payout_yen": 15875240.0,
+            "net_yen": -9230260.0
+          }
+        }
+      }
+    },
+    "totals": {
+      "OLD-R": {
+        "0.7": {
+          "races": 970.0,
+          "stake_yen": 4951400.0,
+          "payout_yen": 3703070.0,
+          "net_yen": -1248330.0,
+          "deleted_marks": 201541.0,
+          "saved_stake_yen": 20154100.0,
+          "forfeited_payout_yen": 12172170.0,
+          "deleted_winning_tickets": 543.0,
+          "retained_winning_tickets": 1397.0,
+          "delta_net_vs_all_marks": 7981930.0
+        }
+      },
+      "NEW-R": {
+        "0.9": {
+          "races": 970.0,
+          "stake_yen": 11265500.0,
+          "payout_yen": 8693110.0,
+          "net_yen": -2572390.0,
+          "deleted_marks": 138400.0,
+          "saved_stake_yen": 13840000.0,
+          "forfeited_payout_yen": 7182130.0,
+          "deleted_winning_tickets": 139.0,
+          "retained_winning_tickets": 1801.0,
+          "delta_net_vs_all_marks": 6657870.0
+        }
+      },
+      "V3-R": {
+        "0.25": {
+          "races": 970.0,
+          "stake_yen": 1942700.0,
+          "payout_yen": 1435240.0,
+          "net_yen": -507460.0,
+          "deleted_marks": 231628.0,
+          "saved_stake_yen": 23162800.0,
+          "forfeited_payout_yen": 14440000.0,
+          "deleted_winning_tickets": 1400.0,
+          "retained_winning_tickets": 540.0,
+          "delta_net_vs_all_marks": 8722800.0
+        }
+      },
+      "V3-ME-R": {
+        "0.25": {
+          "races": 970.0,
+          "stake_yen": 2074100.0,
+          "payout_yen": 1463670.0,
+          "net_yen": -610430.0,
+          "deleted_marks": 230314.0,
+          "saved_stake_yen": 23031400.0,
+          "forfeited_payout_yen": 14411570.0,
+          "deleted_winning_tickets": 1406.0,
+          "retained_winning_tickets": 534.0,
+          "delta_net_vs_all_marks": 8619830.0
+        }
+      },
+      "full": {
+        "all": {
+          "races": 970.0,
+          "stake_yen": 25105500.0,
+          "payout_yen": 15875240.0,
+          "net_yen": -9230260.0
+        }
+      }
+    },
+    "model_start": {
+      "OLD-R": "7f855b49e27c020ca458cdf83e254c29ad9d93db15ae67e0f900015493e46f40",
+      "NEW-R": "7bbf52365b0feeac0f08f8a18d84d8ffceef2ad337f0b80601a44fcc5b546970",
+      "V3-R": "b56ecfe0ef5ac79ab8e0de6caa72490717e0709bf0b439c45b80f3af2f6288fe",
+      "V3-ME-R": "25200029853ed8e1640c61e6f2982609f7b0126a26c0ad056bc5c94f661855b4"
+    },
+    "model_end": {
+      "OLD-R": "7f855b49e27c020ca458cdf83e254c29ad9d93db15ae67e0f900015493e46f40",
+      "NEW-R": "7bbf52365b0feeac0f08f8a18d84d8ffceef2ad337f0b80601a44fcc5b546970",
+      "V3-R": "b56ecfe0ef5ac79ab8e0de6caa72490717e0709bf0b439c45b80f3af2f6288fe",
+      "V3-ME-R": "25200029853ed8e1640c61e6f2982609f7b0126a26c0ad056bc5c94f661855b4"
+    }
+  },
+  "source": {
+    "2023": {
+      "year": 2023,
+      "date_start": "2023-01-01",
+      "date_end": "2023-12-31",
+      "source_count": {
+        "source_containers": 45,
+        "race_rows": 26041,
+        "duplicate_race_id": 1490,
+        "unique_cards": 24551
+      },
+      "selected_racecard_sources": {
+        "data/2023/s_class_f1_all_parts/2023_q1": 1371,
+        "data/2023/s_class_f1_all_parts/2023_q2": 1285,
+        "data/2023/s_class_f1_all_parts/2023_q3": 1249,
+        "data/2023/s_class_f1_all_parts/2023_q4": 1318,
+        "data/2023/s_class_yosen": 17,
+        "data/a_class_12/2023_01_02": 2059,
+        "data/a_class_12/2023_03_04": 2013,
+        "data/a_class_12/2023_05_06": 2071,
+        "data/a_class_12/2023_07_08": 1990,
+        "data/a_class_12/2023_09_10": 2005,
+        "data/a_class_12/2023_11_12": 1989,
+        "data/a3_challenge/2023_01_02": 943,
+        "data/a3_challenge/2023_05_06": 884,
+        "data/a3_challenge/2023_07_08": 998,
+        "data/a3_challenge/2023_09_10": 956,
+        "data/a3_challenge/2023_11_12": 958,
+        "data/grade_races/g1g2/g1-g2-2023-non-girls.zip": 459,
+        "data/grade_races/g3/2023/g3-all-2023-q1-non-girls.zip": 480,
+        "data/grade_races/g3/2023/g3-all-2023-q2-non-girls.zip": 489,
+        "data/grade_races/g3/2023/g3-all-2023-q3-non-girls.zip": 527,
+        "data/grade_races/g3/2023/g3-all-2023-q4-non-girls.zip": 490
+      },
+      "label_source": "data/result_universe_v2/combined/results_2023.jsonl.gz",
+      "result_count": {
+        "source_records": 25365
+      },
+      "odds_source": "data/odds_only/odds_2023.jsonl.gz",
+      "market_count": {
+        "archive_complete_races": 10086,
+        "hash_verified": true,
+        "archive_sha256": "47ea85273831d9333736722f572331f97c4095a8ece5953edb01945f00a11553",
+        "matched_candidate_ids": 10086,
+        "invalid": {}
+      },
+      "join_status": {
+        "no_result": 173,
+        "no_complete_market": 14465,
+        "joined_and_eligible": 9996
+      },
+      "joined_race_ids_sha256": "c5fa26bc6749d92b1d283dbe954ed24af7b632bb91380a8100c6c87aeadb47cd",
+      "complete_races": 9996,
+      "date_data_origin": "racecard race_date ONLY; never decoded meeting-start ID",
+      "price_phase": "FINAL (historical), NOT certified pre-close",
+      "markets": [
+        "3連単",
+        "3連複"
+      ],
+      "result_used_only_as_label": true,
+      "original_training_checkpoints_untouched": true
+    },
+    "2024": {
+      "year": 2024,
+      "date_start": "2024-01-01",
+      "date_end": "2024-01-14",
+      "source_count": {
+        "source_containers": 46,
+        "race_rows": 1043,
+        "duplicate_race_id": 54,
+        "unique_cards": 989
+      },
+      "selected_racecard_sources": {
+        "data/2024/s_class_f1_all_parts/2024_q1": 234,
+        "data/a_class_12/2024_01_02": 437,
+        "data/a3_challenge/2024_01_02": 222,
+        "data/grade_races/g3/2024/g3-2024-q1.zip": 96
+      },
+      "label_source": "data/result_universe_v2/combined/results_2024.jsonl.gz",
+      "result_count": {
+        "source_records": 25482
+      },
+      "odds_source": "data/odds_only/odds_2024.jsonl.gz",
+      "market_count": {
+        "archive_complete_races": 9641,
+        "hash_verified": true,
+        "archive_sha256": "8ea4b866803fbfede56e79e3d7c71ef834a21db628808108b56496317e725a72",
+        "matched_candidate_ids": 973,
+        "invalid": {}
+      },
+      "join_status": {
+        "no_complete_market": 16,
+        "no_result": 3,
+        "joined_and_eligible": 970
+      },
+      "joined_race_ids_sha256": "cb454e96a2e7da62f85670ad8bf17a1b0cb2e3bc8c4d3c2e0aae357ea080e101",
+      "complete_races": 970,
+      "date_data_origin": "racecard race_date ONLY; never decoded meeting-start ID",
+      "price_phase": "FINAL (historical), NOT certified pre-close",
+      "markets": [
+        "3連単",
+        "3連複"
+      ],
+      "result_used_only_as_label": true,
+      "original_training_checkpoints_untouched": true
+    }
+  },
+  "no_post_result_selection": true,
+  "no_2024_outcome_impact_on_weights_or_policy": true,
+  "notes": "In every race, deleting a losing ticket saves 100 yen, deleting the winning ticket forfeits its actual payout. Return percentages compare exactly the same races and both markets. The full-book baseline itself is not a profitable strategy."
+}
