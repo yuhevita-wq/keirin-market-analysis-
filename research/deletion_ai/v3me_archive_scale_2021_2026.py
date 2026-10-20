@@ -210,9 +210,9 @@ def run(source):
         raise ValueError(source)
     dirname = ("GEN-008-V3-ME-R-FULL-SEVEN-ARCHIVE-2021-2026"
                if source == "sealed" else
-               "GEN-008-V3-ME-R-ALL-PLAIN-2021-2026")
+               "GEN-008-V3-ME-R-ALL-PLAIN-2021-2026-CHRONO")
     out = ROOT / "research/deletion_ai/outputs" / dirname
-    web = ROOT / "docs/ai-lab" / f"gen008-v3me-archive-scale-{source}.json"
+    web = ROOT / "docs/ai-lab" / f"gen008-v3me-archive-scale-{source}{'-chrono' if source == 'plain' else ''} .json".replace(" ", "")
     if out.exists() or web.exists():
         raise RuntimeError("Immutable archive-scale run already exists: " + source)
     old, recent = baselines()
