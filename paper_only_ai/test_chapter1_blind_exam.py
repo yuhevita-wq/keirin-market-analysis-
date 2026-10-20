@@ -43,3 +43,20 @@ assert exam.readiness(state(6, "g01-c01", "g02-c01")) == 1
 assert exam.readiness(state(10, "g01-c01", "g02-c01", exams=1)) is None
 assert exam.readiness(state(12, "g01-c01", "g02-c01", exams=1)) == 2
 print("CHAPTER1_BLIND_EXAM_GUARDS_PASSED")
+
+
+# Previously completed race returns gate blocks 2025 unless the calibrated
+# model generates real positive historical P&L at a predeclared stake.
+def historical_result(percent, races=300, investment=100000):
+    return {"qualified_races": races, "by_role": {
+        "calibration": {"combined": {
+            "return_rate_percent": percent, "investment_yen": investment
+        }}
+    }}
+assert exam.past_profit_gate(historical_result(100.01))
+assert not exam.past_profit_gate(historical_result(99.99))
+assert not exam.past_profit_gate(historical_result(100.0))
+assert not exam.past_profit_gate(historical_result(105.0, races=199))
+assert not exam.past_profit_gate(historical_result(None))
+assert not exam.past_profit_gate(historical_result(110.0, investment=0))
+print("CHAPTER1_HISTORICAL_PROFIT_GATE_GUARDS_PASSED")
