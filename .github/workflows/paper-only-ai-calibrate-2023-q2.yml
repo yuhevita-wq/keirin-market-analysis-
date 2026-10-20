@@ -65,6 +65,6 @@ jobs:
           git add docs/paper-only-ai-2023/line_calibration_2023_q2_2024/
           if ! git diff --cached --quiet; then
             git commit -m "Record 2023-only calibrated RF and frozen 2024 Q2 evaluation"
-            git pull --rebase origin main
-            git push origin HEAD:main
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
           fi
