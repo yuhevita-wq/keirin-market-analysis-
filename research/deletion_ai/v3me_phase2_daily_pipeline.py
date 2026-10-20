@@ -235,6 +235,14 @@ def run(source, year, verify=False):
     previous_day = ""
     key_manager = key_path = None
     if source == "sealed":
+        phase1 = DATA / "audits/v3me_full_sealed_source_integrity_2021_2026.json"
+        if not phase1.exists():
+            raise RuntimeError("PHASE1_SEALED_INTEGRITY_AUDIT_NOT_COMPLETE")
+        audited = read(phase1)
+        if (audited["status"] != "COMPLETE" or
+                not audited["all_six_years_sealed_source_decrypted"] or
+                not audited["all_source_cipher_sha256_verified"]):
+            raise RuntimeError("PHASE1_SEALED_AUDIT_NOT_VALID")
         key_manager, key_path = secure_key_temp()
     try:
         for day, rows in chronological_days(source, year, key_path, stats):
