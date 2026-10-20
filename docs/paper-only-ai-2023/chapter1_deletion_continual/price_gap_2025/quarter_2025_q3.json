@@ -1,0 +1,940 @@
+{
+  "status": "FROZEN_2025_PRICE_GAP_QUARTER_DIAGNOSTIC",
+  "quarter": 3,
+  "races": 1297,
+  "frozen_checkpoint": {
+    "checkpoint_sha256": "008938be91209f2e412422251f85689946eb18d5a136b212317e4fab0fdb3124",
+    "weight_model_sha256": "d99e43fc8b0165f670fe5be811c5a5bdfa5e0d5bcc802f41f339fda160f49f28",
+    "2024_end": "2024-12-31",
+    "parent_ids": {
+      "accuracy": "acc-g08-c01",
+      "calibration": "g01-c01"
+    },
+    "coverage": {
+      "accuracy": 0.35,
+      "calibration": 0.5
+    }
+  },
+  "no_2025_fitting": true,
+  "not_new_blind": true,
+  "retrospective_ev_threshold_analysis_not_forward_policy": true,
+  "deletion_normalized_score_not_proven_calibrated_probability": true,
+  "data_audit": {
+    "from": "2025-07-01",
+    "to": "2025-09-30",
+    "cards": 5599,
+    "aligned_races": 1297,
+    "cards_audit": {
+      "files": [
+        {
+          "path": "data/a_class_12/2025_07_08/entries.csv",
+          "race_manifests_with_line": 1960,
+          "entry_rows": 13621
+        },
+        {
+          "path": "data/a_class_12/2025_09_10/entries.csv",
+          "race_manifests_with_line": 949,
+          "entry_rows": 6594
+        },
+        {
+          "path": "data/a3_challenge/2025_07_08/entries.csv",
+          "race_manifests_with_line": 1021,
+          "entry_rows": 6914
+        },
+        {
+          "path": "data/a3_challenge/2025_09_10/entries.csv",
+          "race_manifests_with_line": 491,
+          "entry_rows": 3356
+        },
+        {
+          "path": "data/2025/s_class_f1_all_parts/2025_q3/entries.csv",
+          "race_manifests_with_line": 1297,
+          "entry_rows": 8993
+        },
+        {
+          "path": "data/2025/s_class_yosen/entries.csv",
+          "race_manifests_with_line": 6,
+          "entry_rows": 42
+        }
+      ],
+      "exclusions": {
+        "race_manifest_line_missing": 10,
+        "entry_rows_missing_numeric": 130,
+        "duplicate_manifest_rows": 363,
+        "duplicate_entry_rows": 2537,
+        "exclude_line_coverage_mismatch": 85,
+        "exclude_podium_not_in_card": 40
+      },
+      "complete_podium_with_line_races": 5599,
+      "months": {
+        "2025-07": 1974,
+        "2025-08": 1781,
+        "2025-09": 1844
+      },
+      "categories": {
+        "A1_A2": 2861,
+        "A3": 1455,
+        "S": 1283
+      }
+    },
+    "odds_audit": {
+      "full_year_odds_records": 9781
+    },
+    "dropped": {
+      "missing_odds": 4301,
+      "ValueError:invalid_odd": 1
+    },
+    "year_specific_result_path": "data/result_universe_v2/combined/results_2025.jsonl.gz",
+    "year_specific_odds_path": "data/odds_only/odds_2025.jsonl.gz"
+  },
+  "raw": {
+    "accuracy": {
+      "3連単": {
+        "forecast": {
+          "parent_probability": {
+            "races": 1297,
+            "logloss_sum": 5627.670325290067,
+            "brier_sum": 1255.964973310655,
+            "top1_hits": 153,
+            "top1_confidence_sum": 115.73134792110844
+          },
+          "deletion_normalized_score": {
+            "races": 1297,
+            "logloss_sum": 5526.650855360484,
+            "brier_sum": 1249.7085999490039,
+            "top1_hits": 149,
+            "top1_confidence_sum": 184.7168771957553
+          },
+          "market_normalized": {
+            "races": 1297,
+            "logloss_sum": 5373.4016707944875,
+            "brier_sum": 1246.4256569451538,
+            "top1_hits": 144,
+            "top1_confidence_sum": 147.90269529444032
+          }
+        },
+        "selected_deletion": {
+          "parent_probability": {
+            "tickets": 25148,
+            "hits": 299,
+            "stake_yen": 2514800.0,
+            "payout_yen": 1991910.0,
+            "predicted_payout_yen": 2449092.633757287,
+            "market_expected_payout_yen": 1882688.7691780704
+          },
+          "deletion_normalized_score": {
+            "tickets": 25148,
+            "hits": 299,
+            "stake_yen": 2514800.0,
+            "payout_yen": 1991910.0,
+            "predicted_payout_yen": 3322956.3310942757,
+            "market_expected_payout_yen": 1882688.7691780704
+          }
+        },
+        "positive_ev": {
+          "parent_probability": {
+            "tickets": 119419,
+            "hits": 287,
+            "stake_yen": 11941900.0,
+            "payout_yen": 8763520.0,
+            "predicted_payout_yen": 21721744.73121605,
+            "market_expected_payout_yen": 8932664.63911856
+          },
+          "deletion_normalized_score": {
+            "tickets": 28392,
+            "hits": 300,
+            "stake_yen": 2839200.0,
+            "payout_yen": 2201880.0,
+            "predicted_payout_yen": 3719654.544244827,
+            "market_expected_payout_yen": 2125348.895749568
+          }
+        },
+        "edge_bins": {
+          "parent_probability": {
+            "<-50%": {
+              "tickets": 52616,
+              "hits": 491,
+              "stake_yen": 5261600.0,
+              "payout_yen": 3005800.0,
+              "predicted_payout_yen": 1843964.67301352,
+              "market_expected_payout_yen": 3937721.686815137
+            },
+            "-50..-20%": {
+              "tickets": 61148,
+              "hits": 364,
+              "stake_yen": 6114800.0,
+              "payout_yen": 4163550.0,
+              "predicted_payout_yen": 3960329.9573654435,
+              "market_expected_payout_yen": 4575489.972944195
+            },
+            "-20..0%": {
+              "tickets": 33727,
+              "hits": 155,
+              "stake_yen": 3372700.0,
+              "payout_yen": 1980760.0,
+              "predicted_payout_yen": 3023285.8096399666,
+              "market_expected_payout_yen": 2523375.9967379267
+            },
+            "0..+10%": {
+              "tickets": 14339,
+              "hits": 48,
+              "stake_yen": 1433900.0,
+              "payout_yen": 741290.0,
+              "predicted_payout_yen": 1503866.2011173884,
+              "market_expected_payout_yen": 1072735.3896912748
+            },
+            "+10..+25%": {
+              "tickets": 18602,
+              "hits": 52,
+              "stake_yen": 1860200.0,
+              "payout_yen": 1220620.0,
+              "predicted_payout_yen": 2181945.125939292,
+              "market_expected_payout_yen": 1391612.5835679306
+            },
+            "+25..+50%": {
+              "tickets": 23939,
+              "hits": 67,
+              "stake_yen": 2393900.0,
+              "payout_yen": 1826080.0,
+              "predicted_payout_yen": 3273120.551409367,
+              "market_expected_payout_yen": 1790838.708677616
+            },
+            "+50..+100%": {
+              "tickets": 29456,
+              "hits": 69,
+              "stake_yen": 2945600.0,
+              "payout_yen": 2389510.0,
+              "predicted_payout_yen": 5072088.19679498,
+              "market_expected_payout_yen": 2203319.677347549
+            },
+            "+100..+200%": {
+              "tickets": 22837,
+              "hits": 43,
+              "stake_yen": 2283700.0,
+              "payout_yen": 1756820.0,
+              "predicted_payout_yen": 5466855.38650081,
+              "market_expected_payout_yen": 1708047.0676705497
+            },
+            ">=+200%": {
+              "tickets": 10246,
+              "hits": 8,
+              "stake_yen": 1024600.0,
+              "payout_yen": 829200.0,
+              "predicted_payout_yen": 4223869.269454192,
+              "market_expected_payout_yen": 766111.2121636294
+            }
+          },
+          "deletion_normalized_score": {
+            "<-50%": {
+              "tickets": 171818,
+              "hits": 262,
+              "stake_yen": 17181800.0,
+              "payout_yen": 10688940.0,
+              "predicted_payout_yen": 2791536.526323987,
+              "market_expected_payout_yen": 12852357.134576669
+            },
+            "-50..-20%": {
+              "tickets": 45305,
+              "hits": 458,
+              "stake_yen": 4530500.0,
+              "payout_yen": 3251200.0,
+              "predicted_payout_yen": 2919688.3811745136,
+              "market_expected_payout_yen": 3390214.487496471
+            },
+            "-20..0%": {
+              "tickets": 21395,
+              "hits": 277,
+              "stake_yen": 2139500.0,
+              "payout_yen": 1771610.0,
+              "predicted_payout_yen": 1907022.6306124716,
+              "market_expected_payout_yen": 1601331.7777930952
+            },
+            "0..+10%": {
+              "tickets": 7297,
+              "hits": 73,
+              "stake_yen": 729700.0,
+              "payout_yen": 603590.0,
+              "predicted_payout_yen": 765000.3185881985,
+              "market_expected_payout_yen": 546195.9364287639
+            },
+            "+10..+25%": {
+              "tickets": 7749,
+              "hits": 84,
+              "stake_yen": 774900.0,
+              "payout_yen": 510260.0,
+              "predicted_payout_yen": 906767.472445185,
+              "market_expected_payout_yen": 580038.255465599
+            },
+            "+25..+50%": {
+              "tickets": 7758,
+              "hits": 109,
+              "stake_yen": 775800.0,
+              "payout_yen": 753260.0,
+              "predicted_payout_yen": 1055741.120118799,
+              "market_expected_payout_yen": 580751.9856811564
+            },
+            "+50..+100%": {
+              "tickets": 4675,
+              "hits": 30,
+              "stake_yen": 467500.0,
+              "payout_yen": 246480.0,
+              "predicted_payout_yen": 784113.0213091378,
+              "market_expected_payout_yen": 349995.8962790415
+            },
+            "+100..+200%": {
+              "tickets": 885,
+              "hits": 4,
+              "stake_yen": 88500.0,
+              "payout_yen": 88290.0,
+              "predicted_payout_yen": 198834.75702563292,
+              "market_expected_payout_yen": 66269.53934408899
+            },
+            ">=+200%": {
+              "tickets": 28,
+              "hits": 0,
+              "stake_yen": 2800.0,
+              "payout_yen": 0.0,
+              "predicted_payout_yen": 9197.854757870982,
+              "market_expected_payout_yen": 2097.2825509166787
+            }
+          }
+        }
+      },
+      "3連複": {
+        "forecast": {
+          "parent_probability": {
+            "races": 1297,
+            "logloss_sum": 3637.135240192702,
+            "brier_sum": 1162.1756125544161,
+            "top1_hits": 295,
+            "top1_confidence_sum": 232.75815947162857
+          },
+          "deletion_normalized_score": {
+            "races": 1297,
+            "logloss_sum": 3562.1792195405665,
+            "brier_sum": 1143.0523582961919,
+            "top1_hits": 310,
+            "top1_confidence_sum": 294.8571136959203
+          },
+          "market_normalized": {
+            "races": 1297,
+            "logloss_sum": 3482.996113658189,
+            "brier_sum": 1137.4888236662798,
+            "top1_hits": 325,
+            "top1_confidence_sum": 301.4447860890541
+          }
+        },
+        "selected_deletion": {
+          "parent_probability": {
+            "tickets": 10175,
+            "hits": 407,
+            "stake_yen": 1017500.0,
+            "payout_yen": 900330.0,
+            "predicted_payout_yen": 1089776.7627650653,
+            "market_expected_payout_yen": 758366.6197163027
+          },
+          "deletion_normalized_score": {
+            "tickets": 10175,
+            "hits": 407,
+            "stake_yen": 1017500.0,
+            "payout_yen": 900330.0,
+            "predicted_payout_yen": 1263563.1813330536,
+            "market_expected_payout_yen": 758366.6197163027
+          }
+        },
+        "positive_ev": {
+          "parent_probability": {
+            "tickets": 18799,
+            "hits": 255,
+            "stake_yen": 1879900.0,
+            "payout_yen": 1331780.0,
+            "predicted_payout_yen": 2844891.9243479837,
+            "market_expected_payout_yen": 1399175.980869105
+          },
+          "deletion_normalized_score": {
+            "tickets": 9090,
+            "hits": 167,
+            "stake_yen": 909000.0,
+            "payout_yen": 723210.0,
+            "predicted_payout_yen": 1215806.8872785761,
+            "market_expected_payout_yen": 677340.3428190654
+          }
+        },
+        "edge_bins": {
+          "parent_probability": {
+            "<-50%": {
+              "tickets": 5978,
+              "hits": 372,
+              "stake_yen": 597800.0,
+              "payout_yen": 361480.0,
+              "predicted_payout_yen": 233422.3636572213,
+              "market_expected_payout_yen": 445335.6280303289
+            },
+            "-50..-20%": {
+              "tickets": 12229,
+              "hits": 519,
+              "stake_yen": 1222900.0,
+              "payout_yen": 797750.0,
+              "predicted_payout_yen": 797793.5676637336,
+              "market_expected_payout_yen": 910836.8480172633
+            },
+            "-20..0%": {
+              "tickets": 7479,
+              "hits": 151,
+              "stake_yen": 747900.0,
+              "payout_yen": 413230.0,
+              "predicted_payout_yen": 670648.7749468641,
+              "market_expected_payout_yen": 556961.8359602998
+            },
+            "0..+10%": {
+              "tickets": 3223,
+              "hits": 49,
+              "stake_yen": 322300.0,
+              "payout_yen": 133380.0,
+              "predicted_payout_yen": 338208.5298413998,
+              "market_expected_payout_yen": 239946.70159877898
+            },
+            "+10..+25%": {
+              "tickets": 3935,
+              "hits": 62,
+              "stake_yen": 393500.0,
+              "payout_yen": 301560.0,
+              "predicted_payout_yen": 460960.40121614817,
+              "market_expected_payout_yen": 292970.02167249
+            },
+            "+25..+50%": {
+              "tickets": 4537,
+              "hits": 67,
+              "stake_yen": 453700.0,
+              "payout_yen": 418640.0,
+              "predicted_payout_yen": 620103.9229866308,
+              "market_expected_payout_yen": 337690.95408242696
+            },
+            "+50..+100%": {
+              "tickets": 4581,
+              "hits": 53,
+              "stake_yen": 458100.0,
+              "payout_yen": 237340.0,
+              "predicted_payout_yen": 782028.8236980702,
+              "market_expected_payout_yen": 340901.4246465522
+            },
+            "+100..+200%": {
+              "tickets": 2126,
+              "hits": 19,
+              "stake_yen": 212600.0,
+              "payout_yen": 185170.0,
+              "predicted_payout_yen": 497747.2467783961,
+              "market_expected_payout_yen": 158159.97628224298
+            },
+            ">=+200%": {
+              "tickets": 397,
+              "hits": 5,
+              "stake_yen": 39700.0,
+              "payout_yen": 55690.0,
+              "predicted_payout_yen": 145842.9998273399,
+              "market_expected_payout_yen": 29506.902586614728
+            }
+          },
+          "deletion_normalized_score": {
+            "<-50%": {
+              "tickets": 16109,
+              "hits": 154,
+              "stake_yen": 1610900.0,
+              "payout_yen": 927490.0,
+              "predicted_payout_yen": 385409.7750727745,
+              "market_expected_payout_yen": 1198425.1937027844
+            },
+            "-50..-20%": {
+              "tickets": 12135,
+              "hits": 619,
+              "stake_yen": 1213500.0,
+              "payout_yen": 761150.0,
+              "predicted_payout_yen": 795870.825051511,
+              "market_expected_payout_yen": 903832.5106869715
+            },
+            "-20..0%": {
+              "tickets": 7151,
+              "hits": 357,
+              "stake_yen": 715100.0,
+              "payout_yen": 492390.0,
+              "predicted_payout_yen": 638001.241869817,
+              "market_expected_payout_yen": 532712.2456681743
+            },
+            "0..+10%": {
+              "tickets": 2405,
+              "hits": 57,
+              "stake_yen": 240500.0,
+              "payout_yen": 163090.0,
+              "predicted_payout_yen": 251882.98368337468,
+              "market_expected_payout_yen": 179206.51378153323
+            },
+            "+10..+25%": {
+              "tickets": 2573,
+              "hits": 61,
+              "stake_yen": 257300.0,
+              "payout_yen": 221840.0,
+              "predicted_payout_yen": 301133.22097096033,
+              "market_expected_payout_yen": 191736.0159054312
+            },
+            "+25..+50%": {
+              "tickets": 2184,
+              "hits": 29,
+              "stake_yen": 218400.0,
+              "payout_yen": 131960.0,
+              "predicted_payout_yen": 296306.8267773725,
+              "market_expected_payout_yen": 162755.3865817225
+            },
+            "+50..+100%": {
+              "tickets": 1406,
+              "hits": 15,
+              "stake_yen": 140600.0,
+              "payout_yen": 145870.0,
+              "predicted_payout_yen": 238479.39647952933,
+              "market_expected_payout_yen": 104755.70091630182
+            },
+            "+100..+200%": {
+              "tickets": 467,
+              "hits": 5,
+              "stake_yen": 46700.0,
+              "payout_yen": 60450.0,
+              "predicted_payout_yen": 107843.76947059622,
+              "market_expected_payout_yen": 34789.09516862096
+            },
+            ">=+200%": {
+              "tickets": 55,
+              "hits": 0,
+              "stake_yen": 5500.0,
+              "payout_yen": 0.0,
+              "predicted_payout_yen": 20160.68989674335,
+              "market_expected_payout_yen": 4097.630465455556
+            }
+          }
+        }
+      }
+    },
+    "calibration": {
+      "3連単": {
+        "forecast": {
+          "parent_probability": {
+            "races": 1297,
+            "logloss_sum": 5798.877979300805,
+            "brier_sum": 1262.804288554915,
+            "top1_hits": 107,
+            "top1_confidence_sum": 96.80517338970613
+          },
+          "deletion_normalized_score": {
+            "races": 1297,
+            "logloss_sum": 5516.043508023556,
+            "brier_sum": 1250.0089952345288,
+            "top1_hits": 140,
+            "top1_confidence_sum": 171.51639161111615
+          },
+          "market_normalized": {
+            "races": 1297,
+            "logloss_sum": 5373.4016707944875,
+            "brier_sum": 1246.4256569451538,
+            "top1_hits": 144,
+            "top1_confidence_sum": 147.90269529444032
+          }
+        },
+        "selected_deletion": {
+          "parent_probability": {
+            "tickets": 42963,
+            "hits": 457,
+            "stake_yen": 4296300.0,
+            "payout_yen": 3393230.0,
+            "predicted_payout_yen": 3731274.867115482,
+            "market_expected_payout_yen": 3216197.314034708
+          },
+          "deletion_normalized_score": {
+            "tickets": 42963,
+            "hits": 457,
+            "stake_yen": 4296300.0,
+            "payout_yen": 3393230.0,
+            "predicted_payout_yen": 5136838.25379586,
+            "market_expected_payout_yen": 3216197.314034708
+          }
+        },
+        "positive_ev": {
+          "parent_probability": {
+            "tickets": 131158,
+            "hits": 274,
+            "stake_yen": 13115800.0,
+            "payout_yen": 9401070.0,
+            "predicted_payout_yen": 30927619.87871742,
+            "market_expected_payout_yen": 9810635.70321413
+          },
+          "deletion_normalized_score": {
+            "tickets": 29895,
+            "hits": 271,
+            "stake_yen": 2989500.0,
+            "payout_yen": 2297880.0,
+            "predicted_payout_yen": 3985350.6639658967,
+            "market_expected_payout_yen": 2237742.977611317
+          }
+        },
+        "edge_bins": {
+          "parent_probability": {
+            "<-50%": {
+              "tickets": 64780,
+              "hits": 606,
+              "stake_yen": 6478000.0,
+              "payout_yen": 3876030.0,
+              "predicted_payout_yen": 1976898.0980858563,
+              "market_expected_payout_yen": 4847776.236527678
+            },
+            "-50..-20%": {
+              "tickets": 46102,
+              "hits": 296,
+              "stake_yen": 4610200.0,
+              "payout_yen": 3050710.0,
+              "predicted_payout_yen": 2973938.219825084,
+              "market_expected_payout_yen": 3449897.9529410657
+            },
+            "-20..0%": {
+              "tickets": 24870,
+              "hits": 121,
+              "stake_yen": 2487000.0,
+              "payout_yen": 1585820.0,
+              "predicted_payout_yen": 2231163.5992172095,
+              "market_expected_payout_yen": 1860942.4029329435
+            },
+            "0..+10%": {
+              "tickets": 10821,
+              "hits": 35,
+              "stake_yen": 1082100.0,
+              "payout_yen": 714070.0,
+              "predicted_payout_yen": 1135522.5291293915,
+              "market_expected_payout_yen": 809647.6834803402
+            },
+            "+10..+25%": {
+              "tickets": 14378,
+              "hits": 47,
+              "stake_yen": 1437800.0,
+              "payout_yen": 964680.0,
+              "predicted_payout_yen": 1686455.580073144,
+              "market_expected_payout_yen": 1075728.4595866129
+            },
+            "+25..+50%": {
+              "tickets": 20015,
+              "hits": 54,
+              "stake_yen": 2001500.0,
+              "payout_yen": 1504090.0,
+              "predicted_payout_yen": 2741027.8331043134,
+              "market_expected_payout_yen": 1497396.5077253159
+            },
+            "+50..+100%": {
+              "tickets": 28449,
+              "hits": 56,
+              "stake_yen": 2844900.0,
+              "payout_yen": 1969530.0,
+              "predicted_payout_yen": 4923596.026817325,
+              "market_expected_payout_yen": 2128175.727842869
+            },
+            "+100..+200%": {
+              "tickets": 29920,
+              "hits": 57,
+              "stake_yen": 2992000.0,
+              "payout_yen": 2185110.0,
+              "predicted_payout_yen": 7262166.20349745,
+              "market_expected_payout_yen": 2237871.212394843
+            },
+            ">=+200%": {
+              "tickets": 27575,
+              "hits": 25,
+              "stake_yen": 2757500.0,
+              "payout_yen": 2063590.0,
+              "predicted_payout_yen": 13178851.706095828,
+              "market_expected_payout_yen": 2061816.1121841394
+            }
+          },
+          "deletion_normalized_score": {
+            "<-50%": {
+              "tickets": 164384,
+              "hits": 243,
+              "stake_yen": 16438400.0,
+              "payout_yen": 10125450.0,
+              "predicted_payout_yen": 2808472.7546373047,
+              "market_expected_payout_yen": 12296050.533610139
+            },
+            "-50..-20%": {
+              "tickets": 49848,
+              "hits": 526,
+              "stake_yen": 4984800.0,
+              "payout_yen": 3660950.0,
+              "predicted_payout_yen": 3216031.182887275,
+              "market_expected_payout_yen": 3730261.263834347
+            },
+            "-20..0%": {
+              "tickets": 22783,
+              "hits": 257,
+              "stake_yen": 2278300.0,
+              "payout_yen": 1829350.0,
+              "predicted_payout_yen": 2029269.2231750856,
+              "market_expected_payout_yen": 1705197.520560005
+            },
+            "0..+10%": {
+              "tickets": 7452,
+              "hits": 71,
+              "stake_yen": 745200.0,
+              "payout_yen": 466930.0,
+              "predicted_payout_yen": 780743.8916923775,
+              "market_expected_payout_yen": 557776.8158524038
+            },
+            "+10..+25%": {
+              "tickets": 8154,
+              "hits": 89,
+              "stake_yen": 815400.0,
+              "payout_yen": 640750.0,
+              "predicted_payout_yen": 954504.4079350848,
+              "market_expected_payout_yen": 610334.2516375931
+            },
+            "+25..+50%": {
+              "tickets": 7692,
+              "hits": 66,
+              "stake_yen": 769200.0,
+              "payout_yen": 525220.0,
+              "predicted_payout_yen": 1045082.1606220856,
+              "market_expected_payout_yen": 575782.3147734702
+            },
+            "+50..+100%": {
+              "tickets": 5207,
+              "hits": 39,
+              "stake_yen": 520700.0,
+              "payout_yen": 557800.0,
+              "predicted_payout_yen": 879796.1405434081,
+              "market_expected_payout_yen": 389783.85632680013
+            },
+            "+100..+200%": {
+              "tickets": 1321,
+              "hits": 6,
+              "stake_yen": 132100.0,
+              "payout_yen": 107180.0,
+              "predicted_payout_yen": 301945.09907443926,
+              "market_expected_payout_yen": 98901.71871472744
+            },
+            ">=+200%": {
+              "tickets": 69,
+              "hits": 0,
+              "stake_yen": 6900.0,
+              "payout_yen": 0.0,
+              "predicted_payout_yen": 23278.964098505672,
+              "market_expected_payout_yen": 5164.020306323994
+            }
+          }
+        }
+      },
+      "3連複": {
+        "forecast": {
+          "parent_probability": {
+            "races": 1297,
+            "logloss_sum": 3734.537590448022,
+            "brier_sum": 1174.8597190113585,
+            "top1_hits": 272,
+            "top1_confidence_sum": 208.8762396869062
+          },
+          "deletion_normalized_score": {
+            "races": 1297,
+            "logloss_sum": 3558.4667242731043,
+            "brier_sum": 1141.8984560138344,
+            "top1_hits": 304,
+            "top1_confidence_sum": 291.7989631682744
+          },
+          "market_normalized": {
+            "races": 1297,
+            "logloss_sum": 3482.996113658189,
+            "brier_sum": 1137.4888236662798,
+            "top1_hits": 325,
+            "top1_confidence_sum": 301.4447860890541
+          }
+        },
+        "selected_deletion": {
+          "parent_probability": {
+            "tickets": 13468,
+            "hits": 539,
+            "stake_yen": 1346800.0,
+            "payout_yen": 998450.0,
+            "predicted_payout_yen": 1456872.6173814263,
+            "market_expected_payout_yen": 1003920.450444985
+          },
+          "deletion_normalized_score": {
+            "tickets": 13468,
+            "hits": 539,
+            "stake_yen": 1346800.0,
+            "payout_yen": 998450.0,
+            "predicted_payout_yen": 1577111.6846652422,
+            "market_expected_payout_yen": 1003920.450444985
+          }
+        },
+        "positive_ev": {
+          "parent_probability": {
+            "tickets": 21705,
+            "hits": 250,
+            "stake_yen": 2170500.0,
+            "payout_yen": 1394560.0,
+            "predicted_payout_yen": 3785447.466402078,
+            "market_expected_payout_yen": 1615393.3530939724
+          },
+          "deletion_normalized_score": {
+            "tickets": 8823,
+            "hits": 163,
+            "stake_yen": 882300.0,
+            "payout_yen": 576760.0,
+            "predicted_payout_yen": 1201209.7682648234,
+            "market_expected_payout_yen": 657465.0184461311
+          }
+        },
+        "edge_bins": {
+          "parent_probability": {
+            "<-50%": {
+              "tickets": 6642,
+              "hits": 498,
+              "stake_yen": 664200.0,
+              "payout_yen": 439610.0,
+              "predicted_payout_yen": 248794.41829065487,
+              "market_expected_payout_yen": 494913.2112553211
+            },
+            "-50..-20%": {
+              "tickets": 10015,
+              "hits": 396,
+              "stake_yen": 1001500.0,
+              "payout_yen": 680170.0,
+              "predicted_payout_yen": 649958.4713891053,
+              "market_expected_payout_yen": 746041.2226463212
+            },
+            "-20..0%": {
+              "tickets": 6123,
+              "hits": 153,
+              "stake_yen": 612300.0,
+              "payout_yen": 389900.0,
+              "predicted_payout_yen": 548936.4436339242,
+              "market_expected_payout_yen": 455962.50588137825
+            },
+            "0..+10%": {
+              "tickets": 2618,
+              "hits": 47,
+              "stake_yen": 261800.0,
+              "payout_yen": 144990.0,
+              "predicted_payout_yen": 274965.7792435141,
+              "market_expected_payout_yen": 194917.80637342203
+            },
+            "+10..+25%": {
+              "tickets": 3424,
+              "hits": 51,
+              "stake_yen": 342400.0,
+              "payout_yen": 201630.0,
+              "predicted_payout_yen": 401552.5790196651,
+              "market_expected_payout_yen": 254946.611895712
+            },
+            "+25..+50%": {
+              "tickets": 4543,
+              "hits": 55,
+              "stake_yen": 454300.0,
+              "payout_yen": 305440.0,
+              "predicted_payout_yen": 621185.2245328699,
+              "market_expected_payout_yen": 338180.63863499096
+            },
+            "+50..+100%": {
+              "tickets": 5626,
+              "hits": 50,
+              "stake_yen": 562600.0,
+              "payout_yen": 270020.0,
+              "predicted_payout_yen": 970195.0181047062,
+              "market_expected_payout_yen": 418746.6038432516
+            },
+            "+100..+200%": {
+              "tickets": 4085,
+              "hits": 39,
+              "stake_yen": 408500.0,
+              "payout_yen": 381820.0,
+              "predicted_payout_yen": 975013.5200062094,
+              "market_expected_payout_yen": 303902.32633047365
+            },
+            ">=+200%": {
+              "tickets": 1409,
+              "hits": 8,
+              "stake_yen": 140900.0,
+              "payout_yen": 90660.0,
+              "predicted_payout_yen": 542535.3454951118,
+              "market_expected_payout_yen": 104699.36601612576
+            }
+          },
+          "deletion_normalized_score": {
+            "<-50%": {
+              "tickets": 17047,
+              "hits": 156,
+              "stake_yen": 1704700.0,
+              "payout_yen": 965140.0,
+              "predicted_payout_yen": 403295.71528978605,
+              "market_expected_payout_yen": 1268177.1853964028
+            },
+            "-50..-20%": {
+              "tickets": 11784,
+              "hits": 621,
+              "stake_yen": 1178400.0,
+              "payout_yen": 790940.0,
+              "predicted_payout_yen": 771721.445709914,
+              "market_expected_payout_yen": 877792.3284216557
+            },
+            "-20..0%": {
+              "tickets": 6831,
+              "hits": 357,
+              "stake_yen": 683100.0,
+              "payout_yen": 571400.0,
+              "predicted_payout_yen": 610105.5922779279,
+              "market_expected_payout_yen": 508875.7606128034
+            },
+            "0..+10%": {
+              "tickets": 2239,
+              "hits": 54,
+              "stake_yen": 223900.0,
+              "payout_yen": 151960.0,
+              "predicted_payout_yen": 234530.06306991403,
+              "market_expected_payout_yen": 166847.29549116286
+            },
+            "+10..+25%": {
+              "tickets": 2399,
+              "hits": 59,
+              "stake_yen": 239900.0,
+              "payout_yen": 162940.0,
+              "predicted_payout_yen": 280508.2833465458,
+              "market_expected_payout_yen": 178767.7779811448
+            },
+            "+25..+50%": {
+              "tickets": 2131,
+              "hits": 35,
+              "stake_yen": 213100.0,
+              "payout_yen": 152910.0,
+              "predicted_payout_yen": 288937.35468209966,
+              "market_expected_payout_yen": 158802.98990043384
+            },
+            "+50..+100%": {
+              "tickets": 1453,
+              "hits": 12,
+              "stake_yen": 145300.0,
+              "payout_yen": 81380.0,
+              "predicted_payout_yen": 245737.20813999933,
+              "market_expected_payout_yen": 108269.34482874608
+            },
+            "+100..+200%": {
+              "tickets": 519,
+              "hits": 3,
+              "stake_yen": 51900.0,
+              "payout_yen": 27570.0,
+              "predicted_payout_yen": 121932.17813547491,
+              "market_expected_payout_yen": 38666.38047961247
+            },
+            ">=+200%": {
+              "tickets": 82,
+              "hits": 0,
+              "stake_yen": 8200.0,
+              "payout_yen": 0.0,
+              "predicted_payout_yen": 29564.68089078772,
+              "market_expected_payout_yen": 6111.2297650310375
+            }
+          }
+        }
+      }
+    }
+  }
+}
