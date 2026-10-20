@@ -1,0 +1,40 @@
+{
+  "status": "PUBLIC_SOURCE_GAP_AUDITED",
+  "at_utc": "2026-10-20T13:00:13.770773+00:00",
+  "years": {
+    "2023": {
+      "encrypted_seven_bet_distinct_races_at_least": 25085,
+      "unencrypted_two_bet_complete_races": 10086,
+      "difference_in_archive_reported_counts_lower_bound_minus_plaintext": 14999,
+      "ratio_plaintext_count_to_sealed_lower_bound_pct": 40.21,
+      "warning": "This ratio is NOT exact race-ID coverage: independently assembled archives require a secure per-ID join",
+      "old_2023_study_train_and_validation_races": 9996
+    },
+    "2024": {
+      "encrypted_seven_bet_distinct_races_at_least": 24700,
+      "unencrypted_two_bet_complete_races": 9641,
+      "difference_in_archive_reported_counts_lower_bound_minus_plaintext": 15059,
+      "ratio_plaintext_count_to_sealed_lower_bound_pct": 39.03,
+      "warning": "This ratio is NOT exact race-ID coverage: independently assembled archives require a secure per-ID join",
+      "old_2024_study_train_races": 9594
+    },
+    "2025": {
+      "encrypted_seven_bet_distinct_races_at_least": 24372,
+      "unencrypted_two_bet_complete_races": 9781,
+      "difference_in_archive_reported_counts_lower_bound_minus_plaintext": 14591,
+      "ratio_plaintext_count_to_sealed_lower_bound_pct": 40.13,
+      "warning": "This ratio is NOT exact race-ID coverage: independently assembled archives require a secure per-ID join"
+    }
+  },
+  "all_years_2021_2026h1_encrypted_seven_bet_lower_bound": 134336,
+  "all_years_2021_2026h1_plaintext_two_bet_race_count": 40442,
+  "source_seven_bet": "data/audits/odds_seven_bet_archive_count.json",
+  "source_old_model": "data/odds_only/odds_YEAR.jsonl.gz",
+  "encrypted_private_key_is_not_in_public_repository": true,
+  "private_key_must_not_be_disclosed_in_chat_or_committed": true,
+  "the_ciphertexts_cannot_be_read_as_market_pricing_without_RSA_private_key": true,
+  "authorized_training_plan": "Execute decrypt-and-train in ephemeral runner with privately installed GitHub Actions secret; publish only aggregate coverage, aggregate ROI and model coefficients",
+  "public_repo_must_never_commit_decrypted_quote_files": true,
+  "no_source_collection_triggered": true,
+  "caveat": "Encrypted manifests count verified complete seven-bet races but do not reveal their exact IDs; exact overlaps and usable labels are unknowable until authorized secure decryption."
+}
