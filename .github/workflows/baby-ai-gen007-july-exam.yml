@@ -1,0 +1,38 @@
+name: Baby AI GEN-007 2months independent July growth exam
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/ai_nursery/outputs/GEN-007/continuation-2m/checkpoint.json'
+      - 'research/ai_nursery/forward_exam_2months7.py'
+      - '.github/workflows/baby-ai-gen007-july-exam.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: baby-ai-gen007-july-exam
+  cancel-in-progress: false
+jobs:
+  frozen-july-exam:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numpy
+        run: python -m pip install 'numpy>=1.26'
+      - name: Verify unchanged inherited checkpoints on same never-trained July races
+        run: OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python research/ai_nursery/forward_exam_2months7.py
+      - name: Save independent paper forward comparison
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ai_nursery/outputs/GEN-007/continuation-2m/forward_july_exam* docs/ai-lab/nursery-gen007-phase2-forward-exam.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "data: freeze July unseen growth comparison of GEN-007 before and after two months"
+          git pull --rebase origin main
+          git push origin HEAD:main

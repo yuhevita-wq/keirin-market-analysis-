@@ -1,0 +1,47 @@
+name: Baby AI GEN-007 two-month continuation
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/ai_nursery/train_2months7.py'
+      - 'research/ai_nursery/test_2months7.py'
+      - '.github/workflows/baby-ai-gen007-2months.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: baby-ai-gen007-2months
+  cancel-in-progress: false
+jobs:
+  continue:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numeric runtime
+        run: python -m pip install 'numpy>=1.26'
+      - name: Verify monetary profit learning in isolation
+        run: OPENBLAS_NUM_THREADS=1 python research/ai_nursery/test_profit_objective.py
+      - name: Run 61 active training days excluding June locked holdout
+        run: |
+          if [ -f research/ai_nursery/outputs/GEN-007/continuation-2m/summary.json ]; then
+            echo "Continuation checkpoint already exists, will audit only"
+          else
+            OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python research/ai_nursery/train_2months7.py
+          fi
+      - name: Audit inherited policies, paper marks and 61-day profit goal
+        run: OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python research/ai_nursery/test_2months7.py
+      - name: Save two-month model, paper ledger and registry
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ai_nursery/outputs/GEN-007/continuation-2m/ docs/ai-lab/nursery-gen007-phase2-*.json docs/ai-lab/generations.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "data: freeze GEN-007 two-month continuation"
+          git pull --rebase origin main
+          git push origin HEAD:main

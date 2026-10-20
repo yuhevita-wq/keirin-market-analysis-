@@ -1,5 +1,5 @@
 {
-  "schema_version": 8,
+  "schema_version": 9,
   "kind": "KEIRIN_AI_INFANT_GENERATIONS",
   "current_generation": "GEN-007",
   "generations": [
@@ -185,7 +185,35 @@
       "ending_wallet_yen": 3900,
       "refill_events": 5,
       "new_reward_yen": 38090,
-      "trained_behavior_policy": true
+      "trained_behavior_policy": true,
+      "continuations": [
+        {
+          "id": "GEN-007-C2",
+          "status": "TRAINING_SCHEDULED",
+          "description": "同じ純収支プラス目標のまま61日間追加学習。世代番号は変更しない。",
+          "training_dates": [
+            "2023-04-05",
+            "2023-06-11"
+          ],
+          "active_training_days": 61,
+          "excluded_exam_dates": [
+            "2023-06-01",
+            "2023-06-07"
+          ],
+          "independent_future_exam": [
+            "2023-07-01",
+            "2023-07-07"
+          ],
+          "parent_checkpoint_sha256": "493ed93e2d95d2aad4cf498b821779bba46bfd48135f1dbed8b7a5e83a1c9888",
+          "parent_behavior_policy_sha256": "ce892d430fdfe7e5af23a173e405110db75565350d67fbf0be5f2aeaaeee6278",
+          "output_path": "research/ai_nursery/outputs/GEN-007/continuation-2m/",
+          "checkpoint": "research/ai_nursery/outputs/GEN-007/continuation-2m/checkpoint.json",
+          "behavior_policy": "research/ai_nursery/outputs/GEN-007/continuation-2m/behavior_policy.json",
+          "summary": "nursery-gen007-phase2-summary.json",
+          "objective": "maximize_total_net_yen",
+          "nonbetting_zero_is_failure": true
+        }
+      ]
     }
   ],
   "archived_older_unrelated_checkpoint": "research/ai_evolution/generations/g001/",

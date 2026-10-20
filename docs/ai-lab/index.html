@@ -191,6 +191,26 @@ footer{border-top:1px solid var(--line);color:var(--soft);font-size:12px;margin-
 <p class="warning">これは過去の最終オッズで学習する紙上シミュレーションです。財布やご褒美口座の残高は純利益ではありません。仮に訓練期間でプラスになっても、将来の利益を保証しません。</p>
 <div class="links"><a class="btn" href="nursery-gen007-summary.json">GEN-007の純収支</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery/outputs/GEN-007">選択と結果の履歴</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/actions/workflows/baby-ai-gen007-profit.yml">学習のGitHub Actions</a></div>
 </section>
+<section class="section">
+<h2>📈 GEN-007 続き：2ヶ月追加学習</h2>
+<p>前回の31日間で純収支−13,390円。今回は世代を増やさず、予測重みと行動方針を継承して61日間経験を積みます。4月5日〜5月31日と6月8日〜11日。6月1〜7日は旧世代の共通試験のため使いません。</p>
+<div class="grid">
+<div class="card"><small>追加学習のレース</small><strong id="c2Races">学習実行待ち</strong><span>61日間の連続学習（試験期間を除外）</span></div>
+<div class="card"><small>追加学習の純収支</small><strong id="c2Net">—</strong><span>払戻 − 購入額、唯一の目標</span></div>
+<div class="card"><small>参加／見送り</small><strong id="c2Action">—</strong><span>GEN-007の学習済み重みを継承</span></div>
+<div class="card"><small>黒字化判定</small><strong id="c2Goal">—</strong><span>見送りのみは不合格</span></div>
+</div>
+<div class="row"><span>開始時の学習累計</span><b>3,853レース</b></div>
+<div class="row"><span>購入点数</span><b id="c2Marks">—</b></div>
+<div class="row"><span>新しい未学習試験</span><b id="c2Exam">学習完了後に7月1〜7日を試験</b></div>
+<p class="warning">財布、資金補充、ご褒美の総額は目標でも利益でもありません。既存のGEN-007チェックポイントを上書きせず、追加学習は別ファイルに保存します。払戻は過去の確定オッズ換算値です。</p>
+<div class="links">
+<a class="btn" href="nursery-gen007-phase2-summary.json">追加学習の詳細成績</a>
+<a class="btn" href="nursery-gen007-phase2-forward-exam.json">7月の独立成長試験</a>
+<a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/actions/workflows/baby-ai-gen007-2months.yml">2ヶ月の実行状況</a>
+<a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery/outputs/GEN-007/continuation-2m">全購入記録と学習重み</a>
+</div>
+</section>
 <section class="section"><h2>保存と次の世代</h2><div class="row"><span>出生時の学習重み</span><b>すべて0</b></div><div class="row"><span>1週間後の学習重み</span><b id="checkpoint">—</b></div><div class="row"><span>次の段階</span><b>GEN-003が資金管理を学習中</b></div><p>新しい能力を得た時点でGEN-001からGEN-002へ世代交代。GEN-002は親の学習重みを継承しています。</p><div class="links"><a class="btn" href="nursery-summary.json">1週間の全体成績</a><a class="btn" href="nursery-history.json">全レースのマーク履歴</a><a class="btn" href="nursery-checkpoint.json">学習した重み</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery">GitHub保存先 ↗</a></div></section>
 <footer>過去実験の価格はレース終了後の確定オッズです。締切前の価格と同じではないため、この練習成績を実購入可能な収益と見なせません。入力に足りないレースは欠損として記録。</footer>
 </main>
@@ -449,5 +469,24 @@ start();
     $("g7Holdout").textContent=g?(g.net_proxy_yen>0&&g.stakes_yen>0?"純収支プラス（共通試験）":"純収支未達（共通試験）"):"検証実行待ち";
    }
  }catch(e){$("g7Net").textContent="学習結果待ち";}
+})();
+</script><script>
+(async()=>{
+const $=id=>document.getElementById(id);
+const n=x=>Number(x).toLocaleString("ja-JP");
+try{
+ const r=await fetch("nursery-gen007-phase2-summary.json",{cache:"no-store"});
+ if(!r.ok)throw Error("学習待ち");
+ const d=await r.json();
+ $("c2Races").textContent=n(d.races)+"R";
+ $("c2Net").textContent=n(d.net_profit_total_yen)+"円";
+ $("c2Action").textContent=n(d.races_entered)+"／"+n(d.races_skipped);
+ $("c2Goal").textContent=d.goal_achieved_training?"達成":"未達成";
+ $("c2Marks").textContent=n(d.marks)+"点";
+ try{
+ const f=await fetch("nursery-gen007-phase2-forward-exam.json",{cache:"no-store"});
+ if(f.ok){const e=await f.json();$("c2Exam").textContent=n(e.tested_races)+"Rで検証完了";}
+ }catch(e){}
+}catch(e){$("c2Races").textContent="結果保存待ち";}
 })();
 </script></body></html>
