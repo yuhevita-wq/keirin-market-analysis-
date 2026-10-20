@@ -1,0 +1,59 @@
+{
+  "stage": "GEN008-V3-ME-R-ARCHIVE-SCALE-2021-2026H1",
+  "status": "COMPLETE",
+  "mode": "plain",
+  "model": "V3-ME-R",
+  "eight_feature_names": [
+    "relative_log_price_popularity",
+    "within_market_log_odds_rank",
+    "cross_market_price_gap",
+    "within_trio_order_imbalance",
+    "price_gap_x_popularity",
+    "order_imbalance_x_rank",
+    "relative_trio_order_concentration",
+    "trio_order_concentration_x_price_gap"
+  ],
+  "active_feature_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "source": "verified_plain_two_market",
+  "weights": {
+    "3連単": [
+      -0.025770605882137212,
+      0.1498970455767986,
+      -0.1345996280387894,
+      -0.03684851541748015,
+      0.052017985574693254,
+      -0.07971722664054522,
+      -0.1439856546223358,
+      -0.09945668451305016
+    ],
+    "3連複": [
+      0.033690863420574965,
+      0.1901343545418013,
+      0.5042624737140455,
+      -0.0806716669008244,
+      -0.04827755450964489,
+      0.07252167582878821,
+      -0.0806716669008244,
+      0.35907004125629755
+    ]
+  },
+  "sha256": "ac0597992f27c27a770fc676291aef40591aa006479c09e7f22efed7826d0a1e",
+  "parent_baselines_immutable": true,
+  "hyperparameters": {
+    "LR": 0.017,
+    "RIDGE_STEP": 0.00035,
+    "MAX_WEIGHT": 1.5
+  },
+  "final_policy_coverage": 0.25,
+  "trained_races": 34444,
+  "frozen_races": 5720
+}
