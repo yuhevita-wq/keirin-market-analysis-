@@ -28,13 +28,13 @@ a{color:#8fdcf7}strong.teal{color:var(--teal)}
 <div class="row"><span class="small">2023.01</span><span class="small">2023.12</span></div>
 <div class="row" style="justify-content:flex-start;margin-top:12px"><button id="prev">← 前月</button><button id="play">▶ 再生</button><button id="next">翌月 →</button><button id="refresh">↻ GitHubを再読込</button></div></div>
 <div class="grid">
-<div class="stat"><div class="small">その月のオッズ収録</div><div class="value" id="monthly_odds">—</div><div class="small">確定オッズ</div></div>
-<div class="stat"><div class="small">その月の結果照合</div><div class="value" id="monthly_match">—</div><div class="small">race_id完全一致</div></div>
-<div class="stat"><div class="small">2023年の収録総数</div><div class="value" id="year_odds">—</div><div class="small">全券種ではない</div></div>
-<div class="stat"><div class="small">2023年の照合総数</div><div class="value" id="year_match">—</div><div class="small">学習前の原材料</div></div>
+<div class="stat"><div class="small">その月のA1・A2</div><div class="value" id="monthly_odds">—</div><div class="small">出走表記録</div></div>
+<div class="stat"><div class="small">その月のA3</div><div class="value" id="monthly_match">—</div><div class="small">専用記録の未収集月は「未確認」</div></div>
+<div class="stat"><div class="small">2023年のA級確認数</div><div class="value" id="year_odds">—</div><div class="small">A1・A2・確認済みA3の合計</div></div>
+<div class="stat"><div class="small">結果と一致するA級</div><div class="value" id="year_match">—</div><div class="small">race_id重複除去・実照合済み</div></div>
 </div>
-<section class="panel" style="margin:12px 0"><h2>2023年 オッズ収録内訳（S級限定ではありません）</h2><div id="classes" class="row" style="justify-content:flex-start;gap:20px"><span class="small">GitHubから読み込み中…</span></div><p class="small">原データの race_type 表記で分類。S級・A級・チャレンジ・その他を全て対象とし、データの不存在を0件として扱いません。</p></section>
-<div class="two"><section class="panel"><h2>月次データの収録・照合</h2><div class="graph" id="plot"><div class="small">GitHubの実測データを読込中…</div></div><div class="legend"><span><i class="dot" style="background:var(--blue)"></i>オッズ</span><span><i class="dot" style="background:var(--teal)"></i>結果照合済み</span></div></section>
+<section class="panel" style="margin:12px 0"><h2>別データ：2023年の確定オッズ収録内訳</h2><div id="classes" class="row" style="justify-content:flex-start;gap:20px"><span class="small">GitHubから読み込み中…</span></div><p class="small">原データの race_type 表記で分類。S級・A級・チャレンジ・その他を全て対象とし、データの不存在を0件として扱いません。</p></section>
+<div class="two"><section class="panel"><h2>A級の月次データ収録（A1・A2とA3）</h2><div class="graph" id="plot"><div class="small">GitHubの実測データを読込中…</div></div><div class="legend"><span><i class="dot" style="background:var(--blue)"></i>A1・A2</span><span><i class="dot" style="background:var(--teal)"></i>A3（3–4月は資料未発見）</span></div><p class="small">※A3の3–4月は専用データが未発見です。グラフの空白は0レースを意味しません。</p></section>
 <section class="panel"><h2>AIの状態</h2><div class="row"><span class="small">学習データ</span><strong id="training">0件</strong></div><hr style="border:0;border-top:1px solid var(--border)"><div class="row"><span class="small">期間外予測</span><strong>0件</strong></div><hr style="border:0;border-top:1px solid var(--border)"><div class="row"><span class="small">確率校正誤差 / ECE</span><strong>—</strong></div><hr style="border:0;border-top:1px solid var(--border)"><div class="row"><span class="small">収益 / ROI</span><strong>—</strong></div><p class="small" style="margin-top:18px">データとモデルの接続は別の工程です。二者択一の予測対象と事前特徴量が定義されるまで、学習・架空の成績表示は行いません。</p></section></div>
 <section class="panel" style="margin-top:12px"><h2>データ監査・取り扱い</h2>
 <div id="detail" class="small">照合レポート待機中。</div>
@@ -48,18 +48,18 @@ let report=null,index=0,timer=null;
 const $=id=>document.getElementById(id);
 const fmt=n=>typeof n==='number'?n.toLocaleString('ja-JP'):'—';
 function select(i){index=Math.max(0,Math.min(11,i));$('time').value=index;const n=index+1;$('month').textContent='2023年'+n+'月';
- const m=report?.monthly?.[index];$('monthly_odds').textContent=fmt(m?.odds_races);$('monthly_match').textContent=fmt(m?.matched_races);draw()}
+ const a=report?.a_class_inventory;const m12=a?.a1_a2?.monthly?.[index];const m3=a?.a3?.monthly?.[index];$('monthly_odds').textContent=fmt(m12?.races);$('monthly_match').textContent=[2,3].includes(index)?'未確認':fmt(m3?.races);draw()}
 function draw(){
  const root=$('plot');root.replaceChildren();
- if(!report?.monthly?.length){root.textContent='月次データの読み込み待ち';return}
- const width=650,height=245,L=42,R=20,T=14,B=34;const data=report.monthly,max=Math.max(1,...data.map(x=>x.odds_races));
+ if(!report?.a_class_inventory?.a1_a2?.monthly?.length){root.textContent='A級収録データの読み込み待ち';return}
+ const width=650,height=245,L=42,R=20,T=14,B=34;const a=report.a_class_inventory;const data=a.a1_a2.monthly.map((p,i)=>({a12:p.races,a3:a.a3.monthly[i].races}));const max=Math.max(1,...data.flatMap(x=>[x.a12,x.a3]));
  const ns='http://www.w3.org/2000/svg';const s=document.createElementNS(ns,'svg');s.setAttribute('viewBox',`0 0 ${width} ${height}`);s.setAttribute('preserveAspectRatio','none');root.append(s);
  function add(tag,at,txt){const e=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(at))e.setAttribute(k,v);if(txt!==undefined)e.textContent=txt;s.append(e);return e}
  const x=i=>L+(i+.5)*(width-L-R)/12,y=v=>height-B-v/max*(height-T-B);
  for(let t=0;t<=4;t++){let v=max*t/4;add('line',{x1:L,x2:width-R,y1:y(v),y2:y(v),stroke:'#314559','stroke-dasharray':'3 5'});add('text',{x:L-6,y:y(v)+4,'text-anchor':'end',fill:'#aabdc9','font-size':11},fmt(Math.round(v)))}
  data.forEach((m,i)=>{const bar=(width-L-R)/12;
- add('rect',{x:x(i)-bar*.38,y:y(m.odds_races),width:bar*.33,height:height-B-y(m.odds_races),rx:2,fill:'#90a7f8'});
- add('rect',{x:x(i)+bar*.02,y:y(m.matched_races),width:bar*.33,height:height-B-y(m.matched_races),rx:2,fill:'#42dbc3'});
+ add('rect',{x:x(i)-bar*.38,y:y(m.a12),width:bar*.33,height:height-B-y(m.a12),rx:2,fill:'#90a7f8'});
+ if(![2,3].includes(i))add('rect',{x:x(i)+bar*.02,y:y(m.a3),width:bar*.33,height:height-B-y(m.a3),rx:2,fill:'#42dbc3'});
  if(i===index)add('rect',{x:x(i)-bar*.48,y:T,width:bar*.96,height:height-T-B,fill:'none',stroke:'#f5bf7a','stroke-width':2,rx:4});
  add('text',{x:x(i),y:height-11,'text-anchor':'middle',fill:'#aabdc9','font-size':11},String(i+1))});
 }
@@ -72,11 +72,11 @@ async function load(){
  try{const res=await fetch('./source_status.json?nocache='+Date.now(),{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);
  const item=await res.json();if(item.start_date!=='2023-01-01'||item.odds_sha256_verified!==true)throw Error('開始日または監査状態が不正');
  report=item;$('network').textContent='● GitHub接続済み';$('model').textContent='AI：'+item.model_status;
- $('year_odds').textContent=fmt(item.odds_races);$('year_match').textContent=fmt(item.matched_races);
+ const ai=item.a_class_inventory;$('year_odds').textContent=fmt(ai?.identified_a_races);$('year_match').textContent=fmt(ai?.identified_a_with_results);
  const groups={'S級':0,'A級':0,'チャレンジ':0,'その他':0};for(const [name,count] of Object.entries(item.odds_race_types||{})){if(name.includes('A級'))groups['A級']+=count;else if(name.includes('S級'))groups['S級']+=count;else if(name.includes('チャレンジ'))groups['チャレンジ']+=count;else groups['その他']+=count}
  $('classes').replaceChildren();for(const [name,count] of Object.entries(groups)){const el=document.createElement('div');el.innerHTML='<div class="small"></div><div class="value"></div>';el.querySelector('.small').textContent=name;el.querySelector('.value').textContent=item.odds_race_types?fmt(count):'—';$('classes').append(el)}
  $('training').textContent=fmt(item.model_input_count)+'件';
- $('detail').textContent=`データ確認日：${item.updated_at}｜オッズ${fmt(item.odds_races)}R／結果${fmt(item.result_races)}R／照合${fmt(item.matched_races)}R／未照合${fmt(item.unmatched_odds_races)}R。SHA-256検証：合格。月別日付を復元できないID：${fmt(item.undated_odds_races)}件。`;
+ $('detail').textContent=`監査日：${item.updated_at}。A1・A2 ${fmt(ai?.a1_a2?.unique_races)}R／確認済みA3 ${fmt(ai?.a3?.unique_races)}R／A級合計 ${fmt(ai?.identified_a_races)}R／結果一致 ${fmt(ai?.identified_a_with_results)}R。残りの結果レース ${fmt(ai?.results_not_in_identified_a)}R（S級および未分類のA級を含む）。A級専用フォルダはA3の3～4月が未確認。確定オッズ記録は別母集団 ${fmt(item.odds_races)}R、結果との照合 ${fmt(item.matched_races)}R。オッズSHA-256検証成功。`;
  select(index);
  }catch(e){$('network').textContent='接続状態を確認できません';$('detail').textContent='GitHubレポートが取得できません：'+e.message}
 }
