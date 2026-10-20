@@ -242,7 +242,15 @@ def run(source):
             n = 0
             yearscores = defaultdict(lambda: defaultdict(float))
             dates = Counter()
-            for row in iter_source(source, year, keypath, stats):
+            # Plain export is sorted by numeric race_id (track first), NOT date.
+            # A prequential model must train on actual chronological dates.
+            # Sealed iter_year already streams dates in ascending calendar order.
+            if source == "plain":
+                rows = list(iter_source(source, year, keypath, stats))
+                rows.sort(key=lambda x: (x["race"]["race_date"], x["race_id"]))
+            else:
+                rows = iter_source(source, year, keypath, stats)
+            for row in rows:
                 rid = row["race_id"]
                 if rid in seen:
                     raise RuntimeError(f"DUPLICATE_YEAR_RACE_ID: {year}")
