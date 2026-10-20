@@ -1,0 +1,2426 @@
+{
+  "state": "VALIDATED_TICKET_PROBABILITIES_2024_Q1",
+  "scope": {
+    "2023_training_finished": "2023-12-31",
+    "2024_evaluation_start": "2024-01-01",
+    "2024_evaluation_end": "2024-03-31",
+    "2024_train_fit_calls": 0,
+    "2024_model_selection_calls": 0,
+    "2023_frozen_model_bundle_run": 39362270286
+  },
+  "started_at": "2026-10-20T04:57:14.735972+00:00",
+  "finished_at": "2026-10-20T04:57:30.114621+00:00",
+  "data_audit": {
+    "entry_rows_with_missing_fields": 199,
+    "entry_rows_without_complete_top_three_result": 284,
+    "duplicate_entry_rows": 2438,
+    "races_excluded_missing_podium_in_card": 39,
+    "files": {
+      "data/a_class_12/2024_01_02/entries.csv": 13278,
+      "data/a_class_12/2024_03_04/entries.csv": 6914,
+      "data/a3_challenge/2024_01_02/entries.csv": 6265,
+      "data/a3_challenge/2024_03_04/entries.csv": 3171,
+      "data/2024/s_class_f1_all_parts/2024_q1/entries.csv": 9066,
+      "data/2024/s_class_yosen/entries.csv": 0
+    },
+    "race_count": 5588,
+    "rider_rows": 38465,
+    "months": {
+      "2024-01": 1903,
+      "2024-02": 1790,
+      "2024-03": 1895
+    },
+    "categories": {
+      "A3": 1383,
+      "A1_A2": 2890,
+      "S": 1315
+    }
+  },
+  "per_ticket_type": {
+    "3連単": {
+      "races": 5588,
+      "ticket_outcomes_evaluated": 1118040,
+      "top1_hit_rate": 0.04205440229062276,
+      "uniform_random_ticket_top1_reference": 0.005267452363909056,
+      "top_k_hit_rate": {
+        "1": 0.04205440229062276,
+        "3": 0.110773085182534,
+        "5": 0.1680386542591267,
+        "10": 0.27236936292054403
+      },
+      "mean_realized_ticket_probability": 0.011759711526224806,
+      "mean_nll_real_ticket": 4.745810131354849,
+      "uniform_mean_nll_reference": 5.27940340148133,
+      "mean_ticket_brier": 0.005190172217266155,
+      "pooled_20bin_classwise_ece_raw": 3.7039381805394554e-05,
+      "pooled_ece_bins_per_class": [
+        4,
+        4
+      ],
+      "paper_20bin_80pct_gate_passed": false,
+      "quantile_calibration_display_only": [
+        {
+          "bin": 0,
+          "tickets": 111804,
+          "mean_predicted_probability": 0.000606348336194843,
+          "empirical_hit_rate": 0.000438266967192587
+        },
+        {
+          "bin": 1,
+          "tickets": 111804,
+          "mean_predicted_probability": 0.001244623096951053,
+          "empirical_hit_rate": 0.0009391435011269722
+        },
+        {
+          "bin": 2,
+          "tickets": 111804,
+          "mean_predicted_probability": 0.0018524115718872645,
+          "empirical_hit_rate": 0.0014131873636005867
+        },
+        {
+          "bin": 3,
+          "tickets": 111804,
+          "mean_predicted_probability": 0.0024928588737651563,
+          "empirical_hit_rate": 0.0017799005402311188
+        },
+        {
+          "bin": 4,
+          "tickets": 111804,
+          "mean_predicted_probability": 0.0032089047341453828,
+          "empirical_hit_rate": 0.002209223283603449
+        },
+        {
+          "bin": 5,
+          "tickets": 111804,
+          "mean_predicted_probability": 0.0040519267699730965,
+          "empirical_hit_rate": 0.0032020321276519624
+        },
+        {
+          "bin": 6,
+          "tickets": 111804,
+          "mean_predicted_probability": 0.005100897401884232,
+          "empirical_hit_rate": 0.004069621838216879
+        },
+        {
+          "bin": 7,
+          "tickets": 111804,
+          "mean_predicted_probability": 0.0065254876893423045,
+          "empirical_hit_rate": 0.005974741511931595
+        },
+        {
+          "bin": 8,
+          "tickets": 111804,
+          "mean_predicted_probability": 0.008804053099317916,
+          "empirical_hit_rate": 0.008845837358234052
+        },
+        {
+          "bin": 9,
+          "tickets": 111804,
+          "mean_predicted_probability": 0.01609281113413419,
+          "empirical_hit_rate": 0.021108368215806233
+        }
+      ]
+    },
+    "3連複": {
+      "races": 5588,
+      "ticket_outcomes_evaluated": 186340,
+      "top1_hit_rate": 0.13707945597709378,
+      "uniform_random_ticket_top1_reference": 0.03160471418345434,
+      "top_k_hit_rate": {
+        "1": 0.13707945597709378,
+        "3": 0.329277022190408,
+        "5": 0.4663564781675018,
+        "10": 0.683428775948461
+      },
+      "mean_realized_ticket_probability": 0.05448575055816545,
+      "mean_nll_real_ticket": 3.087561878019679,
+      "uniform_mean_nll_reference": 3.487643932253276,
+      "mean_ticket_brier": 0.02949613315765791,
+      "pooled_20bin_classwise_ece_raw": 0.006529382222084391,
+      "pooled_ece_bins_per_class": [
+        7,
+        7
+      ],
+      "paper_20bin_80pct_gate_passed": false,
+      "quantile_calibration_display_only": [
+        {
+          "bin": 0,
+          "tickets": 18634,
+          "mean_predicted_probability": 0.005999626462298071,
+          "empirical_hit_rate": 0.002629601803155522
+        },
+        {
+          "bin": 1,
+          "tickets": 18634,
+          "mean_predicted_probability": 0.010486156055172993,
+          "empirical_hit_rate": 0.005742191692604916
+        },
+        {
+          "bin": 2,
+          "tickets": 18634,
+          "mean_predicted_probability": 0.014199334493463956,
+          "empirical_hit_rate": 0.008264462809917356
+        },
+        {
+          "bin": 3,
+          "tickets": 18634,
+          "mean_predicted_probability": 0.017936734303082336,
+          "empirical_hit_rate": 0.012396694214876033
+        },
+        {
+          "bin": 4,
+          "tickets": 18634,
+          "mean_predicted_probability": 0.021973490455352233,
+          "empirical_hit_rate": 0.017065579049050122
+        },
+        {
+          "bin": 5,
+          "tickets": 18634,
+          "mean_predicted_probability": 0.02666757814042743,
+          "empirical_hit_rate": 0.021627133197381132
+        },
+        {
+          "bin": 6,
+          "tickets": 18634,
+          "mean_predicted_probability": 0.03223918470449438,
+          "empirical_hit_rate": 0.026832671460770636
+        },
+        {
+          "bin": 7,
+          "tickets": 18634,
+          "mean_predicted_probability": 0.03950739941117183,
+          "empirical_hit_rate": 0.039819684447783624
+        },
+        {
+          "bin": 8,
+          "tickets": 18634,
+          "mean_predicted_probability": 0.050363389917755026,
+          "empirical_hit_rate": 0.056938928839755286
+        },
+        {
+          "bin": 9,
+          "tickets": 18634,
+          "mean_predicted_probability": 0.08050904230235437,
+          "empirical_hit_rate": 0.10856498873027799
+        }
+      ]
+    },
+    "2車単": {
+      "races": 5588,
+      "ticket_outcomes_evaluated": 227094,
+      "top1_hit_rate": 0.14173228346456693,
+      "uniform_random_ticket_top1_reference": 0.025053260387906052,
+      "top_k_hit_rate": {
+        "1": 0.14173228346456693,
+        "3": 0.32462419470293485,
+        "5": 0.43718682891911237,
+        "10": 0.6313528990694345
+      },
+      "mean_realized_ticket_probability": 0.051853834974937195,
+      "mean_nll_real_ticket": 3.2170361565780463,
+      "uniform_mean_nll_reference": 3.697174328815484,
+      "mean_ticket_brier": 0.02352477968851989,
+      "pooled_20bin_classwise_ece_raw": 0.0046921717033612765,
+      "pooled_ece_bins_per_class": [
+        8,
+        8
+      ],
+      "paper_20bin_80pct_gate_passed": false,
+      "quantile_calibration_display_only": [
+        {
+          "bin": 0,
+          "tickets": 22710,
+          "mean_predicted_probability": 0.0033464049930956017,
+          "empirical_hit_rate": 0.0026860413914575076
+        },
+        {
+          "bin": 1,
+          "tickets": 22709,
+          "mean_predicted_probability": 0.006759931182086113,
+          "empirical_hit_rate": 0.005108106917962042
+        },
+        {
+          "bin": 2,
+          "tickets": 22709,
+          "mean_predicted_probability": 0.009970764323815964,
+          "empirical_hit_rate": 0.006385133647452552
+        },
+        {
+          "bin": 3,
+          "tickets": 22710,
+          "mean_predicted_probability": 0.01325820973962156,
+          "empirical_hit_rate": 0.010171730515191546
+        },
+        {
+          "bin": 4,
+          "tickets": 22709,
+          "mean_predicted_probability": 0.016845354260041454,
+          "empirical_hit_rate": 0.012594125677044344
+        },
+        {
+          "bin": 5,
+          "tickets": 22709,
+          "mean_predicted_probability": 0.02098959410094091,
+          "empirical_hit_rate": 0.016425205865515876
+        },
+        {
+          "bin": 6,
+          "tickets": 22710,
+          "mean_predicted_probability": 0.02602451706309232,
+          "empirical_hit_rate": 0.021400264200792603
+        },
+        {
+          "bin": 7,
+          "tickets": 22709,
+          "mean_predicted_probability": 0.03261642310345894,
+          "empirical_hit_rate": 0.0299881104407944
+        },
+        {
+          "bin": 8,
+          "tickets": 22709,
+          "mean_predicted_probability": 0.042804494853253765,
+          "empirical_hit_rate": 0.044872077150028625
+        },
+        {
+          "bin": 9,
+          "tickets": 22710,
+          "mean_predicted_probability": 0.07344903498305148,
+          "empirical_hit_rate": 0.0964332892998679
+        }
+      ]
+    },
+    "2車複": {
+      "races": 5588,
+      "ticket_outcomes_evaluated": 113547,
+      "top1_hit_rate": 0.2458840372226199,
+      "uniform_random_ticket_top1_reference": 0.050106520775812104,
+      "top_k_hit_rate": {
+        "1": 0.2458840372226199,
+        "3": 0.4851467430207588,
+        "5": 0.6304581245526127,
+        "10": 0.8391195418754474
+      },
+      "mean_realized_ticket_probability": 0.09643180633664238,
+      "mean_nll_real_ticket": 2.5378871333350883,
+      "uniform_mean_nll_reference": 3.0040271482555383,
+      "mean_ticket_brier": 0.044355675876131935,
+      "pooled_20bin_classwise_ece_raw": 0.01156232583232358,
+      "pooled_ece_bins_per_class": [
+        9,
+        9
+      ],
+      "paper_20bin_80pct_gate_passed": false,
+      "quantile_calibration_display_only": [
+        {
+          "bin": 0,
+          "tickets": 11355,
+          "mean_predicted_probability": 0.007955457004097562,
+          "empirical_hit_rate": 0.005107881990312637
+        },
+        {
+          "bin": 1,
+          "tickets": 11355,
+          "mean_predicted_probability": 0.015066321484764413,
+          "empirical_hit_rate": 0.008982826948480845
+        },
+        {
+          "bin": 2,
+          "tickets": 11354,
+          "mean_predicted_probability": 0.021513951845591055,
+          "empirical_hit_rate": 0.012946979038224414
+        },
+        {
+          "bin": 3,
+          "tickets": 11355,
+          "mean_predicted_probability": 0.0282282511874711,
+          "empirical_hit_rate": 0.020167327168648174
+        },
+        {
+          "bin": 4,
+          "tickets": 11354,
+          "mean_predicted_probability": 0.03555108781238655,
+          "empirical_hit_rate": 0.02316364276906817
+        },
+        {
+          "bin": 5,
+          "tickets": 11355,
+          "mean_predicted_probability": 0.043701335505789654,
+          "empirical_hit_rate": 0.033641567591369444
+        },
+        {
+          "bin": 6,
+          "tickets": 11355,
+          "mean_predicted_probability": 0.05345230925352882,
+          "empirical_hit_rate": 0.04209599295464553
+        },
+        {
+          "bin": 7,
+          "tickets": 11354,
+          "mean_predicted_probability": 0.06591266544806693,
+          "empirical_hit_rate": 0.06226880394574599
+        },
+        {
+          "bin": 8,
+          "tickets": 11355,
+          "mean_predicted_probability": 0.08460414587072441,
+          "empirical_hit_rate": 0.09018053720827829
+        },
+        {
+          "bin": 9,
+          "tickets": 11355,
+          "mean_predicted_probability": 0.1361433145439957,
+          "empirical_hit_rate": 0.19357111404667549
+        }
+      ]
+    }
+  },
+  "by_month": {
+    "2024-01": {
+      "3連単": {
+        "races": 1903,
+        "ticket_outcomes_evaluated": 375930,
+        "top1_hit_rate": 0.03468208092485549,
+        "uniform_random_ticket_top1_reference": 0.005374971848960286,
+        "top_k_hit_rate": {
+          "1": 0.03468208092485549,
+          "3": 0.10036784025223332,
+          "5": 0.16605359957961113,
+          "10": 0.256437204414083
+        },
+        "mean_realized_ticket_probability": 0.011368857529986376,
+        "mean_nll_real_ticket": 4.782907536408721,
+        "uniform_mean_nll_reference": 5.263277709177842,
+        "mean_ticket_brier": 0.005300134901305279,
+        "pooled_20bin_classwise_ece_raw": 2.3883326714202846e-05,
+        "pooled_ece_bins_per_class": [
+          4,
+          4
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 37593,
+            "mean_predicted_probability": 0.0006440357807103803,
+            "empirical_hit_rate": 0.0006384167265182347
+          },
+          {
+            "bin": 1,
+            "tickets": 37593,
+            "mean_predicted_probability": 0.0013062725206406433,
+            "empirical_hit_rate": 0.0011438299683451706
+          },
+          {
+            "bin": 2,
+            "tickets": 37593,
+            "mean_predicted_probability": 0.0019121699506088163,
+            "empirical_hit_rate": 0.0016492432101721066
+          },
+          {
+            "bin": 3,
+            "tickets": 37593,
+            "mean_predicted_probability": 0.0025518718827373453,
+            "empirical_hit_rate": 0.001702444604048626
+          },
+          {
+            "bin": 4,
+            "tickets": 37593,
+            "mean_predicted_probability": 0.003265305318024771,
+            "empirical_hit_rate": 0.002793073178517277
+          },
+          {
+            "bin": 5,
+            "tickets": 37593,
+            "mean_predicted_probability": 0.004113115693882611,
+            "empirical_hit_rate": 0.0031388822387146543
+          },
+          {
+            "bin": 6,
+            "tickets": 37593,
+            "mean_predicted_probability": 0.005171233762271077,
+            "empirical_hit_rate": 0.004468917085627643
+          },
+          {
+            "bin": 7,
+            "tickets": 37593,
+            "mean_predicted_probability": 0.006602569343342555,
+            "empirical_hit_rate": 0.005559545660096294
+          },
+          {
+            "bin": 8,
+            "tickets": 37593,
+            "mean_predicted_probability": 0.008894893004797242,
+            "empirical_hit_rate": 0.008804830686563988
+          },
+          {
+            "bin": 9,
+            "tickets": 37593,
+            "mean_predicted_probability": 0.01615965901649292,
+            "empirical_hit_rate": 0.02072194291490437
+          }
+        ]
+      },
+      "3連複": {
+        "races": 1903,
+        "ticket_outcomes_evaluated": 62655,
+        "top1_hit_rate": 0.1350499211770888,
+        "uniform_random_ticket_top1_reference": 0.032249831093761734,
+        "top_k_hit_rate": {
+          "1": 0.1350499211770888,
+          "3": 0.324750394114556,
+          "5": 0.4624277456647399,
+          "10": 0.6726221755123489
+        },
+        "mean_realized_ticket_probability": 0.053890294871519966,
+        "mean_nll_real_ticket": 3.1033237836441954,
+        "uniform_mean_nll_reference": 3.4715182399497873,
+        "mean_ticket_brier": 0.030105629559013528,
+        "pooled_20bin_classwise_ece_raw": 0.006323506273265251,
+        "pooled_ece_bins_per_class": [
+          7,
+          7
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 6266,
+            "mean_predicted_probability": 0.006273229925119702,
+            "empirical_hit_rate": 0.0035110118097669966
+          },
+          {
+            "bin": 1,
+            "tickets": 6265,
+            "mean_predicted_probability": 0.01092326938532878,
+            "empirical_hit_rate": 0.007661612130885874
+          },
+          {
+            "bin": 2,
+            "tickets": 6266,
+            "mean_predicted_probability": 0.014681310734681778,
+            "empirical_hit_rate": 0.008298755186721992
+          },
+          {
+            "bin": 3,
+            "tickets": 6265,
+            "mean_predicted_probability": 0.01841380924896459,
+            "empirical_hit_rate": 0.014046288906624103
+          },
+          {
+            "bin": 4,
+            "tickets": 6265,
+            "mean_predicted_probability": 0.022445721453092198,
+            "empirical_hit_rate": 0.017557861133280128
+          },
+          {
+            "bin": 5,
+            "tickets": 6266,
+            "mean_predicted_probability": 0.027144080382906072,
+            "empirical_hit_rate": 0.02010852218321098
+          },
+          {
+            "bin": 6,
+            "tickets": 6265,
+            "mean_predicted_probability": 0.032683884615128715,
+            "empirical_hit_rate": 0.03144453312051077
+          },
+          {
+            "bin": 7,
+            "tickets": 6266,
+            "mean_predicted_probability": 0.039873670823314465,
+            "empirical_hit_rate": 0.036865624002553464
+          },
+          {
+            "bin": 8,
+            "tickets": 6265,
+            "mean_predicted_probability": 0.05059160299090379,
+            "empirical_hit_rate": 0.055227454110135674
+          },
+          {
+            "bin": 9,
+            "tickets": 6266,
+            "mean_predicted_probability": 0.08069349613281868,
+            "empirical_hit_rate": 0.10900095754867539
+          }
+        ]
+      },
+      "2車単": {
+        "races": 1903,
+        "ticket_outcomes_evaluated": 76690,
+        "top1_hit_rate": 0.13084603258013663,
+        "uniform_random_ticket_top1_reference": 0.02533343342591898,
+        "top_k_hit_rate": {
+          "1": 0.13084603258013663,
+          "3": 0.3179190751445087,
+          "5": 0.42038885969521805,
+          "10": 0.6121912769311614
+        },
+        "mean_realized_ticket_probability": 0.05025671916040384,
+        "mean_nll_real_ticket": 3.255196307215717,
+        "uniform_mean_nll_reference": 3.6874919690852828,
+        "mean_ticket_brier": 0.02385906941656007,
+        "pooled_20bin_classwise_ece_raw": 0.004124042982282318,
+        "pooled_ece_bins_per_class": [
+          7,
+          7
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 7669,
+            "mean_predicted_probability": 0.003562243401703211,
+            "empirical_hit_rate": 0.004172643108619116
+          },
+          {
+            "bin": 1,
+            "tickets": 7669,
+            "mean_predicted_probability": 0.007101031850106281,
+            "empirical_hit_rate": 0.0050854087886295475
+          },
+          {
+            "bin": 2,
+            "tickets": 7669,
+            "mean_predicted_probability": 0.0102540337318569,
+            "empirical_hit_rate": 0.007041335245794758
+          },
+          {
+            "bin": 3,
+            "tickets": 7669,
+            "mean_predicted_probability": 0.013524004611859132,
+            "empirical_hit_rate": 0.012778719520146042
+          },
+          {
+            "bin": 4,
+            "tickets": 7669,
+            "mean_predicted_probability": 0.017085939165134272,
+            "empirical_hit_rate": 0.014604250880166906
+          },
+          {
+            "bin": 5,
+            "tickets": 7669,
+            "mean_predicted_probability": 0.02125603339238877,
+            "empirical_hit_rate": 0.01747294301734255
+          },
+          {
+            "bin": 6,
+            "tickets": 7669,
+            "mean_predicted_probability": 0.026283086055668592,
+            "empirical_hit_rate": 0.01929847437736341
+          },
+          {
+            "bin": 7,
+            "tickets": 7669,
+            "mean_predicted_probability": 0.03289678040606333,
+            "empirical_hit_rate": 0.029078106663189465
+          },
+          {
+            "bin": 8,
+            "tickets": 7669,
+            "mean_predicted_probability": 0.043086513913742214,
+            "empirical_hit_rate": 0.04629025948624332
+          },
+          {
+            "bin": 9,
+            "tickets": 7669,
+            "mean_predicted_probability": 0.07309220333717034,
+            "empirical_hit_rate": 0.09231972877819794
+          }
+        ]
+      },
+      "2車複": {
+        "races": 1903,
+        "ticket_outcomes_evaluated": 38345,
+        "top1_hit_rate": 0.23857067787703626,
+        "uniform_random_ticket_top1_reference": 0.05066686685183796,
+        "top_k_hit_rate": {
+          "1": 0.23857067787703626,
+          "3": 0.4724119810825013,
+          "5": 0.6095638465580662,
+          "10": 0.8265895953757225
+        },
+        "mean_realized_ticket_probability": 0.09414165405817583,
+        "mean_nll_real_ticket": 2.5633765784903524,
+        "uniform_mean_nll_reference": 2.9943447885253365,
+        "mean_ticket_brier": 0.04503259524260958,
+        "pooled_20bin_classwise_ece_raw": 0.011206256504475405,
+        "pooled_ece_bins_per_class": [
+          8,
+          8
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 3835,
+            "mean_predicted_probability": 0.00850784866818115,
+            "empirical_hit_rate": 0.006258148631029987
+          },
+          {
+            "bin": 1,
+            "tickets": 3834,
+            "mean_predicted_probability": 0.01586909944874091,
+            "empirical_hit_rate": 0.009128847157016172
+          },
+          {
+            "bin": 2,
+            "tickets": 3835,
+            "mean_predicted_probability": 0.022313743538246573,
+            "empirical_hit_rate": 0.01564537157757497
+          },
+          {
+            "bin": 3,
+            "tickets": 3834,
+            "mean_predicted_probability": 0.029028471159956923,
+            "empirical_hit_rate": 0.02608242044861763
+          },
+          {
+            "bin": 4,
+            "tickets": 3834,
+            "mean_predicted_probability": 0.03633469410766129,
+            "empirical_hit_rate": 0.023213354199269693
+          },
+          {
+            "bin": 5,
+            "tickets": 3835,
+            "mean_predicted_probability": 0.04442416009334036,
+            "empirical_hit_rate": 0.029726205997392438
+          },
+          {
+            "bin": 6,
+            "tickets": 3834,
+            "mean_predicted_probability": 0.05402722650034099,
+            "empirical_hit_rate": 0.04538341158059468
+          },
+          {
+            "bin": 7,
+            "tickets": 3835,
+            "mean_predicted_probability": 0.06627480234598428,
+            "empirical_hit_rate": 0.06023468057366362
+          },
+          {
+            "bin": 8,
+            "tickets": 3834,
+            "mean_predicted_probability": 0.08461609079921387,
+            "empirical_hit_rate": 0.08998435054773082
+          },
+          {
+            "bin": 9,
+            "tickets": 3835,
+            "mean_predicted_probability": 0.13488023246011094,
+            "empirical_hit_rate": 0.19061277705345503
+          }
+        ]
+      }
+    },
+    "2024-02": {
+      "3連単": {
+        "races": 1790,
+        "ticket_outcomes_evaluated": 360030,
+        "top1_hit_rate": 0.04748603351955307,
+        "uniform_random_ticket_top1_reference": 0.005230114392125565,
+        "top_k_hit_rate": {
+          "1": 0.04748603351955307,
+          "3": 0.11731843575418995,
+          "5": 0.17039106145251395,
+          "10": 0.2798882681564246
+        },
+        "mean_realized_ticket_probability": 0.011852374941429442,
+        "mean_nll_real_ticket": 4.7286922426321505,
+        "uniform_mean_nll_reference": 5.285721292240529,
+        "mean_ticket_brier": 0.005153015026313878,
+        "pooled_20bin_classwise_ece_raw": 2.6500011452052855e-05,
+        "pooled_ece_bins_per_class": [
+          3,
+          3
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 36003,
+            "mean_predicted_probability": 0.0005973892470568488,
+            "empirical_hit_rate": 0.0002499791684026331
+          },
+          {
+            "bin": 1,
+            "tickets": 36003,
+            "mean_predicted_probability": 0.0012309236311647685,
+            "empirical_hit_rate": 0.00088881482098714
+          },
+          {
+            "bin": 2,
+            "tickets": 36003,
+            "mean_predicted_probability": 0.0018377843981443038,
+            "empirical_hit_rate": 0.0012498958420131656
+          },
+          {
+            "bin": 3,
+            "tickets": 36003,
+            "mean_predicted_probability": 0.002479799216660557,
+            "empirical_hit_rate": 0.0015554259367274949
+          },
+          {
+            "bin": 4,
+            "tickets": 36003,
+            "mean_predicted_probability": 0.003193295198381062,
+            "empirical_hit_rate": 0.002249812515623698
+          },
+          {
+            "bin": 5,
+            "tickets": 36003,
+            "mean_predicted_probability": 0.0040287552759404165,
+            "empirical_hit_rate": 0.003416381968169319
+          },
+          {
+            "bin": 6,
+            "tickets": 36003,
+            "mean_predicted_probability": 0.005073593967623866,
+            "empirical_hit_rate": 0.004249645862844763
+          },
+          {
+            "bin": 7,
+            "tickets": 36003,
+            "mean_predicted_probability": 0.006493203686381476,
+            "empirical_hit_rate": 0.0059717245785073465
+          },
+          {
+            "bin": 8,
+            "tickets": 36003,
+            "mean_predicted_probability": 0.008770549229473042,
+            "empirical_hit_rate": 0.008665944504624615
+          },
+          {
+            "bin": 9,
+            "tickets": 36003,
+            "mean_predicted_probability": 0.016012785198141803,
+            "empirical_hit_rate": 0.021220453851067966
+          }
+        ]
+      },
+      "3連複": {
+        "races": 1790,
+        "ticket_outcomes_evaluated": 60005,
+        "top1_hit_rate": 0.13631284916201117,
+        "uniform_random_ticket_top1_reference": 0.031380686352753394,
+        "top_k_hit_rate": {
+          "1": 0.13631284916201117,
+          "3": 0.32625698324022345,
+          "5": 0.4620111731843575,
+          "10": 0.6854748603351956
+        },
+        "mean_realized_ticket_probability": 0.05421315261442615,
+        "mean_nll_real_ticket": 3.0867111412983017,
+        "uniform_mean_nll_reference": 3.493961823012476,
+        "mean_ticket_brier": 0.029329017218258664,
+        "pooled_20bin_classwise_ece_raw": 0.006228696641067826,
+        "pooled_ece_bins_per_class": [
+          6,
+          6
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 6001,
+            "mean_predicted_probability": 0.00595827627556655,
+            "empirical_hit_rate": 0.0016663889351774704
+          },
+          {
+            "bin": 1,
+            "tickets": 6000,
+            "mean_predicted_probability": 0.010409567121437998,
+            "empirical_hit_rate": 0.005333333333333333
+          },
+          {
+            "bin": 2,
+            "tickets": 6001,
+            "mean_predicted_probability": 0.014120522517904046,
+            "empirical_hit_rate": 0.00783202799533411
+          },
+          {
+            "bin": 3,
+            "tickets": 6000,
+            "mean_predicted_probability": 0.017851389009424044,
+            "empirical_hit_rate": 0.0125
+          },
+          {
+            "bin": 4,
+            "tickets": 6000,
+            "mean_predicted_probability": 0.021855724288440407,
+            "empirical_hit_rate": 0.0165
+          },
+          {
+            "bin": 5,
+            "tickets": 6001,
+            "mean_predicted_probability": 0.026482007682213315,
+            "empirical_hit_rate": 0.02249625062489585
+          },
+          {
+            "bin": 6,
+            "tickets": 6000,
+            "mean_predicted_probability": 0.032082048967280626,
+            "empirical_hit_rate": 0.025666666666666667
+          },
+          {
+            "bin": 7,
+            "tickets": 6001,
+            "mean_predicted_probability": 0.03938766549279321,
+            "empirical_hit_rate": 0.042659556740543246
+          },
+          {
+            "bin": 8,
+            "tickets": 6000,
+            "mean_predicted_probability": 0.05019345421971777,
+            "empirical_hit_rate": 0.058833333333333335
+          },
+          {
+            "bin": 9,
+            "tickets": 6001,
+            "mean_predicted_probability": 0.07996502550897579,
+            "empirical_hit_rate": 0.1048158640226629
+          }
+        ]
+      },
+      "2車単": {
+        "races": 1790,
+        "ticket_outcomes_evaluated": 72994,
+        "top1_hit_rate": 0.14972067039106146,
+        "uniform_random_ticket_top1_reference": 0.024949454642192073,
+        "top_k_hit_rate": {
+          "1": 0.14972067039106146,
+          "3": 0.3217877094972067,
+          "5": 0.44078212290502794,
+          "10": 0.6391061452513966
+        },
+        "mean_realized_ticket_probability": 0.05240481814035459,
+        "mean_nll_real_ticket": 3.201255802843999,
+        "uniform_mean_nll_reference": 3.7009816121454744,
+        "mean_ticket_brier": 0.02340848984730899,
+        "pooled_20bin_classwise_ece_raw": 0.005016297965605872,
+        "pooled_ece_bins_per_class": [
+          7,
+          7
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 7300,
+            "mean_predicted_probability": 0.00327231077277607,
+            "empirical_hit_rate": 0.0019178082191780822
+          },
+          {
+            "bin": 1,
+            "tickets": 7299,
+            "mean_predicted_probability": 0.0066472741708948745,
+            "empirical_hit_rate": 0.005069187559939718
+          },
+          {
+            "bin": 2,
+            "tickets": 7299,
+            "mean_predicted_probability": 0.00989967196010226,
+            "empirical_hit_rate": 0.006439238251815317
+          },
+          {
+            "bin": 3,
+            "tickets": 7300,
+            "mean_predicted_probability": 0.013184245977432976,
+            "empirical_hit_rate": 0.00904109589041096
+          },
+          {
+            "bin": 4,
+            "tickets": 7299,
+            "mean_predicted_probability": 0.016748622865955465,
+            "empirical_hit_rate": 0.012330456226880395
+          },
+          {
+            "bin": 5,
+            "tickets": 7299,
+            "mean_predicted_probability": 0.02085632630524677,
+            "empirical_hit_rate": 0.015481572818194273
+          },
+          {
+            "bin": 6,
+            "tickets": 7300,
+            "mean_predicted_probability": 0.025957658862670614,
+            "empirical_hit_rate": 0.023287671232876714
+          },
+          {
+            "bin": 7,
+            "tickets": 7299,
+            "mean_predicted_probability": 0.03257792740298291,
+            "empirical_hit_rate": 0.02877106452938759
+          },
+          {
+            "bin": 8,
+            "tickets": 7299,
+            "mean_predicted_probability": 0.042645462721692194,
+            "empirical_hit_rate": 0.044252637347581864
+          },
+          {
+            "bin": 9,
+            "tickets": 7300,
+            "mean_predicted_probability": 0.07343370105413996,
+            "empirical_hit_rate": 0.09863013698630137
+          }
+        ]
+      },
+      "2車複": {
+        "races": 1790,
+        "ticket_outcomes_evaluated": 36497,
+        "top1_hit_rate": 0.2508379888268156,
+        "uniform_random_ticket_top1_reference": 0.049898909284384146,
+        "top_k_hit_rate": {
+          "1": 0.2508379888268156,
+          "3": 0.4888268156424581,
+          "5": 0.6340782122905028,
+          "10": 0.8379888268156425
+        },
+        "mean_realized_ticket_probability": 0.09695453073353942,
+        "mean_nll_real_ticket": 2.5300708821106603,
+        "uniform_mean_nll_reference": 3.007834431585528,
+        "mean_ticket_brier": 0.044142605030976105,
+        "pooled_20bin_classwise_ece_raw": 0.011894136227860851,
+        "pooled_ece_bins_per_class": [
+          9,
+          9
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 3650,
+            "mean_predicted_probability": 0.007719234734512097,
+            "empirical_hit_rate": 0.0032876712328767125
+          },
+          {
+            "bin": 1,
+            "tickets": 3650,
+            "mean_predicted_probability": 0.014857000846796066,
+            "empirical_hit_rate": 0.010136986301369864
+          },
+          {
+            "bin": 2,
+            "tickets": 3649,
+            "mean_predicted_probability": 0.02136570243076976,
+            "empirical_hit_rate": 0.012332145793368046
+          },
+          {
+            "bin": 3,
+            "tickets": 3650,
+            "mean_predicted_probability": 0.02803732315833231,
+            "empirical_hit_rate": 0.018356164383561645
+          },
+          {
+            "bin": 4,
+            "tickets": 3649,
+            "mean_predicted_probability": 0.03533560816970772,
+            "empirical_hit_rate": 0.021923814743765414
+          },
+          {
+            "bin": 5,
+            "tickets": 3650,
+            "mean_predicted_probability": 0.043380466241697,
+            "empirical_hit_rate": 0.0410958904109589
+          },
+          {
+            "bin": 6,
+            "tickets": 3650,
+            "mean_predicted_probability": 0.05324000268647673,
+            "empirical_hit_rate": 0.03616438356164384
+          },
+          {
+            "bin": 7,
+            "tickets": 3649,
+            "mean_predicted_probability": 0.06582084309643467,
+            "empirical_hit_rate": 0.062482872019731434
+          },
+          {
+            "bin": 8,
+            "tickets": 3650,
+            "mean_predicted_probability": 0.08455985823491402,
+            "empirical_hit_rate": 0.08986301369863013
+          },
+          {
+            "bin": 9,
+            "tickets": 3650,
+            "mean_predicted_probability": 0.13612848701781083,
+            "empirical_hit_rate": 0.19479452054794522
+          }
+        ]
+      }
+    },
+    "2024-03": {
+      "3連単": {
+        "races": 1895,
+        "ticket_outcomes_evaluated": 382080,
+        "top1_hit_rate": 0.04432717678100264,
+        "uniform_random_ticket_top1_reference": 0.0051947480839301405,
+        "top_k_hit_rate": {
+          "1": 0.04432717678100264,
+          "3": 0.11503957783641161,
+          "5": 0.16781002638522427,
+          "10": 0.2812664907651715
+        },
+        "mean_realized_ticket_probability": 0.012064686534998125,
+        "mean_nll_real_ticket": 4.724725518687893,
+        "uniform_mean_nll_reference": 5.289629347652608,
+        "mean_ticket_brier": 0.005114843660051446,
+        "pooled_20bin_classwise_ece_raw": 5.991481443406343e-05,
+        "pooled_ece_bins_per_class": [
+          2,
+          2
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 38208,
+            "mean_predicted_probability": 0.0005817033998024424,
+            "empirical_hit_rate": 0.0003402428810720268
+          },
+          {
+            "bin": 1,
+            "tickets": 38208,
+            "mean_predicted_probability": 0.0011980257192402372,
+            "empirical_hit_rate": 0.0007590033500837521
+          },
+          {
+            "bin": 2,
+            "tickets": 38208,
+            "mean_predicted_probability": 0.001806449422936943,
+            "empirical_hit_rate": 0.0015180067001675042
+          },
+          {
+            "bin": 3,
+            "tickets": 38208,
+            "mean_predicted_probability": 0.0024469870537713913,
+            "empirical_hit_rate": 0.001858249581239531
+          },
+          {
+            "bin": 4,
+            "tickets": 38208,
+            "mean_predicted_probability": 0.0031669016273735816,
+            "empirical_hit_rate": 0.0018320770519262982
+          },
+          {
+            "bin": 5,
+            "tickets": 38208,
+            "mean_predicted_probability": 0.0040138803808145804,
+            "empirical_hit_rate": 0.003062185929648241
+          },
+          {
+            "bin": 6,
+            "tickets": 38208,
+            "mean_predicted_probability": 0.005057181415996824,
+            "empirical_hit_rate": 0.0036118090452261307
+          },
+          {
+            "bin": 7,
+            "tickets": 38208,
+            "mean_predicted_probability": 0.006479460042246917,
+            "empirical_hit_rate": 0.006124371859296482
+          },
+          {
+            "bin": 8,
+            "tickets": 38208,
+            "mean_predicted_probability": 0.008745323120590152,
+            "empirical_hit_rate": 0.009265075376884422
+          },
+          {
+            "bin": 9,
+            "tickets": 38208,
+            "mean_predicted_probability": 0.016101030865803147,
+            "empirical_hit_rate": 0.021225921273031825
+          }
+        ]
+      },
+      "3連複": {
+        "races": 1895,
+        "ticket_outcomes_evaluated": 63680,
+        "top1_hit_rate": 0.13984168865435356,
+        "uniform_random_ticket_top1_reference": 0.031168488503580855,
+        "top_k_hit_rate": {
+          "1": 0.13984168865435356,
+          "3": 0.3366754617414248,
+          "5": 0.47440633245382585,
+          "10": 0.6923482849604221
+        },
+        "mean_realized_ticket_probability": 0.05534121361409142,
+        "mean_nll_real_ticket": 3.0725370296438546,
+        "uniform_mean_nll_reference": 3.497869878424554,
+        "mean_ticket_brier": 0.029041919901586603,
+        "pooled_20bin_classwise_ece_raw": 0.007029518006682737,
+        "pooled_ece_bins_per_class": [
+          7,
+          7
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 6368,
+            "mean_predicted_probability": 0.005794853402034875,
+            "empirical_hit_rate": 0.002512562814070352
+          },
+          {
+            "bin": 1,
+            "tickets": 6368,
+            "mean_predicted_probability": 0.010157182102127368,
+            "empirical_hit_rate": 0.0058103015075376884
+          },
+          {
+            "bin": 2,
+            "tickets": 6368,
+            "mean_predicted_probability": 0.01380028677879363,
+            "empirical_hit_rate": 0.007380653266331658
+          },
+          {
+            "bin": 3,
+            "tickets": 6368,
+            "mean_predicted_probability": 0.017537549211381773,
+            "empirical_hit_rate": 0.011149497487437186
+          },
+          {
+            "bin": 4,
+            "tickets": 6368,
+            "mean_predicted_probability": 0.02161730176452132,
+            "empirical_hit_rate": 0.016331658291457288
+          },
+          {
+            "bin": 5,
+            "tickets": 6368,
+            "mean_predicted_probability": 0.02636148164137569,
+            "empirical_hit_rate": 0.02135678391959799
+          },
+          {
+            "bin": 6,
+            "tickets": 6368,
+            "mean_predicted_probability": 0.031940282297362205,
+            "empirical_hit_rate": 0.02386934673366834
+          },
+          {
+            "bin": 7,
+            "tickets": 6368,
+            "mean_predicted_probability": 0.03924157223720633,
+            "empirical_hit_rate": 0.03972989949748744
+          },
+          {
+            "bin": 8,
+            "tickets": 6368,
+            "mean_predicted_probability": 0.050296933391727576,
+            "empirical_hit_rate": 0.05684673366834171
+          },
+          {
+            "bin": 9,
+            "tickets": 6368,
+            "mean_predicted_probability": 0.0808342154649265,
+            "empirical_hit_rate": 0.11259422110552764
+          }
+        ]
+      },
+      "2車単": {
+        "races": 1895,
+        "ticket_outcomes_evaluated": 77410,
+        "top1_hit_rate": 0.14511873350923482,
+        "uniform_random_ticket_top1_reference": 0.024869958537504715,
+        "top_k_hit_rate": {
+          "1": 0.14511873350923482,
+          "3": 0.33403693931398415,
+          "5": 0.45065963060686015,
+          "10": 0.6432717678100264
+        },
+        "mean_realized_ticket_probability": 0.05293723947570757,
+        "mean_nll_real_ticket": 3.1936208882511097,
+        "uniform_mean_nll_reference": 3.7033012382645047,
+        "mean_ticket_brier": 0.023298925051742594,
+        "pooled_20bin_classwise_ece_raw": 0.004949380322832637,
+        "pooled_ece_bins_per_class": [
+          6,
+          6
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 7741,
+            "mean_predicted_probability": 0.0032258358949583082,
+            "empirical_hit_rate": 0.002066916419067304
+          },
+          {
+            "bin": 1,
+            "tickets": 7741,
+            "mean_predicted_probability": 0.006529086046899633,
+            "empirical_hit_rate": 0.004650561942901434
+          },
+          {
+            "bin": 2,
+            "tickets": 7741,
+            "mean_predicted_probability": 0.009749719512588058,
+            "empirical_hit_rate": 0.006329931533393619
+          },
+          {
+            "bin": 3,
+            "tickets": 7741,
+            "mean_predicted_probability": 0.01306131477747357,
+            "empirical_hit_rate": 0.00813848340007751
+          },
+          {
+            "bin": 4,
+            "tickets": 7741,
+            "mean_predicted_probability": 0.016699407492329666,
+            "empirical_hit_rate": 0.011884769409636998
+          },
+          {
+            "bin": 5,
+            "tickets": 7741,
+            "mean_predicted_probability": 0.020846802490651156,
+            "empirical_hit_rate": 0.01550187314300478
+          },
+          {
+            "bin": 6,
+            "tickets": 7741,
+            "mean_predicted_probability": 0.02583207183561504,
+            "empirical_hit_rate": 0.021960986952590106
+          },
+          {
+            "bin": 7,
+            "tickets": 7741,
+            "mean_predicted_probability": 0.032371408460627006,
+            "empirical_hit_rate": 0.031778839943159796
+          },
+          {
+            "bin": 8,
+            "tickets": 7741,
+            "mean_predicted_probability": 0.04266972993229792,
+            "empirical_hit_rate": 0.04405115618137192
+          },
+          {
+            "bin": 9,
+            "tickets": 7741,
+            "mean_predicted_probability": 0.07381503693984347,
+            "empirical_hit_rate": 0.09843689445808035
+          }
+        ]
+      },
+      "2車複": {
+        "races": 1895,
+        "ticket_outcomes_evaluated": 38705,
+        "top1_hit_rate": 0.24854881266490766,
+        "uniform_random_ticket_top1_reference": 0.04973991707500943,
+        "top_k_hit_rate": {
+          "1": 0.24854881266490766,
+          "3": 0.49445910290237466,
+          "5": 0.6480211081794195,
+          "10": 0.8527704485488127
+        },
+        "mean_realized_ticket_probability": 0.09823786602818653,
+        "mean_nll_real_ticket": 2.519673241810686,
+        "uniform_mean_nll_reference": 3.0101540577045576,
+        "mean_ticket_brier": 0.043877163611446966,
+        "pooled_20bin_classwise_ece_raw": 0.011685384803989625,
+        "pooled_ece_bins_per_class": [
+          9,
+          9
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 3871,
+            "mean_predicted_probability": 0.007694743838620809,
+            "empirical_hit_rate": 0.0049082924308964096
+          },
+          {
+            "bin": 1,
+            "tickets": 3870,
+            "mean_predicted_probability": 0.01448637587681046,
+            "empirical_hit_rate": 0.008268733850129198
+          },
+          {
+            "bin": 2,
+            "tickets": 3871,
+            "mean_predicted_probability": 0.02086138911537402,
+            "empirical_hit_rate": 0.01188323430638078
+          },
+          {
+            "bin": 3,
+            "tickets": 3870,
+            "mean_predicted_probability": 0.02761461335575996,
+            "empirical_hit_rate": 0.01627906976744186
+          },
+          {
+            "bin": 4,
+            "tickets": 3870,
+            "mean_predicted_probability": 0.034951578533149764,
+            "empirical_hit_rate": 0.022739018087855296
+          },
+          {
+            "bin": 5,
+            "tickets": 3871,
+            "mean_predicted_probability": 0.04327239476645507,
+            "empirical_hit_rate": 0.030483079307672436
+          },
+          {
+            "bin": 6,
+            "tickets": 3870,
+            "mean_predicted_probability": 0.05305826863571954,
+            "empirical_hit_rate": 0.04392764857881137
+          },
+          {
+            "bin": 7,
+            "tickets": 3871,
+            "mean_predicted_probability": 0.06563030581166414,
+            "empirical_hit_rate": 0.06561611986566779
+          },
+          {
+            "bin": 8,
+            "tickets": 3870,
+            "mean_predicted_probability": 0.08463110729549891,
+            "empirical_hit_rate": 0.09018087855297158
+          },
+          {
+            "bin": 9,
+            "tickets": 3871,
+            "mean_predicted_probability": 0.13739228449755467,
+            "empirical_hit_rate": 0.19529837251356238
+          }
+        ]
+      }
+    }
+  },
+  "by_class": {
+    "A1_A2": {
+      "3連単": {
+        "races": 2890,
+        "ticket_outcomes_evaluated": 591660,
+        "top1_hit_rate": 0.03633217993079585,
+        "uniform_random_ticket_top1_reference": 0.004999999999999998,
+        "top_k_hit_rate": {
+          "1": 0.03633217993079585,
+          "3": 0.10519031141868512,
+          "5": 0.15674740484429064,
+          "10": 0.25813148788927337
+        },
+        "mean_realized_ticket_probability": 0.011061720609341512,
+        "mean_nll_real_ticket": 4.796659850741249,
+        "uniform_mean_nll_reference": 5.3127675353550075,
+        "mean_ticket_brier": 0.004934404057152495,
+        "pooled_20bin_classwise_ece_raw": 2.705491486750248e-05,
+        "pooled_ece_bins_per_class": [
+          3,
+          3
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 59166,
+            "mean_predicted_probability": 0.0006039570480085509,
+            "empirical_hit_rate": 0.00047324476895514316
+          },
+          {
+            "bin": 1,
+            "tickets": 59166,
+            "mean_predicted_probability": 0.0012403601363424415,
+            "empirical_hit_rate": 0.001030997532366562
+          },
+          {
+            "bin": 2,
+            "tickets": 59166,
+            "mean_predicted_probability": 0.001842252966628964,
+            "empirical_hit_rate": 0.0013690295101916642
+          },
+          {
+            "bin": 3,
+            "tickets": 59166,
+            "mean_predicted_probability": 0.0024723928013817504,
+            "empirical_hit_rate": 0.001808471081364297
+          },
+          {
+            "bin": 4,
+            "tickets": 59166,
+            "mean_predicted_probability": 0.003172732064391982,
+            "empirical_hit_rate": 0.0021972078558631647
+          },
+          {
+            "bin": 5,
+            "tickets": 59166,
+            "mean_predicted_probability": 0.004000094433375296,
+            "empirical_hit_rate": 0.0032451069871209815
+          },
+          {
+            "bin": 6,
+            "tickets": 59166,
+            "mean_predicted_probability": 0.005027704905261614,
+            "empirical_hit_rate": 0.004056383733901227
+          },
+          {
+            "bin": 7,
+            "tickets": 59166,
+            "mean_predicted_probability": 0.00641272605513425,
+            "empirical_hit_rate": 0.0059831660075043095
+          },
+          {
+            "bin": 8,
+            "tickets": 59166,
+            "mean_predicted_probability": 0.008614971404327286,
+            "empirical_hit_rate": 0.008873339417908934
+          },
+          {
+            "bin": 9,
+            "tickets": 59166,
+            "mean_predicted_probability": 0.015458428980875143,
+            "empirical_hit_rate": 0.019808673900550994
+          }
+        ]
+      },
+      "3連複": {
+        "races": 2890,
+        "ticket_outcomes_evaluated": 98610,
+        "top1_hit_rate": 0.13460207612456748,
+        "uniform_random_ticket_top1_reference": 0.030000000000000006,
+        "top_k_hit_rate": {
+          "1": 0.13460207612456748,
+          "3": 0.3193771626297578,
+          "5": 0.4467128027681661,
+          "10": 0.6636678200692041
+        },
+        "mean_realized_ticket_probability": 0.052408973488218734,
+        "mean_nll_real_ticket": 3.1272915565723194,
+        "uniform_mean_nll_reference": 3.5210080661269543,
+        "mean_ticket_brier": 0.02816179678126159,
+        "pooled_20bin_classwise_ece_raw": 0.005953029793319416,
+        "pooled_ece_bins_per_class": [
+          6,
+          6
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 9861,
+            "mean_predicted_probability": 0.005939801567373981,
+            "empirical_hit_rate": 0.003447926173816043
+          },
+          {
+            "bin": 1,
+            "tickets": 9861,
+            "mean_predicted_probability": 0.01035056830121854,
+            "empirical_hit_rate": 0.006287394787546902
+          },
+          {
+            "bin": 2,
+            "tickets": 9861,
+            "mean_predicted_probability": 0.014002966534512504,
+            "empirical_hit_rate": 0.008416996247845046
+          },
+          {
+            "bin": 3,
+            "tickets": 9861,
+            "mean_predicted_probability": 0.017683225722971454,
+            "empirical_hit_rate": 0.011966332015008619
+          },
+          {
+            "bin": 4,
+            "tickets": 9861,
+            "mean_predicted_probability": 0.021643329284072685,
+            "empirical_hit_rate": 0.016022715748909847
+          },
+          {
+            "bin": 5,
+            "tickets": 9861,
+            "mean_predicted_probability": 0.02621611252069656,
+            "empirical_hit_rate": 0.023527025656627117
+          },
+          {
+            "bin": 6,
+            "tickets": 9861,
+            "mean_predicted_probability": 0.0316718422760648,
+            "empirical_hit_rate": 0.026062265490315383
+          },
+          {
+            "bin": 7,
+            "tickets": 9861,
+            "mean_predicted_probability": 0.03877161755697138,
+            "empirical_hit_rate": 0.038434235878714126
+          },
+          {
+            "bin": 8,
+            "tickets": 9861,
+            "mean_predicted_probability": 0.049285398018352876,
+            "empirical_hit_rate": 0.05415272284758138
+          },
+          {
+            "bin": 9,
+            "tickets": 9861,
+            "mean_predicted_probability": 0.07750886299212886,
+            "empirical_hit_rate": 0.10475610992799919
+          }
+        ]
+      },
+      "2車単": {
+        "races": 2890,
+        "ticket_outcomes_evaluated": 119320,
+        "top1_hit_rate": 0.13044982698961938,
+        "uniform_random_ticket_top1_reference": 0.024417531718569776,
+        "top_k_hit_rate": {
+          "1": 0.13044982698961938,
+          "3": 0.3124567474048443,
+          "5": 0.4186851211072664,
+          "10": 0.614878892733564
+        },
+        "mean_realized_ticket_probability": 0.04942922919811905,
+        "mean_nll_real_ticket": 3.2578211292586805,
+        "uniform_mean_nll_reference": 3.7170772067356497,
+        "mean_ticket_brier": 0.0230250199771377,
+        "pooled_20bin_classwise_ece_raw": 0.004097811996054236,
+        "pooled_ece_bins_per_class": [
+          6,
+          6
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 11932,
+            "mean_predicted_probability": 0.0033646540831792355,
+            "empirical_hit_rate": 0.0031009051290647
+          },
+          {
+            "bin": 1,
+            "tickets": 11932,
+            "mean_predicted_probability": 0.006772918518660964,
+            "empirical_hit_rate": 0.005028494803888703
+          },
+          {
+            "bin": 2,
+            "tickets": 11932,
+            "mean_predicted_probability": 0.009963652053283421,
+            "empirical_hit_rate": 0.007207509218907141
+          },
+          {
+            "bin": 3,
+            "tickets": 11932,
+            "mean_predicted_probability": 0.013171061286040656,
+            "empirical_hit_rate": 0.01039222259470332
+          },
+          {
+            "bin": 4,
+            "tickets": 11932,
+            "mean_predicted_probability": 0.01670076193167987,
+            "empirical_hit_rate": 0.011481729802212537
+          },
+          {
+            "bin": 5,
+            "tickets": 11932,
+            "mean_predicted_probability": 0.020786753229594435,
+            "empirical_hit_rate": 0.01609118337244385
+          },
+          {
+            "bin": 6,
+            "tickets": 11932,
+            "mean_predicted_probability": 0.025684856248347498,
+            "empirical_hit_rate": 0.022376801877304727
+          },
+          {
+            "bin": 7,
+            "tickets": 11932,
+            "mean_predicted_probability": 0.03216461963274245,
+            "empirical_hit_rate": 0.031009051290647
+          },
+          {
+            "bin": 8,
+            "tickets": 11932,
+            "mean_predicted_probability": 0.04216643244017734,
+            "empirical_hit_rate": 0.04349648005363728
+          },
+          {
+            "bin": 9,
+            "tickets": 11932,
+            "mean_predicted_probability": 0.07143012363026666,
+            "empirical_hit_rate": 0.09202145491116326
+          }
+        ]
+      },
+      "2車複": {
+        "races": 2890,
+        "ticket_outcomes_evaluated": 59660,
+        "top1_hit_rate": 0.23114186851211072,
+        "uniform_random_ticket_top1_reference": 0.04883506343713955,
+        "top_k_hit_rate": {
+          "1": 0.23114186851211072,
+          "3": 0.46332179930795847,
+          "5": 0.6128027681660899,
+          "10": 0.831833910034602
+        },
+        "mean_realized_ticket_probability": 0.09286206837463433,
+        "mean_nll_real_ticket": 2.574262413642585,
+        "uniform_mean_nll_reference": 3.0239300261757043,
+        "mean_ticket_brier": 0.04351767951983061,
+        "pooled_20bin_classwise_ece_raw": 0.009663815714193462,
+        "pooled_ece_bins_per_class": [
+          9,
+          9
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 5966,
+            "mean_predicted_probability": 0.0079521137446299,
+            "empirical_hit_rate": 0.005028494803888703
+          },
+          {
+            "bin": 1,
+            "tickets": 5966,
+            "mean_predicted_probability": 0.0150220362269411,
+            "empirical_hit_rate": 0.009554140127388535
+          },
+          {
+            "bin": 2,
+            "tickets": 5966,
+            "mean_predicted_probability": 0.021517715738765174,
+            "empirical_hit_rate": 0.013241702983573583
+          },
+          {
+            "bin": 3,
+            "tickets": 5966,
+            "mean_predicted_probability": 0.02801633150934849,
+            "empirical_hit_rate": 0.019946362722091854
+          },
+          {
+            "bin": 4,
+            "tickets": 5966,
+            "mean_predicted_probability": 0.03520198667413677,
+            "empirical_hit_rate": 0.022795843110962118
+          },
+          {
+            "bin": 5,
+            "tickets": 5966,
+            "mean_predicted_probability": 0.043168855110072304,
+            "empirical_hit_rate": 0.035534696614146835
+          },
+          {
+            "bin": 6,
+            "tickets": 5966,
+            "mean_predicted_probability": 0.052667042137517134,
+            "empirical_hit_rate": 0.0410660408984244
+          },
+          {
+            "bin": 7,
+            "tickets": 5966,
+            "mean_predicted_probability": 0.06486634337640355,
+            "empirical_hit_rate": 0.06520281595709018
+          },
+          {
+            "bin": 8,
+            "tickets": 5966,
+            "mean_predicted_probability": 0.08322414897463509,
+            "empirical_hit_rate": 0.09084813945692256
+          },
+          {
+            "bin": 9,
+            "tickets": 5966,
+            "mean_predicted_probability": 0.1327750926154955,
+            "empirical_hit_rate": 0.18119342943345626
+          }
+        ]
+      }
+    },
+    "A3": {
+      "3連単": {
+        "races": 1383,
+        "ticket_outcomes_evaluated": 264420,
+        "top1_hit_rate": 0.05784526391901663,
+        "uniform_random_ticket_top1_reference": 0.00576644974692697,
+        "top_k_hit_rate": {
+          "1": 0.05784526391901663,
+          "3": 0.14172089660159073,
+          "5": 0.21836587129428778,
+          "10": 0.3362255965292842
+        },
+        "mean_realized_ticket_probability": 0.014872527175186109,
+        "mean_nll_real_ticket": 4.531675001121181,
+        "uniform_mean_nll_reference": 5.216280949351223,
+        "mean_ticket_brier": 0.0056540035731970474,
+        "pooled_20bin_classwise_ece_raw": 7.735983221077032e-05,
+        "pooled_ece_bins_per_class": [
+          4,
+          4
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 26442,
+            "mean_predicted_probability": 0.0005040759884891348,
+            "empirical_hit_rate": 0.00018909310944709176
+          },
+          {
+            "bin": 1,
+            "tickets": 26442,
+            "mean_predicted_probability": 0.0010233844465783238,
+            "empirical_hit_rate": 0.0007941910596777854
+          },
+          {
+            "bin": 2,
+            "tickets": 26442,
+            "mean_predicted_probability": 0.0015691704203793946,
+            "empirical_hit_rate": 0.000869828303456622
+          },
+          {
+            "bin": 3,
+            "tickets": 26442,
+            "mean_predicted_probability": 0.0021987818164902946,
+            "empirical_hit_rate": 0.0014749262536873156
+          },
+          {
+            "bin": 4,
+            "tickets": 26442,
+            "mean_predicted_probability": 0.0029519224053444243,
+            "empirical_hit_rate": 0.0019287497163603359
+          },
+          {
+            "bin": 5,
+            "tickets": 26442,
+            "mean_predicted_probability": 0.0038769935487329497,
+            "empirical_hit_rate": 0.0024582104228121925
+          },
+          {
+            "bin": 6,
+            "tickets": 26442,
+            "mean_predicted_probability": 0.00508170546819017,
+            "empirical_hit_rate": 0.0036684063232735797
+          },
+          {
+            "bin": 7,
+            "tickets": 26442,
+            "mean_predicted_probability": 0.006790051026416162,
+            "empirical_hit_rate": 0.005672793283412752
+          },
+          {
+            "bin": 8,
+            "tickets": 26442,
+            "mean_predicted_probability": 0.0095935982124187,
+            "empirical_hit_rate": 0.009379018228575751
+          },
+          {
+            "bin": 9,
+            "tickets": 26442,
+            "mean_predicted_probability": 0.018713470740026023,
+            "empirical_hit_rate": 0.025867937372362152
+          }
+        ]
+      },
+      "3連複": {
+        "races": 1383,
+        "ticket_outcomes_evaluated": 44070,
+        "top1_hit_rate": 0.14895155459146783,
+        "uniform_random_ticket_top1_reference": 0.03459869848156183,
+        "top_k_hit_rate": {
+          "1": 0.14895155459146783,
+          "3": 0.37310195227765725,
+          "5": 0.527114967462039,
+          "10": 0.7519884309472162
+        },
+        "mean_realized_ticket_probability": 0.06316591023176839,
+        "mean_nll_real_ticket": 2.9444385633789207,
+        "uniform_mean_nll_reference": 3.4245214801231687,
+        "mean_ticket_brier": 0.03182136831120319,
+        "pooled_20bin_classwise_ece_raw": 0.007858669724455024,
+        "pooled_ece_bins_per_class": [
+          7,
+          7
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 4407,
+            "mean_predicted_probability": 0.00502191289033236,
+            "empirical_hit_rate": 0.0011345586566825505
+          },
+          {
+            "bin": 1,
+            "tickets": 4407,
+            "mean_predicted_probability": 0.009061310137163636,
+            "empirical_hit_rate": 0.0038574994327206717
+          },
+          {
+            "bin": 2,
+            "tickets": 4407,
+            "mean_predicted_probability": 0.012728947660942428,
+            "empirical_hit_rate": 0.004765146358066712
+          },
+          {
+            "bin": 3,
+            "tickets": 4407,
+            "mean_predicted_probability": 0.01669262555041366,
+            "empirical_hit_rate": 0.010891763104152484
+          },
+          {
+            "bin": 4,
+            "tickets": 4407,
+            "mean_predicted_probability": 0.021061174541699944,
+            "empirical_hit_rate": 0.015429997730882687
+          },
+          {
+            "bin": 5,
+            "tickets": 4407,
+            "mean_predicted_probability": 0.026354287891593716,
+            "empirical_hit_rate": 0.018833673700930337
+          },
+          {
+            "bin": 6,
+            "tickets": 4407,
+            "mean_predicted_probability": 0.033020185543767795,
+            "empirical_hit_rate": 0.0270024960290447
+          },
+          {
+            "bin": 7,
+            "tickets": 4407,
+            "mean_predicted_probability": 0.041974227751621594,
+            "empirical_hit_rate": 0.04288631722260041
+          },
+          {
+            "bin": 8,
+            "tickets": 4407,
+            "mean_predicted_probability": 0.05561177434615376,
+            "empirical_hit_rate": 0.06421601996823235
+          },
+          {
+            "bin": 9,
+            "tickets": 4407,
+            "mean_predicted_probability": 0.09229247812470455,
+            "empirical_hit_rate": 0.12480145223508056
+          }
+        ]
+      },
+      "2車単": {
+        "races": 1383,
+        "ticket_outcomes_evaluated": 54498,
+        "top1_hit_rate": 0.1822125813449024,
+        "uniform_random_ticket_top1_reference": 0.026247288503253793,
+        "top_k_hit_rate": {
+          "1": 0.1822125813449024,
+          "3": 0.3926247288503254,
+          "5": 0.5140997830802603,
+          "10": 0.7151120751988431
+        },
+        "mean_realized_ticket_probability": 0.06409137684347672,
+        "mean_nll_real_ticket": 3.0291393458801816,
+        "uniform_mean_nll_reference": 3.659499341056202,
+        "mean_ticket_brier": 0.02420157863532741,
+        "pooled_20bin_classwise_ece_raw": 0.006910902498583653,
+        "pooled_ece_bins_per_class": [
+          8,
+          8
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 5450,
+            "mean_predicted_probability": 0.0027742393912853097,
+            "empirical_hit_rate": 0.0011009174311926607
+          },
+          {
+            "bin": 1,
+            "tickets": 5450,
+            "mean_predicted_probability": 0.005516402537785099,
+            "empirical_hit_rate": 0.0047706422018348625
+          },
+          {
+            "bin": 2,
+            "tickets": 5450,
+            "mean_predicted_probability": 0.00842783417243476,
+            "empirical_hit_rate": 0.005504587155963303
+          },
+          {
+            "bin": 3,
+            "tickets": 5449,
+            "mean_predicted_probability": 0.011722527926721836,
+            "empirical_hit_rate": 0.006973756652596807
+          },
+          {
+            "bin": 4,
+            "tickets": 5450,
+            "mean_predicted_probability": 0.01547362739286067,
+            "empirical_hit_rate": 0.009908256880733945
+          },
+          {
+            "bin": 5,
+            "tickets": 5450,
+            "mean_predicted_probability": 0.020069390606664364,
+            "empirical_hit_rate": 0.014128440366972478
+          },
+          {
+            "bin": 6,
+            "tickets": 5449,
+            "mean_predicted_probability": 0.025862695913211612,
+            "empirical_hit_rate": 0.0178014314553129
+          },
+          {
+            "bin": 7,
+            "tickets": 5450,
+            "mean_predicted_probability": 0.03373796898825207,
+            "empirical_hit_rate": 0.028256880733944955
+          },
+          {
+            "bin": 8,
+            "tickets": 5450,
+            "mean_predicted_probability": 0.046158358702160965,
+            "empirical_hit_rate": 0.04862385321100918
+          },
+          {
+            "bin": 9,
+            "tickets": 5450,
+            "mean_predicted_probability": 0.08402531862987835,
+            "empirical_hit_rate": 0.11669724770642202
+          }
+        ]
+      },
+      "2車複": {
+        "races": 1383,
+        "ticket_outcomes_evaluated": 27249,
+        "top1_hit_rate": 0.2856109906001446,
+        "uniform_random_ticket_top1_reference": 0.05249457700650759,
+        "top_k_hit_rate": {
+          "1": 0.2856109906001446,
+          "3": 0.5560375994215474,
+          "5": 0.6963123644251626,
+          "10": 0.8763557483731019
+        },
+        "mean_realized_ticket_probability": 0.11410071735446997,
+        "mean_nll_real_ticket": 2.383301217676944,
+        "uniform_mean_nll_reference": 2.966352160496256,
+        "mean_ticket_brier": 0.04528523092098966,
+        "pooled_20bin_classwise_ece_raw": 0.015148993822495014,
+        "pooled_ece_bins_per_class": [
+          9,
+          9
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 2725,
+            "mean_predicted_probability": 0.006611151756870409,
+            "empirical_hit_rate": 0.002568807339449541
+          },
+          {
+            "bin": 1,
+            "tickets": 2725,
+            "mean_predicted_probability": 0.012604430731782093,
+            "empirical_hit_rate": 0.007339449541284404
+          },
+          {
+            "bin": 2,
+            "tickets": 2725,
+            "mean_predicted_probability": 0.018345145053537813,
+            "empirical_hit_rate": 0.011743119266055046
+          },
+          {
+            "bin": 3,
+            "tickets": 2725,
+            "mean_predicted_probability": 0.024865727324931763,
+            "empirical_hit_rate": 0.014311926605504587
+          },
+          {
+            "bin": 4,
+            "tickets": 2724,
+            "mean_predicted_probability": 0.032441045855416316,
+            "empirical_hit_rate": 0.016152716593245228
+          },
+          {
+            "bin": 5,
+            "tickets": 2725,
+            "mean_predicted_probability": 0.041695754343262094,
+            "empirical_hit_rate": 0.031192660550458717
+          },
+          {
+            "bin": 6,
+            "tickets": 2725,
+            "mean_predicted_probability": 0.05352669636710898,
+            "empirical_hit_rate": 0.03963302752293578
+          },
+          {
+            "bin": 7,
+            "tickets": 2725,
+            "mean_predicted_probability": 0.06910934433767568,
+            "empirical_hit_rate": 0.06275229357798165
+          },
+          {
+            "bin": 8,
+            "tickets": 2725,
+            "mean_predicted_probability": 0.09270167135444814,
+            "empirical_hit_rate": 0.09137614678899082
+          },
+          {
+            "bin": 9,
+            "tickets": 2725,
+            "mean_predicted_probability": 0.15563387362573933,
+            "empirical_hit_rate": 0.23045871559633027
+          }
+        ]
+      }
+    },
+    "S": {
+      "3連単": {
+        "races": 1315,
+        "ticket_outcomes_evaluated": 261960,
+        "top1_hit_rate": 0.03802281368821293,
+        "uniform_random_ticket_top1_reference": 0.005330436357052325,
+        "top_k_hit_rate": {
+          "1": 0.03802281368821293,
+          "3": 0.09049429657794676,
+          "5": 0.1399239543726236,
+          "10": 0.23650190114068442
+        },
+        "mean_realized_ticket_probability": 0.010019916626817385,
+        "mean_nll_real_ticket": 4.859265033321746,
+        "uniform_mean_nll_reference": 5.272465001786281,
+        "mean_ticket_brier": 0.005264462116487491,
+        "pooled_20bin_classwise_ece_raw": 1.8891100435317512e-05,
+        "pooled_ece_bins_per_class": [
+          2,
+          2
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 26196,
+            "mean_predicted_probability": 0.0007933133531441525,
+            "empirical_hit_rate": 0.0005726065048098947
+          },
+          {
+            "bin": 1,
+            "tickets": 26196,
+            "mean_predicted_probability": 0.0015400603595434798,
+            "empirical_hit_rate": 0.0011833867766071157
+          },
+          {
+            "bin": 2,
+            "tickets": 26196,
+            "mean_predicted_probability": 0.0021715731795907325,
+            "empirical_hit_rate": 0.001717819514429684
+          },
+          {
+            "bin": 3,
+            "tickets": 26196,
+            "mean_predicted_probability": 0.002810406054659938,
+            "empirical_hit_rate": 0.0023667735532142313
+          },
+          {
+            "bin": 4,
+            "tickets": 26196,
+            "mean_predicted_probability": 0.0035039631040032003,
+            "empirical_hit_rate": 0.0029012062910367996
+          },
+          {
+            "bin": 5,
+            "tickets": 26196,
+            "mean_predicted_probability": 0.004300316772293072,
+            "empirical_hit_rate": 0.0036646816307833257
+          },
+          {
+            "bin": 6,
+            "tickets": 26196,
+            "mean_predicted_probability": 0.005265210719404939,
+            "empirical_hit_rate": 0.004275461902580546
+          },
+          {
+            "bin": 7,
+            "tickets": 26196,
+            "mean_predicted_probability": 0.006553369693951071,
+            "empirical_hit_rate": 0.006031455183997557
+          },
+          {
+            "bin": 8,
+            "tickets": 26196,
+            "mean_predicted_probability": 0.008563950395104901,
+            "empirical_hit_rate": 0.008131012368300505
+          },
+          {
+            "bin": 9,
+            "tickets": 26196,
+            "mean_predicted_probability": 0.014696339956638613,
+            "empirical_hit_rate": 0.01935409986257444
+          }
+        ]
+      },
+      "3連複": {
+        "races": 1315,
+        "ticket_outcomes_evaluated": 43660,
+        "top1_hit_rate": 0.1300380228136882,
+        "uniform_random_ticket_top1_reference": 0.031982618142313964,
+        "top_k_hit_rate": {
+          "1": 0.1300380228136882,
+          "3": 0.30494296577946767,
+          "5": 0.44562737642585554,
+          "10": 0.6547528517110266
+        },
+        "mean_realized_ticket_probability": 0.049920902576076565,
+        "mean_nll_real_ticket": 3.150771591427315,
+        "uniform_mean_nll_reference": 3.480705532558227,
+        "mean_ticket_brier": 0.029983153621864916,
+        "pooled_20bin_classwise_ece_raw": 0.006513575579935403,
+        "pooled_ece_bins_per_class": [
+          6,
+          6
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 4366,
+            "mean_predicted_probability": 0.007757164532070634,
+            "empirical_hit_rate": 0.0022904260192395786
+          },
+          {
+            "bin": 1,
+            "tickets": 4366,
+            "mean_predicted_probability": 0.012409461154100828,
+            "empirical_hit_rate": 0.0075584058634906096
+          },
+          {
+            "bin": 2,
+            "tickets": 4366,
+            "mean_predicted_probability": 0.01598600096022116,
+            "empirical_hit_rate": 0.01168117269812185
+          },
+          {
+            "bin": 3,
+            "tickets": 4366,
+            "mean_predicted_probability": 0.019570090502648838,
+            "empirical_hit_rate": 0.012139257901969767
+          },
+          {
+            "bin": 4,
+            "tickets": 4366,
+            "mean_predicted_probability": 0.023469751991961163,
+            "empirical_hit_rate": 0.01946862116353642
+          },
+          {
+            "bin": 5,
+            "tickets": 4366,
+            "mean_predicted_probability": 0.027823576770773628,
+            "empirical_hit_rate": 0.0233623453962437
+          },
+          {
+            "bin": 6,
+            "tickets": 4366,
+            "mean_predicted_probability": 0.03279519645198748,
+            "empirical_hit_rate": 0.029088410444342648
+          },
+          {
+            "bin": 7,
+            "tickets": 4366,
+            "mean_predicted_probability": 0.03916047802166085,
+            "empirical_hit_rate": 0.03779202931745305
+          },
+          {
+            "bin": 8,
+            "tickets": 4366,
+            "mean_predicted_probability": 0.0483748765990072,
+            "empirical_hit_rate": 0.056802565277141545
+          },
+          {
+            "bin": 9,
+            "tickets": 4366,
+            "mean_predicted_probability": 0.0738444245455728,
+            "empirical_hit_rate": 0.10100778744846542
+          }
+        ]
+      },
+      "2車単": {
+        "races": 1315,
+        "ticket_outcomes_evaluated": 53276,
+        "top1_hit_rate": 0.12395437262357414,
+        "uniform_random_ticket_top1_reference": 0.025194640593880137,
+        "top_k_hit_rate": {
+          "1": 0.12395437262357414,
+          "3": 0.2798479087452472,
+          "5": 0.39695817490494295,
+          "10": 0.5794676806083651
+        },
+        "mean_realized_ticket_probability": 0.044312078542096345,
+        "mean_nll_real_ticket": 3.325015409922619,
+        "uniform_mean_nll_reference": 3.69305660325032,
+        "mean_ticket_brier": 0.023911314002177466,
+        "pooled_20bin_classwise_ece_raw": 0.003753711785159075,
+        "pooled_ece_bins_per_class": [
+          5,
+          5
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 5328,
+            "mean_predicted_probability": 0.004326695773520896,
+            "empirical_hit_rate": 0.004316816816816817
+          },
+          {
+            "bin": 1,
+            "tickets": 5327,
+            "mean_predicted_probability": 0.008324380663440129,
+            "empirical_hit_rate": 0.004317627182278956
+          },
+          {
+            "bin": 2,
+            "tickets": 5328,
+            "mean_predicted_probability": 0.011616448001633613,
+            "empirical_hit_rate": 0.009572072072072071
+          },
+          {
+            "bin": 3,
+            "tickets": 5327,
+            "mean_predicted_probability": 0.014885339155297172,
+            "empirical_hit_rate": 0.012014266941993618
+          },
+          {
+            "bin": 4,
+            "tickets": 5328,
+            "mean_predicted_probability": 0.018289410283387555,
+            "empirical_hit_rate": 0.017267267267267267
+          },
+          {
+            "bin": 5,
+            "tickets": 5327,
+            "mean_predicted_probability": 0.022168402538697875,
+            "empirical_hit_rate": 0.018772292096865026
+          },
+          {
+            "bin": 6,
+            "tickets": 5328,
+            "mean_predicted_probability": 0.026841448647984305,
+            "empirical_hit_rate": 0.020833333333333332
+          },
+          {
+            "bin": 7,
+            "tickets": 5327,
+            "mean_predicted_probability": 0.032646195548148856,
+            "empirical_hit_rate": 0.030598836117889994
+          },
+          {
+            "bin": 8,
+            "tickets": 5328,
+            "mean_predicted_probability": 0.04137748768797832,
+            "empirical_hit_rate": 0.04335585585585586
+          },
+          {
+            "bin": 9,
+            "tickets": 5328,
+            "mean_predicted_probability": 0.06634814521303169,
+            "empirical_hit_rate": 0.08577327327327328
+          }
+        ]
+      },
+      "2車複": {
+        "races": 1315,
+        "ticket_outcomes_evaluated": 26638,
+        "top1_hit_rate": 0.23650190114068442,
+        "uniform_random_ticket_top1_reference": 0.050389281187760274,
+        "top_k_hit_rate": {
+          "1": 0.23650190114068442,
+          "3": 0.4585551330798479,
+          "5": 0.6,
+          "10": 0.8159695817490494
+        },
+        "mean_realized_ticket_probability": 0.08569449741842773,
+        "mean_nll_real_ticket": 2.62052421414615,
+        "uniform_mean_nll_reference": 2.999909422690374,
+        "mean_ticket_brier": 0.045219732790711835,
+        "pooled_20bin_classwise_ece_raw": 0.01217627023569816,
+        "pooled_ece_bins_per_class": [
+          7,
+          7
+        ],
+        "paper_20bin_80pct_gate_passed": false,
+        "quantile_calibration_display_only": [
+          {
+            "bin": 0,
+            "tickets": 2664,
+            "mean_predicted_probability": 0.010320991681245182,
+            "empirical_hit_rate": 0.0063813813813813815
+          },
+          {
+            "bin": 1,
+            "tickets": 2664,
+            "mean_predicted_probability": 0.018248891919405964,
+            "empirical_hit_rate": 0.00975975975975976
+          },
+          {
+            "bin": 2,
+            "tickets": 2664,
+            "mean_predicted_probability": 0.025084955637897147,
+            "empirical_hit_rate": 0.016516516516516516
+          },
+          {
+            "bin": 3,
+            "tickets": 2663,
+            "mean_predicted_probability": 0.03197804121466772,
+            "empirical_hit_rate": 0.028914757791963952
+          },
+          {
+            "bin": 4,
+            "tickets": 2664,
+            "mean_predicted_probability": 0.038841866782739404,
+            "empirical_hit_rate": 0.02702702702702703
+          },
+          {
+            "bin": 5,
+            "tickets": 2664,
+            "mean_predicted_probability": 0.04626846005150515,
+            "empirical_hit_rate": 0.03753753753753754
+          },
+          {
+            "bin": 6,
+            "tickets": 2663,
+            "mean_predicted_probability": 0.054934624374590076,
+            "empirical_hit_rate": 0.03867818250093879
+          },
+          {
+            "bin": 7,
+            "tickets": 2664,
+            "mean_predicted_probability": 0.0655946040816179,
+            "empirical_hit_rate": 0.059684684684684686
+          },
+          {
+            "bin": 8,
+            "tickets": 2664,
+            "mean_predicted_probability": 0.08121029113708697,
+            "empirical_hit_rate": 0.08408408408408409
+          },
+          {
+            "bin": 9,
+            "tickets": 2664,
+            "mean_predicted_probability": 0.12116851661233358,
+            "empirical_hit_rate": 0.18506006006006007
+          }
+        ]
+      }
+    }
+  },
+  "probability_normalization_checks": {
+    "3連単": 5588,
+    "3連複": 5588,
+    "2車単": 5588,
+    "2車複": 5588
+  },
+  "validation_only": true,
+  "closing_odds_joined": false,
+  "roi_computed": false,
+  "notes": [
+    "Ordered and unordered ticket probabilities are from chain-rule construction, not directly specified in Walsh-Joshi.",
+    "2023 original rider winner model was normalized within a race; normalized probabilities need fresh calibration.",
+    "Second/third learner choice-model ECE coverage was not passed on 2023 holdout.",
+    "20-bin 80% gate is recorded for each ticket type and may be unattainable for sparse multi-rider tickets; separate quantile reliability is supplementary, not a replacement.",
+    "No odds data used in this probability experiment; 3連単・3連複 historical odds backtesting is a separate next operation.",
+    "Absent source files, missing features and podium mismatches are excluded from this evaluation, with audit counts."
+  ]
+}
