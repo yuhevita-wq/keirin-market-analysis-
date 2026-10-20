@@ -1,0 +1,151 @@
+name: V3-ME-R | Phase 2 day-frozen deterministic learning 2021-2026H1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/v3me-phase2-day-frozen-learning.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v3me-phase2-day-frozen-backtested-source
+  cancel-in-progress: false
+
+jobs:
+  daily_frozen_plain_checkpoints:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      PYTHONUNBUFFERED: '1'
+      PYTHONHASHSEED: '0'
+      PYTHONPATH: '.:research/deletion_ai'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install exact original V3-ME-R model dependency
+        run: python -m pip install -e '.[scrape]' 'numpy>=1.26'
+      - name: Test no-result leakage and exact immutable model resume
+        run: |
+          python -m py_compile research/deletion_ai/v3me_phase2_daily_pipeline.py research/deletion_ai/test_v3me_phase2_daily_pipeline.py
+          python research/deletion_ai/test_v3me_phase2_daily_pipeline.py
+          python research/deletion_ai/test_deletion_2023.py
+          python research/deletion_ai/test_secure_seven_bet_bridge.py
+      - name: Train or resume 2021..2025, compare frozen 2026 on the actual two-market subset
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          output='research/deletion_ai/outputs/GEN-008-V3-ME-R-PHASE2-DAY-FROZEN-PLAIN-2021-2026'
+          for year in 2021 2022 2023 2024 2025 2026; do
+            if [ -f "$output/$year/checkpoint.json" ] && [ -f "$output/$year/summary.json" ]; then
+              echo "Preserving completed source-verified, year-locked model $year."
+              continue
+            fi
+            python research/deletion_ai/v3me_phase2_daily_pipeline.py --source plain --year "$year"
+            git add "$output/$year/"
+            git commit -m "data: Phase2 day-frozen plain V3ME year $year"
+            for attempt in 1 2 3 4 5 6; do
+              git pull --rebase origin main
+              if git push origin HEAD:main; then break; fi
+              if [ "$attempt" -eq 6 ]; then exit 1; fi
+              sleep 3
+            done
+          done
+      - name: Report 2026 comparison and verify frozen status
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path('research/deletion_ai/outputs/GEN-008-V3-ME-R-PHASE2-DAY-FROZEN-PLAIN-2021-2026')
+          saved=[json.loads((root/str(y)/'summary.json').read_text()) for y in range(2021,2027)]
+          assert all(s['status']=='COMPLETE' for s in saved)
+          assert all(s['learning_mode']=='DAY_FROZEN_PRE_RESULT_PREQUENTIAL' for s in saved[:5])
+          assert saved[5]['learning_mode']=='NO_FIT_2026_H1'
+          assert saved[5]['weight_start_sha256']==saved[5]['weight_end_sha256']
+          assert sum(s['actual_supervised_usable_races'] for s in saved)==40164
+          for i in range(1,6):
+            assert saved[i]['weight_start_sha256']==saved[i-1]['weight_end_sha256']
+          print('V3ME_PHASE2_DAILY_FROZEN_ALL_YEAR_CHAINS_VERIFIED')
+          print('V3ME_PHASE2_2026',json.dumps({
+             'races':saved[5]['actual_supervised_usable_races'],
+             'result':saved[5]['accounting'],
+             'controls':saved[5]['same_ticket_count_controls_and_logloss']
+          },ensure_ascii=False))
+          PY
+
+  day_frozen_sealed_after_phase1:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      PYTHONUNBUFFERED: '1'
+      PYTHONHASHSEED: '0'
+      PYTHONPATH: '.:research/deletion_ai'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install original model and verified CMS bridge
+        run: python -m pip install -e '.[scrape]' 'numpy>=1.26'
+      - name: Verify mathematical invariants and sealed market fixtures
+        run: |
+          python research/deletion_ai/test_v3me_phase2_daily_pipeline.py
+          python research/deletion_ai/test_secure_seven_bet_bridge.py
+      - name: Gate on real completed Phase 1 audit and private Actions key
+        id: readiness
+        env:
+          HAS_KEY: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        shell: bash
+        run: |
+          if [ ! -f data/audits/v3me_full_sealed_source_integrity_2021_2026.json ]; then
+            echo 'READY=false' >> "$GITHUB_OUTPUT"
+            echo 'Phase 1 audit not complete: sealed model learning must not begin.' >> "$GITHUB_STEP_SUMMARY"
+          elif [ -z "$HAS_KEY" ]; then
+            echo 'READY=false' >> "$GITHUB_OUTPUT"
+            echo 'Private key not installed in GitHub Actions secret: sealed model learning blocked.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'READY=true' >> "$GITHUB_OUTPUT"
+            echo 'Authenticated full-source Phase 1 is complete: Phase 2 year checkpoint chain enabled.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Train all audited original seven-market books, one securely resumable year at a time
+        if: steps.readiness.outputs.READY == 'true'
+        env:
+          KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          output='research/deletion_ai/outputs/GEN-008-V3-ME-R-PHASE2-DAY-FROZEN-SEALED-2021-2026'
+          for year in 2021 2022 2023 2024 2025 2026; do
+            if [ -f "$output/$year/checkpoint.json" ] && [ -f "$output/$year/summary.json" ]; then
+              echo "Already verified sealed-source year $year, retain immutable result."
+              continue
+            fi
+            python research/deletion_ai/v3me_phase2_daily_pipeline.py --source sealed --year "$year"
+            git add "$output/$year/"
+            git commit -m "data: Phase2 day-frozen sealed V3ME year $year aggregate and weights"
+            for attempt in 1 2 3 4 5 6; do
+              git pull --rebase origin main
+              if git push origin HEAD:main; then break; fi
+              if [ "$attempt" -eq 6 ]; then exit 1; fi
+              sleep 3
+            done
+          done
