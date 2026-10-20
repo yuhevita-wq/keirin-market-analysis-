@@ -23,8 +23,8 @@ jobs:
       - uses: actions/cache/restore@v4
         with:
           path: official_registry
-          key: registry-search-v1-${{ matrix.shard }}-${{ github.run_id }}
-          restore-keys: registry-search-v1-${{ matrix.shard }}-
+          key: registry-search-all-v2-${{ matrix.shard }}-${{ github.run_id }}
+          restore-keys: registry-search-all-v2-${{ matrix.shard }}-
       - name: Collect official immutable identity columns
         env:
           REGISTRY_SHARD: ${{ matrix.shard }}
@@ -57,7 +57,7 @@ jobs:
               root.mkdir(parents=True,exist_ok=True);rows=[];events=[]
               for term in TERMS[shard::8]:
                   fields={k:'' for k in ['gGaiteiCD','tikuCD','nen','bKeirinCD','kSyuruiCD','girlsKBN','nameSeiKana','nameMeiKana','nameSei','nameMei','snum','hukenCD','kuniCD','seibetuCD','kyuhanCD','tikuCDSensyu','age','bHomebankCD','homekyogiCD','kyakusituCD','ckbn']}
-                  fields.update(dppg='1',srmd='01',stgt='1',sotugyouki=str(term));url='https://keirin.jp/pc/racersearchresult?'+urllib.parse.urlencode(fields);seen=set();seen_hashes=set()
+                  fields.update(dppg='1',srmd='01',stgt='2',sotugyouki=str(term));url='https://keirin.jp/pc/racersearchresult?'+urllib.parse.urlencode(fields);seen=set();seen_hashes=set()
                   try:
                       for page in range(1,101):
                           assert url not in seen,'pagination cycle';seen.add(url)
@@ -82,7 +82,7 @@ jobs:
         if: always()
         with:
           path: official_registry
-          key: registry-search-v1-${{ matrix.shard }}-${{ github.run_id }}
+          key: registry-search-all-v2-${{ matrix.shard }}-${{ github.run_id }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
