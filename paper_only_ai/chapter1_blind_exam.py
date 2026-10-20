@@ -192,6 +192,9 @@ def main():
         for role in ("accuracy", "calibration"):
             models[role], checksums[role] = load_frozen_champion(
                 champions[role], td)
+        original, _, original_sha = bt.load_line_models()
+        models["inherited_full_year_2023_line_rf"] = original
+        checksums["inherited_full_year_2023_line_rf"] = original_sha
         scored = score_one_quarter(BASE_YEAR, q, models)
     a = scored["by_role"]["accuracy"]["combined"]["return_rate_percent"]
     c = scored["by_role"]["calibration"]["combined"]["return_rate_percent"]
