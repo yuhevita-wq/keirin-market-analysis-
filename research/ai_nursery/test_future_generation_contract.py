@@ -56,8 +56,14 @@ def check():
             if not set(("race_id","policy_hash_before","decisions","marks","skip"))<=set(event):
                 raise AssertionError("Incomplete pre-decision log")
             actual_actions+=len(event["decisions"])
-        if actual_actions<policy.update_count:
-            raise AssertionError("Policy update count is larger than logged decisions")
+        parent_policy_path=ROOT/previous["training_records"]/"behavior_policy.json"
+        previous_total=0
+        if parent_policy_path.exists():
+            previous_total=BehaviorPolicy.load(parent_policy_path).update_count
+        if actual_actions != policy.update_count-previous_total:
+            raise AssertionError("New-generation action history and inherited policy update counts differ")
+        if cp.get("parent_behavior_policy_sha256") and parent_policy_path.exists():
+            assert cp["parent_behavior_policy_sha256"]==BehaviorPolicy.load(parent_policy_path).digest()
         previous=entry
     print("FUTURE_GENERATION_QUALITY_CONTRACT_PASS",len(tested),"generations checked")
 

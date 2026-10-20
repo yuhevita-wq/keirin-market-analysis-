@@ -1,0 +1,50 @@
+name: Baby AI GEN-007 profit-only one-month learning
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/ai_nursery/train_month7.py'
+      - 'research/ai_nursery/test_month7.py'
+      - 'research/ai_nursery/profit_objective.py'
+      - 'research/ai_nursery/test_profit_objective.py'
+      - '.github/workflows/baby-ai-gen007-profit.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: baby-ai-gen007-profit
+  cancel-in-progress: false
+jobs:
+  learn-profit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numeric library
+        run: python -m pip install 'numpy>=1.26'
+      - name: Check strict monetary profit objective and inherited policy
+        run: OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python research/ai_nursery/test_profit_objective.py
+      - name: Train March 5 through April 4 on NET = payouts minus stakes
+        run: |
+          if [ -f research/ai_nursery/outputs/GEN-007/summary.json ]; then
+            echo "GEN-007 already stored; audit only, never overwrite"
+          else
+            OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python research/ai_nursery/train_month7.py
+          fi
+      - name: Audit all actions, inherited learning, net objective and exact 31 days
+        run: OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python research/ai_nursery/test_month7.py
+      - name: Freeze the 31-day learner checkpoint, net PnL and decisions
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ai_nursery/outputs/GEN-007/ docs/ai-lab/nursery-gen007-*.json docs/ai-lab/generations.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "data: freeze GEN-007 profit-only learning and verified net goal"
+          git pull --rebase origin main
+          git push origin HEAD:main
+          echo "GEN-007 checkpoint push will trigger the independent June holdout audit."

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ja"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#101a25"><title>競輪AI育成室 — GEN-001 → GEN-002 → GEN-003 → GEN-004 → GEN-005 → GEN-006</title>
+<meta name="theme-color" content="#101a25"><title>競輪AI育成室 — GEN-001 → GEN-002 → GEN-003 → GEN-004 → GEN-005 → GEN-006 → GEN-007</title>
 <style>
 :root{color-scheme:dark;--bg:#0c1520;--panel:#172534;--panel2:#1d2e40;--line:#334659;--light:#edf5fb;--soft:#a7becd;--mint:#67e3b6;--yellow:#efcc7b}
 *{box-sizing:border-box}body{margin:0;color:var(--light);background:radial-gradient(circle at 80% -10%,#2c443d,transparent 42%),var(--bg);font:15px/1.65 system-ui,-apple-system,"Noto Sans JP",sans-serif}
@@ -26,9 +26,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;colo
 footer{border-top:1px solid var(--line);color:var(--soft);font-size:12px;margin-top:22px;padding-top:17px}
 @media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.split{grid-template-columns:1fr}.days{grid-template-columns:repeat(4,1fr)}.section{padding:16px}}
 </style></head><body><main>
-<div class="top"><div><div class="eyebrow">BABY AI · GENERATION 001</div><h1>🐣 競輪AI育成室</h1><p>先入観ゼロ。出走表とオッズを見る → マークシートに書く → 結果を見る → 学習する。</p></div><span class="pill">第6世代 ／ 自律的な行動学習を28日間</span></div>
+<div class="top"><div><div class="eyebrow">BABY AI · GENERATION 001</div><h1>🐣 競輪AI育成室</h1><p>先入観ゼロ。出走表とオッズを見る → マークシートに書く → 結果を見る → 学習する。</p></div><span class="pill">第7世代 ／ 純収支プラスを唯一の目標に</span></div>
 <div class="grid">
-<div class="card"><small>現在の世代</small><strong>GEN-006</strong><span>GEN-005の予想・ご褒美・財布を継承</span></div>
+<div class="card"><small>現在の世代</small><strong>GEN-007</strong><span>GEN-006の予測・行動方針を継承</span></div>
 <div class="card"><small>親GEN-001の経験</small><strong id="races">—</strong><span>欠損を推測せず除外</span></div>
 <div class="card"><small>親GEN-001の的中</small><strong class="mint" id="hits">—</strong><span>全券種合計</span></div>
 <div class="card"><small>親GEN-001の学習期間</small><strong id="days">—</strong><span>予想後に1レースずつ学習</span></div>
@@ -172,6 +172,24 @@ footer{border-top:1px solid var(--line);color:var(--soft);font-size:12px;margin-
 <a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery/outputs/GEN-006">記入用紙・行動履歴・学習済み重み</a>
 <a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/actions/workflows/baby-ai-gen006-month.yml">学習実行状況</a>
 </div>
+</section>
+<section class="section">
+<h2>🎯 GEN-007：目標は純収支プラス</h2>
+<p>2023年3月5日〜4月4日。GEN-006の予測モデル・参加／見送り・用紙終了方針の重みを引き継ぐ。目的は唯一、<b>全購入車券の払戻総額−購入総額を0円より大きくすること</b>。財布・補充・ご褒美・ストレスは評価に含めません。全見送りでの0円も失格です。</p>
+<div class="grid">
+<div class="card"><small>31日間の純収支</small><strong id="g7Net">学習中</strong><span>唯一の最上位目標</span></div>
+<div class="card"><small>プラス目標達成</small><strong id="g7Goal">判定待ち</strong><span>0円は不合格</span></div>
+<div class="card"><small>経験レース</small><strong id="g7Races">—</strong><span>出走表・全確定オッズ・着順が結合したレース</span></div>
+<div class="card"><small>参加／見送り</small><strong id="g7Decisions">—</strong><span>学習した行動重みを継承</span></div>
+</div>
+<div class="row"><span>購入総額</span><b id="g7Stake">—</b></div>
+<div class="row"><span>払戻総額</span><b id="g7Payout">—</b></div>
+<div class="row"><span>買い目点数</span><b id="g7Marks">—</b></div>
+<div class="row"><span>新規の参加方針学習回数</span><b id="g7EnterUpdates">—</b></div>
+<div class="row"><span>新規の用紙終了方針学習回数</span><b id="g7ContinueUpdates">—</b></div>
+<div class="row"><span>同じ未学習レースの収支検証</span><b id="g7Holdout">未実施</b></div>
+<p class="warning">これは過去の最終オッズで学習する紙上シミュレーションです。財布やご褒美口座の残高は純利益ではありません。仮に訓練期間でプラスになっても、将来の利益を保証しません。</p>
+<div class="links"><a class="btn" href="nursery-gen007-summary.json">GEN-007の純収支</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery/outputs/GEN-007">選択と結果の履歴</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/actions/workflows/baby-ai-gen007-profit.yml">学習のGitHub Actions</a></div>
 </section>
 <section class="section"><h2>保存と次の世代</h2><div class="row"><span>出生時の学習重み</span><b>すべて0</b></div><div class="row"><span>1週間後の学習重み</span><b id="checkpoint">—</b></div><div class="row"><span>次の段階</span><b>GEN-003が資金管理を学習中</b></div><p>新しい能力を得た時点でGEN-001からGEN-002へ世代交代。GEN-002は親の学習重みを継承しています。</p><div class="links"><a class="btn" href="nursery-summary.json">1週間の全体成績</a><a class="btn" href="nursery-history.json">全レースのマーク履歴</a><a class="btn" href="nursery-checkpoint.json">学習した重み</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery">GitHub保存先 ↗</a></div></section>
 <footer>過去実験の価格はレース終了後の確定オッズです。締切前の価格と同じではないため、この練習成績を実購入可能な収益と見なせません。入力に足りないレースは欠損として記録。</footer>
@@ -405,5 +423,31 @@ start();
     }
   }catch(e){}
  }catch(e){$("g6Races").textContent="学習中・保存待ち";}
+})();
+</script><script>
+(async()=>{
+ const $=id=>document.getElementById(id);
+ const yen=n=>Number(n).toLocaleString("ja-JP")+"円";
+ const count=n=>Number(n).toLocaleString("ja-JP");
+ try{
+   const r=await fetch("nursery-gen007-summary.json",{cache:"no-store"});
+   if(!r.ok)throw Error("学習データ公開待ち");
+   const d=await r.json();
+   $("g7Net").textContent=yen(d.net_profit_total_yen);
+   $("g7Goal").textContent=d.goal_achieved_training?"達成（訓練期間）":"未達成";
+   $("g7Races").textContent=count(d.races)+"R";
+   $("g7Decisions").textContent=count(d.races_entered)+"／"+count(d.races_skipped);
+   $("g7Stake").textContent=yen(d.spent_yen);
+   $("g7Payout").textContent=yen(d.payout_proxy_yen);
+   $("g7Marks").textContent=count(d.marks)+"点";
+   $("g7EnterUpdates").textContent=count(d.policy_updates_this_generation_enter);
+   $("g7ContinueUpdates").textContent=count(d.policy_updates_this_generation_continue);
+   const hold=await fetch("nursery-growth-audit.json",{cache:"no-store"});
+   if(hold.ok){
+    const audit=await hold.json();
+    const g=audit.metrics.find(v=>v.generation==="GEN-007");
+    $("g7Holdout").textContent=g?(g.net_proxy_yen>0&&g.stakes_yen>0?"純収支プラス（共通試験）":"純収支未達（共通試験）"):"検証実行待ち";
+   }
+ }catch(e){$("g7Net").textContent="学習結果待ち";}
 })();
 </script></body></html>

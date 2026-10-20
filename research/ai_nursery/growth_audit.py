@@ -116,7 +116,9 @@ def score_one(row,gen,weights,bank,learned):
     prior=np.array([a["prior"] for a in arms],dtype=float)
     prob=softmax(X@weights+prior)
     rng=np.random.default_rng(stable_seed(row["race_id"]))
-    marks=choice_history(arms,prob,row,gen,rng,bank,learned)
+    # GEN-007 optimizes pure NET profit; wallet is ledger-only, never a policy input.
+    action_wallet=10000 if int(gen.split("-")[1])>=7 else bank
+    marks=choice_history(arms,prob,row,gen,rng,action_wallet,learned)
     truth={
         ("3連単","-".join(map(str,row["outcome"]))),
         ("3連複","=".join(map(str,sorted(row["outcome"]))))

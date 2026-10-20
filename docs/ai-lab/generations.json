@@ -1,7 +1,7 @@
 {
-  "schema_version": 7,
+  "schema_version": 8,
   "kind": "KEIRIN_AI_INFANT_GENERATIONS",
-  "current_generation": "GEN-006",
+  "current_generation": "GEN-007",
   "generations": [
     {
       "id": "GEN-001",
@@ -146,6 +146,28 @@
       "refill_events": 15,
       "new_reward_yen": 53960,
       "trained_behavior_policy": true
+    },
+    {
+      "id": "GEN-007",
+      "parent_id": "GEN-006",
+      "status": "TRAINING_SCHEDULED",
+      "dates": [
+        "2023-03-05",
+        "2023-04-04"
+      ],
+      "duration_calendar_days": 31,
+      "skill": "予測と行動方針の記憶を両方引き継ぎ、唯一の目的を購入相当額に対する払戻純利益 >0円に固定して学習",
+      "objective": "maximize_total_net_yen",
+      "success_criterion": "paper_stake_yen>0 and payout_proxy_yen-paper_stake_yen>0",
+      "wallet_is_objective": false,
+      "zero_purchase_counts_as_success": false,
+      "parent_checkpoint_sha256": "294fe2818f3bf5167b4becd6c59d0f4a8f06172d712b6699093ba49b05065561",
+      "parent_behavior_policy_sha256": "714f62924b0840dbff1790aba0f52ff3cd1d150c88d2eea9ccde99cde50b1a37",
+      "training_records": "research/ai_nursery/outputs/GEN-007/",
+      "checkpoint": "research/ai_nursery/outputs/GEN-007/checkpoint.json",
+      "behavior_policy": "research/ai_nursery/outputs/GEN-007/behavior_policy.json",
+      "summary": "nursery-gen007-summary.json",
+      "required_growth_audit": "2023-06-01/2023-06-07"
     }
   ],
   "archived_older_unrelated_checkpoint": "research/ai_evolution/generations/g001/",
