@@ -70,7 +70,7 @@ def books(pre):
     cars=tuple(sorted(int(c) for c in entries))
     if not 5<=len(cars)<=9:raise ValueError("Outside 5..9 cars")
     keys3=tuple(sorted(odds["3連単"],key=lambda x:tuple(map(int,x.split("-")))))
-    keys2=tuple(sorted(odds["3連複"],key=lambda x:tuple(map(int,x.split("="))))
+    keys2=tuple(sorted(odds["3連複"],key=lambda x:tuple(map(int,x.split("=")))))
     expected3={"-".join(map(str,v)) for v in itertools.permutations(cars,3)}
     expected2={"=".join(map(str,v)) for v in itertools.combinations(cars,3)}
     if set(keys3)!=expected3 or set(keys2)!=expected2:
