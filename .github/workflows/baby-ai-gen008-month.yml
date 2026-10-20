@@ -1,0 +1,57 @@
+name: Baby AI GEN-008 | one additional month parallel
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/ai_nursery/run_parallel_month.py'
+      - 'research/ai_nursery/verify_parallel_month.py'
+      - '.github/workflows/baby-ai-gen008-month.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: baby-ai-gen008-one-month
+  cancel-in-progress: false
+jobs:
+  train-both:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numpy
+        run: python -m pip install 'numpy>=1.26'
+      - name: Audit unchanged prior two weeks and GEN-008 learner
+        run: |
+          python research/ai_nursery/test_gen008.py
+          python research/ai_nursery/verify_parallel_week.py --week 2
+          python -m py_compile research/ai_nursery/run_parallel_month.py research/ai_nursery/verify_parallel_month.py
+      - name: Continue BOTH GEN-008 branches for 31 days from week-02 checkpoints
+        run: |
+          if [ -f research/ai_nursery/outputs/GEN-008-PARALLEL/month-01-after-week02/summary.json ]; then
+            echo "Monthly stage already frozen; checking, never rewriting."
+          else
+            python research/ai_nursery/run_parallel_month.py
+          fi
+      - name: Audit every pre-result seal, calibration logloss, shadow and actual cashflow
+        run: python research/ai_nursery/verify_parallel_month.py
+      - name: Preserve monthly model checkpoints and comparison in GitHub
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ai_nursery/outputs/GEN-008-PARALLEL/month-01-after-week02/ docs/ai-lab/gen008-month01.json
+          if git diff --cached --quiet; then
+            echo "All monthly results already stored."
+            exit 0
+          fi
+          git commit -m "data: freeze GEN-008 31-day inherited parallel learning and audit"
+          git pull --rebase origin main
+          git push origin HEAD:main
