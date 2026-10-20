@@ -8,7 +8,7 @@ from gen008_v3_market_error import (market_features,corrected_probability,
           loss_and_grad,portfolio,settle,fit,FEATURE_NAMES,logloss_report)
 
 
-def race(i=1,day="2023-09-16",payout=20.):
+def race(i=1,day="2023-09-16",payout=60.):
     cars=tuple(range(1,6))
     ticket={ "-".join(map(str,p)):60. for p in itertools.permutations(cars,3)}
     trio={ "=".join(map(str,p)):10. for p in itertools.combinations(cars,3)}
