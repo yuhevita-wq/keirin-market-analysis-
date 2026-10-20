@@ -1,0 +1,70 @@
+name: Paper-only AI | 2024 Q1 real final-odds ROI backtest
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'paper_only_ai/backtest_roi_2024_q1.py'
+      - '.github/workflows/paper-only-ai-backtest-roi-2024-q1.yml'
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: paper-only-ai-backtest-roi-2024-q1
+  cancel-in-progress: false
+jobs:
+  backtest-2024-q1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 160
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            paper_only_ai
+            docs/paper-only-ai-2023
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install ML and analysis dependencies
+        run: |
+          python -m pip install 'numpy<3' 'pandas<3' 'scipy<2' 'scikit-learn<2' 'optuna<5' 'joblib<2'
+      - name: Fetch immutable frozen 2023 three-stage probability AI
+        uses: actions/download-artifact@v4
+        with:
+          name: paper-only-2023-conditional-finish-order-models
+          path: frozen_conditional_bundle
+          run-id: 39362270286
+          github-token: ${{ github.token }}
+      - name: Check script and immutable model presence
+        run: |
+          python -m py_compile paper_only_ai/backtest_roi_2024_q1.py
+          test -s frozen_conditional_bundle/frozen_2023/calibration.joblib
+          test -s frozen_conditional_bundle/docs/paper-only-ai-2023/conditional_2023/stage2.joblib
+          test -s frozen_conditional_bundle/docs/paper-only-ai-2023/conditional_2023/stage3.joblib
+      - name: Historical final-odds ROI on 2024 Q1 all strictly positive-EV 3連単 3連複 tickets
+        env:
+          FROZEN_TICKET_MODEL_DIR: frozen_conditional_bundle
+          OMP_NUM_THREADS: '2'
+          OPENBLAS_NUM_THREADS: '2'
+          MKL_NUM_THREADS: '2'
+          PYTHONUNBUFFERED: '1'
+        run: python paper_only_ai/backtest_roi_2024_q1.py
+      - name: Save financial audit including source coverage even if job fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-only-2024-q1-historical-final-odds-roi-report
+          path: docs/paper-only-ai-2023/roi_2024_q1/
+          if-no-files-found: warn
+          retention-days: 60
+      - name: Commit reproducible ROI breakdown after successful evaluation
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/paper-only-ai-2023/roi_2024_q1/report.json docs/paper-only-ai-2023/roi_2024_q1/progress.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record genuine 2024 Q1 trifecta/trio historical final-odds PnL for frozen 2023 AI"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
