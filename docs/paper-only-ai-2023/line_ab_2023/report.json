@@ -1,0 +1,523 @@
+{
+  "state": "COMPLETE_PAIRED_2023_LINE_AB",
+  "started_at": "2026-10-20T05:31:10.602679+00:00",
+  "finished_at": "2026-10-20T05:35:26.650975+00:00",
+  "objective": "Assess whether supplied published pre-race line grouping/order improves probabilistic prediction in controlled paired conditions",
+  "train_dates": [
+    "2023-01-01",
+    "2023-10-31"
+  ],
+  "strict_heldout_dates": [
+    "2023-11-01",
+    "2023-12-31"
+  ],
+  "line_source_field": "races.csv predicted_line_formation",
+  "line_semantics": "published KDreams line prediction, not verified realized on-track arrangement",
+  "split_isolation": "Both branches train on same race ids; no Nov-Dec labels used in fitting or feature selection",
+  "algorithms_and_hyperparameters": {
+    "LR": {
+      "solver": "liblinear",
+      "C": 1.0,
+      "max_iter": 350,
+      "preprocessing": "StandardScaler"
+    },
+    "RF": {
+      "trees": 90,
+      "depth": 10,
+      "min_samples_leaf": 12,
+      "max_features": 0.7,
+      "n_jobs": 2
+    }
+  },
+  "retraining_not_comparable_directly_to_earlier_2023_full_year_model": true,
+  "prefitted_models_reused_from_run": null,
+  "baseline_features": [
+    "car_no",
+    "age",
+    "term",
+    "gear",
+    "score",
+    "s_count",
+    "b_count",
+    "nige_count",
+    "makuri_count",
+    "sashi_count",
+    "mark_count",
+    "first_count",
+    "second_count",
+    "third_count",
+    "outside_count",
+    "win_rate",
+    "top2_rate",
+    "top3_rate"
+  ],
+  "extra_line_features": "line position, line length, line counts, within-line distance, same-line flags and relations among hypothetical 1/2/3 finishers",
+  "fair_same_training_samples": true,
+  "audit": {
+    "sources": [
+      {
+        "source": "data/a_class_12/2023_01_02/entries.csv",
+        "rows_accepted": 13902,
+        "line_manifests": 2027
+      },
+      {
+        "source": "data/a_class_12/2023_03_04/entries.csv",
+        "rows_accepted": 13867,
+        "line_manifests": 2003
+      },
+      {
+        "source": "data/a_class_12/2023_05_06/entries.csv",
+        "rows_accepted": 14315,
+        "line_manifests": 2065
+      },
+      {
+        "source": "data/a_class_12/2023_07_08/entries.csv",
+        "rows_accepted": 13655,
+        "line_manifests": 1973
+      },
+      {
+        "source": "data/a_class_12/2023_09_10/entries.csv",
+        "rows_accepted": 13815,
+        "line_manifests": 1993
+      },
+      {
+        "source": "data/a_class_12/2023_11_12/entries.csv",
+        "rows_accepted": 13693,
+        "line_manifests": 1973
+      },
+      {
+        "source": "data/a3_challenge/2023_01_02/entries.csv",
+        "rows_accepted": 0,
+        "line_manifests": 0
+      },
+      {
+        "source": "data/a3_challenge/2023_05_06/entries.csv",
+        "rows_accepted": 5997,
+        "line_manifests": 881
+      },
+      {
+        "source": "data/a3_challenge/2023_07_08/entries.csv",
+        "rows_accepted": 6631,
+        "line_manifests": 986
+      },
+      {
+        "source": "data/a3_challenge/2023_09_10/entries.csv",
+        "rows_accepted": 6532,
+        "line_manifests": 953
+      },
+      {
+        "source": "data/a3_challenge/2023_11_12/entries.csv",
+        "rows_accepted": 6449,
+        "line_manifests": 948
+      },
+      {
+        "source": "data/2023/s_class_f1_all_parts/2023_q1/entries.csv",
+        "rows_accepted": 9289,
+        "line_manifests": 1353
+      },
+      {
+        "source": "data/2023/s_class_f1_all_parts/2023_q2/entries.csv",
+        "rows_accepted": 8820,
+        "line_manifests": 1280
+      },
+      {
+        "source": "data/2023/s_class_f1_all_parts/2023_q3/entries.csv",
+        "rows_accepted": 8569,
+        "line_manifests": 1241
+      },
+      {
+        "source": "data/2023/s_class_f1_all_parts/2023_q4/entries.csv",
+        "rows_accepted": 9054,
+        "line_manifests": 1313
+      },
+      {
+        "source": "data/2023/s_class_yosen/entries.csv",
+        "rows_accepted": 153,
+        "line_manifests": 17
+      }
+    ],
+    "exclusions": {
+      "bad_numeric_rows": 700,
+      "published_line_unavailable": 938,
+      "duplicate_race_manifest": 1472,
+      "duplicate_entry_rows": 10234,
+      "exclude_bad_line_coverage": 475,
+      "exclude_missing_podium_car": 182
+    },
+    "races_with_valid_line_and_all_card_features": 20349,
+    "training_races": 16658,
+    "heldout_races": 3691,
+    "heldout_categories": {
+      "A3": 920,
+      "A1_A2": 1916,
+      "S": 855
+    },
+    "heldout_months": {
+      "2023-11": 1828,
+      "2023-12": 1863
+    },
+    "using_only_exactly_identical_race_ids_for_both_branches": true
+  },
+  "metrics": {
+    "LR": {
+      "no_line": {
+        "3連単": {
+          "nll": 4.705708221378204,
+          "top1": 0.04009753454348415,
+          "top3": 0.11324844215659713,
+          "brier": 0.9855944626251357,
+          "p_true": 0.011947190563096712,
+          "races": 3691
+        },
+        "3連複": {
+          "nll": 3.082572776453465,
+          "top1": 0.1365483608778109,
+          "top3": 0.3221349227851531,
+          "brier": 0.9374905113481155,
+          "p_true": 0.05479416844106126,
+          "races": 3691
+        }
+      },
+      "with_line": {
+        "3連単": {
+          "nll": 4.267007906940438,
+          "top1": 0.12408561365483609,
+          "top3": 0.24492007586020048,
+          "brier": 0.9635706657463121,
+          "p_true": 0.02917459298187108,
+          "races": 3691
+        },
+        "3連複": {
+          "nll": 2.7507056508675527,
+          "top1": 0.24817122730967217,
+          "top3": 0.45759956651314004,
+          "brier": 0.887136562674502,
+          "p_true": 0.09694019416583942,
+          "races": 3691
+        }
+      }
+    },
+    "RF": {
+      "no_line": {
+        "3連単": {
+          "nll": 4.624068049126455,
+          "top1": 0.047954483879707396,
+          "top3": 0.13465185586561906,
+          "brier": 0.9833233556910175,
+          "p_true": 0.013787157354713288,
+          "races": 3691
+        },
+        "3連複": {
+          "nll": 3.0228521169465123,
+          "top1": 0.15388783527499322,
+          "top3": 0.3597940937415335,
+          "brier": 0.9314529967406401,
+          "p_true": 0.05924256984018591,
+          "races": 3691
+        }
+      },
+      "with_line": {
+        "3連単": {
+          "nll": 4.1739303021702785,
+          "top1": 0.13085884584123544,
+          "top3": 0.25792468165808724,
+          "brier": 0.9574720732727293,
+          "p_true": 0.03521376326259438,
+          "races": 3691
+        },
+        "3連複": {
+          "nll": 2.6905506001137915,
+          "top1": 0.2538607423462476,
+          "top3": 0.4768355459225142,
+          "brier": 0.8774644100761518,
+          "p_true": 0.10396671720585095,
+          "races": 3691
+        }
+      }
+    }
+  },
+  "paired_improvement": {
+    "LR": {
+      "3連単": {
+        "delta_nll_without_minus_with_positive_means_line_better": 0.438700314437766,
+        "line_better_nll_races": 2333,
+        "no_line_better_nll_races": 1358,
+        "tie_nll_races": 0,
+        "delta_top1_line_minus_without": 0.08398807911135193,
+        "delta_brier_without_minus_with": 0.02202379687882361
+      },
+      "3連複": {
+        "delta_nll_without_minus_with_positive_means_line_better": 0.3318671255859123,
+        "line_better_nll_races": 2594,
+        "no_line_better_nll_races": 1097,
+        "tie_nll_races": 0,
+        "delta_top1_line_minus_without": 0.11162286643186128,
+        "delta_brier_without_minus_with": 0.050353948673613425
+      }
+    },
+    "RF": {
+      "3連単": {
+        "delta_nll_without_minus_with_positive_means_line_better": 0.45013774695617614,
+        "line_better_nll_races": 2391,
+        "no_line_better_nll_races": 1300,
+        "tie_nll_races": 0,
+        "delta_top1_line_minus_without": 0.08290436196152805,
+        "delta_brier_without_minus_with": 0.025851282418288157
+      },
+      "3連複": {
+        "delta_nll_without_minus_with_positive_means_line_better": 0.33230151683272113,
+        "line_better_nll_races": 2569,
+        "no_line_better_nll_races": 1122,
+        "tie_nll_races": 0,
+        "delta_top1_line_minus_without": 0.09997290707125439,
+        "delta_brier_without_minus_with": 0.05398858666448825
+      }
+    }
+  },
+  "by_class": {
+    "A3": {
+      "LR": {
+        "no_line": {
+          "3連単": {
+            "nll": 4.395640397332241,
+            "top1": 0.05217391304347826,
+            "top3": 0.15760869565217392,
+            "brier": 0.9791128076582427,
+            "p_true": 0.016574233702615133,
+            "races": 920
+          },
+          "3連複": {
+            "nll": 2.875321220767471,
+            "top1": 0.1565217391304348,
+            "top3": 0.39456521739130435,
+            "brier": 0.920983284556314,
+            "p_true": 0.06766914917682754,
+            "races": 920
+          }
+        },
+        "with_line": {
+          "3連単": {
+            "nll": 3.881460837945046,
+            "top1": 0.16847826086956522,
+            "top3": 0.31521739130434784,
+            "brier": 0.944881170340917,
+            "p_true": 0.04267698359141899,
+            "races": 920
+          },
+          "3連複": {
+            "nll": 2.467095856073809,
+            "top1": 0.32717391304347826,
+            "top3": 0.5608695652173913,
+            "brier": 0.8470142226029648,
+            "p_true": 0.12673238776777204,
+            "races": 920
+          }
+        }
+      },
+      "RF": {
+        "no_line": {
+          "3連単": {
+            "nll": 4.324371696008227,
+            "top1": 0.058695652173913045,
+            "top3": 0.17391304347826086,
+            "brier": 0.9761115801024088,
+            "p_true": 0.0191809671183423,
+            "races": 920
+          },
+          "3連複": {
+            "nll": 2.834792741297826,
+            "top1": 0.16195652173913044,
+            "top3": 0.4206521739130435,
+            "brier": 0.9167537051955257,
+            "p_true": 0.07100084482210932,
+            "races": 920
+          }
+        },
+        "with_line": {
+          "3連単": {
+            "nll": 3.806470955573818,
+            "top1": 0.175,
+            "top3": 0.3239130434782609,
+            "brier": 0.9348636451173298,
+            "p_true": 0.05361641307876143,
+            "races": 920
+          },
+          "3連複": {
+            "nll": 2.4269222810491864,
+            "top1": 0.325,
+            "top3": 0.5532608695652174,
+            "brier": 0.8356485221635412,
+            "p_true": 0.1379187548236184,
+            "races": 920
+          }
+        }
+      }
+    },
+    "A1_A2": {
+      "LR": {
+        "no_line": {
+          "3連単": {
+            "nll": 4.7587570617591135,
+            "top1": 0.038100208768267224,
+            "top3": 0.10594989561586639,
+            "brier": 0.9868783582013722,
+            "p_true": 0.010968592204716921,
+            "races": 1916
+          },
+          "3連複": {
+            "nll": 3.121490389950515,
+            "top1": 0.13465553235908143,
+            "top3": 0.3147181628392484,
+            "brier": 0.9408336800841792,
+            "p_true": 0.0518384759093273,
+            "races": 1916
+          }
+        },
+        "with_line": {
+          "3連単": {
+            "nll": 4.326140786247696,
+            "top1": 0.11221294363256785,
+            "top3": 0.22964509394572025,
+            "brier": 0.9678047957099827,
+            "p_true": 0.026022251012908452,
+            "races": 1916
+          },
+          "3連複": {
+            "nll": 2.7936284468456214,
+            "top1": 0.23277661795407098,
+            "top3": 0.4462421711899791,
+            "brier": 0.8955446949219337,
+            "p_true": 0.0902032126539667,
+            "races": 1916
+          }
+        }
+      },
+      "RF": {
+        "no_line": {
+          "3連単": {
+            "nll": 4.68248556054321,
+            "top1": 0.042275574112734866,
+            "top3": 0.1174321503131524,
+            "brier": 0.9849367358227052,
+            "p_true": 0.01263285854918006,
+            "races": 1916
+          },
+          "3連複": {
+            "nll": 3.0604415014866584,
+            "top1": 0.151356993736952,
+            "top3": 0.34029227557411273,
+            "brier": 0.9346448006387547,
+            "p_true": 0.05672794686167113,
+            "races": 1916
+          }
+        },
+        "with_line": {
+          "3連単": {
+            "nll": 4.233441030889073,
+            "top1": 0.12004175365344467,
+            "top3": 0.24478079331941544,
+            "brier": 0.9622362801052782,
+            "p_true": 0.03141065194189216,
+            "races": 1916
+          },
+          "3連複": {
+            "nll": 2.730934188162579,
+            "top1": 0.24269311064718163,
+            "top3": 0.4692066805845512,
+            "brier": 0.8852893619749048,
+            "p_true": 0.09757144833869758,
+            "races": 1916
+          }
+        }
+      }
+    },
+    "S": {
+      "LR": {
+        "no_line": {
+          "3連単": {
+            "nll": 4.920469414305063,
+            "top1": 0.031578947368421054,
+            "top3": 0.08187134502923976,
+            "brier": 0.9896917475906007,
+            "p_true": 0.009161359880405168,
+            "races": 855
+          },
+          "3連複": {
+            "nll": 3.218368429986526,
+            "top1": 0.11929824561403508,
+            "top3": 0.2608187134502924,
+            "brier": 0.9477608474301734,
+            "p_true": 0.047563904831584417,
+            "races": 855
+          }
+        },
+        "with_line": {
+          "3連単": {
+            "nll": 4.549352593166233,
+            "top1": 0.10292397660818714,
+            "top3": 0.20350877192982456,
+            "brier": 0.9741925871060435,
+            "p_true": 0.0217099004108165,
+            "races": 855
+          },
+          "3連複": {
+            "nll": 2.9596891995415464,
+            "top1": 0.1976608187134503,
+            "top3": 0.3719298245614035,
+            "brier": 0.9114670556332574,
+            "p_true": 0.07998023915176938,
+            "races": 855
+          }
+        }
+      },
+      "RF": {
+        "no_line": {
+          "3連単": {
+            "nll": 4.815638450289341,
+            "top1": 0.04912280701754386,
+            "top3": 0.13099415204678364,
+            "brier": 0.9874679138304399,
+            "p_true": 0.010570001248120268,
+            "races": 855
+          },
+          "3連複": {
+            "nll": 3.1409730114703382,
+            "top1": 0.15087719298245614,
+            "top3": 0.33801169590643276,
+            "brier": 0.9401171510713041,
+            "p_true": 0.05222549924774707,
+            "races": 855
+          }
+        },
+        "with_line": {
+          "3連単": {
+            "nll": 4.435965439765054,
+            "top1": 0.10760233918128655,
+            "top3": 0.21637426900584794,
+            "brier": 0.9711229897777637,
+            "p_true": 0.023934609414163695,
+            "races": 855
+          },
+          "3連複": {
+            "nll": 2.883723815128948,
+            "top1": 0.2023391812865497,
+            "top3": 0.41169590643274856,
+            "brier": 0.9049240697739194,
+            "p_true": 0.08176491666914894,
+            "races": 855
+          }
+        }
+      }
+    }
+  },
+  "calibration_note": "Proper multiclass log-loss and Brier on complete 3連単/3連複 distributions are used; no claim of Walsh-Joshi 20-bin-ECE coverage pass",
+  "odds_roi_not_computed": true,
+  "no_2024_data_used": true,
+  "limitations": [
+    "2023 November-December is the evaluation holdout. A new 2024+ untouched-period check is needed for external generalization.",
+    "The experiment is a fixed-architecture ablation and does not constitute paper-compliant full feature search/hyperparameter calibration.",
+    "The published line forecast is an archived prediction; not an official observed line result.",
+    "A3 2023 Jan-Feb has no published line column in source, and Mar-Apr source is absent. Only paired available-line rows enter.",
+    "No arbitrary bets, stake amounts, or odds-based selection tested in this comparison."
+  ]
+}
