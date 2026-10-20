@@ -1,0 +1,60 @@
+name: Baby AI GEN-008 | one-week parallel learning
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/ai_nursery/run_parallel_week.py'
+      - 'research/ai_nursery/verify_parallel_week.py'
+      - '.github/workflows/baby-ai-gen008-one-week.yml'
+  workflow_dispatch:
+    inputs:
+      week:
+        description: 'Sequential week number 1 to 9; weeks 2+ inherit the prior checkpoint'
+        required: true
+        default: '1'
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: baby-ai-gen008-week-sequential
+  cancel-in-progress: false
+jobs:
+  parallel-week:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      WEEK_NUMBER: ${{ github.event.inputs.week || '1' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numeric runtime
+        run: python -m pip install 'numpy>=1.26'
+      - name: Test child inheritance and shadow isolation
+        run: python research/ai_nursery/test_gen008.py
+      - name: Check weekly sources compile
+        run: python -m py_compile research/ai_nursery/run_parallel_week.py research/ai_nursery/verify_parallel_week.py
+      - name: Train one week in both children
+        run: |
+          if [ -f "research/ai_nursery/outputs/GEN-008-PARALLEL/week-$(printf '%02d' "$WEEK_NUMBER")/summary.json" ]; then
+            echo "Frozen weekly checkpoint already exists; audit only"
+          else
+            python research/ai_nursery/run_parallel_week.py --week "$WEEK_NUMBER"
+          fi
+      - name: Audit sealed predictions and saved monetary accounting
+        run: python research/ai_nursery/verify_parallel_week.py --week "$WEEK_NUMBER"
+      - name: Preserve both branches without overwriting historical models
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ai_nursery/outputs/GEN-008-PARALLEL/
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "data: freeze both GEN-008 parallel weekly model histories"
+          git pull --rebase origin main
+          git push origin HEAD:main
