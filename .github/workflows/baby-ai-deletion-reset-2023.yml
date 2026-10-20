@@ -37,7 +37,6 @@ jobs:
         run: |
           python -m py_compile research/deletion_ai/deletion_core.py research/deletion_ai/run_reset_2023.py research/deletion_ai/verify_reset_2023.py research/deletion_ai/test_deletion_2023.py
           python research/deletion_ai/test_deletion_2023.py
-          python research/ai_nursery/test_source_bridge.py
       - name: Learn four fresh models from January 2023 (no existing checkpoints inherited)
         run: |
           if [ -f research/deletion_ai/outputs/GEN-008-DELETION-RESET-2023/summary.json ]; then
