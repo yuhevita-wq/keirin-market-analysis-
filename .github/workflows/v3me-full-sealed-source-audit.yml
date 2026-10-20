@@ -1,0 +1,67 @@
+name: V3-ME-R | verify full sealed seven-market archive 2021-2026H1
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/v3me-full-sealed-source-audit.yml'
+permissions:
+  contents: write
+concurrency:
+  group: v3me-sealed-source-2021-2026-integrity
+  cancel-in-progress: false
+jobs:
+  integrity_audit_only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      PYTHONUNBUFFERED: '1'
+      PYTHONHASHSEED: '0'
+      PYTHONPATH: '.:research/deletion_ai'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing seven-market source verification and outcome join dependencies
+        run: python -m pip install -e '.[scrape]' 'numpy>=1.26'
+      - name: Regression-test decryption, market completeness and girls exclusion with synthetic data
+        run: |
+          python -m py_compile research/deletion_ai/audit_full_sealed_v3me_2021_2026.py research/deletion_ai/secure_seven_bet_bridge.py
+          python research/deletion_ai/test_secure_seven_bet_bridge.py
+      - name: Require authorized private key stored in GitHub Actions secrets
+        env:
+          HAS_KEY: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        run: |
+          if [ -z "$HAS_KEY" ]; then
+            echo "::error::KEY_NOT_CONFIGURED: Owner's private key must be securely installed as repository Actions secret KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM. Existing ChatGPT Project Library keys are not passed into GitHub Actions automatically."
+            echo 'Phase 1 status: BLOCKED AT SECRET HANDOFF, not source-audit complete.' >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          echo 'Authorized secret present. Original key bytes will not be printed or committed.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Verify every sealed original and exact official-result join
+        env:
+          KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        run: |
+          if [ -f data/audits/v3me_full_sealed_source_integrity_2021_2026.json ]; then
+            echo 'Immutable prior audit already exists.'
+          else
+            python research/deletion_ai/audit_full_sealed_v3me_2021_2026.py
+          fi
+      - name: Commit only authenticated annual aggregates
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/audits/v3me_full_sealed_source_integrity_2021_2026.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'audit: verify every seven-bet ciphertext and label join 2021-2026h1'
+          for i in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
