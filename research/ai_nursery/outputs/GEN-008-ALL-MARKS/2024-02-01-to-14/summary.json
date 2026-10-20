@@ -1,0 +1,438 @@
+{
+  "stage": "GEN-008-FOUR-BRANCH-ALL-MARKS-2024-FEB",
+  "status": "COMPLETE",
+  "kind": "FULL_FIELD_MARK_SHEET_SUPERVISION",
+  "train_dates": [
+    "2024-02-01",
+    "2024-02-07"
+  ],
+  "test_dates": [
+    "2024-02-08",
+    "2024-02-14"
+  ],
+  "train_races": 319,
+  "test_races": 245,
+  "controls_frozen_start": {
+    "old": {
+      "prediction": "bda09bd84b117c2520db98ec50750f35dae7396e9a94ef1445c720539d02c963",
+      "behavior": "ad49143d6bf82c97a2d1ae7d6cda13be13863e547a7c4fd198772235cef8be75",
+      "temperature": 1.0
+    },
+    "new": {
+      "prediction": "01afec6d9cdd7df82d5310b3c7af2f1d80ff11d9f110b1b430f4b041f4a3425a",
+      "behavior": "9c494049f3181b3b0cd2e72afcc3ef609dd0a477406fbc806e1df9030fa4b3f6",
+      "temperature": 1.0942554149337542
+    }
+  },
+  "controls_frozen_end": {
+    "old": {
+      "prediction": "bda09bd84b117c2520db98ec50750f35dae7396e9a94ef1445c720539d02c963",
+      "behavior": "ad49143d6bf82c97a2d1ae7d6cda13be13863e547a7c4fd198772235cef8be75",
+      "temperature": 1.0
+    },
+    "new": {
+      "prediction": "01afec6d9cdd7df82d5310b3c7af2f1d80ff11d9f110b1b430f4b041f4a3425a",
+      "behavior": "9c494049f3181b3b0cd2e72afcc3ef609dd0a477406fbc806e1df9030fa4b3f6",
+      "temperature": 1.0942554149337542
+    }
+  },
+  "me_original_digest": "48c37ededf914ddffe3f20a5e85bbe18343d8206d6f116db0fdf147221c28cfe",
+  "original_models_untouched": true,
+  "branch_specific_incremental_learning": [
+    {
+      "branch": "old",
+      "incremental_market_error_coefficients": [
+        -0.009173183204969728,
+        -0.176619056772546,
+        0.13451772254872157,
+        0.09758282928760036,
+        0.10065901645330115
+      ],
+      "trained_on_full_result_likelihood_only": true
+    },
+    {
+      "branch": "new",
+      "incremental_market_error_coefficients": [
+        -0.014328916978406745,
+        -0.23742643137769934,
+        0.21168468722176428,
+        0.127021459419185,
+        0.0962837803753812
+      ],
+      "trained_on_full_result_likelihood_only": true
+    },
+    {
+      "branch": "v3",
+      "incremental_market_error_coefficients": [
+        -0.008702548152098706,
+        -0.07735880133666952,
+        0.21111111824611292,
+        0.05580046491782918,
+        0.10546960551177545
+      ],
+      "trained_on_full_result_likelihood_only": true
+    },
+    {
+      "branch": "v3_market_error",
+      "incremental_market_error_coefficients": [
+        -0.035009104181566976,
+        -0.05608252499954822,
+        0.15596332456507306,
+        0.04663336238622584,
+        0.0756949026826764
+      ],
+      "trained_on_full_result_likelihood_only": true
+    }
+  ],
+  "all_3rentan_and_3renpuku_marked": true,
+  "100_yen_per_combination": true,
+  "all_four_same_full_sheet": true,
+  "full_sheet_stakes_not_real_money": true,
+  "outcome_read_after_pre_result_seal": true,
+  "test_period_never_updates_weights_or_coefficients": true,
+  "counterfactual_shadow_not_in_full_cash": true,
+  "frozen_final_odds_only": true,
+  "source_reports": {
+    "train": {
+      "year": 2024,
+      "date_start": "2024-02-01",
+      "date_end": "2024-02-07",
+      "source_count": {
+        "source_containers": 46,
+        "race_rows": 573,
+        "duplicate_race_id": 36,
+        "unique_cards": 537
+      },
+      "selected_racecard_sources": {
+        "data/2024/s_class_f1_all_parts/2024_q1": 129,
+        "data/a_class_12/2024_01_02": 247,
+        "data/a3_challenge/2024_01_02": 113,
+        "data/grade_races/g3/2024/g3-2024-q1.zip": 48
+      },
+      "label_source": "data/result_universe_v2/combined/results_2024.jsonl.gz",
+      "result_count": {
+        "source_records": 25482
+      },
+      "odds_source": "data/odds_only/odds_2024.jsonl.gz",
+      "market_count": {
+        "archive_complete_races": 9542,
+        "hash_verified": true,
+        "archive_sha256": "7ca1e7859c0cbad0b56167e2ecab8957c570ce3c8e82ce1c8280fc022bb50df5",
+        "matched_candidate_ids": 324,
+        "invalid": {}
+      },
+      "join_status": {
+        "no_complete_market": 213,
+        "no_result": 10,
+        "joined_and_eligible": 319
+      },
+      "joined_race_ids_sha256": "a4b167e9a35449f8104b8b73a737ef18cab70485f87761785bfa4134f808e3dc",
+      "complete_races": 319,
+      "date_data_origin": "racecard race_date ONLY; never decoded meeting-start ID",
+      "price_phase": "FINAL (historical), NOT certified pre-close",
+      "markets": [
+        "3連単",
+        "3連複"
+      ],
+      "result_used_only_as_label": true,
+      "original_training_checkpoints_untouched": true
+    },
+    "test": {
+      "year": 2024,
+      "date_start": "2024-02-08",
+      "date_end": "2024-02-14",
+      "source_count": {
+        "source_containers": 46,
+        "race_rows": 517,
+        "duplicate_race_id": 20,
+        "unique_cards": 497
+      },
+      "selected_racecard_sources": {
+        "data/2024/s_class_f1_all_parts/2024_q1": 69,
+        "data/a_class_12/2024_01_02": 248,
+        "data/a3_challenge/2024_01_02": 132,
+        "data/grade_races/g1g2/g1-g2-2024-non-girls.zip": 48
+      },
+      "label_source": "data/result_universe_v2/combined/results_2024.jsonl.gz",
+      "result_count": {
+        "source_records": 25482
+      },
+      "odds_source": "data/odds_only/odds_2024.jsonl.gz",
+      "market_count": {
+        "archive_complete_races": 9542,
+        "hash_verified": true,
+        "archive_sha256": "7ca1e7859c0cbad0b56167e2ecab8957c570ce3c8e82ce1c8280fc022bb50df5",
+        "matched_candidate_ids": 248,
+        "invalid": {}
+      },
+      "join_status": {
+        "no_result": 4,
+        "no_complete_market": 249,
+        "joined_and_eligible": 245
+      },
+      "joined_race_ids_sha256": "3802b59dcff15774685e6ccbf9cb80686d45ae30b08dee9640bb7f0a94d3a05a",
+      "complete_races": 245,
+      "date_data_origin": "racecard race_date ONLY; never decoded meeting-start ID",
+      "price_phase": "FINAL (historical), NOT certified pre-close",
+      "markets": [
+        "3連単",
+        "3連複"
+      ],
+      "result_used_only_as_label": true,
+      "original_training_checkpoints_untouched": true
+    }
+  },
+  "comparison": {
+    "train": {
+      "all_marks_virtual": {
+        "races": 319.0,
+        "marks": 87983.0,
+        "stake_yen": 8798300.0,
+        "payout_yen": 4886160.0,
+        "net_yen": -3912140.0,
+        "roi_percent": 55.5352738597229
+      },
+      "old": {
+        "races": 319.0,
+        "shadow_races_entered": 295.0,
+        "shadow_marks": 9430.0,
+        "shadow_stake_yen": 943000.0,
+        "shadow_payout_yen": 491190.0,
+        "shadow_net_yen": -451810.0,
+        "shadow_hit_races": 33.0,
+        "mean_trifecta_logloss": 4.086548846025537,
+        "mean_trio_logloss": 2.64346936104729,
+        "untrained_source_trifecta_logloss": 4.085726662730436,
+        "untrained_source_trio_logloss": 2.6429222972599202,
+        "shadow_roi_percent": 52.088016967126194
+      },
+      "new": {
+        "races": 319.0,
+        "shadow_races_entered": 315.0,
+        "shadow_marks": 11564.0,
+        "shadow_stake_yen": 1156400.0,
+        "shadow_payout_yen": 765780.0,
+        "shadow_net_yen": -390620.0,
+        "shadow_hit_races": 47.0,
+        "mean_trifecta_logloss": 4.097395589758712,
+        "mean_trio_logloss": 2.6437890364469223,
+        "untrained_source_trifecta_logloss": 4.107357220190855,
+        "untrained_source_trio_logloss": 2.6468666848218407,
+        "shadow_roi_percent": 66.22103078519544
+      },
+      "v3": {
+        "races": 319.0,
+        "shadow_races_entered": 159.0,
+        "shadow_marks": 5377.0,
+        "shadow_stake_yen": 537700.0,
+        "shadow_payout_yen": 54990.0,
+        "shadow_net_yen": -482710.0,
+        "shadow_hit_races": 15.0,
+        "mean_trifecta_logloss": 4.071524137027423,
+        "mean_trio_logloss": 2.6343986311788004,
+        "untrained_source_trifecta_logloss": 4.069071406797947,
+        "untrained_source_trio_logloss": 2.634417875639906,
+        "shadow_roi_percent": 10.226892319137065
+      },
+      "v3_market_error": {
+        "races": 319.0,
+        "shadow_races_entered": 106.0,
+        "shadow_marks": 4501.0,
+        "shadow_stake_yen": 450100.0,
+        "shadow_payout_yen": 17900.0,
+        "shadow_net_yen": -432200.0,
+        "shadow_hit_races": 11.0,
+        "mean_trifecta_logloss": 4.069694495460572,
+        "mean_trio_logloss": 2.632718748547802,
+        "untrained_source_trifecta_logloss": 4.064247106309017,
+        "untrained_source_trio_logloss": 2.630166288867763,
+        "shadow_roi_percent": 3.9768940235503223
+      }
+    },
+    "test": {
+      "all_marks_virtual": {
+        "races": 245.0,
+        "marks": 74004.0,
+        "stake_yen": 7400400.0,
+        "payout_yen": 5767340.0,
+        "net_yen": -1633060.0,
+        "roi_percent": 77.93281444246257
+      },
+      "old": {
+        "races": 245.0,
+        "shadow_races_entered": 230.0,
+        "shadow_marks": 1165.0,
+        "shadow_stake_yen": 116500.0,
+        "shadow_payout_yen": 83690.0,
+        "shadow_net_yen": -32810.0,
+        "shadow_hit_races": 59.0,
+        "mean_trifecta_logloss": 4.1791195046326255,
+        "mean_trio_logloss": 2.8262369228986786,
+        "untrained_source_trifecta_logloss": 4.17054843028544,
+        "untrained_source_trio_logloss": 2.803471020262947,
+        "shadow_roi_percent": 71.83690987124463
+      },
+      "new": {
+        "races": 245.0,
+        "shadow_races_entered": 238.0,
+        "shadow_marks": 1474.0,
+        "shadow_stake_yen": 147400.0,
+        "shadow_payout_yen": 103850.0,
+        "shadow_net_yen": -43550.0,
+        "shadow_hit_races": 61.0,
+        "mean_trifecta_logloss": 4.201409345523015,
+        "mean_trio_logloss": 2.830648520425838,
+        "untrained_source_trifecta_logloss": 4.210367836854267,
+        "untrained_source_trio_logloss": 2.8059893088100907,
+        "shadow_roi_percent": 70.45454545454545
+      },
+      "v3": {
+        "races": 245.0,
+        "shadow_races_entered": 233.0,
+        "shadow_marks": 771.0,
+        "shadow_stake_yen": 77100.0,
+        "shadow_payout_yen": 54980.0,
+        "shadow_net_yen": -22120.0,
+        "shadow_hit_races": 59.0,
+        "mean_trifecta_logloss": 4.1722762566243565,
+        "mean_trio_logloss": 2.824537906460353,
+        "untrained_source_trifecta_logloss": 4.152521628298125,
+        "untrained_source_trio_logloss": 2.7965336267696355,
+        "shadow_roi_percent": 71.30998702983139
+      },
+      "v3_market_error": {
+        "races": 245.0,
+        "shadow_races_entered": 230.0,
+        "shadow_marks": 712.0,
+        "shadow_stake_yen": 71200.0,
+        "shadow_payout_yen": 51640.0,
+        "shadow_net_yen": -19560.0,
+        "shadow_hit_races": 52.0,
+        "mean_trifecta_logloss": 4.173541039003094,
+        "mean_trio_logloss": 2.827812658770402,
+        "untrained_source_trifecta_logloss": 4.149025243152501,
+        "untrained_source_trio_logloss": 2.8004949432770183,
+        "shadow_roi_percent": 72.52808988764045
+      }
+    }
+  },
+  "daily": {
+    "train": [
+      {
+        "date": "2024-02-01",
+        "full_net_yen": -851700.0,
+        "old_shadow_net": 106550.0,
+        "new_shadow_net": 152260.0,
+        "v3_shadow_net": -16850.0,
+        "v3_market_error_shadow_net": -1300.0
+      },
+      {
+        "date": "2024-02-02",
+        "full_net_yen": -579280.0,
+        "old_shadow_net": -135940.0,
+        "new_shadow_net": -152270.0,
+        "v3_shadow_net": -119400.0,
+        "v3_market_error_shadow_net": -80200.0
+      },
+      {
+        "date": "2024-02-03",
+        "full_net_yen": -560330.0,
+        "old_shadow_net": -300190.0,
+        "new_shadow_net": -281320.0,
+        "v3_shadow_net": -330700.0,
+        "v3_market_error_shadow_net": -343700.0
+      },
+      {
+        "date": "2024-02-04",
+        "full_net_yen": -460870.0,
+        "old_shadow_net": -40620.0,
+        "new_shadow_net": -16390.0,
+        "v3_shadow_net": -10200.0,
+        "v3_market_error_shadow_net": -3600.0
+      },
+      {
+        "date": "2024-02-05",
+        "full_net_yen": -346780.0,
+        "old_shadow_net": -54900.0,
+        "new_shadow_net": -56540.0,
+        "v3_shadow_net": -2600.0,
+        "v3_market_error_shadow_net": -800.0
+      },
+      {
+        "date": "2024-02-06",
+        "full_net_yen": -507220.0,
+        "old_shadow_net": -18270.0,
+        "new_shadow_net": -33070.0,
+        "v3_shadow_net": -800.0,
+        "v3_market_error_shadow_net": 0.0
+      },
+      {
+        "date": "2024-02-07",
+        "full_net_yen": -605960.0,
+        "old_shadow_net": -8440.0,
+        "new_shadow_net": -3290.0,
+        "v3_shadow_net": -2160.0,
+        "v3_market_error_shadow_net": -2600.0
+      }
+    ],
+    "test": [
+      {
+        "date": "2024-02-08",
+        "full_net_yen": -137240.0,
+        "old_shadow_net": -1690.0,
+        "new_shadow_net": 11460.0,
+        "v3_shadow_net": -1950.0,
+        "v3_market_error_shadow_net": -2490.0
+      },
+      {
+        "date": "2024-02-09",
+        "full_net_yen": 659720.0,
+        "old_shadow_net": -11340.0,
+        "new_shadow_net": -17280.0,
+        "v3_shadow_net": -8630.0,
+        "v3_market_error_shadow_net": -8580.0
+      },
+      {
+        "date": "2024-02-10",
+        "full_net_yen": -845050.0,
+        "old_shadow_net": -4120.0,
+        "new_shadow_net": -15550.0,
+        "v3_shadow_net": -2460.0,
+        "v3_market_error_shadow_net": -920.0
+      },
+      {
+        "date": "2024-02-11",
+        "full_net_yen": -168730.0,
+        "old_shadow_net": -14020.0,
+        "new_shadow_net": -22340.0,
+        "v3_shadow_net": -3790.0,
+        "v3_market_error_shadow_net": 1080.0
+      },
+      {
+        "date": "2024-02-12",
+        "full_net_yen": -516160.0,
+        "old_shadow_net": 3310.0,
+        "new_shadow_net": -2580.0,
+        "v3_shadow_net": -6770.0,
+        "v3_market_error_shadow_net": -8250.0
+      },
+      {
+        "date": "2024-02-13",
+        "full_net_yen": -159000.0,
+        "old_shadow_net": -2180.0,
+        "new_shadow_net": 990.0,
+        "v3_shadow_net": 460.0,
+        "v3_market_error_shadow_net": -1850.0
+      },
+      {
+        "date": "2024-02-14",
+        "full_net_yen": -466600.0,
+        "old_shadow_net": -2770.0,
+        "new_shadow_net": 1750.0,
+        "v3_shadow_net": 1020.0,
+        "v3_market_error_shadow_net": 1450.0
+      }
+    ]
+  },
+  "note": "Buying every outcome trivially hits both pools, without implying a return advantage. Market-error models are judged by frozen out-of-sample scoring and separated EV-positive shadow."
+}
