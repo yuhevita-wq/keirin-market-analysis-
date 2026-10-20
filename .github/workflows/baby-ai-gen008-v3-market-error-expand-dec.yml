@@ -1,0 +1,66 @@
+name: GEN008 V3-ME | recover December odds and validate frozen market errors
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/ai_nursery/recover_gen008_market_error_dec_odds.py'
+      - 'research/ai_nursery/run_gen008_v3_market_error_expanded.py'
+      - '.github/workflows/baby-ai-gen008-v3-market-error-expand-dec.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: gen008-v3market-error-dec2023-original-price-recovery
+  cancel-in-progress: false
+jobs:
+  recover-and-compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install KDreams scraper and scientific packages
+        run: python -m pip install -e '.[scrape]' 'numpy>=1.26' 'scipy>=1.12'
+      - name: Verify the first immutable market-error model before any source changes
+        run: |
+          python -m py_compile research/ai_nursery/recover_gen008_market_error_dec_odds.py research/ai_nursery/run_gen008_v3_market_error_expanded.py
+          python research/ai_nursery/test_gen008_v3_market_error.py
+          python research/ai_nursery/verify_gen008_v3_market_error.py
+      - name: Recover original complete December 2023 markets by exact race ID
+        run: |
+          if [ -f data/holdout_odds_recovery/gen008-2023-12-01-to-14/coverage.json ]; then
+            echo 'Historical odds already archived; not scraping again'
+          else
+            python research/ai_nursery/recover_gen008_market_error_dec_odds.py
+          fi
+      - name: Apply identical coefficients to expanded December without re-training
+        run: |
+          if [ -f research/ai_nursery/outputs/GEN-008-V3-MARKET-ERROR/dec-2023-expanded-authentic-prices/summary.json ]; then
+            echo 'Expanded sealed report already exists; not overwriting'
+          else
+            python research/ai_nursery/run_gen008_v3_market_error_expanded.py
+          fi
+      - name: Commit immutable recovered quote books, decisions and audit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/holdout_odds_recovery/gen008-2023-12-01-to-14/
+          git add research/ai_nursery/outputs/GEN-008-V3-MARKET-ERROR/dec-2023-expanded-authentic-prices/
+          git add docs/ai-lab/gen008-v3-market-error-dec-2023-expanded.json
+          if git diff --cached --quiet; then echo 'No new archive'; exit 0; fi
+          git commit -m 'data: persist December full-price backfill and fixed market mistake forward test'
+          for attempt in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          echo 'Failed to publish after retries' >&2
+          exit 1
