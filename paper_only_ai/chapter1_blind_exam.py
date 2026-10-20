@@ -90,11 +90,15 @@ def quarter_sources(year, quarter):
             + [f"data/{year}/s_class_f1_all_parts/{year}_q{quarter}/entries.csv"])
 
 
-def score_one_quarter(year, quarter, models):
+def score_one_quarter(year, quarter, models, window=None):
     start = f"{year}-{(quarter - 1) * 3 + 1:02d}-01"
     end_month = quarter * 3
     end_day = 31 if end_month in (3, 12) else 30
     end = f"{year}-{end_month:02d}-{end_day:02d}"
+    if window is not None:
+        start, end = window
+        if not (f"{year}-{(quarter-1)*3+1:02d}-01" <= start <= end <= f"{year}-{quarter*3:02d}-31"):
+            raise ValueError("Profitability preflight window must remain inside fixed quarter")
     bt.LABELS = f"data/result_universe_v2/combined/results_{year}.jsonl.gz"
     bt.START, bt.END = start, end
     bt.sources = lambda: quarter_sources(year, quarter)
@@ -114,7 +118,7 @@ def score_one_quarter(year, quarter, models):
             continue
         valid.append((rid, cards[rid]))
     if len(valid) < MIN_RACES:
-        raise RuntimeError(f"Insufficient aligned unseen 2025 Q{quarter} races: {len(valid)}")
+        raise RuntimeError(f"Insufficient aligned race/odds pairs: {year} Q{quarter}: {len(valid)}")
     ledger = {r: {kind: bt.Ledger() for kind in MARKETS} for r in models}
     for off in range(0, len(valid), 20):
         chunk = valid[off:off + 20]
@@ -132,7 +136,7 @@ def score_one_quarter(year, quarter, models):
                                if p * book[kind][ticket] > 1.0}
                     ledger[role][kind].update(
                         choices, actual[kind], book[kind], pred[kind])
-        print("BLIND_EXAM_PROGRESS", off + len(chunk), len(valid), flush=True)
+        print("HISTORICAL_SCORING_PROGRESS", year, quarter, off + len(chunk), len(valid), flush=True)
     totals = {}
     for role, markets in ledger.items():
         s = {k: l.summary() for k, l in markets.items()}
@@ -159,6 +163,83 @@ def score_one_quarter(year, quarter, models):
     }
 
 
+def past_profit_gate(scored):
+    """Predeclared historic-return filter, NOT proof of repeatable edge.
+
+    The current model search must not consume these historical gate results.
+    2023 Nov-Dec was studied in the earlier LINE-model family, so it is an
+    honest development diagnostic, never a pristine academic holdout.
+    """
+    combined = scored["by_role"]["calibration"]["combined"]
+    roi = combined.get("return_rate_percent")
+    return (scored["qualified_races"] >= 200
+            and combined.get("investment_yen", 0) > 0
+            and roi is not None and np.isfinite(roi) and roi > 100)
+
+
+def historic_preflight(state, champions):
+    """Check a champion on completed 2023 races before burning 2025 tests.
+
+    Each champion is checked only once; negative outcomes remain visible in
+    the ledger and cannot be overwritten to pretend success.
+    """
+    candidate_id = champions["calibration"]["id"]
+    reports = state.setdefault("historical_roi_checks", {})
+    if candidate_id in reports:
+        return bool(reports[candidate_id]["passed"])
+    with tempfile.TemporaryDirectory(prefix="chapter1_past_") as td:
+        models = {}
+        digests = {}
+        seen = {}
+        for role in ("accuracy", "calibration"):
+            cid = champions[role]["id"]
+            if cid not in seen:
+                seen[cid] = load_frozen_champion(champions[role], td)
+            models[role], digests[role] = seen[cid]
+        # The original 2023 full-year model is deliberately EXCLUDED here:
+        # Nov-Dec 2023 is inside its training sample.
+        scored = score_one_quarter(
+            2023, 4, models, window=("2023-11-01", "2023-12-31"))
+    passed = past_profit_gate(scored)
+    report = {
+        "evaluation_type": "development_historical_profit_gate",
+        "not_a_new_unknown_test": True,
+        "past_data_previously_used_for_model_family_study": True,
+        "candidate_model_trained_through": "2023-08-31",
+        "candidate_calibration_fit_only": "2023-09",
+        "candidate_selected_with_accuracy_or_calibration_only": "2023-10",
+        "result_period": ["2023-11-01", "2023-12-31"],
+        "fixed_rule": "Every 3連単 and 3連複 ticket p*final_odds > 1, JPY100 each",
+        "passes_only_if_calibration_champion_combined_roi_above_100_percent": True,
+        "passes_if_at_least_200_matched_races": True,
+        "passed": bool(passed),
+        "champions": {role: c["id"] for role, c in champions.items()},
+        "model_archive_sha256": digests,
+        "metrics": scored,
+        "not_used_by_candidate_generator": True,
+        "future_year_exam_allowed": bool(passed),
+    }
+    path = ROOT / ("historical_gate_" + candidate_id + ".json")
+    if path.exists():
+        raise RuntimeError("Historic gate output already exists without ledger; unsafe overwrite")
+    path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8")
+    reports[candidate_id] = {
+        "passed": bool(passed), "report": str(path),
+        "qualified_races": scored["qualified_races"],
+        "calibration_combined_return_percent": scored["by_role"]["calibration"]["combined"]["return_rate_percent"],
+        "frozen_champions": report["champions"],
+    }
+    STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n",
+                     encoding="utf-8")
+    print("HISTORICAL_GATE_COMPLETE", json.dumps({
+        "candidate": candidate_id, "passed": passed,
+        "roi": reports[candidate_id]["calibration_combined_return_percent"],
+        "races": scored["qualified_races"],
+    }), flush=True)
+    return bool(passed)
+
+
 def readiness(state):
     if int(state["generation"]) != len(state["attempts"]):
         raise RuntimeError("Tampered candidate generation ledger")
@@ -181,11 +262,25 @@ def main():
         print("BLIND_EXAM_WAITING_FOR_GENERATION_STATE")
         return
     state = json.loads(STATE.read_text("utf-8"))
+    # A completed race profitability diagnostic must come BEFORE any 2025
+    # evaluation. This is a fixed policy gate, not a search signal.
+    if state["generation"] < EXAM_EVERY_GENERATIONS:
+        print("HISTORICAL_GATE_WAITING_FOR_INITIAL_RESEARCH", flush=True)
+        return
+    if len(state.get("external_exams", [])) >= MAX_EXAMS:
+        print("ALL_2025_QUARTER_EXAMS_USED", flush=True)
+        return
+    champions = state["champions"]
+    if not all(champions.get(role) for role in ("accuracy", "calibration")):
+        print("HISTORICAL_GATE_WAITING_FOR_TWO_CHAMPIONS", flush=True)
+        return
+    if not historic_preflight(state, champions):
+        print("HISTORICAL_PROFIT_NEGATIVE__DO_NOT_EVALUATE_2025", flush=True)
+        return
     q = readiness(state)
     if q is None:
         print("BLIND_EXAM_NOT_YET_DUE", flush=True)
         return
-    champions = state["champions"]
     fixed_ids = {role: candidate["id"] for role, candidate in champions.items()}
     with tempfile.TemporaryDirectory(prefix="chapter1_exam_") as td:
         models, checksums = {}, {}
