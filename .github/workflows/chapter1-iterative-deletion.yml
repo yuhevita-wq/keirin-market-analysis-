@@ -1,9 +1,6 @@
 name: Chapter 1 | Continuously learn what to delete
 on:
   workflow_dispatch:
-  schedule:
-    # 10:05, 16:05, 22:05 and 04:05 JST after merged on main
-    - cron: '5 1,7,13,19 * * *'
   push:
     paths:
       - 'paper_only_ai/chapter1_iterative_deletion.py'
