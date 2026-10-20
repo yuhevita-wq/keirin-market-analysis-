@@ -104,7 +104,7 @@ def build_stage(events, stage):
     for gid, (rid, race) in enumerate(events.items()):
         a, b, c = race['first3']
         riders = race['riders']
-        others = sorted(k for k in riders if k not in ([a] if stage == 2 else [a,b]),
+        others = sorted((k for k in riders if k not in ([a] if stage == 2 else [a,b])),
                         key=int)
         if not others:
             raise RuntimeError('Empty conditional choice set')
