@@ -1,0 +1,218 @@
+"""Chronologically train empirical market error and freeze a NEW December exam.
+
+The examined October period is now *development data*, clearly recorded as
+such. Its earlier exam reports remain unchanged. December has never been
+used by this candidate to fit, calibrate or choose settings.
+"""
+from __future__ import annotations
+
+import hashlib,json,math
+from collections import defaultdict
+from pathlib import Path
+
+import numpy as np
+
+from train_week import ROOT
+from source_bridge import joined_races
+from gen008_recovered_exam import expanded_joined_races
+from gen008_frozen_exam import load_frozen
+from parallel_gen008 import pure_pre_result,seal
+from gen008_experiment import score_papers,model_digest
+from run_parallel_week import forward_compatible_probabilities,revealed_metric
+from gen008_v3 import matrix,blend,joint_portfolio,settle_v3
+from gen008_v3_market_error import (
+ FIRST_FIT,LAST_FIT,FIRST_DIAG,LAST_DIAG,FIRST_TEST,LAST_TEST,
+ FEATURE_NAMES,RIDGE,fit,logloss_report,market_features,
+ corrected_probability,best_expected_value_stats,portfolio,settle
+)
+
+BASE=ROOT/"research/ai_nursery/outputs/GEN-008-V3-MARKET-ERROR"
+OUT=BASE/"frozen-dec-01-to-14-2023"
+WEB=ROOT/"docs/ai-lab/gen008-v3-market-error-dec-2023.json"
+STAGE="GEN008-V3-MARKET-ERROR-FIRST-DEC-2023"
+V3_PARENT=ROOT/"research/ai_nursery/outputs/GEN-008-V3/first-independent-november-2023/v3_checkpoint.json"
+
+
+def read(path):
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def source_rows():
+    sep,sep_source=joined_races(2023,"2023-09-15","2023-09-30")
+    octob,oct_source=expanded_joined_races(2023,"2023-10-01","2023-10-14")
+    assert len(octob)==917 and len({r["race_id"] for r in octob})==len(octob), "Original October evidence changed"
+    early=sep+octob
+    early.sort(key=lambda r:(r["race"]["race_date"],r["race"].get("start_time",""),
+               r["race"].get("track",""),int(r["race"].get("race_no") or 0),r["race_id"]))
+    ids=[r["race_id"] for r in early]
+    assert len(set(ids))==len(ids)
+    train=[r for r in early if FIRST_FIT<=r["race"]["race_date"]<=LAST_FIT]
+    diagnostic=[r for r in early if FIRST_DIAG<=r["race"]["race_date"]<=LAST_DIAG]
+    assert len(train)+len(diagnostic)==len(early)
+    testing,test_source=joined_races(2023,FIRST_TEST,LAST_TEST)
+    assert len(testing)>0
+    alltrain={r["race_id"] for r in early}
+    assert alltrain.isdisjoint(r["race_id"] for r in testing)
+    assert all(r["race"]["race_date"]>=FIRST_TEST for r in testing)
+    assert all(r["race"]["race_date"]<FIRST_TEST for r in early)
+    return train,diagnostic,testing,{"september":sep_source,"october":oct_source,"december":test_source}
+
+
+def summarize(records):
+    comparison={}
+    for branch in ("old","new","v3","v3_market_error"):
+        x=[r for r in records if r["branch"]==branch]
+        n=len(x)
+        spent=sum(r["actual"]["stake_yen"] for r in x)
+        pay=sum(r["actual"]["payout_yen"] for r in x)
+        comparison[branch]={
+            "races":n,"entered":sum(r["entered"] for r in x),
+            "skipped":sum(not r["entered"] for r in x),
+            "hit_races":sum(r["actual"]["hit"] for r in x),
+            "marks":sum(r["actual"]["marks"] for r in x),
+            "stake_yen":spent,"payout_yen":pay,"net_yen":pay-spent,
+            "roi_pct":100*pay/spent if spent else None,
+            "mean_trifecta_logloss":sum(r["trifecta_logloss"] for r in x)/n,
+            "mean_trio_logloss":sum(r["trio_logloss"] for r in x)/n}
+    return comparison
+
+
+def run():
+    if OUT.exists() or WEB.exists():
+        raise RuntimeError("Immutable market-error result files already exist")
+    prior,snap=load_frozen()
+    v3_checkpoint=read(V3_PARENT)
+    assert v3_checkpoint["model"]=="GEN-008-V3" if "model" in v3_checkpoint else v3_checkpoint["id"]=="GEN-008-V3"
+    assert v3_checkpoint["parent_new_prediction"]==snap["new"]["prediction"]
+    assert v3_checkpoint["parent_new_policy"]==snap["new"]["behavior"]
+    alpha=float(v3_checkpoint["alpha"])
+    train,diagnostics,testing,reports=source_rows()
+    learned=fit(train,prior["new"].weights,prior["new"].temperature)
+    learned["input_NEW_weights_sha256"]=snap["new"]["prediction"]
+    learned["input_NEW_policy_sha256"]=snap["new"]["behavior"]
+    learned["input_NEW_temperature"]=snap["new"]["temperature"]
+    learned["frozen_v3_alpha"]=alpha
+    learned["used_previously_examined_october_as_development"]=True
+    learned["september_training_and_october_training_are_only_development"]=True
+    learned["december_2023_untouched_forward_period"]=[FIRST_TEST,LAST_TEST]
+    learned["diagnostic_races"]=len(diagnostics)
+    learned["diagnostic_dates"]=[FIRST_DIAG,LAST_DIAG]
+    learned["diagnostic_no_refit"]=logloss_report(
+        diagnostics,learned["coefficients"],prior["new"].weights,prior["new"].temperature,alpha)
+    learned["train_logloss"]=logloss_report(
+        train,learned["coefficients"],prior["new"].weights,prior["new"].temperature,alpha)
+    learned["algorithm_sha256"]=hashlib.sha256(
+        json.dumps({
+          "features":learned["feature_names"],"params":learned["coefficients"],
+          "ridge":RIDGE,"parent":snap["new"]["prediction"]
+        },sort_keys=True,separators=(",",":")).encode()).hexdigest()
+    OUT.mkdir(parents=True,exist_ok=False)
+    (OUT/"market_error_fit.json").write_text(json.dumps(learned,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    allresults=[]
+    byday=defaultdict(list)
+    selected_counts={"race_with_positive_ev":0,"positive_trifecta_tickets":0,
+                     "positive_trio_tickets":0,"max_ev":None}
+    with (OUT/"decisions_sealed_before_result.jsonl").open("x",encoding="utf-8") as decisions, \
+         (OUT/"settlements_after_result.jsonl").open("x",encoding="utf-8") as revealed:
+        for i,row in enumerate(testing,1):
+            pre=pure_pre_result(row)
+            controls,controlpayload={},{}
+            for name in ("old","new"):
+                controls[name],controlpayload[name]=prior[name].precommit(pre)
+                assert controls[name]["prediction_before_sha256"]==snap[name]["prediction"]
+                assert controls[name]["policy_before_sha256"]==snap[name]["behavior"]
+            legacy_v3=joint_portfolio(pre,prior["new"].weights,prior["new"].temperature,alpha)
+            features=market_features(pre,prior["new"].weights,prior["new"].temperature)
+            q=corrected_probability(features,learned["coefficients"])
+            choice=portfolio(pre,features,q)
+            ev=best_expected_value_stats(pre,features,q)
+            if ev["positive_3rentan_tickets"] or ev["positive_3renpuku_tickets"]:
+                selected_counts["race_with_positive_ev"]+=1
+            selected_counts["positive_trifecta_tickets"]+=ev["positive_3rentan_tickets"]
+            selected_counts["positive_trio_tickets"]+=ev["positive_3renpuku_tickets"]
+            selected_counts["max_ev"]=max(selected_counts["max_ev"] or -1.,ev["max_3rentan_ev_per_yen"],ev["max_3renpuku_ev_per_yen"])
+            seal(decisions,{
+                "stage":STAGE,"sequence":i,"date":pre["race"]["race_date"],
+                "race_id":pre["race_id"],"market_model_sha256":learned["algorithm_sha256"],
+                "input_model_sha256":snap["new"]["prediction"],
+                "pre_result":True,"old":controls["old"],"new":controls["new"],
+                "v3":legacy_v3,"v3_market_error":choice,
+                "estimated_ev_summary":ev
+            })
+            # Result is not accessed before all four branches have been sealed.
+            finish=row["outcome"]
+            for branch in ("old","new","v3","v3_market_error"):
+                if branch in ("old","new"):
+                    paid=score_papers(controls[branch]["pages"],pre["odds"],finish)
+                    probs=forward_compatible_probabilities(controlpayload[branch][0],controlpayload[branch])
+                    ll=revealed_metric(finish,probs)
+                elif branch=="v3":
+                    paid=settle_v3(legacy_v3,finish)
+                    keys,pmod,m=matrix(pre,prior["new"].weights,prior["new"].temperature)
+                    prob=blend(pmod,m,alpha)
+                    trioq=sum(float(p) for key,p in zip(keys,prob) if
+                        set(key.split("-"))==set(map(str,finish)))
+                    ll={"trifecta_logloss":-math.log(max(float(prob[keys.index("-".join(map(str,finish)))]),1e-50)),
+                        "trio_logloss":-math.log(max(trioq,1e-50))}
+                else:
+                    paid=settle(choice,finish)
+                    idx=features["keys"].index("-".join(map(str,finish)))
+                    trioix=features["trio_group"][idx]
+                    trioq=np.bincount(features["trio_group"],weights=q,minlength=len(features["trio_names"]))
+                    ll={"trifecta_logloss":-math.log(max(float(q[idx]),1e-50)),
+                        "trio_logloss":-math.log(max(float(trioq[trioix]),1e-50))}
+                recorded={
+                    "stage":STAGE,"sequence":i,"date":pre["race"]["race_date"],
+                    "race_id":pre["race_id"],"branch":branch,"entered":paid["stake_yen"]>0,
+                    "finish_only_after_seal":list(finish),
+                    "actual":paid,**ll,"real_money_bet":False}
+                seal(revealed,recorded)
+                allresults.append(recorded)
+                byday[recorded["date"]].append(recorded)
+            if i%100==0:
+                print("MARKET_ERROR_FROZEN_DEC_PROGRESS",i,len(testing),flush=True)
+    ending={name:{"prediction":model_digest(br.weights),
+                   "behavior":br.policy.digest(),"temperature":br.temperature}
+            for name,br in prior.items()}
+    assert ending==snap,"Read-only frozen exam changed control weights or policy"
+    comparison=summarize(allresults)
+    daily=[{"date":date,"races":len(z)//4,
+            **{name+"_net":sum(v["actual"]["net_yen"] for v in z if v["branch"]==name)
+               for name in comparison}}
+            for date,z in sorted(byday.items())]
+    model_ll=learned["diagnostic_no_refit"]["mean_logloss"]
+    summary={
+        "stage":STAGE,"status":"COMPLETE",
+        "model_objective":"Infer systematic past-result/market-pricing residuals without treating odds outliers as proven edge",
+        "train_period":[FIRST_FIT,LAST_FIT],"train_races":len(train),
+        "diagnostic_period":[FIRST_DIAG,LAST_DIAG],"diagnostic_races":len(diagnostics),
+        "test_period":[FIRST_TEST,LAST_TEST],"test_races":len(testing),
+        "former_october_holdout_now_dev":True,
+        "december_outcomes_never_used_to_fit":True,
+        "pre_result_decisions_sealed_before_outcomes":True,
+        "old_new_v3_frozen_unchanged":True,
+        "same_races_for_all_four":True,
+        "historical_final_odds_only":True,"actual_real_bets":False,
+        "market_baseline_and_no_refit_diagnostic":model_ll,
+        "fitted_model_sha256":learned["algorithm_sha256"],
+        "market_mispricing_detection":selected_counts,
+        "frozen_parent_start":snap,"frozen_parent_end":ending,
+        "source_reports":reports,"comparison":comparison,"daily":daily,
+        "limitation":"A statistically learned residual is not a demonstrated profitable exploitable market error. This is paper settlement on historical FINAL prices only."
+    }
+    (OUT/"summary.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    WEB.parent.mkdir(parents=True,exist_ok=True)
+    WEB.write_text(json.dumps({
+      "stage":STAGE,"status":"COMPLETE","test_races":len(testing),
+      "comparison":comparison,"market_mispricing_detection":selected_counts,
+      "source":str((OUT/"summary.json").relative_to(ROOT)),
+      "historical_final_odds_only":True},ensure_ascii=False,indent=2)+"\n")
+    print("GEN008_V3_MARKET_ERROR_FROZEN_EXAM_DONE",
+          json.dumps({"fit":len(train),"diagnostic":len(diagnostics),
+          "test":len(testing),"coefs":learned["coefficients"],
+          "diagnostic":model_ll,"detection":selected_counts,
+          "comparison":comparison},ensure_ascii=False),flush=True)
+
+
+if __name__=="__main__":
+    run()
