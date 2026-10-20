@@ -1,0 +1,1086 @@
+{
+  "status": "COMPLETE_FROZEN_LINE_RF_FINAL_ODDS_2024_Q1",
+  "started_at": "2026-10-20T06:04:53.566427+00:00",
+  "finished_at": "2026-10-20T06:05:35.144513+00:00",
+  "train_dates": [
+    "2023-01-01",
+    "2023-12-31"
+  ],
+  "test_dates": [
+    "2024-01-01",
+    "2024-03-31"
+  ],
+  "2023_line_full_training_run": 39376331186,
+  "2023_line_model_sha256": {
+    "1": "3ef96a3fd6e0e3f2fe96f6bdd28b098abf1d6592132f6e3ccf19a567e90107e4",
+    "2": "a3cd93029adb7231288c65c434fe10eb384e60f30726fb43fc91c25487a022a0",
+    "3": "f7f7028fd9c1559243c7dccc33cda84a0a274520413852f5fdaeea6edba63ea9"
+  },
+  "trained_line_races": 20349,
+  "2024_fit_calls": 0,
+  "2024_model_selection_calls": 0,
+  "training_model_is_unchanged": true,
+  "selection_rule": "p_model*decimal_final_odds > 1, all eligible tickets",
+  "odds_source": "data/odds_only/odds_2024.jsonl.gz",
+  "odds_are_final": true,
+  "real_time_executable_claim": false,
+  "ticket_markets": [
+    "3連単",
+    "3連複"
+  ],
+  "primary_fixed_stake_yen_per_bet": 100,
+  "primary_unlimited_working_capital": true,
+  "odds_join": {
+    "all_2024_q1_line_complete_card_races": 5443,
+    "all_2024_full_year_odds_records": 9542,
+    "q1_line_entry_and_odds_joined_ids_before_price_checks": 3199,
+    "q1_no_complete_odds_races": 2244,
+    "price_exclusions": {
+      "excluded_odds_invalid_odd": 2
+    },
+    "aligned_evaluation_races": 3197,
+    "excluded_examples": [
+      {
+        "race_id": "8320231231020002",
+        "reason": "invalid_odd"
+      },
+      {
+        "race_id": "4720240113010003",
+        "reason": "invalid_odd"
+      }
+    ],
+    "card_source_audit": {
+      "files": [
+        {
+          "path": "data/a_class_12/2024_01_02/entries.csv",
+          "race_manifests_with_line": 1916,
+          "entry_rows": 13266
+        },
+        {
+          "path": "data/a_class_12/2024_03_04/entries.csv",
+          "race_manifests_with_line": 993,
+          "entry_rows": 6902
+        },
+        {
+          "path": "data/a3_challenge/2024_01_02/entries.csv",
+          "race_manifests_with_line": 925,
+          "entry_rows": 6260
+        },
+        {
+          "path": "data/a3_challenge/2024_03_04/entries.csv",
+          "race_manifests_with_line": 463,
+          "entry_rows": 3143
+        },
+        {
+          "path": "data/2024/s_class_f1_all_parts/2024_q1/entries.csv",
+          "race_manifests_with_line": 1320,
+          "entry_rows": 9066
+        },
+        {
+          "path": "data/2024/s_class_yosen/entries.csv",
+          "race_manifests_with_line": 0,
+          "entry_rows": 0
+        }
+      ],
+      "exclusions": {
+        "race_manifest_line_missing": 10,
+        "entry_rows_missing_numeric": 187,
+        "duplicate_manifest_rows": 350,
+        "duplicate_entry_rows": 2438,
+        "exclude_line_coverage_mismatch": 135,
+        "exclude_podium_not_in_card": 39
+      },
+      "complete_podium_with_line_races": 5443,
+      "months": {
+        "2024-01": 1854,
+        "2024-02": 1739,
+        "2024-03": 1850
+      },
+      "categories": {
+        "A3": 1327,
+        "A1_A2": 2829,
+        "S": 1287
+      }
+    },
+    "market_source_audit": {
+      "full_year_odds_records": 9542
+    }
+  },
+  "primary_fixed_100yen": {
+    "line_rf_2023": {
+      "3連単": {
+        "eligible_races": 3197,
+        "betting_races": 3197,
+        "winning_races": 621,
+        "purchased_tickets": 345628,
+        "winning_tickets": 621,
+        "investment_yen": 34562800.0,
+        "payout_yen": 18887570.0,
+        "net_profit_yen": -15675230.0,
+        "return_rate_percent": 54.64710613723425,
+        "roi_percent": -45.35289386276575,
+        "model_expected_roi_percent": 136.46050217929965,
+        "max_drawdown_yen_unlimited_flat_stake": 15749280.0,
+        "losing_races": 2822,
+        "nll": 4.311075675177497,
+        "normalized_market_nll": 3.9695305184855036,
+        "proper_multiclass_brier": 0.9664231336141997,
+        "most_probable_ticket_hit_percent": 10.134501094776352,
+        "top3_tickets_hit_percent": 21.707851110416016
+      },
+      "3連複": {
+        "eligible_races": 3197,
+        "betting_races": 3197,
+        "winning_races": 589,
+        "purchased_tickets": 51862,
+        "winning_tickets": 589,
+        "investment_yen": 5186200.0,
+        "payout_yen": 2932320.0,
+        "net_profit_yen": -2253880.0,
+        "return_rate_percent": 56.54081986811153,
+        "roi_percent": -43.45918013188847,
+        "model_expected_roi_percent": 72.83873569068116,
+        "max_drawdown_yen_unlimited_flat_stake": 2253880.0,
+        "losing_races": 2731,
+        "nll": 2.7898752841733714,
+        "normalized_market_nll": 2.588207075309077,
+        "proper_multiclass_brier": 0.8938328895746851,
+        "most_probable_ticket_hit_percent": 22.61495151704723,
+        "top3_tickets_hit_percent": 44.135126681263685
+      },
+      "combined": {
+        "eligible_races": 3197,
+        "betting_races": 3197,
+        "winning_races": 838,
+        "purchased_tickets": 397490,
+        "winning_tickets": 1210,
+        "investment_yen": 39749000.0,
+        "payout_yen": 21819890.0,
+        "net_profit_yen": -17929110.0,
+        "return_rate_percent": 54.8941860172583,
+        "roi_percent": -45.1058139827417,
+        "model_expected_roi_percent": 128.15953346654533,
+        "max_drawdown_yen_unlimited_flat_stake": 17997360.0,
+        "losing_races": 2816
+      }
+    },
+    "old_no_line_2023": {
+      "3連単": {
+        "eligible_races": 3197,
+        "betting_races": 3197,
+        "winning_races": 596,
+        "purchased_tickets": 449484,
+        "winning_tickets": 596,
+        "investment_yen": 44948400.0,
+        "payout_yen": 26184280.0,
+        "net_profit_yen": -18764120.0,
+        "return_rate_percent": 58.25408690854402,
+        "roi_percent": -41.74591309145598,
+        "model_expected_roi_percent": 283.07181401591055,
+        "max_drawdown_yen_unlimited_flat_stake": 19220760.0,
+        "losing_races": 2744,
+        "nll": 4.7710195934482815,
+        "normalized_market_nll": 3.9695305184855036,
+        "proper_multiclass_brier": 0.9867128950268893,
+        "most_probable_ticket_hit_percent": 3.847356897091023,
+        "top3_tickets_hit_percent": 10.572411635908665
+      },
+      "3連複": {
+        "eligible_races": 3197,
+        "betting_races": 3197,
+        "winning_races": 611,
+        "purchased_tickets": 70549,
+        "winning_tickets": 611,
+        "investment_yen": 7054900.0,
+        "payout_yen": 3949370.0,
+        "net_profit_yen": -3105530.0,
+        "return_rate_percent": 55.9805241746871,
+        "roi_percent": -44.0194758253129,
+        "model_expected_roi_percent": 147.87496661022928,
+        "max_drawdown_yen_unlimited_flat_stake": 3122300.0,
+        "losing_races": 2687,
+        "nll": 3.1042756618891385,
+        "normalized_market_nll": 2.588207075309077,
+        "proper_multiclass_brier": 0.9396318023159766,
+        "most_probable_ticket_hit_percent": 13.387550828902096,
+        "top3_tickets_hit_percent": 32.405380043791055
+      },
+      "combined": {
+        "eligible_races": 3197,
+        "betting_races": 3197,
+        "winning_races": 811,
+        "purchased_tickets": 520033,
+        "winning_tickets": 1207,
+        "investment_yen": 52003300.0,
+        "payout_yen": 30133650.0,
+        "net_profit_yen": -21869650.0,
+        "return_rate_percent": 57.94564960300596,
+        "roi_percent": -42.05435039699404,
+        "model_expected_roi_percent": 264.7306656895098,
+        "max_drawdown_yen_unlimited_flat_stake": 22307030.0,
+        "losing_races": 2745
+      }
+    }
+  },
+  "paired_same_races": {
+    "3連単": {
+      "same_race_set": true,
+      "line_minus_no_line_roi_percentage_points": -3.6069807713097646,
+      "line_minus_no_line_net_yen": 3088890.0,
+      "line_minus_no_line_nll": -0.45994391827078474,
+      "line_minus_no_line_top1_percentage_points": 6.287144197685329
+    },
+    "3連複": {
+      "same_race_set": true,
+      "line_minus_no_line_roi_percentage_points": 0.560295693424429,
+      "line_minus_no_line_net_yen": 851650.0,
+      "line_minus_no_line_nll": -0.3144003777157671,
+      "line_minus_no_line_top1_percentage_points": 9.227400688145135
+    },
+    "combined": {
+      "same_race_set": true,
+      "line_minus_no_line_roi_percentage_points": -3.051463585747662,
+      "line_minus_no_line_net_yen": 3940540.0
+    }
+  },
+  "by_category": {
+    "line_rf_2023": {
+      "A1_A2": {
+        "3連単": {
+          "eligible_races": 991,
+          "betting_races": 991,
+          "winning_races": 205,
+          "purchased_tickets": 104183,
+          "winning_tickets": 205,
+          "investment_yen": 10418300.0,
+          "payout_yen": 6083050.0,
+          "net_profit_yen": -4335250.0,
+          "return_rate_percent": 58.388124742040446,
+          "roi_percent": -41.611875257959554,
+          "model_expected_roi_percent": 122.9109466516469,
+          "max_drawdown_yen_unlimited_flat_stake": 4494260.0,
+          "losing_races": 870,
+          "nll": 4.3937925441417764,
+          "normalized_market_nll": 4.074240567407663,
+          "proper_multiclass_brier": 0.9699644841666366,
+          "most_probable_ticket_hit_percent": 8.87991927346115,
+          "top3_tickets_hit_percent": 21.19071644803229
+        },
+        "3連複": {
+          "eligible_races": 991,
+          "betting_races": 991,
+          "winning_races": 179,
+          "purchased_tickets": 15801,
+          "winning_tickets": 179,
+          "investment_yen": 1580100.0,
+          "payout_yen": 880160.0,
+          "net_profit_yen": -699940.0,
+          "return_rate_percent": 55.70280362002405,
+          "roi_percent": -44.29719637997595,
+          "model_expected_roi_percent": 68.11088854034298,
+          "max_drawdown_yen_unlimited_flat_stake": 721950.0,
+          "losing_races": 848,
+          "nll": 2.8621020652592417,
+          "normalized_market_nll": 2.6463308932544125,
+          "proper_multiclass_brier": 0.9009004760778279,
+          "most_probable_ticket_hit_percent": 20.988900100908175,
+          "top3_tickets_hit_percent": 42.78506559031282
+        }
+      },
+      "A3": {
+        "3連単": {
+          "eligible_races": 934,
+          "betting_races": 934,
+          "winning_races": 153,
+          "purchased_tickets": 100864,
+          "winning_tickets": 153,
+          "investment_yen": 10086400.0,
+          "payout_yen": 3903950.0,
+          "net_profit_yen": -6182450.0,
+          "return_rate_percent": 38.705088039340104,
+          "roi_percent": -61.294911960659896,
+          "model_expected_roi_percent": 150.9019873185759,
+          "max_drawdown_yen_unlimited_flat_stake": 6182450.0,
+          "losing_races": 863,
+          "nll": 4.030513958331518,
+          "normalized_market_nll": 3.653164429431706,
+          "proper_multiclass_brier": 0.9490510139038435,
+          "most_probable_ticket_hit_percent": 13.704496788008566,
+          "top3_tickets_hit_percent": 25.910064239828692
+        },
+        "3連複": {
+          "eligible_races": 934,
+          "betting_races": 934,
+          "winning_races": 158,
+          "purchased_tickets": 14752,
+          "winning_tickets": 158,
+          "investment_yen": 1475200.0,
+          "payout_yen": 760740.0,
+          "net_profit_yen": -714460.0,
+          "return_rate_percent": 51.56860086767896,
+          "roi_percent": -48.43139913232104,
+          "model_expected_roi_percent": 81.39139427460499,
+          "max_drawdown_yen_unlimited_flat_stake": 714460.0,
+          "losing_races": 822,
+          "nll": 2.580772370527607,
+          "normalized_market_nll": 2.4000206108292135,
+          "proper_multiclass_brier": 0.8602801299218561,
+          "most_probable_ticket_hit_percent": 27.8372591006424,
+          "top3_tickets_hit_percent": 51.39186295503212
+        }
+      },
+      "S": {
+        "3連単": {
+          "eligible_races": 1272,
+          "betting_races": 1272,
+          "winning_races": 263,
+          "purchased_tickets": 140581,
+          "winning_tickets": 263,
+          "investment_yen": 14058100.0,
+          "payout_yen": 8900570.0,
+          "net_profit_yen": -5157530.0,
+          "return_rate_percent": 63.31275207887268,
+          "roi_percent": -36.68724792112732,
+          "model_expected_roi_percent": 136.14045456582016,
+          "max_drawdown_yen_unlimited_flat_stake": 5231580.0,
+          "losing_races": 1089,
+          "nll": 4.452641890893296,
+          "normalized_market_nll": 4.120252427836448,
+          "proper_multiclass_brier": 0.9764200529632621,
+          "most_probable_ticket_hit_percent": 8.49056603773585,
+          "top3_tickets_hit_percent": 19.0251572327044
+        },
+        "3連複": {
+          "eligible_races": 1272,
+          "betting_races": 1272,
+          "winning_races": 252,
+          "purchased_tickets": 21309,
+          "winning_tickets": 252,
+          "investment_yen": 2130900.0,
+          "payout_yen": 1291420.0,
+          "net_profit_yen": -839480.0,
+          "return_rate_percent": 60.60443943873481,
+          "roi_percent": -39.39556056126519,
+          "model_expected_roi_percent": 70.42360093036554,
+          "max_drawdown_yen_unlimited_flat_stake": 839480.0,
+          "losing_races": 1061,
+          "nll": 2.8871436656899196,
+          "normalized_market_nll": 2.681104444994881,
+          "proper_multiclass_brier": 0.9129636280111173,
+          "most_probable_ticket_hit_percent": 20.047169811320753,
+          "top3_tickets_hit_percent": 39.85849056603774
+        }
+      }
+    },
+    "old_no_line_2023": {
+      "A1_A2": {
+        "3連単": {
+          "eligible_races": 991,
+          "betting_races": 991,
+          "winning_races": 196,
+          "purchased_tickets": 139759,
+          "winning_tickets": 196,
+          "investment_yen": 13975900.0,
+          "payout_yen": 8499330.0,
+          "net_profit_yen": -5476570.0,
+          "return_rate_percent": 60.81418727953119,
+          "roi_percent": -39.18581272046881,
+          "model_expected_roi_percent": 258.4940824968257,
+          "max_drawdown_yen_unlimited_flat_stake": 5566570.0,
+          "losing_races": 849,
+          "nll": 4.858492841105328,
+          "normalized_market_nll": 4.074240567407663,
+          "proper_multiclass_brier": 0.9882448643800769,
+          "most_probable_ticket_hit_percent": 2.7245206861755804,
+          "top3_tickets_hit_percent": 9.4853683148335
+        },
+        "3連複": {
+          "eligible_races": 991,
+          "betting_races": 991,
+          "winning_races": 186,
+          "purchased_tickets": 21967,
+          "winning_tickets": 186,
+          "investment_yen": 2196700.0,
+          "payout_yen": 1243930.0,
+          "net_profit_yen": -952770.0,
+          "return_rate_percent": 56.62721354759412,
+          "roi_percent": -43.37278645240588,
+          "model_expected_roi_percent": 136.9277064367327,
+          "max_drawdown_yen_unlimited_flat_stake": 974280.0,
+          "losing_races": 836,
+          "nll": 3.168305142648213,
+          "normalized_market_nll": 2.6463308932544125,
+          "proper_multiclass_brier": 0.9436653771141651,
+          "most_probable_ticket_hit_percent": 12.714429868819375,
+          "top3_tickets_hit_percent": 30.77699293642785
+        }
+      },
+      "A3": {
+        "3連単": {
+          "eligible_races": 934,
+          "betting_races": 934,
+          "winning_races": 158,
+          "purchased_tickets": 135182,
+          "winning_tickets": 158,
+          "investment_yen": 13518200.0,
+          "payout_yen": 6272240.0,
+          "net_profit_yen": -7245960.0,
+          "return_rate_percent": 46.398485005400126,
+          "roi_percent": -53.601514994599874,
+          "model_expected_roi_percent": 345.5935138708042,
+          "max_drawdown_yen_unlimited_flat_stake": 7245960.0,
+          "losing_races": 821,
+          "nll": 4.533695708900805,
+          "normalized_market_nll": 3.653164429431706,
+          "proper_multiclass_brier": 0.9820880611872893,
+          "most_probable_ticket_hit_percent": 5.460385438972163,
+          "top3_tickets_hit_percent": 14.025695931477516
+        },
+        "3連複": {
+          "eligible_races": 934,
+          "betting_races": 934,
+          "winning_races": 195,
+          "purchased_tickets": 21493,
+          "winning_tickets": 195,
+          "investment_yen": 2149300.0,
+          "payout_yen": 1195240.0,
+          "net_profit_yen": -954060.0,
+          "return_rate_percent": 55.6106639370958,
+          "roi_percent": -44.3893360629042,
+          "model_expected_roi_percent": 171.34896801629117,
+          "max_drawdown_yen_unlimited_flat_stake": 954060.0,
+          "losing_races": 783,
+          "nll": 2.9549318611052806,
+          "normalized_market_nll": 2.4000206108292135,
+          "proper_multiclass_brier": 0.9288796179694141,
+          "most_probable_ticket_hit_percent": 14.989293361884368,
+          "top3_tickets_hit_percent": 36.723768736616705
+        }
+      },
+      "S": {
+        "3連単": {
+          "eligible_races": 1272,
+          "betting_races": 1272,
+          "winning_races": 242,
+          "purchased_tickets": 174543,
+          "winning_tickets": 242,
+          "investment_yen": 17454300.0,
+          "payout_yen": 11412710.0,
+          "net_profit_yen": -6041590.0,
+          "return_rate_percent": 65.38623720229398,
+          "roi_percent": -34.61376279770601,
+          "model_expected_roi_percent": 254.3290443235788,
+          "max_drawdown_yen_unlimited_flat_stake": 6498230.0,
+          "losing_races": 1074,
+          "nll": 4.877131637268419,
+          "normalized_market_nll": 4.120252427836448,
+          "proper_multiclass_brier": 0.9889152638768651,
+          "most_probable_ticket_hit_percent": 3.5377358490566038,
+          "top3_tickets_hit_percent": 8.883647798742139
+        },
+        "3連複": {
+          "eligible_races": 1272,
+          "betting_races": 1272,
+          "winning_races": 230,
+          "purchased_tickets": 27089,
+          "winning_tickets": 230,
+          "investment_yen": 2708900.0,
+          "payout_yen": 1510200.0,
+          "net_profit_yen": -1198700.0,
+          "return_rate_percent": 55.74956624460113,
+          "roi_percent": -44.25043375539887,
+          "model_expected_roi_percent": 138.12753230149517,
+          "max_drawdown_yen_unlimited_flat_stake": 1217530.0,
+          "losing_races": 1068,
+          "nll": 3.1640507361815073,
+          "normalized_market_nll": 2.681104444994881,
+          "proper_multiclass_brier": 0.9443843711482686,
+          "most_probable_ticket_hit_percent": 12.735849056603774,
+          "top3_tickets_hit_percent": 30.50314465408805
+        }
+      }
+    }
+  },
+  "by_month": {
+    "line_rf_2023": {
+      "2024-01": {
+        "3連単": {
+          "eligible_races": 1839,
+          "betting_races": 1839,
+          "winning_races": 349,
+          "purchased_tickets": 193946,
+          "winning_tickets": 349,
+          "investment_yen": 19394600.0,
+          "payout_yen": 10491350.0,
+          "net_profit_yen": -8903250.0,
+          "return_rate_percent": 54.094180854464646,
+          "roi_percent": -45.905819145535354,
+          "model_expected_roi_percent": 134.13938792327596,
+          "max_drawdown_yen_unlimited_flat_stake": 8944720.0,
+          "losing_races": 1627,
+          "nll": 4.326192885042774,
+          "normalized_market_nll": 3.9684477706683396,
+          "proper_multiclass_brier": 0.968103781181766,
+          "most_probable_ticket_hit_percent": 9.407286568787384,
+          "top3_tickets_hit_percent": 21.805328983143013
+        },
+        "3連複": {
+          "eligible_races": 1839,
+          "betting_races": 1839,
+          "winning_races": 333,
+          "purchased_tickets": 29234,
+          "winning_tickets": 333,
+          "investment_yen": 2923400.0,
+          "payout_yen": 1589740.0,
+          "net_profit_yen": -1333660.0,
+          "return_rate_percent": 54.37983170281179,
+          "roi_percent": -45.62016829718821,
+          "model_expected_roi_percent": 72.27172144647528,
+          "max_drawdown_yen_unlimited_flat_stake": 1347020.0,
+          "losing_races": 1574,
+          "nll": 2.802806671378541,
+          "normalized_market_nll": 2.5799237786920255,
+          "proper_multiclass_brier": 0.8960617187915586,
+          "most_probable_ticket_hit_percent": 22.403480152256662,
+          "top3_tickets_hit_percent": 43.77379010331702
+        }
+      },
+      "2024-02": {
+        "3連単": {
+          "eligible_races": 851,
+          "betting_races": 851,
+          "winning_races": 167,
+          "purchased_tickets": 94103,
+          "winning_tickets": 167,
+          "investment_yen": 9410300.0,
+          "payout_yen": 5285780.0,
+          "net_profit_yen": -4124520.0,
+          "return_rate_percent": 56.17015398021317,
+          "roi_percent": -43.82984601978683,
+          "model_expected_roi_percent": 139.1430562107424,
+          "max_drawdown_yen_unlimited_flat_stake": 4124520.0,
+          "losing_races": 757,
+          "nll": 4.215427616718334,
+          "normalized_market_nll": 3.893841655552255,
+          "proper_multiclass_brier": 0.9596653770806483,
+          "most_probable_ticket_hit_percent": 12.573443008225617,
+          "top3_tickets_hit_percent": 24.794359576968272
+        },
+        "3連複": {
+          "eligible_races": 851,
+          "betting_races": 851,
+          "winning_races": 149,
+          "purchased_tickets": 13980,
+          "winning_tickets": 149,
+          "investment_yen": 1398000.0,
+          "payout_yen": 840270.0,
+          "net_profit_yen": -557730.0,
+          "return_rate_percent": 60.10515021459227,
+          "roi_percent": -39.89484978540773,
+          "model_expected_roi_percent": 74.55098645408846,
+          "max_drawdown_yen_unlimited_flat_stake": 557730.0,
+          "losing_races": 735,
+          "nll": 2.727169240494388,
+          "normalized_market_nll": 2.545786064805063,
+          "proper_multiclass_brier": 0.8810254043377302,
+          "most_probable_ticket_hit_percent": 25.499412455934195,
+          "top3_tickets_hit_percent": 45.710928319623974
+        }
+      },
+      "2024-03": {
+        "3連単": {
+          "eligible_races": 507,
+          "betting_races": 507,
+          "winning_races": 105,
+          "purchased_tickets": 57579,
+          "winning_tickets": 105,
+          "investment_yen": 5757900.0,
+          "payout_yen": 3110440.0,
+          "net_profit_yen": -2647460.0,
+          "return_rate_percent": 54.02038937807187,
+          "roi_percent": -45.97961062192813,
+          "model_expected_roi_percent": 139.8946438538315,
+          "max_drawdown_yen_unlimited_flat_stake": 2782580.0,
+          "losing_races": 438,
+          "nll": 4.416787605762235,
+          "normalized_market_nll": 4.100501712946988,
+          "proper_multiclass_brier": 0.971669957940227,
+          "most_probable_ticket_hit_percent": 8.678500986193294,
+          "top3_tickets_hit_percent": 16.173570019723865
+        },
+        "3連複": {
+          "eligible_races": 507,
+          "betting_races": 507,
+          "winning_races": 107,
+          "purchased_tickets": 8648,
+          "winning_tickets": 107,
+          "investment_yen": 864800.0,
+          "payout_yen": 502310.0,
+          "net_profit_yen": -362490.0,
+          "return_rate_percent": 58.08395004625347,
+          "roi_percent": -41.91604995374653,
+          "model_expected_roi_percent": 71.98753642410803,
+          "max_drawdown_yen_unlimited_flat_stake": 369690.0,
+          "losing_races": 422,
+          "nll": 2.8482224678035712,
+          "normalized_market_nll": 2.6894561136081996,
+          "proper_multiclass_brier": 0.907245814637462,
+          "most_probable_ticket_hit_percent": 18.54043392504931,
+          "top3_tickets_hit_percent": 42.80078895463511
+        }
+      }
+    },
+    "old_no_line_2023": {
+      "2024-01": {
+        "3連単": {
+          "eligible_races": 1839,
+          "betting_races": 1839,
+          "winning_races": 339,
+          "purchased_tickets": 256027,
+          "winning_tickets": 339,
+          "investment_yen": 25602700.0,
+          "payout_yen": 14184420.0,
+          "net_profit_yen": -11418280.0,
+          "return_rate_percent": 55.40204744030903,
+          "roi_percent": -44.59795255969097,
+          "model_expected_roi_percent": 279.67219911038404,
+          "max_drawdown_yen_unlimited_flat_stake": 11443750.0,
+          "losing_races": 1585,
+          "nll": 4.7975296950157915,
+          "normalized_market_nll": 3.9684477706683396,
+          "proper_multiclass_brier": 0.9871528266933058,
+          "most_probable_ticket_hit_percent": 3.3713974986405657,
+          "top3_tickets_hit_percent": 9.896682979880369
+        },
+        "3連複": {
+          "eligible_races": 1839,
+          "betting_races": 1839,
+          "winning_races": 344,
+          "purchased_tickets": 40261,
+          "winning_tickets": 344,
+          "investment_yen": 4026100.0,
+          "payout_yen": 2198010.0,
+          "net_profit_yen": -1828090.0,
+          "return_rate_percent": 54.59402399344279,
+          "roi_percent": -45.40597600655721,
+          "model_expected_roi_percent": 144.24752087695416,
+          "max_drawdown_yen_unlimited_flat_stake": 1838650.0,
+          "losing_races": 1552,
+          "nll": 3.1191613623245766,
+          "normalized_market_nll": 2.5799237786920255,
+          "proper_multiclass_brier": 0.9403905439034355,
+          "most_probable_ticket_hit_percent": 13.322457857531267,
+          "top3_tickets_hit_percent": 31.973898858075042
+        }
+      },
+      "2024-02": {
+        "3連単": {
+          "eligible_races": 851,
+          "betting_races": 851,
+          "winning_races": 156,
+          "purchased_tickets": 121476,
+          "winning_tickets": 156,
+          "investment_yen": 12147600.0,
+          "payout_yen": 7005240.0,
+          "net_profit_yen": -5142360.0,
+          "return_rate_percent": 57.66768744443347,
+          "roi_percent": -42.33231255556653,
+          "model_expected_roi_percent": 293.63980779628395,
+          "max_drawdown_yen_unlimited_flat_stake": 5195900.0,
+          "losing_races": 736,
+          "nll": 4.687519479063389,
+          "normalized_market_nll": 3.893841655552255,
+          "proper_multiclass_brier": 0.9853145624035338,
+          "most_probable_ticket_hit_percent": 4.81786133960047,
+          "top3_tickets_hit_percent": 11.515863689776733
+        },
+        "3連複": {
+          "eligible_races": 851,
+          "betting_races": 851,
+          "winning_races": 171,
+          "purchased_tickets": 19096,
+          "winning_tickets": 171,
+          "investment_yen": 1909600.0,
+          "payout_yen": 1128830.0,
+          "net_profit_yen": -780770.0,
+          "return_rate_percent": 59.11342689568496,
+          "roi_percent": -40.88657310431504,
+          "model_expected_roi_percent": 154.8377072566171,
+          "max_drawdown_yen_unlimited_flat_stake": 787160.0,
+          "losing_races": 713,
+          "nll": 3.059320040679688,
+          "normalized_market_nll": 2.545786064805063,
+          "proper_multiclass_brier": 0.9369261657895596,
+          "most_probable_ticket_hit_percent": 13.160987074030553,
+          "top3_tickets_hit_percent": 33.13748531139836
+        }
+      },
+      "2024-03": {
+        "3連単": {
+          "eligible_races": 507,
+          "betting_races": 507,
+          "winning_races": 101,
+          "purchased_tickets": 71981,
+          "winning_tickets": 101,
+          "investment_yen": 7198100.0,
+          "payout_yen": 4994620.0,
+          "net_profit_yen": -2203480.0,
+          "return_rate_percent": 69.38803295314041,
+          "roi_percent": -30.611967046859586,
+          "model_expected_roi_percent": 277.3291262643149,
+          "max_drawdown_yen_unlimited_flat_stake": 2756540.0,
+          "losing_races": 423,
+          "nll": 4.815016675418509,
+          "normalized_market_nll": 4.100501712946988,
+          "proper_multiclass_brier": 0.9874642692437123,
+          "most_probable_ticket_hit_percent": 3.9447731755424065,
+          "top3_tickets_hit_percent": 11.439842209072978
+        },
+        "3連複": {
+          "eligible_races": 507,
+          "betting_races": 507,
+          "winning_races": 96,
+          "purchased_tickets": 11192,
+          "winning_tickets": 96,
+          "investment_yen": 1119200.0,
+          "payout_yen": 622530.0,
+          "net_profit_yen": -496670.0,
+          "return_rate_percent": 55.62276626161544,
+          "roi_percent": -44.37723373838456,
+          "model_expected_roi_percent": 149.04402462345027,
+          "max_drawdown_yen_unlimited_flat_stake": 517540.0,
+          "losing_races": 422,
+          "nll": 3.1257400219453113,
+          "normalized_market_nll": 2.6894561136081996,
+          "proper_multiclass_brier": 0.941421094041108,
+          "most_probable_ticket_hit_percent": 14.003944773175542,
+          "top3_tickets_hit_percent": 32.74161735700197
+        }
+      }
+    }
+  },
+  "one_eighth_kelly_simulation": {
+    "status": "illustrative extension, NOT original paper optimal overlapping ticket portfolio",
+    "initial_bankroll_yen": 1000000,
+    "individual_bet_formula": "max(0, (p*odds-1)/(odds-1))/8 times current bankroll; floor to 100 yen",
+    "portfolio_feasibility": "same-race sum of fractions rescaled to <=100% of available bankroll, then 100yen floor; for each market and both combined separately",
+    "capital_reinvested_after_each_race": true,
+    "results": {
+      "line_rf_2023": {
+        "3連単": {
+          "initial_bankroll_yen": 1000000.0,
+          "ending_bankroll_yen": 19340.0,
+          "net_profit_yen": -980660.0,
+          "roi_on_staked_yen_percent": -59.43033755529968,
+          "return_on_initial_capital_percent": -98.066,
+          "investment_yen": 1650100.0,
+          "payout_yen": 669440.0,
+          "purchased_tickets": 7147,
+          "winning_tickets": 47,
+          "betting_races": 1099,
+          "eligible_races": 3197,
+          "exposure_scaled_to_cash_races": 0,
+          "races_with_bankroll_below_min_bet": 0,
+          "max_drawdown_yen": 985780.0
+        },
+        "3連複": {
+          "initial_bankroll_yen": 1000000.0,
+          "ending_bankroll_yen": 12990.0,
+          "net_profit_yen": -987010.0,
+          "roi_on_staked_yen_percent": -56.649830683579175,
+          "return_on_initial_capital_percent": -98.701,
+          "investment_yen": 1742300.0,
+          "payout_yen": 755290.0,
+          "purchased_tickets": 4057,
+          "winning_tickets": 91,
+          "betting_races": 1281,
+          "eligible_races": 3197,
+          "exposure_scaled_to_cash_races": 0,
+          "races_with_bankroll_below_min_bet": 0,
+          "max_drawdown_yen": 989000.0
+        },
+        "combined": {
+          "initial_bankroll_yen": 1000000.0,
+          "ending_bankroll_yen": 10480.0,
+          "net_profit_yen": -989520.0,
+          "roi_on_staked_yen_percent": -61.247833622183705,
+          "return_on_initial_capital_percent": -98.952,
+          "investment_yen": 1615600.0,
+          "payout_yen": 626080.0,
+          "purchased_tickets": 5580,
+          "winning_tickets": 67,
+          "betting_races": 664,
+          "eligible_races": 3197,
+          "exposure_scaled_to_cash_races": 0,
+          "races_with_bankroll_below_min_bet": 0,
+          "max_drawdown_yen": 993560.0
+        }
+      },
+      "old_no_line_2023": {
+        "3連単": {
+          "initial_bankroll_yen": 1000000.0,
+          "ending_bankroll_yen": 29000.0,
+          "net_profit_yen": -971000.0,
+          "roi_on_staked_yen_percent": -51.847501067919694,
+          "return_on_initial_capital_percent": -97.1,
+          "investment_yen": 1872800.0,
+          "payout_yen": 901800.0,
+          "purchased_tickets": 10603,
+          "winning_tickets": 27,
+          "betting_races": 633,
+          "eligible_races": 3197,
+          "exposure_scaled_to_cash_races": 0,
+          "races_with_bankroll_below_min_bet": 0,
+          "max_drawdown_yen": 971000.0
+        },
+        "3連複": {
+          "initial_bankroll_yen": 1000000.0,
+          "ending_bankroll_yen": 9800.0,
+          "net_profit_yen": -990200.0,
+          "roi_on_staked_yen_percent": -78.10380186149234,
+          "return_on_initial_capital_percent": -99.02,
+          "investment_yen": 1267800.0,
+          "payout_yen": 277600.0,
+          "purchased_tickets": 2725,
+          "winning_tickets": 20,
+          "betting_races": 333,
+          "eligible_races": 3197,
+          "exposure_scaled_to_cash_races": 0,
+          "races_with_bankroll_below_min_bet": 0,
+          "max_drawdown_yen": 990200.0
+        },
+        "combined": {
+          "initial_bankroll_yen": 1000000.0,
+          "ending_bankroll_yen": 9730.0,
+          "net_profit_yen": -990270.0,
+          "roi_on_staked_yen_percent": -72.8246801000147,
+          "return_on_initial_capital_percent": -99.027,
+          "investment_yen": 1359800.0,
+          "payout_yen": 369530.0,
+          "purchased_tickets": 4925,
+          "winning_tickets": 21,
+          "betting_races": 301,
+          "eligible_races": 3197,
+          "exposure_scaled_to_cash_races": 0,
+          "races_with_bankroll_below_min_bet": 0,
+          "max_drawdown_yen": 990270.0
+        }
+      }
+    }
+  },
+  "sample_validated_races": [
+    {
+      "race_id": "2420240101010001",
+      "date": "2024-01-01",
+      "class": "A3",
+      "line": [
+        [
+          "1",
+          "7",
+          "5"
+        ],
+        [
+          "2"
+        ],
+        [
+          "4",
+          "6",
+          "3"
+        ]
+      ],
+      "results": [
+        "1",
+        "4",
+        "7"
+      ],
+      "odds_matched": true
+    },
+    {
+      "race_id": "2420240101010003",
+      "date": "2024-01-01",
+      "class": "A3",
+      "line": [
+        [
+          "5",
+          "1",
+          "4"
+        ],
+        [
+          "3",
+          "7",
+          "2",
+          "6"
+        ]
+      ],
+      "results": [
+        "3",
+        "7",
+        "4"
+      ],
+      "odds_matched": true
+    },
+    {
+      "race_id": "2420240101010004",
+      "date": "2024-01-01",
+      "class": "A3",
+      "line": [
+        [
+          "4",
+          "2",
+          "7"
+        ],
+        [
+          "6",
+          "1",
+          "3",
+          "5"
+        ]
+      ],
+      "results": [
+        "4",
+        "2",
+        "7"
+      ],
+      "odds_matched": true
+    },
+    {
+      "race_id": "2420240101010005",
+      "date": "2024-01-01",
+      "class": "A3",
+      "line": [
+        [
+          "4",
+          "2",
+          "6"
+        ],
+        [
+          "1",
+          "5",
+          "7",
+          "3"
+        ]
+      ],
+      "results": [
+        "1",
+        "5",
+        "3"
+      ],
+      "odds_matched": true
+    },
+    {
+      "race_id": "2420240101010008",
+      "date": "2024-01-01",
+      "class": "A1_A2",
+      "line": [
+        [
+          "3",
+          "1",
+          "4"
+        ],
+        [
+          "6"
+        ],
+        [
+          "5",
+          "2",
+          "7"
+        ]
+      ],
+      "results": [
+        "5",
+        "2",
+        "1"
+      ],
+      "odds_matched": true
+    },
+    {
+      "race_id": "2420240101010009",
+      "date": "2024-01-01",
+      "class": "A1_A2",
+      "line": [
+        [
+          "2",
+          "7",
+          "4"
+        ],
+        [
+          "1"
+        ],
+        [
+          "5",
+          "3",
+          "6"
+        ]
+      ],
+      "results": [
+        "2",
+        "7",
+        "1"
+      ],
+      "odds_matched": true
+    },
+    {
+      "race_id": "2420240101010010",
+      "date": "2024-01-01",
+      "class": "A1_A2",
+      "line": [
+        [
+          "5",
+          "1",
+          "2"
+        ],
+        [
+          "4",
+          "3",
+          "7"
+        ],
+        [
+          "6"
+        ]
+      ],
+      "results": [
+        "3",
+        "4",
+        "1"
+      ],
+      "odds_matched": true
+    },
+    {
+      "race_id": "2420240101010011",
+      "date": "2024-01-01",
+      "class": "A1_A2",
+      "line": [
+        [
+          "1",
+          "6"
+        ],
+        [
+          "5",
+          "3"
+        ],
+        [
+          "7",
+          "4",
+          "2"
+        ]
+      ],
+      "results": [
+        "7",
+        "4",
+        "2"
+      ],
+      "odds_matched": true
+    }
+  ],
+  "interpretation_limits": [
+    "Historical confirmed *final* odds, NOT 15-minutes-before-closure odds; this is a retrospective hypothetical backtest.",
+    "2024 labels were used only to compute payoffs and predictive scores; not as features, for training, for threshold selection, or any post-hoc modifications.",
+    "Not every 2024 race has completely matched line, rider cards, top-3 result, and two full 3-combination markets. Missing races are excluded and counts reported.",
+    "LINE published formation is KDreams source prediction, not known realized in-race order.",
+    "The old no-LINE baseline uses another 2023 training design/hyperparameters and is compared on IDENTICAL 2024 races, but is not a pure-line-feature controlled causal ablation.",
+    "The LINE RF model was chosen based on 2023 November-December and refitted on ALL 2023; the 2024 period remains new for the LINE model.",
+    "Kelly per-bet fractions are not jointly optimal for correlated and mutually exclusive multi-ticket outcomes; the same-race cash constraint is a transparent engineering adaptation, not found in the NBA paper.",
+    "Minimum 100yen stake and no transaction/price impact limit; these outcomes do not prove live bookable profitability.",
+    "Neither previous no-LINE model nor selected LINE models are certified by original Walsh-Joshi strict 20-bin classwise-ECE gate for every ticket."
+  ]
+}
