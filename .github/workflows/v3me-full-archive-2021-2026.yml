@@ -1,0 +1,121 @@
+name: V3-ME-R | use all stored 2021-2026 H1 historical odds
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/v3me-full-archive-2021-2026.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: v3me-2021-2026-complete-archive-two-evidence-tiers
+  cancel-in-progress: false
+jobs:
+  use_every_accessible_plain_book:
+    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'run: v3me-archive-scale-2026h1-request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      PYTHONUNBUFFERED: '1'
+      PYTHONHASHSEED: '0'
+      PYTHONPATH: '.:research/deletion_ai'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install original V3-ME-R dependencies
+        run: python -m pip install -e '.[scrape]' 'numpy>=1.26'
+      - name: Check original model and new full-year program
+        run: |
+          python -m py_compile research/deletion_ai/v3me_archive_scale_2021_2026.py
+          python research/deletion_ai/test_deletion_2023.py
+          python research/deletion_ai/test_continue_v3me_2025.py
+          python research/deletion_ai/test_secure_seven_bet_bridge.py
+      - name: Train V3-ME-R using ALL genuine plaintext odds years 2021-2025 and freeze 2026
+        run: |
+          if [ -f research/deletion_ai/outputs/GEN-008-V3-ME-R-ALL-PLAIN-2021-2026/summary.json ]; then
+            echo 'Preserving original complete archive-scale evidence'
+          else
+            python research/deletion_ai/v3me_archive_scale_2021_2026.py --source plain
+          fi
+      - name: Publish exact usable counts and independent comparisons
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/deletion_ai/outputs/GEN-008-V3-ME-R-ALL-PLAIN-2021-2026/
+          git add docs/ai-lab/gen008-v3me-archive-scale-plain.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'data: V3ME audit all usable plain books 2021-2026H1'
+          for i in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
+  decrypt_and_train_every_sealed_book_if_authorized:
+    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'run: v3me-archive-scale-2026h1-request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      PYTHONUNBUFFERED: '1'
+      PYTHONHASHSEED: '0'
+      PYTHONPATH: '.:research/deletion_ai'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install original model and verified CMS archive bridge
+        run: python -m pip install -e '.[scrape]' 'numpy>=1.26'
+      - name: Verify sealed parser on synthetic ciphertext (no private archive disclosure)
+        run: |
+          python research/deletion_ai/test_secure_seven_bet_bridge.py
+          python -m py_compile research/deletion_ai/v3me_archive_scale_2021_2026.py
+      - name: Check private key gate without ever exposing key text
+        id: key_gate
+        env:
+          KEY: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        run: |
+          if [ -n "$KEY" ]; then
+            echo 'available=true' >> "$GITHUB_OUTPUT"
+            echo 'AUTHORIZATION CONFIRMED: full 2021-2026H1 sealed archive training enabled' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'available=false' >> "$GITHUB_OUTPUT"
+            echo 'BLOCKED: encrypted 7-market original requires Actions secret KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM. No ciphertext was misrepresented as learned data.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Train V3-ME-R on the entire sealed 7-market original 2021-2025
+        if: steps.key_gate.outputs.available == 'true'
+        env:
+          KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        run: |
+          if [ -f research/deletion_ai/outputs/GEN-008-V3-ME-R-FULL-SEVEN-ARCHIVE-2021-2026/summary.json ]; then
+            echo 'Original sealed-run evidence exists, never overwrite'
+          else
+            python research/deletion_ai/v3me_archive_scale_2021_2026.py --source sealed
+          fi
+      - name: Publish sanitized aggregate comparisons and weights only
+        if: steps.key_gate.outputs.available == 'true'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/deletion_ai/outputs/GEN-008-V3-ME-R-FULL-SEVEN-ARCHIVE-2021-2026/
+          git add docs/ai-lab/gen008-v3me-archive-scale-sealed.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'data: secure V3ME entire seven-bet archive training aggregate audit'
+          for i in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
