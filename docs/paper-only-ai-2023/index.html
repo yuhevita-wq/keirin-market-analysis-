@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paper-only Probability AI | 2023 Observer</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1220;--panel:#131f30;--border:#2e4357;--text:#f0f5fa;--muted:#aabdc9;--teal:#42dbc3;--blue:#90a7f8;--amber:#f5bf7a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.55 system-ui,'Noto Sans JP',sans-serif}
+main{max-width:1080px;margin:auto;padding:22px 16px 70px}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:20px}
+h1{font-size:23px;margin:4px 0}h2{font-size:16px;margin:0 0 12px}
+.panel,.stat{border:1px solid var(--border);background:var(--panel);border-radius:14px;padding:17px}
+.small{color:var(--muted);font-size:12px}.tag{display:inline-block;padding:4px 10px;border:1px solid var(--border);border-radius:30px;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:12px 0}.value{font-size:29px;font-weight:750;font-variant-numeric:tabular-nums}
+.two{display:grid;grid-template-columns:1.5fr 1fr;gap:12px;margin-top:12px}
+button{border:1px solid var(--border);border-radius:9px;color:var(--text);background:#213248;padding:8px 13px;cursor:pointer}
+button:hover{border-color:var(--teal)}button:disabled{opacity:.4}
+input[type=range]{width:100%;accent-color:var(--teal)}
+.graph{height:250px;width:100%}.graph svg{width:100%;height:100%}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.legend{display:flex;gap:17px;font-size:12px;color:var(--muted);margin-top:6px}
+.dot{width:9px;height:9px;border-radius:2px;display:inline-block;margin-right:5px}
+a{color:#8fdcf7}strong.teal{color:var(--teal)}
+@media(max-width:650px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.two{grid-template-columns:1fr}h1{font-size:20px}.value{font-size:24px}}
+</style></head>
+<body><main>
+<header><div><div class="small">PAPER-ONLY PROBABILITY AI · INDEPENDENT OBSERVER</div><h1>独立AI｜2023年からの観測室</h1><div class="small">論文に基づく二値確率モデル / 既存の競輪分析は使用しない</div></div><span id="network" class="tag">接続確認中…</span></header>
+<div class="panel"><div class="row"><div><strong id="month">2023年1月</strong><div class="small">開始：2023-01-01　/　日本時間の暦</div></div><span id="model" class="tag">AI：UNTRAINED</span></div>
+<input type="range" id="time" min="0" max="11" value="0" aria-label="観測月">
+<div class="row"><span class="small">2023.01</span><span class="small">2023.12</span></div>
+<div class="row" style="justify-content:flex-start;margin-top:12px"><button id="prev">← 前月</button><button id="play">▶ 再生</button><button id="next">翌月 →</button><button id="refresh">↻ GitHubを再読込</button></div></div>
+<div class="grid">
+<div class="stat"><div class="small">その月のオッズ収録</div><div class="value" id="monthly_odds">—</div><div class="small">確定オッズ</div></div>
+<div class="stat"><div class="small">その月の結果照合</div><div class="value" id="monthly_match">—</div><div class="small">race_id完全一致</div></div>
+<div class="stat"><div class="small">2023年の収録総数</div><div class="value" id="year_odds">—</div><div class="small">全券種ではない</div></div>
+<div class="stat"><div class="small">2023年の照合総数</div><div class="value" id="year_match">—</div><div class="small">学習前の原材料</div></div>
+</div>
+<div class="two"><section class="panel"><h2>月次データの収録・照合</h2><div class="graph" id="plot"><div class="small">GitHubの実測データを読込中…</div></div><div class="legend"><span><i class="dot" style="background:var(--blue)"></i>オッズ</span><span><i class="dot" style="background:var(--teal)"></i>結果照合済み</span></div></section>
+<section class="panel"><h2>AIの状態</h2><div class="row"><span class="small">学習データ</span><strong id="training">0件</strong></div><hr style="border:0;border-top:1px solid var(--border)"><div class="row"><span class="small">期間外予測</span><strong>0件</strong></div><hr style="border:0;border-top:1px solid var(--border)"><div class="row"><span class="small">確率校正誤差 / ECE</span><strong>—</strong></div><hr style="border:0;border-top:1px solid var(--border)"><div class="row"><span class="small">収益 / ROI</span><strong>—</strong></div><p class="small" style="margin-top:18px">データとモデルの接続は別の工程です。二者択一の予測対象と事前特徴量が定義されるまで、学習・架空の成績表示は行いません。</p></section></div>
+<section class="panel" style="margin-top:12px"><h2>データ監査・取り扱い</h2>
+<div id="detail" class="small">照合レポート待機中。</div>
+<p class="small">オッズ：3連単・3連複の確定値。結果は答え合わせにのみ使用。確定オッズを締切前の価格として扱いません。</p>
+<div class="row"><a href="https://github.com/yuhevita-wq/keirin-market-analysis-/actions/workflows/paper-only-ai-source.yml" target="_blank" rel="noopener">GitHub Actionsで再検査</a><a href="./source_status.json" target="_blank" rel="noopener">生の照合レポート</a></div></section>
+<p class="small" style="margin-top:18px">研究方法：Walsh & Joshi (2024), arXiv:2303.06021v4。GitHubの原データはこのAIへの「追加教材」ではなく、未学習の観測対象。学習には用いていません。</p>
+</main>
+<script>
+'use strict';
+let report=null,index=0,timer=null;
+const $=id=>document.getElementById(id);
+const fmt=n=>typeof n==='number'?n.toLocaleString('ja-JP'):'—';
+function select(i){index=Math.max(0,Math.min(11,i));$('time').value=index;const n=index+1;$('month').textContent='2023年'+n+'月';
+ const m=report?.monthly?.[index];$('monthly_odds').textContent=fmt(m?.odds_races);$('monthly_match').textContent=fmt(m?.matched_races);draw()}
+function draw(){
+ const root=$('plot');root.replaceChildren();
+ if(!report?.monthly?.length){root.textContent='月次データの読み込み待ち';return}
+ const width=650,height=245,L=42,R=20,T=14,B=34;const data=report.monthly,max=Math.max(1,...data.map(x=>x.odds_races));
+ const ns='http://www.w3.org/2000/svg';const s=document.createElementNS(ns,'svg');s.setAttribute('viewBox',`0 0 ${width} ${height}`);s.setAttribute('preserveAspectRatio','none');root.append(s);
+ function add(tag,at,txt){const e=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(at))e.setAttribute(k,v);if(txt!==undefined)e.textContent=txt;s.append(e);return e}
+ const x=i=>L+(i+.5)*(width-L-R)/12,y=v=>height-B-v/max*(height-T-B);
+ for(let t=0;t<=4;t++){let v=max*t/4;add('line',{x1:L,x2:width-R,y1:y(v),y2:y(v),stroke:'#314559','stroke-dasharray':'3 5'});add('text',{x:L-6,y:y(v)+4,'text-anchor':'end',fill:'#aabdc9','font-size':11},fmt(Math.round(v)))}
+ data.forEach((m,i)=>{const bar=(width-L-R)/12;
+ add('rect',{x:x(i)-bar*.38,y:y(m.odds_races),width:bar*.33,height:height-B-y(m.odds_races),rx:2,fill:'#90a7f8'});
+ add('rect',{x:x(i)+bar*.02,y:y(m.matched_races),width:bar*.33,height:height-B-y(m.matched_races),rx:2,fill:'#42dbc3'});
+ if(i===index)add('rect',{x:x(i)-bar*.48,y:T,width:bar*.96,height:height-T-B,fill:'none',stroke:'#f5bf7a','stroke-width':2,rx:4});
+ add('text',{x:x(i),y:height-11,'text-anchor':'middle',fill:'#aabdc9','font-size':11},String(i+1))});
+}
+function stop(){if(timer)clearInterval(timer);timer=null;$('play').textContent='▶ 再生'}
+$('prev').onclick=()=>{stop();select(index-1)};$('next').onclick=()=>{stop();select(index+1)};
+$('time').oninput=e=>{stop();select(Number(e.target.value))};
+$('play').onclick=()=>{if(timer){stop();return}if(index===11)index=0;$('play').textContent='⏸ 停止';timer=setInterval(()=>{if(index>=11)stop();else select(index+1)},600)};
+async function load(){
+ $('network').textContent='GitHub照合中…';
+ try{const res=await fetch('./source_status.json?nocache='+Date.now(),{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);
+ const item=await res.json();if(item.start_date!=='2023-01-01'||item.odds_sha256_verified!==true)throw Error('開始日または監査状態が不正');
+ report=item;$('network').textContent='● GitHub接続済み';$('model').textContent='AI：'+item.model_status;
+ $('year_odds').textContent=fmt(item.odds_races);$('year_match').textContent=fmt(item.matched_races);
+ $('training').textContent=fmt(item.model_input_count)+'件';
+ $('detail').textContent=`データ確認日：${item.updated_at}｜オッズ${fmt(item.odds_races)}R／結果${fmt(item.result_races)}R／照合${fmt(item.matched_races)}R／未照合${fmt(item.unmatched_odds_races)}R。SHA-256検証：合格。月別日付を復元できないID：${fmt(item.undated_odds_races)}件。`;
+ select(index);
+ }catch(e){$('network').textContent='接続状態を確認できません';$('detail').textContent='GitHubレポートが取得できません：'+e.message}
+}
+$('refresh').onclick=load;load();setInterval(load,60000);
+</script></body></html>
