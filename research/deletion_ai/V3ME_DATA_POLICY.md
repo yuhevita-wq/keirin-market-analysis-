@@ -63,3 +63,15 @@
 **採用判定：不採用。** 新モデルは保存するが既存本番モデルを置換しない。単純に訓練件数を増やすだけでは成績向上を保証しない。
 
 暗号化7券種原本の別ジョブは秘密鍵がGitHub Actionsに設定されず **skipped**。7券種全原本の学習完了と主張してはならない。秘密鍵が設定された場合に、同じActionsを手動実行し`--source sealed`の候補モデルを別に評価する。
+
+
+## Phase 1｜2026-10-20：ライブラリ保管鍵を発見・認証
+
+- **実在確認**：ChatGPTプロジェクトのライブラリ `/ベンダー/keirin_odds_decryption_bundle.zip`（約3.5KB）に秘密鍵 `keirin_odds_private.pem`、公開証明書 `keirin_odds_public_cert.pem`、説明書 `README.txt` が存在。
+- 秘密鍵は OpenSSL で正常に解析でき、その公開鍵成分が同梱証明書と一致。
+- 同梱証明書はGitHubの `odds_market/vault_public_cert.pem` とバイト単位で一致（Git blob SHA-1: `8cd4c9e4c9a53ca5776e4c25d985100aa0c7360b`）。
+- **重要**：ここまで確認済みなのは鍵・証明書の適合性であり、実ファイルの復号と13.4万レースの突合完了ではない。
+- 全件監査スクリプト：`research/deletion_ai/audit_full_sealed_v3me_2021_2026.py`。年度別の暗号文ハッシュ照合、CMS復号、7券種完全性、競輪ガールズ除外、レースID確定結果突合、欠損理由・競合データ集計を実装。
+- Actions：`.github/workflows/v3me-full-sealed-source-audit.yml`（2026-10-20 run ID `39440046674`）。公開禁止鍵の保存先であるGitHub Actions Secret が未設定のため、**意図どおり監査前の鍵チェックで失敗**。秘密鍵の転送なしに復号済みと主張しない。
+- Library内の秘密鍵はGitHubに自動転送されない。リポジトリ秘密設定 `KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM` への初回登録が必要。公開GitHub、issue、PR、コミット、Actionsログには鍵を含めない。
+- 秘密鍵の所有者がローカル端末から `gh secret set` に標準入力で渡し、このActionsを手動起動する。登録後に監査成功と結果JSONを確認して初めてPhase 1の原本全件監査が完了となる。
