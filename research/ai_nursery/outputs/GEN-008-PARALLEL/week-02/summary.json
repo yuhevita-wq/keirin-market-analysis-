@@ -1,0 +1,129 @@
+{
+  "id": "GEN-008-PARALLEL-WEEK-02",
+  "status": "COMPLETE",
+  "week": 2,
+  "dates": [
+    "2023-08-08",
+    "2023-08-14"
+  ],
+  "races": 133,
+  "source_reports": [
+    {
+      "year": 2023,
+      "date_start": "2023-08-08",
+      "date_end": "2023-08-14",
+      "source_count": {
+        "source_containers": 44,
+        "race_rows": 458,
+        "duplicate_race_id": 8,
+        "unique_cards": 450
+      },
+      "selected_racecard_sources": {
+        "data/2023/s_class_f1_all_parts/2023_q3": 51,
+        "data/a_class_12/2023_07_08": 214,
+        "data/a3_challenge/2023_07_08": 101,
+        "data/grade_races/g3/2023/g3-all-2023-q3-non-girls.zip": 84
+      },
+      "label_source": "data/result_universe_v2/combined/results_2023.jsonl.gz",
+      "result_count": {
+        "source_records": 25365
+      },
+      "odds_source": "data/odds_only/odds_2023.jsonl.gz",
+      "market_count": {
+        "archive_complete_races": 9987,
+        "hash_verified": true,
+        "archive_sha256": "6718ee164aaef41a1002a7c1cdf680e5b46c44f57e012f7c815b429aa4325637",
+        "matched_candidate_ids": 133,
+        "invalid": {}
+      },
+      "join_status": {
+        "no_complete_market": 317,
+        "no_result": 11,
+        "joined_and_eligible": 133
+      },
+      "joined_race_ids_sha256": "304e9b850ff4970e479cbd2ded1481e57c95a993356d72155911d6cf0a4eb550",
+      "complete_races": 133,
+      "date_data_origin": "racecard race_date ONLY; never decoded meeting-start ID",
+      "price_phase": "FINAL (historical), NOT certified pre-close",
+      "markets": [
+        "3連単",
+        "3連複"
+      ],
+      "result_used_only_as_label": true,
+      "original_training_checkpoints_untouched": true
+    }
+  ],
+  "race_ids_sha256": "304e9b850ff4970e479cbd2ded1481e57c95a993356d72155911d6cf0a4eb550",
+  "parent": {
+    "origin": "GEN-008-PARALLEL-week-01",
+    "inherited_hashes": {
+      "old": {
+        "prediction": "6c30e395142aa963cea93ab84b1fe546b73d95406f72cab12c9b2e84335528f1",
+        "behavior": "cb8667f2339859d58ef9797243d9380546558be1cc0ef09efe0536bc533949f7"
+      },
+      "new": {
+        "prediction": "616ad23d58a49c6bbc5e379fe69e3356ebbf1d7cac2b247f0f4c6fbad8a84399",
+        "behavior": "a4e4079fb744d59d19706eda04580dfb3520c426e1f93e36666cb3d2a81044ba"
+      }
+    }
+  },
+  "models": {
+    "old": "unchanged GEN-007 training rule; independent cloned weights",
+    "new": "shadow-on-skip + coherent outcomes + online past-only calibration"
+  },
+  "comparison": {
+    "old": {
+      "races": 133,
+      "entered": 18,
+      "skipped": 115,
+      "actual_marks": 105,
+      "hit_races": 6,
+      "actual_staked_yen": 10500,
+      "actual_payout_proxy_yen": 4790,
+      "actual_net_yen": -5710,
+      "paper_roi_percent": 45.61904761904762,
+      "mean_trifecta_logloss": 4.508872574277907,
+      "mean_trio_logloss": 3.137603756892476
+    },
+    "new": {
+      "races": 133,
+      "entered": 18,
+      "skipped": 115,
+      "actual_marks": 91,
+      "hit_races": 4,
+      "actual_staked_yen": 9100,
+      "actual_payout_proxy_yen": 17760,
+      "actual_net_yen": 8660,
+      "paper_roi_percent": 195.16483516483515,
+      "mean_trifecta_logloss": 4.51815483339642,
+      "mean_trio_logloss": 3.1163253169122243,
+      "skipped_with_presealed_shadow": 115,
+      "profitable_skipped_shadows": 17,
+      "missed_profitable_shadow_yen": 22050,
+      "shadow_net_on_skips_yen": -15960,
+      "shadow_net_is_not_realized_payout": true
+    }
+  },
+  "training_only": true,
+  "independent_held_out_exam_completed": false,
+  "reserved_never_trained_exam_dates": [
+    "2023-10-01",
+    "2023-10-14"
+  ],
+  "previously_reserved_exams_preserved": [
+    [
+      "2023-06-01",
+      "2023-06-07"
+    ],
+    [
+      "2023-07-01",
+      "2023-07-07"
+    ]
+  ],
+  "real_cash_excludes_shadow": true,
+  "price_phase": "historical FINAL odds (not deadline quotes)",
+  "paper_only": true,
+  "old_model_files_modified": false,
+  "next_week_must_inherit_each_branch_separately": true,
+  "note": "In-sample online paper profits are descriptive, NOT forward evidence."
+}
