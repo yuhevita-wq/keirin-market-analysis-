@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   use_every_accessible_plain_book:
-    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'run: v3me-archive-scale-2026h1-request'
+    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'run-v3me-archive-scale-2026h1-request'
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     env:
@@ -59,7 +59,7 @@ jobs:
           done
           exit 1
   decrypt_and_train_every_sealed_book_if_authorized:
-    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'run: v3me-archive-scale-2026h1-request'
+    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'run-v3me-archive-scale-2026h1-request'
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     env:
