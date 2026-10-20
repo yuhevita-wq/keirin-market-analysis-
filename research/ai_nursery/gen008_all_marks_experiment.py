@@ -278,11 +278,14 @@ def run():
             for b in BRANCHES:
                 p=q_by_branch[b]
                 ll=metrics(f,p,j)
+                baseline_ll=metrics(f,bases[b],j)
                 sh=shadow_settlement(shadow_by_branch[b],outcome)
                 bstats=scored[stage][b]
                 bstats["races"]+=1
                 bstats["ordered_logloss"]+=ll["3連単_logloss"]
                 bstats["unordered_logloss"]+=ll["3連複_logloss"]
+                bstats["untrained_source_ordered_logloss"]+=baseline_ll["3連単_logloss"]
+                bstats["untrained_source_unordered_logloss"]+=baseline_ll["3連複_logloss"]
                 bstats["shadow_races_entered"]+=int(sh["marks"]>0)
                 bstats["shadow_marks"]+=sh["marks"]
                 bstats["shadow_stake_yen"]+=sh["stake_yen"]
@@ -301,7 +304,8 @@ def run():
                 else:
                     assert np.array_equal(delta[b],before)
                 total_record["per_branch"][b]={
-                  "probability_metrics":ll,"shadow_cashflow":sh,
+                  "probability_metrics":ll,"untrained_source_probability_metrics":baseline_ll,
+                  "shadow_cashflow":sh,
                   "delta_before":[float(x) for x in before],
                   "delta_after":[float(x) for x in delta[b]],
                   "training_update":stage=="train",
@@ -326,6 +330,8 @@ def run():
             nr=metrics_agg["races"]
             metrics_agg["mean_trifecta_logloss"]=metrics_agg.pop("ordered_logloss")/nr
             metrics_agg["mean_trio_logloss"]=metrics_agg.pop("unordered_logloss")/nr
+            metrics_agg["untrained_source_trifecta_logloss"]=metrics_agg.pop("untrained_source_ordered_logloss")/nr
+            metrics_agg["untrained_source_trio_logloss"]=metrics_agg.pop("untrained_source_unordered_logloss")/nr
             metrics_agg["shadow_roi_percent"]=(100*metrics_agg["shadow_payout_yen"]/metrics_agg["shadow_stake_yen"]
                                             if metrics_agg["shadow_stake_yen"] else None)
             total[b]=metrics_agg
