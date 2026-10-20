@@ -1,0 +1,110 @@
+{
+  "status": "POST_SEALED_EQUAL_MARK_COUNT_CONTROLS",
+  "computed_at": "2026-10-20T13:02:00.880587+00:00",
+  "parent_result_status": "FINISHED_DELETE_FROM_FULL_SHEET_RESEARCH",
+  "no_retraining_and_no_policy_reselection": true,
+  "payouts_from_same_completed_2023_races": true,
+  "random_is_expectation_not_a_randomized_lucky_sample": true,
+  "uniform_random_same_number_of_marks_within_each_market_and_race": true,
+  "cheapest_odds_same_number_of_marks_within_each_market_and_race": true,
+  "retained_coverage_frozen_in_october": {
+    "accuracy": 0.35,
+    "calibration": 0.5
+  },
+  "results": {
+    "accuracy": {
+      "3連単": {
+        "races": 857,
+        "retained_marks": 18042,
+        "retained_win_tickets": 297,
+        "stake": 1804200.0,
+        "learned_paid": 1349850.0,
+        "random_expected_paid": 1334718.2936507936,
+        "favorite_paid": 1299880.0,
+        "learned_roi": 74.81709344861989,
+        "random_matched_count_expected_roi": 73.97840004715628,
+        "cheap_odds_same_count_roi": 72.04744485090345,
+        "learned_minus_random_expected_yen": 15131.70634920639,
+        "learned_minus_cheapest_yen": 49970.0
+      },
+      "3連複": {
+        "races": 857,
+        "retained_marks": 3820,
+        "retained_win_tickets": 362,
+        "stake": 382000.0,
+        "learned_paid": 253780.0,
+        "random_expected_paid": 270933.3571428572,
+        "favorite_paid": 285580.0,
+        "learned_roi": 66.43455497382199,
+        "random_matched_count_expected_roi": 70.9249626028422,
+        "cheap_odds_same_count_roi": 74.75916230366492,
+        "learned_minus_random_expected_yen": -17153.357142857218,
+        "learned_minus_cheapest_yen": -31800.0
+      },
+      "combined": {
+        "races": 1714,
+        "retained_marks": 21862,
+        "retained_win_tickets": 659,
+        "stake": 2186200.0,
+        "learned_paid": 1603630.0,
+        "random_expected_paid": 1605651.650793651,
+        "favorite_paid": 1585460.0,
+        "learned_roi": 73.35239227884,
+        "random_matched_count_expected_roi": 73.44486555638326,
+        "cheap_odds_same_count_roi": 72.52126978318543,
+        "learned_minus_random_expected_yen": -2021.650793650886,
+        "learned_minus_cheapest_yen": 18170.0
+      }
+    },
+    "calibration": {
+      "3連単": {
+        "races": 857,
+        "retained_marks": 32203,
+        "retained_win_tickets": 520,
+        "stake": 3220300.0,
+        "learned_paid": 2387090.0,
+        "random_expected_paid": 2435420.253968255,
+        "favorite_paid": 2291380.0,
+        "learned_roi": 74.12632363444399,
+        "random_matched_count_expected_roi": 75.62712337261296,
+        "cheap_odds_same_count_roi": 71.1542402881719,
+        "learned_minus_random_expected_yen": -48330.25396825513,
+        "learned_minus_cheapest_yen": 95710.0
+      },
+      "3連複": {
+        "races": 857,
+        "retained_marks": 6506,
+        "retained_win_tickets": 537,
+        "stake": 650600.0,
+        "learned_paid": 442160.0,
+        "random_expected_paid": 452093.23809523816,
+        "favorite_paid": 498690.0,
+        "learned_roi": 67.96188134030126,
+        "random_matched_count_expected_roi": 69.48866248005504,
+        "cheap_odds_same_count_roi": 76.65078389179219,
+        "learned_minus_random_expected_yen": -9933.238095238165,
+        "learned_minus_cheapest_yen": -56530.0
+      },
+      "combined": {
+        "races": 1714,
+        "retained_marks": 38709,
+        "retained_win_tickets": 1057,
+        "stake": 3870900.0,
+        "learned_paid": 2829250.0,
+        "random_expected_paid": 2887513.4920634935,
+        "favorite_paid": 2790070.0,
+        "learned_roi": 73.09023741248805,
+        "random_matched_count_expected_roi": 74.59540396454297,
+        "cheap_odds_same_count_roi": 72.07806969955307,
+        "learned_minus_random_expected_yen": -58263.49206349347,
+        "learned_minus_cheapest_yen": 39180.0
+      }
+    }
+  },
+  "limitations": [
+    "This comparison is a post-hoc DIAGNOSTIC. It cannot be used to change model, weights or the previously scored November/December policy.",
+    "Uniform random analytical expectancy does not require an RNG and is an exact per-race/per-market expectation, not a simulated realized ROI.",
+    "The cheapest odds baseline follows the same number of tickets for every market/race, but is not an independently optimized betting system.",
+    "These historical final odds are not pre-close executable."
+  ]
+}
