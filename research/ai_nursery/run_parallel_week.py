@@ -60,21 +60,29 @@ def load_inherited(week):
     if not (previous/"summary.json").is_file():
         raise RuntimeError(f"Week {week-1} checkpoint must complete first")
     meta=json.loads((previous/"summary.json").read_text(encoding="utf-8"))
-    if meta.get("status")!="COMPLETE" or meta["week"]!=week-1:
+    prior_status=meta.get("status")
+    first_week_legacy=(week==2 and meta.get("stage")=="GEN-008-PARALLEL-WEEK-01"
+                       and prior_status=="COMPLETE_TRAINING_ONLY")
+    if not first_week_legacy and (
+            prior_status!="COMPLETE" or meta.get("week")!=week-1):
         raise RuntimeError("Previous week is incomplete")
     branches=[]
     sha={}
     for name in ("old","new"):
         checkpoint=json.loads((previous/name/"checkpoint.json").read_text(encoding="utf-8"))
         policy_path=previous/name/"behavior_policy.json"
-        if checkpoint["branch"]!=name or checkpoint["week"]!=week-1:
+        cp_week=checkpoint.get("week")
+        if checkpoint.get("branch")!=name or (
+                not first_week_legacy and cp_week!=week-1):
             raise RuntimeError("Corrupted previous-branch lineage")
         w=np.asarray(checkpoint["weights"],dtype=np.float64)
         if w.shape!=(D,) or model_digest(w)!=checkpoint["weights_sha256"]:
             raise RuntimeError("Corrupt inherited prediction weights")
         policy=(ProfitPolicy.inherit(policy_path) if name=="old"
                 else inherited_shadow_policy(policy_path))
-        if policy.digest()!=checkpoint["policy_sha256"]:
+        stored_policy_sha=(meta["checkpoints"][name]["policy_sha256"]
+                           if first_week_legacy else checkpoint["policy_sha256"])
+        if policy.digest()!=stored_policy_sha:
             raise RuntimeError("Corrupt inherited action weights")
         branches.append(Branch(name,w,policy,float(checkpoint["temperature"])))
         sha[name]={"prediction":model_digest(w),"behavior":policy.digest()}

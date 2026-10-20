@@ -604,9 +604,10 @@ const r=await fetch(url,{cache:"no-store"});
 if(!r.ok)throw Error("学習結果の保存待ち");
 const a=await r.json();
 $("week8races").textContent=num(a.races)+"R";
-$("week8old").textContent=num(a.comparison.old.actual_net_yen)+"円";
-$("week8new").textContent=num(a.comparison.new.actual_net_yen)+"円";
-$("week8miss").textContent=num(a.comparison.new.profitable_skipped_shadows)+"R";
+const v=a.old_vs_new_training_scores||a.comparison;
+$("week8old").textContent=num(v.old.pure_net_yen??v.old.actual_net_yen)+"円";
+$("week8new").textContent=num(v.new.pure_net_yen??v.new.actual_net_yen)+"円";
+$("week8miss").textContent=num(v.new.shadow_profitable_skipped_races??v.new.profitable_skipped_shadows)+"R";
 }catch(e){$("week8races").textContent="学習処理待ち";}
 })();
 </script></body></html>
