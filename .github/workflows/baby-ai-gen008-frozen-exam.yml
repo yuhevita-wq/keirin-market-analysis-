@@ -1,0 +1,57 @@
+name: Baby AI GEN-008 | frozen Oct 2023 holdout exam
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/ai_nursery/gen008_frozen_exam.py'
+      - 'research/ai_nursery/verify_gen008_frozen_exam.py'
+      - '.github/workflows/baby-ai-gen008-frozen-exam.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: baby-ai-gen008-frozen-exam
+  cancel-in-progress: false
+jobs:
+  evaluate-frozen:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numeric runtime
+        run: python -m pip install 'numpy>=1.26'
+      - name: Verify untouched 31-day model checkpoints and frozen exam code
+        run: |
+          python -m py_compile research/ai_nursery/gen008_frozen_exam.py research/ai_nursery/verify_gen008_frozen_exam.py
+          python research/ai_nursery/verify_parallel_month.py
+          python research/ai_nursery/verify_gen008_month01.py
+      - name: Evaluate frozen old and new on Oct 1 to 14
+        run: |
+          if [ -f research/ai_nursery/outputs/GEN-008-PARALLEL/frozen-exam-2023-10-01-to-14/summary.json ]; then
+            echo "Exam already frozen; audit only"
+          else
+            python research/ai_nursery/gen008_frozen_exam.py
+          fi
+      - name: Verify sealed decisions and immutable predictor
+        run: python research/ai_nursery/verify_gen008_frozen_exam.py
+      - name: Commit independent holdout results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ai_nursery/outputs/GEN-008-PARALLEL/frozen-exam-2023-10-01-to-14/ docs/ai-lab/gen008-frozen-exam-2023-10.json
+          if git diff --cached --quiet; then
+            echo "No new files; immutable exam already saved"
+            exit 0
+          fi
+          git commit -m "data: freeze independent October 2023 GEN-008 old/new exam"
+          git pull --rebase origin main
+          git push origin HEAD:main
