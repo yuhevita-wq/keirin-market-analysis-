@@ -1,0 +1,516 @@
+{
+  "state": "TRAINED_CONDITIONAL_RESEARCH",
+  "frozen_first_place_model": "2023 calibration branch, GitHub Actions run 39354641293",
+  "first_place_model_changed": false,
+  "target_data_period": [
+    "2023-01-01",
+    "2023-12-31"
+  ],
+  "started_at": "2026-10-20T03:04:04.912341+00:00",
+  "finished_at": "2026-10-20T03:08:33.966351+00:00",
+  "methodological_boundary": "Walsh-Joshi classwise calibration model-selection principle; conditional finish-order construction is an original keirin extension, NOT part of that paper",
+  "stage2": {
+    "stage": 2,
+    "target": "second conditioned on first",
+    "trained_model": "RF",
+    "model_candidates": {
+      "LR": {
+        "races": 3735,
+        "rows": 22106,
+        "conditional_top1": 0.34404283801874164,
+        "mean_correct_choice_log_loss": 1.605843306327752,
+        "conditional_brier": 0.12995190434943352,
+        "classwise_ece_raw": 0.023614086814797815,
+        "classwise_ece_strict": 1.0,
+        "occupied_20bins": [
+          11,
+          11
+        ],
+        "paper_ece_gate_passed": false,
+        "group_sum_error": 4.440892098500626e-16
+      },
+      "RF": {
+        "races": 3735,
+        "rows": 22106,
+        "conditional_top1": 0.3748326639892905,
+        "mean_correct_choice_log_loss": 1.5599651617674675,
+        "conditional_brier": 0.12686305556458174,
+        "classwise_ece_raw": 0.023536253049977973,
+        "classwise_ece_strict": 1.0,
+        "occupied_20bins": [
+          14,
+          14
+        ],
+        "paper_ece_gate_passed": false,
+        "group_sum_error": 4.440892098500626e-16
+      }
+    },
+    "selection_period": "2023-09-01 through 2023-10-31",
+    "holdout_period": "2023-11-01 through 2023-12-31",
+    "holdout": {
+      "races": 3776,
+      "rows": 22302,
+      "conditional_top1": 0.3686440677966102,
+      "mean_correct_choice_log_loss": 1.5546252145112862,
+      "conditional_brier": 0.12708019644031374,
+      "classwise_ece_raw": 0.024525442618251826,
+      "classwise_ece_strict": 1.0,
+      "occupied_20bins": [
+        14,
+        14
+      ],
+      "paper_ece_gate_passed": false,
+      "group_sum_error": 4.440892098500626e-16
+    },
+    "final_fit_races": 21750,
+    "final_fit_rows": 128185,
+    "features_per_candidate": 54,
+    "paper_gate_on_holdout": false,
+    "methodology_extension": "True-result conditional training; non-winners ranked by a binary candidate score then normalized within each race/conditional set"
+  },
+  "stage3": {
+    "stage": 3,
+    "target": "third conditioned on first and second",
+    "trained_model": "LR",
+    "model_candidates": {
+      "LR": {
+        "races": 3735,
+        "rows": 18371,
+        "conditional_top1": 0.31593038821954483,
+        "mean_correct_choice_log_loss": 1.5226486891213875,
+        "conditional_brier": 0.15621923051232076,
+        "classwise_ece_raw": 0.01712648493820298,
+        "classwise_ece_strict": 1.0,
+        "occupied_20bins": [
+          10,
+          10
+        ],
+        "paper_ece_gate_passed": false,
+        "group_sum_error": 3.3306690738754696e-16
+      },
+      "RF": {
+        "races": 3735,
+        "rows": 18371,
+        "conditional_top1": 0.32021419009370816,
+        "mean_correct_choice_log_loss": 1.5210530001833598,
+        "conditional_brier": 0.15619286107611305,
+        "classwise_ece_raw": 0.017322239138365423,
+        "classwise_ece_strict": 1.0,
+        "occupied_20bins": [
+          10,
+          10
+        ],
+        "paper_ece_gate_passed": false,
+        "group_sum_error": 3.3306690738754696e-16
+      }
+    },
+    "selection_period": "2023-09-01 through 2023-10-31",
+    "holdout_period": "2023-11-01 through 2023-12-31",
+    "holdout": {
+      "races": 3776,
+      "rows": 18526,
+      "conditional_top1": 0.3132944915254237,
+      "mean_correct_choice_log_loss": 1.5240210446913356,
+      "conditional_brier": 0.15644114532111633,
+      "classwise_ece_raw": 0.0157277111414979,
+      "classwise_ece_strict": 1.0,
+      "occupied_20bins": [
+        12,
+        12
+      ],
+      "paper_ece_gate_passed": false,
+      "group_sum_error": 4.440892098500626e-16
+    },
+    "final_fit_races": 21750,
+    "final_fit_rows": 106435,
+    "features_per_candidate": 90,
+    "paper_gate_on_holdout": false,
+    "methodology_extension": "True-result conditional training; non-winners ranked by a binary candidate score then normalized within each race/conditional set"
+  },
+  "race_dataset": {
+    "source_files": {
+      "data/a_class_12/2023_01_02/entries.csv": 13902,
+      "data/a_class_12/2023_03_04/entries.csv": 13867,
+      "data/a_class_12/2023_05_06/entries.csv": 14315,
+      "data/a_class_12/2023_07_08/entries.csv": 13655,
+      "data/a_class_12/2023_09_10/entries.csv": 13815,
+      "data/a_class_12/2023_11_12/entries.csv": 13711,
+      "data/a3_challenge/2023_01_02/entries.csv": 6265,
+      "data/a3_challenge/2023_05_06/entries.csv": 5997,
+      "data/a3_challenge/2023_07_08/entries.csv": 6631,
+      "data/a3_challenge/2023_09_10/entries.csv": 6544,
+      "data/a3_challenge/2023_11_12/entries.csv": 6473,
+      "data/2023/s_class_f1_all_parts/2023_q1/entries.csv": 9289,
+      "data/2023/s_class_f1_all_parts/2023_q2/entries.csv": 8820,
+      "data/2023/s_class_f1_all_parts/2023_q3/entries.csv": 8569,
+      "data/2023/s_class_f1_all_parts/2023_q4/entries.csv": 9054,
+      "data/2023/s_class_yosen/entries.csv": 153
+    },
+    "incomplete_card_rows": 738,
+    "duplicate_entry_rows": 10234,
+    "races_missing_podium_rider": 194,
+    "valid_races": 21750,
+    "full_podium_races": 21750,
+    "rider_rows": 149935,
+    "label_source": "data/result_universe_v2/combined/results_2023.jsonl.gz",
+    "omitted_a3_source_period": "2023-03-01 through 2023-04-30",
+    "known_predate_numeric_fields": [
+      "car_no",
+      "age",
+      "term",
+      "gear",
+      "score",
+      "s_count",
+      "b_count",
+      "nige_count",
+      "makuri_count",
+      "sashi_count",
+      "mark_count",
+      "first_count",
+      "second_count",
+      "third_count",
+      "outside_count",
+      "win_rate",
+      "top2_rate",
+      "top3_rate"
+    ]
+  },
+  "probability_inference": "P(first)*P(second|first)*P(third|first,second); normalize each exclusive choice set",
+  "market_odds_used": false,
+  "roi_computed": false,
+  "full_ticket_probability_coverage": [
+    "3連単",
+    "3連複",
+    "2車単",
+    "2車複"
+  ],
+  "sample_integrity_checks": [
+    {
+      "race_id": "1320230101010001",
+      "participants": 6,
+      "ticket_count": {
+        "3連単": 120,
+        "2車単": 30,
+        "2車複": 15,
+        "3連複": 20
+      },
+      "ticket_probability_sums": {
+        "3連単": 1.0000000000000004,
+        "2車単": 1.0000000000000002,
+        "2車複": 1.0,
+        "3連複": 0.9999999999999998
+      }
+    },
+    {
+      "race_id": "1320230101010002",
+      "participants": 5,
+      "ticket_count": {
+        "3連単": 60,
+        "2車単": 20,
+        "2車複": 10,
+        "3連複": 10
+      },
+      "ticket_probability_sums": {
+        "3連単": 1.0,
+        "2車単": 1.0000000000000002,
+        "2車複": 1.0,
+        "3連複": 1.0
+      }
+    },
+    {
+      "race_id": "1320230101010003",
+      "participants": 7,
+      "ticket_count": {
+        "3連単": 210,
+        "2車単": 42,
+        "2車複": 21,
+        "3連複": 35
+      },
+      "ticket_probability_sums": {
+        "3連単": 0.9999999999999999,
+        "2車単": 1.0000000000000002,
+        "2車複": 1.0,
+        "3連複": 1.0000000000000002
+      }
+    },
+    {
+      "race_id": "1320230101010004",
+      "participants": 7,
+      "ticket_count": {
+        "3連単": 210,
+        "2車単": 42,
+        "2車複": 21,
+        "3連複": 35
+      },
+      "ticket_probability_sums": {
+        "3連単": 1.0000000000000004,
+        "2車単": 0.9999999999999998,
+        "2車複": 0.9999999999999998,
+        "3連複": 1.0
+      }
+    },
+    {
+      "race_id": "1320230101010005",
+      "participants": 7,
+      "ticket_count": {
+        "3連単": 210,
+        "2車単": 42,
+        "2車複": 21,
+        "3連複": 35
+      },
+      "ticket_probability_sums": {
+        "3連単": 1.0,
+        "2車単": 0.9999999999999998,
+        "2車複": 0.9999999999999999,
+        "3連複": 1.0
+      }
+    },
+    {
+      "race_id": "1320230101010006",
+      "participants": 6,
+      "ticket_count": {
+        "3連単": 120,
+        "2車単": 30,
+        "2車複": 15,
+        "3連複": 20
+      },
+      "ticket_probability_sums": {
+        "3連単": 0.9999999999999996,
+        "2車単": 1.0,
+        "2車複": 1.0000000000000002,
+        "3連複": 0.9999999999999999
+      }
+    },
+    {
+      "race_id": "1320230101010007",
+      "participants": 7,
+      "ticket_count": {
+        "3連単": 210,
+        "2車単": 42,
+        "2車複": 21,
+        "3連複": 35
+      },
+      "ticket_probability_sums": {
+        "3連単": 0.9999999999999997,
+        "2車単": 1.0000000000000002,
+        "2車複": 0.9999999999999999,
+        "3連複": 0.9999999999999999
+      }
+    },
+    {
+      "race_id": "1320230101010008",
+      "participants": 7,
+      "ticket_count": {
+        "3連単": 210,
+        "2車単": 42,
+        "2車複": 21,
+        "3連複": 35
+      },
+      "ticket_probability_sums": {
+        "3連単": 1.0000000000000007,
+        "2車単": 1.0000000000000002,
+        "2車複": 1.0,
+        "3連複": 1.0
+      }
+    },
+    {
+      "race_id": "1320230101010009",
+      "participants": 7,
+      "ticket_count": {
+        "3連単": 210,
+        "2車単": 42,
+        "2車複": 21,
+        "3連複": 35
+      },
+      "ticket_probability_sums": {
+        "3連単": 1.0000000000000002,
+        "2車単": 0.9999999999999999,
+        "2車複": 1.0,
+        "3連複": 1.0000000000000002
+      }
+    },
+    {
+      "race_id": "1320230101010010",
+      "participants": 7,
+      "ticket_count": {
+        "3連単": 210,
+        "2車単": 42,
+        "2車複": 21,
+        "3連複": 35
+      },
+      "ticket_probability_sums": {
+        "3連単": 0.9999999999999999,
+        "2車単": 1.0000000000000002,
+        "2車複": 0.9999999999999998,
+        "3連複": 1.0
+      }
+    },
+    {
+      "race_id": "1320230101010011",
+      "participants": 7,
+      "ticket_count": {
+        "3連単": 210,
+        "2車単": 42,
+        "2車複": 21,
+        "3連複": 35
+      },
+      "ticket_probability_sums": {
+        "3連単": 0.9999999999999999,
+        "2車単": 1.0,
+        "2車複": 1.0,
+        "3連複": 1.0000000000000002
+      }
+    },
+    {
+      "race_id": "1320230101010012",
+      "participants": 7,
+      "ticket_count": {
+        "3連単": 210,
+        "2車単": 42,
+        "2車複": 21,
+        "3連複": 35
+      },
+      "ticket_probability_sums": {
+        "3連単": 0.9999999999999997,
+        "2車単": 1.0,
+        "2車複": 1.0,
+        "3連複": 1.0
+      }
+    },
+    {
+      "race_id": "2320230101010001",
+      "participants": 6,
+      "ticket_count": {
+        "3連単": 120,
+        "2車単": 30,
+        "2車複": 15,
+        "3連複": 20
+      },
+      "ticket_probability_sums": {
+        "3連単": 0.9999999999999997,
+        "2車単": 1.0,
+        "2車複": 1.0000000000000002,
+        "3連複": 1.0000000000000002
+      }
+    },
+    {
+      "race_id": "2320230101010002",
+      "participants": 6,
+      "ticket_count": {
+        "3連単": 120,
+        "2車単": 30,
+        "2車複": 15,
+        "3連複": 20
+      },
+      "ticket_probability_sums": {
+        "3連単": 1.0000000000000002,
+        "2車単": 1.0,
+        "2車複": 1.0000000000000002,
+        "3連複": 1.0000000000000002
+      }
+    },
+    {
+      "race_id": "2320230101010003",
+      "participants": 6,
+      "ticket_count": {
+        "3連単": 120,
+        "2車単": 30,
+        "2車複": 15,
+        "3連複": 20
+      },
+      "ticket_probability_sums": {
+        "3連単": 0.9999999999999999,
+        "2車単": 1.0,
+        "2車複": 0.9999999999999999,
+        "3連複": 1.0
+      }
+    },
+    {
+      "race_id": "2320230101010004",
+      "participants": 7,
+      "ticket_count": {
+        "3連単": 210,
+        "2車単": 42,
+        "2車複": 21,
+        "3連複": 35
+      },
+      "ticket_probability_sums": {
+        "3連単": 1.0,
+        "2車単": 1.0,
+        "2車複": 1.0,
+        "3連複": 1.0
+      }
+    },
+    {
+      "race_id": "2320230101010005",
+      "participants": 7,
+      "ticket_count": {
+        "3連単": 210,
+        "2車単": 42,
+        "2車複": 21,
+        "3連複": 35
+      },
+      "ticket_probability_sums": {
+        "3連単": 0.9999999999999999,
+        "2車単": 1.0000000000000002,
+        "2車複": 0.9999999999999998,
+        "3連複": 1.0
+      }
+    },
+    {
+      "race_id": "2320230101010008",
+      "participants": 7,
+      "ticket_count": {
+        "3連単": 210,
+        "2車単": 42,
+        "2車複": 21,
+        "3連複": 35
+      },
+      "ticket_probability_sums": {
+        "3連単": 0.9999999999999997,
+        "2車単": 0.9999999999999999,
+        "2車複": 1.0000000000000002,
+        "3連複": 0.9999999999999998
+      }
+    },
+    {
+      "race_id": "2320230101010009",
+      "participants": 7,
+      "ticket_count": {
+        "3連単": 210,
+        "2車単": 42,
+        "2車複": 21,
+        "3連複": 35
+      },
+      "ticket_probability_sums": {
+        "3連単": 0.9999999999999998,
+        "2車単": 0.9999999999999998,
+        "2車複": 1.0000000000000002,
+        "3連複": 0.9999999999999999
+      }
+    },
+    {
+      "race_id": "2320230101010010",
+      "participants": 7,
+      "ticket_count": {
+        "3連単": 210,
+        "2車単": 42,
+        "2車複": 21,
+        "3連複": 35
+      },
+      "ticket_probability_sums": {
+        "3連単": 1.0000000000000004,
+        "2車単": 1.0000000000000002,
+        "2車複": 0.9999999999999998,
+        "3連複": 1.0
+      }
+    }
+  ],
+  "risk_notes": [
+    "Conditional models were trained given ACTUAL previous finishers (teacher forcing); at inference they evaluate every hypothetical previous finisher. Joint calibration requires out-of-time testing.",
+    "Win-probability normalization changes the original binary probabilities; resulting per-race calibration is not guaranteed.",
+    "A3 entries for 2023 March-April are missing; source coverage is not nationwide complete.",
+    "Other ticket types require additional definitions or fields; no inferred odds.",
+    "ECE occupancy 80% is reported; a failed gate does not certify calibration"
+  ]
+}
