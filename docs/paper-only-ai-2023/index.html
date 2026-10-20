@@ -33,6 +33,7 @@ a{color:#8fdcf7}strong.teal{color:var(--teal)}
 <div class="stat"><div class="small">2023年の収録総数</div><div class="value" id="year_odds">—</div><div class="small">全券種ではない</div></div>
 <div class="stat"><div class="small">2023年の照合総数</div><div class="value" id="year_match">—</div><div class="small">学習前の原材料</div></div>
 </div>
+<section class="panel" style="margin:12px 0"><h2>2023年 オッズ収録内訳（S級限定ではありません）</h2><div id="classes" class="row" style="justify-content:flex-start;gap:20px"><span class="small">GitHubから読み込み中…</span></div><p class="small">原データの race_type 表記で分類。S級・A級・チャレンジ・その他を全て対象とし、データの不存在を0件として扱いません。</p></section>
 <div class="two"><section class="panel"><h2>月次データの収録・照合</h2><div class="graph" id="plot"><div class="small">GitHubの実測データを読込中…</div></div><div class="legend"><span><i class="dot" style="background:var(--blue)"></i>オッズ</span><span><i class="dot" style="background:var(--teal)"></i>結果照合済み</span></div></section>
 <section class="panel"><h2>AIの状態</h2><div class="row"><span class="small">学習データ</span><strong id="training">0件</strong></div><hr style="border:0;border-top:1px solid var(--border)"><div class="row"><span class="small">期間外予測</span><strong>0件</strong></div><hr style="border:0;border-top:1px solid var(--border)"><div class="row"><span class="small">確率校正誤差 / ECE</span><strong>—</strong></div><hr style="border:0;border-top:1px solid var(--border)"><div class="row"><span class="small">収益 / ROI</span><strong>—</strong></div><p class="small" style="margin-top:18px">データとモデルの接続は別の工程です。二者択一の予測対象と事前特徴量が定義されるまで、学習・架空の成績表示は行いません。</p></section></div>
 <section class="panel" style="margin-top:12px"><h2>データ監査・取り扱い</h2>
@@ -72,6 +73,8 @@ async function load(){
  const item=await res.json();if(item.start_date!=='2023-01-01'||item.odds_sha256_verified!==true)throw Error('開始日または監査状態が不正');
  report=item;$('network').textContent='● GitHub接続済み';$('model').textContent='AI：'+item.model_status;
  $('year_odds').textContent=fmt(item.odds_races);$('year_match').textContent=fmt(item.matched_races);
+ const groups={'S級':0,'A級':0,'チャレンジ':0,'その他':0};for(const [name,count] of Object.entries(item.odds_race_types||{})){if(name.includes('A級'))groups['A級']+=count;else if(name.includes('S級'))groups['S級']+=count;else if(name.includes('チャレンジ'))groups['チャレンジ']+=count;else groups['その他']+=count}
+ $('classes').replaceChildren();for(const [name,count] of Object.entries(groups)){const el=document.createElement('div');el.innerHTML='<div class="small"></div><div class="value"></div>';el.querySelector('.small').textContent=name;el.querySelector('.value').textContent=item.odds_race_types?fmt(count):'—';$('classes').append(el)}
  $('training').textContent=fmt(item.model_input_count)+'件';
  $('detail').textContent=`データ確認日：${item.updated_at}｜オッズ${fmt(item.odds_races)}R／結果${fmt(item.result_races)}R／照合${fmt(item.matched_races)}R／未照合${fmt(item.unmatched_odds_races)}R。SHA-256検証：合格。月別日付を復元できないID：${fmt(item.undated_odds_races)}件。`;
  select(index);
