@@ -1,0 +1,41 @@
+name: Baby AI expanded GitHub source connection and two-tier label audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/ai_nursery/source_bridge.py'
+      - 'research/ai_nursery/source_connection_audit_expanded.py'
+      - 'research/ai_nursery/test_source_connection_expanded.py'
+      - '.github/workflows/baby-ai-expanded-source-connection.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: baby-ai-expanded-source
+  cancel-in-progress: false
+jobs:
+  connect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numeric runtime
+        run: python -m pip install 'numpy>=1.26'
+      - name: Resolve cards+podiums+prices across all saved archive families
+        run: OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python research/ai_nursery/source_connection_audit_expanded.py
+      - name: Verify counts, schema separation, reserved exam dates and result leakage
+        run: OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python research/ai_nursery/test_source_connection_expanded.py
+      - name: Save validated expanded connection and audit without any model training
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ai_nursery/source_connection/coverage-expanded.json docs/ai-lab/nursery-source-connection-expanded.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "data: verify wider saved-race data connection and supervised label tiers"
+          git pull --rebase origin main
+          git push origin HEAD:main

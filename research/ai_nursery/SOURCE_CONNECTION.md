@@ -26,3 +26,7 @@ source_connection_audit.py をGitHub Actionsで実行すると research/ai_nurse
 **この段階は接続と監査のみ。AIの重みを更新しない。** 歴代GEN-001〜007のチェックポイント、学習時の結果と用紙は不変。
 
 過去の確定オッズを締切前の価格として扱わない。2021〜22の出走表は主としてグレード戦ZIPで、全国全レースとは限らない。2023年の専用A3の3〜4月アーカイブは存在しない。暗号化済み7券種の秘密鍵を求めたり、非公開鍵をコミットしたりしない。
+
+## 追加接続：回収済みレースと2層教師データ
+
+以前の37,441Rの接続に加え、`data/unarchived_races_v1/batch_*` の gzip 圧縮出走表を統合する。新しい `supervised_races_year` は (A)着順＋完備した3連単・3連複オッズ (B)着順は確認できるが全オッズが無い出走表 を重複なしに返す。Aは既存の利益学習に利用できる。Bはオッズを前提としない将来の着順確率モデル用の入力であり、既存の `feature_matrix` に投入しないこと。6年分の年別結合・欠損・監査結果は `research/ai_nursery/source_connection/coverage-expanded.json` および `docs/ai-lab/nursery-source-connection-expanded.json`。全国カレンダーは開催レースの索引にとどまり、選手の出走表ではない。暗号化された券種データは復号手段が確認できないため価格として扱わない。既存AIの重みは不変。

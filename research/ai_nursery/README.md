@@ -84,3 +84,7 @@ GEN-004の重みと財布と累積ご褒美を継承し、1万円分の仮想財
 ## GitHubに保存済みの大量データを育成AIへ接続
 
 2021〜2026上期の既存出走表、着順、年別完全確定オッズを同じ16桁レースIDで突合。出走表の登録、結果の有効ラベル、完全オッズは集合が異なるため、厳密結合した件数と欠損を年度別に監査する。source_bridge.py と joined_races_for_training が次世代用入口。GEN-001〜007の重みは不変。詳細 SOURCE_CONNECTION.md。
+
+## 拡張データ接続（回収済みレース・2層学習用）
+
+`source_bridge.py` に `data/unarchived_races_v1/batch_*/races.csv.gz` と `entries.csv.gz` の読み込みを追加。元の年間完全オッズ2券種はSHA256照合し、すべて16桁レースIDを厳密に一致させる。`supervised_races_year` と `supervised_training_rows` は①完全オッズ＋着順②着順あり／完全オッズなしの別々のデータを返す。後者は未対応のオッズ依存モデルに直接渡してはいけない。両者の年別件数は `nursery-source-connection-expanded.json` に監査して保存する。学習済みAIは一切変更しない。

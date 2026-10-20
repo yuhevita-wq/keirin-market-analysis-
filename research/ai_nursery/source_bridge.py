@@ -84,6 +84,12 @@ def _archive_paths(year):
             for source in sorted(root.rglob("races.csv")):
                 if (source.parent/"entries.csv").is_file():
                     yield ("csv",source.parent)
+    # Independently recovered source cards, kept outside the old yearly tree.
+    recovery=DATA/"unarchived_races_v1"
+    if recovery.exists():
+        for batch in sorted(recovery.glob("batch_*")):
+            if (batch/"races.csv.gz").is_file() and (batch/"entries.csv.gz").is_file():
+                yield ("gz_csv",batch)
     # For early years, most racecards live in durable G1/G2/G3 zips.
     grade=DATA/"grade_races"
     if grade.exists():
@@ -100,6 +106,11 @@ def _stream_csv(path):
 def _archive_streams(kind,source):
     if kind=="csv":
         yield str(source.relative_to(ROOT)),_stream_csv(source/"races.csv"),_stream_csv(source/"entries.csv")
+        return
+    if kind=="gz_csv":
+        with gzip.open(source/"races.csv.gz","rt",encoding="utf-8-sig",newline="") as f_r, \
+             gzip.open(source/"entries.csv.gz","rt",encoding="utf-8-sig",newline="") as f_e:
+            yield str(source.relative_to(ROOT)),csv.DictReader(f_r),csv.DictReader(f_e)
         return
     with zipfile.ZipFile(source) as z:
         race_names=[x for x in z.namelist() if x.rsplit("/",1)[-1]=="races.csv"]
@@ -323,3 +334,93 @@ def joined_races_for_training(start,end):
         r["race"].get("track",""),int(r["race"].get("race_no") or 0),r["race_id"]
     ))
     return rows,reports
+
+
+def supervised_races_year(year,first=None,last=None,*,verify_sha=True):
+    """Two *distinct* supervised/price-aware source tiers, exact race ID only.
+
+    tier complete_market: old 3連単+3連複 full-odds model input.
+    tier label_only: valid racecard + complete podium but no complete price book.
+    No prices are invented. label_only MAY train a separate odds-free ranking
+    model, but MUST NOT be passed to feature_matrix requiring full odds.
+    """
+    cards,counts,sources=load_cards_year(year,first,last)
+    labels,label_counts=stream_podium(year,set(cards))
+    markets,market_counts=stream_full_odds(year,set(cards),verify_sha=verify_sha)
+    full=[]
+    label_only=[]
+    problems=Counter()
+    for rid,card in cards.items():
+        order=labels.get(rid)
+        if order is None:
+            problems["missing_verified_result"]+=1
+            continue
+        entrants=card["entries"]
+        if not all(c in entrants for c in order) or len(entrants)<3:
+            problems["podium_missing_from_entries"]+=1
+            continue
+        obj={"race_id":rid,**card,"outcome":order}
+        if rid not in markets:
+            label_only.append(obj)
+            continue
+        ready={**obj,"odds":markets[rid]}
+        if not eligible(ready):
+            problems["complete_odds_entry_mismatch"]+=1
+            # The label and card still exist, even when odds fail eligibility.
+            label_only.append(obj)
+            continue
+        full.append(ready)
+    def sort_key(row):
+        r=row["race"]
+        return (r["race_date"],r.get("start_time",""),r.get("track",""),
+                int(r.get("race_no") or 0),row["race_id"])
+    full.sort(key=sort_key)
+    label_only.sort(key=sort_key)
+    report={
+        "year":year,"sources":sources,"card_source_counts":counts,
+        "result_source_counts":label_counts,"odds_source_counts":market_counts,
+        "complete_market_races":len(full),
+        "result_labeled_no_full_market_races":len(label_only),
+        "all_labeled_cards":len(full)+len(label_only),
+        "missing_reasons":dict(problems),
+        "complete_race_ids_sha256":hashlib.sha256(
+            "\n".join(x["race_id"] for x in full).encode()).hexdigest(),
+        "no_odds_labeled_ids_sha256":hashlib.sha256(
+            "\n".join(x["race_id"] for x in label_only).encode()).hexdigest(),
+        "full_markets":["3連単","3連複"],
+        "label_only_is_not_valid_betting_data":True,
+        "pricing_phase":"historical final odds; not deadline prices",
+        "result_columns_only_in_label":True
+    }
+    return full,label_only,report
+
+
+def supervised_training_rows(start,end):
+    """Cross-year source gateway for NEXT generations, no training here.
+
+    Explicit supervision tiers prevent accidental substitution of price-less
+    observations into the profit optimization.
+    """
+    first=date.fromisoformat(start)
+    last=date.fromisoformat(end)
+    if first>last or first.year not in YEARS or last.year not in YEARS:
+        raise ValueError("Invalid training date range")
+    if last>date(2026,6,30):
+        raise ValueError("2026H2 is outside validated historical scope")
+    for left,right in ((date(2023,6,1),date(2023,6,7)),
+                       (date(2023,7,1),date(2023,7,7))):
+        if first<=right and last>=left:
+            raise ValueError(f"Training overlaps locked holdout {left}..{right}")
+    book=[]
+    label_only=[]
+    reports=[]
+    for year in range(first.year,last.year+1):
+        lo=max(first,date(year,1,1)).isoformat()
+        hi=min(last,date(year,6,30) if year==2026 else date(year,12,31)).isoformat()
+        full,supervised,rep=supervised_races_year(year,lo,hi)
+        book.extend(full)
+        label_only.extend(supervised)
+        reports.append(rep)
+    # Keep tiers disjoint and samples physically distinct.
+    assert not {r["race_id"] for r in book}&{r["race_id"] for r in label_only}
+    return {"full_market":book,"result_only":label_only,"reports":reports}
