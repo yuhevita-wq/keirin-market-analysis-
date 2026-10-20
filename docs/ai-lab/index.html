@@ -211,6 +211,23 @@ footer{border-top:1px solid var(--line);color:var(--soft);font-size:12px;margin-
 <a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery/outputs/GEN-007/continuation-2m">全購入記録と学習重み</a>
 </div>
 </section>
+<section class="section">
+<h2>🔌 GitHub全期間データ接続</h2>
+<p>育成AIと既存の大規模データ保管庫を接続するため、6年分の出走表・着順・確定オッズを同じレースIDで照合します。3つとも完全に一致したものだけ次世代へ渡します。</p>
+<div class="grid">
+<div class="card"><small>保存済みの完全確定オッズ</small><strong>39,934R</strong><span>2021〜2026上期・3連単と3連複</span></div>
+<div class="card"><small>出走表＋結果＋オッズの完全結合</small><strong id="connReady">検査実行中</strong><span>実際に学習へ渡せる件数</span></div>
+<div class="card"><small>結果欠損のある出走表</small><strong id="connNoResult">—</strong><span>推測しない</span></div>
+<div class="card"><small>完全オッズ欠損のある出走表</small><strong id="connNoOdds">—</strong><span>レースIDの一致で判定</span></div>
+</div>
+<div class="scroll"><table><thead><tr><th>年</th><th>出走表</th><th>完全オッズ</th><th>完全結合</th><th>オッズ欠損</th><th>結果欠損</th></tr></thead><tbody id="connYears"></tbody></table></div>
+<p class="warning">出走表の登録数と完全価格数は異なります。結合できないものは欠損として記録し、過去世代の予想・学習済み重みは変更しません。</p>
+<div class="links">
+<a class="btn" href="nursery-source-connection.json">年別接続監査</a>
+<a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/blob/main/research/ai_nursery/source_bridge.py">接続プログラム</a>
+<a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/blob/main/research/ai_nursery/SOURCE_CONNECTION.md">データ接続規約</a>
+</div>
+</section>
 <section class="section"><h2>保存と次の世代</h2><div class="row"><span>出生時の学習重み</span><b>すべて0</b></div><div class="row"><span>1週間後の学習重み</span><b id="checkpoint">—</b></div><div class="row"><span>次の段階</span><b>GEN-003が資金管理を学習中</b></div><p>新しい能力を得た時点でGEN-001からGEN-002へ世代交代。GEN-002は親の学習重みを継承しています。</p><div class="links"><a class="btn" href="nursery-summary.json">1週間の全体成績</a><a class="btn" href="nursery-history.json">全レースのマーク履歴</a><a class="btn" href="nursery-checkpoint.json">学習した重み</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery">GitHub保存先 ↗</a></div></section>
 <footer>過去実験の価格はレース終了後の確定オッズです。締切前の価格と同じではないため、この練習成績を実購入可能な収益と見なせません。入力に足りないレースは欠損として記録。</footer>
 </main>
@@ -488,5 +505,25 @@ try{
  if(f.ok){const e=await f.json();$("c2Exam").textContent=n(e.tested_races)+"Rで検証完了";}
  }catch(e){}
 }catch(e){$("c2Races").textContent="結果保存待ち";}
+})();
+</script><script>
+(async()=>{
+const el=id=>document.getElementById(id);
+const n=x=>Number(x||0).toLocaleString("ja-JP");
+try{
+ const r=await fetch("nursery-source-connection.json",{cache:"no-store"});
+ if(!r.ok)throw Error("検査中");
+ const d=await r.json();
+ el("connReady").textContent=n(d.totals.joined_races)+"R";
+ el("connNoResult").textContent=n(d.totals.result_missing_on_racecards)+"R";
+ el("connNoOdds").textContent=n(d.totals.odds_missing_on_racecards)+"R";
+ for(const v of d.yearly){
+  const tr=document.createElement("tr");
+  [v.year,n(v.source_count.unique_cards),n(v.market_count.archive_complete_races),
+   n(v.complete_races),n(v.join_status.no_complete_market),n(v.join_status.no_result)]
+   .forEach(text=>{const td=document.createElement("td");td.textContent=String(text);tr.append(td);});
+  el("connYears").append(tr);
+ }
+}catch(e){el("connReady").textContent="監査データ待ち";}
 })();
 </script></body></html>
