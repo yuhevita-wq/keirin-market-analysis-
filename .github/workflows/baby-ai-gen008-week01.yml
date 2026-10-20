@@ -1,0 +1,50 @@
+name: Baby AI GEN-008 | parallel first week
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/ai_nursery/train_gen008_week01.py'
+      - 'research/ai_nursery/test_gen008_week01.py'
+      - '.github/workflows/baby-ai-gen008-week01.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: baby-ai-gen008-week01
+  cancel-in-progress: false
+jobs:
+  parallel-one-week:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numpy
+        run: python -m pip install 'numpy>=1.26'
+      - name: Verify both model implementations and identical inherited parent
+        run: OPENBLAS_NUM_THREADS=1 python research/ai_nursery/test_gen008.py
+      - name: First week August 1 through 7 2023 OLD versus NEW sequential training
+        run: |
+          if [ -f research/ai_nursery/outputs/GEN-008-PARALLEL/week-01/summary.json ]; then
+            echo "Week 01 already frozen: audit only"
+          else
+            OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python research/ai_nursery/train_gen008_week01.py --run-training
+          fi
+      - name: Audit every pre-result seal, equal IDs, frozen parent and net ledger
+        run: OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python research/ai_nursery/test_gen008_week01.py
+      - name: Persist both distinct week-one checkpoints, sealed records and scorecard
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ai_nursery/outputs/GEN-008-PARALLEL/week-01/ docs/ai-lab/gen008-week01.json
+          if git diff --cached --quiet; then
+            echo "No new archive changes"
+            exit 0
+          fi
+          git commit -m "data: freeze GEN-008 parallel first week old vs new learning"
+          git pull --rebase origin main
+          git push origin HEAD:main

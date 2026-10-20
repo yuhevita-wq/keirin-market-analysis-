@@ -1,6 +1,6 @@
 {
   "id": "GEN-008-PARALLEL",
-  "status": "CREATED_NOT_TRAINED",
+  "status": "WEEK_01_LAUNCHED",
   "parent": "GEN-007-C2",
   "old_model_checkpoint_unchanged": true,
   "two_branches": [
@@ -22,7 +22,18 @@
   ],
   "real_training_races": 0,
   "real_examination_races": 0,
-  "auto_training_on_push": false,
-  "run_only_by_manual_workflow": true,
-  "notes": "Creation and tests only. Never merge shadow payouts into actual cash profits."
+  "auto_training_on_push": "first week explicitly requested; later weeks remain manual",
+  "run_only_by_manual_workflow": false,
+  "notes": "First week has its own push-triggered workflow after explicit user request. Earlier two-month workflow stays manual, reserved October exam unopened.",
+  "weekly_learning": {
+    "week": 1,
+    "start": "2023-08-01",
+    "end": "2023-08-07",
+    "branch_count": 2,
+    "old": "unchanged GEN-007 method continued",
+    "new": "GEN-008 counterfactual + coherent probability",
+    "checkpoint_path": "research/ai_nursery/outputs/GEN-008-PARALLEL/week-01/",
+    "summary": "docs/ai-lab/gen008-week01.json",
+    "forward_exam_started": false
+  }
 }
