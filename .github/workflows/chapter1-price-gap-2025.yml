@@ -1,0 +1,75 @@
+name: Paper Chapter 1 | Frozen 2025 Forecast vs Price Gap
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'paper_only_ai/chapter1_probability_price_gap_2025.py'
+      - '.github/workflows/chapter1-price-gap-2025.yml'
+permissions:
+  contents: write
+concurrency:
+  group: chapter1-price-gap-2025
+  cancel-in-progress: false
+jobs:
+  quantitative-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            paper_only_ai
+            docs/paper-only-ai-2023/chapter1_accuracy_ai
+            docs/paper-only-ai-2023/autonomous_chapter1
+            docs/paper-only-ai-2023/chapter1_full_sheet_deletion
+            docs/paper-only-ai-2023/chapter1_deletion_continual
+            .github/workflows/chapter1-price-gap-2025.yml
+          sparse-checkout-cone-mode: false
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install fixed model dependencies
+        run: python -m pip install 'numpy<3' 'pandas<3' 'scipy<2' 'scikit-learn<2' 'joblib<2' 'optuna<5'
+      - name: Validate checkpoint, source and invariants
+        run: |
+          python -m py_compile paper_only_ai/chapter1_probability_price_gap_2025.py
+          python paper_only_ai/chapter1_frozen_2025.py --check
+          python paper_only_ai/test_chapter1_iterative_deletion.py
+      - name: Grade price gap in consecutive completed quarters
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PYTHONUNBUFFERED: '1'
+          OMP_NUM_THREADS: '2'
+          OPENBLAS_NUM_THREADS: '2'
+          MKL_NUM_THREADS: '2'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          set -euo pipefail
+          for q in 1 2 3 4; do
+            report="docs/paper-only-ai-2023/chapter1_deletion_continual/price_gap_2025/quarter_2025_q$q.json"
+            if [ ! -f "$report" ]; then
+              python paper_only_ai/chapter1_probability_price_gap_2025.py --quarter "$q"
+              git add "$report"
+              git commit -m "Score 2025 Q$q forecast-to-price gap without training"
+              git pull --rebase origin "$GITHUB_REF_NAME"
+              git push origin "HEAD:$GITHUB_REF_NAME"
+            fi
+          done
+          annual="docs/paper-only-ai-2023/chapter1_deletion_continual/price_gap_2025/annual_2025.json"
+          if [ ! -f "$annual" ]; then
+            python paper_only_ai/chapter1_probability_price_gap_2025.py --annual
+            git add "$annual"
+            git commit -m "Publish empirical 2025 forecast-vs-market-price decomposition"
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
+      - name: Preserve partial audit on error
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chapter1-2025-forecast-price-gap-${{ github.run_id }}
+          path: docs/paper-only-ai-2023/chapter1_deletion_continual/price_gap_2025/
+          if-no-files-found: warn
+          retention-days: 90
