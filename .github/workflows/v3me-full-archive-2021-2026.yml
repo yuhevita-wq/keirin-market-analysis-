@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   use_every_accessible_plain_book:
-    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'run-v3me-archive-scale-2026h1-request'
+    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'run-v3me-archive-scale-2026h1-chrono'
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     env:
@@ -39,7 +39,7 @@ jobs:
           python research/deletion_ai/test_secure_seven_bet_bridge.py
       - name: Train V3-ME-R using ALL genuine plaintext odds years 2021-2025 and freeze 2026
         run: |
-          if [ -f research/deletion_ai/outputs/GEN-008-V3-ME-R-ALL-PLAIN-2021-2026/summary.json ]; then
+          if [ -f research/deletion_ai/outputs/GEN-008-V3-ME-R-ALL-PLAIN-2021-2026-CHRONO/summary.json ]; then
             echo 'Preserving original complete archive-scale evidence'
           else
             python research/deletion_ai/v3me_archive_scale_2021_2026.py --source plain
@@ -48,8 +48,8 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add research/deletion_ai/outputs/GEN-008-V3-ME-R-ALL-PLAIN-2021-2026/
-          git add docs/ai-lab/gen008-v3me-archive-scale-plain.json
+          git add research/deletion_ai/outputs/GEN-008-V3-ME-R-ALL-PLAIN-2021-2026-CHRONO/
+          git add docs/ai-lab/gen008-v3me-archive-scale-plain-chrono.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'data: V3ME audit all usable plain books 2021-2026H1'
           for i in 1 2 3 4 5 6; do
@@ -59,7 +59,7 @@ jobs:
           done
           exit 1
   decrypt_and_train_every_sealed_book_if_authorized:
-    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'run-v3me-archive-scale-2026h1-request'
+    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'run-v3me-archive-scale-2026h1-chrono'
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     env:
