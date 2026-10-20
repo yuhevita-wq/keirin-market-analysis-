@@ -1,0 +1,41 @@
+name: Finals official identity search source probe
+on:
+  push:
+    paths:
+      - '.github/workflows/finals-registry-public-source.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Read official public search form results
+        run: |
+          python - <<'PY'
+          import urllib.request,urllib.parse,pathlib,gzip,json,re,concurrent.futures
+          root=pathlib.Path('registry_search_probe');root.mkdir(exist_ok=True)
+          fields=['gGaiteiCD','tikuCD','nen','bKeirinCD','kSyuruiCD','girlsKBN','nameSeiKana','nameMeiKana','nameSei','nameMei','snum','hukenCD','sotugyouki','kuniCD','seibetuCD','kyuhanCD','tikuCDSensyu','age','bHomebankCD','homekyogiCD','kyakusituCD','ckbn','stgt']
+          urls=[]
+          for term in [54,90,119]:
+           p={k:'' for k in fields};p.update(dppg='1',srmd='01',sotugyouki=str(term),stgt='1')
+           urls.append(('term_'+str(term),'https://keirin.jp/pc/racersearchresult?'+urllib.parse.urlencode(p)))
+          def get(item):
+           key,url=item
+           try:
+            req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0','Referer':'https://keirin.jp/pc/search'})
+            with urllib.request.urlopen(req,timeout=40) as response:raw=response.read();status=response.status
+            gzip.open(root/(key+'.html.gz'),'wb').write(raw)
+            text=raw.decode('utf-8',errors='strict')
+            return {'key':key,'url':url,'status':status,'bytes':len(raw),'scripts':re.findall(r'<script[^>]+src=["\x27]([^"\x27]+)',text),'onclick':re.findall(r'onclick=["\x27]([^"\x27]+)',text)[:100],'registration_candidates':sorted(set(re.findall(r'(?<!\\d)0?1\\d{4}(?!\\d)',text)))}
+           except Exception as e:return {'key':key,'url':url,'error':repr(e)}
+          with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:report=list(pool.map(get,urls))
+          (root/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2));print(json.dumps(report,ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: finals-registry-public-search
+          path: registry_search_probe
+          retention-days: 90
