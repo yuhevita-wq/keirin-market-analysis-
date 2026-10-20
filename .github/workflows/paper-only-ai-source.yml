@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'paper_only_ai/github_bridge.py'
+      - 'paper_only_ai/probe_schema.py'
       - '.github/workflows/paper-only-ai-source.yml'
 permissions:
   contents: write
@@ -26,11 +27,13 @@ jobs:
           python-version: '3.11'
       - name: Validate actual GitHub 2023 odds and results
         run: python paper_only_ai/github_bridge.py --year 2023 --out docs/paper-only-ai-2023/source_status.json
+      - name: Probe entry and result schemas for 2023 training
+        run: python paper_only_ai/probe_schema.py
       - name: Persist read-only source status
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/paper-only-ai-2023/source_status.json
+          git add docs/paper-only-ai-2023/source_status.json docs/paper-only-ai-2023/schema_probe.json
           if ! git diff --cached --quiet; then
             git commit -m "Update independent AI source status for 2023"
             git push
