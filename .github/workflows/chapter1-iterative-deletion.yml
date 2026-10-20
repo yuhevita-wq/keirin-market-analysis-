@@ -38,14 +38,30 @@ jobs:
         run: |
           python -m py_compile paper_only_ai/chapter1_iterative_deletion.py
           python paper_only_ai/test_chapter1_iterative_deletion.py
-      - name: Advance four independent deletion scoring layers by one full historical quarter
+      - name: Advance up to three chronological quarters with durable checkpoint after each
         env:
           GH_TOKEN: ${{ github.token }}
           PYTHONUNBUFFERED: '1'
           OMP_NUM_THREADS: '2'
           OPENBLAS_NUM_THREADS: '2'
           MKL_NUM_THREADS: '2'
-        run: python paper_only_ai/chapter1_iterative_deletion.py
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for step in 1 2 3; do
+            echo "ADVANCE_DELETE_LEARNING_STEP=$step"
+            python paper_only_ai/chapter1_iterative_deletion.py
+            git add docs/paper-only-ai-2023/chapter1_deletion_continual/checkpoint.json
+            shopt -s nullglob
+            for f in docs/paper-only-ai-2023/chapter1_deletion_continual/quarter_2024_q*.json; do
+              git add "$f"
+            done
+            if ! git diff --cached --quiet; then
+              git commit -m "Advance one prequential historical deletion-learning quarter"
+              git pull --rebase origin "$GITHUB_REF_NAME"
+              git push origin "HEAD:$GITHUB_REF_NAME"
+            fi
+          done
       - name: Preserve checkpoint and all scores even on a failing run
         if: always()
         uses: actions/upload-artifact@v4
