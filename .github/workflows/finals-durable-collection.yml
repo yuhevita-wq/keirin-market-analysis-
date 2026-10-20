@@ -37,6 +37,23 @@ jobs:
         env:
           PYTHONPATH: src
         run: python research/finals_durable/bootstrap.py ${{ matrix.shard }}
+      - name: Reconcile published scope and withdrawn entrants
+        env:
+          PYTHONPATH: src
+        run: |
+          python - <<'PY'
+          import pathlib,sys
+          root=pathlib.Path('research/finals_durable')
+          sys.path.insert(0,str(root))
+          finish=root/'finish_collection.py'
+          text=finish.read_text()
+          old="cars=[e['car_no'] for e in d.get('entries',[])]"
+          new="cars=d.get('odds_scope',{}).get('active_cars') or [e['car_no'] for e in d.get('entries',[])]"
+          assert old in text, 'Unexpected finish collector version'
+          finish.write_text(text.replace(old,new))
+          code="\"\"\"Source-backed scope and withdrawal repair; preserves originals, never certifies full dataset.\"\"\"\nimport json,re,itertools,datetime,pathlib,hashlib,gzip\nIDS=['4720250209030009','8120240219030009','4720250209030011','2820250906030011','1120240810030008','3720240329030008','5120240311030012']\nCARD='https://keirin.kdreams.jp/hakodate/racecard/11202409120300/'\ndef norm(s):return re.sub(r'\\s+','',s)\ndef verify_market(rows,cars,ordered):\n expected=set(itertools.permutations(cars,3) if ordered else itertools.combinations(sorted(cars),3))\n keys=[tuple(x['cars']) for x in rows]\n return set(keys)==expected and len(keys)==len(set(keys)) and all(x.get('status')=='available' and isinstance(x.get('odds'),(int,float)) and x['odds']>0 for x in rows)\ndef repair(c,data,p=None,scope_evidence=None):\n events=[];stamp=datetime.datetime.now(datetime.timezone.utc).isoformat()\n if scope_evidence is None and p is not None:\n  text=norm(p.BeautifulSoup(p.get(CARD,data),'lxml').get_text(' ',strip=True))\n  starts=[text.find(x) for x in ['10Rチャレンジ決勝','11Rガールズ決勝','12RＡ級決勝']]\n  if all(x>=0 for x in starts) and starts==sorted(starts) and '中止' in text[starts[0]:starts[1]]:\n   scope_evidence={'source_url':CARD,'day':'2024-09-14','10R':'チャレンジ決勝・中止','11R':'ガールズ決勝','12R':'Ａ級決勝','checked_at':stamp}\n if scope_evidence:\n  male=c.execute('select payload from races where race_id=?',('1120240912030012',)).fetchone()\n  if male and json.loads(male[0] or '{}').get('race',{}).get('race_date')=='2024-09-14':\n   row=c.execute('select payload from races where race_id=?',('1120240912030011',)).fetchone()\n   if row:\n    d=json.loads(row[0] or '{}');d.setdefault('scope_original',{'label':'チャレンジ決勝','category':'A3'});d['scope_review']={'status':'excluded_women_source_verified','evidence':scope_evidence,'male_final_already_present':'1120240912030012','cancelled_challenge_race_id':'1120240912030010'}\n    c.execute('update races set status=?,category=?,label=?,payload=?,updated=? where race_id=?',('excluded','L','ガールズ決勝',json.dumps(d,ensure_ascii=False),stamp,'1120240912030011'))\n    c.execute('insert or replace into cancellations values(?,?,?,?,?)',('2024-09-14',CARD,10,'チャレンジ決勝',json.dumps(scope_evidence,ensure_ascii=False)))\n    events.append({'scope_corrected':'1120240912030011','evidence':scope_evidence})\n for rid in IDS:\n  row=c.execute('select payload,url from races where race_id=?',(rid,)).fetchone()\n  if not row:continue\n  d=json.loads(row[0] or '{}');entries=d.get('entries',[]);allcars=sorted(e['car_no'] for e in entries)\n  withdrawal=sorted(e['car_no'] for e in entries if '欠車' in (str(e.get('player_profile',''))+str(e.get('raw_row_json',''))))\n  result_withdrawal=sorted(x['car_no'] for x in d.get('results',[]) if x.get('finish_text')=='欠')\n  if not withdrawal or withdrawal!=result_withdrawal:events.append({'race_id':rid,'unresolved':'withdrawal entry/result mismatch'});continue\n  active=[x for x in allcars if x not in withdrawal];review=d.get('withdrawal_source_review',{});markets=review.get('markets',{})\n  if p is not None and not all(verify_market(markets.get(k,[]),active,k=='trifecta') for k in ['trifecta','trio']):\n   soup=p.BeautifulSoup(p.get(p.odds_url(row[1].split('?')[0]),data),'lxml');blocks={}\n   from keirin_market_analysis.historical_final_odds import parse_fixed_first_trifecta_table\n   for table in soup.select('table.odds_table'):\n    got=parse_fixed_first_trifecta_table(table,allcars)\n    if got:blocks.update(got[1])\n   markets={'trifecta':[{'cars':list(k),'odds':v[0],'status':v[1]} for k,v in blocks.items() if set(k)<=set(active)],'trio':[{'cars':list(k),'odds':v[0],'status':v[1]} for k,v in p.parse_trio(soup,active).items()]}\n  if not all(verify_market(markets.get(k,[]),active,k=='trifecta') for k in ['trifecta','trio']):events.append({'race_id':rid,'unresolved':'active market incomplete'});continue\n  d.setdefault('pre_withdrawal_odds',{k:d.get(k,[]) for k in ['trifecta','trio']});d.update(markets)\n  d['odds_scope']={'status':'published_active_field','entered_cars':allcars,'active_cars':active,'withdrawn_cars':withdrawal,'withdrawal_proof':'racecard missing row + result finish_text=欠','source_url':row[1].split('?')[0]}\n  d['withdrawal_source_review']={'source_url':row[1].split('?')[0],'withdrawn_cars':withdrawal,'active_cars':active,'markets':markets,'resolved':True,'scope':'withdrawal and active odds only; rider identity and historical bank still unresolved'}\n  if d.get('line',{}).get('status')!='published' and p is not None:\n   line=p.parse_line_formation_html(p.get(row[1].split('?')[0],data))\n   if line.get('status')=='published' and {int(k) for k in line['riders']}==set(active):d['line']=line;d['line_scope']='published_active_field'\n  c.execute('update races set payload=?,updated=? where race_id=?',(json.dumps(d,ensure_ascii=False),stamp,rid));events.append({'race_id':rid,'active_markets_verified':True,'withdrawn_cars':withdrawal})\n c.commit();data.mkdir(parents=True,exist_ok=True);(data/'source_repairs.json').write_text(json.dumps({'at':stamp,'all_finals_complete':False,'events':events},ensure_ascii=False,indent=2));return events\nif __name__=='__main__':\n import pipeline as p\n c=p.db_open(p.ROOT/'data');print(json.dumps(repair(c,p.ROOT/'data',p=p),ensure_ascii=False))\n"
+          exec(compile(code,'source_repairs.py','exec'),{'__name__':'__main__'})
+          PY
       - name: Collect and verify (commits each race)
         id: collection
         continue-on-error: true
@@ -87,4 +104,31 @@ jobs:
           path: |
             collected
             remaining_summary.json
+          retention-days: 90
+
+  registry-source-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Inspect public official registration source
+        run: |
+          python - <<'PY'
+          import urllib.request,pathlib,gzip,json,re
+          root=pathlib.Path('registry_probe');root.mkdir(exist_ok=True)
+          urls=['https://www.keirin.jp/pc/racerprofile?snum=015649','https://keirin.jp/pc/search?sotugyouki=54&stgt=1']
+          report=[]
+          for i,url in enumerate(urls):
+           try:
+            request=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 (compatible; finals historical identity audit)'})
+            response=urllib.request.urlopen(request,timeout=30);raw=response.read();text=raw.decode('utf-8',errors='replace')
+            gzip.open(root/f'source_{i}.html.gz','wb').write(raw)
+            report.append({'url':url,'status':response.status,'bytes':len(raw),'profile_links':sorted(set(re.findall(r'racerprofile[^\"\s<>]*?snum[=&#?]+(\d+)',text))),'scripts':re.findall(r'<script[^>]+src=[\"\x27]([^\"\x27]+)',text),'contains_registration':('015649' in text),'contains_name':('後藤' in text)})
+           except Exception as exc:report.append({'url':url,'error':repr(exc)})
+          (root/'probe.json').write_text(json.dumps(report,ensure_ascii=False,indent=2));print(json.dumps(report,ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: finals-registration-source-probe
+          path: registry_probe
           retention-days: 90
