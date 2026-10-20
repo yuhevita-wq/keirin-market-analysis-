@@ -1,0 +1,82 @@
+{
+  "status": "2026_A_CLASS_Q_INELIGIBLE_INSUFFICIENT_ALIGNED_RACES",
+  "year": 2026,
+  "quarter": 2,
+  "qualified_races": 2,
+  "required_races": 100,
+  "training_during_scoring": false,
+  "model_weights_sha256": "aa0f10796dded794912f240bb5c4a7d25e691cb8505288d68845eb7845d996e4",
+  "original_2024_fingerprint": {
+    "checkpoint_sha256": "008938be91209f2e412422251f85689946eb18d5a136b212317e4fab0fdb3124",
+    "weight_model_sha256": "d99e43fc8b0165f670fe5be811c5a5bdfa5e0d5bcc802f41f339fda160f49f28",
+    "2024_end": "2024-12-31",
+    "parent_ids": {
+      "accuracy": "acc-g08-c01",
+      "calibration": "g01-c01"
+    },
+    "coverage": {
+      "accuracy": 0.35,
+      "calibration": 0.5
+    }
+  },
+  "data_audit": {
+    "from": "2026-04-01",
+    "to": "2026-06-30",
+    "eligible_cards": 3893,
+    "qualified_races": 2,
+    "classes": "A1/A2/A3 only",
+    "minimum_qualified_races": 100,
+    "sufficient_for_scoring": false,
+    "complete_odds": true,
+    "card_audit": {
+      "files": [
+        {
+          "path": "data/a_class_12/2026_03_04/entries.csv",
+          "race_manifests_with_line": 908,
+          "entry_rows": 6316
+        },
+        {
+          "path": "data/a_class_12/2026_05_06/entries.csv",
+          "race_manifests_with_line": 1823,
+          "entry_rows": 12666
+        },
+        {
+          "path": "data/a3_challenge/2026_03_04/entries.csv",
+          "race_manifests_with_line": 444,
+          "entry_rows": 3006
+        },
+        {
+          "path": "data/a3_challenge/2026_05_06/entries.csv",
+          "race_manifests_with_line": 848,
+          "entry_rows": 5762
+        }
+      ],
+      "exclusions": {
+        "entry_rows_missing_numeric": 131,
+        "race_manifest_line_missing": 13,
+        "exclude_line_coverage_mismatch": 90,
+        "exclude_podium_not_in_card": 40
+      },
+      "complete_podium_with_line_races": 3893,
+      "months": {
+        "2026-04": 1312,
+        "2026-05": 1323,
+        "2026-06": 1258
+      },
+      "categories": {
+        "A1_A2": 2665,
+        "A3": 1228
+      }
+    },
+    "odds_audit": {
+      "full_year_odds_records": 5755
+    },
+    "excluded": {
+      "missing_odds": 3891
+    }
+  },
+  "treated_as_measured_roi": false,
+  "excluded_from_aggregate": true,
+  "reason": "Not enough complete and alignable result-entry-final-odds books",
+  "created_at": "2026-10-20T14:57:07.344456+00:00"
+}
