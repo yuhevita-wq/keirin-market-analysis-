@@ -26,8 +26,8 @@ def check():
     assert summary["decision_before_outcome_seal"]
     assert not summary["weights_policy_updated_during_test"]
     assert summary["frozen_parent_start"]==summary["frozen_parent_end"]
-    assert checkpoint["train_dates"]==[TRAIN_FIRST,TRAIN_LAST]
-    assert checkpoint["validation_dates"]==[VALID_FIRST,VALID_LAST]
+    assert checkpoint["calibration"]["train_dates"]==[TRAIN_FIRST,TRAIN_LAST]
+    assert checkpoint["calibration"]["validation_dates"]==[VALID_FIRST,VALID_LAST]
     assert checkpoint["frozen_test_dates"]==[TEST_FIRST,TEST_LAST]
     assert checkpoint["candidate_uses_october_results"] is False
     assert checkpoint["training_done_on_november"] is False
