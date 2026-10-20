@@ -1,0 +1,390 @@
+{
+  "schema": "line_aware_full_year_RF_2023_v1",
+  "model_family": "RandomForestClassifier",
+  "selection": "RF with_line selected from the strict 2023 November-December paired holdout",
+  "selected_2023_AB_report": "docs/paper-only-ai-2023/line_ab_2023/report.json",
+  "training_date_range": [
+    "2023-01-01",
+    "2023-12-31"
+  ],
+  "trained_races": 20349,
+  "line_source": "historical races.csv published KDreams predicted_line_formation",
+  "fit_only_2023": true,
+  "first_place_2023_train": true,
+  "stage2_2023_train": true,
+  "stage3_2023_train": true,
+  "line_features_only_difference_from_baseline_ab": true,
+  "features_base": [
+    "car_no",
+    "age",
+    "term",
+    "gear",
+    "score",
+    "s_count",
+    "b_count",
+    "nige_count",
+    "makuri_count",
+    "sashi_count",
+    "mark_count",
+    "first_count",
+    "second_count",
+    "third_count",
+    "outside_count",
+    "win_rate",
+    "top2_rate",
+    "top3_rate"
+  ],
+  "seed": 230306021,
+  "algorithm_hyperparameters": {
+    "n_estimators": 90,
+    "max_depth": 10,
+    "min_samples_leaf": 12,
+    "max_features": 0.7,
+    "n_jobs": 2,
+    "random_state": 230306021
+  },
+  "stages": {
+    "1": {
+      "target": "winner",
+      "candidate_rows": 140881,
+      "race_groups": 20349,
+      "positive_targets": 20349,
+      "features_per_candidate": 22,
+      "output_path": "docs/paper-only-ai-2023/line_full_2023/stage_1.joblib",
+      "file_bytes": 2763356,
+      "sha256": "3ef96a3fd6e0e3f2fe96f6bdd28b098abf1d6592132f6e3ccf19a567e90107e4"
+    },
+    "2": {
+      "target": "second_given_first",
+      "candidate_rows": 120532,
+      "race_groups": 20349,
+      "positive_targets": 20349,
+      "features_per_candidate": 65,
+      "output_path": "docs/paper-only-ai-2023/line_full_2023/stage_2.joblib",
+      "file_bytes": 2746815,
+      "sha256": "a3cd93029adb7231288c65c434fe10eb384e60f30726fb43fc91c25487a022a0"
+    },
+    "3": {
+      "target": "third_given_first_and_second",
+      "candidate_rows": 100183,
+      "race_groups": 20349,
+      "positive_targets": 20349,
+      "features_per_candidate": 110,
+      "output_path": "docs/paper-only-ai-2023/line_full_2023/stage_3.joblib",
+      "file_bytes": 2362094,
+      "sha256": "f7f7028fd9c1559243c7dccc33cda84a0a274520413852f5fdaeea6edba63ea9"
+    }
+  },
+  "training_races_by_class": {
+    "A1_A2": 11661,
+    "S": 5074,
+    "A3": 3614
+  },
+  "training_races_by_month": {
+    "2023-01": 1420,
+    "2023-02": 1381,
+    "2023-03": 1435,
+    "2023-04": 1387,
+    "2023-05": 1891,
+    "2023-06": 1777,
+    "2023-07": 1960,
+    "2023-08": 1748,
+    "2023-09": 1783,
+    "2023-10": 1876,
+    "2023-11": 1828,
+    "2023-12": 1863
+  },
+  "excluded_source_data_audit": {
+    "sources": [
+      {
+        "source": "data/a_class_12/2023_01_02/entries.csv",
+        "rows_accepted": 13902,
+        "line_manifests": 2027
+      },
+      {
+        "source": "data/a_class_12/2023_03_04/entries.csv",
+        "rows_accepted": 13867,
+        "line_manifests": 2003
+      },
+      {
+        "source": "data/a_class_12/2023_05_06/entries.csv",
+        "rows_accepted": 14315,
+        "line_manifests": 2065
+      },
+      {
+        "source": "data/a_class_12/2023_07_08/entries.csv",
+        "rows_accepted": 13655,
+        "line_manifests": 1973
+      },
+      {
+        "source": "data/a_class_12/2023_09_10/entries.csv",
+        "rows_accepted": 13815,
+        "line_manifests": 1993
+      },
+      {
+        "source": "data/a_class_12/2023_11_12/entries.csv",
+        "rows_accepted": 13693,
+        "line_manifests": 1973
+      },
+      {
+        "source": "data/a3_challenge/2023_01_02/entries.csv",
+        "rows_accepted": 0,
+        "line_manifests": 0
+      },
+      {
+        "source": "data/a3_challenge/2023_05_06/entries.csv",
+        "rows_accepted": 5997,
+        "line_manifests": 881
+      },
+      {
+        "source": "data/a3_challenge/2023_07_08/entries.csv",
+        "rows_accepted": 6631,
+        "line_manifests": 986
+      },
+      {
+        "source": "data/a3_challenge/2023_09_10/entries.csv",
+        "rows_accepted": 6532,
+        "line_manifests": 953
+      },
+      {
+        "source": "data/a3_challenge/2023_11_12/entries.csv",
+        "rows_accepted": 6449,
+        "line_manifests": 948
+      },
+      {
+        "source": "data/2023/s_class_f1_all_parts/2023_q1/entries.csv",
+        "rows_accepted": 9289,
+        "line_manifests": 1353
+      },
+      {
+        "source": "data/2023/s_class_f1_all_parts/2023_q2/entries.csv",
+        "rows_accepted": 8820,
+        "line_manifests": 1280
+      },
+      {
+        "source": "data/2023/s_class_f1_all_parts/2023_q3/entries.csv",
+        "rows_accepted": 8569,
+        "line_manifests": 1241
+      },
+      {
+        "source": "data/2023/s_class_f1_all_parts/2023_q4/entries.csv",
+        "rows_accepted": 9054,
+        "line_manifests": 1313
+      },
+      {
+        "source": "data/2023/s_class_yosen/entries.csv",
+        "rows_accepted": 153,
+        "line_manifests": 17
+      }
+    ],
+    "exclusions": {
+      "bad_numeric_rows": 700,
+      "published_line_unavailable": 938,
+      "duplicate_race_manifest": 1472,
+      "duplicate_entry_rows": 10234,
+      "exclude_bad_line_coverage": 475,
+      "exclude_missing_podium_car": 182
+    },
+    "races_with_valid_line_and_all_card_features": 20349,
+    "training_races": 16658,
+    "heldout_races": 3691,
+    "heldout_categories": {
+      "A3": 920,
+      "A1_A2": 1916,
+      "S": 855
+    },
+    "heldout_months": {
+      "2023-11": 1828,
+      "2023-12": 1863
+    },
+    "using_only_exactly_identical_race_ids_for_both_branches": true
+  },
+  "trifecta_and_trio_probability_normalization_sample": {
+    "1320230101010001": {
+      "participants": 6,
+      "trifecta_tickets": 120,
+      "trio_tickets": 20,
+      "trifecta_sum": 0.9999999999999999,
+      "trio_sum": 0.9999999999999999
+    },
+    "1320230101010003": {
+      "participants": 7,
+      "trifecta_tickets": 210,
+      "trio_tickets": 35,
+      "trifecta_sum": 1.0,
+      "trio_sum": 1.0
+    },
+    "1320230101010004": {
+      "participants": 7,
+      "trifecta_tickets": 210,
+      "trio_tickets": 35,
+      "trifecta_sum": 1.0,
+      "trio_sum": 1.0
+    },
+    "1320230101010005": {
+      "participants": 7,
+      "trifecta_tickets": 210,
+      "trio_tickets": 35,
+      "trifecta_sum": 0.9999999999999999,
+      "trio_sum": 0.9999999999999999
+    },
+    "1320230101010006": {
+      "participants": 6,
+      "trifecta_tickets": 120,
+      "trio_tickets": 20,
+      "trifecta_sum": 0.9999999999999999,
+      "trio_sum": 0.9999999999999999
+    },
+    "1320230101010007": {
+      "participants": 7,
+      "trifecta_tickets": 210,
+      "trio_tickets": 35,
+      "trifecta_sum": 1.0,
+      "trio_sum": 1.0
+    },
+    "1320230101010008": {
+      "participants": 7,
+      "trifecta_tickets": 210,
+      "trio_tickets": 35,
+      "trifecta_sum": 0.9999999999999999,
+      "trio_sum": 1.0
+    },
+    "1320230101010009": {
+      "participants": 7,
+      "trifecta_tickets": 210,
+      "trio_tickets": 35,
+      "trifecta_sum": 1.0,
+      "trio_sum": 1.0
+    },
+    "1320230101010010": {
+      "participants": 7,
+      "trifecta_tickets": 210,
+      "trio_tickets": 35,
+      "trifecta_sum": 1.0,
+      "trio_sum": 1.0
+    },
+    "1320230101010011": {
+      "participants": 7,
+      "trifecta_tickets": 210,
+      "trio_tickets": 35,
+      "trifecta_sum": 1.0000000000000002,
+      "trio_sum": 1.0000000000000002
+    },
+    "1320230101010012": {
+      "participants": 7,
+      "trifecta_tickets": 210,
+      "trio_tickets": 35,
+      "trifecta_sum": 1.0000000000000002,
+      "trio_sum": 1.0000000000000002
+    },
+    "2320230101010001": {
+      "participants": 6,
+      "trifecta_tickets": 120,
+      "trio_tickets": 20,
+      "trifecta_sum": 1.0,
+      "trio_sum": 0.9999999999999999
+    },
+    "2320230101010002": {
+      "participants": 6,
+      "trifecta_tickets": 120,
+      "trio_tickets": 20,
+      "trifecta_sum": 1.0,
+      "trio_sum": 1.0000000000000002
+    },
+    "2320230101010003": {
+      "participants": 6,
+      "trifecta_tickets": 120,
+      "trio_tickets": 20,
+      "trifecta_sum": 0.9999999999999998,
+      "trio_sum": 0.9999999999999999
+    },
+    "2320230101010004": {
+      "participants": 7,
+      "trifecta_tickets": 210,
+      "trio_tickets": 35,
+      "trifecta_sum": 1.0,
+      "trio_sum": 1.0
+    },
+    "2320230101010005": {
+      "participants": 7,
+      "trifecta_tickets": 210,
+      "trio_tickets": 35,
+      "trifecta_sum": 1.0000000000000002,
+      "trio_sum": 1.0
+    },
+    "2320230101010008": {
+      "participants": 7,
+      "trifecta_tickets": 210,
+      "trio_tickets": 35,
+      "trifecta_sum": 1.0,
+      "trio_sum": 1.0
+    },
+    "2320230101010009": {
+      "participants": 7,
+      "trifecta_tickets": 210,
+      "trio_tickets": 35,
+      "trifecta_sum": 1.0,
+      "trio_sum": 1.0
+    },
+    "2320230101010010": {
+      "participants": 7,
+      "trifecta_tickets": 210,
+      "trio_tickets": 35,
+      "trifecta_sum": 1.0000000000000002,
+      "trio_sum": 1.0000000000000002
+    },
+    "2320230101010011": {
+      "participants": 7,
+      "trifecta_tickets": 210,
+      "trio_tickets": 35,
+      "trifecta_sum": 0.9999999999999998,
+      "trio_sum": 0.9999999999999998
+    },
+    "2320230101010012": {
+      "participants": 7,
+      "trifecta_tickets": 210,
+      "trio_tickets": 35,
+      "trifecta_sum": 1.0,
+      "trio_sum": 1.0
+    },
+    "2720230101010008": {
+      "participants": 6,
+      "trifecta_tickets": 120,
+      "trio_tickets": 20,
+      "trifecta_sum": 1.0,
+      "trio_sum": 0.9999999999999999
+    },
+    "2720230101010009": {
+      "participants": 7,
+      "trifecta_tickets": 210,
+      "trio_tickets": 35,
+      "trifecta_sum": 1.0,
+      "trio_sum": 1.0
+    },
+    "2720230101010010": {
+      "participants": 7,
+      "trifecta_tickets": 210,
+      "trio_tickets": 35,
+      "trifecta_sum": 1.0,
+      "trio_sum": 1.0
+    },
+    "2720230101010011": {
+      "participants": 7,
+      "trifecta_tickets": 210,
+      "trio_tickets": 35,
+      "trifecta_sum": 1.0,
+      "trio_sum": 1.0
+    }
+  },
+  "selection_test_now_included_in_fit": "2023 November-December, now part of 2023 training set",
+  "new_out_of_time_assessment_required": "2024 onward; never claim the 2023 A/B test remains independent of the full-year refit",
+  "market_odds_used_for_training": false,
+  "profit_tested": false,
+  "limitations": [
+    "The ordered-finish conditional extension and line structure features are not specified in Walsh & Joshi; paper-inspired calibration requires independent testing.",
+    "Only 2023 races with published complete line and matching numeric cards and top-three finish used; missing line information is NOT inferred.",
+    "G1/G2/G3 ZIP archives are not additional sources in this exact paired-comparison pipeline.",
+    "A3 January-February lacks line information and March-April source is missing.",
+    "No 2024 or later labels used in training or model selection."
+  ]
+}
