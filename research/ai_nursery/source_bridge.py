@@ -67,6 +67,16 @@ def public_entries(entry):
     }
 
 
+
+# Supplemental archive discovery: read newly added directories without inventing odds.
+def discover_additional_archives(year):
+    roots=[DATA/"new_archive",DATA/"nationwide",DATA/"historical",DATA/"extra_races"]
+    for root in roots:
+        if not root.exists():continue
+        for folder in sorted(root.rglob("races.csv")):
+            if str(year) in folder.as_posix() and (folder.parent/"entries.csv").is_file():
+                yield ("csv",folder.parent)
+
 def _archive_paths(year):
     # A1/A2, A3 and graded race sources; 2023..2025 S-class parts.
     roots=[]
@@ -90,6 +100,7 @@ def _archive_paths(year):
         for batch in sorted(recovery.glob("batch_*")):
             if (batch/"races.csv.gz").is_file() and (batch/"entries.csv.gz").is_file():
                 yield ("gz_csv",batch)
+    yield from discover_additional_archives(year)
     # For early years, most racecards live in durable G1/G2/G3 zips.
     grade=DATA/"grade_races"
     if grade.exists():
