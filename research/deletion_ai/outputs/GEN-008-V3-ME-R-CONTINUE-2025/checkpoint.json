@@ -1,0 +1,119 @@
+{
+  "stage": "GEN008-V3-ME-R-2025-CONTINUATION",
+  "model": "V3-ME-R",
+  "parent_checkpoint_path": "research/deletion_ai/outputs/GEN-008-DELETION-CONTINUE-2024/checkpoint.json",
+  "parent_model_sha256": "59d198657d3344f0787bd45ab58cd4ced1f20fba95e6fafd3385b00fb13af9cb",
+  "after_2025_sha256": "260d4accd61a746d605cd8470478a75e789c89b6c681d712cd075ef65c8192d0",
+  "weights": {
+    "3連単": [
+      -0.02704164427793213,
+      0.037877682100756475,
+      -0.1123184518690359,
+      0.024474943489963208,
+      0.10820691179596499,
+      -0.07695342698495311,
+      -0.04776654776334985,
+      -0.04173597681485607
+    ],
+    "3連複": [
+      -0.040557750721488664,
+      0.03306637763270725,
+      0.46278741858158845,
+      0.01058021387419324,
+      -0.09026211221927452,
+      -0.10144271138869157,
+      0.01058021387419324,
+      0.28287890631384416
+    ]
+  },
+  "active_features": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "feature_names": [
+    "relative_log_price_popularity",
+    "within_market_log_odds_rank",
+    "cross_market_price_gap",
+    "within_trio_order_imbalance",
+    "price_gap_x_popularity",
+    "order_imbalance_x_rank",
+    "relative_trio_order_concentration",
+    "trio_order_concentration_x_price_gap"
+  ],
+  "training_lr": 0.017,
+  "ridge_step": 0.00035,
+  "max_coefficient": 1.5,
+  "coverage_frozen_from_2023": 0.25,
+  "2025_training_races": 9702,
+  "2026_h1_frozen_races": 5720,
+  "monthly_sha256": [
+    {
+      "month": "2025-01",
+      "through_race": 2157,
+      "weights_sha256": "75149647d842ea5fcc734606dfe039831761e9c6cc5fbb0a9f29ce991f349229"
+    },
+    {
+      "month": "2025-02",
+      "through_race": 3210,
+      "weights_sha256": "5bc50dd024b4ced03d625eea2e81757041cb5afccd32c54bcf7c66a640ae5082"
+    },
+    {
+      "month": "2025-03",
+      "through_race": 4039,
+      "weights_sha256": "3d6dc9b131abcd674168d507fc2ba61d93fe07e7736b1e12c3232f27bf5e7101"
+    },
+    {
+      "month": "2025-04",
+      "through_race": 4630,
+      "weights_sha256": "0bfaebb5983ade437c3c9c148083ea5db63bf2bee3477d7b37cc615df021d320"
+    },
+    {
+      "month": "2025-05",
+      "through_race": 5237,
+      "weights_sha256": "de320bd662d6c5c7033cb0fddd3c21abbcd4a38832dacf937fce68e20f841263"
+    },
+    {
+      "month": "2025-06",
+      "through_race": 5878,
+      "weights_sha256": "ff39c751ae1db453a3f25e991224c0b89de51beefe0d663ec15705f35ee4a226"
+    },
+    {
+      "month": "2025-07",
+      "through_race": 6534,
+      "weights_sha256": "c89ba3e5768aa67a622fa8c4915013aa622134eb04ed71dfe6837c8e67974675"
+    },
+    {
+      "month": "2025-08",
+      "through_race": 7188,
+      "weights_sha256": "9c1045c07713645b34dc64b14984568e5243a40b02c8e3f00cb92409ae49fd5a"
+    },
+    {
+      "month": "2025-09",
+      "through_race": 7834,
+      "weights_sha256": "237e6ba0c71d32c07082762dd5534e83d06d7d12bf5a8164dfbc63c611ca9cff"
+    },
+    {
+      "month": "2025-10",
+      "through_race": 8484,
+      "weights_sha256": "447902258ea51e6aeba88e3133f08e78ea2d75197fea7ac1fa2258a58d7eadd8"
+    },
+    {
+      "month": "2025-11",
+      "through_race": 9109,
+      "weights_sha256": "8c630706032b4d92ef84082d0ca92038adb22ec2424f7412c3c0915df37aa438"
+    },
+    {
+      "month": "2025-12",
+      "through_race": 9702,
+      "weights_sha256": "260d4accd61a746d605cd8470478a75e789c89b6c681d712cd075ef65c8192d0"
+    }
+  ],
+  "old_2025_january_exam_reused_as_training": true,
+  "2026_h1_not_used_as_training": true
+}
