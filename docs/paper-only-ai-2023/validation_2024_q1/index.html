@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2024 Q1｜論文型AI 未知データ検証</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1220;--panel:#142238;--edge:#293e56;--text:#e9f2fb;--muted:#a7bdcf;--a:#42dbc3;--b:#e2b47a}*{box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font:14px/1.65 system-ui,sans-serif;margin:0}
+main{max-width:990px;padding:18px 14px 55px;margin:auto}h1{font-size:22px;margin:0}h2{font-size:17px;margin:0 0 14px}
+.panel,.stat{background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:17px}
+.panel{margin:13px 0}.row,.stats{display:flex;gap:12px;flex-wrap:wrap}.stats .stat{flex:1;min-width:155px}.big{font-size:27px;font-weight:750;font-variant-numeric:tabular-nums}.muted{color:var(--muted)}.small{font-size:12px}
+nav{display:flex;gap:7px;flex-wrap:wrap;margin:15px 0}
+button{background:#223551;color:var(--text);border:1px solid var(--edge);border-radius:8px;padding:9px 13px;cursor:pointer}
+button.sel{background:#16544d;border-color:var(--a)}
+table{width:100%;border-collapse:collapse;text-align:right}td,th{padding:11px 6px;border-bottom:1px solid var(--edge)}td:first-child,th:first-child{text-align:left}
+a{color:#92dbee}svg{width:100%;height:235px}.green{color:var(--a)}.yellow{color:var(--b)}.status{border:1px solid var(--edge);border-radius:100px;padding:4px 12px;font-size:12px}
+@media(max-width:600px){h1{font-size:20px}.big{font-size:23px}}
+</style></head><body><main>
+<div class="row" style="justify-content:space-between;align-items:center">
+<div><div class="muted small">PAPER-ONLY PROBABILITY AI · OUT-OF-TIME VALIDATION</div><h1>2024年 第1四半期・未知レース検証</h1></div><span class="status" id="status">GitHub読込中…</span></div>
+<p class="small muted">2023年に学習したモデルを固定。2024年1〜3月の結果を学習・モデル選択に使いません。</p>
+<div class="stats"><div class="stat"><div class="muted small">検証レース</div><div class="big" id="races">—</div></div><div class="stat"><div class="muted small">選手別予測</div><div class="big" id="rows">—</div></div><div class="stat"><div class="muted small">2024年再学習</div><div class="big green">0回</div></div></div>
+<section class="panel"><h2>観測対象</h2>
+<nav id="periods"><button data-period="overall" class="sel">1〜3月合計</button><button data-period="2024-01">1月</button><button data-period="2024-02">2月</button><button data-period="2024-03">3月</button></nav>
+<div class="small muted">同一レースの最大予測確率の選手1名を1着候補とした場合</div>
+<svg id="chart" viewBox="0 0 620 235" preserveAspectRatio="xMidYMid meet"></svg>
+<table><thead><tr><th>指標</th><th>確率校正AI</th><th>的中率AI</th></tr></thead><tbody>
+<tr><td>1着候補的中</td><td id="t1a">—</td><td id="t1b">—</td></tr>
+<tr><td>二値判定正解率</td><td id="acca">—</td><td id="accb">—</td></tr>
+<tr><td>ROC AUC</td><td id="auca">—</td><td id="aucb">—</td></tr>
+<tr><td>Brierスコア ↓</td><td id="bra">—</td><td id="brb">—</td></tr>
+<tr><td>20分割 ECE ↓</td><td id="ecea">—</td><td id="eceb">—</td></tr>
+<tr><td>ECE 80%帯条件</td><td id="gatea">—</td><td id="gateb">—</td></tr>
+</tbody></table>
+<p class="small muted">ECEは各クラスで20帯中16帯以上に予測が存在することが条件。満たさないモデルの厳格ECEは「1」に置換されるため、真の校正誤差100%とは解釈しません。</p>
+</section>
+<section class="panel"><h2>級班別：3か月の1着候補的中率</h2><table><thead><tr><th>レース区分</th><th>検証R</th><th>確率校正AI</th><th>的中率AI</th></tr></thead><tbody id="classes"><tr><td colspan="4">読み込み待ち</td></tr></tbody></table>
+<p class="small muted">級班は出走表の保存元に従います。全開催の網羅を保証するものではありません。</p>
+</section>
+<section class="panel"><h2>実行条件と出典</h2><p class="small" id="audit">—</p>
+<p class="small muted">本検証では車券のROIは算出していません。選手単独の1着に対応する単勝オッズがなく、論文の投資シミュレーションへ直接接続できないためです。また2023/2024年の歴史的出走表は後から取得されたもので、各予測値が実レース前に公開されていたかは独立検証されていません。</p>
+<div class="row"><a href="./report.json" target="_blank">全検証レポート（JSON）</a>
+<a href="https://github.com/yuhevita-wq/keirin-market-analysis-/actions/runs/39358430097" target="_blank">検証GitHub Actions</a>
+<a href="../">2023年観測室へ</a></div></section></main>
+<script>
+let data=null,period='overall';const $=id=>document.getElementById(id);const num=v=>typeof v==='number'?v.toLocaleString('ja-JP'):'—';const pct=v=>typeof v==='number'?(v*100).toFixed(2)+'%':'—';
+function bar(label,value,color,y){const ns='http://www.w3.org/2000/svg',s=$('chart');
+function n(tag,attrs,txt){let x=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([k,v])=>x.setAttribute(k,v));if(txt!==undefined)x.textContent=txt;s.append(x)}
+const w=Math.max(0,Math.min(100,value*100));n('text',{x:12,y:y+14,fill:'#a7bdcf','font-size':'13'},label);
+n('rect',{x:165,y:y,width:360,height:22,rx:4,fill:'#203249'});
+n('rect',{x:165,y:y,width:360*w/100,height:22,rx:4,fill:color});
+n('text',{x:535,y:y+16,fill:'#e9f2fb','font-size':'15','font-weight':'700'},pct(value))}
+function paint(){
+if(!data)return;
+$('chart').replaceChildren();
+const a=period==='overall'?data.branches.calibration.overall:data.branches.calibration.months[period];
+const b=period==='overall'?data.branches.accuracy.overall:data.branches.accuracy.months[period];
+const bas=a.top1_random_rider_reference;
+bar('確率校正AI',a.top1_race_win_rate,'#42dbc3',37);
+bar('的中率AI',b.top1_race_win_rate,'#e2b47a',96);
+bar('無作為選択参考',bas,'#7893ad',155);
+for(const [k,v] of Object.entries({t1a:pct(a.top1_race_win_rate),t1b:pct(b.top1_race_win_rate),
+ acca:pct(a.rider_binary_accuracy),accb:pct(b.rider_binary_accuracy),
+ auca:a.roc_auc.toFixed(3),aucb:b.roc_auc.toFixed(3),
+ bra:a.brier.toFixed(4),brb:b.brier.toFixed(4),
+ ecea:pct(a.ece_20bin_unconstrained),eceb:pct(b.ece_20bin_unconstrained),
+ gatea:a.ece_gate_passed?'合格':'不合格',gateb:b.ece_gate_passed?'合格':'不合格'}))$(k).textContent=v;
+document.querySelectorAll('[data-period]').forEach(x=>x.classList.toggle('sel',x.dataset.period===period));
+}
+document.querySelectorAll('[data-period]').forEach(el=>el.onclick=()=>{period=el.dataset.period;paint()});
+async function load(){try{const resp=await fetch('./report.json?ref='+Date.now(),{cache:'no-store'});if(!resp.ok)throw Error('HTTP '+resp.status);data=await resp.json();if(data.state!=='VALIDATED_2024_Q1'||data.models_changed!==false||data.fit_calls_2024!==0)throw Error('検証メタデータが不正');
+$('status').textContent='● 検証完了・モデル固定';$('races').textContent=num(data.dataset.evaluation_races);$('rows').textContent=num(data.dataset.evaluation_rider_rows);
+const body=$('classes');body.replaceChildren();for(const [name,label] of [['A1_A2','A1・A2'],['A3','A3チャレンジ'],['S','S級']]){
+ const a=data.branches.calibration.categories[name];const b=data.branches.accuracy.categories[name];if(!a||!b)continue;let tr=document.createElement('tr');
+ for(const val of [label,num(a.top1_races),pct(a.top1_race_win_rate),pct(b.top1_race_win_rate)]){const td=document.createElement('td');td.textContent=val;tr.append(td)}body.append(tr)}
+$('audit').textContent='固定モデル：2023年学習GitHub Actions #'+data.model_source_run+
+ '｜照合できたレース：'+num(data.dataset.evaluation_races)+
+ '｜重複入力の除去：'+num(data.dataset.duplicated_entry_rows)+
+ '｜勝者不備で除外：'+num(data.dataset.race_with_missing_winner)+
+ '｜検証完了：'+data.finished_at;paint();
+}catch(e){$('status').textContent='データ読込失敗';$('audit').textContent=String(e)}}
+load();
+</script></body></html>
