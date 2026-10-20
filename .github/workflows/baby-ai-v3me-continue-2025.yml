@@ -1,0 +1,67 @@
+name: GEN008 | V3-ME-R continue 2025 and frozen 2026 H1 audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/deletion_ai/continue_v3me_2025.py'
+      - 'research/deletion_ai/test_continue_v3me_2025.py'
+      - '.github/workflows/baby-ai-v3me-continue-2025.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: gen008-v3me-2025-online-training-2026-h1-holdout
+  cancel-in-progress: false
+jobs:
+  train_and_verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    env:
+      PYTHONUNBUFFERED: '1'
+      PYTHONHASHSEED: '0'
+      PYTHONPATH: 'research/deletion_ai'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install established GEN008 dependencies
+        run: python -m pip install -e '.[scrape]' 'numpy>=1.26'
+      - name: Confirm original 2024 weights and deletion rules remain immutable
+        run: |
+          python -m py_compile research/deletion_ai/continue_v3me_2025.py research/deletion_ai/test_continue_v3me_2025.py
+          python research/deletion_ai/test_deletion_2023.py
+          python research/deletion_ai/test_continue_2024.py
+          python research/deletion_ai/test_continue_v3me_2025.py
+      - name: Continue V3-ME-R on every eligible full-book 2025 race
+        run: |
+          if [ -f research/deletion_ai/outputs/GEN-008-V3-ME-R-CONTINUE-2025/summary.json ]; then
+            echo '2025 learning results already archived, no overwrite'
+          else
+            python research/deletion_ai/continue_v3me_2025.py --run
+          fi
+      - name: Replay and independently verify all 2025 updates and frozen 2026 scores
+        run: python research/deletion_ai/continue_v3me_2025.py --audit
+      - name: Commit validated weights and outcome-sealed ledgers
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/deletion_ai/outputs/GEN-008-V3-ME-R-CONTINUE-2025/
+          git add docs/ai-lab/gen008-v3me-continue-2025.json
+          if git diff --cached --quiet; then
+            echo 'Already committed; no overwrite.'
+            exit 0
+          fi
+          git commit -m 'data: audited V3-ME-R 2025 training and independent 2026 H1 paired test'
+          for i in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          echo 'Failed to publish audited results' >&2
+          exit 1
