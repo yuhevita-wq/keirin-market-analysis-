@@ -33,7 +33,7 @@ CUTS=(0.0,0.05,0.1,0.2)
 
 
 def decode_odds(data,rid,cars):
-    """"Parse odds book strictly, enforce complete identical runner combinations."""
+    """Parse odds book strictly, enforce complete identical runner combinations."""
     expected = {
       '3連単':len(cars)*(len(cars)-1)*(len(cars)-2),
       '3連複':math.comb(len(cars),3)}
@@ -163,7 +163,7 @@ def main():
     counters=Counter()
     examples=[]
     metrics={c:{k:empty_acc() for k in KINDS} for c in CUTS}
-    category={k:{c:empty_acc() for c in CUTS} for k in KINDS}
+    category={k:{cat:empty_acc() for cat in ('A1_A2','A3','S')} for k in KINDS}
     month={k:{m:empty_acc() for m in ('2024-01','2024-02','2024-03')} for k in KINDS}
     model_nll={k:[] for k in KINDS}
     market_nll={k:[] for k in KINDS}
@@ -224,7 +224,7 @@ def main():
                     add(metrics[c][kind],rid,cut_bets[c],cut_hits[c],cut_return[c],cut_expected[c])
                 # All ticket markets' main-rule outcomes separately by race category and month
                 c=0.0
-                add(category[kind][r['source']][c],rid,cut_bets[c],cut_hits[c],cut_return[c],cut_expected[c])
+                add(category[kind][r['source']],rid,cut_bets[c],cut_hits[c],cut_return[c],cut_expected[c])
                 add(month[kind][r['date'][:7]],rid,cut_bets[c],cut_hits[c],cut_return[c],cut_expected[c])
             if valid_races%200==0:
                 print('PROCESSED',valid_races,'/',len(ready),flush=True)
@@ -287,7 +287,7 @@ def main():
         'both_types_combined':stats(both),
         'sensitivity_only_not_tuned':{
              str(c):{k:stats(metrics[c][k]) for k in KINDS} for c in CUTS if c!=0.0},
-        'by_class_main_cutoff':{k:{s:stats(v[0.0]) for s,v in category[k].items()} for k in KINDS},
+        'by_class_main_cutoff':{k:{s:stats(v) for s,v in category[k].items()} for k in KINDS},
         'by_month_main_cutoff':{k:{m:stats(v) for m,v in month[k].items()} for k in KINDS},
         'probability_logloss_market_comparison':nll,
         'caveats':['The model has NOT passed the strict calibration gate for 2nd and 3rd conditional models or final-ticket odds in the 2023 holdout/2024 validation.',
