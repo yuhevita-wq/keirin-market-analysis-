@@ -1,0 +1,276 @@
+{
+  "id": "GEN-008-V3",
+  "algorithm_digest": "da39e7c140ddec6708ca419c1de745041538785f5be786dd8bab1e1fdf4e0268",
+  "parent_new_prediction": "01afec6d9cdd7df82d5310b3c7af2f1d80ff11d9f110b1b430f4b041f4a3425a",
+  "parent_new_policy": "9c494049f3181b3b0cd2e72afcc3ef609dd0a477406fbc806e1df9030fa4b3f6",
+  "parent_new_temperature": 1.0942554149337542,
+  "alpha": 0.2,
+  "decision_policy": "coherent geometric blend, marginal expected log portfolio, integer 100-yen increments",
+  "schema": 1,
+  "train_report": {
+    "year": 2023,
+    "date_start": "2023-09-15",
+    "date_end": "2023-09-22",
+    "source_count": {
+      "source_containers": 44,
+      "race_rows": 555,
+      "duplicate_race_id": 30,
+      "unique_cards": 525
+    },
+    "selected_racecard_sources": {
+      "data/2023/s_class_f1_all_parts/2023_q3": 88,
+      "data/a_class_12/2023_09_10": 274,
+      "data/a3_challenge/2023_09_10": 116,
+      "data/grade_races/g1g2/g1-g2-2023-non-girls.zip": 47
+    },
+    "label_source": "data/result_universe_v2/combined/results_2023.jsonl.gz",
+    "result_count": {
+      "source_records": 25365
+    },
+    "odds_source": "data/odds_only/odds_2023.jsonl.gz",
+    "market_count": {
+      "archive_complete_races": 9987,
+      "hash_verified": true,
+      "archive_sha256": "6718ee164aaef41a1002a7c1cdf680e5b46c44f57e012f7c815b429aa4325637",
+      "matched_candidate_ids": 134,
+      "invalid": {}
+    },
+    "join_status": {
+      "no_complete_market": 391,
+      "no_result": 4,
+      "joined_and_eligible": 133
+    },
+    "joined_race_ids_sha256": "1886411d8098b5e37077d80400da33533042ec4bf1fcfa795038aedce8be0ef5",
+    "complete_races": 133,
+    "date_data_origin": "racecard race_date ONLY; never decoded meeting-start ID",
+    "price_phase": "FINAL (historical), NOT certified pre-close",
+    "markets": [
+      "3連単",
+      "3連複"
+    ],
+    "result_used_only_as_label": true,
+    "original_training_checkpoints_untouched": true
+  },
+  "validation_report": {
+    "year": 2023,
+    "date_start": "2023-09-23",
+    "date_end": "2023-09-30",
+    "source_count": {
+      "source_containers": 44,
+      "race_rows": 674,
+      "duplicate_race_id": 30,
+      "unique_cards": 644
+    },
+    "selected_racecard_sources": {
+      "data/2023/s_class_f1_all_parts/2023_q3": 105,
+      "data/a_class_12/2023_09_10": 315,
+      "data/a3_challenge/2023_09_10": 140,
+      "data/grade_races/g3/2023/g3-all-2023-q3-non-girls.zip": 84
+    },
+    "label_source": "data/result_universe_v2/combined/results_2023.jsonl.gz",
+    "result_count": {
+      "source_records": 25365
+    },
+    "odds_source": "data/odds_only/odds_2023.jsonl.gz",
+    "market_count": {
+      "archive_complete_races": 9987,
+      "hash_verified": true,
+      "archive_sha256": "6718ee164aaef41a1002a7c1cdf680e5b46c44f57e012f7c815b429aa4325637",
+      "matched_candidate_ids": 187,
+      "invalid": {}
+    },
+    "join_status": {
+      "no_complete_market": 457,
+      "no_result": 4,
+      "joined_and_eligible": 184
+    },
+    "joined_race_ids_sha256": "9d1b8a6fb856f9dc1e927cc2ee860d72c022318f909dd793ae101e3806c3373e",
+    "complete_races": 184,
+    "date_data_origin": "racecard race_date ONLY; never decoded meeting-start ID",
+    "price_phase": "FINAL (historical), NOT certified pre-close",
+    "markets": [
+      "3連単",
+      "3連複"
+    ],
+    "result_used_only_as_label": true,
+    "original_training_checkpoints_untouched": true
+  },
+  "calibration": {
+    "alpha": 0.2,
+    "alpha_selection_rule": "minimize both-market mean log loss on Sep 15-22 only",
+    "selected_train": {
+      "trifecta": 4.4060401750908245,
+      "trio": 2.982866603783957,
+      "mean": 3.694453389437391
+    },
+    "selected_validation_no_retuning": {
+      "trifecta": 4.387940332931766,
+      "trio": 2.903307871960043,
+      "mean": 3.645624102445905
+    },
+    "all_candidate_scores": [
+      {
+        "alpha": 0.0,
+        "calibration_train": {
+          "trifecta": 4.40651311073146,
+          "trio": 2.9843698918625448,
+          "mean": 3.6954415012970023
+        },
+        "chronological_validation": {
+          "trifecta": 4.38740587366856,
+          "trio": 2.904726234388666,
+          "mean": 3.646066054028613
+        }
+      },
+      {
+        "alpha": 0.1,
+        "calibration_train": {
+          "trifecta": 4.40593766675565,
+          "trio": 2.983538892048981,
+          "mean": 3.694738279402315
+        },
+        "chronological_validation": {
+          "trifecta": 4.387331588892358,
+          "trio": 2.9039519071971873,
+          "mean": 3.6456417480447727
+        }
+      },
+      {
+        "alpha": 0.2,
+        "calibration_train": {
+          "trifecta": 4.4060401750908245,
+          "trio": 2.982866603783957,
+          "mean": 3.694453389437391
+        },
+        "chronological_validation": {
+          "trifecta": 4.387940332931766,
+          "trio": 2.903307871960043,
+          "mean": 3.645624102445905
+        }
+      },
+      {
+        "alpha": 0.3,
+        "calibration_train": {
+          "trifecta": 4.4068256824451915,
+          "trio": 2.982352805276637,
+          "mean": 3.6945892438609147
+        },
+        "chronological_validation": {
+          "trifecta": 4.389237756149835,
+          "trio": 2.902792668498555,
+          "mean": 3.646015212324195
+        }
+      },
+      {
+        "alpha": 0.4,
+        "calibration_train": {
+          "trifecta": 4.408299125553258,
+          "trio": 2.9819973875696446,
+          "mean": 3.6951482565614513
+        },
+        "chronological_validation": {
+          "trifecta": 4.391229394896681,
+          "trio": 2.9024049182082483,
+          "mean": 3.6468171565524647
+        }
+      },
+      {
+        "alpha": 0.5,
+        "calibration_train": {
+          "trifecta": 4.410465321696226,
+          "trio": 2.9818003567859614,
+          "mean": 3.696132839241094
+        },
+        "chronological_validation": {
+          "trifecta": 4.393920660257527,
+          "trio": 2.902143327341817,
+          "mean": 3.6480319937996724
+        }
+      },
+      {
+        "alpha": 0.6,
+        "calibration_train": {
+          "trifecta": 4.413328958665557,
+          "trio": 2.9817618363476477,
+          "mean": 3.697545397506602
+        },
+        "chronological_validation": {
+          "trifecta": 4.397316826365402,
+          "trio": 2.902006690353199,
+          "mean": 3.6496617583593003
+        }
+      },
+      {
+        "alpha": 0.7,
+        "calibration_train": {
+          "trifecta": 4.416894584194645,
+          "trio": 2.9818820692684995,
+          "mean": 3.699388326731572
+        },
+        "chronological_validation": {
+          "trifecta": 4.40142301829122,
+          "trio": 2.9019938933373792,
+          "mean": 3.6517084558143
+        }
+      },
+      {
+        "alpha": 0.8,
+        "calibration_train": {
+          "trifecta": 4.42116659489369,
+          "trio": 2.9821614206043994,
+          "mean": 3.7016640077490446
+        },
+        "chronological_validation": {
+          "trifecta": 4.406244199528728,
+          "trio": 2.9021039175820174,
+          "mean": 3.654174058555373
+        }
+      },
+      {
+        "alpha": 0.9,
+        "calibration_train": {
+          "trifecta": 4.426149224733719,
+          "trio": 2.9826003801211924,
+          "mean": 3.7043748024274556
+        },
+        "chronological_validation": {
+          "trifecta": 4.4117851590982164,
+          "trio": 2.9023358432262083,
+          "mean": 3.6570605011622126
+        }
+      },
+      {
+        "alpha": 1.0,
+        "calibration_train": {
+          "trifecta": 4.431846533135814,
+          "trio": 2.9831995652116463,
+          "mean": 3.70752304917373
+        },
+        "chronological_validation": {
+          "trifecta": 4.4180504983009525,
+          "trio": 2.9026888529995194,
+          "mean": 3.6603696756502364
+        }
+      }
+    ],
+    "train_races": 133,
+    "validation_races": 184,
+    "train_dates": [
+      "2023-09-15",
+      "2023-09-22"
+    ],
+    "validation_dates": [
+      "2023-09-23",
+      "2023-09-30"
+    ],
+    "trained_predictor_weights": false,
+    "train_race_ids_sha256": "1886411d8098b5e37077d80400da33533042ec4bf1fcfa795038aedce8be0ef5",
+    "validation_race_ids_sha256": "9d1b8a6fb856f9dc1e927cc2ee860d72c022318f909dd793ae101e3806c3373e"
+  },
+  "frozen_test_dates": [
+    "2023-11-01",
+    "2023-11-14"
+  ],
+  "candidate_uses_october_results": false,
+  "training_done_on_november": false
+}
