@@ -1,0 +1,33 @@
+name: Baby AI GEN-008 | creation tests only
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/ai_nursery/gen008_experiment.py'
+      - 'research/ai_nursery/parallel_gen008.py'
+      - 'research/ai_nursery/test_gen008.py'
+      - '.github/workflows/baby-ai-gen008-creation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verification-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical runtime
+        run: python -m pip install 'numpy>=1.26'
+      - name: Compile only, never launch training
+        run: python -m py_compile research/ai_nursery/gen008_experiment.py research/ai_nursery/parallel_gen008.py research/ai_nursery/test_gen008.py
+      - name: Unit tests for coherent odds, shadow seal, inheritance and no leakage
+        run: OPENBLAS_NUM_THREADS=1 python research/ai_nursery/test_gen008.py
+      - name: Verify default invocation never starts training
+        run: OPENBLAS_NUM_THREADS=1 python research/ai_nursery/parallel_gen008.py
+      - name: Confirm GEN-007 parent remains frozen
+        run: |
+          git diff --exit-code -- research/ai_nursery/outputs/GEN-007/
+          test ! -e research/ai_nursery/outputs/GEN-008-PARALLEL/summary.json

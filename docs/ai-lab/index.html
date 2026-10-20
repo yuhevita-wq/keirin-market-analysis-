@@ -245,6 +245,22 @@ footer{border-top:1px solid var(--line);color:var(--soft);font-size:12px;margin-
 <a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/actions/workflows/baby-ai-expanded-source-connection.yml">GitHubの接続検査</a>
 </div>
 </section>
+<section class="section">
+<h2>🧪 GEN-008 — 旧版と改良版の併走実験</h2>
+<p>実験環境を作成しました。旧GEN-007の重みを複製して、同じ過去レースを別々に経験する「対照群」と「改良群」を準備しています。<strong>現時点では追加学習を実行していません。</strong></p>
+<div class="grid">
+<div class="card"><small>対照群</small><strong>GEN-007方式</strong><span>従来の損益学習を同じ新期間で継続</span></div>
+<div class="card"><small>改良群</small><strong>GEN-008方式</strong><span>見送り時の仮想1枚・整合確率・オンライン較正</span></div>
+<div class="card"><small>学習期間（起動後）</small><strong>2023年8〜9月</strong><span>旧版と新版が同一レースを学習</span></div>
+<div class="card"><small>未学習の比較期間</small><strong>2023年10月1〜14日</strong><span>両モデルを凍結して評価</span></div>
+</div>
+<p class="warning">見送ったレースの仮想買い目は結果前に確定します。仮想払戻は実際の純収支には加算しません。旧GEN-007の元データと重みは一切変更しません。</p>
+<div class="links">
+<a class="btn" href="gen008-parallel-plan.json">実験準備の状態</a>
+<a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/blob/main/research/ai_nursery/GEN-008.md">実験設計</a>
+<a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/actions/workflows/baby-ai-gen008-creation.yml">作成テスト</a>
+</div>
+</section>
 <section class="section"><h2>保存と次の世代</h2><div class="row"><span>出生時の学習重み</span><b>すべて0</b></div><div class="row"><span>1週間後の学習重み</span><b id="checkpoint">—</b></div><div class="row"><span>次の段階</span><b>GEN-003が資金管理を学習中</b></div><p>新しい能力を得た時点でGEN-001からGEN-002へ世代交代。GEN-002は親の学習重みを継承しています。</p><div class="links"><a class="btn" href="nursery-summary.json">1週間の全体成績</a><a class="btn" href="nursery-history.json">全レースのマーク履歴</a><a class="btn" href="nursery-checkpoint.json">学習した重み</a><a class="btn" href="https://github.com/yuhevita-wq/keirin-market-analysis-/tree/main/research/ai_nursery">GitHub保存先 ↗</a></div></section>
 <footer>過去実験の価格はレース終了後の確定オッズです。締切前の価格と同じではないため、この練習成績を実購入可能な収益と見なせません。入力に足りないレースは欠損として記録。</footer>
 </main>
