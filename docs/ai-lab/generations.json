@@ -189,7 +189,7 @@
       "continuations": [
         {
           "id": "GEN-007-C2",
-          "status": "TRAINING_SCHEDULED",
+          "status": "COMPLETE",
           "description": "同じ純収支プラス目標のまま61日間追加学習。世代番号は変更しない。",
           "training_dates": [
             "2023-04-05",
@@ -211,7 +211,33 @@
           "behavior_policy": "research/ai_nursery/outputs/GEN-007/continuation-2m/behavior_policy.json",
           "summary": "nursery-gen007-phase2-summary.json",
           "objective": "maximize_total_net_yen",
-          "nonbetting_zero_is_failure": true
+          "nonbetting_zero_is_failure": true,
+          "races": 1475,
+          "training_span": [
+            "2023-04-05",
+            "2023-06-11"
+          ],
+          "excluded_holdout": [
+            "2023-06-01",
+            "2023-06-07"
+          ],
+          "races_entered": 300,
+          "races_skipped": 1175,
+          "sheets": 442,
+          "marks": 1476,
+          "hit_races": 69,
+          "policy_enter_updates": 3019,
+          "policy_continue_updates": 1481,
+          "net_profit_goal_yen": -55480,
+          "net_profit_goal_met": false,
+          "optimization_objective": "maximize_total_net_yen",
+          "policy_sha256": "0fd3d0f41c2472d6d822fd78727f3c797eea0120c8d97f8e770be79fde21604d",
+          "weights_sha256": "58ab6584f67d669956dbda9cb9f7fb3128614b84075d7a6526d6c0a143d69cd5",
+          "net_proxy_yen": -55480,
+          "ending_wallet_yen": 8550,
+          "refill_events": 8,
+          "new_reward_yen": 19870,
+          "trained_behavior_policy": true
         }
       ]
     }
