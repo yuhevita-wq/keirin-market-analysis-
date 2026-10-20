@@ -1,0 +1,95 @@
+name: Chapter 1 | Autonomous calibration-versus-accuracy research
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 1'
+  push:
+    paths:
+      - 'paper_only_ai/chapter1_autonomous.py'
+      - 'paper_only_ai/test_chapter1_autonomous.py'
+      - '.github/workflows/chapter1-autonomous-research.yml'
+permissions:
+  contents: write
+concurrency:
+  group: chapter1-autonomous-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  model-research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            paper_only_ai
+            docs/paper-only-ai-2023/autonomous_chapter1
+          sparse-checkout-cone-mode: false
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned major scientific dependencies
+        run: |
+          python -m pip install 'numpy<3' 'pandas<3' 'scipy<2' 'scikit-learn<2' 'optuna<5' 'joblib<2'
+      - name: Download immutable 2023 LINE-RF foundation
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p frozen_line_full
+          gh release download paper-only-line-rf-2023-v1 --pattern 'line_aware_rf_2023.tar.gz' --dir frozen_line_full
+          tar -xzf frozen_line_full/line_aware_rf_2023.tar.gz -C frozen_line_full
+          test -s frozen_line_full/manifest.json
+          for i in 1 2 3; do test -s "frozen_line_full/stage_${i}.joblib"; done
+      - name: Static check and mathematics/regression guards
+        run: |
+          python -m py_compile paper_only_ai/chapter1_autonomous.py
+          python -m py_compile paper_only_ai/test_chapter1_autonomous.py
+          python paper_only_ai/test_chapter1_autonomous.py
+      - name: Let the AI produce and evaluate its next generation
+        env:
+          FROZEN_LINE_FULL_DIR: frozen_line_full
+          PYTHONUNBUFFERED: '1'
+          OMP_NUM_THREADS: '2'
+          OPENBLAS_NUM_THREADS: '2'
+          MKL_NUM_THREADS: '2'
+        run: python paper_only_ai/chapter1_autonomous.py
+      - name: Preserve weights and research reports as run artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chapter1-autonomous-generation-${{ github.run_id }}
+          path: docs/paper-only-ai-2023/autonomous_chapter1/
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Permanently archive promoted model weights as immutable GitHub Release
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          shopt -s nullglob
+          FILES=(docs/paper-only-ai-2023/autonomous_chapter1/g*.tar.gz)
+          if (( ${#FILES[@]} )); then
+            GEN=$(python -c "import json;print(json.load(open('docs/paper-only-ai-2023/autonomous_chapter1/state.json'))['generation'])")
+            TAG="chapter1-autonomous-generation-$(printf '%02d' "$GEN")"
+            if gh release view "$TAG" >/dev/null 2>&1; then
+              echo "Refusing overwrite of an existing autonomous generation release"
+              exit 1
+            fi
+            gh release create "$TAG" "${FILES[@]}" \
+              --target "$GITHUB_SHA" \
+              --title "Chapter 1 autonomous research generation $GEN" \
+              --notes "Research-only 2023-trained LINE-aware candidate models. Stage-conditional development evaluation, not a verified positive-ROI or paper-equivalence claim. SHA256 of weights included in latest.json."
+          else
+            echo "No new champions: no replacement weights required"
+          fi
+      - name: Save append-only candidate history without triggering a new run
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/paper-only-ai-2023/autonomous_chapter1/state.json docs/paper-only-ai-2023/autonomous_chapter1/latest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record next autonomous chapter 1 model research generation"
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
