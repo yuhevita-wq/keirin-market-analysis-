@@ -1,0 +1,90 @@
+name: Audit historical keirin training coverage (exact race IDs)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/historical_training_audit_v1/**'
+      - '.github/workflows/audit-historical-training-coverage.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: historical-training-coverage-v1
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - name: Checkout relevant original archives, no decrypted ciphertext
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: blob:none
+          sparse-checkout: |
+            data/2023
+            data/2024
+            data/2025
+            data/2026_h1
+            data/a_class_12
+            data/a3_challenge
+            data/grade_races
+            data/unarchived_races_v1
+            data/odds_only
+            data/result_universe_v2/combined
+            data/audits
+            research/ai_nursery/train_week.py
+            research/ai_nursery/source_bridge.py
+            research/historical_training_audit_v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install local reader dependency
+        run: python -m pip install numpy
+      - name: Exact race-ID coverage and gap audit (no fetching or training)
+        run: python -u research/historical_training_audit_v1/audit.py
+      - name: Check disjoint categories and source bounds
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a=json.loads(Path('data/audits/historical_training_coverage_v1.json').read_text())
+          t=a['grand_totals']
+          assert t['verified_results_population']==136906
+          assert t['two_market_complete']+t['partial']+t['insufficient']==136906
+          assert a['seven_bet_exact_id_join_status'].startswith('NOT VERIFIED')
+          assert a['prediction_cutoff_verified'] is False
+          assert a['seven_bet_manifest_lower_bound']>=134336
+          print('VERIFIED_COVERAGE', t)
+          PY
+      - name: Archive exact missing race-ID ledger for reproducibility
+        uses: actions/upload-artifact@v4
+        with:
+          name: historical-training-coverage-v1
+          path: |
+            data/audits/historical_training_coverage_v1.json
+            data/audits/historical_training_coverage_v1_missing.csv.gz
+          retention-days: 90
+      - name: Commit only aggregates and the compressed missing-ID index
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f data/audits/historical_training_coverage_v1.json data/audits/historical_training_coverage_v1_missing.csv.gz
+          if git diff --cached --quiet; then
+            echo 'No changed audit data'
+            exit 0
+          fi
+          git commit -m 'audit: publish historical coverage and missing ID ledger'
+          for try in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              echo 'Published audited data'
+              exit 0
+            fi
+            sleep 5
+          done
+          exit 1
