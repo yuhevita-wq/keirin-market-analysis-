@@ -26,7 +26,10 @@ def collect(data):
                 assert b.startswith(b'%PDF-') and len(b)<20000000
                 p=out/(d+'.pdf');p.write_bytes(b)
             r.update(raw_file=str(p.relative_to(data)),sha256=hashlib.sha256(b).hexdigest(),bytes=len(b),status='retrieved')
-            for page in range(1,7):
+            info=subprocess.check_output(['pdfinfo',str(p)]).decode()
+            import re
+            page_count=int(re.search(r'^Pages:\s*(\d+)',info,re.M).group(1))
+            for page in range(1,min(page_count,6)+1):
                 txt=subprocess.check_output(['pdftotext','-f',str(page),'-l',str(page),'-layout',str(p),'-'],stderr=subprocess.DEVNULL).decode()
                 if not txt.strip():break
                 try:
