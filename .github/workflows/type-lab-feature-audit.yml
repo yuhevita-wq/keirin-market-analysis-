@@ -13,6 +13,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   inspect-real-archive-headers:
@@ -91,5 +92,59 @@ jobs:
         with:
           name: type-lab-rider-settlement-audit-${{ matrix.year }}
           path: type-lab-feature-audit/${{ matrix.year }}/
+          retention-days: 30
+          compression-level: 0
+
+
+  join-seven-markets-with-riders:
+    needs: audit-all-historical-rider-payouts
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        year: [2021, 2022, 2023, 2024, 2025, 2026]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            research/type_lab_features
+            odds_market/vault_public_cert.pem
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download ALL year's previously SHA-checked full-market encrypted artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: type-lab-full-secure-join-${{ matrix.year }}
+          path: incoming/full/
+          run-id: 39789535577
+          repository: yuhevita-wq/keirin-market-analysis-
+          github-token: ${{ github.token }}
+      - name: Download independently audited per-rider and payout quarantine records
+        uses: actions/download-artifact@v4
+        with:
+          name: type-lab-rider-settlement-audit-${{ matrix.year }}
+          path: incoming/rider/
+      - name: Attach FULL 7-market original (not plaintext subset) to riders/results
+        env:
+          YEAR: ${{ matrix.year }}
+          KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -u research/type_lab_features/full_sealed_rider_join.py \
+            --year "$YEAR" \
+            --full incoming/full --feature incoming/rider \
+            --output "type-lab-feature-joined/$YEAR"
+          test -s "type-lab-feature-joined/$YEAR/full_join_summary.json"
+          test -s "type-lab-feature-joined/$YEAR/full_seven_market_with_riders_$YEAR.jsonl.gz.cms"
+      - name: Preserve owner-encrypted full-race joins and nonprivate counts
+        uses: actions/upload-artifact@v4
+        with:
+          name: type-lab-134336-full-market-rider-join-${{ matrix.year }}
+          path: type-lab-feature-joined/${{ matrix.year }}/
           retention-days: 30
           compression-level: 0
