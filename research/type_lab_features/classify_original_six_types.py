@@ -259,6 +259,7 @@ def selftest():
     # Both exact original boundaries and the no-missing-attributes rule.
     assert [type_label_of(1.5,r) for r in (-2,0,3)]==list("ABC")
     assert [type_label_of(1.4,r) for r in (-2,0,3)]==list("DEF")
+    assert type_label_of(1.44,0)=="B" and type_label_of(1.439999,0)=="E"
     assert [type_label_of(1.44,r) for r in (-1,0,1)]==list("ABC")
     p1={str(i):(1/7) for i in range(1,8)}
     p3={str(i):(3/7) for i in range(1,8)}
