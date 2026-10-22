@@ -202,6 +202,7 @@ def run(input_dir,output_dir,metadata_path=None):
             f=input_dir/basename
             if not f.exists():raise RuntimeError("MISSING_PRODUCTION_OR_OOS_CMS_"+basename)
             counters=collections.Counter();podium_seen=0;pair_hits=0;weighted=collections.Counter()
+            group_total=collections.Counter();group_hits=collections.Counter()
             out=output_dir/(name+"_six_type_classification.jsonl.gz.cms")
             with Sealed(out) as writer:
                 for row in stream_encrypted(f,key):
@@ -209,7 +210,10 @@ def run(input_dir,output_dir,metadata_path=None):
                     y=row.get("target_finish_order_kept_separate_from_features")
                     if y is not None:
                         podium_seen+=1
-                        if set(item["top2_cars_by_raw_p3"]).issubset(set(y)):pair_hits+=1
+                        group_total[item["axis_family"]]+=1
+                        if set(item["top2_cars_by_raw_p3"]).issubset(set(y)):
+                            pair_hits+=1
+                            group_hits[item["axis_family"]]+=1
                     if item["type_label"] is not None:counters["type_"+item["type_label"]]+=1
                     else:counters["unresolved_full_type"]+=1
                     counters["family_"+item["axis_family"]]+=1
@@ -234,7 +238,12 @@ def run(input_dir,output_dir,metadata_path=None):
             if podium_seen:
                 summary["independently_tested_axis_pair_podium_rate"]={
                     "samples":podium_seen,"both_p3_top2_podium_hits":pair_hits,
-                    "frequency":pair_hits/podium_seen
+                    "frequency":pair_hits/podium_seen,
+                    "by_original_axis_family":{
+                        grp:{"n":group_total[grp],"top2_both_in_podium":group_hits[grp],
+                             "empirical_rate":group_hits[grp]/group_total[grp]
+                             if group_total[grp] else None}
+                        for grp in ("ABC","DEF")}
                 }
             summary["unresolved_reason_counts"][name]=dict(weighted)
             print("EXACT_TYPE_LAB_A_F_COVERAGE",json.dumps({
@@ -243,7 +252,9 @@ def run(input_dir,output_dir,metadata_path=None):
                 "family_DEF":counters["family_DEF"],
                 "full_A_F":sum(counters["type_"+k] for k in "ABCDEF"),
                 "unresolved":counters["unresolved_full_type"],
-                "axis_pair_podium_hits_in_heldout":pair_hits if podium_seen else None
+                "axis_pair_podium_hits_in_heldout":pair_hits if podium_seen else None,
+                "axis_pair_podium_hits_ABC":group_hits["ABC"] if podium_seen else None,
+                "axis_pair_podium_hits_DEF":group_hits["DEF"] if podium_seen else None
             }),flush=True)
     (output_dir/"type_lab_af_strict_classification_report.json").write_text(
         json.dumps(summary,ensure_ascii=False,indent=2)+"\n",encoding="utf8")
