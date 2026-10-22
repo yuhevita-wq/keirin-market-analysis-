@@ -110,7 +110,7 @@ def read_full(incoming,key,counts):
             label=data.get("actual_order_label_not_feature")
             if label is not None:nr+=1
             flagged=set(data.get("settlement_quarantine_evidence") or ())
-            if MARKER in flagged:ties[year]+=1
+            if MARKER in flagged and label is not None:ties[year]+=1
             when=dt.date.fromisoformat(str(data["race_date"]))
             if when.year!=year or (year==2026 and when>dt.date(2026,6,30)):
                 raise RuntimeError("RACE_DATE_OUTSIDE_SOURCE_SCOPE")
