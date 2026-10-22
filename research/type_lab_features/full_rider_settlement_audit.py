@@ -38,6 +38,7 @@ BASELINE_MATCHED={2021:23669,2022:24331,2023:24966,2024:24598,2025:24234,2026:11
 
 def race_day(rid):
     if not RID_RX.fullmatch(rid): return None
+    if int(rid[10:12]) not in range(1,8): return None
     try:
         d=dt.date(int(rid[2:6]),int(rid[6:8]),int(rid[8:10]))
         return d+dt.timedelta(days=int(rid[10:12])-1)
@@ -116,7 +117,7 @@ def load(year):
         for row in rows:
             rid=str(row.get("race_id","")).strip()
             day=race_day(rid)
-            if day is None or day.year!=year:continue
+            if day is None or day.year!=year or (year==2026 and day>dt.date(2026,6,30)):continue
             seen["rows_"+kind]+=1
             row["_source"]=source
             if kind=="entries.csv":
@@ -168,7 +169,8 @@ def verified_results(year):
             if not line.strip():continue
             x=json.loads(line);rid=str(x.get("race_id",""))
             order=x.get("finish_order")
-            if race_day(rid) is None or not isinstance(order,list) or len(order)!=3:continue
+            when=race_day(rid)
+            if when is None or when.year!=year or (year==2026 and when>dt.date(2026,6,30)) or not isinstance(order,list) or len(order)!=3:continue
             if rid in known and known[rid]!=order:conflicts.add(rid)
             known[rid]=order
     for k in conflicts:known.pop(k,None)
@@ -215,7 +217,9 @@ def run(year,output):
                 if not all(captured_before_event(x,day) for x in samples):
                     all_timing_valid=False
                 points.append({"car":car,"values":values,"conflicting_fields":conflicting,
-                               "source_count":len(samples)})
+                               "source_count":len(samples),
+                               "source_files":sorted({str(x["_source"]) for x in samples}),
+                               "captured_at_utc":sorted({str(x.get("captured_at_utc","")) for x in samples})})
             if rr and not all(captured_before_event(x,day) for x in rr):
                 all_timing_valid=False
             if any_ambiguous:observed["rider_attribute_conflict_races"]+=1
