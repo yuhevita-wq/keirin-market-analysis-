@@ -113,7 +113,10 @@ def run(year,full,feature,out):
                         and riders["n_entry_cars"]==n)
                 if roster and supported and order is not None:
                     counter["market_result_and_full_roster_connected"]+=1
-                unsafe=(riders or {}).get("settlement_quarantine",[])
+                unsafe=list((riders or {}).get("settlement_quarantine",[]))
+                if riders is not None and riders.get("result_archive_order") != order:
+                    unsafe.append("RESULT_ARCHIVE_ORDER_DISAGREEMENT")
+                    counter["cross_archive_result_label_conflicts"]+=1
                 if unsafe:counter["payout_or_podium_suspect"]+=1
                 payout=bool((riders or {}).get("distinct_trifecta_winner_count",0))
                 if roster and order is not None and payout and not unsafe:
