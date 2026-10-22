@@ -10,7 +10,7 @@ This does NOT assert p1/p3 probability calibration or permission to place bets.
 """
 from __future__ import annotations
 import argparse, collections, contextlib, datetime as dt, gzip, hashlib
-import json, math, os, re, subprocess, tempfile
+import json, math, os, re, subprocess, tempfile, unicodedata
 from pathlib import Path
 from urllib.parse import urlsplit, urlunsplit
 
@@ -75,7 +75,7 @@ class SealedWriter:
             if kind is None:raise RuntimeError("OUTPUT_CMS_ENCRYPTION_FAILED")
         return False
 
-def stable_player_id(value):
+def stable_player_id(value, attrs=None):
     """Exact stable profile URL, or explicit numeric ID. No weak name-only join."""
     s=str(value or "").strip()
     if not s:return None
@@ -86,6 +86,17 @@ def stable_player_id(value):
         return urlunsplit((parts.scheme.lower(),parts.netloc.lower(),parts.path.rstrip("/"),parts.query,""))
     if s.isascii() and s.isdigit() and len(s)>=5:
         return "numeric-rider-id:"+s
+    # Archive player_profile is NOT a player identifier: it encodes region/age/term,
+    # e.g. "千 葉/27/119". Use verified static name+term+prefecture surrogate.
+    # Do not merge names alone. Independently quarantine temporal ID conflicts.
+    attrs=attrs or {}
+    clean=lambda value: "".join(unicodedata.normalize("NFKC",str(value or "")).split())
+    name=clean(attrs.get("player_name"))
+    pref=clean(attrs.get("prefecture"))
+    term=clean(attrs.get("term"))
+    if name and pref and term.isascii() and term.isdigit() and len(name)>=2:
+        seed="type-lab-surrogate-v1|"+name+"|"+pref+"|"+term
+        return "surrogate:"+hashlib.sha256(seed.encode("utf-8")).hexdigest()
     return None
 
 def read_full(incoming,key,counts):
@@ -131,7 +142,9 @@ def read_full(incoming,key,counts):
                 elif profile.startswith("/"): identity_profiles["relative_path"]+=1
                 elif profile.isascii() and profile.isdigit(): identity_profiles["digits"]+=1
                 else: identity_profiles["other_non_url"]+=1
-                keyplayer=stable_player_id(profile)
+                keyplayer=stable_player_id(profile,attrs)
+                if keyplayer and keyplayer.startswith("surrogate:"):
+                    counts["individual_rider_rows_using_surrogate"]+=1
                 if keyplayer:counts["individual_rider_rows_with_stable_id"]+=1
                 else:counts["individual_rider_rows_without_stable_id"]+=1
                 if (not isinstance(car,int) or not keyplayer or keyplayer in ids
@@ -179,6 +192,8 @@ def read_full(incoming,key,counts):
               json.dumps({"year":year,"market_books":n,"matched_results":nr,
                           "verified_ties":ties[year]}),flush=True)
     if len(seen)!=134336:raise RuntimeError("FULL_SEVEN_MARKET_UNIVERSE_NOT_LOADED")
+    if not records:
+        raise RuntimeError("ZERO_ABILITIES_AFTER_SURROGATE_ID_MATCH")
     if not records:
         raise RuntimeError("NO_STABLE_ID_COMPLETE_ROSTER: refusing false-green 0-record study")
     return records
@@ -249,6 +264,21 @@ def run(args):
     counts=collections.Counter()
     with private_key() as key:
         events=read_full(Path(args.incoming),key,counts)
+        # A rider cannot race two different races on one calendar day.
+        # A composite identity collision is quarantined, not silently merged.
+        byday=collections.defaultdict(set)
+        for e in events:
+            for person in e["p"].values():
+                byday[(e["day"],person)].add(e["rid"])
+        ambiguous={(date,person) for (date,person),rids in byday.items() if len(rids)>1}
+        if ambiguous:
+            safe=[]
+            for e in events:
+                if any((e["day"],person) in ambiguous for person in e["p"].values()):
+                    counts["same_day_identity_collision_races_quarantined"]+=1
+                else:
+                    safe.append(e)
+            events=safe
         events.sort(key=lambda r:(r["day"],r["rid"]))
         histories=collections.defaultdict(list)
         ratings=collections.defaultdict(lambda:1500.0)
@@ -300,6 +330,9 @@ def run(args):
                 "input_independently_audited_ties":188,
                 "estimator":"past observed win/top2/top3 windows plus 12-K pairwise podium Elo",
                 "calibrated_prediction_probability":False,
+                "stable_official_rider_ids_verified":False,
+                "identity_strategy":"name+term+prefecture surrogate, with same-day collision quarantine",
+                "identity_collision_quarantine_required":True,
                 "asof_policy":"strictly earlier calendar dates only; same day withheld",
                 "retrospective_racecard_score_ever_used":False,
                 "model_ready_no_hindsight_feature_rows":counts["ability_examples_emitted"],
@@ -312,7 +345,8 @@ def run(args):
                      "features_records":yearwriters[y].count}
                     for y in YEARS],
                 "safety_flags":[
-                    "Rider identity requires stable profile URL / explicit numeric ID: name-only not used",
+                    "Rider ID: provider URLs if available, else name+term+prefecture surrogate, not verified official ID",
+                    "Same-day surrogate collisions are quarantined, not merged",
                     "Only clean uniquely settled observed podiums contribute history updates",
                     "Markets and retrospective racecard score never enter ability features",
                     "Pre-2021 history absent; 2021/22 sparse rider coverage, so cold start is explicit",
@@ -345,6 +379,10 @@ def selftest():
     assert ratings["player:a"]>ratings["player:e"]
     assert stable_player_id("https://example.com/rider/100/?id=1")=="https://example.com/rider/100?id=1"
     assert stable_player_id("John Smith") is None
+    s=stable_player_id("千 葉/27/119",{"player_name":"架空 選手","prefecture":"千葉","term":"119"})
+    assert s and s.startswith("surrogate:")
+    assert stable_player_id("千 葉/28/119",{"player_name":"架空 選手","prefecture":"千葉","term":"119"})==s
+    assert stable_player_id("千 葉/28/119",{"player_name":"架空 選手","prefecture":"千葉","term":"121"})!=s
     print("TYPE_LAB_ASOF_SELFTEST_OK")
 
 if __name__=="__main__":
