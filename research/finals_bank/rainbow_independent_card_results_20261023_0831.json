@@ -1,0 +1,48 @@
+{
+  "all_finals_complete": false,
+  "canonical_db_changed": false,
+  "existing_ledger": 5354,
+  "existing_male": 5353,
+  "male_scope_lower_bound": 5367,
+  "historical_bank_verified": 230,
+  "historical_bank_unresolved": 5123,
+  "independent_cards_results": {
+    "events": 14,
+    "entries": 126,
+    "results": 126,
+    "exact_scores": true,
+    "explicit_registration_IDs": true,
+    "classes_age_term_prefecture": true,
+    "four_finish_counts": true,
+    "four_winning_move_counts": true,
+    "gear_and_style": true,
+    "DQ_ties_preserved": true
+  },
+  "raw_archive": "independent_card_results_raw.tar.xz",
+  "archive_bytes": 70696,
+  "archive_sha256": "b067a5fcb5629030f5440bc0efc88e368b753c4236a5a50fee8af372c270bbe2",
+  "lossless_archive_member_audit": {
+    "members": 56,
+    "missing_extra_duplicate": 0,
+    "all_original_bytes_sha_verified": true
+  },
+  "mutation_rejection": [
+    "explicit card ID",
+    "historical score",
+    "result rank"
+  ],
+  "remaining": [
+    "actual prior histories and malformed Chariloto dates",
+    "independent line verification",
+    "canonical key policy and complete insertion audit",
+    "historical bank applicability",
+    "full period final-equivalent label scope"
+  ],
+  "no_retries": [
+    "saved Chariloto sources",
+    "saved netkeiba full odds",
+    "KDreams maintenance route",
+    "old collectors/watchdog"
+  ],
+  "run_instructions": "From workspace cwd, extract raw archive to raw_independent_0831 and run recovery/review_rainbow_independent_card_results_0831.py. Existing collector metadata cache prevents refetch; extraction required before rerun."
+}
