@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Nine-request historical WINTICKET PRELOADED_STATE availability probe.
+"""Sixteen-request historical WINTICKET PRELOADED_STATE availability probe.
 
 Uses exactly the URL + SSR JSON + tanStackQuery FETCH_KEIRIN_RACE path from
 nyanta-kun/kiseki/keirin/src/scraper/winticket.py. NO bulk historical crawl.
@@ -32,6 +32,15 @@ CASES = (
     # 2024 Yahiko GI 17..20 October.
     ("2024-10-17","yahiko","2024101721",1,1),
     ("2024-10-20","yahiko","2024101721",4,12),
+    # 7-car A/S/Challenge from verified 2023-10-19 scheduled events.
+    ("2023-10-19","kawasaki","2023101734",3,1),
+    ("2023-10-19","kawasaki","2023101734",3,9),
+    ("2023-10-19","kochi","2023101774",3,4),
+    ("2023-10-19","kokura","2023101781",3,8),
+    ("2023-10-19","beppu","2023101886",2,1),
+    # 2024 Matsuyama F2, final day 2024-10-20.
+    ("2024-10-20","matsuyama","2024101875",3,6),
+    ("2024-10-20","matsuyama","2024101875",3,9),
 )
 HEADERS={
     "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -166,7 +175,7 @@ def run(out):
            "behind":row.get("with_original_fields",{}).get("ex_left_behind_pct"),
            "full_type_input_now":row.get("full_7_9_six_type_inputs_available_now")
         },ensure_ascii=False),flush=True)
-        time.sleep(1.2)  # 9 targeted requests, no search burst.
+        time.sleep(1.2)  # 16 targeted requests, no search burst.
     successful=[x for x in records if x.get("failure_stage") is None]
     fields=("official_player_id","name","prefecture","term","line_group","line_pos","race_point","style","ex_left_behind_pct")
     report={
