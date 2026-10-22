@@ -69,13 +69,38 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git sparse-checkout set --no-cone \
-            '/research/type_lab_full_archive/**' \
-            '/research/deletion_ai/secure_seven_bet_bridge.py' \
-            '/odds_market/**' \
-            '/data/audits/odds_seven_bet_runs/**' \
-            '/data/result_universe_v2/combined/**' \
-            "/data/odds_ciphertext/${YEAR}-*/**"
+          # Enumerate precise ciphertext blob paths from EVERY ORIGINAL run manifest.
+          # Avoid wildcard directories: saved archive filenames are not organized by year at the root.
+          python - "$YEAR" <<'PY' > /tmp/type-lab-sparse-patterns
+          import json, sys
+          from pathlib import Path
+          year = str(sys.argv[1])
+          paths = set()
+          manifests = sorted(Path("data/audits/odds_seven_bet_runs").glob("*.json"))
+          if not manifests:
+              raise SystemExit("FAIL: original run manifests missing")
+          for manifest in manifests:
+              data = json.loads(manifest.read_text(encoding="utf-8"))
+              for row in data.get("encrypted_files", []):
+                  p = str(row["path"])
+                  if Path(p).parent.name.startswith(year + "-"):
+                      paths.add(p)
+          if not paths:
+              raise SystemExit("FAIL: no archived ciphertext for year " + year)
+          common = [
+              "research/type_lab_full_archive/secure_connect.py",
+              "research/deletion_ai/secure_seven_bet_bridge.py",
+              "odds_market/collect_all_odds.py",
+              "odds_market/vault_public_cert.pem",
+          ]
+          common += [str(p) for p in Path("data/audits/odds_seven_bet_runs").glob("*.json")]
+          common += [str(p) for p in Path("data/result_universe_v2/combined").glob("*.gz")]
+          for p in sorted(set(common) | paths):
+              print("/" + p)
+          print("CIPHERTEXT_PATHS_IN_MANIFEST=" + str(len(paths)), file=sys.stderr)
+          PY
+          git sparse-checkout set --no-cone --stdin < /tmp/type-lab-sparse-patterns
+          test "$(find data/odds_ciphertext -name '*.p7m' -type f | wc -l)" -gt 0
           echo "SPARSE_YEAR=$YEAR"
           test -f research/type_lab_full_archive/secure_connect.py
           test -f research/deletion_ai/secure_seven_bet_bridge.py
