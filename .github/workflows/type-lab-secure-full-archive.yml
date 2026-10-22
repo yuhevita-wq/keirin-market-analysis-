@@ -1,0 +1,108 @@
+name: TypeLab full archive read and secure actual results join
+
+on:
+  push:
+    branches:
+      - research/type-lab-full-archive-20261022
+    paths:
+      - "research/type_lab_full_archive/**"
+      - ".github/workflows/type-lab-secure-full-archive.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  private-key-preflight:
+    runs-on: ubuntu-24.04
+    outputs:
+      available: ${{ steps.secretcheck.outputs.available }}
+    steps:
+      - name: Check that OWNER'S private CMS key is configured (never print value)
+        id: secretcheck
+        env:
+          PRIVATE_KEY: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        run: |
+          if [ -n "$PRIVATE_KEY" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+            echo "SECURE_ARCHIVE_KEY_STATUS=AVAILABLE"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::SECURE_ARCHIVE_KEY_STATUS=MISSING. No fake or partial-data success."
+          fi
+
+  full-year-join:
+    needs: private-key-preflight
+    if: needs.private-key-preflight.outputs.available == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        year: [2021, 2022, 2023, 2024, 2025, 2026]
+    env:
+      PYTHONUNBUFFERED: '1'
+      PYTHONHASHSEED: '0'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          persist-credentials: false
+          sparse-checkout: |
+            research/type_lab_full_archive
+            research/deletion_ai
+            odds_market
+            data/audits/odds_seven_bet_runs
+            data/result_universe_v2/combined
+
+      - name: Checkout THIS year's complete ciphertext (not a subset)
+        env:
+          YEAR: ${{ matrix.year }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git sparse-checkout set --no-cone \
+            '/research/type_lab_full_archive/**' \
+            '/research/deletion_ai/secure_seven_bet_bridge.py' \
+            '/odds_market/**' \
+            '/data/audits/odds_seven_bet_runs/**' \
+            '/data/result_universe_v2/combined/**' \
+            "/data/odds_ciphertext/${YEAR}-*/**"
+          echo "SPARSE_YEAR=$YEAR"
+          test -f research/type_lab_full_archive/secure_connect.py
+          test -f research/deletion_ai/secure_seven_bet_bridge.py
+          test -f odds_market/vault_public_cert.pem
+          test -f "data/result_universe_v2/combined/results_${YEAR}.jsonl.gz"
+          find data/odds_ciphertext -name '*.p7m' -type f | wc -l
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Python parser import preflight without opening any secret
+        run: |
+          python -m py_compile research/type_lab_full_archive/secure_connect.py
+          python -m py_compile research/deletion_ai/secure_seven_bet_bridge.py
+
+      - name: Decrypt and VERIFY ALL original seven-market archives, join exact podiums
+        env:
+          YEAR: ${{ matrix.year }}
+          KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        run: |
+          set -euo pipefail
+          python -u research/type_lab_full_archive/secure_connect.py \
+            --year "$YEAR" --output "type-lab-secure-results/${YEAR}"
+          test -s "type-lab-secure-results/${YEAR}/connection_report.json"
+          test -s "type-lab-secure-results/${YEAR}/all_seven_bet_odds_${YEAR}.jsonl.gz.cms"
+          test -s "type-lab-secure-results/${YEAR}/verified_result_labels_${YEAR}.jsonl.gz.cms"
+
+      - name: Save owner-encrypted all-market join and public COUNTS ONLY
+        uses: actions/upload-artifact@v4
+        with:
+          name: type-lab-full-secure-join-${{ matrix.year }}
+          path: type-lab-secure-results/${{ matrix.year }}/
+          retention-days: 30
+          compression-level: 0
