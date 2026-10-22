@@ -82,8 +82,8 @@ def stable_player_id(value):
     if PROFILE_RE.match(s):
         parts=urlsplit(s)
         if not parts.netloc or not parts.path.strip("/"):return None
-        # All provider URL spellings normalized: host case, trailing slash, no query.
-        return urlunsplit((parts.scheme.lower(),parts.netloc.lower(),parts.path.rstrip("/"),"",""))
+        # Preserve query-based rider IDs; dropping a player_id query could merge riders.
+        return urlunsplit((parts.scheme.lower(),parts.netloc.lower(),parts.path.rstrip("/"),parts.query,""))
     if s.isascii() and s.isdigit() and len(s)>=5:
         return "numeric-rider-id:"+s
     return None
@@ -322,7 +322,7 @@ def selftest():
     assert nextday["riders"][0]["lifetime_observed_win_rate"]==1
     assert nextday["riders"][4]["lifetime_observed_top3_rate"]==0
     assert ratings["player:a"]>ratings["player:e"]
-    assert stable_player_id("https://example.com/rider/100/?x=1")=="https://example.com/rider/100"
+    assert stable_player_id("https://example.com/rider/100/?id=1")=="https://example.com/rider/100?id=1"
     assert stable_player_id("John Smith") is None
     print("TYPE_LAB_ASOF_SELFTEST_OK")
 
