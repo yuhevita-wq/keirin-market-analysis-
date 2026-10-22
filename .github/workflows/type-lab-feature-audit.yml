@@ -1,0 +1,46 @@
+name: Type Lab historical rider schema inspection
+on:
+  push:
+    branches: [research/type-lab-full-archive-20261022]
+    paths:
+      - "research/type_lab_features/**"
+      - ".github/workflows/type-lab-feature-audit.yml"
+  pull_request:
+    paths:
+      - "research/type_lab_features/**"
+      - ".github/workflows/type-lab-feature-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect-real-archive-headers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            research/type_lab_features
+            data/2023
+            data/2024
+            data/2025
+            data/2026_h1
+            data/a_class_12
+            data/a3_challenge
+            data/grade_races
+            data/2026_future_block1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Inspect EVERY source table header and grade ZIP member header
+        run: python research/type_lab_features/schema_probe.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: type-lab-real-source-schema-inventory
+          path: research/type_lab_features/schema_inventory.json
+          retention-days: 30
