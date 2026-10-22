@@ -116,7 +116,8 @@ def certified_arare(extra,topcar,allcars):
     if not isinstance(di,int) or not (1<=di<=6):
         return None,"MISSING_OR_INVALID_EVENT_DAY_INDEX"
     for car in cars:
-        if safe_float(point[car]) is None or not 0<=safe_float(behind[car])<=100:
+        b=safe_float(behind[car])
+        if safe_float(point[car]) is None or b is None or not 0<=b<=100:
             return None,"MISSING_BETTING_PRICE_OR_BEHIND"
         if not str(style[car]).strip():return None,"MISSING_STYLE"
     g=group[str(topcar)]
