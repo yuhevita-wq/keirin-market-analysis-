@@ -22,6 +22,14 @@ jobs:
     outputs:
       available: ${{ steps.secretcheck.outputs.available }}
     steps:
+      - name: Checkout the ORIGINAL public certificate only
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            odds_market/vault_public_cert.pem
+          sparse-checkout-cone-mode: false
+
       - name: Check that OWNER'S private CMS key is configured (never print value)
         id: secretcheck
         env:
@@ -35,6 +43,44 @@ jobs:
             echo "::warning::SECURE_ARCHIVE_KEY_STATUS=MISSING. No fake or partial-data success."
             exit 2  # fail-closed; report must never be green without the private archive
           fi
+
+      - name: Verify the original RSA key actually matches the archive certificate (print status ONLY)
+        if: steps.secretcheck.outputs.available == 'true'
+        env:
+          PRIVATE_KEY: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os, pathlib, subprocess, sys, tempfile
+          pem = os.environ.pop("PRIVATE_KEY", "")
+          cert = "odds_market/vault_public_cert.pem"
+          with tempfile.TemporaryDirectory(prefix="key_check_") as d:
+              key = pathlib.Path(d)/"original.key"
+              key.write_bytes(pem.encode("utf-8").replace(b"\r\n", b"\n"))
+              key.chmod(0o600)
+              private = subprocess.run(
+                  ["openssl","pkey","-in",str(key),"-pubout","-outform","DER"],
+                  capture_output=True, timeout=15,
+              )
+              if private.returncode != 0 or not private.stdout:
+                  print("PRIVATE_KEY_STATUS=INVALID_FORMAT_OR_PASSWORD_PROTECTED")
+                  sys.exit(2)
+              cert_pub = subprocess.run(
+                  ["openssl","x509","-in",cert,"-pubkey","-noout"],
+                  capture_output=True, timeout=15,
+              )
+              if cert_pub.returncode != 0:
+                  print("PUBLIC_CERT_STATUS=UNREADABLE")
+                  sys.exit(2)
+              encoded = subprocess.run(
+                  ["openssl","pkey","-pubin","-outform","DER"],
+                  input=cert_pub.stdout,capture_output=True,timeout=15,
+              )
+              if encoded.returncode != 0 or encoded.stdout != private.stdout:
+                  print("PRIVATE_KEY_STATUS=VALID_BUT_NOT_THE_ORIGINAL_ARCHIVE_KEY")
+                  sys.exit(2)
+              print("PRIVATE_KEY_STATUS=MATCHES_ARCHIVE_PUBLIC_CERTIFICATE")
+          PY
 
   full-year-join:
     needs: private-key-preflight
