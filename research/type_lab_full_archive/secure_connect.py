@@ -58,6 +58,8 @@ class SealedWriter:
     def __exit__(self, typ, value, tb):
         if self.z is not None:
             self.z.close()
+        if self.proc is not None and self.proc.stdin is not None:
+            self.proc.stdin.close()
         if self.proc is not None:
             try:
                 rc = self.proc.wait(timeout=120)
