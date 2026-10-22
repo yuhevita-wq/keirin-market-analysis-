@@ -316,7 +316,7 @@ def selftest():
     assert split_day("2024-12-31")=="calibration" and split_day("2025-01-01")=="test"
     # Numerical gradient check for the ordered top-three model.
     scores=np.array([[.3,.1,-.2,.2,.9,-.7,-.8,-100,-100]],float)
-    mm=np.array([[True]*7+[False]*2)
+    mm=np.array([[True]*7+[False]*2])
     target=np.array([[4,0,3]],dtype=np.int64)
     loss,grad=order_loglik_grad(scores,mm,target)
     eps=1e-6
