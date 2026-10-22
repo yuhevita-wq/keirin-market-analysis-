@@ -438,6 +438,32 @@ def run(args):
         print("PL_FULL_HISTORY_REFIT_DONE",json.dumps({
            "all_races_trained":len(rows),"last_day":rows[-1][1],
            "iterations":full_fit["iterations"]}),flush=True)
+        # All 80,882 are *in-sample* for the separate full-history refit.
+        # NEVER market these probabilities as out-of-time validation.
+        production_probs=output/"production_in_sample_all_80882_p1p3.jsonl.gz.cms"
+        prod_features=apply_scaling(allX,allM,allmean,allstd)
+        prod_logits=np.einsum("nkd,d->nk",prod_features,full_weights,optimize=True)
+        prod_p1,prod_p3=sequential_marginals(prod_logits/T,allM)
+        with Sealed(production_probs) as writer:
+            for original,a,b in zip(rows,prod_p1,prod_p3):
+                rid,day,rider_feature_data,_finish=original
+                n=len(rider_feature_data)
+                writer.write({
+                    "race_id":rid,"race_date":day,"n_cars":n,
+                    "p1":{str(c):float(a[c-1]) for c in range(1,n+1)},
+                    "p3":{str(c):float(b[c-1]) for c in range(1,n+1)},
+                    "source":"production_refit_80882_in_sample",
+                    "in_sample":True,"independent_test":False,
+                    "includes_future_relative_to_earlier_historical_races":True
+                })
+        if writer.count!=len(rows):raise RuntimeError("PRODUCTION_PREDICTION_COUNT_ERROR")
+        report["production_in_sample_probabilities"]={
+            "name":production_probs.name,"records":writer.count,
+            "sha256":sha256(production_probs),
+            "in_sample":True,"valid_for_historical_accuracy_evaluation":False
+        }
+        print("PRODUCTION_80882_PROBABILITIES_WRITTEN",json.dumps({
+            "records":writer.count,"in_sample":True}),flush=True)
         (output/"probability_training_report.json").write_text(json.dumps(report,ensure_ascii=False,
                      indent=2,allow_nan=False)+"\n",encoding="utf8")
         if not (report["counts"]["train"]>20000 and report["counts"]["test"]>20000):
