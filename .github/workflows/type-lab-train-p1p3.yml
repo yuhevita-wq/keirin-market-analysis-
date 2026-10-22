@@ -55,11 +55,12 @@ jobs:
             --input incoming --output fitted-win-top3
           test -s fitted-win-top3/probability_training_report.json
           test -s fitted-win-top3/pl_probability_model.jsonl.gz.cms
+          test -s fitted-win-top3/pl_full_80882_production_model.jsonl.gz.cms
           test -s fitted-win-top3/heldout_test_predictions.jsonl.gz.cms
       - name: Retain encrypted model, encrypted held-out predictions and aggregate accuracy report
         uses: actions/upload-artifact@v4
         with:
-          name: type-lab-full-history-2025H2-2026H1-p1p3-test
+          name: type-lab-80882-p1p3-frozen-test-and-production-refit
           path: fitted-win-top3/
           retention-days: 30
           compression-level: 0
