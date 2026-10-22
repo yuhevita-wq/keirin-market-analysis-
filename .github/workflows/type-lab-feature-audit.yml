@@ -44,3 +44,52 @@ jobs:
           name: type-lab-real-source-schema-inventory
           path: research/type_lab_features/schema_inventory.json
           retention-days: 30
+
+
+  audit-all-historical-rider-payouts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        year: [2021, 2022, 2023, 2024, 2025, 2026]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            research/type_lab_features
+            data/2023
+            data/2024
+            data/2025
+            data/2026_h1
+            data/a_class_12
+            data/a3_challenge
+            data/grade_races
+            data/2026_future_block1
+            data/result_universe_v2/combined
+            odds_market/vault_public_cert.pem
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Audit all actual entries, official payouts, independent results and as-of-time
+        env:
+          YEAR: ${{ matrix.year }}
+        run: |
+          set -euo pipefail
+          python -m py_compile research/type_lab_features/full_rider_settlement_audit.py
+          python -u research/type_lab_features/full_rider_settlement_audit.py \
+            --year "$YEAR" --output "type-lab-feature-audit/$YEAR"
+          test -s "type-lab-feature-audit/$YEAR/rider_settlement_audit_$YEAR.jsonl.gz.cms"
+          test -s "type-lab-feature-audit/$YEAR/settlement_quarantine_$YEAR.jsonl.gz.cms"
+          test -s "type-lab-feature-audit/$YEAR/audit_summary.json"
+      - name: Archive encrypted private rider records and plaintext aggregate counts
+        uses: actions/upload-artifact@v4
+        with:
+          name: type-lab-rider-settlement-audit-${{ matrix.year }}
+          path: type-lab-feature-audit/${{ matrix.year }}/
+          retention-days: 30
+          compression-level: 0
