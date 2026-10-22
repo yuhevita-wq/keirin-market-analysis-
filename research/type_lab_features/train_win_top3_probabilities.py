@@ -408,6 +408,36 @@ def run(args):
                 "temperature":T,"training_end":"2024-06-30",
                 "calibration_end":"2024-12-31","n_train":len(pieces["train"])})
         report["encrypted_model"]={"name":model.name,"sha256":sha256(model)}
+        # Production-only refit AFTER untouched historical evaluation. This model
+        # has no independent 2025/2026 test; never report historical heldout scores
+        # as its own out-of-sample performance.
+        allX,allM,allY=tensors(rows)
+        allmean,allstd=train_normalize(allX,allM)
+        full_weights,full_fit=fit_pl(apply_scaling(allX,allM,allmean,allstd),allM,allY)
+        production=output/"pl_full_80882_production_model.jsonl.gz.cms"
+        with Sealed(production) as f:
+            f.write({"schema":"type_lab_pl_coherent_win_top3_production_refit_v1",
+                "feature_names":FEATURE_NAMES,
+                "mean":allmean.tolist(),"std":allstd.tolist(),
+                "weights":full_weights.tolist(),"temperature":T,
+                "temperature_source":"historical_2024H2_calibration_frozen",
+                "full_history_races_used":len(rows),
+                "last_known_race_date":rows[-1][1],
+                "independent_holdout_assessment_of_this_refit":False,
+                "asof_only_features":True})
+        report["latest_production_refit"]={
+            "n_races_used":len(rows),
+            "last_observed_date":rows[-1][1],
+            "frozen_temperature_from_2024H2":T,
+            "optimizer":full_fit,
+            "encrypted_model_name":production.name,
+            "encrypted_sha256":sha256(production),
+            "separate_unseen_test_for_this_refit":False,
+            "previous_2025_2026_test_scores_belong_to_pre_2025_frozen_model":True
+        }
+        print("PL_FULL_HISTORY_REFIT_DONE",json.dumps({
+           "all_races_trained":len(rows),"last_day":rows[-1][1],
+           "iterations":full_fit["iterations"]}),flush=True)
         (output/"probability_training_report.json").write_text(json.dumps(report,ensure_ascii=False,
                      indent=2,allow_nan=False)+"\n",encoding="utf8")
         if not (report["counts"]["train"]>20000 and report["counts"]["test"]>20000):
