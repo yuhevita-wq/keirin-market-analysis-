@@ -33,6 +33,7 @@ jobs:
           else
             echo "available=false" >> "$GITHUB_OUTPUT"
             echo "::warning::SECURE_ARCHIVE_KEY_STATUS=MISSING. No fake or partial-data success."
+            exit 2  # fail-closed; report must never be green without the private archive
           fi
 
   full-year-join:
@@ -110,3 +111,39 @@ jobs:
           path: type-lab-secure-results/${{ matrix.year }}/
           retention-days: 30
           compression-level: 0
+
+  public-source-census:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          persist-credentials: false
+          sparse-checkout: |
+            research/type_lab_full_archive
+            data/2023
+            data/2024
+            data/2025
+            data/2026_h1
+            data/a_class_12
+            data/a3_challenge
+            data/grade_races
+            data/result_universe_v2/combined
+            data/odds_only
+            data/audits/odds_only_export.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Scan ALL mounted public CSV/ZIP/source results and join all exact race IDs
+        run: |
+          set -euo pipefail
+          python research/type_lab_full_archive/public_census.py
+          test -s research/type_lab_full_archive/public_connection_report.json
+      - name: Publish audit counts ONLY - not falsely identified as full seven-market
+        uses: actions/upload-artifact@v4
+        with:
+          name: type-lab-all-public-sources-audit
+          path: research/type_lab_full_archive/public_connection_report.json
+          retention-days: 30
