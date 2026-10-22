@@ -92,6 +92,7 @@ def read_full(incoming,key,counts):
     """Use EVERY FULL-market source artifact. Payload discarded after parsing race identity."""
     records=[];seen=set()
     ties=collections.Counter()
+    identity_profiles=collections.Counter()
     for year in YEARS:
         root=incoming/f"type-lab-134336-full-market-rider-join-{year}"
         name=root/f"full_seven_market_with_riders_{year}.jsonl.gz.cms"
@@ -116,12 +117,23 @@ def read_full(incoming,key,counts):
                 raise RuntimeError("RACE_DATE_OUTSIDE_SOURCE_SCOPE")
             cars=data.get("rider_entries") or []
             if not isinstance(cars,list):cars=[]
+            if cars:counts["any_rider_rows_in_full_archive"]+=1
+            if len(cars)==int(data["n_cars"]):counts["roster_length_matches_field"]+=1
             players={}
             ids=set()
             conflict=False
             for row in cars:
                 car=row.get("car")
-                keyplayer=stable_player_id((row.get("values") or {}).get("player_profile"))
+                attrs=row.get("values") or {}
+                profile=str(attrs.get("player_profile") or "").strip()
+                if not profile: identity_profiles["blank"]+=1
+                elif PROFILE_RE.match(profile):identity_profiles["absolute_url"]+=1
+                elif profile.startswith("/"): identity_profiles["relative_path"]+=1
+                elif profile.isascii() and profile.isdigit(): identity_profiles["digits"]+=1
+                else: identity_profiles["other_non_url"]+=1
+                keyplayer=stable_player_id(profile)
+                if keyplayer:counts["individual_rider_rows_with_stable_id"]+=1
+                else:counts["individual_rider_rows_without_stable_id"]+=1
                 if (not isinstance(car,int) or not keyplayer or keyplayer in ids
                     or row.get("conflicting_fields")):
                     conflict=True
@@ -150,6 +162,13 @@ def read_full(incoming,key,counts):
                 counts["records_eligible_for_temporal_reconstruction"]+=1
             elif supported and label is not None and full_roster and flagged:
                 counts["full_roster_with_settlement_quarantine"]+=1
+        print("TEMPORAL_ID_DIAGNOSTIC",json.dumps({
+            "year":year,"full_archive_markets":n,
+            "rosters_length_matched_cumulative":counts["roster_length_matches_field"],
+            "with_stable_player_ids":counts["individual_rider_rows_with_stable_id"],
+            "without_stable_player_ids":counts["individual_rider_rows_without_stable_id"],
+            "profile_shapes":dict(identity_profiles)
+        }),flush=True)
         if n!=EXPECTED_FULL[year] or nr!=EXPECTED_RESULT[year]:
             raise RuntimeError("INCOMPLETE_YEAR_FULL_ARCHIVE_DATASET")
         if ties[year]!=EXPECTED_TIES[year]:
@@ -160,6 +179,8 @@ def read_full(incoming,key,counts):
               json.dumps({"year":year,"market_books":n,"matched_results":nr,
                           "verified_ties":ties[year]}),flush=True)
     if len(seen)!=134336:raise RuntimeError("FULL_SEVEN_MARKET_UNIVERSE_NOT_LOADED")
+    if not records:
+        raise RuntimeError("NO_STABLE_ID_COMPLETE_ROSTER: refusing false-green 0-record study")
     return records
 
 def _stats(history,today,window):
