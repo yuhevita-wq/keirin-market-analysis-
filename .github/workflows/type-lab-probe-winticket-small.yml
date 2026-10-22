@@ -1,4 +1,4 @@
-name: Type Lab probe historical WINTICKET fields (nine pages only)
+name: Type Lab probe historical WINTICKET fields (sixteen pages only)
 on:
   pull_request:
     paths:
@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  nine-archive-pages-only:
+  sixteen-archive-pages-only:
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:
@@ -30,7 +30,7 @@ jobs:
           set -euo pipefail
           python -m py_compile research/type_lab_features/probe_winticket_2023_2024_small.py
           python research/type_lab_features/probe_winticket_2023_2024_small.py --selftest
-      - name: Visit exactly nine confirmed 2023-2024 historical racecards
+      - name: Visit exactly sixteen confirmed 2023-2024 historical racecards
         run: |
           set -o pipefail
           python -u research/type_lab_features/probe_winticket_2023_2024_small.py --output probe-output/
@@ -38,7 +38,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: type-lab-winticket-historical-nine-case-audit
+          name: type-lab-winticket-historical-sixteen-case-audit
           path: probe-output/historical_winticket_probe_report.json
           if-no-files-found: warn
           retention-days: 30
