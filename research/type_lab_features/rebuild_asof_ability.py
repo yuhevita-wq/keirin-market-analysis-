@@ -104,6 +104,7 @@ def read_full(incoming,key,counts):
     records=[];seen=set()
     ties=collections.Counter()
     identity_profiles=collections.Counter()
+    age_consistency=collections.defaultdict(list)
     for year in YEARS:
         root=incoming/f"type-lab-134336-full-market-rider-join-{year}"
         name=root/f"full_seven_market_with_riders_{year}.jsonl.gz.cms"
@@ -145,6 +146,9 @@ def read_full(incoming,key,counts):
                 keyplayer=stable_player_id(profile,attrs)
                 if keyplayer and keyplayer.startswith("surrogate:"):
                     counts["individual_rider_rows_using_surrogate"]+=1
+                    age=str(attrs.get("age") or "").strip()
+                    if age.isascii() and age.isdigit() and 17<=int(age)<=90:
+                        age_consistency[keyplayer].append((when,int(age)))
                 if keyplayer:counts["individual_rider_rows_with_stable_id"]+=1
                 else:counts["individual_rider_rows_without_stable_id"]+=1
                 if (not isinstance(car,int) or not keyplayer or keyplayer in ids
@@ -194,6 +198,21 @@ def read_full(incoming,key,counts):
     if len(seen)!=134336:raise RuntimeError("FULL_SEVEN_MARKET_UNIVERSE_NOT_LOADED")
     if not records:
         raise RuntimeError("ZERO_ABILITIES_AFTER_SURROGATE_ID_MATCH")
+    bad=set()
+    for person,observed in age_consistency.items():
+        if len(observed)<2:continue
+        days=[x[0] for x in observed]
+        ages=[x[1] for x in observed]
+        if max(ages)-min(ages)>(max(days)-min(days)).days/365.25+2.0:
+            bad.add(person)
+    counts["surrogate_ids_with_implausible_age_span"]=len(bad)
+    if bad:
+        retained=[]
+        for e in records:
+            if any(p in bad for p in e["p"].values()):
+                counts["races_quarantined_for_identity_age_conflict"]+=1
+            else: retained.append(e)
+        records=retained
     if not records:
         raise RuntimeError("NO_STABLE_ID_COMPLETE_ROSTER: refusing false-green 0-record study")
     return records
