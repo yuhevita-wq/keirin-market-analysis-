@@ -112,6 +112,9 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Install dependencies of original seven-market completeness parser
+        run: python -m pip install --disable-pip-version-check requests beautifulsoup4
+
       - name: Python parser import preflight without opening any secret
         run: |
           python -m py_compile research/type_lab_full_archive/secure_connect.py
