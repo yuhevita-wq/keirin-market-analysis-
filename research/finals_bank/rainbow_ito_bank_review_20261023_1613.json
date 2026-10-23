@@ -1,0 +1,258 @@
+{
+  "status": "candidate_historical_bank_verified_for_exact_source_event",
+  "target": {
+    "day": "2023-12-05",
+    "venue_code": "37",
+    "race_no": 9,
+    "category": "A12"
+  },
+  "bank_record": {
+    "bank_version_id": "37-ito20231202-reviewed",
+    "track": "伊東競輪",
+    "venue_code": "37",
+    "valid_from": "2023-12-02",
+    "valid_until_exclusive": "2023-12-06",
+    "geometry": {
+      "circumference_m": 333,
+      "minashi_straight_m": 46.6,
+      "home_width_m": 11,
+      "back_width_m": 9.3,
+      "center_width_m": 7.8,
+      "home_cant_dms": [
+        3,
+        26,
+        1
+      ],
+      "center_cant_dms": [
+        34,
+        41,
+        9
+      ]
+    },
+    "sources": [
+      {
+        "source_url": "https://www.itokeirin.com/race/pdf_20231202.pdf?20231117",
+        "raw_file": "bank_sources_0313/20231202.pdf",
+        "sha256": "d7db8acefa08e48c2f33e438d89cb083930be119d8f79f9070a03915941606bf",
+        "bytes": 5823194,
+        "location": "Page2orangebody explicitlyReiwa5Dec2-5/Ito73rdTsubakiGIII; coverDec2Sat3Sun4Mon5Tue/phone37/Ito. Geometry own5500pxpage2 proportionalx.31-.43y.70-.80. Yearbody cropx.70-.79y.12-.40. ReviewSHA 53d50965942388957fe630ccd91748767458ebe312ed4be51f12b956bb81f626"
+      }
+    ],
+    "review_status": "verified_within_source_event",
+    "validity_basis": "Only explicitly reviewed source event. GIII explicit Reiwa5 event body is manually reviewed; Jan2024 header independently extracted; all weekdays calculated. No period interpolation. Printed333m retained.",
+    "visual_review": "Manual visual transcription of all7 labelled geometry values and explicit event year from this originalPDF; not automatic geometryparser/OCR. Bothpages visually inspected. Page2orangebody explicitlyReiwa5Dec2-5/Ito73rdTsubakiGIII; coverDec2Sat3Sun4Mon5Tue/phone37/Ito. Geometry own5500pxpage2 proportionalx.31-.43y.70-.80. Yearbody cropx.70-.79y.12-.40."
+  },
+  "manual_source_review": {
+    "method": "Manual visual transcription of all7 labelled geometry values and explicit event year from this originalPDF; not automatic geometryparser/OCR. Bothpages visually inspected.",
+    "reviewed_records_sha256": "53d50965942388957fe630ccd91748767458ebe312ed4be51f12b956bb81f626",
+    "source_pdf_sha256": "d7db8acefa08e48c2f33e438d89cb083930be119d8f79f9070a03915941606bf",
+    "source_pdf_bytes": 5823194,
+    "source_page": 2,
+    "geometry_manual_values_rechecked_from_original_PDF_media_box": true,
+    "event_year_dates_manual_reading": "令和5年12月2日〜5日",
+    "geometry_values_not_automatic_OCR": true,
+    "render_note": "Original PDF page2 media box used, not default crop box. First default-cropbox proportional crops were incomplete and rejected; media-box rerender showed full geometry and explicit Reiwa5 date, both visually checked. No PDF bytes changed."
+  },
+  "source_scope": "Only this actual event/day/venue and actual 9R; no wider period or other venue",
+  "canonical_DB_changed": false,
+  "existing_verified_bank_count_increment": 0,
+  "candidate_is_complete_SQL_row": false,
+  "all_finals_complete": false,
+  "sources": {
+    "OP_actual_target": {
+      "key": "202312053709",
+      "part": "card",
+      "url": "https://www.oddspark.com/keirin/RaceList.do?joCode=37&kaisaiBi=20231205&raceNo=9",
+      "final_url": "https://www.oddspark.com/keirin/RaceList.do?joCode=37&kaisaiBi=20231205&raceNo=9",
+      "status": 200,
+      "headers": {
+        "server": "envoy",
+        "content-type": "text/html;charset=UTF-8",
+        "content-language": "ja-JP",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-xss-protection": "1; mode=block",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff",
+        "x-akamai-transformed": "0 - 0 -",
+        "vary": "user-agent,Accept-Encoding",
+        "expires": "Thu, 22 Oct 2026 23:33:15 GMT",
+        "cache-control": "max-age=0, no-cache, no-store",
+        "pragma": "no-cache",
+        "date": "Thu, 22 Oct 2026 23:33:15 GMT",
+        "content-length": "37028",
+        "set-cookie": "Apache=9adb436a.65e7649abd1e0; path=/",
+        "x-envoy-upstream-service-time": "3949",
+        "connection": "close"
+      },
+      "bytes": 37028,
+      "sha256": "a9b96a8d19cab64f0108f29bbbbaaa1a57d33287b62ee059e7b4fe813120ca45",
+      "retrieved_at": "2026-10-22T23:33:15.793273+00:00",
+      "recovery": "One recovery of raw lost before previous durable save; not new completed race"
+    },
+    "NK_actual_target": {
+      "key": "202312053709",
+      "part": "result",
+      "url": "https://keirin.netkeiba.com/race/result/?race_id=202312053709",
+      "final_url": "https://keirin.netkeiba.com/race/result/?race_id=202312053709",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html; charset=",
+        "date": "Thu, 22 Oct 2026 23:33:10 GMT",
+        "access-control-allow-origin": "https://keirin.netkeiba.com",
+        "access-control-allow-credentials": "true",
+        "server": "envoy",
+        "set-cookie": "netkeiba_pc_sp=1; expires=Sun, 17 Oct 2027 23:33:10 GMT; Max-Age=31104000; path=/; domain=.netkeiba.com; secure; SameSite=none",
+        "x-cache": "Miss from cloudfront",
+        "via": "1.1 f449f4ea60d8c122ba96a995290f8ec0.cloudfront.net (CloudFront)",
+        "x-amz-cf-pop": "ORD58-P4",
+        "x-amz-cf-id": "ktUE8540a5K4pralj4EPhsodvN39EMV8kUYOmBA7pYowtDcfsun6sA==",
+        "x-envoy-upstream-service-time": "289",
+        "connection": "close",
+        "transfer-encoding": "chunked"
+      },
+      "bytes": 152045,
+      "sha256": "ef73664556c5310a8e77778c142ed213de739cb1df918dec655b0ac204f286a7",
+      "retrieved_at": "2026-10-22T23:33:10.941397+00:00",
+      "recovery": "One recovery of raw lost before previous durable save; not new completed race"
+    },
+    "official_held_report": {
+      "url": "https://keirin.jp/pc/dfw/portal/guest/report/GIII/37itou/2023/report_4.html",
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "content-length": "13407",
+        "date": "Thu, 22 Oct 2026 18:29:31 GMT",
+        "expires": "Thu, 22 Oct 2026 18:59:31 GMT",
+        "server": "envoy",
+        "last-modified": "Wed, 06 Dec 2023 02:03:32 GMT",
+        "etag": "\"345f-60bcdc20b8500\"",
+        "accept-ranges": "bytes",
+        "cache-control": "max-age=1800",
+        "x-cache": "Miss from cloudfront",
+        "via": "1.1 2f6c934d1fb288c449c938700e848b20.cloudfront.net (CloudFront)",
+        "x-amz-cf-pop": "LAX54-P12",
+        "x-amz-cf-id": "vFfOMC33KUqiFFPe0kSZv0Yfhnyj8FTJN513hqnIzTBC3iYegqE7xA==",
+        "x-envoy-upstream-service-time": "491",
+        "connection": "close"
+      },
+      "bytes": 13407,
+      "sha256": "f2d06c167189d64fb064eb6f9aa6bbf03d427e979dead65b0e7321df287dbd6d",
+      "status": "fetched"
+    },
+    "Chariloto_card": {
+      "path": "chariloto_api_card.html",
+      "sha256": "54cb847e852154362823a5610861f3a0270e1a74395be5d80014ce7f095d572c",
+      "bytes": 19113
+    }
+  },
+  "mutations": [
+    {
+      "mutation": "day_outside",
+      "rejected": true
+    },
+    {
+      "mutation": "wrong_venue",
+      "rejected": true
+    },
+    {
+      "mutation": "wrong_R",
+      "rejected": true
+    },
+    {
+      "mutation": "missing_geometry",
+      "rejected": true
+    },
+    {
+      "mutation": "changed_geometry",
+      "rejected": true
+    },
+    {
+      "mutation": "PDF_byte_change",
+      "rejected": true
+    },
+    {
+      "mutation": "wrong_source_year",
+      "rejected": true
+    }
+  ],
+  "new_raw_fetches": 0,
+  "other_13_candidate_banks_unresolved": [
+    {
+      "day": "2023-06-06",
+      "venue_code": "44",
+      "race_no": 9,
+      "status": "unresolved_no_matching_dated_catalog_evidence"
+    },
+    {
+      "day": "2023-06-27",
+      "venue_code": "83",
+      "race_no": 9,
+      "status": "unresolved_no_matching_dated_catalog_evidence"
+    },
+    {
+      "day": "2023-12-17",
+      "venue_code": "85",
+      "race_no": 9,
+      "status": "unresolved_no_matching_dated_catalog_evidence"
+    },
+    {
+      "day": "2024-06-04",
+      "venue_code": "22",
+      "race_no": 9,
+      "status": "unresolved_no_matching_dated_catalog_evidence"
+    },
+    {
+      "day": "2024-06-30",
+      "venue_code": "23",
+      "race_no": 9,
+      "status": "unresolved_no_matching_dated_catalog_evidence"
+    },
+    {
+      "day": "2024-12-22",
+      "venue_code": "85",
+      "race_no": 9,
+      "status": "unresolved_no_matching_dated_catalog_evidence"
+    },
+    {
+      "day": "2024-12-15",
+      "venue_code": "61",
+      "race_no": 9,
+      "status": "unresolved_no_matching_dated_catalog_evidence"
+    },
+    {
+      "day": "2025-06-08",
+      "venue_code": "86",
+      "race_no": 9,
+      "status": "unresolved_no_matching_dated_catalog_evidence"
+    },
+    {
+      "day": "2025-06-03",
+      "venue_code": "23",
+      "race_no": 9,
+      "status": "unresolved_no_matching_dated_catalog_evidence"
+    },
+    {
+      "day": "2025-12-23",
+      "venue_code": "62",
+      "race_no": 11,
+      "status": "unresolved_no_matching_dated_catalog_evidence"
+    },
+    {
+      "day": "2025-12-14",
+      "venue_code": "37",
+      "race_no": 9,
+      "status": "unresolved_no_matching_dated_catalog_evidence"
+    },
+    {
+      "day": "2026-06-07",
+      "venue_code": "83",
+      "race_no": 9,
+      "status": "unresolved_no_matching_dated_catalog_evidence"
+    },
+    {
+      "day": "2026-06-30",
+      "venue_code": "23",
+      "race_no": 9,
+      "status": "unresolved_no_matching_dated_catalog_evidence"
+    }
+  ]
+}
