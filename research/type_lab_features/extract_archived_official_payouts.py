@@ -73,6 +73,6 @@ def run(out):
            "Do not fill absent payout values with odds."],
   "encrypted_sha256":hashlib.sha256((out/"official_payouts_2023_2025.jsonl.gz.cms").read_bytes()).hexdigest()}
  (out/"official_payout_availability.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n")
- print("TYPE_LAB_OFFICIAL_PAYOUT_CENSUS",json.dumps(report,ensure_ascii=False)[:7000],flush=True)
+ print("TYPE_LAB_OFFICIAL_PAYOUTS_CENSUS",json.dumps(report,ensure_ascii=False)[:7000],flush=True)
 if __name__=="__main__":
  run(Path(sys.argv[1] if len(sys.argv)>1 else "official-payout-audit"))
