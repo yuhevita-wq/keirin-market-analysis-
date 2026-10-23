@@ -1,6 +1,10 @@
 name: Type Lab historical rider schema inspection
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - "research/type_lab_features/extract_official_all_markets_2023_2025.py"
+      - ".github/workflows/type-lab-feature-audit.yml"
 
 permissions:
   contents: read
