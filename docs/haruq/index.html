@@ -227,7 +227,7 @@ function renderList(){
 }
 async function openRace(id){
  if(busy)return;busy=true;visible("固定AIの結果を取得しています","GitHubに保存されたレース別JSONを照合しています。",true);
- try{const data=await getJson(ROOT+id+".json");if(data.race_id!==id)throw new Error("レースID不一致");render(data)}
+ try{const data=await getJson(ROOT+id+".json");if(data.race_id!==id)throw new Error("レースID不一致");if(data.invalidation?.invalid){current=null;visible("ガールズは購入対象外","このレースには過去の誤判定があり、買い目と購入額は無効化しました。"+(data.invalidation.reason||""),false);return}render(data)}
  catch(err){current=null;const missing=String(err.message).includes("404");visible(missing?"このレースの予測は未生成です":"予測データを表示できません",missing?"ハルキューがまだこのレースのJSONを保存していません。GitHubでレースIDを指定して予測を実行してください。":"取得や照合に失敗しました："+err.message,false);e("raceInput").value=id}
  finally{busy=false}
 }
