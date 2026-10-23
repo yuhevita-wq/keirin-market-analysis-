@@ -1,0 +1,55 @@
+{
+  "all_finals_complete": false,
+  "archive": {
+    "bytes": 9312,
+    "member": "payout_fragments.json",
+    "member_bytes": 116267,
+    "member_sha256": "b468330e89e778acc6cd481dcc3fab654d3a1bc56fcb8a5e202491439c4ccd33",
+    "path": "data/scope_review_0636/payout_fragments.tar.xz",
+    "sha256": "f0729f417e0410bc0b26e1ad2d772b83a5bab3ee790c6a24703909744e6d28eb"
+  },
+  "canonical_SQL_inserts": 0,
+  "contract": {
+    "compatibility_scope": "payload.payouts field names and observed value types only; full payload SQL adapter and completion audit remain pending",
+    "observed_payout_fields": [
+      "bet_code",
+      "combination",
+      "payout_yen",
+      "popularity",
+      "raw_text",
+      "status",
+      "ticket_type"
+    ],
+    "pipeline_source_sha256": "122cd6a9b06821618e539e84b2fc98a031f6df065f2332c9a88e8b6b969b4d81",
+    "races_SQL_schema": "CREATE TABLE races(race_id TEXT PRIMARY KEY,day TEXT,url TEXT,label TEXT,grade TEXT,category TEXT,status TEXT,payload TEXT,error TEXT,updated TEXT)",
+    "sample_legacy_race_id": "6220221230030006",
+    "sample_payload_sha256": "d5cb4586a3b35311bad708bafdb5b6df522438d64c60395ce5174924c0bf70cb",
+    "sample_payload_top_level_fields": [
+      "captured",
+      "category",
+      "discovered_day",
+      "entries",
+      "expected_label",
+      "grade",
+      "line",
+      "odds_header",
+      "payouts",
+      "race",
+      "race_id",
+      "racecard_tables",
+      "results",
+      "trifecta",
+      "trio"
+    ]
+  },
+  "events": 14,
+  "full_payload_SQL_adapter_verified": false,
+  "independently_verified_fields": [
+    "combination",
+    "payout_yen"
+  ],
+  "new_completed_races": 0,
+  "payout_rows": 126,
+  "popularity_single_source_retained": true,
+  "status": "candidate_payload_payouts_fragment_only"
+}
