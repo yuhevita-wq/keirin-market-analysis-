@@ -1,0 +1,213 @@
+{
+  "SQL_rows_inserted": 0,
+  "all_finals_complete": false,
+  "candidate_bank_not_added_existing_count": true,
+  "canonical_DB_changed": false,
+  "code_dependencies": {
+    "pipeline.py": "122cd6a9b06821618e539e84b2fc98a031f6df065f2332c9a88e8b6b969b4d81",
+    "recovery/apply_historical_bank.py": "ff7b072a07e05b82a6631c2998bfa8236c1682a8211ecf618c31a2d3f79db96a",
+    "recovery/audit_historical_bank.py": "763b582a80fe88ff82a4c0278dbd64836d39b098f8504ca521ff0c9f642ce9d6"
+  },
+  "confirmed_KDreams_targets": 0,
+  "events": [
+    {
+      "canonical_key": "keirin:2023-06-06:44:09",
+      "confirmed_kdreams_race_id": null,
+      "day": "2023-06-06",
+      "provider": "local_composite",
+      "race_no": 9,
+      "venue_code": "44"
+    },
+    {
+      "canonical_key": "keirin:2023-06-27:83:09",
+      "confirmed_kdreams_race_id": null,
+      "day": "2023-06-27",
+      "provider": "local_composite",
+      "race_no": 9,
+      "venue_code": "83"
+    },
+    {
+      "canonical_key": "keirin:2023-12-05:37:09",
+      "confirmed_kdreams_race_id": null,
+      "day": "2023-12-05",
+      "provider": "local_composite",
+      "race_no": 9,
+      "venue_code": "37"
+    },
+    {
+      "canonical_key": "keirin:2023-12-17:85:09",
+      "confirmed_kdreams_race_id": null,
+      "day": "2023-12-17",
+      "provider": "local_composite",
+      "race_no": 9,
+      "venue_code": "85"
+    },
+    {
+      "canonical_key": "keirin:2024-06-04:22:09",
+      "confirmed_kdreams_race_id": null,
+      "day": "2024-06-04",
+      "provider": "local_composite",
+      "race_no": 9,
+      "venue_code": "22"
+    },
+    {
+      "canonical_key": "keirin:2024-06-30:23:09",
+      "confirmed_kdreams_race_id": null,
+      "day": "2024-06-30",
+      "provider": "local_composite",
+      "race_no": 9,
+      "venue_code": "23"
+    },
+    {
+      "canonical_key": "keirin:2024-12-22:85:09",
+      "confirmed_kdreams_race_id": null,
+      "day": "2024-12-22",
+      "provider": "local_composite",
+      "race_no": 9,
+      "venue_code": "85"
+    },
+    {
+      "canonical_key": "keirin:2024-12-15:61:09",
+      "confirmed_kdreams_race_id": null,
+      "day": "2024-12-15",
+      "provider": "local_composite",
+      "race_no": 9,
+      "venue_code": "61"
+    },
+    {
+      "canonical_key": "keirin:2025-06-08:86:09",
+      "confirmed_kdreams_race_id": null,
+      "day": "2025-06-08",
+      "provider": "local_composite",
+      "race_no": 9,
+      "venue_code": "86"
+    },
+    {
+      "canonical_key": "keirin:2025-06-03:23:09",
+      "confirmed_kdreams_race_id": null,
+      "day": "2025-06-03",
+      "provider": "local_composite",
+      "race_no": 9,
+      "venue_code": "23"
+    },
+    {
+      "canonical_key": "keirin:2025-12-23:62:11",
+      "confirmed_kdreams_race_id": null,
+      "day": "2025-12-23",
+      "provider": "local_composite",
+      "race_no": 11,
+      "venue_code": "62"
+    },
+    {
+      "canonical_key": "keirin:2025-12-14:37:09",
+      "confirmed_kdreams_race_id": null,
+      "day": "2025-12-14",
+      "provider": "local_composite",
+      "race_no": 9,
+      "venue_code": "37"
+    },
+    {
+      "canonical_key": "keirin:2026-06-07:83:09",
+      "confirmed_kdreams_race_id": null,
+      "day": "2026-06-07",
+      "provider": "local_composite",
+      "race_no": 9,
+      "venue_code": "83"
+    },
+    {
+      "canonical_key": "keirin:2026-06-30:23:09",
+      "confirmed_kdreams_race_id": null,
+      "day": "2026-06-30",
+      "provider": "local_composite",
+      "race_no": 9,
+      "venue_code": "23"
+    }
+  ],
+  "excluded_women_preserved": 1,
+  "explicit_tuple_selector_finds_exact_Ito_candidate": "37-ito20231202-reviewed",
+  "integration_blockers": [
+    "pipeline.collect_one uses int(rid[-4:]) and provider-specific HTML parsers",
+    "apply_historical_bank.select and audit_historical_bank use rid[:2]",
+    "audit_historical_bank and older builders hardcode 5354/5353; do not relax without independent scope manifest",
+    "Complete race payload adapter, raw provenance, readiness gate and isolated insertion audit still pending",
+    "Legacy identity anomalies must be resolved from actual source labels; do not strip 100 from raw race_no by assumption",
+    "13 candidate bank sources,17 empty planned histories, broader final-equivalent scope unresolved"
+  ],
+  "legacy_bank_prefix_misses_verified_Ito_candidate": true,
+  "legacy_bank_selection_exact_parity_on_accepted_identities": {
+    "unresolved": 5118,
+    "verified": 230
+  },
+  "legacy_collector_suffix_parse_rejected_local_keys": [
+    "keirin:2023-06-06:44:09",
+    "keirin:2023-06-27:83:09",
+    "keirin:2023-12-05:37:09",
+    "keirin:2023-12-17:85:09",
+    "keirin:2024-06-04:22:09",
+    "keirin:2024-06-30:23:09",
+    "keirin:2024-12-22:85:09",
+    "keirin:2024-12-15:61:09",
+    "keirin:2025-06-08:86:09",
+    "keirin:2025-06-03:23:09",
+    "keirin:2025-12-23:62:11",
+    "keirin:2025-12-14:37:09",
+    "keirin:2026-06-07:83:09",
+    "keirin:2026-06-30:23:09"
+  ],
+  "legacy_identity_anomalies": [
+    {
+      "day": "2023-01-26",
+      "exception_type": "AssertionError",
+      "race_id": "8620230123030112",
+      "raw_race_no": "112",
+      "status": "unresolved_legacy_identity_adapter",
+      "url": "https://keirin.kdreams.jp/beppu/racedetail/8620230123030112/?pageType=result"
+    },
+    {
+      "day": "2023-01-26",
+      "exception_type": "AssertionError",
+      "race_id": "5520230123030105",
+      "raw_race_no": 105,
+      "status": "unresolved_legacy_identity_adapter",
+      "url": "https://keirin.kdreams.jp/wakayama/racedetail/5520230123030105/?pageType=odds"
+    },
+    {
+      "day": "2026-06-03",
+      "exception_type": "AssertionError",
+      "race_id": "7420260531030107",
+      "raw_race_no": 107,
+      "status": "unresolved_legacy_identity_adapter",
+      "url": "https://keirin.kdreams.jp/kochi/racedetail/7420260531030107/?pageType=odds"
+    },
+    {
+      "day": "2023-01-26",
+      "exception_type": "AssertionError",
+      "race_id": "8620230123030111",
+      "raw_race_no": "111",
+      "status": "unresolved_legacy_identity_adapter",
+      "url": "https://keirin.kdreams.jp/beppu/racedetail/8620230123030111/?pageType=result"
+    },
+    {
+      "day": "2023-01-26",
+      "exception_type": "AssertionError",
+      "race_id": "5520230123030111",
+      "raw_race_no": "111",
+      "status": "unresolved_legacy_identity_adapter",
+      "url": "https://keirin.kdreams.jp/wakayama/racedetail/5520230123030111/?pageType=result"
+    }
+  ],
+  "legacy_male_identity_adapter_accepted": 5348,
+  "legacy_rows_scanned": 5354,
+  "local_identity_mappings_checked": 14,
+  "mutations_rejected": [
+    "local_composite_key",
+    "local_key_namespace",
+    "confirmed_kdreams_race_id",
+    "tuple.day",
+    "tuple.venue_code",
+    "tuple.race_no"
+  ],
+  "network_requests": 0,
+  "source_key_review_sha256": "755a2c57cbfb5b4c4e66a326d089ba81005b7af780e36d457072d06e3865673a",
+  "status": "offline_identity_adapter_prototype_verified_not_integrated"
+}
