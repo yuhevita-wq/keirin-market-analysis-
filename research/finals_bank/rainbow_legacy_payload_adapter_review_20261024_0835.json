@@ -1,0 +1,791 @@
+{
+  "all_finals_complete": false,
+  "archive": {
+    "bytes": 189464,
+    "member": "legacy_payload_drafts.json",
+    "member_bytes": 3154217,
+    "member_sha256": "ff23321971f27f6608b572535ad1055dac21f5d07fd9d53c7efc3aefa94bc984",
+    "path": "data/scope_review_0835/legacy_payload_drafts.tar.xz",
+    "sha256": "28ceabb5cafc8035193c22813b7a9617aeb1d9b84279db9fa942a23da5da9ab2"
+  },
+  "canonical_SQL_inserts": 0,
+  "complete_payload_insertion_audit": false,
+  "entries": 126,
+  "events": 14,
+  "field_mappings": {
+    "entries": "saved historical core + 0730 verified fields; no current profile import",
+    "identity": "explicit local key + actual observed NK URL; no KD ID assumptions",
+    "line": "published groups -> line id/size/position only; role/provider absent",
+    "markets": "sanrentan -> trifecta / sanrenfuku -> trio; exact Decimal roundtrip float wire type",
+    "odds_header": "Char explicit total_votes single source; odds_as_of absent; NK official_dt raw separately retained",
+    "results": "NK raw display; numeric finish only when explicit decimal; Char raw retained"
+  },
+  "full_payload_SQL_adapter_verified": false,
+  "mapped_line_roles": 0,
+  "new_completed_races": 0,
+  "observed_contract": {
+    "entry_rows": 37883,
+    "excluded": [
+      {
+        "race_id": "1120240912030011",
+        "status": "excluded"
+      }
+    ],
+    "male_rows": 5353,
+    "observed_types": {
+      "/entries": {
+        "list": 5353
+      },
+      "/entries/*": {
+        "dict": 37883
+      },
+      "/entries/*/age": {
+        "str": 37883
+      },
+      "/entries/*/b_count": {
+        "str": 37883
+      },
+      "/entries/*/captured_at_utc": {
+        "str": 37883
+      },
+      "/entries/*/car_no": {
+        "int": 37883
+      },
+      "/entries/*/class": {
+        "str": 37883
+      },
+      "/entries/*/class_scope": {
+        "str": 27727
+      },
+      "/entries/*/deadline": {
+        "str": 37883
+      },
+      "/entries/*/evaluation": {
+        "str": 37883
+      },
+      "/entries/*/first_count": {
+        "str": 37883
+      },
+      "/entries/*/gear": {
+        "str": 37883
+      },
+      "/entries/*/line_id": {
+        "str": 34181
+      },
+      "/entries/*/line_position": {
+        "str": 34181
+      },
+      "/entries/*/line_provider": {
+        "str": 34181
+      },
+      "/entries/*/line_role": {
+        "str": 34181
+      },
+      "/entries/*/line_size": {
+        "str": 34181
+      },
+      "/entries/*/line_source": {
+        "str": 34181
+      },
+      "/entries/*/line_status": {
+        "str": 34181
+      },
+      "/entries/*/makuri_count": {
+        "str": 37883
+      },
+      "/entries/*/mark_count": {
+        "str": 37883
+      },
+      "/entries/*/meeting_grade": {
+        "str": 34636
+      },
+      "/entries/*/nige_count": {
+        "str": 37883
+      },
+      "/entries/*/outside_count": {
+        "str": 37883
+      },
+      "/entries/*/player_name": {
+        "str": 37883
+      },
+      "/entries/*/player_profile": {
+        "str": 37883
+      },
+      "/entries/*/predicted_line_formation": {
+        "str": 34181
+      },
+      "/entries/*/prediction_mark": {
+        "str": 37883
+      },
+      "/entries/*/prefecture": {
+        "str": 37883
+      },
+      "/entries/*/race_date": {
+        "str": 37883
+      },
+      "/entries/*/race_id": {
+        "str": 37883
+      },
+      "/entries/*/race_no": {
+        "int": 14405,
+        "str": 23478
+      },
+      "/entries/*/race_type": {
+        "str": 37883
+      },
+      "/entries/*/raw_row_json": {
+        "str": 37883
+      },
+      "/entries/*/rider_id_status": {
+        "str": 37883
+      },
+      "/entries/*/rider_identity_evidence": {
+        "dict": 37883
+      },
+      "/entries/*/rider_identity_evidence/local_sentinels": {
+        "dict": 13
+      },
+      "/entries/*/rider_identity_evidence/local_sentinels/prefecture": {
+        "str": 13
+      },
+      "/entries/*/rider_identity_evidence/local_sentinels/term": {
+        "str": 13
+      },
+      "/entries/*/rider_identity_evidence/matching_fields": {
+        "list": 37883
+      },
+      "/entries/*/rider_identity_evidence/matching_fields/*": {
+        "str": 113675
+      },
+      "/entries/*/rider_identity_evidence/official_sources": {
+        "list": 37883
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*": {
+        "dict": 89559
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/birth_date": {
+        "str": 13
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/class": {
+        "str": 13
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/country": {
+        "str": 13
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/full_name": {
+        "str": 13
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/gender": {
+        "str": 2311
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/name": {
+        "str": 89546
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/note": {
+        "str": 76534
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/official_term": {
+        "NoneType": 13
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/prefecture": {
+        "str": 89546
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/prefecture_source_line": {
+        "int": 2311
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/profile_source_line": {
+        "int": 13
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/profile_url": {
+        "str": 13
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/raw_sha256": {
+        "str": 70270
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/registered_on": {
+        "str": 2324
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/registration_notice_line": {
+        "int": 5881
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/registration_notice_url": {
+        "str": 5881
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/registration_number": {
+        "str": 89559
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/sex": {
+        "str": 13
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/short_name": {
+        "str": 13
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/source_kind": {
+        "str": 89546
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/source_line": {
+        "NoneType": 2311,
+        "int": 87248
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/source_url": {
+        "str": 89559
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/term": {
+        "str": 89546
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/term_evidence": {
+        "dict": 2,
+        "list": 354
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/term_evidence/*": {
+        "dict": 824
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/term_evidence/*/name": {
+        "str": 824
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/term_evidence/*/prefecture": {
+        "str": 22
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/term_evidence/*/registration_number": {
+        "str": 824
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/term_evidence/*/source_line": {
+        "int": 824
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/term_evidence/*/source_url": {
+        "str": 824
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/term_evidence/*/term": {
+        "str": 824
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/term_evidence/source_line": {
+        "int": 2
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/term_evidence/text": {
+        "str": 2
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/transfer": {
+        "dict": 343
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/transfer/effective_date": {
+        "str": 343
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/transfer/name": {
+        "str": 343
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/transfer/new_prefecture": {
+        "str": 343
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/transfer/old_prefecture": {
+        "str": 343
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/transfer/registration_number": {
+        "str": 343
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/transfer/source_line": {
+        "int": 343
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/transfer/source_url": {
+        "str": 343
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/use": {
+        "str": 1603
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/valid_from": {
+        "str": 343
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/valid_until_exclusive": {
+        "str": 343
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/verified_excerpt": {
+        "str": 5881
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/verified_fields": {
+        "list": 70270
+      },
+      "/entries/*/rider_identity_evidence/official_sources/*/verified_fields/*": {
+        "str": 281080
+      },
+      "/entries/*/rider_identity_evidence/use": {
+        "str": 37883
+      },
+      "/entries/*/rider_registration_number": {
+        "str": 37883
+      },
+      "/entries/*/rider_source_id": {
+        "str": 37883
+      },
+      "/entries/*/s_count": {
+        "str": 37883
+      },
+      "/entries/*/sashi_count": {
+        "str": 37883
+      },
+      "/entries/*/score": {
+        "str": 37883
+      },
+      "/entries/*/second_count": {
+        "str": 37883
+      },
+      "/entries/*/source_url": {
+        "str": 37883
+      },
+      "/entries/*/start_time": {
+        "str": 37883
+      },
+      "/entries/*/style": {
+        "str": 37883
+      },
+      "/entries/*/term": {
+        "str": 37883
+      },
+      "/entries/*/third_count": {
+        "str": 37883
+      },
+      "/entries/*/top2_rate": {
+        "str": 37883
+      },
+      "/entries/*/top3_rate": {
+        "str": 37883
+      },
+      "/entries/*/track": {
+        "str": 37883
+      },
+      "/entries/*/win_rate": {
+        "str": 37883
+      },
+      "/line": {
+        "dict": 5353
+      },
+      "/line/formation": {
+        "str": 5353
+      },
+      "/line/groups": {
+        "list": 5353
+      },
+      "/line/groups/*": {
+        "list": 18386
+      },
+      "/line/groups/*/*": {
+        "dict": 37882
+      },
+      "/line/groups/*/*/car_no": {
+        "int": 37882
+      },
+      "/line/groups/*/*/role": {
+        "str": 14404
+      },
+      "/line/provider": {
+        "NoneType": 5,
+        "str": 1994
+      },
+      "/line/raw_sha256": {
+        "str": 1
+      },
+      "/line/riders": {
+        "dict": 5353
+      },
+      "/line/riders/1": {
+        "dict": 5353
+      },
+      "/line/riders/1/line_id": {
+        "int": 5353
+      },
+      "/line/riders/1/line_position": {
+        "int": 5353
+      },
+      "/line/riders/1/line_role": {
+        "str": 1999
+      },
+      "/line/riders/1/line_size": {
+        "int": 5353
+      },
+      "/line/riders/2": {
+        "dict": 5352
+      },
+      "/line/riders/2/line_id": {
+        "int": 5352
+      },
+      "/line/riders/2/line_position": {
+        "int": 5352
+      },
+      "/line/riders/2/line_role": {
+        "str": 1998
+      },
+      "/line/riders/2/line_size": {
+        "int": 5352
+      },
+      "/line/riders/3": {
+        "dict": 5353
+      },
+      "/line/riders/3/line_id": {
+        "int": 5353
+      },
+      "/line/riders/3/line_position": {
+        "int": 5353
+      },
+      "/line/riders/3/line_role": {
+        "str": 1999
+      },
+      "/line/riders/3/line_size": {
+        "int": 5353
+      },
+      "/line/riders/4": {
+        "dict": 5353
+      },
+      "/line/riders/4/line_id": {
+        "int": 5353
+      },
+      "/line/riders/4/line_position": {
+        "int": 5353
+      },
+      "/line/riders/4/line_role": {
+        "str": 1999
+      },
+      "/line/riders/4/line_size": {
+        "int": 5353
+      },
+      "/line/riders/5": {
+        "dict": 5353
+      },
+      "/line/riders/5/line_id": {
+        "int": 5353
+      },
+      "/line/riders/5/line_position": {
+        "int": 5353
+      },
+      "/line/riders/5/line_role": {
+        "str": 1999
+      },
+      "/line/riders/5/line_size": {
+        "int": 5353
+      },
+      "/line/riders/6": {
+        "dict": 5353
+      },
+      "/line/riders/6/line_id": {
+        "int": 5353
+      },
+      "/line/riders/6/line_position": {
+        "int": 5353
+      },
+      "/line/riders/6/line_role": {
+        "str": 1999
+      },
+      "/line/riders/6/line_size": {
+        "int": 5353
+      },
+      "/line/riders/7": {
+        "dict": 5353
+      },
+      "/line/riders/7/line_id": {
+        "int": 5353
+      },
+      "/line/riders/7/line_position": {
+        "int": 5353
+      },
+      "/line/riders/7/line_role": {
+        "str": 1999
+      },
+      "/line/riders/7/line_size": {
+        "int": 5353
+      },
+      "/line/riders/8": {
+        "dict": 206
+      },
+      "/line/riders/8/line_id": {
+        "int": 206
+      },
+      "/line/riders/8/line_position": {
+        "int": 206
+      },
+      "/line/riders/8/line_role": {
+        "str": 206
+      },
+      "/line/riders/8/line_size": {
+        "int": 206
+      },
+      "/line/riders/9": {
+        "dict": 206
+      },
+      "/line/riders/9/line_id": {
+        "int": 206
+      },
+      "/line/riders/9/line_position": {
+        "int": 206
+      },
+      "/line/riders/9/line_role": {
+        "str": 206
+      },
+      "/line/riders/9/line_size": {
+        "int": 206
+      },
+      "/line/source_url": {
+        "str": 1
+      },
+      "/line/status": {
+        "str": 5353
+      },
+      "/odds_header": {
+        "dict": 5353
+      },
+      "/odds_header/3連単": {
+        "dict": 5353
+      },
+      "/odds_header/3連単/odds_as_of": {
+        "str": 5353
+      },
+      "/odds_header/3連単/total_votes": {
+        "int": 5353
+      },
+      "/odds_header/3連複": {
+        "dict": 5353
+      },
+      "/odds_header/3連複/odds_as_of": {
+        "str": 5353
+      },
+      "/odds_header/3連複/total_votes": {
+        "int": 5353
+      },
+      "/payouts": {
+        "list": 5353
+      },
+      "/payouts/*": {
+        "dict": 48245
+      },
+      "/payouts/*/bet_code": {
+        "str": 48245
+      },
+      "/payouts/*/captured_at_utc": {
+        "str": 29598
+      },
+      "/payouts/*/combination": {
+        "str": 48245
+      },
+      "/payouts/*/payout_yen": {
+        "int": 14922,
+        "str": 33323
+      },
+      "/payouts/*/popularity": {
+        "int": 14922,
+        "str": 33323
+      },
+      "/payouts/*/race_date": {
+        "str": 29598
+      },
+      "/payouts/*/race_id": {
+        "str": 29598
+      },
+      "/payouts/*/race_no": {
+        "str": 29598
+      },
+      "/payouts/*/race_type": {
+        "str": 29598
+      },
+      "/payouts/*/raw_text": {
+        "str": 48245
+      },
+      "/payouts/*/result_source": {
+        "str": 29598
+      },
+      "/payouts/*/result_source_url": {
+        "str": 29598
+      },
+      "/payouts/*/status": {
+        "str": 48245
+      },
+      "/payouts/*/ticket_type": {
+        "str": 48245
+      },
+      "/payouts/*/track": {
+        "str": 29598
+      },
+      "/race": {
+        "dict": 5353
+      },
+      "/race/captured_at_utc": {
+        "str": 5353
+      },
+      "/race/class_scope": {
+        "str": 3961
+      },
+      "/race/deadline": {
+        "str": 5353
+      },
+      "/race/entry_count": {
+        "int": 1999,
+        "str": 3354
+      },
+      "/race/event_name": {
+        "NoneType": 4,
+        "str": 1995
+      },
+      "/race/line_provider": {
+        "str": 4883
+      },
+      "/race/line_source": {
+        "str": 4883
+      },
+      "/race/line_status": {
+        "str": 4883
+      },
+      "/race/meeting_grade": {
+        "str": 5353
+      },
+      "/race/predicted_line_formation": {
+        "str": 4883
+      },
+      "/race/race_date": {
+        "str": 5353
+      },
+      "/race/race_id": {
+        "str": 5353
+      },
+      "/race/race_no": {
+        "int": 1999,
+        "str": 3354
+      },
+      "/race/race_type": {
+        "str": 5353
+      },
+      "/race/source_url": {
+        "str": 5353
+      },
+      "/race/start_time": {
+        "str": 5353
+      },
+      "/race/track": {
+        "str": 5353
+      },
+      "/results": {
+        "list": 5353
+      },
+      "/results/*": {
+        "dict": 37883
+      },
+      "/results/*/captured_at_utc": {
+        "str": 33698
+      },
+      "/results/*/car_no": {
+        "int": 37883
+      },
+      "/results/*/finish_position": {
+        "int": 37478,
+        "str": 405
+      },
+      "/results/*/finish_text": {
+        "str": 37883
+      },
+      "/results/*/last200": {
+        "str": 37883
+      },
+      "/results/*/margin": {
+        "str": 37883
+      },
+      "/results/*/player_name": {
+        "str": 37883
+      },
+      "/results/*/race_date": {
+        "str": 33698
+      },
+      "/results/*/race_id": {
+        "str": 33698
+      },
+      "/results/*/race_no": {
+        "str": 33698
+      },
+      "/results/*/race_type": {
+        "str": 33698
+      },
+      "/results/*/raw_row_json": {
+        "str": 37883
+      },
+      "/results/*/result_comment": {
+        "str": 37883
+      },
+      "/results/*/result_source": {
+        "str": 33698
+      },
+      "/results/*/result_source_url": {
+        "str": 33698
+      },
+      "/results/*/sb": {
+        "str": 37883
+      },
+      "/results/*/track": {
+        "str": 33698
+      },
+      "/results/*/winning_method": {
+        "str": 37883
+      },
+      "/trifecta": {
+        "list": 5353
+      },
+      "/trifecta/*": {
+        "dict": 1184064
+      },
+      "/trifecta/*/cars": {
+        "list": 1184064
+      },
+      "/trifecta/*/cars/*": {
+        "int": 3552192
+      },
+      "/trifecta/*/odds": {
+        "float": 1184064
+      },
+      "/trifecta/*/status": {
+        "str": 1184064
+      },
+      "/trio": {
+        "list": 5353
+      },
+      "/trio/*": {
+        "dict": 197344
+      },
+      "/trio/*/cars": {
+        "list": 197344
+      },
+      "/trio/*/cars/*": {
+        "int": 592032
+      },
+      "/trio/*/odds": {
+        "float": 197344
+      },
+      "/trio/*/status": {
+        "str": 197344
+      }
+    },
+    "ordered_original_payload_text_digest": "10787fcb77a59068a3777a3509d91c1774ea2b14f3b15e05d637eea2a00a8b58",
+    "races_DDL": "CREATE TABLE races(race_id TEXT PRIMARY KEY,day TEXT,url TEXT,label TEXT,grade TEXT,category TEXT,status TEXT,payload TEXT,error TEXT,updated TEXT)",
+    "result_rows": 37883,
+    "scope": "observed persisted contract; not a universal schema or readiness proof",
+    "top_field_presence": {
+      "bank": 230,
+      "captured": 5353,
+      "category": 5353,
+      "discovered_day": 1999,
+      "entries": 5353,
+      "expected_label": 1999,
+      "grade": 5353,
+      "imported_from": 4948,
+      "line": 5353,
+      "line_scope": 1,
+      "odds_header": 5353,
+      "odds_scope": 7,
+      "payouts": 5353,
+      "pre_withdrawal_odds": 7,
+      "race": 5353,
+      "race_id": 5353,
+      "racecard_tables": 1999,
+      "results": 5353,
+      "trifecta": 5353,
+      "trio": 5353,
+      "withdrawal_source_review": 7
+    }
+  },
+  "odds_selections": 8232,
+  "original_DB_unchanged": true,
+  "results": 126,
+  "status": "legacy_field_mapping_drafts_only",
+  "unmapped_top3_rates": 2
+}
