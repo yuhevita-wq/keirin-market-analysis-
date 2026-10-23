@@ -128,6 +128,7 @@ button,input,a{font:inherit}a{color:var(--blue)}button{cursor:pointer}button:foc
 <section class="hero"><div class="eyebrow">KEIRIN / RACE DECISION BOARD</div><h1>数字が決めた買い目を、<br>そのまま見る。</h1><p>春キューブ3月21日版の固定予測結果だけを表示。独自の選手選択・買い目補正・金額変更は一切行いません。</p>
 <form id="finder" class="search"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="raceInput" aria-label="レースIDまたはnetkeirin URL" type="search" placeholder="レースID・netkeirinのURL（12桁）" autocomplete="off" inputmode="text"><button class="primary" type="submit">レースを表示</button></form>
 <div class="hint"><span>例：202610234812 ／ netkeirin出走表URL</span><a id="requestLink" href="https://github.com/yuhevita-wq/keirin-ai-predictor/actions/workflows/flagship-live-predict.yml" target="_blank" rel="noopener noreferrer">未生成のレースはGitHubで予測を実行 ↗</a></div></section>
+<div class="wrap" style="padding:2px 0 12px"><a class="outline" href="midnight.html?date=2026-10-23">10月23日ミッドナイト全3場／21レース一覧 →</a></div>
 <section class="layout"><div class="primary-content">
 <div id="notice" class="card placeholder" role="status" aria-live="polite"><span class="big">◇</span><h2>レース結果を読み込みます</h2><p>保存された固定AIの予測結果を取得しています。</p></div>
 <div id="result" class="hidden">
@@ -137,21 +138,21 @@ button,input,a{font:inherit}a{color:var(--blue)}button{cursor:pointer}button:foc
 <section class="card ranking"><div class="section-head"><h3>AI予測順位</h3><small>固定モデルの出力</small></div><div id="rankList"></div></section>
 </div></div>
 <aside class="sidebar"><section class="card sideblock"><h3>最近のレース</h3><div id="recentList" class="timeline"><div class="footnote">読み込み中…</div></div></section>
-<section class="card sideblock"><h3>ハルキューの3連単ルール</h3><div class="footnote"><p><strong style="color:var(--gold)">S3-HIGH</strong> — 6点を必ず買う（各500円）</p><p><strong style="color:var(--text)">S3-MED+</strong> — 買わない</p><p><strong style="color:var(--text)">S3-MED</strong> — 6点を検討、未承認</p><p>F2も購入対象。2車単は元の信頼度と4点の基準を使い、F2除外のみ解除しています。</p></div><a class="outline" href="https://github.com/yuhevita-wq/keirin-ai-predictor/releases/tag/haruqube-20260321-flagship-v1" target="_blank" rel="noopener noreferrer">固定モデル原本 ↗</a></section></aside></section>
+<section class="card sideblock"><h3>ハルキューの3連単ルール</h3><div class="footnote"><p><strong style="color:var(--gold)">S3-HIGH</strong> — 6点を必ず買う（各500円）</p><p><strong style="color:var(--text)">S3-MED+</strong> — 買わない</p><p><strong style="color:var(--text)">S3-MED</strong> — 買わない</p><p>F2も購入対象。2車単もHIGHだけを4点×500円で購入し、MED+・MEDは購入しません。</p></div><a class="outline" href="https://github.com/yuhevita-wq/keirin-ai-predictor/releases/tag/haruqube-20260321-flagship-v1" target="_blank" rel="noopener noreferrer">固定モデル原本 ↗</a></section></aside></section>
 </main><footer class="footer"><div>HARUQ · モデルと買い目の再解釈なし</div><div class="credit">これは保存時点の予測記録です。表示だけで購入処理は行いません。時刻・締切・欠場は別途確認してください。</div></footer>
 <script>
 "use strict";
 (function(){
 const ROOT="https://raw.githubusercontent.com/yuhevita-wq/keirin-ai-predictor/production/flagship-haruqube-20260321-live-v1/docs/haruq/results/";
 const EXPECTED_SHA="e70690f4538b77e927a042e7ae2db312f8a0a4f16bf72def37e7ccad3568c193";
-const EXPECTED_POLICIES=new Set(["HARUQ_S3_HIGH_BUY_MEDPLUS_REJECT_MED_REVIEW_V1","HARUQ_S3_HIGH_BUY_MEDPLUS_REJECT_MED_REVIEW_F2_ELIGIBLE_V2"]);
+const EXPECTED_POLICIES=new Set(["HARUQ_S3_HIGH_BUY_MEDPLUS_REJECT_MED_REVIEW_V1","HARUQ_S3_HIGH_BUY_MEDPLUS_REJECT_MED_REVIEW_F2_ELIGIBLE_V2","HARUQ_HIGH_ONLY_ALL_MARKETS_F2_ELIGIBLE_V3"]);
 const e=(id)=>document.getElementById(id);
 let current=null,items=[],busy=false;
 function safe(x){return String(x===undefined||x===null?"":x).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function money(n){return Number(n||0).toLocaleString("ja-JP")+"円"}
 function raceId(s){const m=String(s||"").match(/(?:race_id=|^|[^0-9])(\d{12})(?!\d)/);return m?m[1]:null}
 function statusClass(x){return x==="S3-HIGH"?"buy":x==="S3-MED"?"review":x==="S3-MED+"?"reject":"skip"}
-function statusText(x){return x==="S3-HIGH"?"必ず買う":x==="S3-MED"?"検討":x==="S3-MED+"?"買わない":"見送り"}
+function statusText(x){return x==="S3-HIGH"?"必ず買う":x==="S3-MED"?"買わない":x==="S3-MED+"?"買わない":"見送り"}
 function nowJST(){return Date.now()}
 function finished(v){if(!v.start_time||!/^\d{1,2}:\d{2}$/.test(v.start_time))return v.date<(new Date(Date.now()+9*3600000)).toISOString().slice(0,10);return nowJST()>=new Date(v.date+"T"+v.start_time+":00+09:00").getTime()}
 function visible(msg,sub,loading){e("result").classList.add("hidden");e("notice").classList.remove("hidden");e("notice").innerHTML='<span class="big">'+(loading?'<span class="loader"></span>':'◇')+'</span><h2>'+safe(msg)+'</h2><p>'+safe(sub)+'</p>'}
@@ -170,22 +171,22 @@ function buildTickets(tickets,each,mode){
 }
 function renderTri(v){
  const cat=v.s3_policy.trifecta_tier,accepted=v.bets.trifecta,review=v.med_under_review||{};
- const marked=cat==="S3-HIGH"?"<strong>確定購入</strong>":cat==="S3-MED"?"検討候補のみ":cat==="S3-MED+"?"買わない":"基準未達";
+ const marked=cat==="S3-HIGH"?"<strong>確定購入</strong>":cat==="S3-MED"?(v.s3_policy.trifecta_high_only?"買わない":"検討候補のみ"):cat==="S3-MED+"?"買わない":"基準未達";
  let html='<div class="ticket-head"><div class="ticket-head-left"><span class="ticket-head-icon">3T</span><div><h3>3連単</h3><div class="subtle">TRIFECTA / 6 TICKETS</div></div></div><span class="verdict '+statusClass(cat)+'">'+statusText(cat)+'</span></div>';
  html+='<p class="ticket-caption">'+safe(cat)+' · '+marked+'。3月21日モデルの買い目と運用判定をそのまま表示します。</p>';
  let tickets=accepted.tickets||[],each=accepted.stake_per_ticket_yen,mode="";
- if(cat==="S3-MED"){tickets=review.tickets||[];each=review.stake_per_ticket_yen;mode="review"}
+ if(cat==="S3-MED"&&!v.s3_policy.trifecta_high_only){tickets=review.tickets||[];each=review.stake_per_ticket_yen;mode="review"}
  if(tickets.length){html+=buildTickets(tickets,each,mode)}else if(cat==="S3-MED+"){html+='<div class="empty-note">S3-MED+ は購入しません。元の6点を追加し直すこともありません。</div>'}else{html+='<div class="empty-note">3連単は固定の購入基準に該当しません。</div>'}
- html+='<div class="totals"><div><small>'+safe(cat==="S3-MED"?"購入未承認・検討した場合":"確定購入額")+'</small><strong class="'+(cat==="S3-HIGH"?"gold":"")+'">'+money(cat==="S3-MED"?(review.conditional_total_yen||0):accepted.total_yen)+'</strong></div><span class="tag '+(cat==="S3-HIGH"?"safe":"")+'">'+(cat==="S3-MED"?"購入額には含めない":cat==="S3-HIGH"?"6点確定":"購入0点")+'</span></div>';
+ html+='<div class="totals"><div><small>'+safe(cat==="S3-MED"&&!v.s3_policy.trifecta_high_only?"購入未承認・検討した場合":"確定購入額")+'</small><strong class="'+(cat==="S3-HIGH"?"gold":"")+'">'+money(cat==="S3-MED"&&!v.s3_policy.trifecta_high_only?(review.conditional_total_yen||0):accepted.total_yen)+'</strong></div><span class="tag '+(cat==="S3-HIGH"?"safe":"")+'">'+(cat==="S3-MED"?"購入額には含めない":cat==="S3-HIGH"?"6点確定":"購入0点")+'</span></div>';
  if(cat==="S3-HIGH"&&tickets.length)html+='<div class="tools"><button class="utility" id="copyTri" type="button">3連単6点をコピー</button></div>';
- if(cat==="S3-MED"&&tickets.length)html+='<div class="tools"><button class="utility" id="copyTri" type="button">検討6点をコピー（未購入）</button></div>';
+ if(cat==="S3-MED"&&!v.s3_policy.trifecta_high_only&&tickets.length)html+='<div class="tools"><button class="utility" id="copyTri" type="button">検討6点をコピー（未購入）</button></div>';
  e("triPanel").innerHTML=html;
  if(e("copyTri"))e("copyTri").addEventListener("click",()=>copyText("ハルキュー "+v.velodrome+v.race_number+"R／3連単 "+statusText(cat)+"\n"+tickets.join(" / ")+"\n各"+money(each),e("copyTri")))
 }
 function renderExa(v){
  let x=v.bets.exacta;
  let html='<div class="ticket-head"><div class="ticket-head-left"><span class="ticket-head-icon">2T</span><div><h3>2車単</h3><div class="subtle">EXACTA / 4 TICKETS</div></div></div><span class="verdict '+(x.tickets.length?"review":"skip")+'">'+safe(x.tickets.length?x.label:"見送り")+'</span></div>';
- html+='<p class="ticket-caption">2車単は3月21日版の購入ロジックを変更していません。</p>';
+ html+='<p class="ticket-caption">2車単のHIGH閾値・4点・各500円は固定。新ルールではMED+・MEDを購入しません。</p>';
  html+=(x.tickets.length?buildTickets(x.tickets,x.stake_per_ticket_yen):'<div class="empty-note">信頼度またはレース条件が購入基準に届きません。</div>');
  html+='<div class="totals"><div><small>確定購入額</small><strong>'+money(x.total_yen)+'</strong></div><span class="tag">'+safe(x.tickets.length?x.points+"点":"0点")+'</span></div>';
  if(x.tickets.length)html+='<div class="tools"><button id="copyExa" class="utility" type="button">2車単をコピー</button></div>';
