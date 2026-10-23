@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#09101c">
+<meta name="description" content="ハルキュー — 春キューブ3月21日固定AI。レース別のAI順位、3連単・2車単、金額と判定を見やすく表示します。">
+<title>ハルキュー | 固定AIレースボード</title>
+<style>
+:root{color-scheme:dark;--bg:#080d17;--panel:#111b2b;--panel2:#142237;--edge:#2a3b51;--text:#edf5ff;--muted:#a0afc3;--soft:#73869b;--blue:#7ec9ff;--gold:#f6c875;--gold-dark:#3c2f1b;--green:#93dcc3;--red:#ffb0a5;--radius:20px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(80% 500px at 50% -220px,#24456e55,transparent),var(--bg);font-family:Inter,-apple-system,BlinkMacSystemFont,"Noto Sans JP","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;color:var(--text);line-height:1.55}
+button,input,a{font:inherit}a{color:var(--blue)}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.wrap{width:min(1120px,calc(100% - 36px));margin:0 auto}
+.top{border-bottom:1px solid #293749aa;background:#09111cdd;backdrop-filter:blur(20px);position:sticky;top:0;z-index:12}
+.top-in{height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text)}
+.brandmark{display:grid;place-items:center;width:37px;height:37px;border-radius:12px;background:linear-gradient(145deg,#cfeeff,#67adf0);color:#082037;font-size:23px;font-weight:900}
+.brandname{font-weight:850;font-size:20px;letter-spacing:.08em}
+.brand small{display:block;font-size:10px;color:var(--muted);letter-spacing:.17em;font-weight:600;margin-top:-5px}
+.top-side{font-size:12px;display:flex;align-items:center;gap:9px;color:var(--muted)}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#89d9c1;box-shadow:0 0 0 4px #89d9c124}
+.hero{padding:42px 0 25px}
+.eyebrow{font-size:12px;font-weight:750;letter-spacing:.21em;color:var(--blue)}
+.hero h1{font-size:clamp(27px,5vw,44px);margin:10px 0 8px;letter-spacing:-.035em;line-height:1.32}
+.hero p{color:var(--muted);font-size:14px;margin:0;max-width:700px}
+.search{display:flex;gap:10px;margin-top:23px;background:#0e1827;border:1px solid var(--edge);border-radius:18px;padding:8px;align-items:center}
+.search svg{margin-left:11px;flex:none;color:var(--soft)}
+.search input{border:0;outline:none;background:transparent;color:var(--text);font-size:16px;min-width:0;flex:1;padding:10px 4px}
+.search input::placeholder{color:#778ba3}
+.primary{background:var(--blue);border:0;color:#0b1725;font-weight:800;padding:12px 24px;border-radius:12px;white-space:nowrap}
+.primary:hover{background:#b0e1ff}
+.hint{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--soft)}
+.hint a{color:#b1cae0;text-underline-offset:3px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 278px;gap:21px;margin:20px 0 60px;align-items:start}
+.card{background:linear-gradient(180deg,#111d2e,#101925);border:1px solid var(--edge);border-radius:var(--radius);overflow:hidden}
+.primary-content{display:flex;flex-direction:column;gap:17px;min-width:0}
+.hidden{display:none!important}
+.placeholder{padding:65px 22px;text-align:center;color:var(--muted)}
+.placeholder .big{font-size:42px;display:block;margin-bottom:15px}
+.placeholder h2{color:var(--text);margin:0 0 8px;font-size:21px}
+.placeholder p{font-size:13px;max-width:430px;margin:0 auto;line-height:1.8}
+.placeholder .actions{margin:20px auto 0;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.outline{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 15px;border:1px solid #496078;background:#132239;border-radius:11px;color:#eaf5ff;text-decoration:none;font-weight:700;font-size:13px}
+.outline:hover{background:#1a304b}
+.event{padding:24px 25px 22px}
+.event-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.subtle{font-size:11px;color:var(--muted);letter-spacing:.12em;font-weight:760}
+.tag{display:inline-flex;align-items:center;gap:6px;border:1px solid #496078;border-radius:99px;padding:5px 10px;color:#bdd6ea;font-size:11px;font-weight:760}
+.tag.safe{border-color:#668e80;background:#15332d;color:#b5f1d8}
+.event h2{font-size:clamp(28px,4.5vw,43px);letter-spacing:-.04em;line-height:1.2;margin:10px 0}
+.meta{font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;align-items:center;gap:7px 13px}
+.meta span{white-space:nowrap}
+.event-note{font-size:12px;color:var(--soft);margin:12px 0 0}
+.summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border-top:1px solid var(--edge);margin-top:20px;padding-top:17px}
+.stat{padding-right:13px}
+.stat+.stat{border-left:1px solid #2b3c50;padding-left:17px}
+.stat small{font-size:11px;color:var(--muted);display:block}
+.stat strong{font-size:clamp(19px,3.4vw,27px);line-height:1.5;font-weight:850;letter-spacing:-.025em}
+.stat .warm{color:var(--gold)}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 14px}
+.section-head h3{font-size:18px;margin:0;letter-spacing:-.015em}
+.section-head small{font-size:11px;color:var(--soft)}
+.ticketbox{padding:22px}
+.ticketbox.main{border-color:#8a754e;background:linear-gradient(145deg,#1d2430,#161d29 55%,#28231c)}
+.ticketbox.main .ticket-head-icon{background:#40331d;color:var(--gold)}
+.ticketbox h3{margin:0;font-size:19px}
+.ticket-head{display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap}
+.ticket-head-left{display:flex;align-items:center;gap:11px}
+.ticket-head-icon{width:41px;height:41px;display:grid;place-items:center;border-radius:12px;background:#1c354d;color:var(--blue);font-weight:900;font-size:13px;flex:none}
+.verdict{font-size:12px;font-weight:850;border:1px solid #42617e;color:#aaddff;border-radius:99px;padding:5px 11px;white-space:nowrap}
+.verdict.buy{border-color:#bea16b;background:#352c1d;color:var(--gold)}
+.verdict.reject{border-color:#674849;color:var(--red)}
+.verdict.review{border-color:#607a87;color:#b6d5e8}
+.verdict.skip{border-color:#405367;color:#91a2b6}
+.ticket-caption{font-size:13px;color:var(--muted);margin:11px 0 16px}
+.tickets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.ticket{border:1px solid #3d4a59;border-radius:12px;background:#0e1725;padding:11px 7px;text-align:center;min-width:0}
+.ticket small{display:block;color:var(--soft);font-size:10px;letter-spacing:.09em}
+.ticket .comb{display:flex;align-items:center;justify-content:center;gap:5px;font-variant-numeric:tabular-nums}
+.num{font-size:clamp(21px,3vw,31px);font-weight:880;line-height:1.3}
+.arrow{color:#7a8fa4;font-size:14px}
+.ticket .amt{font-size:11px;margin-top:5px;color:#d2dde9}
+.ticket.rejected{opacity:.48}
+.ticket.review{border-style:dashed}
+.totals{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:17px;margin-top:17px;border-top:1px solid #445064}
+.totals small{font-size:12px;color:var(--muted);display:block}
+.totals strong{font-size:25px;font-weight:850;color:#f0f7ff;letter-spacing:-.02em}
+.totals .gold{color:var(--gold)}
+.empty-note{background:#0e1725;border:1px dashed #395069;border-radius:12px;padding:18px 14px;color:var(--muted);font-size:13px}
+.tools{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:16px}
+.utility{font-size:12px;font-weight:700;border:1px solid #51627b;background:#192d45;color:#e0f1ff;padding:10px 13px;border-radius:9px}
+.utility:hover{background:#26405c}
+.utility:disabled{opacity:.4;cursor:not-allowed}
+.ranking{padding:21px 22px}
+.rider{display:grid;grid-template-columns:30px 36px minmax(0,1fr) 58px;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #26374a}
+.rider:last-child{border-bottom:0}
+.rider .rankno{font-size:12px;color:var(--muted);font-weight:750}
+.rider .bike{width:36px;height:36px;background:#263951;border:1px solid #57708c;border-radius:9px;display:grid;place-items:center;font-size:20px;font-weight:850}
+.rider.first .bike{background:#44502e;color:var(--gold);border-color:#b69e69}
+.rider .rname{font-size:14px;font-weight:750;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.meter{margin-top:4px;height:4px;background:#2b3b4e;border-radius:99px;overflow:hidden}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,#527cb2,#8bd3ff);border-radius:inherit}
+.rider.first .meter i{background:var(--gold)}
+.score{font-size:12px;color:#a8bad0;text-align:right;font-variant-numeric:tabular-nums}
+.sidebar{position:sticky;top:89px;display:flex;flex-direction:column;gap:17px}
+.sideblock{padding:20px}
+.sideblock h3{font-size:14px;margin:0 0 13px}
+.timeline{display:flex;flex-direction:column;gap:7px}
+.history{border:1px solid #32475f;background:#0d1725;border-radius:11px;padding:11px 12px;color:var(--text);text-align:left;width:100%;display:block}
+.history:hover,.history.active{border-color:#8bcee9;background:#192a3e}
+.history-line{display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:760;gap:8px}
+.history-sub{font-size:11px;color:var(--muted);margin-top:3px;display:flex;justify-content:space-between;gap:8px}
+.history .signal{color:var(--gold)}
+.footnote{color:var(--soft);font-size:11px;line-height:1.8}
+.footer{border-top:1px solid #253548;color:var(--soft);font-size:12px;text-align:center;padding:24px 15px 50px}
+.credit{font-size:12px;color:var(--soft);margin-top:12px}
+.loader{width:17px;height:17px;border:2px solid #445875;border-top-color:var(--blue);border-radius:50%;display:inline-block;animation:spin .8s linear infinite;margin-right:10px;vertical-align:middle}@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:870px){.layout{grid-template-columns:minmax(0,1fr)}.sidebar{position:static;display:grid;grid-template-columns:1fr 1fr}.history{padding:9px 12px}}
+@media(max-width:600px){.wrap{width:min(100% - 28px,1120px)}.top-in{height:60px}.brandname{font-size:18px}.top-side{font-size:10px}.hero{padding-top:29px}.hero p{font-size:12px}.search{padding:5px}.search input{font-size:14px}.primary{padding:11px 14px;font-size:13px}.layout{margin-top:16px;gap:14px}.primary-content{gap:13px}.event{padding:20px 17px}.event h2{font-size:30px}.meta{font-size:12px}.stat strong{font-size:21px}.stat small{font-size:10px}.stat+.stat{padding-left:9px}.ticketbox{padding:19px 15px}.tickets{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.ticket .num{font-size:24px}.ticket .comb{gap:3px}.ticket-head{gap:7px}.sidebar{display:flex}.ticket-head h3{font-size:17px}.rider{grid-template-columns:23px 33px minmax(0,1fr) 57px;gap:9px}.rider .bike{width:33px;height:33px}.rider .rname{font-size:13px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="./" aria-label="ハルキュー ホーム"><span class="brandmark">H</span><span><span class="brandname">ハルキュー</span><small>HARUQ / FIXED AI</small></span></a><div class="top-side"><span class="live-dot" aria-hidden="true"></span>3月21日固定モデル <span aria-hidden="true">·</span> v1</div></div></header>
+<main class="wrap">
+<section class="hero"><div class="eyebrow">KEIRIN / RACE DECISION BOARD</div><h1>数字が決めた買い目を、<br>そのまま見る。</h1><p>春キューブ3月21日版の固定予測結果だけを表示。独自の選手選択・買い目補正・金額変更は一切行いません。</p>
+<form id="finder" class="search"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="raceInput" aria-label="レースIDまたはnetkeirin URL" type="search" placeholder="レースID・netkeirinのURL（12桁）" autocomplete="off" inputmode="text"><button class="primary" type="submit">レースを表示</button></form>
+<div class="hint"><span>例：202610234812 ／ netkeirin出走表URL</span><a id="requestLink" href="https://github.com/yuhevita-wq/keirin-ai-predictor/actions/workflows/flagship-live-predict.yml" target="_blank" rel="noopener noreferrer">未生成のレースはGitHubで予測を実行 ↗</a></div></section>
+<section class="layout"><div class="primary-content">
+<div id="notice" class="card placeholder" role="status" aria-live="polite"><span class="big">◇</span><h2>レース結果を読み込みます</h2><p>保存された固定AIの予測結果を取得しています。</p></div>
+<div id="result" class="hidden">
+<section class="card event"><div class="event-top"><span class="subtle">RACE SNAPSHOT / ハルキュー</span><span id="timeBadge" class="tag">照合済み</span></div><h2 id="eventName">—</h2><div id="eventMeta" class="meta"></div><p id="eventNote" class="event-note"></p><div class="summary"><div class="stat"><small>信頼度・スコア差</small><strong id="confidence">—</strong></div><div class="stat"><small>3連単ランク</small><strong id="triGrade" class="warm">—</strong></div><div class="stat"><small>確定購入合計</small><strong id="totalAmount">—</strong></div></div></section>
+<section id="triPanel" class="card ticketbox main"></section>
+<section id="exaPanel" class="card ticketbox"></section>
+<section class="card ranking"><div class="section-head"><h3>AI予測順位</h3><small>固定モデルの出力</small></div><div id="rankList"></div></section>
+</div></div>
+<aside class="sidebar"><section class="card sideblock"><h3>最近のレース</h3><div id="recentList" class="timeline"><div class="footnote">読み込み中…</div></div></section>
+<section class="card sideblock"><h3>ハルキューの3連単ルール</h3><div class="footnote"><p><strong style="color:var(--gold)">S3-HIGH</strong> — 6点を必ず買う（各500円）</p><p><strong style="color:var(--text)">S3-MED+</strong> — 買わない</p><p><strong style="color:var(--text)">S3-MED</strong> — 6点を検討、未承認</p><p>2車単は原作者3月21日版の条件をそのまま維持します。</p></div><a class="outline" href="https://github.com/yuhevita-wq/keirin-ai-predictor/releases/tag/haruqube-20260321-flagship-v1" target="_blank" rel="noopener noreferrer">固定モデル原本 ↗</a></section></aside></section>
+</main><footer class="footer"><div>HARUQ · モデルと買い目の再解釈なし</div><div class="credit">これは保存時点の予測記録です。表示だけで購入処理は行いません。時刻・締切・欠場は別途確認してください。</div></footer>
+<script>
+"use strict";
+(function(){
+const ROOT="https://raw.githubusercontent.com/yuhevita-wq/keirin-ai-predictor/production/flagship-haruqube-20260321-live-v1/docs/haruq/results/";
+const EXPECTED_SHA="e70690f4538b77e927a042e7ae2db312f8a0a4f16bf72def37e7ccad3568c193";
+const EXPECTED_POLICY="HARUQ_S3_HIGH_BUY_MEDPLUS_REJECT_MED_REVIEW_V1";
+const e=(id)=>document.getElementById(id);
+let current=null,items=[],busy=false;
+function safe(x){return String(x===undefined||x===null?"":x).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function money(n){return Number(n||0).toLocaleString("ja-JP")+"円"}
+function raceId(s){const m=String(s||"").match(/(?:race_id=|^|[^0-9])(\d{12})(?!\d)/);return m?m[1]:null}
+function statusClass(x){return x==="S3-HIGH"?"buy":x==="S3-MED"?"review":x==="S3-MED+"?"reject":"skip"}
+function statusText(x){return x==="S3-HIGH"?"必ず買う":x==="S3-MED"?"検討":x==="S3-MED+"?"買わない":"見送り"}
+function nowJST(){return Date.now()}
+function finished(v){if(!v.start_time||!/^\d{1,2}:\d{2}$/.test(v.start_time))return v.date<(new Date(Date.now()+9*3600000)).toISOString().slice(0,10);return nowJST()>=new Date(v.date+"T"+v.start_time+":00+09:00").getTime()}
+function visible(msg,sub,loading){e("result").classList.add("hidden");e("notice").classList.remove("hidden");e("notice").innerHTML='<span class="big">'+(loading?'<span class="loader"></span>':'◇')+'</span><h2>'+safe(msg)+'</h2><p>'+safe(sub)+'</p>'}
+async function getJson(url){let ctrl=new AbortController();let t=setTimeout(function(){ctrl.abort()},18000);try{let r=await fetch(url+(url.includes("?")?"&":"?")+"v="+Date.now(),{cache:"no-store",signal:ctrl.signal});if(!r.ok)throw new Error("HTTP "+r.status);return await r.json()}finally{clearTimeout(t)}}
+function verify(v){
+ if(!v||v.system!=="FLAGSHIP_HARUQUBE_20260321_V1"||v.model_sha256!==EXPECTED_SHA||!v.s3_policy||v.s3_policy.policy_version!==EXPECTED_POLICY)throw new Error("固定モデルまたは運用ルールの照合に失敗しました");
+ if(JSON.stringify(v.bets)!==JSON.stringify(v.s3_policy.approved_bets)||Number(v.total_yen)!==Number(v.s3_policy.approved_total_yen))throw new Error("買い目と合計金額の整合性エラー");
+ if(!/^\d{12}$/.test(v.race_id)||!Array.isArray(v.ranked)||!v.ranked.length)throw new Error("予測データの形式が不正です");
+ return v
+}
+function chip(ticket,each,mode){
+ const ns=String(ticket).split(">");return '<div class="ticket '+safe(mode||"")+'"><small>'+safe(ns.length===3?"3連単":"2車単")+'</small><div class="comb">'+ns.map((n,i)=>'<span class="num">'+safe(n)+'</span>'+(i<ns.length-1?'<span class="arrow">›</span>':"")).join("")+'</div><div class="amt">各 '+money(each)+'</div></div>'
+}
+function buildTickets(tickets,each,mode){
+ return '<div class="tickets">'+tickets.map(x=>chip(x,each,mode)).join("")+'</div>'
+}
+function renderTri(v){
+ const cat=v.s3_policy.trifecta_tier,accepted=v.bets.trifecta,review=v.med_under_review||{};
+ const marked=cat==="S3-HIGH"?"<strong>確定購入</strong>":cat==="S3-MED"?"検討候補のみ":cat==="S3-MED+"?"買わない":"基準未達";
+ let html='<div class="ticket-head"><div class="ticket-head-left"><span class="ticket-head-icon">3T</span><div><h3>3連単</h3><div class="subtle">TRIFECTA / 6 TICKETS</div></div></div><span class="verdict '+statusClass(cat)+'">'+statusText(cat)+'</span></div>';
+ html+='<p class="ticket-caption">'+safe(cat)+' · '+marked+'。3月21日モデルの買い目と運用判定をそのまま表示します。</p>';
+ let tickets=accepted.tickets||[],each=accepted.stake_per_ticket_yen,mode="";
+ if(cat==="S3-MED"){tickets=review.tickets||[];each=review.stake_per_ticket_yen;mode="review"}
+ if(tickets.length){html+=buildTickets(tickets,each,mode)}else if(cat==="S3-MED+"){html+='<div class="empty-note">S3-MED+ は購入しません。元の6点を追加し直すこともありません。</div>'}else{html+='<div class="empty-note">3連単は固定の購入基準に該当しません。</div>'}
+ html+='<div class="totals"><div><small>'+safe(cat==="S3-MED"?"購入未承認・検討した場合":"確定購入額")+'</small><strong class="'+(cat==="S3-HIGH"?"gold":"")+'">'+money(cat==="S3-MED"?(review.conditional_total_yen||0):accepted.total_yen)+'</strong></div><span class="tag '+(cat==="S3-HIGH"?"safe":"")+'">'+(cat==="S3-MED"?"購入額には含めない":cat==="S3-HIGH"?"6点確定":"購入0点")+'</span></div>';
+ if(cat==="S3-HIGH"&&tickets.length)html+='<div class="tools"><button class="utility" id="copyTri" type="button">3連単6点をコピー</button></div>';
+ if(cat==="S3-MED"&&tickets.length)html+='<div class="tools"><button class="utility" id="copyTri" type="button">検討6点をコピー（未購入）</button></div>';
+ e("triPanel").innerHTML=html;
+ if(e("copyTri"))e("copyTri").addEventListener("click",()=>copyText("ハルキュー "+v.velodrome+v.race_number+"R／3連単 "+statusText(cat)+"\n"+tickets.join(" / ")+"\n各"+money(each),e("copyTri")))
+}
+function renderExa(v){
+ let x=v.bets.exacta;
+ let html='<div class="ticket-head"><div class="ticket-head-left"><span class="ticket-head-icon">2T</span><div><h3>2車単</h3><div class="subtle">EXACTA / 4 TICKETS</div></div></div><span class="verdict '+(x.tickets.length?"review":"skip")+'">'+safe(x.tickets.length?x.label:"見送り")+'</span></div>';
+ html+='<p class="ticket-caption">2車単は3月21日版の購入ロジックを変更していません。</p>';
+ html+=(x.tickets.length?buildTickets(x.tickets,x.stake_per_ticket_yen):'<div class="empty-note">信頼度またはレース条件が購入基準に届きません。</div>');
+ html+='<div class="totals"><div><small>確定購入額</small><strong>'+money(x.total_yen)+'</strong></div><span class="tag">'+safe(x.tickets.length?x.points+"点":"0点")+'</span></div>';
+ if(x.tickets.length)html+='<div class="tools"><button id="copyExa" class="utility" type="button">2車単をコピー</button></div>';
+ e("exaPanel").innerHTML=html;
+ if(e("copyExa"))e("copyExa").addEventListener("click",()=>copyText("ハルキュー "+v.velodrome+v.race_number+"R／2車単\n"+x.tickets.join(" / ")+"\n各"+money(x.stake_per_ticket_yen),e("copyExa")))
+}
+async function copyText(s,b){try{await navigator.clipboard.writeText(s);let prev=b.textContent;b.textContent="コピー済み";setTimeout(()=>b.textContent=prev,1300)}catch{b.textContent="コピー不可"}}
+function renderRanks(v){
+ const arr=v.ranked.map(x=>Number(x.score)),hi=Math.max(...arr),lo=Math.min(...arr);
+ e("rankList").innerHTML=v.ranked.map(x=>{
+  const pct=hi===lo?55:Math.max(9,Math.round((Number(x.score)-lo)/(hi-lo)*100));
+  return '<div class="rider '+(x.rank===1?"first":"")+'"><span class="rankno">'+safe(x.rank)+'位</span><span class="bike">'+safe(x.bike)+'</span><div><div class="rname">'+safe(x.name)+'</div><div class="meter"><i style="width:'+pct+'%"></i></div></div><span class="score">'+Number(x.score).toFixed(3)+'</span></div>'
+ }).join("")
+}
+function render(v){
+ current=verify(v);
+ e("notice").classList.add("hidden");e("result").classList.remove("hidden");
+ const ended=finished(v);
+ e("timeBadge").textContent=ended?"予測記録・発走時刻経過":"固定AI・計算済み";
+ e("timeBadge").className="tag"+(ended?"":" safe");
+ e("eventName").textContent=v.velodrome+" "+v.race_number+"R";
+ e("eventMeta").innerHTML="<span>"+safe(v.date)+"</span><span>発走 "+safe(v.start_time||"時刻未取得")+"</span><span>"+safe(v.grade)+"</span><span>レースID "+safe(v.race_id)+"</span>";
+ e("eventNote").textContent=ended?"発走予定時刻を過ぎたレースの保存済み予測です。購入可能という意味ではありません。":"指定レースの保存されたAI出力です。直前の出走変更・締切は反映されない場合があります。";
+ e("confidence").textContent=Number(v.confidence).toFixed(4);
+ e("triGrade").textContent=v.s3_policy.trifecta_tier;
+ e("totalAmount").textContent=money(v.total_yen);
+ renderTri(v);renderExa(v);renderRanks(v);
+ e("raceInput").value=v.race_id;
+ history.replaceState(null,"","?race="+encodeURIComponent(v.race_id));
+ renderList();
+}
+function renderList(){
+ const t=items.length?items:[{race_id:"202610234812",date:"2026-10-23",velodrome:"四日市",race_number:12,confidence:0.33991765,trifecta_tier:"LOW",total_yen:0}];
+ e("recentList").innerHTML=t.slice(0,12).map(x=>{
+  return '<button type="button" class="history '+(current&&current.race_id===x.race_id?"active":"")+'" data-race="'+safe(x.race_id)+'"><div class="history-line"><span>'+safe(x.velodrome)+' '+safe(x.race_number)+'R</span><span class="'+(x.trifecta_tier==="S3-HIGH"?"signal":"")+'">'+safe(x.trifecta_tier||"—")+'</span></div><div class="history-sub"><span>'+safe(x.date)+'</span><span>'+money(x.total_yen)+'</span></div></button>';
+ }).join("");
+ document.querySelectorAll("button[data-race]").forEach(b=>b.addEventListener("click",()=>openRace(b.dataset.race)))
+}
+async function openRace(id){
+ if(busy)return;busy=true;visible("固定AIの結果を取得しています","GitHubに保存されたレース別JSONを照合しています。",true);
+ try{const data=await getJson(ROOT+id+".json");if(data.race_id!==id)throw new Error("レースID不一致");render(data)}
+ catch(err){current=null;const missing=String(err.message).includes("404");visible(missing?"このレースの予測は未生成です":"予測データを表示できません",missing?"ハルキューがまだこのレースのJSONを保存していません。GitHubでレースIDを指定して予測を実行してください。":"取得や照合に失敗しました："+err.message,false);e("raceInput").value=id}
+ finally{busy=false}
+}
+e("finder").addEventListener("submit",function(ev){ev.preventDefault();const id=raceId(e("raceInput").value);if(!id){visible("12桁のレースIDが必要です","出走表URLまたは YYYYMMDD＋場コード2桁＋レース番号2桁 を入力してください。",false);return}openRace(id)});
+async function init(){
+ try{const data=await getJson(ROOT+"index.json");items=Array.isArray(data.items)?data.items:[];renderList()}
+ catch{e("recentList").innerHTML='<div class="footnote">履歴一覧の取得に失敗しました。レースIDから直接開けます。</div>'}
+ const id=raceId(new URLSearchParams(location.search).get("race")||"")||(items[0]&&items[0].race_id);
+ if(id)await openRace(id);else visible("ハルキューのレースを検索","上の検索欄に12桁のレースIDか出走表URLを入力してください。",false);
+}
+init();
+})();
+</script>
+</body>
+</html>
