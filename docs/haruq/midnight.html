@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#070f1c">
+<title>ハルキュー｜10/23 全ミッドナイト 21R</title>
+<meta name="description" content="ハルキュー固定AIの2026年10月23日ミッドナイト全3場21レース一覧。HIGHのみ、F2対象、ガールズ除外。">
+<style>
+:root{color-scheme:dark;--bg:#080e19;--surface:#131f2d;--surface2:#19293b;--line:#304257;--text:#ebf3ff;--muted:#9aacc2;--gold:#ffd37d;--blue:#94cfff;--red:#e6a5a8;--green:#9df0d0}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(70% 450px at 60% -80px,#2e527135,transparent),var(--bg);font-family:Inter,-apple-system,BlinkMacSystemFont,"Noto Sans JP","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;color:var(--text);line-height:1.58}
+.wrap{width:min(1160px,calc(100% - 32px));margin:auto}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+a{color:var(--blue)}header{background:#0c1723ed;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10;backdrop-filter:blur(14px)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:61px}
+.brand{text-decoration:none;color:var(--text);font-weight:860;font-size:17px;display:flex;align-items:center;gap:10px}.brand span{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#bde6ff;color:#0d2744;font-weight:900}.prev{font-size:12px;text-decoration:none;color:var(--muted)}
+main{padding-top:32px;padding-bottom:80px}.eyebrow{color:var(--blue);font-weight:850;letter-spacing:.15em;font-size:11px}
+h1{margin:10px 0 4px;font-size:clamp(27px,5vw,45px);letter-spacing:-.038em;line-height:1.28}.summary-text{color:var(--muted);font-size:13px;margin:10px 0 18px}
+.rules{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0 23px}.rule{font-size:11px;border:1px solid #425c73;background:#132338;padding:7px 11px;border-radius:99px;color:#bdd7ec;font-weight:700}.rule.main{background:#3d331f;border-color:#9d824f;color:var(--gold)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.stat{background:#132031;border:1px solid #2c4058;border-radius:15px;padding:14px 16px}.stat small{font-size:10px;color:var(--muted);font-weight:750;display:block;white-space:nowrap}.stat strong{display:block;font-size:clamp(19px,3vw,27px);font-variant-numeric:tabular-nums;letter-spacing:-.035em;margin-top:3px}.stat.money strong{color:var(--gold)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-top:25px;margin-bottom:8px}
+.toolbar small{color:var(--muted);font-size:12px}.btn{border:1px solid #537293;background:#1a314a;color:#eaf5ff;border-radius:11px;padding:9px 13px;font-size:12px;font-weight:800}.btn:hover{background:#254561}.btn.active{background:#b7dfff;color:#0f253b;border-color:#b7dfff}
+.venue{margin-top:19px;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:#101b28}
+.venue-head{padding:18px 21px;background:linear-gradient(90deg,#192b3f,#112132);display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid var(--line)}
+.venue-head h2{margin:0;font-size:19px;letter-spacing:-.015em}.venue-head small{color:var(--muted);font-size:12px}
+.venue-sum{font-size:12px;color:var(--gold);font-weight:800;white-space:nowrap}
+.race{padding:14px 20px;border-top:1px solid #26394b}.race:first-child{border-top:0}.race.buy{background:linear-gradient(90deg,#302719a8,transparent 70%)}.race.failed{background:#1b1b23}
+.race-top{display:grid;grid-template-columns:60px minmax(0,1fr) 86px 86px;gap:12px;align-items:center}
+.rno{font-size:19px;font-weight:850;font-variant-numeric:tabular-nums}.meta{font-size:11px;color:var(--muted);font-weight:600}
+.pick{min-width:0}.pick strong{display:block;font-size:14px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.pick small{font-size:11px;color:var(--muted)}
+.badge{justify-self:end;white-space:nowrap;border-radius:99px;padding:5px 10px;background:#25344a;color:#b6c8dd;font-size:11px;font-weight:830;border:1px solid #445875}
+.badge.high{background:#5a4625;border-color:#a8905e;color:#ffe0a1}.badge.skip{background:#1e2938;color:#9ab0c7}.badge.off{background:#2a252b;color:#cbbac4}.amt{text-align:right;font-weight:860;font-size:17px;font-variant-numeric:tabular-nums}.amt.zero{font-weight:600;color:#7c91a8}
+.race-actions{margin-top:9px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.race-actions button{border:1px solid #48617b;background:#1e3043;border-radius:8px;color:#cceaff;padding:6px 9px;font-size:11px;font-weight:700}
+.race-actions a{font-size:11px;color:#b0c3d8;text-underline-offset:3px}.race-actions .score{color:var(--muted);font-size:11px}
+.ticket-detail{display:none;margin-top:12px;border:1px solid #455467;border-radius:12px;padding:13px;background:#0e1824}
+.race.open .ticket-detail{display:block}.bets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.bethead{font-size:11px;font-weight:820;color:var(--blue);letter-spacing:.04em;margin-bottom:6px}.bethead .g{color:var(--gold)}
+.combos{display:flex;gap:6px;flex-wrap:wrap}.combo{border:1px solid #435974;border-radius:7px;padding:6px 8px;background:#14253a;font-variant-numeric:tabular-nums;font-size:13px;font-weight:850}.combo strong{color:#fff0c9}
+.tips{font-size:11px;color:var(--muted);margin-top:11px;line-height:1.7}
+.footer{margin:28px auto 0;padding-top:22px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);line-height:1.8}
+.message{margin:20px 0;border:1px solid #435873;padding:16px 18px;border-radius:13px;background:#142135;color:var(--muted);font-size:13px}
+.copy-toast{position:fixed;z-index:20;bottom:23px;left:50%;transform:translateX(-50%);background:#dbf0ff;color:#14253a;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:780;display:none;box-shadow:0 10px 35px #0008}
+.hidden{display:none!important}@media(max-width:680px){main{padding-top:24px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.venue-head{padding:15px}.race{padding:13px 14px}.race-top{grid-template-columns:47px minmax(0,1fr) 79px;gap:7px}.amt{grid-column:3;grid-row:2;font-size:15px}.badge{grid-column:3;grid-row:1;padding:4px 7px;font-size:10px}.meta{font-size:10px}.pick strong{font-size:12px}.rno{font-size:18px}.bets{grid-template-columns:1fr}.combos .combo{font-size:12px}.rule{font-size:10px}}
+</style></head>
+<body>
+<header><div class="wrap"><a class="brand" href="./"><span>H</span> ハルキュー</a><a class="prev" href="./">個別レース画面へ →</a></div></header>
+<main class="wrap">
+<div class="eyebrow">HARUQ / ALL MIDNIGHT RACES</div>
+<h1>10月23日 ミッドナイト<br>全3場・21レース</h1>
+<p class="summary-text">3月21日固定AI。F2購入対象／ガールズ除外。2車単も3連単もHIGHだけ購入候補として表示します。</p>
+<div class="rules"><span class="rule main">3連単 S3-HIGH ≧2.00 ｜ 6点・3,000円</span><span class="rule">2車単 HIGH ≧1.00 ｜ 4点・2,000円</span><span class="rule">MED+・MED ｜ 全券種購入なし</span><span class="rule">ガールズ ｜ 対象外4R</span></div>
+<div class="stats">
+  <div class="stat"><small>開催</small><strong>3場／21R</strong></div>
+  <div class="stat"><small>AI集計</small><strong id="count">読込中</strong></div>
+  <div class="stat"><small>購入対象レース</small><strong id="selected">—</strong></div>
+  <div class="stat money"><small>確定ルール金額</small><strong id="total">—</strong></div>
+</div>
+<div class="toolbar"><small id="loadStatus" role="status">固定AIの保存結果を取得中です…</small><div><button id="onlyBuy" class="btn" type="button" aria-pressed="false">購入対象だけ表示</button> <button id="copyAll" class="btn" type="button" disabled>買い目をまとめてコピー</button></div></div>
+<div id="venues"></div>
+<div class="footer">開催確認：競輪公式CTC・ウィンチケット（2026年10月23日）。ガールズは元プロジェクトの対象外。AIはモデル再学習や展開予想を実施しません。発走予定時刻を過ぎた買い目は購入指示ではなく当時の保存記録です。実際の購入、締切や払戻の保証は行いません。<div><a href="https://github.com/yuhevita-wq/keirin-ai-predictor/releases/tag/haruqube-20260321-flagship-v1" rel="noopener noreferrer" target="_blank">固定モデルとバックテスト原本 ↗</a></div></div>
+</main><div id="toast" class="copy-toast" role="status">買い目をコピーしました</div>
+<script>
+"use strict";
+(()=> {
+const ROOT="https://raw.githubusercontent.com/yuhevita-wq/keirin-ai-predictor/production/flagship-haruqube-20260321-live-v1/docs/haruq/results/";
+const POLICY="HARUQ_HIGH_ONLY_ALL_MARKETS_F2_ELIGIBLE_V3";
+const HASH="e70690f4538b77e927a042e7ae2db312f8a0a4f16bf72def37e7ccad3568c193";
+const D="20261023", raceIds=[1,2,3,4,5,6,7], venues=[{code:"13",name:"いわき平",girls:[1,6]},{code:"22",name:"前橋",girls:[1,6]},{code:"47",name:"松阪",girls:[]}];
+const $=id=>document.getElementById(id);
+let recs={},errors={},only=false;
+const money=n=>(Number(n)||0).toLocaleString("ja-JP")+"円";
+const escapeHtml=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function started(r){if(!r||!r.start_time)return false;return Date.now()>=Date.parse(r.date+"T"+r.start_time+":00+09:00")}
+async function get(id){const req=await fetch(ROOT+id+".json?x="+Date.now(),{cache:"no-store"});if(!req.ok)throw Error("HTTP "+req.status);let v=await req.json();if(v.race_id!==id||v.model_sha256!==HASH||v.s3_policy?.policy_version!==POLICY||v.s3_policy?.exacta_high_only!==true||v.s3_policy?.trifecta_high_only!==true)throw Error("最新HIGH専用ルールの結果ではありません");if(v.grade!=="F2")throw Error("開催グレード不一致");if(v.invalidation?.invalid)throw Error("ガールズ対象外");
+const ex=v.bets?.exacta,tri=v.bets?.trifecta;if(!ex||!tri||v.total_yen!==ex.total_yen+tri.total_yen)throw Error("金額整合性エラー");
+if((ex.points>0&&(ex.label!=="HIGH"||ex.points!==4||ex.stake_per_ticket_yen!==500))||(tri.points>0&&(tri.label!=="S3-HIGH"||tri.points!==6||tri.stake_per_ticket_yen!==500)))throw Error("HIGH購入条件に違反");return v}
+function ticketBlock(m,kind){if(!m?.tickets?.length)return "";return '<div><div class="bethead">'+kind+' <span class="g">各500円 × '+m.tickets.length+'点</span></div><div class="combos">'+m.tickets.map(t=>'<span class="combo"><strong>'+escapeHtml(t.replaceAll(">", " - "))+'</strong></span>').join("")+'</div></div>'}
+function raceMarkup(venue,n){const id=D+venue.code+String(n).padStart(2,"0"),girls=venue.girls.includes(n),v=recs[id];
+if(girls){if(only)return "";return '<article class="race failed"><div class="race-top"><div><div class="rno">'+n+'R</div></div><div class="pick"><strong>ガールズ（対象外）</strong><small>元AIの学習・購入範囲外</small></div><span class="badge off">対象外</span><span class="amt zero">0円</span></div></article>'}
+if(!v){if(only)return "";return '<article class="race"><div class="race-top"><div class="rno">'+n+'R</div><div class="pick"><strong>結果を取得できません</strong><small>'+escapeHtml(errors[id]||"データ確認中")+'</small></div><span class="badge skip">未判定</span><span class="amt zero">—</span></div></article>'}
+const selected=v.total_yen>0;if(only&&!selected)return "";
+const ex=v.bets.exacta,tri=v.bets.trifecta,confidence=Number(v.confidence).toFixed(4),rank=v.ranked||[];
+let chip=selected?"HIGH採用":"購入なし";
+let stat=selected?"high":"skip";
+return '<article class="race '+(selected?"buy":"")+(selected?" open":"")+'" data-id="'+id+'"><div class="race-top"><div><div class="rno">'+n+'R</div><div class="meta">'+escapeHtml(v.start_time||"--:--")+'</div></div><div class="pick"><strong>軸 '+escapeHtml(rank[0]?.bike||"—")+'番 '+escapeHtml(rank[0]?.name||"")+'</strong><small>スコア差 '+confidence+' ｜ '+escapeHtml(v.s3_policy.trifecta_tier)+'</small></div><span class="badge '+stat+'">'+chip+'</span><span class="amt '+(selected?"":"zero")+'">'+money(v.total_yen)+'</span></div><div class="race-actions"><button type="button" data-expand="'+id+'" aria-expanded="'+(selected?"true":"false")+'">'+(selected?"詳細を閉じる":"買い目・順位を見る")+'</button><a href="./?race='+id+'" target="_blank" rel="noopener noreferrer">個別ページ ↗</a><span class="score">'+(started(v)?"発走予定時刻経過":"予測記録")+'</span></div><div class="ticket-detail">'+(selected?'<div class="bets">'+ticketBlock(tri,"3連単")+ticketBlock(ex,"2車単")+'</div>':'<div class="tips">2車単HIGH／3連単S3-HIGHのどちらにも該当しないため、買い目は0点です。</div>')+'<div class="tips">AI順位（車番）：'+rank.map(x=>escapeHtml(x.bike)).join(" → ")+'　｜　モデルは3月21日固定。MED・MED+は採用しません。</div></div></article>'
+}
+function render(){
+let count=0,selected=0,total=0,selectedLines=[];
+for(const v of Object.values(recs)){count++;if(v.total_yen>0){selected++;total+=v.total_yen;const tri=v.bets.trifecta,ex=v.bets.exacta;selectedLines.push(v.velodrome+v.race_number+'R｜'+v.start_time+'｜計'+money(v.total_yen)+(tri.points?'｜3連単 '+tri.tickets.map(t=>t.replaceAll(">","-")).join(" / ")+' 各500円':"")+(ex.points?'｜2車単 '+ex.tickets.map(t=>t.replaceAll(">","-")).join(" / ")+' 各500円':""))}}
+$("count").textContent=count+"/17R";$("selected").textContent=selected+"R";$("total").textContent=money(total);
+$("venues").innerHTML=venues.map(venue=>{let group=Object.values(recs).filter(v=>v.race_id.slice(8,10)===venue.code),sum=group.reduce((a,v)=>a+v.total_yen,0),selected_count=group.filter(x=>x.total_yen>0).length;
+let races=raceIds.map(i=>raceMarkup(venue,i)).join("");
+return '<section class="venue"><div class="venue-head"><div><h2>'+venue.name+'</h2><small>F2・最終日 / 7R ｜ '+(7-venue.girls.length)+'R解析＋'+venue.girls.length+'R対象外</small></div><div class="venue-sum">'+selected_count+'R採用・'+money(sum)+'</div></div>'+(!races?'<div class="race"><div class="meta">購入対象なし</div></div>':races)+'</section>'
+}).join("");
+document.querySelectorAll("[data-expand]").forEach(b=>b.addEventListener("click",()=>{const p=b.closest(".race");p.classList.toggle("open");const on=p.classList.contains("open");b.textContent=on?"詳細を閉じる":"買い目・順位を見る";b.setAttribute("aria-expanded",on?"true":"false")}));
+$("loadStatus").textContent="固定AI照合済み："+count+"/17R"+(Object.keys(errors).length?" ／ 未取得"+Object.keys(errors).length+"R":"");
+$("copyAll").disabled=selectedLines.length===0;
+$("copyAll").onclick=async()=>{try{await navigator.clipboard.writeText("ハルキュー 2026-10-23 ミッドナイト HIGHだけ\n"+selectedLines.join("\n")+"\n合計 "+money(total));$("toast").style.display="block";setTimeout(()=>$("toast").style.display="none",1700)}catch{$("loadStatus").textContent="コピーできません。ブラウザ設定を確認してください。"}};
+}
+$("onlyBuy").onclick=()=>{only=!only;$("onlyBuy").classList.toggle("active",only);$("onlyBuy").setAttribute("aria-pressed",only?"true":"false");$("onlyBuy").textContent=only?"全21レースを表示":"購入対象だけ表示";render()};
+async function load(){const ids=venues.flatMap(v=>raceIds.filter(n=>!v.girls.includes(n)).map(n=>D+v.code+String(n).padStart(2,"0")));const all=await Promise.all(ids.map(async id=>{try{return [id,await get(id),null]}catch(e){return [id,null,String(e.message)]}}));for(const [id,r,err] of all){if(r)recs[id]=r;else errors[id]=err}render()}load();
+})();
+</script></body></html>
