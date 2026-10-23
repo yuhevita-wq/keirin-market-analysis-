@@ -137,14 +137,14 @@ button,input,a{font:inherit}a{color:var(--blue)}button{cursor:pointer}button:foc
 <section class="card ranking"><div class="section-head"><h3>AI予測順位</h3><small>固定モデルの出力</small></div><div id="rankList"></div></section>
 </div></div>
 <aside class="sidebar"><section class="card sideblock"><h3>最近のレース</h3><div id="recentList" class="timeline"><div class="footnote">読み込み中…</div></div></section>
-<section class="card sideblock"><h3>ハルキューの3連単ルール</h3><div class="footnote"><p><strong style="color:var(--gold)">S3-HIGH</strong> — 6点を必ず買う（各500円）</p><p><strong style="color:var(--text)">S3-MED+</strong> — 買わない</p><p><strong style="color:var(--text)">S3-MED</strong> — 6点を検討、未承認</p><p>2車単は原作者3月21日版の条件をそのまま維持します。</p></div><a class="outline" href="https://github.com/yuhevita-wq/keirin-ai-predictor/releases/tag/haruqube-20260321-flagship-v1" target="_blank" rel="noopener noreferrer">固定モデル原本 ↗</a></section></aside></section>
+<section class="card sideblock"><h3>ハルキューの3連単ルール</h3><div class="footnote"><p><strong style="color:var(--gold)">S3-HIGH</strong> — 6点を必ず買う（各500円）</p><p><strong style="color:var(--text)">S3-MED+</strong> — 買わない</p><p><strong style="color:var(--text)">S3-MED</strong> — 6点を検討、未承認</p><p>F2も購入対象。2車単は元の信頼度と4点の基準を使い、F2除外のみ解除しています。</p></div><a class="outline" href="https://github.com/yuhevita-wq/keirin-ai-predictor/releases/tag/haruqube-20260321-flagship-v1" target="_blank" rel="noopener noreferrer">固定モデル原本 ↗</a></section></aside></section>
 </main><footer class="footer"><div>HARUQ · モデルと買い目の再解釈なし</div><div class="credit">これは保存時点の予測記録です。表示だけで購入処理は行いません。時刻・締切・欠場は別途確認してください。</div></footer>
 <script>
 "use strict";
 (function(){
 const ROOT="https://raw.githubusercontent.com/yuhevita-wq/keirin-ai-predictor/production/flagship-haruqube-20260321-live-v1/docs/haruq/results/";
 const EXPECTED_SHA="e70690f4538b77e927a042e7ae2db312f8a0a4f16bf72def37e7ccad3568c193";
-const EXPECTED_POLICY="HARUQ_S3_HIGH_BUY_MEDPLUS_REJECT_MED_REVIEW_V1";
+const EXPECTED_POLICIES=new Set(["HARUQ_S3_HIGH_BUY_MEDPLUS_REJECT_MED_REVIEW_V1","HARUQ_S3_HIGH_BUY_MEDPLUS_REJECT_MED_REVIEW_F2_ELIGIBLE_V2"]);
 const e=(id)=>document.getElementById(id);
 let current=null,items=[],busy=false;
 function safe(x){return String(x===undefined||x===null?"":x).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
@@ -157,7 +157,7 @@ function finished(v){if(!v.start_time||!/^\d{1,2}:\d{2}$/.test(v.start_time))ret
 function visible(msg,sub,loading){e("result").classList.add("hidden");e("notice").classList.remove("hidden");e("notice").innerHTML='<span class="big">'+(loading?'<span class="loader"></span>':'◇')+'</span><h2>'+safe(msg)+'</h2><p>'+safe(sub)+'</p>'}
 async function getJson(url){let ctrl=new AbortController();let t=setTimeout(function(){ctrl.abort()},18000);try{let r=await fetch(url+(url.includes("?")?"&":"?")+"v="+Date.now(),{cache:"no-store",signal:ctrl.signal});if(!r.ok)throw new Error("HTTP "+r.status);return await r.json()}finally{clearTimeout(t)}}
 function verify(v){
- if(!v||v.system!=="FLAGSHIP_HARUQUBE_20260321_V1"||v.model_sha256!==EXPECTED_SHA||!v.s3_policy||v.s3_policy.policy_version!==EXPECTED_POLICY)throw new Error("固定モデルまたは運用ルールの照合に失敗しました");
+ if(!v||v.system!=="FLAGSHIP_HARUQUBE_20260321_V1"||v.model_sha256!==EXPECTED_SHA||!v.s3_policy||!EXPECTED_POLICIES.has(v.s3_policy.policy_version))throw new Error("固定モデルまたは運用ルールの照合に失敗しました");
  if(JSON.stringify(v.bets)!==JSON.stringify(v.s3_policy.approved_bets)||Number(v.total_yen)!==Number(v.s3_policy.approved_total_yen))throw new Error("買い目と合計金額の整合性エラー");
  if(!/^\d{12}$/.test(v.race_id)||!Array.isArray(v.ranked)||!v.ranked.length)throw new Error("予測データの形式が不正です");
  return v
@@ -208,7 +208,7 @@ function render(v){
  e("timeBadge").className="tag"+(ended?"":" safe");
  e("eventName").textContent=v.velodrome+" "+v.race_number+"R";
  e("eventMeta").innerHTML="<span>"+safe(v.date)+"</span><span>発走 "+safe(v.start_time||"時刻未取得")+"</span><span>"+safe(v.grade)+"</span><span>レースID "+safe(v.race_id)+"</span>";
- e("eventNote").textContent=ended?"発走予定時刻を過ぎたレースの保存済み予測です。購入可能という意味ではありません。":"指定レースの保存されたAI出力です。直前の出走変更・締切は反映されない場合があります。";
+ e("eventNote").textContent=(v.grade==="F2"?(v.f2_all_grades_eligible?"F2購入対象（新ルール）。":"F2除外（過去の判定記録）。"):"")+(ended?"発走予定時刻を過ぎたレースの保存済み予測です。購入可能という意味ではありません。":"指定レースの保存されたAI出力です。直前の出走変更・締切は反映されない場合があります。");
  e("confidence").textContent=Number(v.confidence).toFixed(4);
  e("triGrade").textContent=v.s3_policy.trifecta_tier;
  e("totalAmount").textContent=money(v.total_yen);
