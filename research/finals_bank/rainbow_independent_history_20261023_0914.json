@@ -1,0 +1,40 @@
+{
+  "all_finals_complete": false,
+  "canonical_db_changed": false,
+  "errors": [],
+  "entry_identities_verified": 126,
+  "independent_prior_slots_status": {
+    "independently_verified_dates_and_results": 232,
+    "unresolved_date_venue_sequence": 12,
+    "dates_matched_result_text_discrepancy_unresolved": 7,
+    "unresolved_empty_OP_slot": 1
+  },
+  "Chariloto_slot_date_status": {
+    "independently_verified_explicit_full_date": 219,
+    "empty_planned_slot_date_unresolved": 17,
+    "unresolved_slot_mapping_or_abnormal_text": 16
+  },
+  "scope_note": "Explicit historic dates only. Raw malformed dates retained. Abnormal rank tokens, blank slots, and postponed-day candidates are not silently repaired. Single-source current firstday observations are not counted as fully independent verification.",
+  "raw_archive": "independent_history_raw.tar.xz",
+  "archive_bytes": 157136,
+  "archive_sha256": "6e9c07f6b552b16ba501fd1520347e85ac0dbf6d16d7f3d3020b4da8404c4985",
+  "archive_members": 30,
+  "all_original_members_SHA_size_equal": true,
+  "canonical_ledger": 5354,
+  "existing_male": 5353,
+  "male_scope_lower_bound": 5367,
+  "historical_bank_verified": 230,
+  "historical_bank_unresolved": 5123,
+  "remaining": [
+    "12 OP abbreviated venue labels need explicit mapping evidence (伊東/伊東温泉 and 平/いわき平); dates/results otherwise align",
+    "7 OP落 vs NK棄 result-text discrepancies retained unresolved",
+    "1 OP prior2 blank (2023-12-17 Sasebo car6)",
+    "17 empty planned Chariloto slots date unresolved",
+    "16 nonempty Chariloto slots with venue/date/abnormal result mapping unresolved",
+    "current firstday only OP explicit date observed, not fully independently verified",
+    "independent posted lines, historical banks, canonical race-key and SQL insertion audit, complete final-equivalent label scope"
+  ],
+  "postponement_resolution": "OP own dated 2026/06/02 notice explicitly says June2 Kochi third day canceled for typhoon and postponed June3. Only blank NK 202606027407 under group2026053174 excluded from actual-result sequence for comparison; all original NK results retained in NK_all_raw_groups and raw HTML. Actual May31/June1/June3 matches OP, no consecutive-day fabrication.",
+  "failed_source_discovery": "Official Kochi 2026/06?cat=2 web fetch timed out once; no repeated same route. OP published notice was fully fetched and hash preserved.",
+  "run_instructions": "From workspace cwd, extract this raw archive to raw_history_0914 and v37 card archive to raw_independent_0831, then run recovery/review_rainbow_independent_history_0914.py. No refetch of saved sources."
+}
