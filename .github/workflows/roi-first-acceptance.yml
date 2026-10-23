@@ -1,0 +1,30 @@
+name: ROI-first research acceptance rules
+
+on:
+  push:
+    branches:
+      - research/type-lab-full-archive-20261022
+    paths:
+      - "research/roi_first/**"
+      - ".github/workflows/roi-first-acceptance.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit-no-invented-profit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            research/roi_first
+          sparse-checkout-cone-mode: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify all ROI-first requirements (no financial data or secrets)
+        working-directory: research/roi_first
+        run: python -m unittest -v test_verify_roi.py
