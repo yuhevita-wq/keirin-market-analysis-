@@ -1,0 +1,461 @@
+{
+  "status": "EXPLORATORY_POST_RACE_ARCHIVED_RACECARDS",
+  "scope": "2026-07-02 through 2026-08-30 F1 S-class only; no girls",
+  "trained_on": "2023-2025 S-class F1; 2025 for hyperparam selection, 2023-2025 refit",
+  "model_predictions_committed_before_outcome_scoring": true,
+  "archive_count": 875,
+  "predicted": 875,
+  "scored": 872,
+  "unscorable": [
+    {
+      "race_id": "4320260711010006",
+      "winner_count": 2
+    },
+    {
+      "race_id": "4320260711010009",
+      "winner_count": 2
+    },
+    {
+      "race_id": "6120260826020011",
+      "winner_count": 2
+    }
+  ],
+  "metrics": {
+    "score_argmax": {
+      "races": 872,
+      "top1_hits": 292,
+      "top1_accuracy": 0.3348623853211009
+    },
+    "score_only_logit": {
+      "races": 872,
+      "top1_hits": 292,
+      "top1_accuracy": 0.3348623853211009,
+      "log_loss": 1.6822280067688755,
+      "brier": 0.7753164834787231
+    },
+    "v2_line_model": {
+      "races": 872,
+      "top1_hits": 330,
+      "top1_accuracy": 0.37844036697247707,
+      "log_loss": 1.5778162552536024,
+      "brier": 0.7475778068842821
+    },
+    "score_tree": {
+      "races": 872,
+      "top1_hits": 288,
+      "top1_accuracy": 0.3302752293577982,
+      "log_loss": 1.7107736048815123,
+      "brier": 0.7841757231336085
+    },
+    "no_score_tree": {
+      "races": 872,
+      "top1_hits": 261,
+      "top1_accuracy": 0.2993119266055046,
+      "log_loss": 1.6918281162753022,
+      "brier": 0.7856297032986007
+    },
+    "joint_tree": {
+      "races": 872,
+      "top1_hits": 312,
+      "top1_accuracy": 0.3577981651376147,
+      "log_loss": 1.577753414350487,
+      "brier": 0.7446934008455708
+    }
+  },
+  "contrasts": {
+    "joint_tree_vs_score_only_logit_top1": {
+      "improvement": 0.022935779816513763,
+      "bootstrap_by_day_95pct_interval": [
+        -0.00420546215095934,
+        0.0492732621332528
+      ],
+      "interpretation": "positive means model A beats model B"
+    },
+    "joint_tree_vs_score_argmax_top1": {
+      "improvement": 0.022935779816513763,
+      "bootstrap_by_day_95pct_interval": [
+        -0.00420546215095934,
+        0.0492732621332528
+      ],
+      "interpretation": "positive means model A beats model B"
+    },
+    "joint_tree_vs_score_only_logit_logloss": {
+      "improvement": 0.10447459241838866,
+      "bootstrap_by_day_95pct_interval": [
+        0.07228095833410915,
+        0.13351957699716982
+      ],
+      "interpretation": "positive means model A beats model B"
+    },
+    "no_score_tree_vs_score_only_logit_top1": {
+      "improvement": -0.03555045871559633,
+      "bootstrap_by_day_95pct_interval": [
+        -0.07390506925650536,
+        0.00211467257519726
+      ],
+      "interpretation": "positive means model A beats model B"
+    },
+    "no_score_tree_vs_score_argmax_top1": {
+      "improvement": -0.03555045871559633,
+      "bootstrap_by_day_95pct_interval": [
+        -0.07390506925650536,
+        0.00211467257519726
+      ],
+      "interpretation": "positive means model A beats model B"
+    },
+    "no_score_tree_vs_score_only_logit_logloss": {
+      "improvement": -0.009600109506426577,
+      "bootstrap_by_day_95pct_interval": [
+        -0.061686724715101636,
+        0.04003291180064044
+      ],
+      "interpretation": "positive means model A beats model B"
+    },
+    "score_tree_vs_score_only_logit_top1": {
+      "improvement": -0.0045871559633027525,
+      "bootstrap_by_day_95pct_interval": [
+        -0.010949305288769369,
+        0.0012093737220393243
+      ],
+      "interpretation": "positive means model A beats model B"
+    },
+    "score_tree_vs_score_argmax_top1": {
+      "improvement": -0.0045871559633027525,
+      "bootstrap_by_day_95pct_interval": [
+        -0.010949305288769369,
+        0.0012093737220393243
+      ],
+      "interpretation": "positive means model A beats model B"
+    },
+    "score_tree_vs_score_only_logit_logloss": {
+      "improvement": -0.0285455981126368,
+      "bootstrap_by_day_95pct_interval": [
+        -0.04154877373928313,
+        -0.015551009853768642
+      ],
+      "interpretation": "positive means model A beats model B"
+    },
+    "v2_line_model_vs_score_only_logit_top1": {
+      "improvement": 0.04357798165137615,
+      "bootstrap_by_day_95pct_interval": [
+        0.01590714200047973,
+        0.07331790235739233
+      ],
+      "interpretation": "positive means model A beats model B"
+    },
+    "v2_line_model_vs_score_argmax_top1": {
+      "improvement": 0.04357798165137615,
+      "bootstrap_by_day_95pct_interval": [
+        0.01590714200047973,
+        0.07331790235739233
+      ],
+      "interpretation": "positive means model A beats model B"
+    },
+    "v2_line_model_vs_score_only_logit_logloss": {
+      "improvement": 0.10441175151527315,
+      "bootstrap_by_day_95pct_interval": [
+        0.058886545374305974,
+        0.14500540906865697
+      ],
+      "interpretation": "positive means model A beats model B"
+    },
+    "joint_tree_vs_score_tree_logloss": {
+      "improvement": 0.13302019053102546,
+      "bootstrap_by_day_95pct_interval": [
+        0.10138327081871273,
+        0.162153190748741
+      ],
+      "interpretation": "positive means model A beats model B"
+    },
+    "joint_tree_vs_score_tree_top1": {
+      "improvement": 0.027522935779816515,
+      "bootstrap_by_day_95pct_interval": [
+        0.0011720943864336542,
+        0.053261442002047306
+      ],
+      "interpretation": "positive means model A beats model B"
+    },
+    "joint_tree_vs_v2_line_model_logloss": {
+      "improvement": 6.284090311551182e-05,
+      "bootstrap_by_day_95pct_interval": [
+        -0.02660564333127217,
+        0.027026133928540797
+      ],
+      "interpretation": "positive means model A beats model B"
+    }
+  },
+  "track_summary": {
+    "大宮競輪": {
+      "races": 13,
+      "score_argmax_hits": 4,
+      "score_only_logit_hits": 4,
+      "v2_line_model_hits": 7,
+      "score_tree_hits": 4,
+      "no_score_tree_hits": 7,
+      "joint_tree_hits": 5
+    },
+    "平塚競輪": {
+      "races": 5,
+      "score_argmax_hits": 2,
+      "score_only_logit_hits": 2,
+      "v2_line_model_hits": 1,
+      "score_tree_hits": 2,
+      "no_score_tree_hits": 1,
+      "joint_tree_hits": 1
+    },
+    "青森競輪": {
+      "races": 36,
+      "score_argmax_hits": 15,
+      "score_only_logit_hits": 15,
+      "v2_line_model_hits": 13,
+      "score_tree_hits": 14,
+      "no_score_tree_hits": 10,
+      "joint_tree_hits": 12
+    },
+    "和歌山競輪": {
+      "races": 42,
+      "score_argmax_hits": 7,
+      "score_only_logit_hits": 7,
+      "v2_line_model_hits": 13,
+      "score_tree_hits": 7,
+      "no_score_tree_hits": 8,
+      "joint_tree_hits": 9
+    },
+    "豊橋競輪": {
+      "races": 15,
+      "score_argmax_hits": 6,
+      "score_only_logit_hits": 6,
+      "v2_line_model_hits": 5,
+      "score_tree_hits": 6,
+      "no_score_tree_hits": 4,
+      "joint_tree_hits": 6
+    },
+    "防府競輪": {
+      "races": 42,
+      "score_argmax_hits": 21,
+      "score_only_logit_hits": 21,
+      "v2_line_model_hits": 17,
+      "score_tree_hits": 20,
+      "no_score_tree_hits": 16,
+      "joint_tree_hits": 18
+    },
+    "函館競輪": {
+      "races": 36,
+      "score_argmax_hits": 10,
+      "score_only_logit_hits": 10,
+      "v2_line_model_hits": 13,
+      "score_tree_hits": 10,
+      "no_score_tree_hits": 12,
+      "joint_tree_hits": 14
+    },
+    "大垣競輪": {
+      "races": 42,
+      "score_argmax_hits": 10,
+      "score_only_logit_hits": 10,
+      "v2_line_model_hits": 13,
+      "score_tree_hits": 10,
+      "no_score_tree_hits": 10,
+      "joint_tree_hits": 12
+    },
+    "伊東競輪": {
+      "races": 15,
+      "score_argmax_hits": 7,
+      "score_only_logit_hits": 7,
+      "v2_line_model_hits": 7,
+      "score_tree_hits": 7,
+      "no_score_tree_hits": 4,
+      "joint_tree_hits": 6
+    },
+    "岐阜競輪": {
+      "races": 34,
+      "score_argmax_hits": 17,
+      "score_only_logit_hits": 17,
+      "v2_line_model_hits": 16,
+      "score_tree_hits": 17,
+      "no_score_tree_hits": 13,
+      "joint_tree_hits": 17
+    },
+    "佐世保競輪": {
+      "races": 36,
+      "score_argmax_hits": 10,
+      "score_only_logit_hits": 10,
+      "v2_line_model_hits": 14,
+      "score_tree_hits": 10,
+      "no_score_tree_hits": 11,
+      "joint_tree_hits": 14
+    },
+    "宇都宮競輪": {
+      "races": 21,
+      "score_argmax_hits": 6,
+      "score_only_logit_hits": 6,
+      "v2_line_model_hits": 7,
+      "score_tree_hits": 6,
+      "no_score_tree_hits": 4,
+      "joint_tree_hits": 7
+    },
+    "玉野競輪": {
+      "races": 77,
+      "score_argmax_hits": 23,
+      "score_only_logit_hits": 23,
+      "v2_line_model_hits": 31,
+      "score_tree_hits": 23,
+      "no_score_tree_hits": 24,
+      "joint_tree_hits": 24
+    },
+    "松阪競輪": {
+      "races": 21,
+      "score_argmax_hits": 6,
+      "score_only_logit_hits": 6,
+      "v2_line_model_hits": 6,
+      "score_tree_hits": 6,
+      "no_score_tree_hits": 6,
+      "joint_tree_hits": 6
+    },
+    "静岡競輪": {
+      "races": 15,
+      "score_argmax_hits": 2,
+      "score_only_logit_hits": 2,
+      "v2_line_model_hits": 3,
+      "score_tree_hits": 3,
+      "no_score_tree_hits": 4,
+      "joint_tree_hits": 4
+    },
+    "岸和田競輪": {
+      "races": 15,
+      "score_argmax_hits": 8,
+      "score_only_logit_hits": 8,
+      "v2_line_model_hits": 11,
+      "score_tree_hits": 8,
+      "no_score_tree_hits": 7,
+      "joint_tree_hits": 8
+    },
+    "富山競輪": {
+      "races": 42,
+      "score_argmax_hits": 17,
+      "score_only_logit_hits": 17,
+      "v2_line_model_hits": 15,
+      "score_tree_hits": 17,
+      "no_score_tree_hits": 13,
+      "joint_tree_hits": 17
+    },
+    "奈良競輪": {
+      "races": 57,
+      "score_argmax_hits": 21,
+      "score_only_logit_hits": 21,
+      "v2_line_model_hits": 24,
+      "score_tree_hits": 21,
+      "no_score_tree_hits": 14,
+      "joint_tree_hits": 25
+    },
+    "立川競輪": {
+      "races": 36,
+      "score_argmax_hits": 18,
+      "score_only_logit_hits": 18,
+      "v2_line_model_hits": 20,
+      "score_tree_hits": 17,
+      "no_score_tree_hits": 13,
+      "joint_tree_hits": 17
+    },
+    "弥彦競輪": {
+      "races": 42,
+      "score_argmax_hits": 15,
+      "score_only_logit_hits": 15,
+      "v2_line_model_hits": 15,
+      "score_tree_hits": 14,
+      "no_score_tree_hits": 13,
+      "joint_tree_hits": 14
+    },
+    "いわき平競輪": {
+      "races": 21,
+      "score_argmax_hits": 4,
+      "score_only_logit_hits": 4,
+      "v2_line_model_hits": 8,
+      "score_tree_hits": 4,
+      "no_score_tree_hits": 7,
+      "joint_tree_hits": 7
+    },
+    "西武園競輪": {
+      "races": 42,
+      "score_argmax_hits": 13,
+      "score_only_logit_hits": 13,
+      "v2_line_model_hits": 16,
+      "score_tree_hits": 13,
+      "no_score_tree_hits": 14,
+      "joint_tree_hits": 15
+    },
+    "名古屋競輪": {
+      "races": 21,
+      "score_argmax_hits": 5,
+      "score_only_logit_hits": 5,
+      "v2_line_model_hits": 5,
+      "score_tree_hits": 4,
+      "no_score_tree_hits": 5,
+      "joint_tree_hits": 2
+    },
+    "小松島競輪": {
+      "races": 21,
+      "score_argmax_hits": 4,
+      "score_only_logit_hits": 4,
+      "v2_line_model_hits": 6,
+      "score_tree_hits": 4,
+      "no_score_tree_hits": 4,
+      "joint_tree_hits": 7
+    },
+    "熊本競輪": {
+      "races": 21,
+      "score_argmax_hits": 6,
+      "score_only_logit_hits": 6,
+      "v2_line_model_hits": 3,
+      "score_tree_hits": 6,
+      "no_score_tree_hits": 7,
+      "joint_tree_hits": 4
+    },
+    "京王閣競輪": {
+      "races": 21,
+      "score_argmax_hits": 6,
+      "score_only_logit_hits": 6,
+      "v2_line_model_hits": 7,
+      "score_tree_hits": 6,
+      "no_score_tree_hits": 5,
+      "joint_tree_hits": 8
+    },
+    "四日市競輪": {
+      "races": 15,
+      "score_argmax_hits": 8,
+      "score_only_logit_hits": 8,
+      "v2_line_model_hits": 9,
+      "score_tree_hits": 8,
+      "no_score_tree_hits": 3,
+      "joint_tree_hits": 9
+    },
+    "高知競輪": {
+      "races": 21,
+      "score_argmax_hits": 6,
+      "score_only_logit_hits": 6,
+      "v2_line_model_hits": 9,
+      "score_tree_hits": 6,
+      "no_score_tree_hits": 6,
+      "joint_tree_hits": 7
+    },
+    "川崎競輪": {
+      "races": 26,
+      "score_argmax_hits": 10,
+      "score_only_logit_hits": 10,
+      "v2_line_model_hits": 9,
+      "score_tree_hits": 10,
+      "no_score_tree_hits": 9,
+      "joint_tree_hits": 10
+    },
+    "小倉競輪": {
+      "races": 21,
+      "score_argmax_hits": 5,
+      "score_only_logit_hits": 5,
+      "v2_line_model_hits": 7,
+      "score_tree_hits": 5,
+      "no_score_tree_hits": 7,
+      "joint_tree_hits": 7
+    }
+  },
+  "critical_caveat": "Historical entrant and published predicted-line data were collected Sept 17 after target races; as-of correctness NOT VERIFIED. Do not claim genuine prospective proof or betting edge.",
+  "no_betting_returns_evaluated": true
+}

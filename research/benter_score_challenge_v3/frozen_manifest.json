@@ -1,0 +1,626 @@
+{
+  "research_design": "Train 2023-24, select on 2025 validation, refit on 2023-25, score H2 without retraining",
+  "model_must_beat_score_only": "top1 accuracy and log_loss both tested; no post-hoc threshold tuning",
+  "training_cutoff": "2025-12-31",
+  "holdout_start": "2026-07-02",
+  "holdout_end": "2026-08-30",
+  "historical_training_races": 9021,
+  "validation_races": 5106,
+  "holdout_archive_races": 875,
+  "frozen_holdout_races": 875,
+  "rejected": [],
+  "validation_models": {
+    "score_tree": {
+      "selected": {
+        "index": 0,
+        "temperature": 1.2,
+        "races": 5106,
+        "top1_hits": 1838,
+        "top1_accuracy": 0.3599686643164904,
+        "log_loss": 1.6806549022305748,
+        "brier": 0.7725731800630198
+      },
+      "candidates": [
+        {
+          "index": 0,
+          "temperature": 0.8,
+          "races": 5106,
+          "top1_hits": 1838,
+          "top1_accuracy": 0.3599686643164904,
+          "log_loss": 1.7416360299459221,
+          "brier": 0.7955958514638051
+        },
+        {
+          "index": 0,
+          "temperature": 1.0,
+          "races": 5106,
+          "top1_hits": 1838,
+          "top1_accuracy": 0.3599686643164904,
+          "log_loss": 1.6923436341694904,
+          "brier": 0.777279155802284
+        },
+        {
+          "index": 0,
+          "temperature": 1.2,
+          "races": 5106,
+          "top1_hits": 1838,
+          "top1_accuracy": 0.3599686643164904,
+          "log_loss": 1.6806549022305748,
+          "brier": 0.7725731800630198
+        },
+        {
+          "index": 0,
+          "temperature": 1.45,
+          "races": 5106,
+          "top1_hits": 1838,
+          "top1_accuracy": 0.3599686643164904,
+          "log_loss": 1.685949473456764,
+          "brier": 0.7743561111759426
+        },
+        {
+          "index": 1,
+          "temperature": 0.8,
+          "races": 5106,
+          "top1_hits": 1827,
+          "top1_accuracy": 0.35781433607520563,
+          "log_loss": 1.747959559040044,
+          "brier": 0.7968330467330025
+        },
+        {
+          "index": 1,
+          "temperature": 1.0,
+          "races": 5106,
+          "top1_hits": 1827,
+          "top1_accuracy": 0.35781433607520563,
+          "log_loss": 1.6961164331388205,
+          "brier": 0.7781374388594833
+        },
+        {
+          "index": 1,
+          "temperature": 1.2,
+          "races": 5106,
+          "top1_hits": 1827,
+          "top1_accuracy": 0.35781433607520563,
+          "log_loss": 1.6828287446418941,
+          "brier": 0.7730955910211229
+        },
+        {
+          "index": 1,
+          "temperature": 1.45,
+          "races": 5106,
+          "top1_hits": 1827,
+          "top1_accuracy": 0.35781433607520563,
+          "log_loss": 1.6868998193857199,
+          "brier": 0.7745796781178481
+        },
+        {
+          "index": 2,
+          "temperature": 0.8,
+          "races": 5106,
+          "top1_hits": 1828,
+          "top1_accuracy": 0.35801018409714064,
+          "log_loss": 1.7423626470887044,
+          "brier": 0.795968149851177
+        },
+        {
+          "index": 2,
+          "temperature": 1.0,
+          "races": 5106,
+          "top1_hits": 1828,
+          "top1_accuracy": 0.35801018409714064,
+          "log_loss": 1.6926911414785906,
+          "brier": 0.7775027002439643
+        },
+        {
+          "index": 2,
+          "temperature": 1.2,
+          "races": 5106,
+          "top1_hits": 1828,
+          "top1_accuracy": 0.35801018409714064,
+          "log_loss": 1.6807735281862684,
+          "brier": 0.7726956748299803
+        },
+        {
+          "index": 2,
+          "temperature": 1.45,
+          "races": 5106,
+          "top1_hits": 1828,
+          "top1_accuracy": 0.35801018409714064,
+          "log_loss": 1.6859008581239956,
+          "brier": 0.7744016536668115
+        }
+      ],
+      "feature_count": 5
+    },
+    "no_score_tree": {
+      "selected": {
+        "index": 1,
+        "temperature": 1.2,
+        "races": 5106,
+        "top1_hits": 1713,
+        "top1_accuracy": 0.3354876615746181,
+        "log_loss": 1.6521711832907073,
+        "brier": 0.7706608060650103
+      },
+      "candidates": [
+        {
+          "index": 0,
+          "temperature": 0.8,
+          "races": 5106,
+          "top1_hits": 1696,
+          "top1_accuracy": 0.3321582452017235,
+          "log_loss": 1.6846610698175104,
+          "brier": 0.7851644546135758
+        },
+        {
+          "index": 0,
+          "temperature": 1.0,
+          "races": 5106,
+          "top1_hits": 1696,
+          "top1_accuracy": 0.3321582452017235,
+          "log_loss": 1.6539060057622463,
+          "brier": 0.7725885469832883
+        },
+        {
+          "index": 0,
+          "temperature": 1.2,
+          "races": 5106,
+          "top1_hits": 1696,
+          "top1_accuracy": 0.3321582452017235,
+          "log_loss": 1.651149812625016,
+          "brier": 0.7700490907519294
+        },
+        {
+          "index": 0,
+          "temperature": 1.45,
+          "races": 5106,
+          "top1_hits": 1696,
+          "top1_accuracy": 0.3321582452017235,
+          "log_loss": 1.6622299660532829,
+          "brier": 0.7725812207781435
+        },
+        {
+          "index": 1,
+          "temperature": 0.8,
+          "races": 5106,
+          "top1_hits": 1713,
+          "top1_accuracy": 0.3354876615746181,
+          "log_loss": 1.693142719210369,
+          "brier": 0.7881580715110647
+        },
+        {
+          "index": 1,
+          "temperature": 1.0,
+          "races": 5106,
+          "top1_hits": 1713,
+          "top1_accuracy": 0.3354876615746181,
+          "log_loss": 1.657673622496104,
+          "brier": 0.7741629859243233
+        },
+        {
+          "index": 1,
+          "temperature": 1.2,
+          "races": 5106,
+          "top1_hits": 1713,
+          "top1_accuracy": 0.3354876615746181,
+          "log_loss": 1.6521711832907073,
+          "brier": 0.7706608060650103
+        },
+        {
+          "index": 1,
+          "temperature": 1.45,
+          "races": 5106,
+          "top1_hits": 1713,
+          "top1_accuracy": 0.3354876615746181,
+          "log_loss": 1.6613039164584547,
+          "brier": 0.7724679505497054
+        },
+        {
+          "index": 2,
+          "temperature": 0.8,
+          "races": 5106,
+          "top1_hits": 1697,
+          "top1_accuracy": 0.33235409322365844,
+          "log_loss": 1.6853983158058499,
+          "brier": 0.7854695729926087
+        },
+        {
+          "index": 2,
+          "temperature": 1.0,
+          "races": 5106,
+          "top1_hits": 1697,
+          "top1_accuracy": 0.33235409322365844,
+          "log_loss": 1.6544680475630718,
+          "brier": 0.7728995972090438
+        },
+        {
+          "index": 2,
+          "temperature": 1.2,
+          "races": 5106,
+          "top1_hits": 1697,
+          "top1_accuracy": 0.33235409322365844,
+          "log_loss": 1.6515305124310322,
+          "brier": 0.7703018189343417
+        },
+        {
+          "index": 2,
+          "temperature": 1.45,
+          "races": 5106,
+          "top1_hits": 1697,
+          "top1_accuracy": 0.33235409322365844,
+          "log_loss": 1.6624324546537512,
+          "brier": 0.7727594402142498
+        }
+      ],
+      "feature_count": 61
+    },
+    "joint_tree": {
+      "selected": {
+        "index": 2,
+        "temperature": 1.2,
+        "races": 5106,
+        "top1_hits": 2015,
+        "top1_accuracy": 0.3946337641989816,
+        "log_loss": 1.558566703420669,
+        "brier": 0.734654959954361
+      },
+      "candidates": [
+        {
+          "index": 0,
+          "temperature": 0.8,
+          "races": 5106,
+          "top1_hits": 2013,
+          "top1_accuracy": 0.39424206815511165,
+          "log_loss": 1.613807512043029,
+          "brier": 0.7573742912149721
+        },
+        {
+          "index": 0,
+          "temperature": 1.0,
+          "races": 5106,
+          "top1_hits": 2013,
+          "top1_accuracy": 0.39424206815511165,
+          "log_loss": 1.566586043809331,
+          "brier": 0.739215943579851
+        },
+        {
+          "index": 0,
+          "temperature": 1.2,
+          "races": 5106,
+          "top1_hits": 2013,
+          "top1_accuracy": 0.39424206815511165,
+          "log_loss": 1.558748080580364,
+          "brier": 0.73465698577545
+        },
+        {
+          "index": 0,
+          "temperature": 1.45,
+          "races": 5106,
+          "top1_hits": 2013,
+          "top1_accuracy": 0.39424206815511165,
+          "log_loss": 1.5705510125212727,
+          "brier": 0.7376085574639017
+        },
+        {
+          "index": 1,
+          "temperature": 0.8,
+          "races": 5106,
+          "top1_hits": 1995,
+          "top1_accuracy": 0.390716803760282,
+          "log_loss": 1.6192556690414122,
+          "brier": 0.7598470776120635
+        },
+        {
+          "index": 1,
+          "temperature": 1.0,
+          "races": 5106,
+          "top1_hits": 1995,
+          "top1_accuracy": 0.390716803760282,
+          "log_loss": 1.5676766164593545,
+          "brier": 0.7402204784290536
+        },
+        {
+          "index": 1,
+          "temperature": 1.2,
+          "races": 5106,
+          "top1_hits": 1995,
+          "top1_accuracy": 0.390716803760282,
+          "log_loss": 1.5572659758932792,
+          "brier": 0.7346107612028868
+        },
+        {
+          "index": 1,
+          "temperature": 1.45,
+          "races": 5106,
+          "top1_hits": 1995,
+          "top1_accuracy": 0.390716803760282,
+          "log_loss": 1.5672630044317974,
+          "brier": 0.73676613901926
+        },
+        {
+          "index": 2,
+          "temperature": 0.8,
+          "races": 5106,
+          "top1_hits": 2015,
+          "top1_accuracy": 0.3946337641989816,
+          "log_loss": 1.6136000631897789,
+          "brier": 0.7572740513892458
+        },
+        {
+          "index": 2,
+          "temperature": 1.0,
+          "races": 5106,
+          "top1_hits": 2015,
+          "top1_accuracy": 0.3946337641989816,
+          "log_loss": 1.566442183020394,
+          "brier": 0.7391909529654
+        },
+        {
+          "index": 2,
+          "temperature": 1.2,
+          "races": 5106,
+          "top1_hits": 2015,
+          "top1_accuracy": 0.3946337641989816,
+          "log_loss": 1.558566703420669,
+          "brier": 0.734654959954361
+        },
+        {
+          "index": 2,
+          "temperature": 1.45,
+          "races": 5106,
+          "top1_hits": 2015,
+          "top1_accuracy": 0.3946337641989816,
+          "log_loss": 1.5702910059455493,
+          "brier": 0.7376007584804943
+        }
+      ],
+      "feature_count": 67
+    }
+  },
+  "chosen_configs": {
+    "score_tree": {
+      "configuration": {
+        "max_leaf_nodes": 15,
+        "max_iter": 140,
+        "learning_rate": 0.055,
+        "min_samples_leaf": 80,
+        "l2_regularization": 20.0
+      },
+      "temperature": 1.2,
+      "fields": [
+        "score",
+        "score_z",
+        "score_gapmax",
+        "score_rank",
+        "field_size"
+      ]
+    },
+    "no_score_tree": {
+      "configuration": {
+        "max_leaf_nodes": 31,
+        "max_iter": 165,
+        "learning_rate": 0.045,
+        "min_samples_leaf": 90,
+        "l2_regularization": 20.0
+      },
+      "temperature": 1.2,
+      "fields": [
+        "age",
+        "term",
+        "s_count",
+        "b_count",
+        "nige_count",
+        "makuri_count",
+        "sashi_count",
+        "mark_count",
+        "first_count",
+        "second_count",
+        "third_count",
+        "outside_count",
+        "win_rate",
+        "top2_rate",
+        "top3_rate",
+        "gear",
+        "leader",
+        "second",
+        "third_or_later",
+        "solo",
+        "line_size",
+        "leader_b",
+        "follower_mark",
+        "lead_follow_synergy",
+        "line_leader_first",
+        "line_follow_first",
+        "line_leader_pressure_share",
+        "rival_front_b",
+        "lead_attack_versatility",
+        "line_mate_count",
+        "line_head_vs_follower_win_gap",
+        "own_role_front_b",
+        "solo_front_pressure",
+        "win_rate_z",
+        "win_rate_gapmax",
+        "win_rate_rank",
+        "top2_rate_z",
+        "top2_rate_gapmax",
+        "top2_rate_rank",
+        "top3_rate_z",
+        "top3_rate_gapmax",
+        "top3_rate_rank",
+        "b_count_z",
+        "b_count_gapmax",
+        "b_count_rank",
+        "nige_count_z",
+        "nige_count_gapmax",
+        "nige_count_rank",
+        "makuri_count_z",
+        "makuri_count_gapmax",
+        "makuri_count_rank",
+        "mark_count_z",
+        "mark_count_gapmax",
+        "mark_count_rank",
+        "first_count_z",
+        "first_count_gapmax",
+        "first_count_rank",
+        "outside_count_z",
+        "outside_count_gapmax",
+        "outside_count_rank",
+        "field_size"
+      ]
+    },
+    "joint_tree": {
+      "configuration": {
+        "max_leaf_nodes": 15,
+        "max_iter": 220,
+        "learning_rate": 0.038,
+        "min_samples_leaf": 55,
+        "l2_regularization": 12.0
+      },
+      "temperature": 1.2,
+      "fields": [
+        "score",
+        "age",
+        "term",
+        "s_count",
+        "b_count",
+        "nige_count",
+        "makuri_count",
+        "sashi_count",
+        "mark_count",
+        "first_count",
+        "second_count",
+        "third_count",
+        "outside_count",
+        "win_rate",
+        "top2_rate",
+        "top3_rate",
+        "gear",
+        "leader",
+        "second",
+        "third_or_later",
+        "solo",
+        "line_size",
+        "leader_b",
+        "follower_mark",
+        "lead_follow_synergy",
+        "line_leader_first",
+        "line_follow_first",
+        "line_leader_pressure_share",
+        "rival_front_b",
+        "lead_attack_versatility",
+        "line_mate_count",
+        "line_head_vs_follower_win_gap",
+        "own_role_front_b",
+        "solo_front_pressure",
+        "teammate_score_support",
+        "line_score_imbalance",
+        "score_z",
+        "score_gapmax",
+        "score_rank",
+        "win_rate_z",
+        "win_rate_gapmax",
+        "win_rate_rank",
+        "top2_rate_z",
+        "top2_rate_gapmax",
+        "top2_rate_rank",
+        "top3_rate_z",
+        "top3_rate_gapmax",
+        "top3_rate_rank",
+        "b_count_z",
+        "b_count_gapmax",
+        "b_count_rank",
+        "nige_count_z",
+        "nige_count_gapmax",
+        "nige_count_rank",
+        "makuri_count_z",
+        "makuri_count_gapmax",
+        "makuri_count_rank",
+        "mark_count_z",
+        "mark_count_gapmax",
+        "mark_count_rank",
+        "first_count_z",
+        "first_count_gapmax",
+        "first_count_rank",
+        "outside_count_z",
+        "outside_count_gapmax",
+        "outside_count_rank",
+        "field_size"
+      ]
+    }
+  },
+  "audit": {
+    "data_audit": {
+      "races_discovered": 14182,
+      "retrospective_snapshot_races": 14127,
+      "missing_or_ambiguous_winner": 55
+    },
+    "skipped": {},
+    "directories": {
+      "data/2023/s_class_f1_all_parts/2023_q2": {
+        "races_in_entries": 1285,
+        "races_valid": 1282,
+        "rows_in_results": 8888
+      },
+      "data/2023/s_class_f1_all_parts/2023_q3": {
+        "races_in_entries": 1249,
+        "races_valid": 1245,
+        "rows_in_results": 8653
+      },
+      "data/2023/s_class_f1_all_parts/2023_q4": {
+        "races_in_entries": 1318,
+        "races_valid": 1315,
+        "rows_in_results": 9115
+      },
+      "data/2024/s_class_f1_all_parts/2024_q1": {
+        "races_in_entries": 1328,
+        "races_valid": 1325,
+        "rows_in_results": 9155
+      },
+      "data/2024/s_class_f1_all_parts/2024_q2": {
+        "races_in_entries": 1295,
+        "races_valid": 1291,
+        "rows_in_results": 8978
+      },
+      "data/2024/s_class_f1_all_parts/2024_q3": {
+        "races_in_entries": 1290,
+        "races_valid": 1288,
+        "rows_in_results": 8920
+      },
+      "data/2024/s_class_f1_all_parts/2024_q4": {
+        "races_in_entries": 1278,
+        "races_valid": 1275,
+        "rows_in_results": 8841
+      },
+      "data/2025/s_class_f1_all_parts/2025_q1": {
+        "races_in_entries": 1248,
+        "races_valid": 1240,
+        "rows_in_results": 8677
+      },
+      "data/2025/s_class_f1_all_parts/2025_q2": {
+        "races_in_entries": 1266,
+        "races_valid": 1257,
+        "rows_in_results": 8749
+      },
+      "data/2025/s_class_f1_all_parts/2025_q3": {
+        "races_in_entries": 1308,
+        "races_valid": 1303,
+        "rows_in_results": 9089
+      },
+      "data/2025/s_class_f1_all_parts/2025_q4": {
+        "races_in_entries": 1317,
+        "races_valid": 1306,
+        "rows_in_results": 9129
+      }
+    }
+  },
+  "models_compared": [
+    "score_argmax",
+    "score_only_logit",
+    "v2_line_model",
+    "score_tree",
+    "no_score_tree",
+    "joint_tree"
+  ],
+  "unverified_as_of": "Entries and line formation for H2 were archived after racing (Sept 17, 2026). Neither historically faithful nor prospectively captured.",
+  "race_result_file_opened_by_this_script": false
+}
