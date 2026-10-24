@@ -1,0 +1,44 @@
+name: Type Lab probe historical WINTICKET fields (sixteen pages only)
+on:
+  pull_request:
+    paths:
+      - "research/type_lab_features/probe_winticket_2023_2024_small.py"
+      - ".github/workflows/type-lab-probe-winticket-small.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sixteen-archive-pages-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            research/type_lab_features/probe_winticket_2023_2024_small.py
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install one HTTP dependency
+        run: python -m pip install --disable-pip-version-check requests
+      - name: Verify the original SSR JSON extraction structure locally
+        run: |
+          set -euo pipefail
+          python -m py_compile research/type_lab_features/probe_winticket_2023_2024_small.py
+          python research/type_lab_features/probe_winticket_2023_2024_small.py --selftest
+      - name: Visit exactly sixteen confirmed 2023-2024 historical racecards
+        run: |
+          set -o pipefail
+          python -u research/type_lab_features/probe_winticket_2023_2024_small.py --output probe-output/
+      - name: Retain coverage, response status and missing-field causes even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: type-lab-winticket-historical-sixteen-case-audit
+          path: probe-output/historical_winticket_probe_report.json
+          if-no-files-found: warn
+          retention-days: 30

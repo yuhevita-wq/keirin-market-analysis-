@@ -1,0 +1,214 @@
+name: TypeLab full archive read and secure actual results join
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  private-key-preflight:
+    runs-on: ubuntu-24.04
+    outputs:
+      available: ${{ steps.secretcheck.outputs.available }}
+    steps:
+      - name: Checkout the ORIGINAL public certificate only
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            odds_market/vault_public_cert.pem
+          sparse-checkout-cone-mode: false
+
+      - name: Check that OWNER'S private CMS key is configured (never print value)
+        id: secretcheck
+        env:
+          PRIVATE_KEY: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        run: |
+          if [ -n "$PRIVATE_KEY" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+            echo "SECURE_ARCHIVE_KEY_STATUS=AVAILABLE"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::SECURE_ARCHIVE_KEY_STATUS=MISSING. No fake or partial-data success."
+            exit 2  # fail-closed; report must never be green without the private archive
+          fi
+
+      - name: Verify the original RSA key actually matches the archive certificate (print status ONLY)
+        if: steps.secretcheck.outputs.available == 'true'
+        env:
+          PRIVATE_KEY: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os, pathlib, subprocess, sys, tempfile
+          pem = os.environ.pop("PRIVATE_KEY", "")
+          cert = "odds_market/vault_public_cert.pem"
+          with tempfile.TemporaryDirectory(prefix="key_check_") as d:
+              key = pathlib.Path(d)/"original.key"
+              key.write_bytes(pem.encode("utf-8").replace(b"\r\n", b"\n"))
+              key.chmod(0o600)
+              private = subprocess.run(
+                  ["openssl","pkey","-in",str(key),"-pubout","-outform","DER"],
+                  capture_output=True, timeout=15,
+              )
+              if private.returncode != 0 or not private.stdout:
+                  print("PRIVATE_KEY_STATUS=INVALID_FORMAT_OR_PASSWORD_PROTECTED")
+                  sys.exit(2)
+              cert_pub = subprocess.run(
+                  ["openssl","x509","-in",cert,"-pubkey","-noout"],
+                  capture_output=True, timeout=15,
+              )
+              if cert_pub.returncode != 0:
+                  print("PUBLIC_CERT_STATUS=UNREADABLE")
+                  sys.exit(2)
+              encoded = subprocess.run(
+                  ["openssl","pkey","-pubin","-outform","DER"],
+                  input=cert_pub.stdout,capture_output=True,timeout=15,
+              )
+              if encoded.returncode != 0 or encoded.stdout != private.stdout:
+                  print("PRIVATE_KEY_STATUS=VALID_BUT_NOT_THE_ORIGINAL_ARCHIVE_KEY")
+                  sys.exit(2)
+              print("PRIVATE_KEY_STATUS=MATCHES_ARCHIVE_PUBLIC_CERTIFICATE")
+          PY
+
+  full-year-join:
+    needs: private-key-preflight
+    if: needs.private-key-preflight.outputs.available == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        year: [2021, 2022, 2023, 2024, 2025, 2026]
+    env:
+      PYTHONPATH: '.'
+      PYTHONUNBUFFERED: '1'
+      PYTHONHASHSEED: '0'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          persist-credentials: false
+          sparse-checkout: |
+            research/type_lab_full_archive
+            research/deletion_ai
+            odds_market
+            data/audits/odds_seven_bet_runs
+            data/result_universe_v2/combined
+
+      - name: Checkout THIS year's complete ciphertext (not a subset)
+        env:
+          YEAR: ${{ matrix.year }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Enumerate precise ciphertext blob paths from EVERY ORIGINAL run manifest.
+          # Avoid wildcard directories: saved archive filenames are not organized by year at the root.
+          python - "$YEAR" <<'PY' > /tmp/type-lab-sparse-patterns
+          import json, sys
+          from pathlib import Path
+          year = str(sys.argv[1])
+          paths = set()
+          manifests = sorted(Path("data/audits/odds_seven_bet_runs").glob("*.json"))
+          if not manifests:
+              raise SystemExit("FAIL: original run manifests missing")
+          for manifest in manifests:
+              data = json.loads(manifest.read_text(encoding="utf-8"))
+              for row in data.get("encrypted_files", []):
+                  p = str(row["path"])
+                  if Path(p).parent.name.startswith(year + "-"):
+                      paths.add(p)
+          if not paths:
+              raise SystemExit("FAIL: no archived ciphertext for year " + year)
+          common = [
+              "research/type_lab_full_archive/secure_connect.py",
+              "research/deletion_ai/secure_seven_bet_bridge.py",
+              "odds_market/collect_all_odds.py",
+              "odds_market/vault_public_cert.pem",
+          ]
+          common += [str(p) for p in Path("data/audits/odds_seven_bet_runs").glob("*.json")]
+          common += [str(p) for p in Path("data/result_universe_v2/combined").glob("*.gz")]
+          for p in sorted(set(common) | paths):
+              print("/" + p)
+          print("CIPHERTEXT_PATHS_IN_MANIFEST=" + str(len(paths)), file=sys.stderr)
+          PY
+          git sparse-checkout set --no-cone --stdin < /tmp/type-lab-sparse-patterns
+          test "$(find data/odds_ciphertext -name '*.p7m' -type f | wc -l)" -gt 0
+          echo "SPARSE_YEAR=$YEAR"
+          test -f research/type_lab_full_archive/secure_connect.py
+          test -f research/deletion_ai/secure_seven_bet_bridge.py
+          test -f odds_market/vault_public_cert.pem
+          test -f "data/result_universe_v2/combined/results_${YEAR}.jsonl.gz"
+          find data/odds_ciphertext -name '*.p7m' -type f | wc -l
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies of original seven-market completeness parser
+        run: python -m pip install --disable-pip-version-check requests beautifulsoup4
+
+      - name: Python parser import preflight without opening any secret
+        run: |
+          python -m py_compile research/type_lab_full_archive/secure_connect.py
+          python -m py_compile research/deletion_ai/secure_seven_bet_bridge.py
+
+      - name: Decrypt and VERIFY ALL original seven-market archives, join exact podiums
+        env:
+          YEAR: ${{ matrix.year }}
+          KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        run: |
+          set -euo pipefail
+          python -u research/type_lab_full_archive/secure_connect.py \
+            --year "$YEAR" --output "type-lab-secure-results/${YEAR}"
+          test -s "type-lab-secure-results/${YEAR}/connection_report.json"
+          test -s "type-lab-secure-results/${YEAR}/all_seven_bet_odds_${YEAR}.jsonl.gz.cms"
+          test -s "type-lab-secure-results/${YEAR}/verified_result_labels_${YEAR}.jsonl.gz.cms"
+
+      - name: Save owner-encrypted all-market join and public COUNTS ONLY
+        uses: actions/upload-artifact@v4
+        with:
+          name: type-lab-full-secure-join-${{ matrix.year }}
+          path: type-lab-secure-results/${{ matrix.year }}/
+          retention-days: 30
+          compression-level: 0
+
+  public-source-census:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          persist-credentials: false
+          sparse-checkout: |
+            research/type_lab_full_archive
+            data/2023
+            data/2024
+            data/2025
+            data/2026_h1
+            data/a_class_12
+            data/a3_challenge
+            data/grade_races
+            data/result_universe_v2/combined
+            data/odds_only
+            data/audits/odds_only_export.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Scan ALL mounted public CSV/ZIP/source results and join all exact race IDs
+        run: |
+          set -euo pipefail
+          python research/type_lab_full_archive/public_census.py
+          test -s research/type_lab_full_archive/public_connection_report.json
+      - name: Publish audit counts ONLY - not falsely identified as full seven-market
+        uses: actions/upload-artifact@v4
+        with:
+          name: type-lab-all-public-sources-audit
+          path: research/type_lab_full_archive/public_connection_report.json
+          retention-days: 30

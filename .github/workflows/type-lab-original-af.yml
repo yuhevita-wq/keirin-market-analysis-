@@ -1,0 +1,63 @@
+name: Type Lab A-F exact-rule classification provenance audit
+on:
+  push:
+    branches: [research/type-lab-full-archive-20261022]
+    paths:
+      - "research/type_lab_features/classify_original_six_types.py"
+      - ".github/workflows/type-lab-original-af.yml"
+  pull_request:
+    paths:
+      - "research/type_lab_features/classify_original_six_types.py"
+      - ".github/workflows/type-lab-original-af.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  verify-and-classify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            odds_market/vault_public_cert.pem
+            research/type_lab_features/classify_original_six_types.py
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Ensure original A-F classification and strict missing values
+        run: |
+          python -m py_compile research/type_lab_features/classify_original_six_types.py
+          python research/type_lab_features/classify_original_six_types.py --selftest
+      - name: Download ALL 80,882 all-history probabilities and frozen 33,487 out-of-time forecasts
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 39867327186
+          repository: yuhevita-wq/keirin-market-analysis-
+          name: type-lab-80882-p1p3-frozen-test-and-production-refit
+          path: incoming/
+          github-token: ${{ github.token }}
+      - name: Classify using EXACT canonical A-F rule; do not invent absent historical arare
+        env:
+          KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+          PYTHONUNBUFFERED: '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -u research/type_lab_features/classify_original_six_types.py \
+            --input incoming --output classified/
+          test -s classified/type_lab_af_strict_classification_report.json
+          test -s classified/full_history_in_sample_six_type_classification.jsonl.gz.cms
+          test -s classified/frozen_2025_2026_heldout_six_type_classification.jsonl.gz.cms
+      - name: Archive owner-encrypted per-race families and plaintext audit counts
+        uses: actions/upload-artifact@v4
+        with:
+          name: type-lab-af-strict-80882-33487-no-invented-inputs
+          path: classified/
+          retention-days: 30
+          compression-level: 0
