@@ -1,0 +1,640 @@
+{
+  "schema": "chapter1-market-fusion-profit-lab-2023-v1",
+  "generated_at": "2026-10-20T09:54:08.754750+00:00",
+  "source": {
+    "matched_races": 1650,
+    "month_counts": {
+      "2023-09": 361,
+      "2023-10": 441,
+      "2023-11": 428,
+      "2023-12": 420
+    },
+    "model_id": "g01-c01",
+    "model_archive_sha256": "10f5cc3c4b1adaf73cdd60fdf21f70247dcd3627576461f7457522ec61dc00b8",
+    "cards": {
+      "files": [
+        {
+          "path": "data/a_class_12/2023_07_08/entries.csv",
+          "race_manifests_with_line": 0,
+          "entry_rows": 0
+        },
+        {
+          "path": "data/a_class_12/2023_09_10/entries.csv",
+          "race_manifests_with_line": 1993,
+          "entry_rows": 13815
+        },
+        {
+          "path": "data/a3_challenge/2023_07_08/entries.csv",
+          "race_manifests_with_line": 0,
+          "entry_rows": 0
+        },
+        {
+          "path": "data/a3_challenge/2023_09_10/entries.csv",
+          "race_manifests_with_line": 953,
+          "entry_rows": 6532
+        },
+        {
+          "path": "data/2023/s_class_f1_all_parts/2023_q3/entries.csv",
+          "race_manifests_with_line": 375,
+          "entry_rows": 2595
+        },
+        {
+          "path": "data/a_class_12/2023_11_12/entries.csv",
+          "race_manifests_with_line": 1973,
+          "entry_rows": 13693
+        },
+        {
+          "path": "data/a3_challenge/2023_11_12/entries.csv",
+          "race_manifests_with_line": 948,
+          "entry_rows": 6449
+        },
+        {
+          "path": "data/2023/s_class_f1_all_parts/2023_q4/entries.csv",
+          "race_manifests_with_line": 1313,
+          "entry_rows": 9054
+        }
+      ],
+      "exclusions": {
+        "entry_rows_missing_numeric": 215,
+        "race_manifest_line_missing": 9,
+        "exclude_podium_not_in_card": 62,
+        "exclude_line_coverage_mismatch": 152
+      },
+      "complete_podium_with_line_races": 7341,
+      "months": {
+        "2023-09": 1783,
+        "2023-10": 1876,
+        "2023-11": 1828,
+        "2023-12": 1854
+      },
+      "categories": {
+        "A3": 1840,
+        "A1_A2": 3853,
+        "S": 1648
+      }
+    },
+    "odds": {
+      "full_year_odds_records": 9987
+    },
+    "missing_book": {
+      "missing_market": 5691
+    },
+    "source_dates": [
+      "2023-09-01",
+      "2023-12-31"
+    ]
+  },
+  "objective": "Improve actual ticket PnL without leaking later race results into model decisions",
+  "learned_parameters_using_september_only": {
+    "3連単": {
+      "parameters_by_family": {
+        "inherited_model": {
+          "family": "linear",
+          "alpha": 1.0,
+          "gamma": 1.0
+        },
+        "normalized_market": {
+          "family": "linear",
+          "alpha": 0.0,
+          "gamma": 1.0
+        },
+        "fitted_linear": {
+          "family": "linear",
+          "alpha": 0.03745212778867741,
+          "gamma": 1.0564094873950054
+        },
+        "fitted_log": {
+          "family": "log",
+          "alpha": 0.14836855751659356,
+          "gamma": 1.100597836661804
+        }
+      },
+      "september_training_nll": {
+        "inherited_model": 4.4696330812209615,
+        "normalized_market": 4.180301663297741,
+        "fitted_linear": 4.178191082700058,
+        "fitted_log": 4.173413868799478
+      },
+      "september_races": 361
+    },
+    "3連複": {
+      "parameters_by_family": {
+        "inherited_model": {
+          "family": "linear",
+          "alpha": 1.0,
+          "gamma": 1.0
+        },
+        "normalized_market": {
+          "family": "linear",
+          "alpha": 0.0,
+          "gamma": 1.0
+        },
+        "fitted_linear": {
+          "family": "linear",
+          "alpha": 0.0423445498551753,
+          "gamma": 1.1058615641188636
+        },
+        "fitted_log": {
+          "family": "log",
+          "alpha": 0.1275312538665701,
+          "gamma": 1.144345111587682
+        }
+      },
+      "september_training_nll": {
+        "inherited_model": 2.892475748835797,
+        "normalized_market": 2.718851703723476,
+        "fitted_linear": 2.714013753631437,
+        "fitted_log": 2.7126247032582693
+      },
+      "september_races": 361
+    }
+  },
+  "october_policy_candidates": [
+    {
+      "label": "fitted_linear",
+      "buffer": 0.0,
+      "sample_gate": false,
+      "tickets": 152,
+      "hits": 0,
+      "roi": 0.0,
+      "net_yen": -15200.0
+    },
+    {
+      "label": "fitted_linear",
+      "buffer": 0.05,
+      "sample_gate": false,
+      "tickets": 90,
+      "hits": 0,
+      "roi": 0.0,
+      "net_yen": -9000.0
+    },
+    {
+      "label": "fitted_linear",
+      "buffer": 0.1,
+      "sample_gate": false,
+      "tickets": 68,
+      "hits": 0,
+      "roi": 0.0,
+      "net_yen": -6800.0
+    },
+    {
+      "label": "fitted_linear",
+      "buffer": 0.2,
+      "sample_gate": false,
+      "tickets": 26,
+      "hits": 0,
+      "roi": 0.0,
+      "net_yen": -2600.0
+    },
+    {
+      "label": "fitted_linear",
+      "buffer": 0.35,
+      "sample_gate": false,
+      "tickets": 9,
+      "hits": 0,
+      "roi": 0.0,
+      "net_yen": -900.0
+    },
+    {
+      "label": "fitted_linear",
+      "buffer": 0.5,
+      "sample_gate": false,
+      "tickets": 3,
+      "hits": 0,
+      "roi": 0.0,
+      "net_yen": -300.0
+    },
+    {
+      "label": "fitted_log",
+      "buffer": 0.0,
+      "sample_gate": false,
+      "tickets": 56,
+      "hits": 0,
+      "roi": 0.0,
+      "net_yen": -5600.0
+    },
+    {
+      "label": "fitted_log",
+      "buffer": 0.05,
+      "sample_gate": false,
+      "tickets": 14,
+      "hits": 0,
+      "roi": 0.0,
+      "net_yen": -1400.0
+    },
+    {
+      "label": "fitted_log",
+      "buffer": 0.1,
+      "sample_gate": false,
+      "tickets": 2,
+      "hits": 0,
+      "roi": 0.0,
+      "net_yen": -200.0
+    },
+    {
+      "label": "fitted_log",
+      "buffer": 0.2,
+      "sample_gate": false,
+      "tickets": 0,
+      "hits": 0,
+      "roi": null,
+      "net_yen": 0.0
+    },
+    {
+      "label": "fitted_log",
+      "buffer": 0.35,
+      "sample_gate": false,
+      "tickets": 0,
+      "hits": 0,
+      "roi": null,
+      "net_yen": 0.0
+    },
+    {
+      "label": "fitted_log",
+      "buffer": 0.5,
+      "sample_gate": false,
+      "tickets": 0,
+      "hits": 0,
+      "roi": null,
+      "net_yen": 0.0
+    },
+    {
+      "label": "inherited_model",
+      "buffer": 0.0,
+      "sample_gate": true,
+      "tickets": 47706,
+      "hits": 168,
+      "roi": 53.83599547226764,
+      "net_yen": -2202300.0
+    },
+    {
+      "label": "inherited_model",
+      "buffer": 0.05,
+      "sample_gate": true,
+      "tickets": 45267,
+      "hits": 152,
+      "roi": 54.5311153820664,
+      "net_yen": -2058240.0
+    },
+    {
+      "label": "inherited_model",
+      "buffer": 0.1,
+      "sample_gate": true,
+      "tickets": 42950,
+      "hits": 135,
+      "roi": 52.83864959254947,
+      "net_yen": -2025580.0
+    },
+    {
+      "label": "inherited_model",
+      "buffer": 0.2,
+      "sample_gate": true,
+      "tickets": 38759,
+      "hits": 112,
+      "roi": 55.08888258210996,
+      "net_yen": -1740710.0
+    },
+    {
+      "label": "inherited_model",
+      "buffer": 0.35,
+      "sample_gate": true,
+      "tickets": 33269,
+      "hits": 79,
+      "roi": 49.725570350777,
+      "net_yen": -1672580.0
+    },
+    {
+      "label": "inherited_model",
+      "buffer": 0.5,
+      "sample_gate": true,
+      "tickets": 28758,
+      "hits": 59,
+      "roi": 52.686556784199176,
+      "net_yen": -1360640.0
+    },
+    {
+      "label": "normalized_market",
+      "buffer": 0.0,
+      "sample_gate": false,
+      "tickets": 0,
+      "hits": 0,
+      "roi": null,
+      "net_yen": 0.0
+    },
+    {
+      "label": "normalized_market",
+      "buffer": 0.05,
+      "sample_gate": false,
+      "tickets": 0,
+      "hits": 0,
+      "roi": null,
+      "net_yen": 0.0
+    },
+    {
+      "label": "normalized_market",
+      "buffer": 0.1,
+      "sample_gate": false,
+      "tickets": 0,
+      "hits": 0,
+      "roi": null,
+      "net_yen": 0.0
+    },
+    {
+      "label": "normalized_market",
+      "buffer": 0.2,
+      "sample_gate": false,
+      "tickets": 0,
+      "hits": 0,
+      "roi": null,
+      "net_yen": 0.0
+    },
+    {
+      "label": "normalized_market",
+      "buffer": 0.35,
+      "sample_gate": false,
+      "tickets": 0,
+      "hits": 0,
+      "roi": null,
+      "net_yen": 0.0
+    },
+    {
+      "label": "normalized_market",
+      "buffer": 0.5,
+      "sample_gate": false,
+      "tickets": 0,
+      "hits": 0,
+      "roi": null,
+      "net_yen": 0.0
+    }
+  ],
+  "baseline_and_nll_comparisons": {
+    "fitted_linear": {
+      "september_train": {
+        "eligible_market_race_observations": 722,
+        "purchased_tickets": 277,
+        "winning_tickets": 0,
+        "betting_market_race_observations": 49,
+        "investment_yen": 27700.0,
+        "payout_yen": 0.0,
+        "profit_yen": -27700.0,
+        "return_percent": 0.0,
+        "model_expected_return_percent": 115.20170671673421,
+        "nll": 3.446102418165748,
+        "market_nll": 3.4495766835106068,
+        "per_month": {
+          "2023-09": {
+            "investment_yen": 27700.0,
+            "payout_yen": 0.0,
+            "bets": 277,
+            "winning_tickets": 0,
+            "return_percent": 0.0
+          }
+        }
+      },
+      "october_dev": {
+        "eligible_market_race_observations": 882,
+        "purchased_tickets": 152,
+        "winning_tickets": 0,
+        "betting_market_race_observations": 35,
+        "investment_yen": 15200.0,
+        "payout_yen": 0.0,
+        "profit_yen": -15200.0,
+        "return_percent": 0.0,
+        "model_expected_return_percent": 111.65805800657164,
+        "nll": 3.4002109524504918,
+        "market_nll": 3.4039683273352686,
+        "per_month": {
+          "2023-10": {
+            "investment_yen": 15200.0,
+            "payout_yen": 0.0,
+            "bets": 152,
+            "winning_tickets": 0,
+            "return_percent": 0.0
+          }
+        }
+      }
+    },
+    "fitted_log": {
+      "september_train": {
+        "eligible_market_race_observations": 722,
+        "purchased_tickets": 91,
+        "winning_tickets": 0,
+        "betting_market_race_observations": 46,
+        "investment_yen": 9100.0,
+        "payout_yen": 0.0,
+        "profit_yen": -9100.0,
+        "return_percent": 0.0,
+        "model_expected_return_percent": 103.84652702461723,
+        "nll": 3.4430192860288753,
+        "market_nll": 3.4495766835106068,
+        "per_month": {
+          "2023-09": {
+            "investment_yen": 9100.0,
+            "payout_yen": 0.0,
+            "bets": 91,
+            "winning_tickets": 0,
+            "return_percent": 0.0
+          }
+        }
+      },
+      "october_dev": {
+        "eligible_market_race_observations": 882,
+        "purchased_tickets": 56,
+        "winning_tickets": 0,
+        "betting_market_race_observations": 38,
+        "investment_yen": 5600.0,
+        "payout_yen": 0.0,
+        "profit_yen": -5600.0,
+        "return_percent": 0.0,
+        "model_expected_return_percent": 103.14859793805473,
+        "nll": 3.3989573891736398,
+        "market_nll": 3.4039683273352686,
+        "per_month": {
+          "2023-10": {
+            "investment_yen": 5600.0,
+            "payout_yen": 0.0,
+            "bets": 56,
+            "winning_tickets": 0,
+            "return_percent": 0.0
+          }
+        }
+      }
+    },
+    "inherited_model": {
+      "september_train": {
+        "eligible_market_race_observations": 722,
+        "purchased_tickets": 40858,
+        "winning_tickets": 162,
+        "betting_market_race_observations": 722,
+        "investment_yen": 4085800.0,
+        "payout_yen": 2532120.0,
+        "profit_yen": -1553680.0,
+        "return_percent": 61.9736648881492,
+        "model_expected_return_percent": 232.94027832287574,
+        "nll": 3.6810544150283837,
+        "market_nll": 3.4495766835106068,
+        "per_month": {
+          "2023-09": {
+            "investment_yen": 4085800.0,
+            "payout_yen": 2532120.0,
+            "bets": 40858,
+            "winning_tickets": 162,
+            "return_percent": 61.9736648881492
+          }
+        }
+      },
+      "october_dev": {
+        "eligible_market_race_observations": 882,
+        "purchased_tickets": 47706,
+        "winning_tickets": 168,
+        "betting_market_race_observations": 882,
+        "investment_yen": 4770600.0,
+        "payout_yen": 2568300.0,
+        "profit_yen": -2202300.0,
+        "return_percent": 53.83599547226764,
+        "model_expected_return_percent": 216.51895819561258,
+        "nll": 3.6293594040571375,
+        "market_nll": 3.4039683273352686,
+        "per_month": {
+          "2023-10": {
+            "investment_yen": 4770600.0,
+            "payout_yen": 2568300.0,
+            "bets": 47706,
+            "winning_tickets": 168,
+            "return_percent": 53.83599547226764
+          }
+        }
+      }
+    },
+    "normalized_market": {
+      "september_train": {
+        "eligible_market_race_observations": 722,
+        "purchased_tickets": 0,
+        "winning_tickets": 0,
+        "betting_market_race_observations": 0,
+        "investment_yen": 0.0,
+        "payout_yen": 0.0,
+        "profit_yen": 0.0,
+        "return_percent": null,
+        "model_expected_return_percent": null,
+        "nll": 3.4495766835106068,
+        "market_nll": 3.4495766835106068,
+        "per_month": {
+          "2023-09": {
+            "investment_yen": 0.0,
+            "payout_yen": 0.0,
+            "bets": 0,
+            "winning_tickets": 0,
+            "return_percent": null
+          }
+        }
+      },
+      "october_dev": {
+        "eligible_market_race_observations": 882,
+        "purchased_tickets": 0,
+        "winning_tickets": 0,
+        "betting_market_race_observations": 0,
+        "investment_yen": 0.0,
+        "payout_yen": 0.0,
+        "profit_yen": 0.0,
+        "return_percent": null,
+        "model_expected_return_percent": null,
+        "nll": 3.4039683273352686,
+        "market_nll": 3.4039683273352686,
+        "per_month": {
+          "2023-10": {
+            "investment_yen": 0.0,
+            "payout_yen": 0.0,
+            "bets": 0,
+            "winning_tickets": 0,
+            "return_percent": null
+          }
+        }
+      }
+    }
+  },
+  "decision_and_historical_check": {
+    "october_selected": {
+      "label": "inherited_model",
+      "buffer": 0.2
+    },
+    "frozen_policy_before_november": {
+      "3連単": {
+        "family": "linear",
+        "alpha": 1.0,
+        "gamma": 1.0
+      },
+      "3連複": {
+        "family": "linear",
+        "alpha": 1.0,
+        "gamma": 1.0
+      }
+    },
+    "october_result": {
+      "eligible_market_race_observations": 882,
+      "purchased_tickets": 38759,
+      "winning_tickets": 112,
+      "betting_market_race_observations": 880,
+      "investment_yen": 3875900.0,
+      "payout_yen": 2135190.0,
+      "profit_yen": -1740710.0,
+      "return_percent": 55.08888258210996,
+      "model_expected_return_percent": 241.19884251461045,
+      "nll": 3.6293594040571375,
+      "market_nll": 3.4039683273352686,
+      "per_month": {
+        "2023-10": {
+          "investment_yen": 3875900.0,
+          "payout_yen": 2135190.0,
+          "bets": 38759,
+          "winning_tickets": 112,
+          "return_percent": 55.08888258210996
+        }
+      }
+    },
+    "held_out_november_december": {
+      "eligible_market_race_observations": 1696,
+      "purchased_tickets": 77536,
+      "winning_tickets": 253,
+      "betting_market_race_observations": 1690,
+      "investment_yen": 7753600.0,
+      "payout_yen": 5358010.0,
+      "profit_yen": -2395590.0,
+      "return_percent": 69.10351320676847,
+      "model_expected_return_percent": 237.71506255019943,
+      "nll": 3.640452483239583,
+      "market_nll": 3.4189579775684815,
+      "per_month": {
+        "2023-11": {
+          "investment_yen": 3961100.0,
+          "payout_yen": 2389340.0,
+          "bets": 39611,
+          "winning_tickets": 126,
+          "return_percent": 60.320113099896496
+        },
+        "2023-12": {
+          "investment_yen": 3792500.0,
+          "payout_yen": 2968670.0,
+          "bets": 37925,
+          "winning_tickets": 127,
+          "return_percent": 78.27738958470665
+        }
+      }
+    },
+    "historical_profit_qualifies_two_months": false,
+    "status": "FAILED_HISTORICAL_TWO_MONTHS"
+  },
+  "2024plus_results_used_in_training": false,
+  "2023_nov_dec_used_in_selection": false,
+  "passed_new_unknown_year_test": false,
+  "may_claim_true_profit_edge": false,
+  "cautions": [
+    "2023 Nov-Dec had already been consulted in prior LINE model family development, so not untouched.",
+    "Sep-trained frozen candidate temperature was already fitted on Sep labels; historical profit lab only adds odds-informed calibration.",
+    "Oct selection is a search on realized historical ROI; it can overfit October. Never select on November/December outcomes.",
+    "Final odds were used, not live 15-min preclose betting odds.",
+    "Market-weighted ticket probability can converge to market prices, yielding no EV opportunities; abstention is valid.",
+    "Every high-odds ticket is included in the full distribution but bought only if predicted positive expected value after required buffer.",
+    "This is a model calibration/market-fusion search, not arbitrary retrospective filtering of winning selections."
+  ]
+}
