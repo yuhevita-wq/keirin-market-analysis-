@@ -1,0 +1,185 @@
+{
+  "status": "SEPARATE_OUT_OF_TIME_CALIBRATION_TEST",
+  "window": "2026-09-01 through 2026-09-30",
+  "calibration_training_window": "2026-07-02 to 2026-08-30 only",
+  "calibrator": {
+    "method": "high_hinge",
+    "theta": 0.9999940391390134,
+    "calibration_logloss": 1.5728980559701697
+  },
+  "forecast_was_committed_before_target_outcomes_loaded": true,
+  "predicted_races": 422,
+  "scored_races": 421,
+  "unscorable": [
+    {
+      "race_id": "8520260912030009",
+      "reason": "Missing or ambiguous winner",
+      "winner_count": 2
+    }
+  ],
+  "race_dates": 30,
+  "top1_hits_same_for_both": 152,
+  "top1_accuracy_same_for_both": 0.36104513064133015,
+  "before": {
+    "races": 421,
+    "log_loss": 1.5635661192747754,
+    "pseudo_R2_benter_1994": 0.19114431421063816,
+    "brier": 0.7390166435297771
+  },
+  "after": {
+    "races": 421,
+    "log_loss": 1.5626619061344822,
+    "pseudo_R2_benter_1994": 0.19161207692989612,
+    "brier": 0.7383997922383798
+  },
+  "comparison": {
+    "logloss_improvement_positive_is_good": 0.0009042131402932085,
+    "brier_improvement_positive_is_good": 0.0006168512913973245,
+    "bootstrap_by_date_95pct_logloss_improvement": [
+      -0.0016650040254337834,
+      0.0033435883772893428
+    ]
+  },
+  "high_40pct_bucket_frozen_from_original_predictions": {
+    "before": {
+      "riders": 164,
+      "predicted": 0.5036562369289335,
+      "actual": 0.4878048780487805,
+      "prediction_minus_actual": 0.01585135888015303,
+      "predicted_winners": 82.5996228563451,
+      "actual_winners": 80
+    },
+    "after": {
+      "riders": 164,
+      "predicted": 0.4800004141085771,
+      "actual": 0.4878048780487805,
+      "prediction_minus_actual": -0.00780446394020344,
+      "predicted_winners": 78.72006791380664,
+      "actual_winners": 80
+    },
+    "before_abs_calibration_error": 0.01585135888015303,
+    "after_abs_calibration_error": 0.00780446394020344,
+    "bootstrap_95pct_original_predicted_minus_actual": [
+      -0.053797814694810674,
+      0.08511360520143996
+    ],
+    "bootstrap_95pct_corrected_predicted_minus_actual": [
+      -0.07810436709932754,
+      0.06185028001681152
+    ]
+  },
+  "bins": [
+    {
+      "original_probability_bin": [
+        0,
+        0.025
+      ],
+      "n_riders": 296,
+      "before": 0.01654153300911484,
+      "after": 0.01737475984787973,
+      "actual": 0.02027027027027027
+    },
+    {
+      "original_probability_bin": [
+        0.025,
+        0.05
+      ],
+      "n_riders": 473,
+      "before": 0.036958117592348905,
+      "after": 0.038327307445151004,
+      "actual": 0.02959830866807611
+    },
+    {
+      "original_probability_bin": [
+        0.05,
+        0.1
+      ],
+      "n_riders": 643,
+      "before": 0.07318676509085739,
+      "after": 0.07466655277717413,
+      "actual": 0.060653188180404355
+    },
+    {
+      "original_probability_bin": [
+        0.1,
+        0.15
+      ],
+      "n_riders": 471,
+      "before": 0.12432508275573112,
+      "after": 0.12595784420695344,
+      "actual": 0.11252653927813164
+    },
+    {
+      "original_probability_bin": [
+        0.15,
+        0.2
+      ],
+      "n_riders": 293,
+      "before": 0.17161738044065414,
+      "after": 0.1733207566603926,
+      "actual": 0.18771331058020477
+    },
+    {
+      "original_probability_bin": [
+        0.2,
+        0.25
+      ],
+      "n_riders": 215,
+      "before": 0.22571948676781875,
+      "after": 0.22773925654393423,
+      "actual": 0.30697674418604654
+    },
+    {
+      "original_probability_bin": [
+        0.25,
+        0.3
+      ],
+      "n_riders": 166,
+      "before": 0.27236812813941036,
+      "after": 0.27374046077256825,
+      "actual": 0.30120481927710846
+    },
+    {
+      "original_probability_bin": [
+        0.3,
+        0.4
+      ],
+      "n_riders": 192,
+      "before": 0.3457291584639082,
+      "after": 0.34626880388426695,
+      "actual": 0.3020833333333333
+    },
+    {
+      "original_probability_bin": [
+        0.4,
+        0.5
+      ],
+      "n_riders": 102,
+      "before": 0.444521375607525,
+      "after": 0.4335975801033305,
+      "actual": 0.46078431372549017
+    },
+    {
+      "original_probability_bin": [
+        0.5,
+        0.6
+      ],
+      "n_riders": 44,
+      "before": 0.5535266290694809,
+      "after": 0.5154592482582617,
+      "actual": 0.4772727272727273
+    },
+    {
+      "original_probability_bin": [
+        0.6,
+        1.000001
+      ],
+      "n_riders": 18,
+      "before": 0.7168483814066866,
+      "after": 0.6562726566613009,
+      "actual": 0.6666666666666666
+    }
+  ],
+  "caveat": "Historical per-race rider cards are retrospectively archived, not contemporaneous live forecasts.",
+  "other_caveat": "Strong Sept performance validates temporal transfer of a calibration fixed on Jul-Aug; no betting profitability or full-race generality claim."
+}

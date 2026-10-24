@@ -1,0 +1,246 @@
+{
+  "status": "EXPLORATORY_RETROSPECTIVE_NOT_PROVEN_AS_OF",
+  "scope": "F1 S-class races in available paired entrant/result files only",
+  "data_quality_note": "Historic entries were obtained retrospectively; no proof that stored factors equal the original pre-race snapshots.",
+  "audit": {
+    "races_discovered": 16744,
+    "retrospective_snapshot_races": 16680,
+    "missing_or_ambiguous_winner": 64
+  },
+  "by_directory": {
+    "data/2023/s_class_f1_all_parts/2023_q2": {
+      "races_in_entries": 1285,
+      "races_valid": 1282,
+      "rows_in_results": 8888
+    },
+    "data/2023/s_class_f1_all_parts/2023_q3": {
+      "races_in_entries": 1249,
+      "races_valid": 1245,
+      "rows_in_results": 8653
+    },
+    "data/2023/s_class_f1_all_parts/2023_q4": {
+      "races_in_entries": 1318,
+      "races_valid": 1315,
+      "rows_in_results": 9115
+    },
+    "data/2024/s_class_f1_all_parts/2024_q1": {
+      "races_in_entries": 1328,
+      "races_valid": 1325,
+      "rows_in_results": 9155
+    },
+    "data/2024/s_class_f1_all_parts/2024_q2": {
+      "races_in_entries": 1295,
+      "races_valid": 1291,
+      "rows_in_results": 8978
+    },
+    "data/2024/s_class_f1_all_parts/2024_q3": {
+      "races_in_entries": 1290,
+      "races_valid": 1288,
+      "rows_in_results": 8920
+    },
+    "data/2024/s_class_f1_all_parts/2024_q4": {
+      "races_in_entries": 1278,
+      "races_valid": 1275,
+      "rows_in_results": 8841
+    },
+    "data/2025/s_class_f1_all_parts/2025_q1": {
+      "races_in_entries": 1248,
+      "races_valid": 1240,
+      "rows_in_results": 8677
+    },
+    "data/2025/s_class_f1_all_parts/2025_q2": {
+      "races_in_entries": 1266,
+      "races_valid": 1257,
+      "rows_in_results": 8749
+    },
+    "data/2025/s_class_f1_all_parts/2025_q3": {
+      "races_in_entries": 1308,
+      "races_valid": 1303,
+      "rows_in_results": 9089
+    },
+    "data/2025/s_class_f1_all_parts/2025_q4": {
+      "races_in_entries": 1317,
+      "races_valid": 1306,
+      "rows_in_results": 9129
+    },
+    "data/2026_h1/s_class_f1_all": {
+      "races_in_entries": 2562,
+      "races_valid": 2553,
+      "rows_in_results": 17708
+    }
+  },
+  "partition_counts": {
+    "train": 9021,
+    "validation": 5106,
+    "test": 2553
+  },
+  "hyperparameter_search": [
+    {
+      "ridge_alpha": 0.0001,
+      "validation_log_loss": 1.6387515431103823
+    },
+    {
+      "ridge_alpha": 0.001,
+      "validation_log_loss": 1.639246568074691
+    },
+    {
+      "ridge_alpha": 0.01,
+      "validation_log_loss": 1.6396002731417216
+    },
+    {
+      "ridge_alpha": 0.1,
+      "validation_log_loss": 1.6522036682747112
+    }
+  ],
+  "validation": {
+    "race_count": 5106,
+    "from": "2025-01-01",
+    "to": "2025-12-31",
+    "log_loss": 1.6387515431103823,
+    "uniform_log_loss": 1.9358585205891128,
+    "gain_vs_uniform_log_loss": 0.2971069774787305,
+    "multiclass_brier": 0.7582650084240613,
+    "top1_hit_rate": 0.3619271445358402,
+    "calibration": [
+      {
+        "lower": 0.0,
+        "upper": 0.1,
+        "count": 16884,
+        "mean_predicted": 0.0561229144641165,
+        "actual_frequency": 0.050935797204453924
+      },
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "count": 10161,
+        "mean_predicted": 0.1425186374898749,
+        "actual_frequency": 0.15185513236886133
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.3,
+        "count": 4471,
+        "mean_predicted": 0.24355860584451383,
+        "actual_frequency": 0.2516215611719973
+      },
+      {
+        "lower": 0.3,
+        "upper": 0.4,
+        "count": 2154,
+        "mean_predicted": 0.34357787220397984,
+        "actual_frequency": 0.3532961931290622
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "count": 1028,
+        "mean_predicted": 0.445595329373012,
+        "actual_frequency": 0.42023346303501946
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6,
+        "count": 471,
+        "mean_predicted": 0.5417481756108244,
+        "actual_frequency": 0.5031847133757962
+      },
+      {
+        "lower": 0.6,
+        "upper": 0.7,
+        "count": 175,
+        "mean_predicted": 0.644697602649783,
+        "actual_frequency": 0.5714285714285714
+      },
+      {
+        "lower": 0.7,
+        "upper": 0.8,
+        "count": 53,
+        "mean_predicted": 0.7419246011830912,
+        "actual_frequency": 0.6415094339622641
+      },
+      {
+        "lower": 0.8,
+        "upper": 0.9,
+        "count": 19,
+        "mean_predicted": 0.8364262926565219,
+        "actual_frequency": 0.7368421052631579
+      }
+    ]
+  },
+  "test": {
+    "race_count": 2553,
+    "from": "2026-01-01",
+    "to": "2026-06-30",
+    "log_loss": 1.663162436770208,
+    "uniform_log_loss": 1.9318559476887922,
+    "gain_vs_uniform_log_loss": 0.2686935109185842,
+    "multiclass_brier": 0.7566157444134742,
+    "top1_hit_rate": 0.36584410497453973,
+    "calibration": [
+      {
+        "lower": 0.0,
+        "upper": 0.1,
+        "count": 8449,
+        "mean_predicted": 0.05602626277900356,
+        "actual_frequency": 0.05373416972422772
+      },
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "count": 5006,
+        "mean_predicted": 0.14284424433474674,
+        "actual_frequency": 0.14802237315221733
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.3,
+        "count": 2196,
+        "mean_predicted": 0.24382720379583278,
+        "actual_frequency": 0.2522768670309654
+      },
+      {
+        "lower": 0.3,
+        "upper": 0.4,
+        "count": 1100,
+        "mean_predicted": 0.3443271991716522,
+        "actual_frequency": 0.3481818181818182
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "count": 522,
+        "mean_predicted": 0.4432210616132286,
+        "actual_frequency": 0.421455938697318
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6,
+        "count": 247,
+        "mean_predicted": 0.5425554484438893,
+        "actual_frequency": 0.5101214574898786
+      },
+      {
+        "lower": 0.6,
+        "upper": 0.7,
+        "count": 86,
+        "mean_predicted": 0.6455694443994342,
+        "actual_frequency": 0.6046511627906976
+      },
+      {
+        "lower": 0.7,
+        "upper": 0.8,
+        "count": 33,
+        "mean_predicted": 0.740379630601426,
+        "actual_frequency": 0.5454545454545454
+      },
+      {
+        "lower": 0.8,
+        "upper": 0.9,
+        "count": 6,
+        "mean_predicted": 0.8378783433410026,
+        "actual_frequency": 0.8333333333333334
+      }
+    ]
+  },
+  "comparison_with_market": "NOT_YET_PERFORMED"
+}
