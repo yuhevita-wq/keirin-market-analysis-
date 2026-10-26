@@ -1,0 +1,71 @@
+name: HaruQ market race selection v1 - research only
+
+on:
+  push:
+    branches: [research/haruq-market-race-selection-20261026]
+    paths:
+      - 'research/haruq_market_selection_v1/**'
+      - '.github/workflows/haruq-market-selection-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: haruq-market-selection-v1
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependencies
+        run: python -m pip install 'numpy>=1.26' 'scipy>=1.13'
+      - name: Verify self-test and script
+        run: |
+          python -m py_compile research/haruq_market_selection_v1/race_selection.py
+          PYTHONPATH=. python research/haruq_market_selection_v1/race_selection.py --self-test
+      - name: Chronological full archive analysis
+        env:
+          OPENBLAS_NUM_THREADS: '1'
+          OMP_NUM_THREADS: '1'
+          PYTHONPATH: .
+        run: python -u research/haruq_market_selection_v1/race_selection.py
+      - name: Validate reported year counts
+        run: |
+          python - <<'PY'
+          import json
+          path='data/audits/haruq_market_race_selection_v1.json'
+          j=json.load(open(path,encoding='utf-8'))
+          assert j['status']=='RESEARCH_FINAL_ODDS_NOT_EXECUTABLE'
+          assert j['data_counts']['2025']>3500
+          assert j['data_counts']['2026']>1800
+          assert set(j['tests'])=={'2025','2026H1'}
+          assert all(len(j['tests'][y]['all_predeclared_gates'])==9 for y in j['tests'])
+          print('HARUQ_MARKET_RACE_SELECTION_VALIDATED')
+          PY
+      - name: Upload experimental evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: haruq-market-race-selection-${{ github.run_id }}
+          path: data/audits/haruq_market_race_selection_v1.json
+          retention-days: 90
+          if-no-files-found: warn
+      - name: Archive without touching main or production
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f data/audits/haruq_market_race_selection_v1.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'archive: HaruQ market race selection outcomes [skip ci]'
+          git pull --rebase origin research/haruq-market-race-selection-20261026
+          git push origin HEAD:research/haruq-market-race-selection-20261026
