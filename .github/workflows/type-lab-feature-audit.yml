@@ -1,0 +1,176 @@
+name: Type Lab historical rider schema inspection
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "research/type_lab_features/extract_official_all_markets_2023_2025.py"
+      - ".github/workflows/type-lab-feature-audit.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  inspect-real-archive-headers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            research/type_lab_features
+            data/2023
+            data/2024
+            data/2025
+            data/2026_h1
+            data/a_class_12
+            data/a3_challenge
+            data/grade_races
+            data/2026_future_block1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Inspect EVERY source table header and grade ZIP member header
+        run: python research/type_lab_features/schema_probe.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: type-lab-real-source-schema-inventory
+          path: research/type_lab_features/schema_inventory.json
+          retention-days: 30
+
+
+  audit-all-historical-rider-payouts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        year: [2021, 2022, 2023, 2024, 2025, 2026]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            research/type_lab_features
+            data/2023
+            data/2024
+            data/2025
+            data/2026_h1
+            data/a_class_12
+            data/a3_challenge
+            data/grade_races
+            data/2026_future_block1
+            data/result_universe_v2/combined
+            odds_market/vault_public_cert.pem
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Audit all actual entries, official payouts, independent results and as-of-time
+        env:
+          YEAR: ${{ matrix.year }}
+        run: |
+          set -euo pipefail
+          python -m py_compile research/type_lab_features/full_rider_settlement_audit.py
+          python -u research/type_lab_features/full_rider_settlement_audit.py \
+            --year "$YEAR" --output "type-lab-feature-audit/$YEAR"
+          test -s "type-lab-feature-audit/$YEAR/rider_settlement_audit_$YEAR.jsonl.gz.cms"
+          test -s "type-lab-feature-audit/$YEAR/settlement_quarantine_$YEAR.jsonl.gz.cms"
+          test -s "type-lab-feature-audit/$YEAR/audit_summary.json"
+      - name: Archive encrypted private rider records and plaintext aggregate counts
+        uses: actions/upload-artifact@v4
+        with:
+          name: type-lab-rider-settlement-audit-${{ matrix.year }}
+          path: type-lab-feature-audit/${{ matrix.year }}/
+          retention-days: 30
+          compression-level: 0
+
+
+  join-seven-markets-with-riders:
+    needs: audit-all-historical-rider-payouts
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        year: [2021, 2022, 2023, 2024, 2025, 2026]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            research/type_lab_features
+            odds_market/vault_public_cert.pem
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download ALL year's previously SHA-checked full-market encrypted artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: type-lab-full-secure-join-${{ matrix.year }}
+          path: incoming/full/
+          run-id: 39789535577
+          repository: yuhevita-wq/keirin-market-analysis-
+          github-token: ${{ github.token }}
+      - name: Download independently audited per-rider and payout quarantine records
+        uses: actions/download-artifact@v4
+        with:
+          name: type-lab-rider-settlement-audit-${{ matrix.year }}
+          path: incoming/rider/
+      - name: Attach FULL 7-market original (not plaintext subset) to riders/results
+        env:
+          YEAR: ${{ matrix.year }}
+          KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -u research/type_lab_features/full_sealed_rider_join.py \
+            --year "$YEAR" \
+            --full incoming/full --feature incoming/rider \
+            --output "type-lab-feature-joined/$YEAR"
+          test -s "type-lab-feature-joined/$YEAR/full_join_summary.json"
+          test -s "type-lab-feature-joined/$YEAR/full_seven_market_with_riders_$YEAR.jsonl.gz.cms"
+      - name: Preserve owner-encrypted full-race joins and nonprivate counts
+        uses: actions/upload-artifact@v4
+        with:
+          name: type-lab-134336-full-market-rider-join-${{ matrix.year }}
+          path: type-lab-feature-joined/${{ matrix.year }}/
+          retention-days: 30
+          compression-level: 0
+
+  payout-all-markets-owner-encrypted:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 80
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            research/type_lab_features/extract_official_all_markets_2023_2025.py
+            odds_market/vault_public_cert.pem
+            data/2023
+            data/2024
+            data/2025
+            data/a_class_12
+            data/a3_challenge
+            data/grade_races
+      - name: Reconcile ALL public official payout market types and encrypt
+        run: |
+          set -euo pipefail
+          python -u research/type_lab_features/extract_official_all_markets_2023_2025.py all-markets/
+          test -s all-markets/all_markets_official_2023_2025.jsonl.gz.cms
+          test -s all-markets/all_markets_official_report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: roi-first-all-markets-official-payments
+          path: all-markets/
+          retention-days: 30
+          compression-level: 0
