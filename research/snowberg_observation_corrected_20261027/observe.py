@@ -27,7 +27,7 @@ def verify_page(html,rid,books,finish):
     evidence={}
     for kind,arity in (("2shatan",2),("3rentan",3)):
         refs={}
-        for el in soup.select("span.num"):
+        for el in soup.select(f"#JS_ODDSCONTENTS_{kind} span.num"):
             selection=el.get_text(strip=True)
             val=el.find_next_sibling("span",class_="odds")
             if re.fullmatch(r"[1-9](?:-[1-9]){"+str(arity-1)+"}",selection) and val:
