@@ -1,0 +1,57 @@
+name: Snowberg-Wolfers | descriptive cross-pool observation
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/snowberg-observation-20261027.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: snowberg-observation-20261027
+  cancel-in-progress: false
+jobs:
+  observe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      PYTHONUNBUFFERED: '1'
+      PYTHONPATH: '.'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing archive reader dependencies
+        run: python -m pip install -e '.[scrape]'
+      - name: Verify syntax
+        run: python -m py_compile research/snowberg_observation_20261027/observe.py
+      - name: Observe existing records without training or collection
+        env:
+          KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        run: python research/snowberg_observation_20261027/observe.py
+      - name: Preserve aggregate results including partial status
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: snowberg-observation-aggregates-${{ github.run_id }}
+          path: |
+            research/snowberg_observation_20261027/summary.json
+            research/snowberg_observation_20261027/README.md
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Save aggregate observation to repository
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/snowberg_observation_20261027/summary.json research/snowberg_observation_20261027/README.md
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'research: publish aggregate cross-pool observations and explicit coverage'
+          for attempt in 1 2 3 4; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
