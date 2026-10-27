@@ -24,6 +24,8 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install -e '.[scrape]'
       - run: python -m py_compile research/snowberg_observation_corrected_20261027/observe.py
+      - name: Regression checks for frame-market contamination
+        run: python -m unittest research.snowberg_observation_corrected_20261027.test_orientation
       - name: Verify independent labels then reaggregate full archive
         env:
           KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
