@@ -30,6 +30,7 @@ CELLS=tuple(itertools.product(range(3),repeat=3))
 STATS=defaultdict(lambda:[0.,0.,0.,0.,0.,0.,0.])
 FAV=defaultdict(lambda:[0.,0.,0.])
 AUDIT=Counter()
+ILLUSTRATIONS=defaultdict(list) # First-encountered future examples, no best-result selection
 
 def odds_band(v):
     for i,t in enumerate(BANDS):
@@ -80,6 +81,11 @@ def observe(rid,day,books,finish,rtype,source):
     if year not in YEARS:raise RuntimeError("Out-of-period records")
     for group in CARS:
         if group==7 and n!=7:continue
+        if year in FORWARD and len(ILLUSTRATIONS[(year,band,group)])<8:
+            ILLUSTRATIONS[(year,band,group)].append({
+                "race_id":rid,"date":day,"favorite":favorite,
+                "favorite_odds":odds[favorite],"finish":finish,
+                "odds":odds,"ranks":ranks,"favorite_cell":favorite_cell})
         f=FAV[(year,band,group)]
         f[0]+=1
         f[1]+=int(finish!=favorite)
@@ -120,6 +126,47 @@ def metrics(s):
             "profit_yen":round(pay-stake),
             "roi_pct":round(100*pay/stake,3) if stake else None,
             "normalized_market_reference_roi_pct":round(100*baseline/stake,3) if stake else None}
+def actual_car_formations(band,group,cap,cells):
+    """Display full genuine 3連単 formations. Never print rank indexes as actual car numbers."""
+    for year in FORWARD:
+        for race in ILLUSTRATIONS[(year,band,group)]:
+            favorite=race["favorite"]
+            book=race["odds"]
+            ranks=race["ranks"]
+            chosen=[]
+            components=[]
+            for cell in cells:
+                if cell==race["favorite_cell"]:continue
+                groups=[]
+                for slot,bin_index in enumerate(CELLS[cell]):
+                    ordered=sorted(ranks[slot],key=lambda c:ranks[slot][c])
+                    groups.append([c for c in ordered if
+                        (0 if ranks[slot][c]<2 else 1 if ranks[slot][c]<4 else 2)==bin_index])
+                valid=[t for t in itertools.product(*groups) if len(set(t))==3]
+                if not valid or (cap!="all" and len(valid)>cap):continue
+                if favorite in valid:raise AssertionError("Favorite not excluded")
+                components.append({"1着":groups[0],"2着":groups[1],
+                    "3着":groups[2],"有効点数":len(valid)})
+                chosen.extend(valid)
+            chosen=sorted(set(chosen))
+            if not chosen:continue
+            if favorite in chosen:raise AssertionError("Forbidden favorite")
+            actual=tuple(race["finish"])
+            payout=100*book[actual] if actual in chosen else 0
+            return {"race_id":race["race_id"],"date":race["date"],
+                "example_selection":"first eligible amongst first 8 future races, not by result",
+                "favorite_car_numbers":"-".join(map(str,favorite)),
+                "favorite_odds":race["favorite_odds"],
+                "actual_car_formations":components,
+                "tickets":[{"car_numbers":"-".join(map(str,t)),
+                    "odds":book[t],"stake_yen":100} for t in chosen],
+                "distinct_points":len(chosen),
+                "stake_yen":100*len(chosen),
+                "actual_finish":"-".join(map(str,actual)),
+                "payout_yen":round(payout,1),
+                "profit_yen":round(payout-100*len(chosen),1)}
+    return None
+
 def item(band,group,cap,cells):
     tr=metrics(sum_stats(DEV,band,group,cap,cells))
     yr={y:metrics(sum_stats([y],band,group,cap,cells)) for y in YEARS}
@@ -128,6 +175,7 @@ def item(band,group,cap,cells):
     return {"cells":list(cells),"rank_triplets":[list(CELLS[x]) for x in cells],
             "train":tr,"worst_dev_year_roi_pct":worst,"positive_roi_all_3_dev_years":allthree,
             "validation_2024":yr["2024"],
+            "concrete_example":actual_car_formations(band,group,cap,cells),
             "forward_2025":yr["2025"],"forward_2026H1":yr["2026"],
             "forward_combined":metrics(sum_stats(FORWARD,band,group,cap,cells)),
             "dev_year_results":{y:yr[y] for y in DEV},
@@ -195,11 +243,13 @@ def main():
           "Q2 non-favorite positional rank rectangle 27-cell residual frequency",
           "Q3 100yen-per-ticket whole-rectangle ROI with all losses counted",
           "Q4 unions of two disjoint rectangle formations, not ticket-picking",
-          "Q5 frozen 2021-23 discovery vs 2024 and 2025-26H1"],
+          "Q5 frozen 2021-23 discovery vs 2024 and 2025-26H1",
+          "Q6 actual-number formation and full ticket-price audit"],
        "definition":{
          "rank_by_position":"Marginal inverse-trifecta-odds market support, separately at 1st/2nd/3rd",
          "rank_bins":["1-2","3-4","5+"],
-         "cell":"rank group A for 1st x group B for 2nd x group C for 3rd, removing duplicate riders",
+         "cell":"Position-specific market groups are INPUT LABELS ONLY; final formations are numeric car sets 1着 x 2着 x 3着, repeated car tickets excluded",
+         "required_result":"Actual 1着/2着/3着 numbered cars, every exact ticket and odds, full stake, result and payment; not symbolic rank strings",
          "mandatory_favorite_exclusion":"If a cell includes 1番人気 ticket it is not bought in that race AT ALL",
          "unions":"Up to 2 whole cells; no candidate individual winning-ticket selection",
          "point_caps":"Each component separately has no limit/8/16/32; union can have up to twice the cap",
