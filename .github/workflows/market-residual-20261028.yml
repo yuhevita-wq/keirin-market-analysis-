@@ -1,0 +1,28 @@
+name: Verify market residual formula on full archived aggregates
+on:
+  push:
+    branches: ['research/market-residual-20261028']
+    paths:
+      - 'research/market_residual_20261028/**'
+      - '.github/workflows/market-residual-20261028.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest research.market_residual_20261028.test_verify
+      - run: python research/market_residual_20261028/verify.py
+      - name: Check reproducible committed results
+        run: git diff --exit-code -- research/market_residual_20261028/results.json research/market_residual_20261028/results.csv
+      - uses: actions/upload-artifact@v4
+        with:
+          name: market-residual-results
+          path: |
+            research/market_residual_20261028/results.json
+            research/market_residual_20261028/results.csv
