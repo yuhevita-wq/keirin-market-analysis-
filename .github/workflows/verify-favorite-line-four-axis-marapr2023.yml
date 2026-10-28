@@ -1,0 +1,73 @@
+name: OOS March-April 2023 frozen favorite line-class-stage whole formations
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/verify-favorite-line-four-axis-marapr2023.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: verify-favorite-line-four-axis-marapr2023
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    env:
+      PYTHONUNBUFFERED: '1'
+      PYTHONPATH: '.'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install preexisting research dependencies
+        run: python -m pip install -e '.[scrape]'
+      - name: Regression and PRE-RESULT period/hypothesis checks
+        run: |
+          python -m py_compile research/favorite_odds_line_four_axis_oos_20230304/verify_mar_apr_fixed.py
+          python -m unittest research.snowberg_observation_corrected_20261027.test_orientation
+          python - <<'PY'
+          import research.favorite_odds_line_four_axis_oos_20230304.verify_mar_apr_fixed as m
+          assert m.START=="2023-03-01" and m.END=="2023-04-30"
+          assert len(m.REGISTRY)==34
+          assert len(m.LINE_SOURCES)==4
+          assert "2023_03_04" in " ".join(m.LINE_SOURCES)
+          assert "2023_q2" in " ".join(m.LINE_SOURCES)
+          assert m.classified_grade("data/2023/s_class_f1_all_parts/2023_q2/races.csv")=="S級"
+          from pathlib import Path
+          s=Path(m.__file__).read_text(encoding="utf-8")
+          assert 'PRIMARY_KEY="5-8|3-2-2|A級1・2班|準決勝"' in s
+          assert 'PRIMARY_FAMILY="market_top_two/pair_line_cross_3_on_second"' in s
+          print("OOS_2023_MAR_APR_PRIMARY_FORM_HYPOTHESIS_FROZEN")
+          PY
+      - name: Verify 2023 Mar-Apr outcomes on frozen whole formation and all comparators
+        env:
+          KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        run: python research/favorite_odds_line_four_axis_oos_20230304/verify_mar_apr_fixed.py
+      - name: Upload report even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 2023-marapr-formation-oos-${{ github.run_id }}
+          path: |
+            research/favorite_odds_line_four_axis_oos_20230304/summary.json
+            research/favorite_odds_line_four_axis_oos_20230304/compact.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Publish all test statistics unselected
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/favorite_odds_line_four_axis_oos_20230304/summary.json research/favorite_odds_line_four_axis_oos_20230304/compact.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'research: preserve Mar-Apr 2023 out-of-sample formation results'
+          for i in 1 2 3 4; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
