@@ -1,0 +1,64 @@
+name: Replicate discovered frozen formation sets on May-Jun 2023 without refitting
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/replicate-discovered-formation-2023-mayjun.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: replicate-discovered-formation-2023-mayjun
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    env:
+      PYTHONUNBUFFERED: '1'
+      PYTHONPATH: '.'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing dependencies
+        run: python -m pip install -e '.[scrape]'
+      - name: Validate saved model and May-Jun-only date lock before result reading
+        run: |
+          python -m py_compile research/frozen_formation_sets_replication_2023_mayjun/verify_frozen_may_jun.py
+          python -m unittest research.snowberg_observation_corrected_20261027.test_orientation
+          python - <<'PY'
+          from research.frozen_formation_sets_replication_2023_mayjun import verify_frozen_may_jun as x
+          assert (x.START,x.END)==("2023-05-01","2023-06-30")
+          assert len(x.FROZEN)==4
+          prior=x.verify_against_saved()
+          assert prior["status"]=="COMPLETE_DISCOVERY_WITH_FROZEN_OUT_OF_SAMPLE_COMPARISON"
+          assert sum(len(t["parts"]) for t in x.FROZEN)==7
+          print("ALL_FROZEN_FORMATION_SHAPES_MATCH_PREVIOUSLY_COMMITTED_DISCOVERY")
+          PY
+      - name: Observe fixed full-cartesian sets on May and June 2023 ONLY
+        env:
+          KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        run: python research/frozen_formation_sets_replication_2023_mayjun/verify_frozen_may_jun.py
+      - name: Upload all outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frozen-formation-2023-mayjun-${{ github.run_id }}
+          path: research/frozen_formation_sets_replication_2023_mayjun/summary.json
+          if-no-files-found: warn
+      - name: Preserve report without reselecting the successful rule
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/frozen_formation_sets_replication_2023_mayjun/summary.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'research: preserve frozen May-Jun 2023 result even if negative'
+          for i in 1 2 3 4; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
