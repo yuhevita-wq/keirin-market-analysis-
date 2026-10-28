@@ -1,0 +1,45 @@
+name: Audit 3ren-tan favorite low-odds misses in 0.1x bins
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - research/favorite_price_miss_v1/low_odds_fine.py
+      - .github/workflows/audit-trifecta-favorite-low-odds-fine.yml
+permissions:
+  contents: write
+concurrency:
+  group: audit-trifecta-favorite-low-odds-fine
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compute 0.1x 0.5x odds bands with real outcomes
+        run: python research/favorite_price_miss_v1/low_odds_fine.py
+      - name: Publish audit output to main
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p /tmp/favorite-low-odds-output
+          cp data/audits/favorite_trifecta_low_odds_fine_v1/* /tmp/favorite-low-odds-output/
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            git reset --hard origin/main
+            mkdir -p data/audits/favorite_trifecta_low_odds_fine_v1
+            cp /tmp/favorite-low-odds-output/* data/audits/favorite_trifecta_low_odds_fine_v1/
+            git add data/audits/favorite_trifecta_low_odds_fine_v1/
+            if git diff --cached --quiet; then echo "Already up to date"; exit 0; fi
+            git commit -m "data: publish 0.1x low odds favorite miss archive"
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
