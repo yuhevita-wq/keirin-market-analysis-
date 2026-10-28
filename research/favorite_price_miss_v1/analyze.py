@@ -197,7 +197,8 @@ def main():
             "Final odds are not guaranteed available at bet placement time.",
             "Grouped-bin significance exploratory; many price bands, no multiplicity correction.",
             "Check forward 2025-2026H1 rather than just in-sample 2021-2024. No individual ticket or formation profit proven."],
-       "counters":dict(counters),"favorite_tie_races":sum(int(r["favorite_tied"]) for r in rows),\n       "result_input_diagnostics":label_diagnostics,
+       "counters":dict(counters),"favorite_tie_races":sum(int(r["favorite_tied"]) for r in rows),
+       "result_input_diagnostics":label_diagnostics,
        "invalid_examples":bad,"total":summarize(rows),"price_band_edges":EDGES[:-1]+["inf"],
        "repeated_excess_miss_candidates_exploratory":candidates,
        "tables":tables
