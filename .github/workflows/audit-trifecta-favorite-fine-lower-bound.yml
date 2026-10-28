@@ -1,0 +1,48 @@
+name: Audit 7-car trifecta favorite fine lower bound
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - research/favorite_price_miss_v1/fine_lower_bound.py
+      - .github/workflows/audit-trifecta-favorite-fine-lower-bound.yml
+permissions:
+  contents: write
+concurrency:
+  group: audit-seven-car-favorite-fine-lower-bound
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Analyze lower bound 0.5x and per-1x exact odds bins
+        run: python research/favorite_price_miss_v1/fine_lower_bound.py
+      - name: Publish auditable result without concurrent main branch conflicts
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p /tmp/trifecta-favorite-fine
+          cp data/audits/favorite_trifecta_lower_bound_v1/* /tmp/trifecta-favorite-fine/
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            git reset --hard origin/main
+            mkdir -p data/audits/favorite_trifecta_lower_bound_v1
+            cp /tmp/trifecta-favorite-fine/* data/audits/favorite_trifecta_lower_bound_v1/
+            git add data/audits/favorite_trifecta_lower_bound_v1/
+            if git diff --cached --quiet; then
+              echo "Already published"
+              exit 0
+            fi
+            git commit -m "data: publish fine favorite miss odds lower bound audit"
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
