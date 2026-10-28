@@ -1,0 +1,1823 @@
+{
+  "status": "COMPLETE_DISCOVERY_WITH_FROZEN_OUT_OF_SAMPLE_COMPARISON",
+  "generated_utc": "2026-10-28T11:07:13.225435+00:00",
+  "scope": {
+    "discovery": [
+      "2023-01-01",
+      "2023-02-28"
+    ],
+    "frozen_holdout": [
+      "2023-03-01",
+      "2023-04-30"
+    ],
+    "years_processed": "2023 only",
+    "no_later_2023_years_consumed": true,
+    "data_sources": "Sealed full four-market odds archive + published KDreams lines + verified result labels; 3連単 pays, corrected orientation"
+  },
+  "research_question": "Discover and compress actual profitable finish-order SET SHAPES, conditional on line shape × class × 1番人気 price × race type, not merely score 34 predefined buying templates.",
+  "hard_limits": {
+    "all_market_line_count_exactly": 3,
+    "line_selection": "ALL 2^3-1 per slot mask combinations, all three rank slots; supports multiple lines on each finishing position",
+    "union_components_max": 2,
+    "rider_roles_in_line_separately_modeled": false,
+    "rider_no_preselected": "Each slot includes ALL riders of selected lines, no cherry-picked outcome tickets.",
+    "min_train_races_for_four_axes": 60,
+    "min_train_races_for_pooled_stage": 100,
+    "january_and_february_each_min_hits": 2,
+    "min_mean_tickets": 8,
+    "max_mean_tickets": 65
+  },
+  "audit": {
+    "published_line_rows": 6381,
+    "line_matching_duplicates": 512,
+    "unique_line_races": 5869,
+    "available_result_labels_2023": 25365,
+    "encrypted_files": 166,
+    "odds_duplicate_conflicts": 0,
+    "excluded_non_three_line_races": 1621,
+    "usable_3_line_races": 4138,
+    "train": 2092,
+    "excluded_no_result": 30,
+    "days": 120,
+    "test": 2046
+  },
+  "line_sources": {
+    "data/a_class_12/2023_01_02/races.csv": 2059,
+    "data/a_class_12/2023_03_04/races.csv": 2013,
+    "data/2023/s_class_f1_all_parts/2023_q1/races.csv": 1371,
+    "data/2023/s_class_f1_all_parts/2023_q2/races.csv": 426
+  },
+  "eligible_groups": 10,
+  "main_4axis_example_discovery": {
+    "conditioning_axes": {
+      "level": "4axis",
+      "line_shape": "3-2-2",
+      "class": "A級1・2班",
+      "favorite_odds_band": "5-8",
+      "race_stage": "準決勝"
+    },
+    "status": "FORM_FOUND_IN_TRAIN",
+    "rank_line_order": "sum of normalized full-market first place 3連単 probability on each line, descending",
+    "shape": "union of complete cartesian whole-line slot sets (no individual tickets selected)",
+    "coverage_27_line_triplet_cells": 2,
+    "union_components": 2,
+    "line_rank_slot_formation": [
+      {
+        "first_line_ranks": [
+          1
+        ],
+        "second_line_ranks": [
+          2
+        ],
+        "third_line_ranks": [
+          2
+        ]
+      },
+      {
+        "first_line_ranks": [
+          2
+        ],
+        "second_line_ranks": [
+          1
+        ],
+        "third_line_ranks": [
+          1
+        ]
+      }
+    ],
+    "training_score_conservative_worst_month_roi": 262.854,
+    "train_january": {
+      "stake_yen": 74800,
+      "payout_yen": 197860,
+      "profit_yen": 123060,
+      "roi_pct": 264.52,
+      "tickets": 748.0,
+      "mean_points": 16.261,
+      "hits": 8,
+      "market_expected_hits": 4.85,
+      "races": 46
+    },
+    "train_february": {
+      "stake_yen": 77800,
+      "payout_yen": 303970,
+      "profit_yen": 226170,
+      "roi_pct": 390.71,
+      "tickets": 778.0,
+      "mean_points": 16.913,
+      "hits": 9,
+      "market_expected_hits": 4.859,
+      "races": 46
+    },
+    "train_total": {
+      "stake_yen": 152600,
+      "payout_yen": 501830,
+      "profit_yen": 349230,
+      "roi_pct": 328.85,
+      "tickets": 1526.0,
+      "mean_points": 16.587,
+      "hits": 17,
+      "market_expected_hits": 9.709,
+      "races": 92
+    },
+    "heldout_march": {
+      "stake_yen": 66800,
+      "payout_yen": 42280,
+      "profit_yen": -24520,
+      "roi_pct": 63.29,
+      "tickets": 668.0,
+      "mean_points": 16.293,
+      "hits": 3,
+      "market_expected_hits": 3.95,
+      "races": 41
+    },
+    "heldout_april": {
+      "stake_yen": 72400,
+      "payout_yen": 33600,
+      "profit_yen": -38800,
+      "roi_pct": 46.41,
+      "tickets": 724.0,
+      "mean_points": 16.837,
+      "hits": 8,
+      "market_expected_hits": 5.123,
+      "races": 43
+    },
+    "heldout_total": {
+      "stake_yen": 139200,
+      "payout_yen": 75880,
+      "profit_yen": -63320,
+      "roi_pct": 54.51,
+      "tickets": 1392.0,
+      "mean_points": 16.571,
+      "hits": 11,
+      "market_expected_hits": 9.073,
+      "races": 84
+    },
+    "train_races": 92,
+    "heldout_races": 84,
+    "example_real_car_formation": {
+      "race_id": "5620221231020003",
+      "day": "2023-01-01",
+      "lines_ranked": [
+        "2-7",
+        "5-3",
+        "4-1-6"
+      ],
+      "favorite_odds": 6.1,
+      "formation_cartesian_union": [
+        [
+          [
+            2,
+            7
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            5
+          ]
+        ],
+        [
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            7
+          ]
+        ]
+      ],
+      "distinct_tickets": 8,
+      "winner": [
+        7,
+        2,
+        3
+      ],
+      "example_set_hit": false,
+      "example_stake_yen": 800,
+      "example_payout_yen": 0
+    },
+    "geometry_search": {
+      "distinct_cartesian_rectangles_exhaustively_enumerated": 343,
+      "union_atom_count": 85,
+      "union_pair_tests_upper_bound": 3570,
+      "feasible_candidates": 2351,
+      "note": "General all nonempty subsets of 3 line ranks per slot. Up to two complete rectangles; not a predefined list of 34."
+    }
+  },
+  "groups": [
+    {
+      "conditioning_axes": {
+        "level": "3axis_stage_pooled",
+        "line_shape": "3-2-2",
+        "class": "A級1・2班",
+        "favorite_odds_band": "12-20",
+        "race_stage": "all-stages"
+      },
+      "status": "FORM_FOUND_IN_TRAIN",
+      "rank_line_order": "sum of normalized full-market first place 3連単 probability on each line, descending",
+      "shape": "union of complete cartesian whole-line slot sets (no individual tickets selected)",
+      "coverage_27_line_triplet_cells": 3,
+      "union_components": 2,
+      "line_rank_slot_formation": [
+        {
+          "first_line_ranks": [
+            2,
+            3
+          ],
+          "second_line_ranks": [
+            2
+          ],
+          "third_line_ranks": [
+            2
+          ]
+        },
+        {
+          "first_line_ranks": [
+            3
+          ],
+          "second_line_ranks": [
+            3
+          ],
+          "third_line_ranks": [
+            1
+          ]
+        }
+      ],
+      "training_score_conservative_worst_month_roi": 165.737,
+      "train_january": {
+        "stake_yen": 128600,
+        "payout_yen": 239150,
+        "profit_yen": 110550,
+        "roi_pct": 185.96,
+        "tickets": 1286.0,
+        "mean_points": 15.494,
+        "hits": 7,
+        "market_expected_hits": 5.8,
+        "races": 83
+      },
+      "train_february": {
+        "stake_yen": 105600,
+        "payout_yen": 176760,
+        "profit_yen": 71160,
+        "roi_pct": 167.39,
+        "tickets": 1056.0,
+        "mean_points": 15.086,
+        "hits": 6,
+        "market_expected_hits": 4.54,
+        "races": 70
+      },
+      "train_total": {
+        "stake_yen": 234200,
+        "payout_yen": 415910,
+        "profit_yen": 181710,
+        "roi_pct": 177.59,
+        "tickets": 2342.0,
+        "mean_points": 15.307,
+        "hits": 13,
+        "market_expected_hits": 10.339,
+        "races": 153
+      },
+      "heldout_march": {
+        "stake_yen": 125400,
+        "payout_yen": 89210,
+        "profit_yen": -36190,
+        "roi_pct": 71.14,
+        "tickets": 1254.0,
+        "mean_points": 14.09,
+        "hits": 8,
+        "market_expected_hits": 5.418,
+        "races": 89
+      },
+      "heldout_april": {
+        "stake_yen": 120800,
+        "payout_yen": 30810,
+        "profit_yen": -89990,
+        "roi_pct": 25.5,
+        "tickets": 1208.0,
+        "mean_points": 15.487,
+        "hits": 6,
+        "market_expected_hits": 5.702,
+        "races": 78
+      },
+      "heldout_total": {
+        "stake_yen": 246200,
+        "payout_yen": 120020,
+        "profit_yen": -126180,
+        "roi_pct": 48.75,
+        "tickets": 2462.0,
+        "mean_points": 14.743,
+        "hits": 14,
+        "market_expected_hits": 11.12,
+        "races": 167
+      },
+      "train_races": 153,
+      "heldout_races": 167,
+      "example_real_car_formation": {
+        "race_id": "1320230101010005",
+        "day": "2023-01-01",
+        "lines_ranked": [
+          "4-7-1",
+          "5-2",
+          "6-3"
+        ],
+        "favorite_odds": 13.4,
+        "formation_cartesian_union": [
+          [
+            [
+              2,
+              3,
+              5,
+              6
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ]
+          ],
+          [
+            [
+              3,
+              6
+            ],
+            [
+              3,
+              6
+            ],
+            [
+              1,
+              4,
+              7
+            ]
+          ]
+        ],
+        "distinct_tickets": 10,
+        "winner": [
+          2,
+          6,
+          5
+        ],
+        "example_set_hit": false,
+        "example_stake_yen": 1000,
+        "example_payout_yen": 0
+      },
+      "geometry_search": {
+        "distinct_cartesian_rectangles_exhaustively_enumerated": 343,
+        "union_atom_count": 77,
+        "union_pair_tests_upper_bound": 2926,
+        "feasible_candidates": 2515,
+        "note": "General all nonempty subsets of 3 line ranks per slot. Up to two complete rectangles; not a predefined list of 34."
+      }
+    },
+    {
+      "conditioning_axes": {
+        "level": "3axis_stage_pooled",
+        "line_shape": "3-2-2",
+        "class": "A級1・2班",
+        "favorite_odds_band": "3-5",
+        "race_stage": "all-stages"
+      },
+      "status": "FORM_FOUND_IN_TRAIN",
+      "rank_line_order": "sum of normalized full-market first place 3連単 probability on each line, descending",
+      "shape": "union of complete cartesian whole-line slot sets (no individual tickets selected)",
+      "coverage_27_line_triplet_cells": 3,
+      "union_components": 2,
+      "line_rank_slot_formation": [
+        {
+          "first_line_ranks": [
+            3
+          ],
+          "second_line_ranks": [
+            3
+          ],
+          "third_line_ranks": [
+            1
+          ]
+        },
+        {
+          "first_line_ranks": [
+            2,
+            3
+          ],
+          "second_line_ranks": [
+            1
+          ],
+          "third_line_ranks": [
+            2
+          ]
+        }
+      ],
+      "training_score_conservative_worst_month_roi": 154.124,
+      "train_january": {
+        "stake_yen": 146800,
+        "payout_yen": 228820,
+        "profit_yen": 82020,
+        "roi_pct": 155.87,
+        "tickets": 1468.0,
+        "mean_points": 24.467,
+        "hits": 5,
+        "market_expected_hits": 2.093,
+        "races": 60
+      },
+      "train_february": {
+        "stake_yen": 170800,
+        "payout_yen": 296520,
+        "profit_yen": 125720,
+        "roi_pct": 173.61,
+        "tickets": 1708.0,
+        "mean_points": 24.754,
+        "hits": 6,
+        "market_expected_hits": 2.479,
+        "races": 69
+      },
+      "train_total": {
+        "stake_yen": 317600,
+        "payout_yen": 525340,
+        "profit_yen": 207740,
+        "roi_pct": 165.41,
+        "tickets": 3176.0,
+        "mean_points": 24.62,
+        "hits": 11,
+        "market_expected_hits": 4.572,
+        "races": 129
+      },
+      "heldout_march": {
+        "stake_yen": 204000,
+        "payout_yen": 82990,
+        "profit_yen": -121010,
+        "roi_pct": 40.68,
+        "tickets": 2040.0,
+        "mean_points": 24.878,
+        "hits": 2,
+        "market_expected_hits": 3.217,
+        "races": 82
+      },
+      "heldout_april": {
+        "stake_yen": 199200,
+        "payout_yen": 129560,
+        "profit_yen": -69640,
+        "roi_pct": 65.04,
+        "tickets": 1992.0,
+        "mean_points": 24.593,
+        "hits": 5,
+        "market_expected_hits": 2.826,
+        "races": 81
+      },
+      "heldout_total": {
+        "stake_yen": 403200,
+        "payout_yen": 212550,
+        "profit_yen": -190650,
+        "roi_pct": 52.72,
+        "tickets": 4032.0,
+        "mean_points": 24.736,
+        "hits": 7,
+        "market_expected_hits": 6.042,
+        "races": 163
+      },
+      "train_races": 129,
+      "heldout_races": 163,
+      "example_real_car_formation": {
+        "race_id": "2320230101010004",
+        "day": "2023-01-01",
+        "lines_ranked": [
+          "7-4-5",
+          "3-1",
+          "6-2"
+        ],
+        "favorite_odds": 3.8,
+        "formation_cartesian_union": [
+          [
+            [
+              2,
+              6
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              4,
+              5,
+              7
+            ]
+          ],
+          [
+            [
+              1,
+              2,
+              3,
+              6
+            ],
+            [
+              4,
+              5,
+              7
+            ],
+            [
+              1,
+              3
+            ]
+          ]
+        ],
+        "distinct_tickets": 24,
+        "winner": [
+          7,
+          4,
+          6
+        ],
+        "example_set_hit": false,
+        "example_stake_yen": 2400,
+        "example_payout_yen": 0
+      },
+      "geometry_search": {
+        "distinct_cartesian_rectangles_exhaustively_enumerated": 343,
+        "union_atom_count": 82,
+        "union_pair_tests_upper_bound": 3321,
+        "feasible_candidates": 1762,
+        "note": "General all nonempty subsets of 3 line ranks per slot. Up to two complete rectangles; not a predefined list of 34."
+      }
+    },
+    {
+      "conditioning_axes": {
+        "level": "3axis_stage_pooled",
+        "line_shape": "3-2-2",
+        "class": "A級1・2班",
+        "favorite_odds_band": "5-8",
+        "race_stage": "all-stages"
+      },
+      "status": "FORM_FOUND_IN_TRAIN",
+      "rank_line_order": "sum of normalized full-market first place 3連単 probability on each line, descending",
+      "shape": "union of complete cartesian whole-line slot sets (no individual tickets selected)",
+      "coverage_27_line_triplet_cells": 2,
+      "union_components": 2,
+      "line_rank_slot_formation": [
+        {
+          "first_line_ranks": [
+            1
+          ],
+          "second_line_ranks": [
+            2
+          ],
+          "third_line_ranks": [
+            2
+          ]
+        },
+        {
+          "first_line_ranks": [
+            2
+          ],
+          "second_line_ranks": [
+            1
+          ],
+          "third_line_ranks": [
+            1
+          ]
+        }
+      ],
+      "training_score_conservative_worst_month_roi": 101.091,
+      "train_january": {
+        "stake_yen": 291800,
+        "payout_yen": 299840,
+        "profit_yen": 8040,
+        "roi_pct": 102.76,
+        "tickets": 2918.0,
+        "mean_points": 17.064,
+        "hits": 23,
+        "market_expected_hits": 16.879,
+        "races": 171
+      },
+      "train_february": {
+        "stake_yen": 248400,
+        "payout_yen": 444750,
+        "profit_yen": 196350,
+        "roi_pct": 179.05,
+        "tickets": 2484.0,
+        "mean_points": 16.784,
+        "hits": 22,
+        "market_expected_hits": 14.948,
+        "races": 148
+      },
+      "train_total": {
+        "stake_yen": 540200,
+        "payout_yen": 744590,
+        "profit_yen": 204390,
+        "roi_pct": 137.84,
+        "tickets": 5402.0,
+        "mean_points": 16.934,
+        "hits": 45,
+        "market_expected_hits": 31.826,
+        "races": 319
+      },
+      "heldout_march": {
+        "stake_yen": 231600,
+        "payout_yen": 235110,
+        "profit_yen": 3510,
+        "roi_pct": 101.52,
+        "tickets": 2316.0,
+        "mean_points": 16.905,
+        "hits": 14,
+        "market_expected_hits": 13.542,
+        "races": 137
+      },
+      "heldout_april": {
+        "stake_yen": 235200,
+        "payout_yen": 128960,
+        "profit_yen": -106240,
+        "roi_pct": 54.83,
+        "tickets": 2352.0,
+        "mean_points": 16.921,
+        "hits": 20,
+        "market_expected_hits": 15.29,
+        "races": 139
+      },
+      "heldout_total": {
+        "stake_yen": 466800,
+        "payout_yen": 364070,
+        "profit_yen": -102730,
+        "roi_pct": 77.99,
+        "tickets": 4668.0,
+        "mean_points": 16.913,
+        "hits": 34,
+        "market_expected_hits": 28.832,
+        "races": 276
+      },
+      "train_races": 319,
+      "heldout_races": 276,
+      "example_real_car_formation": {
+        "race_id": "1320230101010003",
+        "day": "2023-01-01",
+        "lines_ranked": [
+          "2-7-4",
+          "5-3",
+          "6-1"
+        ],
+        "favorite_odds": 7.6,
+        "formation_cartesian_union": [
+          [
+            [
+              2,
+              4,
+              7
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              3,
+              5
+            ]
+          ],
+          [
+            [
+              3,
+              5
+            ],
+            [
+              2,
+              4,
+              7
+            ],
+            [
+              2,
+              4,
+              7
+            ]
+          ]
+        ],
+        "distinct_tickets": 18,
+        "winner": [
+          7,
+          2,
+          4
+        ],
+        "example_set_hit": false,
+        "example_stake_yen": 1800,
+        "example_payout_yen": 0
+      },
+      "geometry_search": {
+        "distinct_cartesian_rectangles_exhaustively_enumerated": 343,
+        "union_atom_count": 85,
+        "union_pair_tests_upper_bound": 3570,
+        "feasible_candidates": 3051,
+        "note": "General all nonempty subsets of 3 line ranks per slot. Up to two complete rectangles; not a predefined list of 34."
+      }
+    },
+    {
+      "conditioning_axes": {
+        "level": "3axis_stage_pooled",
+        "line_shape": "3-2-2",
+        "class": "A級1・2班",
+        "favorite_odds_band": "8-12",
+        "race_stage": "all-stages"
+      },
+      "status": "FORM_FOUND_IN_TRAIN",
+      "rank_line_order": "sum of normalized full-market first place 3連単 probability on each line, descending",
+      "shape": "union of complete cartesian whole-line slot sets (no individual tickets selected)",
+      "coverage_27_line_triplet_cells": 3,
+      "union_components": 2,
+      "line_rank_slot_formation": [
+        {
+          "first_line_ranks": [
+            2
+          ],
+          "second_line_ranks": [
+            3
+          ],
+          "third_line_ranks": [
+            2
+          ]
+        },
+        {
+          "first_line_ranks": [
+            2,
+            3
+          ],
+          "second_line_ranks": [
+            1
+          ],
+          "third_line_ranks": [
+            3
+          ]
+        }
+      ],
+      "training_score_conservative_worst_month_roi": 128.353,
+      "train_january": {
+        "stake_yen": 250400,
+        "payout_yen": 325760,
+        "profit_yen": 75360,
+        "roi_pct": 130.1,
+        "tickets": 2504.0,
+        "mean_points": 24.311,
+        "hits": 9,
+        "market_expected_hits": 6.014,
+        "races": 103
+      },
+      "train_february": {
+        "stake_yen": 290000,
+        "payout_yen": 395230,
+        "profit_yen": 105230,
+        "roi_pct": 136.29,
+        "tickets": 2900.0,
+        "mean_points": 25.0,
+        "hits": 10,
+        "market_expected_hits": 6.412,
+        "races": 116
+      },
+      "train_total": {
+        "stake_yen": 540400,
+        "payout_yen": 720990,
+        "profit_yen": 180590,
+        "roi_pct": 133.42,
+        "tickets": 5404.0,
+        "mean_points": 24.676,
+        "hits": 19,
+        "market_expected_hits": 12.426,
+        "races": 219
+      },
+      "heldout_march": {
+        "stake_yen": 268000,
+        "payout_yen": 92220,
+        "profit_yen": -175780,
+        "roi_pct": 34.41,
+        "tickets": 2680.0,
+        "mean_points": 24.587,
+        "hits": 5,
+        "market_expected_hits": 6.216,
+        "races": 109
+      },
+      "heldout_april": {
+        "stake_yen": 267800,
+        "payout_yen": 172110,
+        "profit_yen": -95690,
+        "roi_pct": 64.27,
+        "tickets": 2678.0,
+        "mean_points": 25.264,
+        "hits": 7,
+        "market_expected_hits": 6.049,
+        "races": 106
+      },
+      "heldout_total": {
+        "stake_yen": 535800,
+        "payout_yen": 264330,
+        "profit_yen": -271470,
+        "roi_pct": 49.33,
+        "tickets": 5358.0,
+        "mean_points": 24.921,
+        "hits": 12,
+        "market_expected_hits": 12.265,
+        "races": 215
+      },
+      "train_races": 219,
+      "heldout_races": 215,
+      "example_real_car_formation": {
+        "race_id": "6220221230030002",
+        "day": "2023-01-01",
+        "lines_ranked": [
+          "1-5-7",
+          "4-3",
+          "2-6"
+        ],
+        "favorite_odds": 8.5,
+        "formation_cartesian_union": [
+          [
+            [
+              3,
+              4
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              3,
+              4
+            ]
+          ],
+          [
+            [
+              2,
+              3,
+              4,
+              6
+            ],
+            [
+              1,
+              5,
+              7
+            ],
+            [
+              2,
+              6
+            ]
+          ]
+        ],
+        "distinct_tickets": 22,
+        "winner": [
+          3,
+          7,
+          1
+        ],
+        "example_set_hit": false,
+        "example_stake_yen": 2200,
+        "example_payout_yen": 0
+      },
+      "geometry_search": {
+        "distinct_cartesian_rectangles_exhaustively_enumerated": 343,
+        "union_atom_count": 88,
+        "union_pair_tests_upper_bound": 3828,
+        "feasible_candidates": 3200,
+        "note": "General all nonempty subsets of 3 line ranks per slot. Up to two complete rectangles; not a predefined list of 34."
+      }
+    },
+    {
+      "conditioning_axes": {
+        "level": "3axis_stage_pooled",
+        "line_shape": "3-2-2",
+        "class": "S級",
+        "favorite_odds_band": "5-8",
+        "race_stage": "all-stages"
+      },
+      "status": "FORM_FOUND_IN_TRAIN",
+      "rank_line_order": "sum of normalized full-market first place 3連単 probability on each line, descending",
+      "shape": "union of complete cartesian whole-line slot sets (no individual tickets selected)",
+      "coverage_27_line_triplet_cells": 3,
+      "union_components": 2,
+      "line_rank_slot_formation": [
+        {
+          "first_line_ranks": [
+            1
+          ],
+          "second_line_ranks": [
+            2,
+            3
+          ],
+          "third_line_ranks": [
+            2
+          ]
+        },
+        {
+          "first_line_ranks": [
+            3
+          ],
+          "second_line_ranks": [
+            2
+          ],
+          "third_line_ranks": [
+            1
+          ]
+        }
+      ],
+      "training_score_conservative_worst_month_roi": 132.893,
+      "train_january": {
+        "stake_yen": 239000,
+        "payout_yen": 345660,
+        "profit_yen": 106660,
+        "roi_pct": 144.63,
+        "tickets": 2390.0,
+        "mean_points": 31.447,
+        "hits": 6,
+        "market_expected_hits": 6.799,
+        "races": 76
+      },
+      "train_february": {
+        "stake_yen": 261600,
+        "payout_yen": 352400,
+        "profit_yen": 90800,
+        "roi_pct": 134.71,
+        "tickets": 2616.0,
+        "mean_points": 31.902,
+        "hits": 6,
+        "market_expected_hits": 7.448,
+        "races": 82
+      },
+      "train_total": {
+        "stake_yen": 500600,
+        "payout_yen": 698060,
+        "profit_yen": 197460,
+        "roi_pct": 139.44,
+        "tickets": 5006.0,
+        "mean_points": 31.684,
+        "hits": 12,
+        "market_expected_hits": 14.247,
+        "races": 158
+      },
+      "heldout_march": {
+        "stake_yen": 289400,
+        "payout_yen": 351920,
+        "profit_yen": 62520,
+        "roi_pct": 121.6,
+        "tickets": 2894.0,
+        "mean_points": 31.457,
+        "hits": 15,
+        "market_expected_hits": 7.903,
+        "races": 92
+      },
+      "heldout_april": {
+        "stake_yen": 284000,
+        "payout_yen": 295920,
+        "profit_yen": 11920,
+        "roi_pct": 104.2,
+        "tickets": 2840.0,
+        "mean_points": 31.556,
+        "hits": 9,
+        "market_expected_hits": 8.266,
+        "races": 90
+      },
+      "heldout_total": {
+        "stake_yen": 573400,
+        "payout_yen": 647840,
+        "profit_yen": 74440,
+        "roi_pct": 112.98,
+        "tickets": 5734.0,
+        "mean_points": 31.505,
+        "hits": 24,
+        "market_expected_hits": 16.169,
+        "races": 182
+      },
+      "train_races": 158,
+      "heldout_races": 182,
+      "example_real_car_formation": {
+        "race_id": "1320230101010009",
+        "day": "2023-01-01",
+        "lines_ranked": [
+          "4-2-6",
+          "5-3",
+          "1-7"
+        ],
+        "favorite_odds": 6.0,
+        "formation_cartesian_union": [
+          [
+            [
+              2,
+              4,
+              6
+            ],
+            [
+              1,
+              3,
+              5,
+              7
+            ],
+            [
+              3,
+              5
+            ]
+          ],
+          [
+            [
+              1,
+              7
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              2,
+              4,
+              6
+            ]
+          ]
+        ],
+        "distinct_tickets": 30,
+        "winner": [
+          1,
+          4,
+          7
+        ],
+        "example_set_hit": false,
+        "example_stake_yen": 3000,
+        "example_payout_yen": 0
+      },
+      "geometry_search": {
+        "distinct_cartesian_rectangles_exhaustively_enumerated": 343,
+        "union_atom_count": 83,
+        "union_pair_tests_upper_bound": 3403,
+        "feasible_candidates": 2780,
+        "note": "General all nonempty subsets of 3 line ranks per slot. Up to two complete rectangles; not a predefined list of 34."
+      }
+    },
+    {
+      "conditioning_axes": {
+        "level": "3axis_stage_pooled",
+        "line_shape": "3-2-2",
+        "class": "S級",
+        "favorite_odds_band": "8-12",
+        "race_stage": "all-stages"
+      },
+      "status": "FORM_FOUND_IN_TRAIN",
+      "rank_line_order": "sum of normalized full-market first place 3連単 probability on each line, descending",
+      "shape": "union of complete cartesian whole-line slot sets (no individual tickets selected)",
+      "coverage_27_line_triplet_cells": 3,
+      "union_components": 2,
+      "line_rank_slot_formation": [
+        {
+          "first_line_ranks": [
+            1
+          ],
+          "second_line_ranks": [
+            3
+          ],
+          "third_line_ranks": [
+            2,
+            3
+          ]
+        },
+        {
+          "first_line_ranks": [
+            2
+          ],
+          "second_line_ranks": [
+            2
+          ],
+          "third_line_ranks": [
+            2
+          ]
+        }
+      ],
+      "training_score_conservative_worst_month_roi": 179.982,
+      "train_january": {
+        "stake_yen": 147400,
+        "payout_yen": 275980,
+        "profit_yen": 128580,
+        "roi_pct": 187.23,
+        "tickets": 1474.0,
+        "mean_points": 19.653,
+        "hits": 10,
+        "market_expected_hits": 4.831,
+        "races": 75
+      },
+      "train_february": {
+        "stake_yen": 116400,
+        "payout_yen": 211470,
+        "profit_yen": 95070,
+        "roi_pct": 181.68,
+        "tickets": 1164.0,
+        "mean_points": 20.069,
+        "hits": 3,
+        "market_expected_hits": 4.247,
+        "races": 58
+      },
+      "train_total": {
+        "stake_yen": 263800,
+        "payout_yen": 487450,
+        "profit_yen": 223650,
+        "roi_pct": 184.78,
+        "tickets": 2638.0,
+        "mean_points": 19.835,
+        "hits": 13,
+        "market_expected_hits": 9.079,
+        "races": 133
+      },
+      "heldout_march": {
+        "stake_yen": 121600,
+        "payout_yen": 92040,
+        "profit_yen": -29560,
+        "roi_pct": 75.69,
+        "tickets": 1216.0,
+        "mean_points": 19.934,
+        "hits": 5,
+        "market_expected_hits": 4.178,
+        "races": 61
+      },
+      "heldout_april": {
+        "stake_yen": 129200,
+        "payout_yen": 162810,
+        "profit_yen": 33610,
+        "roi_pct": 126.01,
+        "tickets": 1292.0,
+        "mean_points": 19.877,
+        "hits": 3,
+        "market_expected_hits": 3.993,
+        "races": 65
+      },
+      "heldout_total": {
+        "stake_yen": 250800,
+        "payout_yen": 254850,
+        "profit_yen": 4050,
+        "roi_pct": 101.61,
+        "tickets": 2508.0,
+        "mean_points": 19.905,
+        "hits": 8,
+        "market_expected_hits": 8.171,
+        "races": 126
+      },
+      "train_races": 133,
+      "heldout_races": 126,
+      "example_real_car_formation": {
+        "race_id": "1320230101010008",
+        "day": "2023-01-01",
+        "lines_ranked": [
+          "1-4",
+          "3-7",
+          "6-2-5"
+        ],
+        "favorite_odds": 8.3,
+        "formation_cartesian_union": [
+          [
+            [
+              1,
+              4
+            ],
+            [
+              2,
+              5,
+              6
+            ],
+            [
+              2,
+              3,
+              5,
+              6,
+              7
+            ]
+          ],
+          [
+            [
+              3,
+              7
+            ],
+            [
+              3,
+              7
+            ],
+            [
+              3,
+              7
+            ]
+          ]
+        ],
+        "distinct_tickets": 24,
+        "winner": [
+          5,
+          2,
+          3
+        ],
+        "example_set_hit": false,
+        "example_stake_yen": 2400,
+        "example_payout_yen": 0
+      },
+      "geometry_search": {
+        "distinct_cartesian_rectangles_exhaustively_enumerated": 343,
+        "union_atom_count": 74,
+        "union_pair_tests_upper_bound": 2701,
+        "feasible_candidates": 2157,
+        "note": "General all nonempty subsets of 3 line ranks per slot. Up to two complete rectangles; not a predefined list of 34."
+      }
+    },
+    {
+      "conditioning_axes": {
+        "level": "3axis_stage_pooled",
+        "line_shape": "3-3-1",
+        "class": "A級1・2班",
+        "favorite_odds_band": "5-8",
+        "race_stage": "all-stages"
+      },
+      "status": "FORM_FOUND_IN_TRAIN",
+      "rank_line_order": "sum of normalized full-market first place 3連単 probability on each line, descending",
+      "shape": "union of complete cartesian whole-line slot sets (no individual tickets selected)",
+      "coverage_27_line_triplet_cells": 2,
+      "union_components": 1,
+      "line_rank_slot_formation": [
+        {
+          "first_line_ranks": [
+            1,
+            2
+          ],
+          "second_line_ranks": [
+            2
+          ],
+          "third_line_ranks": [
+            2
+          ]
+        }
+      ],
+      "training_score_conservative_worst_month_roi": 152.607,
+      "train_january": {
+        "stake_yen": 180000,
+        "payout_yen": 275120,
+        "profit_yen": 95120,
+        "roi_pct": 152.84,
+        "tickets": 1800.0,
+        "mean_points": 23.377,
+        "hits": 14,
+        "market_expected_hits": 9.536,
+        "races": 77
+      },
+      "train_february": {
+        "stake_yen": 158400,
+        "payout_yen": 304140,
+        "profit_yen": 145740,
+        "roi_pct": 192.01,
+        "tickets": 1584.0,
+        "mean_points": 23.294,
+        "hits": 12,
+        "market_expected_hits": 8.875,
+        "races": 68
+      },
+      "train_total": {
+        "stake_yen": 338400,
+        "payout_yen": 579260,
+        "profit_yen": 240860,
+        "roi_pct": 171.18,
+        "tickets": 3384.0,
+        "mean_points": 23.338,
+        "hits": 26,
+        "market_expected_hits": 18.412,
+        "races": 145
+      },
+      "heldout_march": {
+        "stake_yen": 124800,
+        "payout_yen": 53170,
+        "profit_yen": -71630,
+        "roi_pct": 42.6,
+        "tickets": 1248.0,
+        "mean_points": 24.0,
+        "hits": 5,
+        "market_expected_hits": 6.719,
+        "races": 52
+      },
+      "heldout_april": {
+        "stake_yen": 170400,
+        "payout_yen": 208660,
+        "profit_yen": 38260,
+        "roi_pct": 122.45,
+        "tickets": 1704.0,
+        "mean_points": 23.667,
+        "hits": 14,
+        "market_expected_hits": 8.372,
+        "races": 72
+      },
+      "heldout_total": {
+        "stake_yen": 295200,
+        "payout_yen": 261830,
+        "profit_yen": -33370,
+        "roi_pct": 88.7,
+        "tickets": 2952.0,
+        "mean_points": 23.806,
+        "hits": 19,
+        "market_expected_hits": 15.091,
+        "races": 124
+      },
+      "train_races": 145,
+      "heldout_races": 124,
+      "example_real_car_formation": {
+        "race_id": "2320230101010005",
+        "day": "2023-01-01",
+        "lines_ranked": [
+          "2-5-7",
+          "6-3-1",
+          "4"
+        ],
+        "favorite_odds": 6.5,
+        "formation_cartesian_union": [
+          [
+            [
+              1,
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            [
+              1,
+              3,
+              6
+            ],
+            [
+              1,
+              3,
+              6
+            ]
+          ]
+        ],
+        "distinct_tickets": 24,
+        "winner": [
+          2,
+          6,
+          5
+        ],
+        "example_set_hit": false,
+        "example_stake_yen": 2400,
+        "example_payout_yen": 0
+      },
+      "geometry_search": {
+        "distinct_cartesian_rectangles_exhaustively_enumerated": 343,
+        "union_atom_count": 86,
+        "union_pair_tests_upper_bound": 3655,
+        "feasible_candidates": 2401,
+        "note": "General all nonempty subsets of 3 line ranks per slot. Up to two complete rectangles; not a predefined list of 34."
+      }
+    },
+    {
+      "conditioning_axes": {
+        "level": "4axis",
+        "line_shape": "3-2-2",
+        "class": "A級1・2班",
+        "favorite_odds_band": "5-8",
+        "race_stage": "予選"
+      },
+      "status": "FORM_FOUND_IN_TRAIN",
+      "rank_line_order": "sum of normalized full-market first place 3連単 probability on each line, descending",
+      "shape": "union of complete cartesian whole-line slot sets (no individual tickets selected)",
+      "coverage_27_line_triplet_cells": 2,
+      "union_components": 1,
+      "line_rank_slot_formation": [
+        {
+          "first_line_ranks": [
+            1,
+            2
+          ],
+          "second_line_ranks": [
+            1
+          ],
+          "third_line_ranks": [
+            1
+          ]
+        }
+      ],
+      "training_score_conservative_worst_month_roi": 113.967,
+      "train_january": {
+        "stake_yen": 55000,
+        "payout_yen": 63080,
+        "profit_yen": 8080,
+        "roi_pct": 114.69,
+        "tickets": 550.0,
+        "mean_points": 13.415,
+        "hits": 13,
+        "market_expected_hits": 7.3,
+        "races": 41
+      },
+      "train_february": {
+        "stake_yen": 36600,
+        "payout_yen": 41760,
+        "profit_yen": 5160,
+        "roi_pct": 114.1,
+        "tickets": 366.0,
+        "mean_points": 13.071,
+        "hits": 7,
+        "market_expected_hits": 4.584,
+        "races": 28
+      },
+      "train_total": {
+        "stake_yen": 91600,
+        "payout_yen": 104840,
+        "profit_yen": 13240,
+        "roi_pct": 114.45,
+        "tickets": 916.0,
+        "mean_points": 13.275,
+        "hits": 20,
+        "market_expected_hits": 11.883,
+        "races": 69
+      },
+      "heldout_march": {
+        "stake_yen": 49600,
+        "payout_yen": 7660,
+        "profit_yen": -41940,
+        "roi_pct": 15.44,
+        "tickets": 496.0,
+        "mean_points": 17.103,
+        "hits": 5,
+        "market_expected_hits": 7.061,
+        "races": 29
+      },
+      "heldout_april": {
+        "stake_yen": 58200,
+        "payout_yen": 7390,
+        "profit_yen": -50810,
+        "roi_pct": 12.7,
+        "tickets": 582.0,
+        "mean_points": 15.316,
+        "hits": 4,
+        "market_expected_hits": 8.043,
+        "races": 38
+      },
+      "heldout_total": {
+        "stake_yen": 107800,
+        "payout_yen": 15050,
+        "profit_yen": -92750,
+        "roi_pct": 13.96,
+        "tickets": 1078.0,
+        "mean_points": 16.09,
+        "hits": 9,
+        "market_expected_hits": 15.104,
+        "races": 67
+      },
+      "train_races": 69,
+      "heldout_races": 67,
+      "example_real_car_formation": {
+        "race_id": "1320230101010003",
+        "day": "2023-01-01",
+        "lines_ranked": [
+          "2-7-4",
+          "5-3",
+          "6-1"
+        ],
+        "favorite_odds": 7.6,
+        "formation_cartesian_union": [
+          [
+            [
+              2,
+              3,
+              4,
+              5,
+              7
+            ],
+            [
+              2,
+              4,
+              7
+            ],
+            [
+              2,
+              4,
+              7
+            ]
+          ]
+        ],
+        "distinct_tickets": 18,
+        "winner": [
+          7,
+          2,
+          4
+        ],
+        "example_set_hit": true,
+        "example_stake_yen": 1800,
+        "example_payout_yen": 940.0
+      },
+      "geometry_search": {
+        "distinct_cartesian_rectangles_exhaustively_enumerated": 343,
+        "union_atom_count": 80,
+        "union_pair_tests_upper_bound": 3160,
+        "feasible_candidates": 2383,
+        "note": "General all nonempty subsets of 3 line ranks per slot. Up to two complete rectangles; not a predefined list of 34."
+      }
+    },
+    {
+      "conditioning_axes": {
+        "level": "4axis",
+        "line_shape": "3-2-2",
+        "class": "A級1・2班",
+        "favorite_odds_band": "5-8",
+        "race_stage": "準決勝"
+      },
+      "status": "FORM_FOUND_IN_TRAIN",
+      "rank_line_order": "sum of normalized full-market first place 3連単 probability on each line, descending",
+      "shape": "union of complete cartesian whole-line slot sets (no individual tickets selected)",
+      "coverage_27_line_triplet_cells": 2,
+      "union_components": 2,
+      "line_rank_slot_formation": [
+        {
+          "first_line_ranks": [
+            1
+          ],
+          "second_line_ranks": [
+            2
+          ],
+          "third_line_ranks": [
+            2
+          ]
+        },
+        {
+          "first_line_ranks": [
+            2
+          ],
+          "second_line_ranks": [
+            1
+          ],
+          "third_line_ranks": [
+            1
+          ]
+        }
+      ],
+      "training_score_conservative_worst_month_roi": 262.854,
+      "train_january": {
+        "stake_yen": 74800,
+        "payout_yen": 197860,
+        "profit_yen": 123060,
+        "roi_pct": 264.52,
+        "tickets": 748.0,
+        "mean_points": 16.261,
+        "hits": 8,
+        "market_expected_hits": 4.85,
+        "races": 46
+      },
+      "train_february": {
+        "stake_yen": 77800,
+        "payout_yen": 303970,
+        "profit_yen": 226170,
+        "roi_pct": 390.71,
+        "tickets": 778.0,
+        "mean_points": 16.913,
+        "hits": 9,
+        "market_expected_hits": 4.859,
+        "races": 46
+      },
+      "train_total": {
+        "stake_yen": 152600,
+        "payout_yen": 501830,
+        "profit_yen": 349230,
+        "roi_pct": 328.85,
+        "tickets": 1526.0,
+        "mean_points": 16.587,
+        "hits": 17,
+        "market_expected_hits": 9.709,
+        "races": 92
+      },
+      "heldout_march": {
+        "stake_yen": 66800,
+        "payout_yen": 42280,
+        "profit_yen": -24520,
+        "roi_pct": 63.29,
+        "tickets": 668.0,
+        "mean_points": 16.293,
+        "hits": 3,
+        "market_expected_hits": 3.95,
+        "races": 41
+      },
+      "heldout_april": {
+        "stake_yen": 72400,
+        "payout_yen": 33600,
+        "profit_yen": -38800,
+        "roi_pct": 46.41,
+        "tickets": 724.0,
+        "mean_points": 16.837,
+        "hits": 8,
+        "market_expected_hits": 5.123,
+        "races": 43
+      },
+      "heldout_total": {
+        "stake_yen": 139200,
+        "payout_yen": 75880,
+        "profit_yen": -63320,
+        "roi_pct": 54.51,
+        "tickets": 1392.0,
+        "mean_points": 16.571,
+        "hits": 11,
+        "market_expected_hits": 9.073,
+        "races": 84
+      },
+      "train_races": 92,
+      "heldout_races": 84,
+      "example_real_car_formation": {
+        "race_id": "5620221231020003",
+        "day": "2023-01-01",
+        "lines_ranked": [
+          "2-7",
+          "5-3",
+          "4-1-6"
+        ],
+        "favorite_odds": 6.1,
+        "formation_cartesian_union": [
+          [
+            [
+              2,
+              7
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              3,
+              5
+            ]
+          ],
+          [
+            [
+              3,
+              5
+            ],
+            [
+              2,
+              7
+            ],
+            [
+              2,
+              7
+            ]
+          ]
+        ],
+        "distinct_tickets": 8,
+        "winner": [
+          7,
+          2,
+          3
+        ],
+        "example_set_hit": false,
+        "example_stake_yen": 800,
+        "example_payout_yen": 0
+      },
+      "geometry_search": {
+        "distinct_cartesian_rectangles_exhaustively_enumerated": 343,
+        "union_atom_count": 85,
+        "union_pair_tests_upper_bound": 3570,
+        "feasible_candidates": 2351,
+        "note": "General all nonempty subsets of 3 line ranks per slot. Up to two complete rectangles; not a predefined list of 34."
+      }
+    },
+    {
+      "conditioning_axes": {
+        "level": "4axis",
+        "line_shape": "3-2-2",
+        "class": "S級",
+        "favorite_odds_band": "5-8",
+        "race_stage": "予選"
+      },
+      "status": "FORM_FOUND_IN_TRAIN",
+      "rank_line_order": "sum of normalized full-market first place 3連単 probability on each line, descending",
+      "shape": "union of complete cartesian whole-line slot sets (no individual tickets selected)",
+      "coverage_27_line_triplet_cells": 2,
+      "union_components": 1,
+      "line_rank_slot_formation": [
+        {
+          "first_line_ranks": [
+            3
+          ],
+          "second_line_ranks": [
+            1,
+            2
+          ],
+          "third_line_ranks": [
+            3
+          ]
+        }
+      ],
+      "training_score_conservative_worst_month_roi": 110.321,
+      "train_january": {
+        "stake_yen": 40000,
+        "payout_yen": 44720,
+        "profit_yen": 4720,
+        "roi_pct": 111.8,
+        "tickets": 400.0,
+        "mean_points": 12.121,
+        "hits": 2,
+        "market_expected_hits": 0.553,
+        "races": 33
+      },
+      "train_february": {
+        "stake_yen": 40600,
+        "payout_yen": 44840,
+        "profit_yen": 4240,
+        "roi_pct": 110.44,
+        "tickets": 406.0,
+        "mean_points": 11.6,
+        "hits": 2,
+        "market_expected_hits": 0.473,
+        "races": 35
+      },
+      "train_total": {
+        "stake_yen": 80600,
+        "payout_yen": 89560,
+        "profit_yen": 8960,
+        "roi_pct": 111.12,
+        "tickets": 806.0,
+        "mean_points": 11.853,
+        "hits": 4,
+        "market_expected_hits": 1.027,
+        "races": 68
+      },
+      "heldout_march": {
+        "stake_yen": 46400,
+        "payout_yen": 77110,
+        "profit_yen": 30710,
+        "roi_pct": 166.19,
+        "tickets": 464.0,
+        "mean_points": 10.311,
+        "hits": 2,
+        "market_expected_hits": 0.612,
+        "races": 45
+      },
+      "heldout_april": {
+        "stake_yen": 48400,
+        "payout_yen": 23190,
+        "profit_yen": -25210,
+        "roi_pct": 47.91,
+        "tickets": 484.0,
+        "mean_points": 12.1,
+        "hits": 1,
+        "market_expected_hits": 0.506,
+        "races": 40
+      },
+      "heldout_total": {
+        "stake_yen": 94800,
+        "payout_yen": 100300,
+        "profit_yen": 5500,
+        "roi_pct": 105.8,
+        "tickets": 948.0,
+        "mean_points": 11.153,
+        "hits": 3,
+        "market_expected_hits": 1.118,
+        "races": 85
+      },
+      "train_races": 68,
+      "heldout_races": 85,
+      "example_real_car_formation": {
+        "race_id": "1320230101010009",
+        "day": "2023-01-01",
+        "lines_ranked": [
+          "4-2-6",
+          "5-3",
+          "1-7"
+        ],
+        "favorite_odds": 6.0,
+        "formation_cartesian_union": [
+          [
+            [
+              1,
+              7
+            ],
+            [
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            [
+              1,
+              7
+            ]
+          ]
+        ],
+        "distinct_tickets": 10,
+        "winner": [
+          1,
+          4,
+          7
+        ],
+        "example_set_hit": true,
+        "example_stake_yen": 1000,
+        "example_payout_yen": 23320.0
+      },
+      "geometry_search": {
+        "distinct_cartesian_rectangles_exhaustively_enumerated": 343,
+        "union_atom_count": 78,
+        "union_pair_tests_upper_bound": 3003,
+        "feasible_candidates": 2358,
+        "note": "General all nonempty subsets of 3 line ranks per slot. Up to two complete rectangles; not a predefined list of 34."
+      }
+    }
+  ],
+  "warnings": [
+    "The training data and Mar-Apr dates have been previously examined in this research conversation, so this is a temporal rule-held-out replication, not proof of untouched independent data.",
+    "Searching among 343+composite candidate set geometries can produce in-sample false positives. Do not reselect using holdout outcomes.",
+    "Marketline ranks are built from full final 3連単 quotes, not a closing-15-minute executable snapshot.",
+    "A whole-line set grammar cannot express individual head/follower role subsets; further language learning is needed for full unconstrained formations.",
+    "No bet placement or investment advice. No evidence of a market edge unless a frozen rule survives holdout and broader tests.",
+    "Only 3-line races and source-matched 3連単 complete odds with published line labels. S grades beyond F1 are not comprehensive.",
+    "Multiple testing of cells and union structures; exact odds settle to displayed final values."
+  ]
+}
