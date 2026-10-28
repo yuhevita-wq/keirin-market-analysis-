@@ -17,8 +17,25 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -e '.[scrape]'
+      - run: python -m py_compile research/unrestricted_result_first_collections_20261028/discover.py
       - run: python research/unrestricted_result_first_collections_20261028/discover.py
       - uses: actions/upload-artifact@v4
         with:
           name: result-first-collections
           path: research/unrestricted_result_first_collections_20261028/*.json
+      - name: Publish compact audit, leave all raw archival material unchanged
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp research/unrestricted_result_first_collections_20261028/compact.json /tmp/collections-compact.json
+          for i in 1 2 3 4; do
+            git fetch origin main
+            git reset --hard origin/main
+            cp /tmp/collections-compact.json research/unrestricted_result_first_collections_20261028/compact.json
+            git add research/unrestricted_result_first_collections_20261028/compact.json
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "research: publish new result-first real-formation audit"
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
