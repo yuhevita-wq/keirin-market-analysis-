@@ -9,7 +9,7 @@ Candidate geometries are generated anew for each race, rather than choosing
 from a catalog of 20 old equal-stake formations.
 """
 from __future__ import annotations
-import gzip,itertools,json,math,random
+import gzip,itertools,json,math,random,heapq
 from collections import Counter,defaultdict
 from pathlib import Path
 from datetime import datetime,timezone
@@ -123,21 +123,31 @@ def find_candidates(m,probs):
     p=m["prices"];cars=m["cars"]
     edge={t:probs[t]*p[t] for t in p}
     potential={t:max(0.,edge[t]-MIN_GROSS_EV)*probs[t] for t in p}
-    ranked=[];tested=0
-    seen=set()
+    # Stream millions of possible Cartesian boxes without keeping the entire
+    # candidate universe in RAM. Deduplicate only the top-scoring distinct
+    # concrete ticket sets; zero-edge boxes never enter the heap.
+    ranked=[];tested=0;positive_boxes=0
+    serial=0
+    TOP_HEAP=2048
     for slots,tickets in possible_sets(cars):
-        if tickets in seen:continue
-        seen.add(tickets);tested+=1
+        tested+=1
         positive=[t for t in tickets if edge[t]>MIN_GROSS_EV]
-        if len(positive)==0:continue
-        # Penalize superfluous zero-stake positions without suppressing
-        # otherwise opaque, irregular actual-car geometric formations.
+        if not positive:continue
+        positive_boxes+=1
         score=sum(potential[t] for t in positive) - .000002*len(tickets)
-        # Prefer a shape that genuinely includes at least two useful decisions
         score*=1 if len(positive)>=2 else .5
-        ranked.append((score,slots,tickets,positive))
-    ranked.sort(key=lambda r:(-r[0],len(r[2]),r[1]))
-    return ranked[:CANDIDATE_TOP],tested,len(ranked),edge
+        serial+=1
+        item=(score,serial,slots,tickets,positive)
+        if len(ranked)<TOP_HEAP:heapq.heappush(ranked,item)
+        elif score>ranked[0][0]:heapq.heapreplace(ranked,item)
+    ordered=sorted(ranked,key=lambda r:(-r[0],len(r[3]),r[2]))
+    unique=[];seen_top=set()
+    for score,_,slots,tickets,positive in ordered:
+        if tickets in seen_top:continue
+        seen_top.add(tickets)
+        unique.append((score,slots,tickets,positive))
+        if len(unique)>=CANDIDATE_TOP:break
+    return unique,tested,positive_boxes,edge
 
 def kelly(tickets,m,probs):
     # exact portfolio objective for disjoint mutually exclusive ordered outcomes.
