@@ -224,7 +224,7 @@ def concrete(mask,ex):
         "1着":places[0],"2着":places[1],"3着":places[2],
         "valid_points":len(t),"favorite":"-".join(map(str,ex["fav"])),
         "favorite_odds":ex["fav_odds"],
-        "ticket_odds":[{"numbers":"-".join(map(str(x))),
+        "ticket_odds":[{"numbers":"-".join(map(str,x)),
                        "odds":ex["prices"][x],"stake_yen":100} for x in t],
         "result":"-".join(map(str,ex["result"])),
         "total_stake_yen":100*len(t),
