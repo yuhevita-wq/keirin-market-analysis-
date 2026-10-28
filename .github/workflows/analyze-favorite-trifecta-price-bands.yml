@@ -1,0 +1,44 @@
+name: Audit trifecta favorite miss by price band (2021-2026H1)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - research/favorite_price_miss_v1/analyze.py
+      - .github/workflows/analyze-favorite-trifecta-price-bands.yml
+permissions:
+  contents: write
+concurrency:
+  group: favorite-trifecta-price-bands-audit
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compute actual favorite miss distribution from full-price archives and independent result labels
+        run: python research/favorite_price_miss_v1/analyze.py
+      - name: Commit immutable audit output
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/audits/favorite_trifecta_price_bands_2021_2026h1.json data/audits/favorite_trifecta_price_bands_2021_2026h1.csv
+          if git diff --cached --quiet; then
+            echo "Audit output unchanged"
+          else
+            git commit -m "data: publish exact-ID favorite trifecta price-band audit"
+            for attempt in 1 2 3; do
+              git pull --rebase origin main
+              if git push origin HEAD:main; then exit 0; fi
+              sleep 3
+            done
+            echo "Could not push audit report" >&2
+            exit 1
+          fi
