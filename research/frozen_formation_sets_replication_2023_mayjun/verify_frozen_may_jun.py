@@ -87,6 +87,13 @@ def read_selected_months():
             base.A["archive_conflicts"]+=len(bad)
             for rid,rows in combined.items():
                 if rid not in base.LINE:continue
+                # Pre-outcome eligibility gate: ALL frozen rules were trained on
+                # exactly 3-2-2; avoid unrelated 5-/6-/9-car races with
+                # different public result labels or no actionable formation.
+                published=base.LINE[rid]
+                if len(published[1])!=3 or sorted((len(line) for line in published[1]),reverse=True)!=[3,2,2]:
+                    base.A["excluded_not_frozen_322_before_reading_finish"]+=1
+                    continue
                 _,err=bridge.normalize_book(rid,day,rows)
                 if err:
                     base.A["bad_norm_"+err]+=1;continue
