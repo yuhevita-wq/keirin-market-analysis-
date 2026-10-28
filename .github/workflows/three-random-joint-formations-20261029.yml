@@ -1,0 +1,55 @@
+name: Three random races joint formation allocation demonstration
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/three-random-joint-formations-20261029.yml'
+      - 'research/three_random_joint_formation_allocation_20261029/evaluate.py'
+permissions:
+  contents: write
+concurrency:
+  group: three-random-joint-formations-20261029
+  cancel-in-progress: true
+jobs:
+  simulate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - run: python -m py_compile research/three_random_joint_formation_allocation_20261029/evaluate.py
+      - run: python research/three_random_joint_formation_allocation_20261029/evaluate.py
+      - name: Upload complete audit file
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: random-three-formation-and-stakes-${{ github.run_id }}
+          path: research/three_random_joint_formation_allocation_20261029/result.json
+          retention-days: 30
+          if-no-files-found: warn
+      - name: Commit research-only report
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp research/three_random_joint_formation_allocation_20261029/result.json /tmp/random-three-report.json
+          for i in 1 2 3 4; do
+            git fetch origin main
+            git reset --hard origin/main
+            mkdir -p research/three_random_joint_formation_allocation_20261029
+            cp /tmp/random-three-report.json research/three_random_joint_formation_allocation_20261029/result.json
+            git add research/three_random_joint_formation_allocation_20261029/result.json
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m 'research: save three randomly selected formation and sizing trials'
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
