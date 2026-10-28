@@ -1,0 +1,54 @@
+name: Unconditional market-excess 1 to 4 ticket formations
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/unconditional-small-point-formations.yml'
+      - 'research/unconditional_small_point_formation_20261028/scan.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: unconditional-small-point-formations
+  cancel-in-progress: false
+jobs:
+  scan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      PYTHONPATH: '.'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - run: python -m py_compile research/unconditional_small_point_formation_20261028/scan.py
+      - run: python research/unconditional_small_point_formation_20261028/scan.py
+      - name: Keep full diagnostic output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unconditional-1-4-point-${{ github.run_id }}
+          path: research/unconditional_small_point_formation_20261028/compact.json
+          retention-days: 30
+          if-no-files-found: warn
+      - name: Publish research summary
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp research/unconditional_small_point_formation_20261028/compact.json /tmp/small-point-compact.json
+          for i in 1 2 3 4; do
+            git fetch origin main
+            git reset --hard origin/main
+            cp /tmp/small-point-compact.json research/unconditional_small_point_formation_20261028/compact.json
+            git add research/unconditional_small_point_formation_20261028/compact.json
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "research: publish unconditional small-point formation market residuals"
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
