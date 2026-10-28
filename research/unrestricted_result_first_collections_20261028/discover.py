@@ -21,7 +21,7 @@ OUT=ROOT/"research/unrestricted_result_first_collections_20261028"
 YEARS=(2021,2022,2023,2024,2025,2026)
 TRAIN=(2021,2022,2023)
 FORWARD=(2025,2026)
-FIELD=(7,9)
+FIELD=(5,6,7,8,9)
 PRICE_EDGES=(0,3,5,8,12,15,20,25,float("inf"))
 MIN_RACES=60
 MIN_EXPECTED=8
@@ -71,7 +71,8 @@ def new_bucket(year,price_band,n):
             "inverse_book":np.zeros(size),
             "market":np.zeros((size,size)),
             "wins":np.zeros((size,size)),
-            "pay":np.zeros((size,size))
+            "pay":np.zeros((size,size)),
+            "biggest_single_payout":np.zeros((size,size))
         }
     return DATA[key]
 
@@ -112,6 +113,7 @@ def observe(rid,year,row,actual):
     cube["market"][favorite_index]+=q
     cube["wins"][favorite_index,win_index]+=1
     cube["pay"][favorite_index,win_index]+=prices[tuple(actual)]
+    cube["biggest_single_payout"][favorite_index,win_index]=max(cube["biggest_single_payout"][favorite_index,win_index],100*prices[tuple(actual)])
     RACE_COUNTS[(year,b,n)]+=1
     AUDIT["usable_races"]+=1
     if year in FORWARD and len(EXAMPLES[(year,b,n)])<15:
@@ -129,6 +131,7 @@ def merge(years,b,n):
             out={k:(v.copy() if isinstance(v,np.ndarray) else v) for k,v in x.items()}
         else:
             for k in ("n","inverse_book","market","wins","pay"):out[k]+=x[k]
+            out["biggest_single_payout"]=np.maximum(out["biggest_single_payout"],x["biggest_single_payout"])
     return out
 
 def selected(cube,mask):
@@ -150,6 +153,7 @@ def evaluate(cube,mask):
     hits=float(cube["wins"][ix].sum())
     implied=float(cube["market"][ix].sum())
     paid=100*float(cube["pay"][ix].sum())
+    largest=float(cube["biggest_single_payout"][ix].max()) if paid else 0
     return {
         "races":entered,"points":len(points),"hits":int(hits),
         "market_expected_hits":round(implied,6),
@@ -157,6 +161,8 @@ def evaluate(cube,mask):
         "stake_yen":wager,"payout_yen":round(paid),
         "profit_yen":round(paid-wager),
         "roi_pct":round(100*paid/wager,4),
+        "largest_single_paid_ticket_yen":round(largest),
+        "largest_hit_share_of_payout_pct":round(100*largest/paid,4) if paid else None,
         "market_reference_roi_pct":round(100*cube["inverse_book"][available].sum()/entered,4)
     }
 
@@ -296,7 +302,7 @@ def research_report():
             "Train best may overfit; hundreds of correlated candidate masks explored.",
             "2024 onward not used to select patterns, but previously seen in other analyses.",
             "No independent pre-close executable-price audit.",
-            "Small 5,6,8 car fields not part of this first pass.",
+            "All 5-9 field counts included; sparse field/odds cohorts can return no discovered pattern.",
             "One Cartesian formation only; multi-component union research later."
         ]
     }
@@ -307,6 +313,8 @@ def research_report():
         {"band":g["band"],"cars":g["cars"],"search":g["search"],
          "top3":[{"development":r["development_combined"],
                   "validation":r["validation_2024"],"forward":r["forward_2025_2026H1"],
+                  "train_years":r["development_2021_2023"],
+                  "forward_years":r["forward_by_year"],
                   "formation":r["concrete_actual_car_formation"]}
                  for r in g["frozen_training_ranked_candidates"][:3]]}
         for g in groups]
@@ -337,7 +345,7 @@ def main():
                 AUDIT["unmatched_result"]+=1
                 continue
             observe(rid,year,r,actual)
-    if AUDIT["usable_races"]<25000:
+    if AUDIT["usable_races"]<40000:
         raise RuntimeError("Full archival dataset unavailable; refuse tiny proxy")
     research_report()
 
