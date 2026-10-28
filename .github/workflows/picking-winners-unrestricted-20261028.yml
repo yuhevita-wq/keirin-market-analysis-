@@ -1,0 +1,55 @@
+name: Picking Winners | unrestricted two-solution observation
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/picking-winners-unrestricted-20261028.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: picking-winners-unrestricted-20261028
+  cancel-in-progress: false
+jobs:
+  full_observation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      PYTHONPATH: '.'
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing environment
+        run: python -m pip install -e '.[scrape]'
+      - name: Check read-only observation source
+        run: python -m py_compile research/picking_winners_unrestricted_20261028/observe.py
+      - name: Observe all saved sealed odds and verified results
+        env:
+          KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        run: python research/picking_winners_unrestricted_20261028/observe.py
+      - name: Save research report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: picking-winners-unrestricted-${{ github.run_id }}
+          path: research/picking_winners_unrestricted_20261028/summary.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Commit only aggregate evidence
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/picking_winners_unrestricted_20261028/summary.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'research: preserve unrestricted Picking Winners empirical summary'
+          for attempt in 1 2 3 4; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
