@@ -1,0 +1,5545 @@
+{
+  "status": "COMPLETE",
+  "generated_at_utc": "2026-10-28T08:43:27.340596+00:00",
+  "source_odds": "data/odds_only/odds_2021.jsonl.gz ... odds_2026.jsonl.gz",
+  "source_results": "data/result_universe_v2/combined/results_2021.jsonl.gz ... results_2026.jsonl.gz",
+  "scope": "Men's keirin, completely priced trifecta and trio, years 2021-2025 plus 2026H1; final odds (NOT actionable T-minus odds)",
+  "favorite_definition": "minimum finalized 3連単 decimal odds within the complete race market, lexical tie-break",
+  "hit_definition": "exact ordered winning first-second-third matches the favorite ticket",
+  "market_probability": "(1/favorite_odds)/sum(1/all_trifecta_odds) ; expected miss = 1-market_probability",
+  "meaning": "excess_miss_pp > 0 implies favorites missed more than full-market normalized odds predicted. Mere high miss percent is not evidence of mispricing.",
+  "limitations": [
+    "Only matched fully priced markets with genuine unambiguous results. Missing races excluded, selection bias possible.",
+    "Final odds are not guaranteed available at bet placement time.",
+    "Grouped-bin significance exploratory; many price bands, no multiplicity correction.",
+    "Check forward 2025-2026H1 rather than just in-sample 2021-2024. No individual ticket or formation profit proven."
+  ],
+  "counters": {
+    "market_total": 45361,
+    "no_verified_result": 321,
+    "joined_valid_races": 45040,
+    "all_outcomes": 136906
+  },
+  "result_input_diagnostics": {},
+  "invalid_examples": [],
+  "total": {
+    "races": 45040,
+    "favorite_hits": 5288,
+    "favorite_misses": 39752,
+    "favorite_hit_pct": 11.7407,
+    "favorite_miss_pct": 88.2593,
+    "market_expected_hit_pct": 11.0792,
+    "market_expected_miss_pct": 88.9208,
+    "excess_miss_pp": -0.6615,
+    "underperformance_z": -4.5994,
+    "favorite_hit_pct_wilson_95": [
+      11.4466,
+      12.0412
+    ],
+    "favorite_100yen_stake_yen": 4504000,
+    "favorite_100yen_payout_yen": 3414650,
+    "favorite_roi_pct": 75.8137,
+    "favorite_mean_odds": 9.5387,
+    "market_mean_overround": 1.337
+  },
+  "price_band_edges": [
+    0,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    10,
+    12,
+    15,
+    20,
+    25,
+    30,
+    40,
+    50,
+    75,
+    100,
+    150,
+    "inf"
+  ],
+  "repeated_excess_miss_candidates_exploratory": [
+    {
+      "band": "20-25",
+      "development_races": 1004,
+      "development_excess_miss_pp": 0.845,
+      "forward_races": 562,
+      "forward_excess_miss_pp": 1.4673,
+      "forward_z": 1.9129
+    },
+    {
+      "band": "15-20",
+      "development_races": 2796,
+      "development_excess_miss_pp": 0.2527,
+      "forward_races": 1729,
+      "forward_excess_miss_pp": 0.5748,
+      "forward_z": 1.1593
+    },
+    {
+      "band": "12-15",
+      "development_races": 3527,
+      "development_excess_miss_pp": 0.2791,
+      "forward_races": 2188,
+      "forward_excess_miss_pp": 0.1704,
+      "forward_z": 0.3451
+    }
+  ],
+  "tables": {
+    "all_bands": [
+      {
+        "group": {
+          "band": "0-2"
+        },
+        "races": 489,
+        "favorite_hits": 261,
+        "favorite_misses": 228,
+        "favorite_hit_pct": 53.3742,
+        "favorite_miss_pct": 46.6258,
+        "market_expected_hit_pct": 43.9793,
+        "market_expected_miss_pct": 56.0207,
+        "excess_miss_pp": -9.395,
+        "underperformance_z": -4.2027,
+        "favorite_hit_pct_wilson_95": [
+          48.9436,
+          57.7523
+        ],
+        "favorite_100yen_stake_yen": 48900,
+        "favorite_100yen_payout_yen": 43610,
+        "favorite_roi_pct": 89.182,
+        "favorite_mean_odds": 1.6953,
+        "market_mean_overround": 1.35477
+      },
+      {
+        "group": {
+          "band": "2-3"
+        },
+        "races": 1898,
+        "favorite_hits": 640,
+        "favorite_misses": 1258,
+        "favorite_hit_pct": 33.7197,
+        "favorite_miss_pct": 66.2803,
+        "market_expected_hit_pct": 29.9688,
+        "market_expected_miss_pct": 70.0312,
+        "excess_miss_pp": -3.7509,
+        "underperformance_z": -3.5771,
+        "favorite_hit_pct_wilson_95": [
+          31.6276,
+          35.8775
+        ],
+        "favorite_100yen_stake_yen": 189800,
+        "favorite_100yen_payout_yen": 158450,
+        "favorite_roi_pct": 83.4826,
+        "favorite_mean_odds": 2.5131,
+        "market_mean_overround": 1.34475
+      },
+      {
+        "group": {
+          "band": "3-4"
+        },
+        "races": 3080,
+        "favorite_hits": 759,
+        "favorite_misses": 2321,
+        "favorite_hit_pct": 24.6429,
+        "favorite_miss_pct": 75.3571,
+        "market_expected_hit_pct": 21.6172,
+        "market_expected_miss_pct": 78.3828,
+        "excess_miss_pp": -3.0256,
+        "underperformance_z": -4.0829,
+        "favorite_hit_pct_wilson_95": [
+          23.1532,
+          26.1957
+        ],
+        "favorite_100yen_stake_yen": 308000,
+        "favorite_100yen_payout_yen": 261070,
+        "favorite_roi_pct": 84.763,
+        "favorite_mean_odds": 3.4725,
+        "market_mean_overround": 1.34081
+      },
+      {
+        "group": {
+          "band": "4-5"
+        },
+        "races": 3913,
+        "favorite_hits": 697,
+        "favorite_misses": 3216,
+        "favorite_hit_pct": 17.8124,
+        "favorite_miss_pct": 82.1876,
+        "market_expected_hit_pct": 16.8006,
+        "market_expected_miss_pct": 83.1994,
+        "excess_miss_pp": -1.0118,
+        "underperformance_z": -1.6937,
+        "favorite_hit_pct_wilson_95": [
+          16.6453,
+          19.0426
+        ],
+        "favorite_100yen_stake_yen": 391300,
+        "favorite_100yen_payout_yen": 310040,
+        "favorite_roi_pct": 79.2333,
+        "favorite_mean_odds": 4.4644,
+        "market_mean_overround": 1.33884
+      },
+      {
+        "group": {
+          "band": "5-6"
+        },
+        "races": 4249,
+        "favorite_hits": 607,
+        "favorite_misses": 3642,
+        "favorite_hit_pct": 14.2857,
+        "favorite_miss_pct": 85.7143,
+        "market_expected_hit_pct": 13.7513,
+        "market_expected_miss_pct": 86.2487,
+        "excess_miss_pp": -0.5344,
+        "underperformance_z": -1.0117,
+        "favorite_hit_pct_wilson_95": [
+          13.2658,
+          15.3702
+        ],
+        "favorite_100yen_stake_yen": 424900,
+        "favorite_100yen_payout_yen": 330740,
+        "favorite_roi_pct": 77.8395,
+        "favorite_mean_odds": 5.4511,
+        "market_mean_overround": 1.33771
+      },
+      {
+        "group": {
+          "band": "6-7"
+        },
+        "races": 4150,
+        "favorite_hits": 505,
+        "favorite_misses": 3645,
+        "favorite_hit_pct": 12.1687,
+        "favorite_miss_pct": 87.8313,
+        "market_expected_hit_pct": 11.6332,
+        "market_expected_miss_pct": 88.3668,
+        "excess_miss_pp": -0.5354,
+        "underperformance_z": -1.076,
+        "favorite_hit_pct_wilson_95": [
+          11.2089,
+          13.1985
+        ],
+        "favorite_100yen_stake_yen": 415000,
+        "favorite_100yen_payout_yen": 324370,
+        "favorite_roi_pct": 78.1614,
+        "favorite_mean_odds": 6.442,
+        "market_mean_overround": 1.33698
+      },
+      {
+        "group": {
+          "band": "7-8"
+        },
+        "races": 3827,
+        "favorite_hits": 419,
+        "favorite_misses": 3408,
+        "favorite_hit_pct": 10.9485,
+        "favorite_miss_pct": 89.0515,
+        "market_expected_hit_pct": 10.0717,
+        "market_expected_miss_pct": 89.9283,
+        "excess_miss_pp": -0.8768,
+        "underperformance_z": -1.8025,
+        "favorite_hit_pct_wilson_95": [
+          9.9981,
+          11.9772
+        ],
+        "favorite_100yen_stake_yen": 382700,
+        "favorite_100yen_payout_yen": 310790,
+        "favorite_roi_pct": 81.2098,
+        "favorite_mean_odds": 7.4407,
+        "market_mean_overround": 1.33637
+      },
+      {
+        "group": {
+          "band": "8-10"
+        },
+        "races": 5587,
+        "favorite_hits": 490,
+        "favorite_misses": 5097,
+        "favorite_hit_pct": 8.7704,
+        "favorite_miss_pct": 91.2296,
+        "market_expected_hit_pct": 8.4444,
+        "market_expected_miss_pct": 91.5556,
+        "excess_miss_pp": -0.326,
+        "underperformance_z": -0.8765,
+        "favorite_hit_pct_wilson_95": [
+          8.0567,
+          9.5407
+        ],
+        "favorite_100yen_stake_yen": 558700,
+        "favorite_100yen_payout_yen": 435100,
+        "favorite_roi_pct": 77.8772,
+        "favorite_mean_odds": 8.9027,
+        "market_mean_overround": 1.33586
+      },
+      {
+        "group": {
+          "band": "10-12"
+        },
+        "races": 5259,
+        "favorite_hits": 361,
+        "favorite_misses": 4898,
+        "favorite_hit_pct": 6.8644,
+        "favorite_miss_pct": 93.1356,
+        "market_expected_hit_pct": 6.8645,
+        "market_expected_miss_pct": 93.1355,
+        "excess_miss_pp": 0.0001,
+        "underperformance_z": 0.0003,
+        "favorite_hit_pct_wilson_95": [
+          6.2121,
+          7.5798
+        ],
+        "favorite_100yen_stake_yen": 525900,
+        "favorite_100yen_payout_yen": 391280,
+        "favorite_roi_pct": 74.402,
+        "favorite_mean_odds": 10.9385,
+        "market_mean_overround": 1.33539
+      },
+      {
+        "group": {
+          "band": "12-15"
+        },
+        "races": 5715,
+        "favorite_hits": 309,
+        "favorite_misses": 5406,
+        "favorite_hit_pct": 5.4068,
+        "favorite_miss_pct": 94.5932,
+        "market_expected_hit_pct": 5.6443,
+        "market_expected_miss_pct": 94.3557,
+        "excess_miss_pp": 0.2375,
+        "underperformance_z": 0.7781,
+        "favorite_hit_pct_wilson_95": [
+          4.8499,
+          6.0237
+        ],
+        "favorite_100yen_stake_yen": 571500,
+        "favorite_100yen_payout_yen": 408390,
+        "favorite_roi_pct": 71.4593,
+        "favorite_mean_odds": 13.3256,
+        "market_mean_overround": 1.33506
+      },
+      {
+        "group": {
+          "band": "15-20"
+        },
+        "races": 4525,
+        "favorite_hits": 184,
+        "favorite_misses": 4341,
+        "favorite_hit_pct": 4.0663,
+        "favorite_miss_pct": 95.9337,
+        "market_expected_hit_pct": 4.4421,
+        "market_expected_miss_pct": 95.5579,
+        "excess_miss_pp": 0.3758,
+        "underperformance_z": 1.227,
+        "favorite_hit_pct_wilson_95": [
+          3.5287,
+          4.6818
+        ],
+        "favorite_100yen_stake_yen": 452500,
+        "favorite_100yen_payout_yen": 307390,
+        "favorite_roi_pct": 67.9315,
+        "favorite_mean_odds": 16.978,
+        "market_mean_overround": 1.33469
+      },
+      {
+        "group": {
+          "band": "20-25"
+        },
+        "races": 1566,
+        "favorite_hits": 37,
+        "favorite_misses": 1529,
+        "favorite_hit_pct": 2.3627,
+        "favorite_miss_pct": 97.6373,
+        "market_expected_hit_pct": 3.431,
+        "market_expected_miss_pct": 96.569,
+        "excess_miss_pp": 1.0683,
+        "underperformance_z": 2.3227,
+        "favorite_hit_pct_wilson_95": [
+          1.719,
+          3.2396
+        ],
+        "favorite_100yen_stake_yen": 156600,
+        "favorite_100yen_payout_yen": 80640,
+        "favorite_roi_pct": 51.4943,
+        "favorite_mean_odds": 21.9251,
+        "market_mean_overround": 1.33437
+      },
+      {
+        "group": {
+          "band": "25-30"
+        },
+        "races": 535,
+        "favorite_hits": 17,
+        "favorite_misses": 518,
+        "favorite_hit_pct": 3.1776,
+        "favorite_miss_pct": 96.8224,
+        "market_expected_hit_pct": 2.785,
+        "market_expected_miss_pct": 97.215,
+        "excess_miss_pp": -0.3926,
+        "underperformance_z": -0.5519,
+        "favorite_hit_pct_wilson_95": [
+          1.9932,
+          5.0295
+        ],
+        "favorite_100yen_stake_yen": 53500,
+        "favorite_100yen_payout_yen": 46410,
+        "favorite_roi_pct": 86.7477,
+        "favorite_mean_odds": 26.986,
+        "market_mean_overround": 1.33414
+      },
+      {
+        "group": {
+          "band": "30-40"
+        },
+        "races": 225,
+        "favorite_hits": 2,
+        "favorite_misses": 223,
+        "favorite_hit_pct": 0.8889,
+        "favorite_miss_pct": 99.1111,
+        "market_expected_hit_pct": 2.2661,
+        "market_expected_miss_pct": 97.7339,
+        "excess_miss_pp": 1.3772,
+        "underperformance_z": 1.3882,
+        "favorite_hit_pct_wilson_95": [
+          0.2441,
+          3.1825
+        ],
+        "favorite_100yen_stake_yen": 22500,
+        "favorite_100yen_payout_yen": 6370,
+        "favorite_roi_pct": 28.3111,
+        "favorite_mean_odds": 33.2827,
+        "market_mean_overround": 1.33394
+      },
+      {
+        "group": {
+          "band": "40-50"
+        },
+        "races": 19,
+        "favorite_hits": 0,
+        "favorite_misses": 19,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 1.7758,
+        "market_expected_miss_pct": 98.2242,
+        "excess_miss_pp": 1.7758,
+        "underperformance_z": 0.5861,
+        "favorite_hit_pct_wilson_95": [
+          -0.0,
+          16.8179
+        ],
+        "favorite_100yen_stake_yen": 1900,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 42.3684,
+        "market_mean_overround": 1.33389
+      },
+      {
+        "group": {
+          "band": "50-75"
+        },
+        "races": 3,
+        "favorite_hits": 0,
+        "favorite_misses": 3,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 1.2926,
+        "market_expected_miss_pct": 98.7074,
+        "excess_miss_pp": 1.2926,
+        "underperformance_z": 0.1982,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          56.1497
+        ],
+        "favorite_100yen_stake_yen": 300,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 58.6333,
+        "market_mean_overround": 1.33365
+      }
+    ],
+    "development_bands": [
+      {
+        "group": {
+          "band": "0-2"
+        },
+        "races": 265,
+        "favorite_hits": 144,
+        "favorite_misses": 121,
+        "favorite_hit_pct": 54.3396,
+        "favorite_miss_pct": 45.6604,
+        "market_expected_hit_pct": 43.8675,
+        "market_expected_miss_pct": 56.1325,
+        "excess_miss_pp": -10.4721,
+        "underperformance_z": -3.4505,
+        "favorite_hit_pct_wilson_95": [
+          48.323,
+          60.2322
+        ],
+        "favorite_100yen_stake_yen": 26500,
+        "favorite_100yen_payout_yen": 24080,
+        "favorite_roi_pct": 90.8679,
+        "favorite_mean_odds": 1.7004,
+        "market_mean_overround": 1.35509
+      },
+      {
+        "group": {
+          "band": "2-3"
+        },
+        "races": 1084,
+        "favorite_hits": 364,
+        "favorite_misses": 720,
+        "favorite_hit_pct": 33.5793,
+        "favorite_miss_pct": 66.4207,
+        "market_expected_hit_pct": 29.8619,
+        "market_expected_miss_pct": 70.1381,
+        "excess_miss_pp": -3.7174,
+        "underperformance_z": -2.6819,
+        "favorite_hit_pct_wilson_95": [
+          30.8303,
+          36.4443
+        ],
+        "favorite_100yen_stake_yen": 108400,
+        "favorite_100yen_payout_yen": 90360,
+        "favorite_roi_pct": 83.3579,
+        "favorite_mean_odds": 2.5218,
+        "market_mean_overround": 1.34483
+      },
+      {
+        "group": {
+          "band": "3-4"
+        },
+        "races": 1767,
+        "favorite_hits": 451,
+        "favorite_misses": 1316,
+        "favorite_hit_pct": 25.5235,
+        "favorite_miss_pct": 74.4765,
+        "market_expected_hit_pct": 21.6254,
+        "market_expected_miss_pct": 78.3746,
+        "excess_miss_pp": -3.8981,
+        "underperformance_z": -3.9837,
+        "favorite_hit_pct_wilson_95": [
+          23.5452,
+          27.6079
+        ],
+        "favorite_100yen_stake_yen": 176700,
+        "favorite_100yen_payout_yen": 154740,
+        "favorite_roi_pct": 87.5722,
+        "favorite_mean_odds": 3.4708,
+        "market_mean_overround": 1.34085
+      },
+      {
+        "group": {
+          "band": "4-5"
+        },
+        "races": 2378,
+        "favorite_hits": 409,
+        "favorite_misses": 1969,
+        "favorite_hit_pct": 17.1993,
+        "favorite_miss_pct": 82.8007,
+        "market_expected_hit_pct": 16.7906,
+        "market_expected_miss_pct": 83.2094,
+        "excess_miss_pp": -0.4087,
+        "underperformance_z": -0.5335,
+        "favorite_hit_pct_wilson_95": [
+          15.7358,
+          18.7687
+        ],
+        "favorite_100yen_stake_yen": 237800,
+        "favorite_100yen_payout_yen": 182320,
+        "favorite_roi_pct": 76.6695,
+        "favorite_mean_odds": 4.4664,
+        "market_mean_overround": 1.33895
+      },
+      {
+        "group": {
+          "band": "5-6"
+        },
+        "races": 2643,
+        "favorite_hits": 380,
+        "favorite_misses": 2263,
+        "favorite_hit_pct": 14.3776,
+        "favorite_miss_pct": 85.6224,
+        "market_expected_hit_pct": 13.7344,
+        "market_expected_miss_pct": 86.2656,
+        "excess_miss_pp": -0.6432,
+        "underperformance_z": -0.9608,
+        "favorite_hit_pct_wilson_95": [
+          13.0916,
+          15.767
+        ],
+        "favorite_100yen_stake_yen": 264300,
+        "favorite_100yen_payout_yen": 206700,
+        "favorite_roi_pct": 78.2066,
+        "favorite_mean_odds": 5.4574,
+        "market_mean_overround": 1.33779
+      },
+      {
+        "group": {
+          "band": "6-7"
+        },
+        "races": 2634,
+        "favorite_hits": 322,
+        "favorite_misses": 2312,
+        "favorite_hit_pct": 12.2248,
+        "favorite_miss_pct": 87.7752,
+        "market_expected_hit_pct": 11.6257,
+        "market_expected_miss_pct": 88.3743,
+        "excess_miss_pp": -0.599,
+        "underperformance_z": -0.9593,
+        "favorite_hit_pct_wilson_95": [
+          11.0285,
+          13.531
+        ],
+        "favorite_100yen_stake_yen": 263400,
+        "favorite_100yen_payout_yen": 206980,
+        "favorite_roi_pct": 78.5801,
+        "favorite_mean_odds": 6.4459,
+        "market_mean_overround": 1.337
+      },
+      {
+        "group": {
+          "band": "7-8"
+        },
+        "races": 2410,
+        "favorite_hits": 249,
+        "favorite_misses": 2161,
+        "favorite_hit_pct": 10.332,
+        "favorite_miss_pct": 89.668,
+        "market_expected_hit_pct": 10.0803,
+        "market_expected_miss_pct": 89.9197,
+        "excess_miss_pp": -0.2517,
+        "underperformance_z": -0.4104,
+        "favorite_hit_pct_wilson_95": [
+          9.1792,
+          11.611
+        ],
+        "favorite_100yen_stake_yen": 241000,
+        "favorite_100yen_payout_yen": 184350,
+        "favorite_roi_pct": 76.4938,
+        "favorite_mean_odds": 7.4341,
+        "market_mean_overround": 1.33641
+      },
+      {
+        "group": {
+          "band": "8-10"
+        },
+        "races": 3489,
+        "favorite_hits": 302,
+        "favorite_misses": 3187,
+        "favorite_hit_pct": 8.6558,
+        "favorite_miss_pct": 91.3442,
+        "market_expected_hit_pct": 8.4456,
+        "market_expected_miss_pct": 91.5544,
+        "excess_miss_pp": -0.2102,
+        "underperformance_z": -0.4466,
+        "favorite_hit_pct_wilson_95": [
+          7.7676,
+          9.6349
+        ],
+        "favorite_100yen_stake_yen": 348900,
+        "favorite_100yen_payout_yen": 268900,
+        "favorite_roi_pct": 77.0708,
+        "favorite_mean_odds": 8.9007,
+        "market_mean_overround": 1.33588
+      },
+      {
+        "group": {
+          "band": "10-12"
+        },
+        "races": 3248,
+        "favorite_hits": 229,
+        "favorite_misses": 3019,
+        "favorite_hit_pct": 7.0505,
+        "favorite_miss_pct": 92.9495,
+        "market_expected_hit_pct": 6.8599,
+        "market_expected_miss_pct": 93.1401,
+        "excess_miss_pp": -0.1906,
+        "underperformance_z": -0.4298,
+        "favorite_hit_pct_wilson_95": [
+          6.2199,
+          7.9826
+        ],
+        "favorite_100yen_stake_yen": 324800,
+        "favorite_100yen_payout_yen": 248730,
+        "favorite_roi_pct": 76.5794,
+        "favorite_mean_odds": 10.9456,
+        "market_mean_overround": 1.33539
+      },
+      {
+        "group": {
+          "band": "12-15"
+        },
+        "races": 3527,
+        "favorite_hits": 189,
+        "favorite_misses": 3338,
+        "favorite_hit_pct": 5.3587,
+        "favorite_miss_pct": 94.6413,
+        "market_expected_hit_pct": 5.6378,
+        "market_expected_miss_pct": 94.3622,
+        "excess_miss_pp": 0.2791,
+        "underperformance_z": 0.7188,
+        "favorite_hit_pct_wilson_95": [
+          4.6628,
+          6.1516
+        ],
+        "favorite_100yen_stake_yen": 352700,
+        "favorite_100yen_payout_yen": 248900,
+        "favorite_roi_pct": 70.5699,
+        "favorite_mean_odds": 13.3409,
+        "market_mean_overround": 1.33505
+      },
+      {
+        "group": {
+          "band": "15-20"
+        },
+        "races": 2796,
+        "favorite_hits": 117,
+        "favorite_misses": 2679,
+        "favorite_hit_pct": 4.1845,
+        "favorite_miss_pct": 95.8155,
+        "market_expected_hit_pct": 4.4372,
+        "market_expected_miss_pct": 95.5628,
+        "excess_miss_pp": 0.2527,
+        "underperformance_z": 0.6489,
+        "favorite_hit_pct_wilson_95": [
+          3.5031,
+          4.9918
+        ],
+        "favorite_100yen_stake_yen": 279600,
+        "favorite_100yen_payout_yen": 195740,
+        "favorite_roi_pct": 70.0072,
+        "favorite_mean_odds": 16.9969,
+        "market_mean_overround": 1.33468
+      },
+      {
+        "group": {
+          "band": "20-25"
+        },
+        "races": 1004,
+        "favorite_hits": 26,
+        "favorite_misses": 978,
+        "favorite_hit_pct": 2.5896,
+        "favorite_miss_pct": 97.4104,
+        "market_expected_hit_pct": 3.4346,
+        "market_expected_miss_pct": 96.5654,
+        "excess_miss_pp": 0.845,
+        "underperformance_z": 1.4703,
+        "favorite_hit_pct_wilson_95": [
+          1.7733,
+          3.7674
+        ],
+        "favorite_100yen_stake_yen": 100400,
+        "favorite_100yen_payout_yen": 57100,
+        "favorite_roi_pct": 56.8725,
+        "favorite_mean_odds": 21.9019,
+        "market_mean_overround": 1.33433
+      },
+      {
+        "group": {
+          "band": "25-30"
+        },
+        "races": 353,
+        "favorite_hits": 11,
+        "favorite_misses": 342,
+        "favorite_hit_pct": 3.1161,
+        "favorite_miss_pct": 96.8839,
+        "market_expected_hit_pct": 2.7883,
+        "market_expected_miss_pct": 97.2117,
+        "excess_miss_pp": -0.3278,
+        "underperformance_z": -0.3741,
+        "favorite_hit_pct_wilson_95": [
+          1.7488,
+          5.493
+        ],
+        "favorite_100yen_stake_yen": 35300,
+        "favorite_100yen_payout_yen": 29800,
+        "favorite_roi_pct": 84.4193,
+        "favorite_mean_odds": 26.9504,
+        "market_mean_overround": 1.33413
+      },
+      {
+        "group": {
+          "band": "30-40"
+        },
+        "races": 146,
+        "favorite_hits": 1,
+        "favorite_misses": 145,
+        "favorite_hit_pct": 0.6849,
+        "favorite_miss_pct": 99.3151,
+        "market_expected_hit_pct": 2.2618,
+        "market_expected_miss_pct": 97.7382,
+        "excess_miss_pp": 1.5769,
+        "underperformance_z": 1.2816,
+        "favorite_hit_pct_wilson_95": [
+          0.121,
+          3.7774
+        ],
+        "favorite_100yen_stake_yen": 14600,
+        "favorite_100yen_payout_yen": 3300,
+        "favorite_roi_pct": 22.6027,
+        "favorite_mean_odds": 33.339,
+        "market_mean_overround": 1.33393
+      },
+      {
+        "group": {
+          "band": "40-50"
+        },
+        "races": 9,
+        "favorite_hits": 0,
+        "favorite_misses": 9,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 1.7776,
+        "market_expected_miss_pct": 98.2224,
+        "excess_miss_pp": 1.7776,
+        "underperformance_z": 0.4036,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          29.9145
+        ],
+        "favorite_100yen_stake_yen": 900,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 42.3444,
+        "market_mean_overround": 1.33379
+      },
+      {
+        "group": {
+          "band": "50-75"
+        },
+        "races": 2,
+        "favorite_hits": 0,
+        "favorite_misses": 2,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 1.251,
+        "market_expected_miss_pct": 98.749,
+        "excess_miss_pp": 1.251,
+        "underperformance_z": 0.1592,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          65.762
+        ],
+        "favorite_100yen_stake_yen": 200,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 60.7,
+        "market_mean_overround": 1.33366
+      }
+    ],
+    "forward_bands": [
+      {
+        "group": {
+          "band": "0-2"
+        },
+        "races": 224,
+        "favorite_hits": 117,
+        "favorite_misses": 107,
+        "favorite_hit_pct": 52.2321,
+        "favorite_miss_pct": 47.7679,
+        "market_expected_hit_pct": 44.1115,
+        "market_expected_miss_pct": 55.8885,
+        "excess_miss_pp": -8.1207,
+        "underperformance_z": -2.4571,
+        "favorite_hit_pct_wilson_95": [
+          45.7085,
+          58.6805
+        ],
+        "favorite_100yen_stake_yen": 22400,
+        "favorite_100yen_payout_yen": 19530,
+        "favorite_roi_pct": 87.1875,
+        "favorite_mean_odds": 1.6893,
+        "market_mean_overround": 1.35439
+      },
+      {
+        "group": {
+          "band": "2-3"
+        },
+        "races": 814,
+        "favorite_hits": 276,
+        "favorite_misses": 538,
+        "favorite_hit_pct": 33.9066,
+        "favorite_miss_pct": 66.0934,
+        "market_expected_hit_pct": 30.1111,
+        "market_expected_miss_pct": 69.8889,
+        "excess_miss_pp": -3.7955,
+        "underperformance_z": -2.3673,
+        "favorite_hit_pct_wilson_95": [
+          30.7369,
+          37.2275
+        ],
+        "favorite_100yen_stake_yen": 81400,
+        "favorite_100yen_payout_yen": 68090,
+        "favorite_roi_pct": 83.6486,
+        "favorite_mean_odds": 2.5016,
+        "market_mean_overround": 1.34466
+      },
+      {
+        "group": {
+          "band": "3-4"
+        },
+        "races": 1313,
+        "favorite_hits": 308,
+        "favorite_misses": 1005,
+        "favorite_hit_pct": 23.4577,
+        "favorite_miss_pct": 76.5423,
+        "market_expected_hit_pct": 21.6062,
+        "market_expected_miss_pct": 78.3938,
+        "excess_miss_pp": -1.8515,
+        "underperformance_z": -1.6316,
+        "favorite_hit_pct_wilson_95": [
+          21.2452,
+          25.8251
+        ],
+        "favorite_100yen_stake_yen": 131300,
+        "favorite_100yen_payout_yen": 106330,
+        "favorite_roi_pct": 80.9825,
+        "favorite_mean_odds": 3.4747,
+        "market_mean_overround": 1.34075
+      },
+      {
+        "group": {
+          "band": "4-5"
+        },
+        "races": 1535,
+        "favorite_hits": 288,
+        "favorite_misses": 1247,
+        "favorite_hit_pct": 18.7622,
+        "favorite_miss_pct": 81.2378,
+        "market_expected_hit_pct": 16.816,
+        "market_expected_miss_pct": 83.184,
+        "excess_miss_pp": -1.9462,
+        "underperformance_z": -2.0396,
+        "favorite_hit_pct_wilson_95": [
+          16.888,
+          20.7924
+        ],
+        "favorite_100yen_stake_yen": 153500,
+        "favorite_100yen_payout_yen": 127720,
+        "favorite_roi_pct": 83.2052,
+        "favorite_mean_odds": 4.4612,
+        "market_mean_overround": 1.33866
+      },
+      {
+        "group": {
+          "band": "5-6"
+        },
+        "races": 1606,
+        "favorite_hits": 227,
+        "favorite_misses": 1379,
+        "favorite_hit_pct": 14.1345,
+        "favorite_miss_pct": 85.8655,
+        "market_expected_hit_pct": 13.7791,
+        "market_expected_miss_pct": 86.2209,
+        "excess_miss_pp": -0.3554,
+        "underperformance_z": -0.4133,
+        "favorite_hit_pct_wilson_95": [
+          12.5161,
+          15.924
+        ],
+        "favorite_100yen_stake_yen": 160600,
+        "favorite_100yen_payout_yen": 124040,
+        "favorite_roi_pct": 77.2354,
+        "favorite_mean_odds": 5.4408,
+        "market_mean_overround": 1.33757
+      },
+      {
+        "group": {
+          "band": "6-7"
+        },
+        "races": 1516,
+        "favorite_hits": 183,
+        "favorite_misses": 1333,
+        "favorite_hit_pct": 12.0712,
+        "favorite_miss_pct": 87.9288,
+        "market_expected_hit_pct": 11.6463,
+        "market_expected_miss_pct": 88.3537,
+        "excess_miss_pp": -0.4249,
+        "underperformance_z": -0.5158,
+        "favorite_hit_pct_wilson_95": [
+          10.5264,
+          13.8078
+        ],
+        "favorite_100yen_stake_yen": 151600,
+        "favorite_100yen_payout_yen": 117390,
+        "favorite_roi_pct": 77.434,
+        "favorite_mean_odds": 6.4351,
+        "market_mean_overround": 1.33694
+      },
+      {
+        "group": {
+          "band": "7-8"
+        },
+        "races": 1417,
+        "favorite_hits": 170,
+        "favorite_misses": 1247,
+        "favorite_hit_pct": 11.9972,
+        "favorite_miss_pct": 88.0028,
+        "market_expected_hit_pct": 10.0571,
+        "market_expected_miss_pct": 89.9429,
+        "excess_miss_pp": -1.9401,
+        "underperformance_z": -2.4284,
+        "favorite_hit_pct_wilson_95": [
+          10.4073,
+          13.7926
+        ],
+        "favorite_100yen_stake_yen": 141700,
+        "favorite_100yen_payout_yen": 126440,
+        "favorite_roi_pct": 89.2308,
+        "favorite_mean_odds": 7.4519,
+        "market_mean_overround": 1.3363
+      },
+      {
+        "group": {
+          "band": "8-10"
+        },
+        "races": 2098,
+        "favorite_hits": 188,
+        "favorite_misses": 1910,
+        "favorite_hit_pct": 8.9609,
+        "favorite_miss_pct": 91.0391,
+        "market_expected_hit_pct": 8.4423,
+        "market_expected_miss_pct": 91.5577,
+        "excess_miss_pp": -0.5186,
+        "underperformance_z": -0.8545,
+        "favorite_hit_pct_wilson_95": [
+          7.8126,
+          10.2593
+        ],
+        "favorite_100yen_stake_yen": 209800,
+        "favorite_100yen_payout_yen": 166200,
+        "favorite_roi_pct": 79.2183,
+        "favorite_mean_odds": 8.9059,
+        "market_mean_overround": 1.33583
+      },
+      {
+        "group": {
+          "band": "10-12"
+        },
+        "races": 2011,
+        "favorite_hits": 132,
+        "favorite_misses": 1879,
+        "favorite_hit_pct": 6.5639,
+        "favorite_miss_pct": 93.4361,
+        "market_expected_hit_pct": 6.8721,
+        "market_expected_miss_pct": 93.1279,
+        "excess_miss_pp": 0.3082,
+        "underperformance_z": 0.5463,
+        "favorite_hit_pct_wilson_95": [
+          5.5622,
+          7.7312
+        ],
+        "favorite_100yen_stake_yen": 201100,
+        "favorite_100yen_payout_yen": 142550,
+        "favorite_roi_pct": 70.8851,
+        "favorite_mean_odds": 10.9271,
+        "market_mean_overround": 1.33538
+      },
+      {
+        "group": {
+          "band": "12-15"
+        },
+        "races": 2188,
+        "favorite_hits": 120,
+        "favorite_misses": 2068,
+        "favorite_hit_pct": 5.4845,
+        "favorite_miss_pct": 94.5155,
+        "market_expected_hit_pct": 5.6548,
+        "market_expected_miss_pct": 94.3452,
+        "excess_miss_pp": 0.1704,
+        "underperformance_z": 0.3451,
+        "favorite_hit_pct_wilson_95": [
+          4.6061,
+          6.5188
+        ],
+        "favorite_100yen_stake_yen": 218800,
+        "favorite_100yen_payout_yen": 159490,
+        "favorite_roi_pct": 72.8931,
+        "favorite_mean_odds": 13.301,
+        "market_mean_overround": 1.33507
+      },
+      {
+        "group": {
+          "band": "15-20"
+        },
+        "races": 1729,
+        "favorite_hits": 67,
+        "favorite_misses": 1662,
+        "favorite_hit_pct": 3.8751,
+        "favorite_miss_pct": 96.1249,
+        "market_expected_hit_pct": 4.4499,
+        "market_expected_miss_pct": 95.5501,
+        "excess_miss_pp": 0.5748,
+        "underperformance_z": 1.1593,
+        "favorite_hit_pct_wilson_95": [
+          3.0629,
+          4.8918
+        ],
+        "favorite_100yen_stake_yen": 172900,
+        "favorite_100yen_payout_yen": 111650,
+        "favorite_roi_pct": 64.5749,
+        "favorite_mean_odds": 16.9474,
+        "market_mean_overround": 1.33471
+      },
+      {
+        "group": {
+          "band": "20-25"
+        },
+        "races": 562,
+        "favorite_hits": 11,
+        "favorite_misses": 551,
+        "favorite_hit_pct": 1.9573,
+        "favorite_miss_pct": 98.0427,
+        "market_expected_hit_pct": 3.4246,
+        "market_expected_miss_pct": 96.5754,
+        "excess_miss_pp": 1.4673,
+        "underperformance_z": 1.9129,
+        "favorite_hit_pct_wilson_95": [
+          1.0964,
+          3.4705
+        ],
+        "favorite_100yen_stake_yen": 56200,
+        "favorite_100yen_payout_yen": 23540,
+        "favorite_roi_pct": 41.8861,
+        "favorite_mean_odds": 21.9665,
+        "market_mean_overround": 1.33445
+      },
+      {
+        "group": {
+          "band": "25-30"
+        },
+        "races": 182,
+        "favorite_hits": 6,
+        "favorite_misses": 176,
+        "favorite_hit_pct": 3.2967,
+        "favorite_miss_pct": 96.7033,
+        "market_expected_hit_pct": 2.7785,
+        "market_expected_miss_pct": 97.2215,
+        "excess_miss_pp": -0.5182,
+        "underperformance_z": -0.4254,
+        "favorite_hit_pct_wilson_95": [
+          1.5195,
+          7.0047
+        ],
+        "favorite_100yen_stake_yen": 18200,
+        "favorite_100yen_payout_yen": 16610,
+        "favorite_roi_pct": 91.2637,
+        "favorite_mean_odds": 27.0549,
+        "market_mean_overround": 1.33416
+      },
+      {
+        "group": {
+          "band": "30-40"
+        },
+        "races": 79,
+        "favorite_hits": 1,
+        "favorite_misses": 78,
+        "favorite_hit_pct": 1.2658,
+        "favorite_miss_pct": 98.7342,
+        "market_expected_hit_pct": 2.2739,
+        "market_expected_miss_pct": 97.7261,
+        "excess_miss_pp": 1.0081,
+        "underperformance_z": 0.6011,
+        "favorite_hit_pct_wilson_95": [
+          0.2238,
+          6.8276
+        ],
+        "favorite_100yen_stake_yen": 7900,
+        "favorite_100yen_payout_yen": 3070,
+        "favorite_roi_pct": 38.8608,
+        "favorite_mean_odds": 33.1785,
+        "market_mean_overround": 1.33395
+      },
+      {
+        "group": {
+          "band": "40-50"
+        },
+        "races": 10,
+        "favorite_hits": 0,
+        "favorite_misses": 10,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 1.7741,
+        "market_expected_miss_pct": 98.2259,
+        "excess_miss_pp": 1.7741,
+        "underperformance_z": 0.425,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          27.7533
+        ],
+        "favorite_100yen_stake_yen": 1000,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 42.39,
+        "market_mean_overround": 1.33397
+      },
+      {
+        "group": {
+          "band": "50-75"
+        },
+        "races": 1,
+        "favorite_hits": 0,
+        "favorite_misses": 1,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 1.3758,
+        "market_expected_miss_pct": 98.6242,
+        "excess_miss_pp": 1.3758,
+        "underperformance_z": 0.1181,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          79.3451
+        ],
+        "favorite_100yen_stake_yen": 100,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 54.5,
+        "market_mean_overround": 1.33364
+      }
+    ],
+    "year_bands": [
+      {
+        "group": {
+          "year": "2020",
+          "band": "2-3"
+        },
+        "races": 1,
+        "favorite_hits": 1,
+        "favorite_misses": 0,
+        "favorite_hit_pct": 100.0,
+        "favorite_miss_pct": 0.0,
+        "market_expected_hit_pct": 37.3981,
+        "market_expected_miss_pct": 62.6019,
+        "excess_miss_pp": -62.6019,
+        "underperformance_z": -1.2938,
+        "favorite_hit_pct_wilson_95": [
+          20.6549,
+          100.0
+        ],
+        "favorite_100yen_stake_yen": 100,
+        "favorite_100yen_payout_yen": 200,
+        "favorite_roi_pct": 200.0,
+        "favorite_mean_odds": 2.0,
+        "market_mean_overround": 1.33697
+      },
+      {
+        "group": {
+          "year": "2020",
+          "band": "3-4"
+        },
+        "races": 5,
+        "favorite_hits": 0,
+        "favorite_misses": 5,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 21.7266,
+        "market_expected_miss_pct": 78.2734,
+        "excess_miss_pp": 21.7266,
+        "underperformance_z": 1.1783,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          43.4482
+        ],
+        "favorite_100yen_stake_yen": 500,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 3.44,
+        "market_mean_overround": 1.34003
+      },
+      {
+        "group": {
+          "year": "2020",
+          "band": "4-5"
+        },
+        "races": 6,
+        "favorite_hits": 0,
+        "favorite_misses": 6,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 16.4848,
+        "market_expected_miss_pct": 83.5152,
+        "excess_miss_pp": 16.4848,
+        "underperformance_z": 1.0887,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          39.0334
+        ],
+        "favorite_100yen_stake_yen": 600,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 4.55,
+        "market_mean_overround": 1.3384
+      },
+      {
+        "group": {
+          "year": "2020",
+          "band": "5-6"
+        },
+        "races": 7,
+        "favorite_hits": 0,
+        "favorite_misses": 7,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 14.0438,
+        "market_expected_miss_pct": 85.9562,
+        "excess_miss_pp": 14.0438,
+        "underperformance_z": 1.0698,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          35.433
+        ],
+        "favorite_100yen_stake_yen": 700,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 5.3429,
+        "market_mean_overround": 1.33778
+      },
+      {
+        "group": {
+          "year": "2020",
+          "band": "6-7"
+        },
+        "races": 6,
+        "favorite_hits": 1,
+        "favorite_misses": 5,
+        "favorite_hit_pct": 16.6667,
+        "favorite_miss_pct": 83.3333,
+        "market_expected_hit_pct": 11.5079,
+        "market_expected_miss_pct": 88.4921,
+        "excess_miss_pp": -5.1587,
+        "underperformance_z": -0.396,
+        "favorite_hit_pct_wilson_95": [
+          3.0053,
+          56.3503
+        ],
+        "favorite_100yen_stake_yen": 600,
+        "favorite_100yen_payout_yen": 690,
+        "favorite_roi_pct": 115.0,
+        "favorite_mean_odds": 6.5167,
+        "market_mean_overround": 1.3368
+      },
+      {
+        "group": {
+          "year": "2020",
+          "band": "7-8"
+        },
+        "races": 5,
+        "favorite_hits": 0,
+        "favorite_misses": 5,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 9.9319,
+        "market_expected_miss_pct": 90.0681,
+        "excess_miss_pp": 9.9319,
+        "underperformance_z": 0.7426,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          43.4482
+        ],
+        "favorite_100yen_stake_yen": 500,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 7.54,
+        "market_mean_overround": 1.33653
+      },
+      {
+        "group": {
+          "year": "2020",
+          "band": "8-10"
+        },
+        "races": 16,
+        "favorite_hits": 1,
+        "favorite_misses": 15,
+        "favorite_hit_pct": 6.25,
+        "favorite_miss_pct": 93.75,
+        "market_expected_hit_pct": 8.3542,
+        "market_expected_miss_pct": 91.6458,
+        "excess_miss_pp": 2.1042,
+        "underperformance_z": 0.3042,
+        "favorite_hit_pct_wilson_95": [
+          1.1119,
+          28.3287
+        ],
+        "favorite_100yen_stake_yen": 1600,
+        "favorite_100yen_payout_yen": 830,
+        "favorite_roi_pct": 51.875,
+        "favorite_mean_odds": 8.9938,
+        "market_mean_overround": 1.33565
+      },
+      {
+        "group": {
+          "year": "2020",
+          "band": "10-12"
+        },
+        "races": 12,
+        "favorite_hits": 0,
+        "favorite_misses": 12,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 6.9406,
+        "market_expected_miss_pct": 93.0594,
+        "excess_miss_pp": 6.9406,
+        "underperformance_z": 0.9461,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          24.2494
+        ],
+        "favorite_100yen_stake_yen": 1200,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 10.8,
+        "market_mean_overround": 1.3353
+      },
+      {
+        "group": {
+          "year": "2020",
+          "band": "12-15"
+        },
+        "races": 10,
+        "favorite_hits": 0,
+        "favorite_misses": 10,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 5.5493,
+        "market_expected_miss_pct": 94.4507,
+        "excess_miss_pp": 5.5493,
+        "underperformance_z": 0.7666,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          27.7533
+        ],
+        "favorite_100yen_stake_yen": 1000,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 13.54,
+        "market_mean_overround": 1.33477
+      },
+      {
+        "group": {
+          "year": "2020",
+          "band": "15-20"
+        },
+        "races": 8,
+        "favorite_hits": 0,
+        "favorite_misses": 8,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 4.3861,
+        "market_expected_miss_pct": 95.6139,
+        "excess_miss_pp": 4.3861,
+        "underperformance_z": 0.6059,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          32.4408
+        ],
+        "favorite_100yen_stake_yen": 800,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 17.2,
+        "market_mean_overround": 1.33473
+      },
+      {
+        "group": {
+          "year": "2020",
+          "band": "20-25"
+        },
+        "races": 2,
+        "favorite_hits": 0,
+        "favorite_misses": 2,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 3.7105,
+        "market_expected_miss_pct": 96.2895,
+        "excess_miss_pp": 3.7105,
+        "underperformance_z": 0.2776,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          65.762
+        ],
+        "favorite_100yen_stake_yen": 200,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 20.2,
+        "market_mean_overround": 1.33433
+      },
+      {
+        "group": {
+          "year": "2021",
+          "band": "0-2"
+        },
+        "races": 7,
+        "favorite_hits": 2,
+        "favorite_misses": 5,
+        "favorite_hit_pct": 28.5714,
+        "favorite_miss_pct": 71.4286,
+        "market_expected_hit_pct": 42.6842,
+        "market_expected_miss_pct": 57.3158,
+        "excess_miss_pp": 14.1128,
+        "underperformance_z": 0.7562,
+        "favorite_hit_pct_wilson_95": [
+          8.2219,
+          64.1066
+        ],
+        "favorite_100yen_stake_yen": 700,
+        "favorite_100yen_payout_yen": 320,
+        "favorite_roi_pct": 45.7143,
+        "favorite_mean_odds": 1.7429,
+        "market_mean_overround": 1.35036
+      },
+      {
+        "group": {
+          "year": "2021",
+          "band": "2-3"
+        },
+        "races": 85,
+        "favorite_hits": 35,
+        "favorite_misses": 50,
+        "favorite_hit_pct": 41.1765,
+        "favorite_miss_pct": 58.8235,
+        "market_expected_hit_pct": 30.1921,
+        "market_expected_miss_pct": 69.8079,
+        "excess_miss_pp": -10.9843,
+        "underperformance_z": -2.2127,
+        "favorite_hit_pct_wilson_95": [
+          31.317,
+          51.799
+        ],
+        "favorite_100yen_stake_yen": 8500,
+        "favorite_100yen_payout_yen": 8690,
+        "favorite_roi_pct": 102.2353,
+        "favorite_mean_odds": 2.4988,
+        "market_mean_overround": 1.34371
+      },
+      {
+        "group": {
+          "year": "2021",
+          "band": "3-4"
+        },
+        "races": 164,
+        "favorite_hits": 41,
+        "favorite_misses": 123,
+        "favorite_hit_pct": 25.0,
+        "favorite_miss_pct": 75.0,
+        "market_expected_hit_pct": 21.5717,
+        "market_expected_miss_pct": 78.4283,
+        "excess_miss_pp": -3.4283,
+        "underperformance_z": -1.0682,
+        "favorite_hit_pct_wilson_95": [
+          18.9964,
+          32.148
+        ],
+        "favorite_100yen_stake_yen": 16400,
+        "favorite_100yen_payout_yen": 14290,
+        "favorite_roi_pct": 87.1341,
+        "favorite_mean_odds": 3.4774,
+        "market_mean_overround": 1.34068
+      },
+      {
+        "group": {
+          "year": "2021",
+          "band": "4-5"
+        },
+        "races": 209,
+        "favorite_hits": 27,
+        "favorite_misses": 182,
+        "favorite_hit_pct": 12.9187,
+        "favorite_miss_pct": 87.0813,
+        "market_expected_hit_pct": 16.7268,
+        "market_expected_miss_pct": 83.2732,
+        "excess_miss_pp": 3.8081,
+        "underperformance_z": 1.4758,
+        "favorite_hit_pct_wilson_95": [
+          9.0325,
+          18.1434
+        ],
+        "favorite_100yen_stake_yen": 20900,
+        "favorite_100yen_payout_yen": 12100,
+        "favorite_roi_pct": 57.8947,
+        "favorite_mean_odds": 4.4847,
+        "market_mean_overround": 1.33898
+      },
+      {
+        "group": {
+          "year": "2021",
+          "band": "5-6"
+        },
+        "races": 213,
+        "favorite_hits": 30,
+        "favorite_misses": 183,
+        "favorite_hit_pct": 14.0845,
+        "favorite_miss_pct": 85.9155,
+        "market_expected_hit_pct": 13.7235,
+        "market_expected_miss_pct": 86.2765,
+        "excess_miss_pp": -0.361,
+        "underperformance_z": -0.1532,
+        "favorite_hit_pct_wilson_95": [
+          10.0472,
+          19.3943
+        ],
+        "favorite_100yen_stake_yen": 21300,
+        "favorite_100yen_payout_yen": 16420,
+        "favorite_roi_pct": 77.0892,
+        "favorite_mean_odds": 5.4629,
+        "market_mean_overround": 1.33754
+      },
+      {
+        "group": {
+          "year": "2021",
+          "band": "6-7"
+        },
+        "races": 231,
+        "favorite_hits": 24,
+        "favorite_misses": 207,
+        "favorite_hit_pct": 10.3896,
+        "favorite_miss_pct": 89.6104,
+        "market_expected_hit_pct": 11.6412,
+        "market_expected_miss_pct": 88.3588,
+        "excess_miss_pp": 1.2516,
+        "underperformance_z": 0.5932,
+        "favorite_hit_pct_wilson_95": [
+          7.0817,
+          14.9934
+        ],
+        "favorite_100yen_stake_yen": 23100,
+        "favorite_100yen_payout_yen": 15510,
+        "favorite_roi_pct": 67.1429,
+        "favorite_mean_odds": 6.4381,
+        "market_mean_overround": 1.33686
+      },
+      {
+        "group": {
+          "year": "2021",
+          "band": "7-8"
+        },
+        "races": 171,
+        "favorite_hits": 23,
+        "favorite_misses": 148,
+        "favorite_hit_pct": 13.4503,
+        "favorite_miss_pct": 86.5497,
+        "market_expected_hit_pct": 10.0376,
+        "market_expected_miss_pct": 89.9624,
+        "excess_miss_pp": -3.4127,
+        "underperformance_z": -1.4852,
+        "favorite_hit_pct_wilson_95": [
+          9.1326,
+          19.3741
+        ],
+        "favorite_100yen_stake_yen": 17100,
+        "favorite_100yen_payout_yen": 17060,
+        "favorite_roi_pct": 99.7661,
+        "favorite_mean_odds": 7.4673,
+        "market_mean_overround": 1.33629
+      },
+      {
+        "group": {
+          "year": "2021",
+          "band": "8-10"
+        },
+        "races": 285,
+        "favorite_hits": 30,
+        "favorite_misses": 255,
+        "favorite_hit_pct": 10.5263,
+        "favorite_miss_pct": 89.4737,
+        "market_expected_hit_pct": 8.4846,
+        "market_expected_miss_pct": 91.5154,
+        "excess_miss_pp": -2.0418,
+        "underperformance_z": -1.2372,
+        "favorite_hit_pct_wilson_95": [
+          7.4734,
+          14.6292
+        ],
+        "favorite_100yen_stake_yen": 28500,
+        "favorite_100yen_payout_yen": 27000,
+        "favorite_roi_pct": 94.7368,
+        "favorite_mean_odds": 8.8632,
+        "market_mean_overround": 1.33572
+      },
+      {
+        "group": {
+          "year": "2021",
+          "band": "10-12"
+        },
+        "races": 288,
+        "favorite_hits": 18,
+        "favorite_misses": 270,
+        "favorite_hit_pct": 6.25,
+        "favorite_miss_pct": 93.75,
+        "market_expected_hit_pct": 6.8288,
+        "market_expected_miss_pct": 93.1712,
+        "excess_miss_pp": 0.5788,
+        "underperformance_z": 0.3895,
+        "favorite_hit_pct_wilson_95": [
+          3.9896,
+          9.6621
+        ],
+        "favorite_100yen_stake_yen": 28800,
+        "favorite_100yen_payout_yen": 19910,
+        "favorite_roi_pct": 69.1319,
+        "favorite_mean_odds": 10.9972,
+        "market_mean_overround": 1.33514
+      },
+      {
+        "group": {
+          "year": "2021",
+          "band": "12-15"
+        },
+        "races": 337,
+        "favorite_hits": 19,
+        "favorite_misses": 318,
+        "favorite_hit_pct": 5.638,
+        "favorite_miss_pct": 94.362,
+        "market_expected_hit_pct": 5.6534,
+        "market_expected_miss_pct": 94.3466,
+        "excess_miss_pp": 0.0154,
+        "underperformance_z": 0.0123,
+        "favorite_hit_pct_wilson_95": [
+          3.6388,
+          8.6372
+        ],
+        "favorite_100yen_stake_yen": 33700,
+        "favorite_100yen_payout_yen": 25070,
+        "favorite_roi_pct": 74.3917,
+        "favorite_mean_odds": 13.3056,
+        "market_mean_overround": 1.33488
+      },
+      {
+        "group": {
+          "year": "2021",
+          "band": "15-20"
+        },
+        "races": 309,
+        "favorite_hits": 8,
+        "favorite_misses": 301,
+        "favorite_hit_pct": 2.589,
+        "favorite_miss_pct": 97.411,
+        "market_expected_hit_pct": 4.4492,
+        "market_expected_miss_pct": 95.5508,
+        "excess_miss_pp": 1.8602,
+        "underperformance_z": 1.5862,
+        "favorite_hit_pct_wilson_95": [
+          1.3176,
+          5.0247
+        ],
+        "favorite_100yen_stake_yen": 30900,
+        "favorite_100yen_payout_yen": 13620,
+        "favorite_roi_pct": 44.0777,
+        "favorite_mean_odds": 16.9605,
+        "market_mean_overround": 1.33449
+      },
+      {
+        "group": {
+          "year": "2021",
+          "band": "20-25"
+        },
+        "races": 134,
+        "favorite_hits": 5,
+        "favorite_misses": 129,
+        "favorite_hit_pct": 3.7313,
+        "favorite_miss_pct": 96.2687,
+        "market_expected_hit_pct": 3.4291,
+        "market_expected_miss_pct": 96.5709,
+        "excess_miss_pp": -0.3022,
+        "underperformance_z": -0.1923,
+        "favorite_hit_pct_wilson_95": [
+          1.6042,
+          8.4374
+        ],
+        "favorite_100yen_stake_yen": 13400,
+        "favorite_100yen_payout_yen": 10960,
+        "favorite_roi_pct": 81.791,
+        "favorite_mean_odds": 21.9455,
+        "market_mean_overround": 1.33424
+      },
+      {
+        "group": {
+          "year": "2021",
+          "band": "25-30"
+        },
+        "races": 63,
+        "favorite_hits": 1,
+        "favorite_misses": 62,
+        "favorite_hit_pct": 1.5873,
+        "favorite_miss_pct": 98.4127,
+        "market_expected_hit_pct": 2.7946,
+        "market_expected_miss_pct": 97.2054,
+        "excess_miss_pp": 1.2073,
+        "underperformance_z": 0.5814,
+        "favorite_hit_pct_wilson_95": [
+          0.2807,
+          8.4585
+        ],
+        "favorite_100yen_stake_yen": 6300,
+        "favorite_100yen_payout_yen": 2750,
+        "favorite_roi_pct": 43.6508,
+        "favorite_mean_odds": 26.8841,
+        "market_mean_overround": 1.33405
+      },
+      {
+        "group": {
+          "year": "2021",
+          "band": "30-40"
+        },
+        "races": 28,
+        "favorite_hits": 1,
+        "favorite_misses": 27,
+        "favorite_hit_pct": 3.5714,
+        "favorite_miss_pct": 96.4286,
+        "market_expected_hit_pct": 2.2427,
+        "market_expected_miss_pct": 97.7573,
+        "excess_miss_pp": -1.3288,
+        "underperformance_z": -0.4749,
+        "favorite_hit_pct_wilson_95": [
+          0.6333,
+          17.7122
+        ],
+        "favorite_100yen_stake_yen": 2800,
+        "favorite_100yen_payout_yen": 3300,
+        "favorite_roi_pct": 117.8571,
+        "favorite_mean_odds": 33.6107,
+        "market_mean_overround": 1.33387
+      },
+      {
+        "group": {
+          "year": "2021",
+          "band": "40-50"
+        },
+        "races": 1,
+        "favorite_hits": 0,
+        "favorite_misses": 1,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 1.6229,
+        "market_expected_miss_pct": 98.3771,
+        "excess_miss_pp": 1.6229,
+        "underperformance_z": 0.1284,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          79.3451
+        ],
+        "favorite_100yen_stake_yen": 100,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 46.2,
+        "market_mean_overround": 1.33369
+      },
+      {
+        "group": {
+          "year": "2021",
+          "band": "50-75"
+        },
+        "races": 2,
+        "favorite_hits": 0,
+        "favorite_misses": 2,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 1.251,
+        "market_expected_miss_pct": 98.749,
+        "excess_miss_pp": 1.251,
+        "underperformance_z": 0.1592,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          65.762
+        ],
+        "favorite_100yen_stake_yen": 200,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 60.7,
+        "market_mean_overround": 1.33366
+      },
+      {
+        "group": {
+          "year": "2022",
+          "band": "0-2"
+        },
+        "races": 14,
+        "favorite_hits": 7,
+        "favorite_misses": 7,
+        "favorite_hit_pct": 50.0,
+        "favorite_miss_pct": 50.0,
+        "market_expected_hit_pct": 42.1534,
+        "market_expected_miss_pct": 57.8466,
+        "excess_miss_pp": -7.8466,
+        "underperformance_z": -0.5958,
+        "favorite_hit_pct_wilson_95": [
+          26.7992,
+          73.2008
+        ],
+        "favorite_100yen_stake_yen": 1400,
+        "favorite_100yen_payout_yen": 1210,
+        "favorite_roi_pct": 86.4286,
+        "favorite_mean_odds": 1.7571,
+        "market_mean_overround": 1.35806
+      },
+      {
+        "group": {
+          "year": "2022",
+          "band": "2-3"
+        },
+        "races": 81,
+        "favorite_hits": 36,
+        "favorite_misses": 45,
+        "favorite_hit_pct": 44.4444,
+        "favorite_miss_pct": 55.5556,
+        "market_expected_hit_pct": 29.3176,
+        "market_expected_miss_pct": 70.6824,
+        "excess_miss_pp": -15.1269,
+        "underperformance_z": -2.9995,
+        "favorite_hit_pct_wilson_95": [
+          34.1196,
+          55.2724
+        ],
+        "favorite_100yen_stake_yen": 8100,
+        "favorite_100yen_payout_yen": 9040,
+        "favorite_roi_pct": 111.6049,
+        "favorite_mean_odds": 2.5716,
+        "market_mean_overround": 1.34399
+      },
+      {
+        "group": {
+          "year": "2022",
+          "band": "3-4"
+        },
+        "races": 128,
+        "favorite_hits": 37,
+        "favorite_misses": 91,
+        "favorite_hit_pct": 28.9062,
+        "favorite_miss_pct": 71.0938,
+        "market_expected_hit_pct": 21.5386,
+        "market_expected_miss_pct": 78.4614,
+        "excess_miss_pp": -7.3676,
+        "underperformance_z": -2.0296,
+        "favorite_hit_pct_wilson_95": [
+          21.7584,
+          37.2833
+        ],
+        "favorite_100yen_stake_yen": 12800,
+        "favorite_100yen_payout_yen": 12740,
+        "favorite_roi_pct": 99.5312,
+        "favorite_mean_odds": 3.4852,
+        "market_mean_overround": 1.34136
+      },
+      {
+        "group": {
+          "year": "2022",
+          "band": "4-5"
+        },
+        "races": 200,
+        "favorite_hits": 31,
+        "favorite_misses": 169,
+        "favorite_hit_pct": 15.5,
+        "favorite_miss_pct": 84.5,
+        "market_expected_hit_pct": 16.7549,
+        "market_expected_miss_pct": 83.2451,
+        "excess_miss_pp": 1.2549,
+        "underperformance_z": 0.4754,
+        "favorite_hit_pct_wilson_95": [
+          11.1396,
+          21.1607
+        ],
+        "favorite_100yen_stake_yen": 20000,
+        "favorite_100yen_payout_yen": 13760,
+        "favorite_roi_pct": 68.8,
+        "favorite_mean_odds": 4.474,
+        "market_mean_overround": 1.33974
+      },
+      {
+        "group": {
+          "year": "2022",
+          "band": "5-6"
+        },
+        "races": 249,
+        "favorite_hits": 33,
+        "favorite_misses": 216,
+        "favorite_hit_pct": 13.253,
+        "favorite_miss_pct": 86.747,
+        "market_expected_hit_pct": 13.7365,
+        "market_expected_miss_pct": 86.2635,
+        "excess_miss_pp": 0.4835,
+        "underperformance_z": 0.2217,
+        "favorite_hit_pct_wilson_95": [
+          9.5948,
+          18.0278
+        ],
+        "favorite_100yen_stake_yen": 24900,
+        "favorite_100yen_payout_yen": 17610,
+        "favorite_roi_pct": 70.7229,
+        "favorite_mean_odds": 5.4526,
+        "market_mean_overround": 1.33848
+      },
+      {
+        "group": {
+          "year": "2022",
+          "band": "6-7"
+        },
+        "races": 292,
+        "favorite_hits": 40,
+        "favorite_misses": 252,
+        "favorite_hit_pct": 13.6986,
+        "favorite_miss_pct": 86.3014,
+        "market_expected_hit_pct": 11.6746,
+        "market_expected_miss_pct": 88.3254,
+        "excess_miss_pp": -2.024,
+        "underperformance_z": -1.0772,
+        "favorite_hit_pct_wilson_95": [
+          10.2237,
+          18.1163
+        ],
+        "favorite_100yen_stake_yen": 29200,
+        "favorite_100yen_payout_yen": 25630,
+        "favorite_roi_pct": 87.774,
+        "favorite_mean_odds": 6.4164,
+        "market_mean_overround": 1.33759
+      },
+      {
+        "group": {
+          "year": "2022",
+          "band": "7-8"
+        },
+        "races": 293,
+        "favorite_hits": 26,
+        "favorite_misses": 267,
+        "favorite_hit_pct": 8.8737,
+        "favorite_miss_pct": 91.1263,
+        "market_expected_hit_pct": 10.0703,
+        "market_expected_miss_pct": 89.9297,
+        "excess_miss_pp": 1.1966,
+        "underperformance_z": 0.6807,
+        "favorite_hit_pct_wilson_95": [
+          6.1276,
+          12.6843
+        ],
+        "favorite_100yen_stake_yen": 29300,
+        "favorite_100yen_payout_yen": 19480,
+        "favorite_roi_pct": 66.4846,
+        "favorite_mean_odds": 7.4369,
+        "market_mean_overround": 1.33692
+      },
+      {
+        "group": {
+          "year": "2022",
+          "band": "8-10"
+        },
+        "races": 443,
+        "favorite_hits": 34,
+        "favorite_misses": 409,
+        "favorite_hit_pct": 7.6749,
+        "favorite_miss_pct": 92.3251,
+        "market_expected_hit_pct": 8.3981,
+        "market_expected_miss_pct": 91.6019,
+        "excess_miss_pp": 0.7232,
+        "underperformance_z": 0.5489,
+        "favorite_hit_pct_wilson_95": [
+          5.544,
+          10.5336
+        ],
+        "favorite_100yen_stake_yen": 44300,
+        "favorite_100yen_payout_yen": 29720,
+        "favorite_roi_pct": 67.088,
+        "favorite_mean_odds": 8.9499,
+        "market_mean_overround": 1.33613
+      },
+      {
+        "group": {
+          "year": "2022",
+          "band": "10-12"
+        },
+        "races": 447,
+        "favorite_hits": 38,
+        "favorite_misses": 409,
+        "favorite_hit_pct": 8.5011,
+        "favorite_miss_pct": 91.4989,
+        "market_expected_hit_pct": 6.8723,
+        "market_expected_miss_pct": 93.1277,
+        "excess_miss_pp": -1.6288,
+        "underperformance_z": -1.3613,
+        "favorite_hit_pct_wilson_95": [
+          6.2561,
+          11.4533
+        ],
+        "favorite_100yen_stake_yen": 44700,
+        "favorite_100yen_payout_yen": 41480,
+        "favorite_roi_pct": 92.7964,
+        "favorite_mean_odds": 10.9237,
+        "market_mean_overround": 1.33555
+      },
+      {
+        "group": {
+          "year": "2022",
+          "band": "12-15"
+        },
+        "races": 511,
+        "favorite_hits": 29,
+        "favorite_misses": 482,
+        "favorite_hit_pct": 5.6751,
+        "favorite_miss_pct": 94.3249,
+        "market_expected_hit_pct": 5.6085,
+        "market_expected_miss_pct": 94.3915,
+        "excess_miss_pp": -0.0667,
+        "underperformance_z": -0.0655,
+        "favorite_hit_pct_wilson_95": [
+          3.9802,
+          8.0316
+        ],
+        "favorite_100yen_stake_yen": 51100,
+        "favorite_100yen_payout_yen": 38490,
+        "favorite_roi_pct": 75.3229,
+        "favorite_mean_odds": 13.4106,
+        "market_mean_overround": 1.33513
+      },
+      {
+        "group": {
+          "year": "2022",
+          "band": "15-20"
+        },
+        "races": 486,
+        "favorite_hits": 13,
+        "favorite_misses": 473,
+        "favorite_hit_pct": 2.6749,
+        "favorite_miss_pct": 97.3251,
+        "market_expected_hit_pct": 4.4018,
+        "market_expected_miss_pct": 95.5982,
+        "excess_miss_pp": 1.7269,
+        "underperformance_z": 1.8561,
+        "favorite_hit_pct_wilson_95": [
+          1.5698,
+          4.5223
+        ],
+        "favorite_100yen_stake_yen": 48600,
+        "favorite_100yen_payout_yen": 22310,
+        "favorite_roi_pct": 45.9053,
+        "favorite_mean_odds": 17.1354,
+        "market_mean_overround": 1.33463
+      },
+      {
+        "group": {
+          "year": "2022",
+          "band": "20-25"
+        },
+        "races": 236,
+        "favorite_hits": 5,
+        "favorite_misses": 231,
+        "favorite_hit_pct": 2.1186,
+        "favorite_miss_pct": 97.8814,
+        "market_expected_hit_pct": 3.4154,
+        "market_expected_miss_pct": 96.5846,
+        "excess_miss_pp": 1.2968,
+        "underperformance_z": 1.0969,
+        "favorite_hit_pct_wilson_95": [
+          0.9083,
+          4.8628
+        ],
+        "favorite_100yen_stake_yen": 23600,
+        "favorite_100yen_payout_yen": 10930,
+        "favorite_roi_pct": 46.3136,
+        "favorite_mean_odds": 22.0203,
+        "market_mean_overround": 1.33428
+      },
+      {
+        "group": {
+          "year": "2022",
+          "band": "25-30"
+        },
+        "races": 88,
+        "favorite_hits": 2,
+        "favorite_misses": 86,
+        "favorite_hit_pct": 2.2727,
+        "favorite_miss_pct": 97.7273,
+        "market_expected_hit_pct": 2.7724,
+        "market_expected_miss_pct": 97.2276,
+        "excess_miss_pp": 0.4997,
+        "underperformance_z": 0.2855,
+        "favorite_hit_pct_wilson_95": [
+          0.6255,
+          7.9125
+        ],
+        "favorite_100yen_stake_yen": 8800,
+        "favorite_100yen_payout_yen": 5530,
+        "favorite_roi_pct": 62.8409,
+        "favorite_mean_odds": 27.0989,
+        "market_mean_overround": 1.3341
+      },
+      {
+        "group": {
+          "year": "2022",
+          "band": "30-40"
+        },
+        "races": 44,
+        "favorite_hits": 0,
+        "favorite_misses": 44,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 2.2759,
+        "market_expected_miss_pct": 97.7241,
+        "excess_miss_pp": 2.2759,
+        "underperformance_z": 1.0123,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          8.0296
+        ],
+        "favorite_100yen_stake_yen": 4400,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 33.1159,
+        "market_mean_overround": 1.33396
+      },
+      {
+        "group": {
+          "year": "2023",
+          "band": "0-2"
+        },
+        "races": 136,
+        "favorite_hits": 77,
+        "favorite_misses": 59,
+        "favorite_hit_pct": 56.6176,
+        "favorite_miss_pct": 43.3824,
+        "market_expected_hit_pct": 44.0888,
+        "market_expected_miss_pct": 55.9112,
+        "excess_miss_pp": -12.5289,
+        "underperformance_z": -2.958,
+        "favorite_hit_pct_wilson_95": [
+          48.2197,
+          64.652
+        ],
+        "favorite_100yen_stake_yen": 13600,
+        "favorite_100yen_payout_yen": 12870,
+        "favorite_roi_pct": 94.6324,
+        "favorite_mean_odds": 1.6934,
+        "market_mean_overround": 1.35603
+      },
+      {
+        "group": {
+          "year": "2023",
+          "band": "2-3"
+        },
+        "races": 441,
+        "favorite_hits": 139,
+        "favorite_misses": 302,
+        "favorite_hit_pct": 31.5193,
+        "favorite_miss_pct": 68.4807,
+        "market_expected_hit_pct": 29.8662,
+        "market_expected_miss_pct": 70.1338,
+        "excess_miss_pp": -1.6531,
+        "underperformance_z": -0.7607,
+        "favorite_hit_pct_wilson_95": [
+          27.3586,
+          35.9992
+        ],
+        "favorite_100yen_stake_yen": 44100,
+        "favorite_100yen_payout_yen": 34360,
+        "favorite_roi_pct": 77.9138,
+        "favorite_mean_odds": 2.5215,
+        "market_mean_overround": 1.34512
+      },
+      {
+        "group": {
+          "year": "2023",
+          "band": "3-4"
+        },
+        "races": 767,
+        "favorite_hits": 193,
+        "favorite_misses": 574,
+        "favorite_hit_pct": 25.163,
+        "favorite_miss_pct": 74.837,
+        "market_expected_hit_pct": 21.679,
+        "market_expected_miss_pct": 78.321,
+        "excess_miss_pp": -3.484,
+        "underperformance_z": -2.3436,
+        "favorite_hit_pct_wilson_95": [
+          22.2208,
+          28.3527
+        ],
+        "favorite_100yen_stake_yen": 76700,
+        "favorite_100yen_payout_yen": 65980,
+        "favorite_roi_pct": 86.0235,
+        "favorite_mean_odds": 3.4617,
+        "market_mean_overround": 1.34076
+      },
+      {
+        "group": {
+          "year": "2023",
+          "band": "4-5"
+        },
+        "races": 1010,
+        "favorite_hits": 180,
+        "favorite_misses": 830,
+        "favorite_hit_pct": 17.8218,
+        "favorite_miss_pct": 82.1782,
+        "market_expected_hit_pct": 16.7594,
+        "market_expected_miss_pct": 83.2406,
+        "excess_miss_pp": -1.0624,
+        "underperformance_z": -0.9043,
+        "favorite_hit_pct_wilson_95": [
+          15.5849,
+          20.3025
+        ],
+        "favorite_100yen_stake_yen": 101000,
+        "favorite_100yen_payout_yen": 80580,
+        "favorite_roi_pct": 79.7822,
+        "favorite_mean_odds": 4.474,
+        "market_mean_overround": 1.33888
+      },
+      {
+        "group": {
+          "year": "2023",
+          "band": "5-6"
+        },
+        "races": 1130,
+        "favorite_hits": 168,
+        "favorite_misses": 962,
+        "favorite_hit_pct": 14.8673,
+        "favorite_miss_pct": 85.1327,
+        "market_expected_hit_pct": 13.7491,
+        "market_expected_miss_pct": 86.2509,
+        "excess_miss_pp": -1.1182,
+        "underperformance_z": -1.0918,
+        "favorite_hit_pct_wilson_95": [
+          12.9121,
+          17.0605
+        ],
+        "favorite_100yen_stake_yen": 113000,
+        "favorite_100yen_payout_yen": 91260,
+        "favorite_roi_pct": 80.7611,
+        "favorite_mean_odds": 5.4519,
+        "market_mean_overround": 1.33773
+      },
+      {
+        "group": {
+          "year": "2023",
+          "band": "6-7"
+        },
+        "races": 1092,
+        "favorite_hits": 131,
+        "favorite_misses": 961,
+        "favorite_hit_pct": 11.9963,
+        "favorite_miss_pct": 88.0037,
+        "market_expected_hit_pct": 11.6393,
+        "market_expected_miss_pct": 88.3607,
+        "excess_miss_pp": -0.357,
+        "underperformance_z": -0.3679,
+        "favorite_hit_pct_wilson_95": [
+          10.2012,
+          14.0579
+        ],
+        "favorite_100yen_stake_yen": 109200,
+        "favorite_100yen_payout_yen": 83650,
+        "favorite_roi_pct": 76.6026,
+        "favorite_mean_odds": 6.4387,
+        "market_mean_overround": 1.33697
+      },
+      {
+        "group": {
+          "year": "2023",
+          "band": "7-8"
+        },
+        "races": 1000,
+        "favorite_hits": 117,
+        "favorite_misses": 883,
+        "favorite_hit_pct": 11.7,
+        "favorite_miss_pct": 88.3,
+        "market_expected_hit_pct": 10.0923,
+        "market_expected_miss_pct": 89.9077,
+        "excess_miss_pp": -1.6077,
+        "underperformance_z": -1.6879,
+        "favorite_hit_pct_wilson_95": [
+          9.8528,
+          13.8403
+        ],
+        "favorite_100yen_stake_yen": 100000,
+        "favorite_100yen_payout_yen": 86460,
+        "favorite_roi_pct": 86.46,
+        "favorite_mean_odds": 7.4256,
+        "market_mean_overround": 1.33635
+      },
+      {
+        "group": {
+          "year": "2023",
+          "band": "8-10"
+        },
+        "races": 1381,
+        "favorite_hits": 111,
+        "favorite_misses": 1270,
+        "favorite_hit_pct": 8.0377,
+        "favorite_miss_pct": 91.9623,
+        "market_expected_hit_pct": 8.4517,
+        "market_expected_miss_pct": 91.5483,
+        "excess_miss_pp": 0.4141,
+        "underperformance_z": 0.5533,
+        "favorite_hit_pct_wilson_95": [
+          6.7174,
+          9.5907
+        ],
+        "favorite_100yen_stake_yen": 138100,
+        "favorite_100yen_payout_yen": 99080,
+        "favorite_roi_pct": 71.7451,
+        "favorite_mean_odds": 8.8954,
+        "market_mean_overround": 1.33588
+      },
+      {
+        "group": {
+          "year": "2023",
+          "band": "10-12"
+        },
+        "races": 1292,
+        "favorite_hits": 76,
+        "favorite_misses": 1216,
+        "favorite_hit_pct": 5.8824,
+        "favorite_miss_pct": 94.1176,
+        "market_expected_hit_pct": 6.8572,
+        "market_expected_miss_pct": 93.1428,
+        "excess_miss_pp": 0.9748,
+        "underperformance_z": 1.3866,
+        "favorite_hit_pct_wilson_95": [
+          4.7254,
+          7.3009
+        ],
+        "favorite_100yen_stake_yen": 129200,
+        "favorite_100yen_payout_yen": 82130,
+        "favorite_roi_pct": 63.5681,
+        "favorite_mean_odds": 10.951,
+        "market_mean_overround": 1.33541
+      },
+      {
+        "group": {
+          "year": "2023",
+          "band": "12-15"
+        },
+        "races": 1374,
+        "favorite_hits": 65,
+        "favorite_misses": 1309,
+        "favorite_hit_pct": 4.7307,
+        "favorite_miss_pct": 95.2693,
+        "market_expected_hit_pct": 5.6432,
+        "market_expected_miss_pct": 94.3568,
+        "excess_miss_pp": 0.9125,
+        "underperformance_z": 1.466,
+        "favorite_hit_pct_wilson_95": [
+          3.7289,
+          5.985
+        ],
+        "favorite_100yen_stake_yen": 137400,
+        "favorite_100yen_payout_yen": 85860,
+        "favorite_roi_pct": 62.4891,
+        "favorite_mean_odds": 13.3253,
+        "market_mean_overround": 1.33507
+      },
+      {
+        "group": {
+          "year": "2023",
+          "band": "15-20"
+        },
+        "races": 1051,
+        "favorite_hits": 53,
+        "favorite_misses": 998,
+        "favorite_hit_pct": 5.0428,
+        "favorite_miss_pct": 94.9572,
+        "market_expected_hit_pct": 4.4412,
+        "market_expected_miss_pct": 95.5588,
+        "excess_miss_pp": -0.6016,
+        "underperformance_z": -0.9469,
+        "favorite_hit_pct_wilson_95": [
+          3.8759,
+          6.5372
+        ],
+        "favorite_100yen_stake_yen": 105100,
+        "favorite_100yen_payout_yen": 87750,
+        "favorite_roi_pct": 83.4919,
+        "favorite_mean_odds": 16.9828,
+        "market_mean_overround": 1.33472
+      },
+      {
+        "group": {
+          "year": "2023",
+          "band": "20-25"
+        },
+        "races": 312,
+        "favorite_hits": 11,
+        "favorite_misses": 301,
+        "favorite_hit_pct": 3.5256,
+        "favorite_miss_pct": 96.4744,
+        "market_expected_hit_pct": 3.4448,
+        "market_expected_miss_pct": 96.5552,
+        "excess_miss_pp": -0.0808,
+        "underperformance_z": -0.0783,
+        "favorite_hit_pct_wilson_95": [
+          1.9799,
+          6.2019
+        ],
+        "favorite_100yen_stake_yen": 31200,
+        "favorite_100yen_payout_yen": 23840,
+        "favorite_roi_pct": 76.4103,
+        "favorite_mean_odds": 21.8343,
+        "market_mean_overround": 1.33439
+      },
+      {
+        "group": {
+          "year": "2023",
+          "band": "25-30"
+        },
+        "races": 90,
+        "favorite_hits": 3,
+        "favorite_misses": 87,
+        "favorite_hit_pct": 3.3333,
+        "favorite_miss_pct": 96.6667,
+        "market_expected_hit_pct": 2.8078,
+        "market_expected_miss_pct": 97.1922,
+        "excess_miss_pp": -0.5255,
+        "underperformance_z": -0.3018,
+        "favorite_hit_pct_wilson_95": [
+          1.14,
+          9.3473
+        ],
+        "favorite_100yen_stake_yen": 9000,
+        "favorite_100yen_payout_yen": 8180,
+        "favorite_roi_pct": 90.8889,
+        "favorite_mean_odds": 26.7633,
+        "market_mean_overround": 1.33414
+      },
+      {
+        "group": {
+          "year": "2023",
+          "band": "30-40"
+        },
+        "races": 35,
+        "favorite_hits": 0,
+        "favorite_misses": 35,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 2.2564,
+        "market_expected_miss_pct": 97.7436,
+        "excess_miss_pp": 2.2564,
+        "underperformance_z": 0.8989,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          9.8901
+        ],
+        "favorite_100yen_stake_yen": 3500,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 33.4029,
+        "market_mean_overround": 1.33401
+      },
+      {
+        "group": {
+          "year": "2023",
+          "band": "40-50"
+        },
+        "races": 3,
+        "favorite_hits": 0,
+        "favorite_misses": 3,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 1.7404,
+        "market_expected_miss_pct": 98.2596,
+        "excess_miss_pp": 1.7404,
+        "underperformance_z": 0.2305,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          56.1497
+        ],
+        "favorite_100yen_stake_yen": 300,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 43.2667,
+        "market_mean_overround": 1.33384
+      },
+      {
+        "group": {
+          "year": "2024",
+          "band": "0-2"
+        },
+        "races": 108,
+        "favorite_hits": 58,
+        "favorite_misses": 50,
+        "favorite_hit_pct": 53.7037,
+        "favorite_miss_pct": 46.2963,
+        "market_expected_hit_pct": 43.8878,
+        "market_expected_miss_pct": 56.1122,
+        "excess_miss_pp": -9.8159,
+        "underperformance_z": -2.0633,
+        "favorite_hit_pct_wilson_95": [
+          44.3346,
+          62.8184
+        ],
+        "favorite_100yen_stake_yen": 10800,
+        "favorite_100yen_payout_yen": 9680,
+        "favorite_roi_pct": 89.6296,
+        "favorite_mean_odds": 1.6991,
+        "market_mean_overround": 1.35382
+      },
+      {
+        "group": {
+          "year": "2024",
+          "band": "2-3"
+        },
+        "races": 476,
+        "favorite_hits": 153,
+        "favorite_misses": 323,
+        "favorite_hit_pct": 32.1429,
+        "favorite_miss_pct": 67.8571,
+        "market_expected_hit_pct": 29.8757,
+        "market_expected_miss_pct": 70.1243,
+        "excess_miss_pp": -2.2671,
+        "underperformance_z": -1.0835,
+        "favorite_hit_pct_wilson_95": [
+          28.1047,
+          36.4669
+        ],
+        "favorite_100yen_stake_yen": 47600,
+        "favorite_100yen_payout_yen": 38070,
+        "favorite_roi_pct": 79.979,
+        "favorite_mean_odds": 2.5187,
+        "market_mean_overround": 1.34492
+      },
+      {
+        "group": {
+          "year": "2024",
+          "band": "3-4"
+        },
+        "races": 703,
+        "favorite_hits": 180,
+        "favorite_misses": 523,
+        "favorite_hit_pct": 25.6046,
+        "favorite_miss_pct": 74.3954,
+        "market_expected_hit_pct": 21.5945,
+        "market_expected_miss_pct": 78.4055,
+        "excess_miss_pp": -4.01,
+        "underperformance_z": -2.5864,
+        "favorite_hit_pct_wilson_95": [
+          22.5169,
+          28.9574
+        ],
+        "favorite_100yen_stake_yen": 70300,
+        "favorite_100yen_payout_yen": 61730,
+        "favorite_roi_pct": 87.8094,
+        "favorite_mean_odds": 3.4768,
+        "market_mean_overround": 1.34089
+      },
+      {
+        "group": {
+          "year": "2024",
+          "band": "4-5"
+        },
+        "races": 953,
+        "favorite_hits": 171,
+        "favorite_misses": 782,
+        "favorite_hit_pct": 17.9433,
+        "favorite_miss_pct": 82.0567,
+        "market_expected_hit_pct": 16.8471,
+        "market_expected_miss_pct": 83.1529,
+        "excess_miss_pp": -1.0963,
+        "underperformance_z": -0.9046,
+        "favorite_hit_pct_wilson_95": [
+          15.6373,
+          20.5067
+        ],
+        "favorite_100yen_stake_yen": 95300,
+        "favorite_100yen_payout_yen": 75880,
+        "favorite_roi_pct": 79.6222,
+        "favorite_mean_odds": 4.4523,
+        "market_mean_overround": 1.33887
+      },
+      {
+        "group": {
+          "year": "2024",
+          "band": "5-6"
+        },
+        "races": 1044,
+        "favorite_hits": 149,
+        "favorite_misses": 895,
+        "favorite_hit_pct": 14.272,
+        "favorite_miss_pct": 85.728,
+        "market_expected_hit_pct": 13.7182,
+        "market_expected_miss_pct": 86.2818,
+        "excess_miss_pp": -0.5538,
+        "underperformance_z": -0.5202,
+        "favorite_hit_pct_wilson_95": [
+          12.2811,
+          16.525
+        ],
+        "favorite_100yen_stake_yen": 104400,
+        "favorite_100yen_payout_yen": 81410,
+        "favorite_roi_pct": 77.9789,
+        "favorite_mean_odds": 5.4641,
+        "market_mean_overround": 1.33774
+      },
+      {
+        "group": {
+          "year": "2024",
+          "band": "6-7"
+        },
+        "races": 1013,
+        "favorite_hits": 126,
+        "favorite_misses": 887,
+        "favorite_hit_pct": 12.4383,
+        "favorite_miss_pct": 87.5617,
+        "market_expected_hit_pct": 11.5941,
+        "market_expected_miss_pct": 88.4059,
+        "excess_miss_pp": -0.8442,
+        "underperformance_z": -0.8393,
+        "favorite_hit_pct_wilson_95": [
+          10.5468,
+          14.6136
+        ],
+        "favorite_100yen_stake_yen": 101300,
+        "favorite_100yen_payout_yen": 81500,
+        "favorite_roi_pct": 80.4541,
+        "favorite_mean_odds": 6.4636,
+        "market_mean_overround": 1.3369
+      },
+      {
+        "group": {
+          "year": "2024",
+          "band": "7-8"
+        },
+        "races": 941,
+        "favorite_hits": 83,
+        "favorite_misses": 858,
+        "favorite_hit_pct": 8.8204,
+        "favorite_miss_pct": 91.1796,
+        "market_expected_hit_pct": 10.0792,
+        "market_expected_miss_pct": 89.9208,
+        "excess_miss_pp": 1.2588,
+        "underperformance_z": 1.2828,
+        "favorite_hit_pct_wilson_95": [
+          7.1718,
+          10.8038
+        ],
+        "favorite_100yen_stake_yen": 94100,
+        "favorite_100yen_payout_yen": 61350,
+        "favorite_roi_pct": 65.1966,
+        "favorite_mean_odds": 7.4356,
+        "market_mean_overround": 1.33633
+      },
+      {
+        "group": {
+          "year": "2024",
+          "band": "8-10"
+        },
+        "races": 1364,
+        "favorite_hits": 126,
+        "favorite_misses": 1238,
+        "favorite_hit_pct": 9.2375,
+        "favorite_miss_pct": 90.7625,
+        "market_expected_hit_pct": 8.4477,
+        "market_expected_miss_pct": 91.5523,
+        "excess_miss_pp": -0.7899,
+        "underperformance_z": -1.0491,
+        "favorite_hit_pct_wilson_95": [
+          7.8133,
+          10.8908
+        ],
+        "favorite_100yen_stake_yen": 136400,
+        "favorite_100yen_payout_yen": 112270,
+        "favorite_roi_pct": 82.3094,
+        "favorite_mean_odds": 8.8969,
+        "market_mean_overround": 1.33584
+      },
+      {
+        "group": {
+          "year": "2024",
+          "band": "10-12"
+        },
+        "races": 1209,
+        "favorite_hits": 97,
+        "favorite_misses": 1112,
+        "favorite_hit_pct": 8.0232,
+        "favorite_miss_pct": 91.9768,
+        "market_expected_hit_pct": 6.8648,
+        "market_expected_miss_pct": 93.1352,
+        "excess_miss_pp": -1.1584,
+        "underperformance_z": -1.5931,
+        "favorite_hit_pct_wilson_95": [
+          6.6215,
+          9.6907
+        ],
+        "favorite_100yen_stake_yen": 120900,
+        "favorite_100yen_payout_yen": 105210,
+        "favorite_roi_pct": 87.0223,
+        "favorite_mean_odds": 10.9371,
+        "market_mean_overround": 1.33538
+      },
+      {
+        "group": {
+          "year": "2024",
+          "band": "12-15"
+        },
+        "races": 1295,
+        "favorite_hits": 76,
+        "favorite_misses": 1219,
+        "favorite_hit_pct": 5.8687,
+        "favorite_miss_pct": 94.1313,
+        "market_expected_hit_pct": 5.6402,
+        "market_expected_miss_pct": 94.3598,
+        "excess_miss_pp": -0.2286,
+        "underperformance_z": -0.3566,
+        "favorite_hit_pct_wilson_95": [
+          4.7144,
+          7.2841
+        ],
+        "favorite_100yen_stake_yen": 129500,
+        "favorite_100yen_payout_yen": 99480,
+        "favorite_roi_pct": 76.8185,
+        "favorite_mean_odds": 13.3377,
+        "market_mean_overround": 1.33505
+      },
+      {
+        "group": {
+          "year": "2024",
+          "band": "15-20"
+        },
+        "races": 942,
+        "favorite_hits": 43,
+        "favorite_misses": 899,
+        "favorite_hit_pct": 4.5648,
+        "favorite_miss_pct": 95.4352,
+        "market_expected_hit_pct": 4.4476,
+        "market_expected_miss_pct": 95.5524,
+        "excess_miss_pp": -0.1172,
+        "underperformance_z": -0.1745,
+        "favorite_hit_pct_wilson_95": [
+          3.4064,
+          6.0922
+        ],
+        "favorite_100yen_stake_yen": 94200,
+        "favorite_100yen_payout_yen": 72060,
+        "favorite_roi_pct": 76.4968,
+        "favorite_mean_odds": 16.9514,
+        "market_mean_overround": 1.33471
+      },
+      {
+        "group": {
+          "year": "2024",
+          "band": "20-25"
+        },
+        "races": 320,
+        "favorite_hits": 5,
+        "favorite_misses": 315,
+        "favorite_hit_pct": 1.5625,
+        "favorite_miss_pct": 98.4375,
+        "market_expected_hit_pct": 3.4395,
+        "market_expected_miss_pct": 96.5605,
+        "excess_miss_pp": 1.877,
+        "underperformance_z": 1.8425,
+        "favorite_hit_pct_wilson_95": [
+          0.6692,
+          3.6049
+        ],
+        "favorite_100yen_stake_yen": 32000,
+        "favorite_100yen_payout_yen": 11370,
+        "favorite_roi_pct": 35.5312,
+        "favorite_mean_odds": 21.8728,
+        "market_mean_overround": 1.33435
+      },
+      {
+        "group": {
+          "year": "2024",
+          "band": "25-30"
+        },
+        "races": 112,
+        "favorite_hits": 5,
+        "favorite_misses": 107,
+        "favorite_hit_pct": 4.4643,
+        "favorite_miss_pct": 95.5357,
+        "market_expected_hit_pct": 2.7816,
+        "market_expected_miss_pct": 97.2184,
+        "excess_miss_pp": -1.6827,
+        "underperformance_z": -1.0829,
+        "favorite_hit_pct_wilson_95": [
+          1.9217,
+          10.0269
+        ],
+        "favorite_100yen_stake_yen": 11200,
+        "favorite_100yen_payout_yen": 13340,
+        "favorite_roi_pct": 119.1071,
+        "favorite_mean_odds": 27.0214,
+        "market_mean_overround": 1.3342
+      },
+      {
+        "group": {
+          "year": "2024",
+          "band": "30-40"
+        },
+        "races": 39,
+        "favorite_hits": 0,
+        "favorite_misses": 39,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 2.2645,
+        "market_expected_miss_pct": 97.7355,
+        "excess_miss_pp": 2.2645,
+        "underperformance_z": 0.9507,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          8.9667
+        ],
+        "favorite_100yen_stake_yen": 3900,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 33.3385,
+        "market_mean_overround": 1.33388
+      },
+      {
+        "group": {
+          "year": "2024",
+          "band": "40-50"
+        },
+        "races": 5,
+        "favorite_hits": 0,
+        "favorite_misses": 5,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 1.8309,
+        "market_expected_miss_pct": 98.1691,
+        "excess_miss_pp": 1.8309,
+        "underperformance_z": 0.3054,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          43.4482
+        ],
+        "favorite_100yen_stake_yen": 500,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 41.02,
+        "market_mean_overround": 1.33379
+      },
+      {
+        "group": {
+          "year": "2025",
+          "band": "0-2"
+        },
+        "races": 139,
+        "favorite_hits": 68,
+        "favorite_misses": 71,
+        "favorite_hit_pct": 48.9209,
+        "favorite_miss_pct": 51.0791,
+        "market_expected_hit_pct": 44.3432,
+        "market_expected_miss_pct": 55.6568,
+        "excess_miss_pp": -4.5776,
+        "underperformance_z": -1.0906,
+        "favorite_hit_pct_wilson_95": [
+          40.7522,
+          57.1476
+        ],
+        "favorite_100yen_stake_yen": 13900,
+        "favorite_100yen_payout_yen": 11350,
+        "favorite_roi_pct": 81.6547,
+        "favorite_mean_odds": 1.6799,
+        "market_mean_overround": 1.35475
+      },
+      {
+        "group": {
+          "year": "2025",
+          "band": "2-3"
+        },
+        "races": 484,
+        "favorite_hits": 161,
+        "favorite_misses": 323,
+        "favorite_hit_pct": 33.2645,
+        "favorite_miss_pct": 66.7355,
+        "market_expected_hit_pct": 30.0715,
+        "market_expected_miss_pct": 69.9285,
+        "excess_miss_pp": -3.1929,
+        "underperformance_z": -1.5362,
+        "favorite_hit_pct_wilson_95": [
+          29.2132,
+          37.5793
+        ],
+        "favorite_100yen_stake_yen": 48400,
+        "favorite_100yen_payout_yen": 39420,
+        "favorite_roi_pct": 81.4463,
+        "favorite_mean_odds": 2.5052,
+        "market_mean_overround": 1.34451
+      },
+      {
+        "group": {
+          "year": "2025",
+          "band": "3-4"
+        },
+        "races": 823,
+        "favorite_hits": 184,
+        "favorite_misses": 639,
+        "favorite_hit_pct": 22.3572,
+        "favorite_miss_pct": 77.6428,
+        "market_expected_hit_pct": 21.5835,
+        "market_expected_miss_pct": 78.4165,
+        "excess_miss_pp": -0.7737,
+        "underperformance_z": -0.54,
+        "favorite_hit_pct_wilson_95": [
+          19.6429,
+          25.3284
+        ],
+        "favorite_100yen_stake_yen": 82300,
+        "favorite_100yen_payout_yen": 63890,
+        "favorite_roi_pct": 77.6306,
+        "favorite_mean_odds": 3.4785,
+        "market_mean_overround": 1.34071
+      },
+      {
+        "group": {
+          "year": "2025",
+          "band": "4-5"
+        },
+        "races": 950,
+        "favorite_hits": 169,
+        "favorite_misses": 781,
+        "favorite_hit_pct": 17.7895,
+        "favorite_miss_pct": 82.2105,
+        "market_expected_hit_pct": 16.8477,
+        "market_expected_miss_pct": 83.1523,
+        "excess_miss_pp": -0.9418,
+        "underperformance_z": -0.7759,
+        "favorite_hit_pct_wilson_95": [
+          15.4888,
+          20.3496
+        ],
+        "favorite_100yen_stake_yen": 95000,
+        "favorite_100yen_payout_yen": 74900,
+        "favorite_roi_pct": 78.8421,
+        "favorite_mean_odds": 4.4528,
+        "market_mean_overround": 1.33867
+      },
+      {
+        "group": {
+          "year": "2025",
+          "band": "5-6"
+        },
+        "races": 981,
+        "favorite_hits": 132,
+        "favorite_misses": 849,
+        "favorite_hit_pct": 13.4557,
+        "favorite_miss_pct": 86.5443,
+        "market_expected_hit_pct": 13.7742,
+        "market_expected_miss_pct": 86.2258,
+        "excess_miss_pp": 0.3185,
+        "underperformance_z": 0.2895,
+        "favorite_hit_pct_wilson_95": [
+          11.4622,
+          15.7342
+        ],
+        "favorite_100yen_stake_yen": 98100,
+        "favorite_100yen_payout_yen": 72430,
+        "favorite_roi_pct": 73.8328,
+        "favorite_mean_odds": 5.4421,
+        "market_mean_overround": 1.33766
+      },
+      {
+        "group": {
+          "year": "2025",
+          "band": "6-7"
+        },
+        "races": 943,
+        "favorite_hits": 117,
+        "favorite_misses": 826,
+        "favorite_hit_pct": 12.4072,
+        "favorite_miss_pct": 87.5928,
+        "market_expected_hit_pct": 11.6493,
+        "market_expected_miss_pct": 88.3507,
+        "excess_miss_pp": -0.7579,
+        "underperformance_z": -0.7256,
+        "favorite_hit_pct_wilson_95": [
+          10.4544,
+          14.6651
+        ],
+        "favorite_100yen_stake_yen": 94300,
+        "favorite_100yen_payout_yen": 75120,
+        "favorite_roi_pct": 79.6607,
+        "favorite_mean_odds": 6.4332,
+        "market_mean_overround": 1.33697
+      },
+      {
+        "group": {
+          "year": "2025",
+          "band": "7-8"
+        },
+        "races": 852,
+        "favorite_hits": 111,
+        "favorite_misses": 741,
+        "favorite_hit_pct": 13.0282,
+        "favorite_miss_pct": 86.9718,
+        "market_expected_hit_pct": 10.0646,
+        "market_expected_miss_pct": 89.9354,
+        "excess_miss_pp": -2.9636,
+        "underperformance_z": -2.8754,
+        "favorite_hit_pct_wilson_95": [
+          10.9328,
+          15.4554
+        ],
+        "favorite_100yen_stake_yen": 85200,
+        "favorite_100yen_payout_yen": 82380,
+        "favorite_roi_pct": 96.6901,
+        "favorite_mean_odds": 7.4461,
+        "market_mean_overround": 1.33633
+      },
+      {
+        "group": {
+          "year": "2025",
+          "band": "8-10"
+        },
+        "races": 1284,
+        "favorite_hits": 115,
+        "favorite_misses": 1169,
+        "favorite_hit_pct": 8.9564,
+        "favorite_miss_pct": 91.0436,
+        "market_expected_hit_pct": 8.4304,
+        "market_expected_miss_pct": 91.5696,
+        "excess_miss_pp": -0.526,
+        "underperformance_z": -0.6784,
+        "favorite_hit_pct_wilson_95": [
+          7.5144,
+          10.6432
+        ],
+        "favorite_100yen_stake_yen": 128400,
+        "favorite_100yen_payout_yen": 101750,
+        "favorite_roi_pct": 79.2445,
+        "favorite_mean_odds": 8.9188,
+        "market_mean_overround": 1.33582
+      },
+      {
+        "group": {
+          "year": "2025",
+          "band": "10-12"
+        },
+        "races": 1249,
+        "favorite_hits": 75,
+        "favorite_misses": 1174,
+        "favorite_hit_pct": 6.0048,
+        "favorite_miss_pct": 93.9952,
+        "market_expected_hit_pct": 6.8622,
+        "market_expected_miss_pct": 93.1378,
+        "excess_miss_pp": 0.8574,
+        "underperformance_z": 1.1987,
+        "favorite_hit_pct_wilson_95": [
+          4.8173,
+          7.4621
+        ],
+        "favorite_100yen_stake_yen": 124900,
+        "favorite_100yen_payout_yen": 81330,
+        "favorite_roi_pct": 65.1161,
+        "favorite_mean_odds": 10.9425,
+        "market_mean_overround": 1.33538
+      },
+      {
+        "group": {
+          "year": "2025",
+          "band": "12-15"
+        },
+        "races": 1319,
+        "favorite_hits": 78,
+        "favorite_misses": 1241,
+        "favorite_hit_pct": 5.9136,
+        "favorite_miss_pct": 94.0864,
+        "market_expected_hit_pct": 5.6562,
+        "market_expected_miss_pct": 94.3438,
+        "excess_miss_pp": -0.2574,
+        "underperformance_z": -0.4048,
+        "favorite_hit_pct_wilson_95": [
+          4.7641,
+          7.3191
+        ],
+        "favorite_100yen_stake_yen": 131900,
+        "favorite_100yen_payout_yen": 103900,
+        "favorite_roi_pct": 78.7718,
+        "favorite_mean_odds": 13.2982,
+        "market_mean_overround": 1.33505
+      },
+      {
+        "group": {
+          "year": "2025",
+          "band": "15-20"
+        },
+        "races": 1083,
+        "favorite_hits": 41,
+        "favorite_misses": 1042,
+        "favorite_hit_pct": 3.7858,
+        "favorite_miss_pct": 96.2142,
+        "market_expected_hit_pct": 4.4543,
+        "market_expected_miss_pct": 95.5457,
+        "excess_miss_pp": 0.6685,
+        "underperformance_z": 1.0665,
+        "favorite_hit_pct_wilson_95": [
+          2.8028,
+          5.0955
+        ],
+        "favorite_100yen_stake_yen": 108300,
+        "favorite_100yen_payout_yen": 68700,
+        "favorite_roi_pct": 63.4349,
+        "favorite_mean_odds": 16.9292,
+        "market_mean_overround": 1.33469
+      },
+      {
+        "group": {
+          "year": "2025",
+          "band": "20-25"
+        },
+        "races": 378,
+        "favorite_hits": 6,
+        "favorite_misses": 372,
+        "favorite_hit_pct": 1.5873,
+        "favorite_miss_pct": 98.4127,
+        "market_expected_hit_pct": 3.42,
+        "market_expected_miss_pct": 96.58,
+        "excess_miss_pp": 1.8327,
+        "underperformance_z": 1.9607,
+        "favorite_hit_pct_wilson_95": [
+          0.7295,
+          3.4192
+        ],
+        "favorite_100yen_stake_yen": 37800,
+        "favorite_100yen_payout_yen": 12820,
+        "favorite_roi_pct": 33.9153,
+        "favorite_mean_odds": 21.996,
+        "market_mean_overround": 1.33443
+      },
+      {
+        "group": {
+          "year": "2025",
+          "band": "25-30"
+        },
+        "races": 121,
+        "favorite_hits": 4,
+        "favorite_misses": 117,
+        "favorite_hit_pct": 3.3058,
+        "favorite_miss_pct": 96.6942,
+        "market_expected_hit_pct": 2.7895,
+        "market_expected_miss_pct": 97.2105,
+        "excess_miss_pp": -0.5163,
+        "underperformance_z": -0.3449,
+        "favorite_hit_pct_wilson_95": [
+          1.2929,
+          8.1923
+        ],
+        "favorite_100yen_stake_yen": 12100,
+        "favorite_100yen_payout_yen": 11060,
+        "favorite_roi_pct": 91.405,
+        "favorite_mean_odds": 26.9446,
+        "market_mean_overround": 1.33418
+      },
+      {
+        "group": {
+          "year": "2025",
+          "band": "30-40"
+        },
+        "races": 58,
+        "favorite_hits": 0,
+        "favorite_misses": 58,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 2.2618,
+        "market_expected_miss_pct": 97.7382,
+        "excess_miss_pp": 2.2618,
+        "underperformance_z": 1.1586,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          6.2118
+        ],
+        "favorite_100yen_stake_yen": 5800,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 33.3741,
+        "market_mean_overround": 1.33394
+      },
+      {
+        "group": {
+          "year": "2025",
+          "band": "40-50"
+        },
+        "races": 8,
+        "favorite_hits": 0,
+        "favorite_misses": 8,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 1.7641,
+        "market_expected_miss_pct": 98.2359,
+        "excess_miss_pp": 1.7641,
+        "underperformance_z": 0.379,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          32.4408
+        ],
+        "favorite_100yen_stake_yen": 800,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 42.65,
+        "market_mean_overround": 1.33402
+      },
+      {
+        "group": {
+          "year": "2026",
+          "band": "0-2"
+        },
+        "races": 85,
+        "favorite_hits": 49,
+        "favorite_misses": 36,
+        "favorite_hit_pct": 57.6471,
+        "favorite_miss_pct": 42.3529,
+        "market_expected_hit_pct": 43.7325,
+        "market_expected_miss_pct": 56.2675,
+        "excess_miss_pp": -13.9146,
+        "underperformance_z": -2.5954,
+        "favorite_hit_pct_wilson_95": [
+          47.0364,
+          67.5965
+        ],
+        "favorite_100yen_stake_yen": 8500,
+        "favorite_100yen_payout_yen": 8180,
+        "favorite_roi_pct": 96.2353,
+        "favorite_mean_odds": 1.7047,
+        "market_mean_overround": 1.3538
+      },
+      {
+        "group": {
+          "year": "2026",
+          "band": "2-3"
+        },
+        "races": 330,
+        "favorite_hits": 115,
+        "favorite_misses": 215,
+        "favorite_hit_pct": 34.8485,
+        "favorite_miss_pct": 65.1515,
+        "market_expected_hit_pct": 30.1691,
+        "market_expected_miss_pct": 69.8309,
+        "excess_miss_pp": -4.6794,
+        "underperformance_z": -1.8573,
+        "favorite_hit_pct_wilson_95": [
+          29.9085,
+          40.1371
+        ],
+        "favorite_100yen_stake_yen": 33000,
+        "favorite_100yen_payout_yen": 28670,
+        "favorite_roi_pct": 86.8788,
+        "favorite_mean_odds": 2.4964,
+        "market_mean_overround": 1.34487
+      },
+      {
+        "group": {
+          "year": "2026",
+          "band": "3-4"
+        },
+        "races": 490,
+        "favorite_hits": 124,
+        "favorite_misses": 366,
+        "favorite_hit_pct": 25.3061,
+        "favorite_miss_pct": 74.6939,
+        "market_expected_hit_pct": 21.6445,
+        "market_expected_miss_pct": 78.3555,
+        "excess_miss_pp": -3.6616,
+        "underperformance_z": -1.97,
+        "favorite_hit_pct_wilson_95": [
+          21.6589,
+          29.3375
+        ],
+        "favorite_100yen_stake_yen": 49000,
+        "favorite_100yen_payout_yen": 42440,
+        "favorite_roi_pct": 86.6122,
+        "favorite_mean_odds": 3.4684,
+        "market_mean_overround": 1.34083
+      },
+      {
+        "group": {
+          "year": "2026",
+          "band": "4-5"
+        },
+        "races": 585,
+        "favorite_hits": 119,
+        "favorite_misses": 466,
+        "favorite_hit_pct": 20.3419,
+        "favorite_miss_pct": 79.6581,
+        "market_expected_hit_pct": 16.7646,
+        "market_expected_miss_pct": 83.2354,
+        "excess_miss_pp": -3.5773,
+        "underperformance_z": -2.3172,
+        "favorite_hit_pct_wilson_95": [
+          17.2783,
+          23.7924
+        ],
+        "favorite_100yen_stake_yen": 58500,
+        "favorite_100yen_payout_yen": 52820,
+        "favorite_roi_pct": 90.2906,
+        "favorite_mean_odds": 4.4749,
+        "market_mean_overround": 1.33866
+      },
+      {
+        "group": {
+          "year": "2026",
+          "band": "5-6"
+        },
+        "races": 625,
+        "favorite_hits": 95,
+        "favorite_misses": 530,
+        "favorite_hit_pct": 15.2,
+        "favorite_miss_pct": 84.8,
+        "market_expected_hit_pct": 13.7868,
+        "market_expected_miss_pct": 86.2132,
+        "excess_miss_pp": -1.4132,
+        "underperformance_z": -1.025,
+        "favorite_hit_pct_wilson_95": [
+          12.5985,
+          18.2267
+        ],
+        "favorite_100yen_stake_yen": 62500,
+        "favorite_100yen_payout_yen": 51610,
+        "favorite_roi_pct": 82.576,
+        "favorite_mean_odds": 5.4389,
+        "market_mean_overround": 1.33742
+      },
+      {
+        "group": {
+          "year": "2026",
+          "band": "6-7"
+        },
+        "races": 573,
+        "favorite_hits": 66,
+        "favorite_misses": 507,
+        "favorite_hit_pct": 11.5183,
+        "favorite_miss_pct": 88.4817,
+        "market_expected_hit_pct": 11.6414,
+        "market_expected_miss_pct": 88.3586,
+        "excess_miss_pp": 0.1231,
+        "underperformance_z": 0.0919,
+        "favorite_hit_pct_wilson_95": [
+          9.1568,
+          14.3924
+        ],
+        "favorite_100yen_stake_yen": 57300,
+        "favorite_100yen_payout_yen": 42270,
+        "favorite_roi_pct": 73.7696,
+        "favorite_mean_odds": 6.4382,
+        "market_mean_overround": 1.3369
+      },
+      {
+        "group": {
+          "year": "2026",
+          "band": "7-8"
+        },
+        "races": 565,
+        "favorite_hits": 59,
+        "favorite_misses": 506,
+        "favorite_hit_pct": 10.4425,
+        "favorite_miss_pct": 89.5575,
+        "market_expected_hit_pct": 10.0458,
+        "market_expected_miss_pct": 89.9542,
+        "excess_miss_pp": -0.3967,
+        "underperformance_z": -0.3137,
+        "favorite_hit_pct_wilson_95": [
+          8.1824,
+          13.2368
+        ],
+        "favorite_100yen_stake_yen": 56500,
+        "favorite_100yen_payout_yen": 44060,
+        "favorite_roi_pct": 77.9823,
+        "favorite_mean_odds": 7.4605,
+        "market_mean_overround": 1.33625
+      },
+      {
+        "group": {
+          "year": "2026",
+          "band": "8-10"
+        },
+        "races": 814,
+        "favorite_hits": 73,
+        "favorite_misses": 741,
+        "favorite_hit_pct": 8.9681,
+        "favorite_miss_pct": 91.0319,
+        "market_expected_hit_pct": 8.4611,
+        "market_expected_miss_pct": 91.5389,
+        "excess_miss_pp": -0.5069,
+        "underperformance_z": -0.5198,
+        "favorite_hit_pct_wilson_95": [
+          7.1931,
+          11.1285
+        ],
+        "favorite_100yen_stake_yen": 81400,
+        "favorite_100yen_payout_yen": 64450,
+        "favorite_roi_pct": 79.1769,
+        "favorite_mean_odds": 8.8855,
+        "market_mean_overround": 1.33583
+      },
+      {
+        "group": {
+          "year": "2026",
+          "band": "10-12"
+        },
+        "races": 762,
+        "favorite_hits": 57,
+        "favorite_misses": 705,
+        "favorite_hit_pct": 7.4803,
+        "favorite_miss_pct": 92.5197,
+        "market_expected_hit_pct": 6.8882,
+        "market_expected_miss_pct": 93.1118,
+        "excess_miss_pp": -0.5921,
+        "underperformance_z": -0.6454,
+        "favorite_hit_pct_wilson_95": [
+          5.8182,
+          9.5689
+        ],
+        "favorite_100yen_stake_yen": 76200,
+        "favorite_100yen_payout_yen": 61220,
+        "favorite_roi_pct": 80.3412,
+        "favorite_mean_odds": 10.9018,
+        "market_mean_overround": 1.33537
+      },
+      {
+        "group": {
+          "year": "2026",
+          "band": "12-15"
+        },
+        "races": 869,
+        "favorite_hits": 42,
+        "favorite_misses": 827,
+        "favorite_hit_pct": 4.8331,
+        "favorite_miss_pct": 95.1669,
+        "market_expected_hit_pct": 5.6529,
+        "market_expected_miss_pct": 94.3471,
+        "excess_miss_pp": 0.8197,
+        "underperformance_z": 1.0465,
+        "favorite_hit_pct_wilson_95": [
+          3.5953,
+          6.4685
+        ],
+        "favorite_100yen_stake_yen": 86900,
+        "favorite_100yen_payout_yen": 55590,
+        "favorite_roi_pct": 63.9701,
+        "favorite_mean_odds": 13.3052,
+        "market_mean_overround": 1.33509
+      },
+      {
+        "group": {
+          "year": "2026",
+          "band": "15-20"
+        },
+        "races": 646,
+        "favorite_hits": 26,
+        "favorite_misses": 620,
+        "favorite_hit_pct": 4.0248,
+        "favorite_miss_pct": 95.9752,
+        "market_expected_hit_pct": 4.4426,
+        "market_expected_miss_pct": 95.5574,
+        "excess_miss_pp": 0.4178,
+        "underperformance_z": 0.5155,
+        "favorite_hit_pct_wilson_95": [
+          2.7612,
+          5.8319
+        ],
+        "favorite_100yen_stake_yen": 64600,
+        "favorite_100yen_payout_yen": 42950,
+        "favorite_roi_pct": 66.4861,
+        "favorite_mean_odds": 16.978,
+        "market_mean_overround": 1.33475
+      },
+      {
+        "group": {
+          "year": "2026",
+          "band": "20-25"
+        },
+        "races": 184,
+        "favorite_hits": 5,
+        "favorite_misses": 179,
+        "favorite_hit_pct": 2.7174,
+        "favorite_miss_pct": 97.2826,
+        "market_expected_hit_pct": 3.4341,
+        "market_expected_miss_pct": 96.5659,
+        "excess_miss_pp": 0.7167,
+        "underperformance_z": 0.5339,
+        "favorite_hit_pct_wilson_95": [
+          1.1662,
+          6.2025
+        ],
+        "favorite_100yen_stake_yen": 18400,
+        "favorite_100yen_payout_yen": 10720,
+        "favorite_roi_pct": 58.2609,
+        "favorite_mean_odds": 21.906,
+        "market_mean_overround": 1.33449
+      },
+      {
+        "group": {
+          "year": "2026",
+          "band": "25-30"
+        },
+        "races": 61,
+        "favorite_hits": 2,
+        "favorite_misses": 59,
+        "favorite_hit_pct": 3.2787,
+        "favorite_miss_pct": 96.7213,
+        "market_expected_hit_pct": 2.7566,
+        "market_expected_miss_pct": 97.2434,
+        "excess_miss_pp": -0.5221,
+        "underperformance_z": -0.2491,
+        "favorite_hit_pct_wilson_95": [
+          0.9038,
+          11.1895
+        ],
+        "favorite_100yen_stake_yen": 6100,
+        "favorite_100yen_payout_yen": 5550,
+        "favorite_roi_pct": 90.9836,
+        "favorite_mean_odds": 27.2738,
+        "market_mean_overround": 1.33412
+      },
+      {
+        "group": {
+          "year": "2026",
+          "band": "30-40"
+        },
+        "races": 21,
+        "favorite_hits": 1,
+        "favorite_misses": 20,
+        "favorite_hit_pct": 4.7619,
+        "favorite_miss_pct": 95.2381,
+        "market_expected_hit_pct": 2.3072,
+        "market_expected_miss_pct": 97.6928,
+        "excess_miss_pp": -2.4547,
+        "underperformance_z": -0.7493,
+        "favorite_hit_pct_wilson_95": [
+          0.8456,
+          22.6694
+        ],
+        "favorite_100yen_stake_yen": 2100,
+        "favorite_100yen_payout_yen": 3070,
+        "favorite_roi_pct": 146.1905,
+        "favorite_mean_odds": 32.6381,
+        "market_mean_overround": 1.33399
+      },
+      {
+        "group": {
+          "year": "2026",
+          "band": "40-50"
+        },
+        "races": 2,
+        "favorite_hits": 0,
+        "favorite_misses": 2,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 1.8141,
+        "market_expected_miss_pct": 98.1859,
+        "excess_miss_pp": 1.8141,
+        "underperformance_z": 0.1922,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          65.762
+        ],
+        "favorite_100yen_stake_yen": 200,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 41.35,
+        "market_mean_overround": 1.33377
+      },
+      {
+        "group": {
+          "year": "2026",
+          "band": "50-75"
+        },
+        "races": 1,
+        "favorite_hits": 0,
+        "favorite_misses": 1,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 1.3758,
+        "market_expected_miss_pct": 98.6242,
+        "excess_miss_pp": 1.3758,
+        "underperformance_z": 0.1181,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          79.3451
+        ],
+        "favorite_100yen_stake_yen": 100,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 54.5,
+        "market_mean_overround": 1.33364
+      }
+    ],
+    "car_count_bands": [
+      {
+        "group": {
+          "cars_group": "5",
+          "band": "0-2"
+        },
+        "races": 15,
+        "favorite_hits": 5,
+        "favorite_misses": 10,
+        "favorite_hit_pct": 33.3333,
+        "favorite_miss_pct": 66.6667,
+        "market_expected_hit_pct": 43.4871,
+        "market_expected_miss_pct": 56.5129,
+        "excess_miss_pp": 10.1538,
+        "underperformance_z": 0.7987,
+        "favorite_hit_pct_wilson_95": [
+          15.1763,
+          58.2865
+        ],
+        "favorite_100yen_stake_yen": 1500,
+        "favorite_100yen_payout_yen": 890,
+        "favorite_roi_pct": 59.3333,
+        "favorite_mean_odds": 1.72,
+        "market_mean_overround": 1.35772
+      },
+      {
+        "group": {
+          "cars_group": "5",
+          "band": "2-3"
+        },
+        "races": 93,
+        "favorite_hits": 31,
+        "favorite_misses": 62,
+        "favorite_hit_pct": 33.3333,
+        "favorite_miss_pct": 66.6667,
+        "market_expected_hit_pct": 30.233,
+        "market_expected_miss_pct": 69.767,
+        "excess_miss_pp": -3.1004,
+        "underperformance_z": -0.653,
+        "favorite_hit_pct_wilson_95": [
+          24.5824,
+          43.4065
+        ],
+        "favorite_100yen_stake_yen": 9300,
+        "favorite_100yen_payout_yen": 7680,
+        "favorite_roi_pct": 82.5806,
+        "favorite_mean_odds": 2.4946,
+        "market_mean_overround": 1.34429
+      },
+      {
+        "group": {
+          "cars_group": "5",
+          "band": "3-4"
+        },
+        "races": 99,
+        "favorite_hits": 33,
+        "favorite_misses": 66,
+        "favorite_hit_pct": 33.3333,
+        "favorite_miss_pct": 66.6667,
+        "market_expected_hit_pct": 21.6009,
+        "market_expected_miss_pct": 78.3991,
+        "excess_miss_pp": -11.7324,
+        "underperformance_z": -2.8393,
+        "favorite_hit_pct_wilson_95": [
+          24.8238,
+          43.088
+        ],
+        "favorite_100yen_stake_yen": 9900,
+        "favorite_100yen_payout_yen": 11510,
+        "favorite_roi_pct": 116.2626,
+        "favorite_mean_odds": 3.4747,
+        "market_mean_overround": 1.34091
+      },
+      {
+        "group": {
+          "cars_group": "5",
+          "band": "4-5"
+        },
+        "races": 92,
+        "favorite_hits": 17,
+        "favorite_misses": 75,
+        "favorite_hit_pct": 18.4783,
+        "favorite_miss_pct": 81.5217,
+        "market_expected_hit_pct": 16.93,
+        "market_expected_miss_pct": 83.07,
+        "excess_miss_pp": -1.5482,
+        "underperformance_z": -0.3962,
+        "favorite_hit_pct_wilson_95": [
+          11.8693,
+          27.6141
+        ],
+        "favorite_100yen_stake_yen": 9200,
+        "favorite_100yen_payout_yen": 7480,
+        "favorite_roi_pct": 81.3043,
+        "favorite_mean_odds": 4.4304,
+        "market_mean_overround": 1.33929
+      },
+      {
+        "group": {
+          "cars_group": "5",
+          "band": "5-6"
+        },
+        "races": 90,
+        "favorite_hits": 11,
+        "favorite_misses": 79,
+        "favorite_hit_pct": 12.2222,
+        "favorite_miss_pct": 87.7778,
+        "market_expected_hit_pct": 13.7684,
+        "market_expected_miss_pct": 86.2316,
+        "excess_miss_pp": 1.5462,
+        "underperformance_z": 0.4258,
+        "favorite_hit_pct_wilson_95": [
+          6.9636,
+          20.5737
+        ],
+        "favorite_100yen_stake_yen": 9000,
+        "favorite_100yen_payout_yen": 6030,
+        "favorite_roi_pct": 67.0,
+        "favorite_mean_odds": 5.4411,
+        "market_mean_overround": 1.33812
+      },
+      {
+        "group": {
+          "cars_group": "5",
+          "band": "6-7"
+        },
+        "races": 72,
+        "favorite_hits": 7,
+        "favorite_misses": 65,
+        "favorite_hit_pct": 9.7222,
+        "favorite_miss_pct": 90.2778,
+        "market_expected_hit_pct": 11.6066,
+        "market_expected_miss_pct": 88.3934,
+        "excess_miss_pp": 1.8844,
+        "underperformance_z": 0.4993,
+        "favorite_hit_pct_wilson_95": [
+          4.7896,
+          18.735
+        ],
+        "favorite_100yen_stake_yen": 7200,
+        "favorite_100yen_payout_yen": 4500,
+        "favorite_roi_pct": 62.5,
+        "favorite_mean_odds": 6.4556,
+        "market_mean_overround": 1.33744
+      },
+      {
+        "group": {
+          "cars_group": "5",
+          "band": "7-8"
+        },
+        "races": 48,
+        "favorite_hits": 2,
+        "favorite_misses": 46,
+        "favorite_hit_pct": 4.1667,
+        "favorite_miss_pct": 95.8333,
+        "market_expected_hit_pct": 10.0394,
+        "market_expected_miss_pct": 89.9606,
+        "excess_miss_pp": 5.8727,
+        "underperformance_z": 1.354,
+        "favorite_hit_pct_wilson_95": [
+          1.1502,
+          13.9757
+        ],
+        "favorite_100yen_stake_yen": 4800,
+        "favorite_100yen_payout_yen": 1520,
+        "favorite_roi_pct": 31.6667,
+        "favorite_mean_odds": 7.4625,
+        "market_mean_overround": 1.33689
+      },
+      {
+        "group": {
+          "cars_group": "5",
+          "band": "8-10"
+        },
+        "races": 36,
+        "favorite_hits": 2,
+        "favorite_misses": 34,
+        "favorite_hit_pct": 5.5556,
+        "favorite_miss_pct": 94.4444,
+        "market_expected_hit_pct": 8.4789,
+        "market_expected_miss_pct": 91.5211,
+        "excess_miss_pp": 2.9234,
+        "underperformance_z": 0.6298,
+        "favorite_hit_pct_wilson_95": [
+          1.537,
+          18.1447
+        ],
+        "favorite_100yen_stake_yen": 3600,
+        "favorite_100yen_payout_yen": 1830,
+        "favorite_roi_pct": 50.8333,
+        "favorite_mean_odds": 8.8667,
+        "market_mean_overround": 1.33639
+      },
+      {
+        "group": {
+          "cars_group": "5",
+          "band": "10-12"
+        },
+        "races": 26,
+        "favorite_hits": 5,
+        "favorite_misses": 21,
+        "favorite_hit_pct": 19.2308,
+        "favorite_miss_pct": 80.7692,
+        "market_expected_hit_pct": 6.8866,
+        "market_expected_miss_pct": 93.1134,
+        "excess_miss_pp": -12.3442,
+        "underperformance_z": -2.4859,
+        "favorite_hit_pct_wilson_95": [
+          8.5071,
+          37.8763
+        ],
+        "favorite_100yen_stake_yen": 2600,
+        "favorite_100yen_payout_yen": 5270,
+        "favorite_roi_pct": 202.6923,
+        "favorite_mean_odds": 10.8962,
+        "market_mean_overround": 1.33607
+      },
+      {
+        "group": {
+          "cars_group": "5",
+          "band": "12-15"
+        },
+        "races": 9,
+        "favorite_hits": 0,
+        "favorite_misses": 9,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 5.9928,
+        "market_expected_miss_pct": 94.0072,
+        "excess_miss_pp": 5.9928,
+        "underperformance_z": 0.7575,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          29.9145
+        ],
+        "favorite_100yen_stake_yen": 900,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 12.5,
+        "market_mean_overround": 1.33593
+      },
+      {
+        "group": {
+          "cars_group": "5",
+          "band": "15-20"
+        },
+        "races": 1,
+        "favorite_hits": 0,
+        "favorite_misses": 1,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 4.6239,
+        "market_expected_miss_pct": 95.3761,
+        "excess_miss_pp": 4.6239,
+        "underperformance_z": 0.2202,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          79.3451
+        ],
+        "favorite_100yen_stake_yen": 100,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 16.2,
+        "market_mean_overround": 1.335
+      },
+      {
+        "group": {
+          "cars_group": "6",
+          "band": "0-2"
+        },
+        "races": 31,
+        "favorite_hits": 24,
+        "favorite_misses": 7,
+        "favorite_hit_pct": 77.4194,
+        "favorite_miss_pct": 22.5806,
+        "market_expected_hit_pct": 44.237,
+        "market_expected_miss_pct": 55.763,
+        "excess_miss_pp": -33.1824,
+        "underperformance_z": -3.7409,
+        "favorite_hit_pct_wilson_95": [
+          60.1876,
+          88.6049
+        ],
+        "favorite_100yen_stake_yen": 3100,
+        "favorite_100yen_payout_yen": 4040,
+        "favorite_roi_pct": 130.3226,
+        "favorite_mean_odds": 1.6903,
+        "market_mean_overround": 1.35529
+      },
+      {
+        "group": {
+          "cars_group": "6",
+          "band": "2-3"
+        },
+        "races": 169,
+        "favorite_hits": 59,
+        "favorite_misses": 110,
+        "favorite_hit_pct": 34.9112,
+        "favorite_miss_pct": 65.0888,
+        "market_expected_hit_pct": 29.2389,
+        "market_expected_miss_pct": 70.7611,
+        "excess_miss_pp": -5.6723,
+        "underperformance_z": -1.6251,
+        "favorite_hit_pct_wilson_95": [
+          28.1321,
+          42.3611
+        ],
+        "favorite_100yen_stake_yen": 16900,
+        "favorite_100yen_payout_yen": 14660,
+        "favorite_roi_pct": 86.7456,
+        "favorite_mean_odds": 2.5728,
+        "market_mean_overround": 1.34407
+      },
+      {
+        "group": {
+          "cars_group": "6",
+          "band": "3-4"
+        },
+        "races": 252,
+        "favorite_hits": 65,
+        "favorite_misses": 187,
+        "favorite_hit_pct": 25.7937,
+        "favorite_miss_pct": 74.2063,
+        "market_expected_hit_pct": 21.7319,
+        "market_expected_miss_pct": 78.2681,
+        "excess_miss_pp": -4.0618,
+        "underperformance_z": -1.5649,
+        "favorite_hit_pct_wilson_95": [
+          20.7839,
+          31.5303
+        ],
+        "favorite_100yen_stake_yen": 25200,
+        "favorite_100yen_payout_yen": 22440,
+        "favorite_roi_pct": 89.0476,
+        "favorite_mean_odds": 3.4544,
+        "market_mean_overround": 1.34104
+      },
+      {
+        "group": {
+          "cars_group": "6",
+          "band": "4-5"
+        },
+        "races": 337,
+        "favorite_hits": 59,
+        "favorite_misses": 278,
+        "favorite_hit_pct": 17.5074,
+        "favorite_miss_pct": 82.4926,
+        "market_expected_hit_pct": 16.8509,
+        "market_expected_miss_pct": 83.1491,
+        "excess_miss_pp": -0.6565,
+        "underperformance_z": -0.3221,
+        "favorite_hit_pct_wilson_95": [
+          13.8225,
+          21.9247
+        ],
+        "favorite_100yen_stake_yen": 33700,
+        "favorite_100yen_payout_yen": 25880,
+        "favorite_roi_pct": 76.7953,
+        "favorite_mean_odds": 4.4501,
+        "market_mean_overround": 1.33871
+      },
+      {
+        "group": {
+          "cars_group": "6",
+          "band": "5-6"
+        },
+        "races": 307,
+        "favorite_hits": 40,
+        "favorite_misses": 267,
+        "favorite_hit_pct": 13.0293,
+        "favorite_miss_pct": 86.9707,
+        "market_expected_hit_pct": 13.7667,
+        "market_expected_miss_pct": 86.2333,
+        "excess_miss_pp": 0.7374,
+        "underperformance_z": 0.3751,
+        "favorite_hit_pct_wilson_95": [
+          9.7162,
+          17.2562
+        ],
+        "favorite_100yen_stake_yen": 30700,
+        "favorite_100yen_payout_yen": 21940,
+        "favorite_roi_pct": 71.4658,
+        "favorite_mean_odds": 5.4456,
+        "market_mean_overround": 1.33755
+      },
+      {
+        "group": {
+          "cars_group": "6",
+          "band": "6-7"
+        },
+        "races": 326,
+        "favorite_hits": 45,
+        "favorite_misses": 281,
+        "favorite_hit_pct": 13.8037,
+        "favorite_miss_pct": 86.1963,
+        "market_expected_hit_pct": 11.693,
+        "market_expected_miss_pct": 88.307,
+        "excess_miss_pp": -2.1107,
+        "underperformance_z": -1.1861,
+        "favorite_hit_pct_wilson_95": [
+          10.4789,
+          17.9716
+        ],
+        "favorite_100yen_stake_yen": 32600,
+        "favorite_100yen_payout_yen": 28460,
+        "favorite_roi_pct": 87.3006,
+        "favorite_mean_odds": 6.4089,
+        "market_mean_overround": 1.33691
+      },
+      {
+        "group": {
+          "cars_group": "6",
+          "band": "7-8"
+        },
+        "races": 231,
+        "favorite_hits": 25,
+        "favorite_misses": 206,
+        "favorite_hit_pct": 10.8225,
+        "favorite_miss_pct": 89.1775,
+        "market_expected_hit_pct": 10.1122,
+        "market_expected_miss_pct": 89.8878,
+        "excess_miss_pp": -0.7103,
+        "underperformance_z": -0.3581,
+        "favorite_hit_pct_wilson_95": [
+          7.4387,
+          15.488
+        ],
+        "favorite_100yen_stake_yen": 23100,
+        "favorite_100yen_payout_yen": 18560,
+        "favorite_roi_pct": 80.3463,
+        "favorite_mean_odds": 7.4113,
+        "market_mean_overround": 1.33628
+      },
+      {
+        "group": {
+          "cars_group": "6",
+          "band": "8-10"
+        },
+        "races": 294,
+        "favorite_hits": 28,
+        "favorite_misses": 266,
+        "favorite_hit_pct": 9.5238,
+        "favorite_miss_pct": 90.4762,
+        "market_expected_hit_pct": 8.4293,
+        "market_expected_miss_pct": 91.5707,
+        "excess_miss_pp": -1.0945,
+        "underperformance_z": -0.6756,
+        "favorite_hit_pct_wilson_95": [
+          6.6715,
+          13.4202
+        ],
+        "favorite_100yen_stake_yen": 29400,
+        "favorite_100yen_payout_yen": 24400,
+        "favorite_roi_pct": 82.9932,
+        "favorite_mean_odds": 8.9167,
+        "market_mean_overround": 1.33589
+      },
+      {
+        "group": {
+          "cars_group": "6",
+          "band": "10-12"
+        },
+        "races": 248,
+        "favorite_hits": 9,
+        "favorite_misses": 239,
+        "favorite_hit_pct": 3.629,
+        "favorite_miss_pct": 96.371,
+        "market_expected_hit_pct": 6.9028,
+        "market_expected_miss_pct": 93.0972,
+        "excess_miss_pp": 3.2737,
+        "underperformance_z": 2.0339,
+        "favorite_hit_pct_wilson_95": [
+          1.9208,
+          6.7519
+        ],
+        "favorite_100yen_stake_yen": 24800,
+        "favorite_100yen_payout_yen": 9570,
+        "favorite_roi_pct": 38.5887,
+        "favorite_mean_odds": 10.8794,
+        "market_mean_overround": 1.3355
+      },
+      {
+        "group": {
+          "cars_group": "6",
+          "band": "12-15"
+        },
+        "races": 163,
+        "favorite_hits": 11,
+        "favorite_misses": 152,
+        "favorite_hit_pct": 6.7485,
+        "favorite_miss_pct": 93.2515,
+        "market_expected_hit_pct": 5.7077,
+        "market_expected_miss_pct": 94.2923,
+        "excess_miss_pp": -1.0408,
+        "underperformance_z": -0.5728,
+        "favorite_hit_pct_wilson_95": [
+          3.8097,
+          11.6789
+        ],
+        "favorite_100yen_stake_yen": 16300,
+        "favorite_100yen_payout_yen": 14740,
+        "favorite_roi_pct": 90.4294,
+        "favorite_mean_odds": 13.1681,
+        "market_mean_overround": 1.33518
+      },
+      {
+        "group": {
+          "cars_group": "6",
+          "band": "15-20"
+        },
+        "races": 68,
+        "favorite_hits": 3,
+        "favorite_misses": 65,
+        "favorite_hit_pct": 4.4118,
+        "favorite_miss_pct": 95.5882,
+        "market_expected_hit_pct": 4.5576,
+        "market_expected_miss_pct": 95.4424,
+        "excess_miss_pp": 0.1458,
+        "underperformance_z": 0.0577,
+        "favorite_hit_pct_wilson_95": [
+          1.5117,
+          12.1872
+        ],
+        "favorite_100yen_stake_yen": 6800,
+        "favorite_100yen_payout_yen": 4770,
+        "favorite_roi_pct": 70.1471,
+        "favorite_mean_odds": 16.5265,
+        "market_mean_overround": 1.33489
+      },
+      {
+        "group": {
+          "cars_group": "6",
+          "band": "20-25"
+        },
+        "races": 3,
+        "favorite_hits": 0,
+        "favorite_misses": 3,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 3.5333,
+        "market_expected_miss_pct": 96.4667,
+        "excess_miss_pp": 3.5333,
+        "underperformance_z": 0.3315,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          56.1497
+        ],
+        "favorite_100yen_stake_yen": 300,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 21.2333,
+        "market_mean_overround": 1.33451
+      },
+      {
+        "group": {
+          "cars_group": "7",
+          "band": "0-2"
+        },
+        "races": 442,
+        "favorite_hits": 231,
+        "favorite_misses": 211,
+        "favorite_hit_pct": 52.2624,
+        "favorite_miss_pct": 47.7376,
+        "market_expected_hit_pct": 43.9903,
+        "market_expected_miss_pct": 56.0097,
+        "excess_miss_pp": -8.2722,
+        "underperformance_z": -3.5173,
+        "favorite_hit_pct_wilson_95": [
+          47.6065,
+          56.8794
+        ],
+        "favorite_100yen_stake_yen": 44200,
+        "favorite_100yen_payout_yen": 38490,
+        "favorite_roi_pct": 87.0814,
+        "favorite_mean_odds": 1.6943,
+        "market_mean_overround": 1.3546
+      },
+      {
+        "group": {
+          "cars_group": "7",
+          "band": "2-3"
+        },
+        "races": 1575,
+        "favorite_hits": 527,
+        "favorite_misses": 1048,
+        "favorite_hit_pct": 33.4603,
+        "favorite_miss_pct": 66.5397,
+        "market_expected_hit_pct": 30.1059,
+        "market_expected_miss_pct": 69.8941,
+        "excess_miss_pp": -3.3544,
+        "underperformance_z": -2.9104,
+        "favorite_hit_pct_wilson_95": [
+          31.1727,
+          35.8284
+        ],
+        "favorite_100yen_stake_yen": 157500,
+        "favorite_100yen_payout_yen": 129990,
+        "favorite_roi_pct": 82.5333,
+        "favorite_mean_odds": 2.5019,
+        "market_mean_overround": 1.34477
+      },
+      {
+        "group": {
+          "cars_group": "7",
+          "band": "3-4"
+        },
+        "races": 2515,
+        "favorite_hits": 605,
+        "favorite_misses": 1910,
+        "favorite_hit_pct": 24.0557,
+        "favorite_miss_pct": 75.9443,
+        "market_expected_hit_pct": 21.6261,
+        "market_expected_miss_pct": 78.3739,
+        "excess_miss_pp": -2.4296,
+        "underperformance_z": -2.9622,
+        "favorite_hit_pct_wilson_95": [
+          22.4256,
+          25.7649
+        ],
+        "favorite_100yen_stake_yen": 251500,
+        "favorite_100yen_payout_yen": 207870,
+        "favorite_roi_pct": 82.6521,
+        "favorite_mean_odds": 3.4717,
+        "market_mean_overround": 1.34056
+      },
+      {
+        "group": {
+          "cars_group": "7",
+          "band": "4-5"
+        },
+        "races": 3071,
+        "favorite_hits": 532,
+        "favorite_misses": 2539,
+        "favorite_hit_pct": 17.3233,
+        "favorite_miss_pct": 82.6767,
+        "market_expected_hit_pct": 16.7988,
+        "market_expected_miss_pct": 83.2012,
+        "excess_miss_pp": -0.5245,
+        "underperformance_z": -0.7779,
+        "favorite_hit_pct_wilson_95": [
+          16.0259,
+          18.7024
+        ],
+        "favorite_100yen_stake_yen": 307100,
+        "favorite_100yen_payout_yen": 236580,
+        "favorite_roi_pct": 77.0368,
+        "favorite_mean_odds": 4.466,
+        "market_mean_overround": 1.33851
+      },
+      {
+        "group": {
+          "cars_group": "7",
+          "band": "5-6"
+        },
+        "races": 3281,
+        "favorite_hits": 461,
+        "favorite_misses": 2820,
+        "favorite_hit_pct": 14.0506,
+        "favorite_miss_pct": 85.9494,
+        "market_expected_hit_pct": 13.7643,
+        "market_expected_miss_pct": 86.2357,
+        "excess_miss_pp": -0.2863,
+        "underperformance_z": -0.4762,
+        "favorite_hit_pct_wilson_95": [
+          12.9035,
+          15.2818
+        ],
+        "favorite_100yen_stake_yen": 328100,
+        "favorite_100yen_payout_yen": 251310,
+        "favorite_roi_pct": 76.5956,
+        "favorite_mean_odds": 5.4475,
+        "market_mean_overround": 1.33736
+      },
+      {
+        "group": {
+          "cars_group": "7",
+          "band": "6-7"
+        },
+        "races": 3083,
+        "favorite_hits": 355,
+        "favorite_misses": 2728,
+        "favorite_hit_pct": 11.5148,
+        "favorite_miss_pct": 88.4852,
+        "market_expected_hit_pct": 11.6397,
+        "market_expected_miss_pct": 88.3603,
+        "excess_miss_pp": 0.1249,
+        "underperformance_z": 0.2163,
+        "favorite_hit_pct_wilson_95": [
+          10.4356,
+          12.6897
+        ],
+        "favorite_100yen_stake_yen": 308300,
+        "favorite_100yen_payout_yen": 228230,
+        "favorite_roi_pct": 74.0285,
+        "favorite_mean_odds": 6.4399,
+        "market_mean_overround": 1.33665
+      },
+      {
+        "group": {
+          "cars_group": "7",
+          "band": "7-8"
+        },
+        "races": 2814,
+        "favorite_hits": 294,
+        "favorite_misses": 2520,
+        "favorite_hit_pct": 10.4478,
+        "favorite_miss_pct": 89.5522,
+        "market_expected_hit_pct": 10.0727,
+        "market_expected_miss_pct": 89.9273,
+        "excess_miss_pp": -0.375,
+        "underperformance_z": -0.6611,
+        "favorite_hit_pct_wilson_95": [
+          9.371,
+          11.6323
+        ],
+        "favorite_100yen_stake_yen": 281400,
+        "favorite_100yen_payout_yen": 217740,
+        "favorite_roi_pct": 77.3774,
+        "favorite_mean_odds": 7.4416,
+        "market_mean_overround": 1.33607
+      },
+      {
+        "group": {
+          "cars_group": "7",
+          "band": "8-10"
+        },
+        "races": 4022,
+        "favorite_hits": 325,
+        "favorite_misses": 3697,
+        "favorite_hit_pct": 8.0806,
+        "favorite_miss_pct": 91.9194,
+        "market_expected_hit_pct": 8.4538,
+        "market_expected_miss_pct": 91.5462,
+        "excess_miss_pp": 0.3733,
+        "underperformance_z": 0.8511,
+        "favorite_hit_pct_wilson_95": [
+          7.2777,
+          8.9634
+        ],
+        "favorite_100yen_stake_yen": 402200,
+        "favorite_100yen_payout_yen": 288570,
+        "favorite_roi_pct": 71.7479,
+        "favorite_mean_odds": 8.8944,
+        "market_mean_overround": 1.33562
+      },
+      {
+        "group": {
+          "cars_group": "7",
+          "band": "10-12"
+        },
+        "races": 3682,
+        "favorite_hits": 239,
+        "favorite_misses": 3443,
+        "favorite_hit_pct": 6.491,
+        "favorite_miss_pct": 93.509,
+        "market_expected_hit_pct": 6.8693,
+        "market_expected_miss_pct": 93.1307,
+        "excess_miss_pp": 0.3783,
+        "underperformance_z": 0.9077,
+        "favorite_hit_pct_wilson_95": [
+          5.7397,
+          7.333
+        ],
+        "favorite_100yen_stake_yen": 368200,
+        "favorite_100yen_payout_yen": 259670,
+        "favorite_roi_pct": 70.5242,
+        "favorite_mean_odds": 10.9324,
+        "market_mean_overround": 1.3352
+      },
+      {
+        "group": {
+          "cars_group": "7",
+          "band": "12-15"
+        },
+        "races": 3667,
+        "favorite_hits": 186,
+        "favorite_misses": 3481,
+        "favorite_hit_pct": 5.0723,
+        "favorite_miss_pct": 94.9277,
+        "market_expected_hit_pct": 5.658,
+        "market_expected_miss_pct": 94.342,
+        "excess_miss_pp": 0.5857,
+        "underperformance_z": 1.5354,
+        "favorite_hit_pct_wilson_95": [
+          4.4079,
+          5.8307
+        ],
+        "favorite_100yen_stake_yen": 366700,
+        "favorite_100yen_payout_yen": 243560,
+        "favorite_roi_pct": 66.4194,
+        "favorite_mean_odds": 13.2954,
+        "market_mean_overround": 1.33491
+      },
+      {
+        "group": {
+          "cars_group": "7",
+          "band": "15-20"
+        },
+        "races": 2346,
+        "favorite_hits": 79,
+        "favorite_misses": 2267,
+        "favorite_hit_pct": 3.3674,
+        "favorite_miss_pct": 96.6326,
+        "market_expected_hit_pct": 4.4714,
+        "market_expected_miss_pct": 95.5286,
+        "excess_miss_pp": 1.104,
+        "underperformance_z": 2.5876,
+        "favorite_hit_pct_wilson_95": [
+          2.7103,
+          4.177
+        ],
+        "favorite_100yen_stake_yen": 234600,
+        "favorite_100yen_payout_yen": 130710,
+        "favorite_roi_pct": 55.7161,
+        "favorite_mean_odds": 16.8629,
+        "market_mean_overround": 1.33461
+      },
+      {
+        "group": {
+          "cars_group": "7",
+          "band": "20-25"
+        },
+        "races": 534,
+        "favorite_hits": 10,
+        "favorite_misses": 524,
+        "favorite_hit_pct": 1.8727,
+        "favorite_miss_pct": 98.1273,
+        "market_expected_hit_pct": 3.4597,
+        "market_expected_miss_pct": 96.5403,
+        "excess_miss_pp": 1.5871,
+        "underperformance_z": 2.0069,
+        "favorite_hit_pct_wilson_95": [
+          1.0203,
+          3.4125
+        ],
+        "favorite_100yen_stake_yen": 53400,
+        "favorite_100yen_payout_yen": 21610,
+        "favorite_roi_pct": 40.4682,
+        "favorite_mean_odds": 21.7378,
+        "market_mean_overround": 1.33437
+      },
+      {
+        "group": {
+          "cars_group": "7",
+          "band": "25-30"
+        },
+        "races": 99,
+        "favorite_hits": 1,
+        "favorite_misses": 98,
+        "favorite_hit_pct": 1.0101,
+        "favorite_miss_pct": 98.9899,
+        "market_expected_hit_pct": 2.8123,
+        "market_expected_miss_pct": 97.1877,
+        "excess_miss_pp": 1.8021,
+        "underperformance_z": 1.0847,
+        "favorite_hit_pct_wilson_95": [
+          0.1785,
+          5.5015
+        ],
+        "favorite_100yen_stake_yen": 9900,
+        "favorite_100yen_payout_yen": 2880,
+        "favorite_roi_pct": 29.0909,
+        "favorite_mean_odds": 26.7253,
+        "market_mean_overround": 1.33419
+      },
+      {
+        "group": {
+          "cars_group": "7",
+          "band": "30-40"
+        },
+        "races": 12,
+        "favorite_hits": 0,
+        "favorite_misses": 12,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 2.3641,
+        "market_expected_miss_pct": 97.6359,
+        "excess_miss_pp": 2.3641,
+        "underperformance_z": 0.539,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          24.2494
+        ],
+        "favorite_100yen_stake_yen": 1200,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 31.7667,
+        "market_mean_overround": 1.3341
+      },
+      {
+        "group": {
+          "cars_group": "7",
+          "band": "40-50"
+        },
+        "races": 2,
+        "favorite_hits": 0,
+        "favorite_misses": 2,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 1.8511,
+        "market_expected_miss_pct": 98.1489,
+        "excess_miss_pp": 1.8511,
+        "underperformance_z": 0.1942,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          65.762
+        ],
+        "favorite_100yen_stake_yen": 200,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 40.5,
+        "market_mean_overround": 1.33402
+      },
+      {
+        "group": {
+          "cars_group": "8",
+          "band": "2-3"
+        },
+        "races": 1,
+        "favorite_hits": 0,
+        "favorite_misses": 1,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 25.8184,
+        "market_expected_miss_pct": 74.1816,
+        "excess_miss_pp": 25.8184,
+        "underperformance_z": 0.59,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          79.3451
+        ],
+        "favorite_100yen_stake_yen": 100,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 2.9,
+        "market_mean_overround": 1.33559
+      },
+      {
+        "group": {
+          "cars_group": "8",
+          "band": "3-4"
+        },
+        "races": 5,
+        "favorite_hits": 0,
+        "favorite_misses": 5,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 20.644,
+        "market_expected_miss_pct": 79.356,
+        "excess_miss_pp": 20.644,
+        "underperformance_z": 1.1406,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          43.4482
+        ],
+        "favorite_100yen_stake_yen": 500,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 3.62,
+        "market_mean_overround": 1.33911
+      },
+      {
+        "group": {
+          "cars_group": "8",
+          "band": "4-5"
+        },
+        "races": 7,
+        "favorite_hits": 2,
+        "favorite_misses": 5,
+        "favorite_hit_pct": 28.5714,
+        "favorite_miss_pct": 71.4286,
+        "market_expected_hit_pct": 16.4553,
+        "market_expected_miss_pct": 83.5447,
+        "excess_miss_pp": -12.1162,
+        "underperformance_z": -0.8651,
+        "favorite_hit_pct_wilson_95": [
+          8.2219,
+          64.1066
+        ],
+        "favorite_100yen_stake_yen": 700,
+        "favorite_100yen_payout_yen": 960,
+        "favorite_roi_pct": 137.1429,
+        "favorite_mean_odds": 4.5714,
+        "market_mean_overround": 1.33744
+      },
+      {
+        "group": {
+          "cars_group": "8",
+          "band": "5-6"
+        },
+        "races": 32,
+        "favorite_hits": 4,
+        "favorite_misses": 28,
+        "favorite_hit_pct": 12.5,
+        "favorite_miss_pct": 87.5,
+        "market_expected_hit_pct": 13.6764,
+        "market_expected_miss_pct": 86.3236,
+        "excess_miss_pp": 1.1764,
+        "underperformance_z": 0.1937,
+        "favorite_hit_pct_wilson_95": [
+          4.9701,
+          28.0683
+        ],
+        "favorite_100yen_stake_yen": 3200,
+        "favorite_100yen_payout_yen": 2150,
+        "favorite_roi_pct": 67.1875,
+        "favorite_mean_odds": 5.4813,
+        "market_mean_overround": 1.33659
+      },
+      {
+        "group": {
+          "cars_group": "8",
+          "band": "6-7"
+        },
+        "races": 41,
+        "favorite_hits": 3,
+        "favorite_misses": 38,
+        "favorite_hit_pct": 7.3171,
+        "favorite_miss_pct": 92.6829,
+        "market_expected_hit_pct": 11.6006,
+        "market_expected_miss_pct": 88.3994,
+        "excess_miss_pp": 4.2835,
+        "underperformance_z": 0.8566,
+        "favorite_hit_pct_wilson_95": [
+          2.5198,
+          19.4274
+        ],
+        "favorite_100yen_stake_yen": 4100,
+        "favorite_100yen_payout_yen": 1990,
+        "favorite_roi_pct": 48.5366,
+        "favorite_mean_odds": 6.4634,
+        "market_mean_overround": 1.33627
+      },
+      {
+        "group": {
+          "cars_group": "8",
+          "band": "7-8"
+        },
+        "races": 44,
+        "favorite_hits": 4,
+        "favorite_misses": 40,
+        "favorite_hit_pct": 9.0909,
+        "favorite_miss_pct": 90.9091,
+        "market_expected_hit_pct": 10.0316,
+        "market_expected_miss_pct": 89.9684,
+        "excess_miss_pp": 0.9407,
+        "underperformance_z": 0.2077,
+        "favorite_hit_pct_wilson_95": [
+          3.5922,
+          21.1592
+        ],
+        "favorite_100yen_stake_yen": 4400,
+        "favorite_100yen_payout_yen": 2940,
+        "favorite_roi_pct": 66.8182,
+        "favorite_mean_odds": 7.4727,
+        "market_mean_overround": 1.33582
+      },
+      {
+        "group": {
+          "cars_group": "8",
+          "band": "8-10"
+        },
+        "races": 69,
+        "favorite_hits": 5,
+        "favorite_misses": 64,
+        "favorite_hit_pct": 7.2464,
+        "favorite_miss_pct": 92.7536,
+        "market_expected_hit_pct": 8.364,
+        "market_expected_miss_pct": 91.636,
+        "excess_miss_pp": 1.1177,
+        "underperformance_z": 0.3354,
+        "favorite_hit_pct_wilson_95": [
+          3.1348,
+          15.8674
+        ],
+        "favorite_100yen_stake_yen": 6900,
+        "favorite_100yen_payout_yen": 4180,
+        "favorite_roi_pct": 60.5797,
+        "favorite_mean_odds": 8.9812,
+        "market_mean_overround": 1.33521
+      },
+      {
+        "group": {
+          "cars_group": "8",
+          "band": "10-12"
+        },
+        "races": 101,
+        "favorite_hits": 8,
+        "favorite_misses": 93,
+        "favorite_hit_pct": 7.9208,
+        "favorite_miss_pct": 92.0792,
+        "market_expected_hit_pct": 6.789,
+        "market_expected_miss_pct": 93.211,
+        "excess_miss_pp": -1.1318,
+        "underperformance_z": -0.4522,
+        "favorite_hit_pct_wilson_95": [
+          4.0681,
+          14.8571
+        ],
+        "favorite_100yen_stake_yen": 10100,
+        "favorite_100yen_payout_yen": 8640,
+        "favorite_roi_pct": 85.5446,
+        "favorite_mean_odds": 11.0634,
+        "market_mean_overround": 1.33507
+      },
+      {
+        "group": {
+          "cars_group": "8",
+          "band": "12-15"
+        },
+        "races": 144,
+        "favorite_hits": 10,
+        "favorite_misses": 134,
+        "favorite_hit_pct": 6.9444,
+        "favorite_miss_pct": 93.0556,
+        "market_expected_hit_pct": 5.5906,
+        "market_expected_miss_pct": 94.4094,
+        "excess_miss_pp": -1.3539,
+        "underperformance_z": -0.7072,
+        "favorite_hit_pct_wilson_95": [
+          3.8155,
+          12.3109
+        ],
+        "favorite_100yen_stake_yen": 14400,
+        "favorite_100yen_payout_yen": 13210,
+        "favorite_roi_pct": 91.7361,
+        "favorite_mean_odds": 13.4486,
+        "market_mean_overround": 1.33472
+      },
+      {
+        "group": {
+          "cars_group": "8",
+          "band": "15-20"
+        },
+        "races": 133,
+        "favorite_hits": 9,
+        "favorite_misses": 124,
+        "favorite_hit_pct": 6.7669,
+        "favorite_miss_pct": 93.2331,
+        "market_expected_hit_pct": 4.4386,
+        "market_expected_miss_pct": 95.5614,
+        "excess_miss_pp": -2.3283,
+        "underperformance_z": -1.304,
+        "favorite_hit_pct_wilson_95": [
+          3.6006,
+          12.3605
+        ],
+        "favorite_100yen_stake_yen": 13300,
+        "favorite_100yen_payout_yen": 14940,
+        "favorite_roi_pct": 112.3308,
+        "favorite_mean_odds": 16.988,
+        "market_mean_overround": 1.33449
+      },
+      {
+        "group": {
+          "cars_group": "8",
+          "band": "20-25"
+        },
+        "races": 51,
+        "favorite_hits": 0,
+        "favorite_misses": 51,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 3.4454,
+        "market_expected_miss_pct": 96.5546,
+        "excess_miss_pp": 3.4454,
+        "underperformance_z": 1.3491,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          7.0047
+        ],
+        "favorite_100yen_stake_yen": 5100,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 21.8333,
+        "market_mean_overround": 1.33423
+      },
+      {
+        "group": {
+          "cars_group": "8",
+          "band": "25-30"
+        },
+        "races": 17,
+        "favorite_hits": 1,
+        "favorite_misses": 16,
+        "favorite_hit_pct": 5.8824,
+        "favorite_miss_pct": 94.1176,
+        "market_expected_hit_pct": 2.7836,
+        "market_expected_miss_pct": 97.2164,
+        "excess_miss_pp": -3.0988,
+        "underperformance_z": -0.7767,
+        "favorite_hit_pct_wilson_95": [
+          1.046,
+          26.982
+        ],
+        "favorite_100yen_stake_yen": 1700,
+        "favorite_100yen_payout_yen": 2920,
+        "favorite_roi_pct": 171.7647,
+        "favorite_mean_odds": 26.9824,
+        "market_mean_overround": 1.33407
+      },
+      {
+        "group": {
+          "cars_group": "8",
+          "band": "30-40"
+        },
+        "races": 2,
+        "favorite_hits": 0,
+        "favorite_misses": 2,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 2.3296,
+        "market_expected_miss_pct": 97.6704,
+        "excess_miss_pp": 2.3296,
+        "underperformance_z": 0.2184,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          65.762
+        ],
+        "favorite_100yen_stake_yen": 200,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 32.2,
+        "market_mean_overround": 1.33393
+      },
+      {
+        "group": {
+          "cars_group": "9",
+          "band": "0-2"
+        },
+        "races": 1,
+        "favorite_hits": 1,
+        "favorite_misses": 0,
+        "favorite_hit_pct": 100.0,
+        "favorite_miss_pct": 0.0,
+        "market_expected_hit_pct": 38.5053,
+        "market_expected_miss_pct": 61.4947,
+        "excess_miss_pp": -61.4947,
+        "underperformance_z": -1.2637,
+        "favorite_hit_pct_wilson_95": [
+          20.6549,
+          100.0
+        ],
+        "favorite_100yen_stake_yen": 100,
+        "favorite_100yen_payout_yen": 190,
+        "favorite_roi_pct": 190.0,
+        "favorite_mean_odds": 1.9,
+        "market_mean_overround": 1.36687
+      },
+      {
+        "group": {
+          "cars_group": "9",
+          "band": "2-3"
+        },
+        "races": 60,
+        "favorite_hits": 23,
+        "favorite_misses": 37,
+        "favorite_hit_pct": 38.3333,
+        "favorite_miss_pct": 61.6667,
+        "market_expected_hit_pct": 28.0843,
+        "market_expected_miss_pct": 71.9157,
+        "excess_miss_pp": -10.249,
+        "underperformance_z": -1.7691,
+        "favorite_hit_pct_wilson_95": [
+          27.0883,
+          50.9824
+        ],
+        "favorite_100yen_stake_yen": 6000,
+        "favorite_100yen_payout_yen": 6120,
+        "favorite_roi_pct": 102.0,
+        "favorite_mean_odds": 2.6617,
+        "market_mean_overround": 1.3472
+      },
+      {
+        "group": {
+          "cars_group": "9",
+          "band": "3-4"
+        },
+        "races": 209,
+        "favorite_hits": 56,
+        "favorite_misses": 153,
+        "favorite_hit_pct": 26.7943,
+        "favorite_miss_pct": 73.2057,
+        "market_expected_hit_pct": 21.403,
+        "market_expected_miss_pct": 78.597,
+        "excess_miss_pp": -5.3913,
+        "underperformance_z": -1.902,
+        "favorite_hit_pct_wilson_95": [
+          21.2484,
+          33.1778
+        ],
+        "favorite_100yen_stake_yen": 20900,
+        "favorite_100yen_payout_yen": 19250,
+        "favorite_roi_pct": 92.1053,
+        "favorite_mean_odds": 3.4995,
+        "market_mean_overround": 1.34346
+      },
+      {
+        "group": {
+          "cars_group": "9",
+          "band": "4-5"
+        },
+        "races": 406,
+        "favorite_hits": 87,
+        "favorite_misses": 319,
+        "favorite_hit_pct": 21.4286,
+        "favorite_miss_pct": 78.5714,
+        "market_expected_hit_pct": 16.7488,
+        "market_expected_miss_pct": 83.2512,
+        "excess_miss_pp": -4.6798,
+        "underperformance_z": -2.5263,
+        "favorite_hit_pct_wilson_95": [
+          17.7148,
+          25.6779
+        ],
+        "favorite_100yen_stake_yen": 40600,
+        "favorite_100yen_payout_yen": 39140,
+        "favorite_roi_pct": 96.4039,
+        "favorite_mean_odds": 4.4697,
+        "market_mean_overround": 1.34138
+      },
+      {
+        "group": {
+          "cars_group": "9",
+          "band": "5-6"
+        },
+        "races": 539,
+        "favorite_hits": 91,
+        "favorite_misses": 448,
+        "favorite_hit_pct": 16.8831,
+        "favorite_miss_pct": 83.1169,
+        "market_expected_hit_pct": 13.6653,
+        "market_expected_miss_pct": 86.3347,
+        "excess_miss_pp": -3.2179,
+        "underperformance_z": -2.1755,
+        "favorite_hit_pct_wilson_95": [
+          13.9575,
+          20.2774
+        ],
+        "favorite_100yen_stake_yen": 53900,
+        "favorite_100yen_payout_yen": 49310,
+        "favorite_roi_pct": 91.4842,
+        "favorite_mean_odds": 5.4763,
+        "market_mean_overround": 1.33989
+      },
+      {
+        "group": {
+          "cars_group": "9",
+          "band": "6-7"
+        },
+        "races": 628,
+        "favorite_hits": 95,
+        "favorite_misses": 533,
+        "favorite_hit_pct": 15.1274,
+        "favorite_miss_pct": 84.8726,
+        "market_expected_hit_pct": 11.5758,
+        "market_expected_miss_pct": 88.4242,
+        "excess_miss_pp": -3.5516,
+        "underperformance_z": -2.7823,
+        "favorite_hit_pct_wilson_95": [
+          12.5375,
+          18.1413
+        ],
+        "favorite_100yen_stake_yen": 62800,
+        "favorite_100yen_payout_yen": 61190,
+        "favorite_roi_pct": 97.4363,
+        "favorite_mean_odds": 6.4664,
+        "market_mean_overround": 1.33864
+      },
+      {
+        "group": {
+          "cars_group": "9",
+          "band": "7-8"
+        },
+        "races": 690,
+        "favorite_hits": 94,
+        "favorite_misses": 596,
+        "favorite_hit_pct": 13.6232,
+        "favorite_miss_pct": 86.3768,
+        "market_expected_hit_pct": 10.0588,
+        "market_expected_miss_pct": 89.9412,
+        "excess_miss_pp": -3.5644,
+        "underperformance_z": -3.1131,
+        "favorite_hit_pct_wilson_95": [
+          11.2642,
+          16.385
+        ],
+        "favorite_100yen_stake_yen": 69000,
+        "favorite_100yen_payout_yen": 70030,
+        "favorite_roi_pct": 101.4928,
+        "favorite_mean_odds": 7.443,
+        "market_mean_overround": 1.33764
+      },
+      {
+        "group": {
+          "cars_group": "9",
+          "band": "8-10"
+        },
+        "races": 1166,
+        "favorite_hits": 130,
+        "favorite_misses": 1036,
+        "favorite_hit_pct": 11.1492,
+        "favorite_miss_pct": 88.8508,
+        "market_expected_hit_pct": 8.4192,
+        "market_expected_miss_pct": 91.5808,
+        "excess_miss_pp": -2.7301,
+        "underperformance_z": -3.3579,
+        "favorite_hit_pct_wilson_95": [
+          9.4687,
+          13.0849
+        ],
+        "favorite_100yen_stake_yen": 116600,
+        "favorite_100yen_payout_yen": 116120,
+        "favorite_roi_pct": 99.5883,
+        "favorite_mean_odds": 8.9241,
+        "market_mean_overround": 1.3367
+      },
+      {
+        "group": {
+          "cars_group": "9",
+          "band": "10-12"
+        },
+        "races": 1202,
+        "favorite_hits": 100,
+        "favorite_misses": 1102,
+        "favorite_hit_pct": 8.3195,
+        "favorite_miss_pct": 91.6805,
+        "market_expected_hit_pct": 6.8478,
+        "market_expected_miss_pct": 93.1522,
+        "excess_miss_pp": -1.4716,
+        "underperformance_z": -2.0203,
+        "favorite_hit_pct_wilson_95": [
+          6.8878,
+          10.0167
+        ],
+        "favorite_100yen_stake_yen": 120200,
+        "favorite_100yen_payout_yen": 108130,
+        "favorite_roi_pct": 89.9584,
+        "favorite_mean_odds": 10.96,
+        "market_mean_overround": 1.33594
+      },
+      {
+        "group": {
+          "cars_group": "9",
+          "band": "12-15"
+        },
+        "races": 1732,
+        "favorite_hits": 102,
+        "favorite_misses": 1630,
+        "favorite_hit_pct": 5.8891,
+        "favorite_miss_pct": 94.1109,
+        "market_expected_hit_pct": 5.6121,
+        "market_expected_miss_pct": 94.3879,
+        "excess_miss_pp": -0.2771,
+        "underperformance_z": -0.5011,
+        "favorite_hit_pct_wilson_95": [
+          4.875,
+          7.0985
+        ],
+        "favorite_100yen_stake_yen": 173200,
+        "favorite_100yen_payout_yen": 136880,
+        "favorite_roi_pct": 79.03,
+        "favorite_mean_odds": 13.3984,
+        "market_mean_overround": 1.33539
+      },
+      {
+        "group": {
+          "cars_group": "9",
+          "band": "15-20"
+        },
+        "races": 1977,
+        "favorite_hits": 93,
+        "favorite_misses": 1884,
+        "favorite_hit_pct": 4.7041,
+        "favorite_miss_pct": 95.2959,
+        "market_expected_hit_pct": 4.4034,
+        "market_expected_miss_pct": 95.5966,
+        "excess_miss_pp": -0.3007,
+        "underperformance_z": -0.6517,
+        "favorite_hit_pct_wilson_95": [
+          3.8554,
+          5.7285
+        ],
+        "favorite_100yen_stake_yen": 197700,
+        "favorite_100yen_payout_yen": 156970,
+        "favorite_roi_pct": 79.3981,
+        "favorite_mean_odds": 17.1298,
+        "market_mean_overround": 1.3348
+      },
+      {
+        "group": {
+          "cars_group": "9",
+          "band": "20-25"
+        },
+        "races": 978,
+        "favorite_hits": 27,
+        "favorite_misses": 951,
+        "favorite_hit_pct": 2.7607,
+        "favorite_miss_pct": 97.2393,
+        "market_expected_hit_pct": 3.4143,
+        "market_expected_miss_pct": 96.5857,
+        "excess_miss_pp": 0.6536,
+        "underperformance_z": 1.1256,
+        "favorite_hit_pct_wilson_95": [
+          1.9042,
+          3.9869
+        ],
+        "favorite_100yen_stake_yen": 97800,
+        "favorite_100yen_payout_yen": 59030,
+        "favorite_roi_pct": 60.3579,
+        "favorite_mean_odds": 22.0343,
+        "market_mean_overround": 1.33438
+      },
+      {
+        "group": {
+          "cars_group": "9",
+          "band": "25-30"
+        },
+        "races": 419,
+        "favorite_hits": 15,
+        "favorite_misses": 404,
+        "favorite_hit_pct": 3.58,
+        "favorite_miss_pct": 96.42,
+        "market_expected_hit_pct": 2.7786,
+        "market_expected_miss_pct": 97.2214,
+        "excess_miss_pp": -0.8014,
+        "underperformance_z": -0.9981,
+        "favorite_hit_pct_wilson_95": [
+          2.1813,
+          5.822
+        ],
+        "favorite_100yen_stake_yen": 41900,
+        "favorite_100yen_payout_yen": 40610,
+        "favorite_roi_pct": 96.9212,
+        "favorite_mean_odds": 27.0477,
+        "market_mean_overround": 1.33413
+      },
+      {
+        "group": {
+          "cars_group": "9",
+          "band": "30-40"
+        },
+        "races": 211,
+        "favorite_hits": 2,
+        "favorite_misses": 209,
+        "favorite_hit_pct": 0.9479,
+        "favorite_miss_pct": 99.0521,
+        "market_expected_hit_pct": 2.2599,
+        "market_expected_miss_pct": 97.7401,
+        "excess_miss_pp": 1.312,
+        "underperformance_z": 1.2824,
+        "favorite_hit_pct_wilson_95": [
+          0.2603,
+          3.3896
+        ],
+        "favorite_100yen_stake_yen": 21100,
+        "favorite_100yen_payout_yen": 6370,
+        "favorite_roi_pct": 30.1896,
+        "favorite_mean_odds": 33.3791,
+        "market_mean_overround": 1.33393
+      },
+      {
+        "group": {
+          "cars_group": "9",
+          "band": "40-50"
+        },
+        "races": 17,
+        "favorite_hits": 0,
+        "favorite_misses": 17,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 1.7669,
+        "market_expected_miss_pct": 98.2331,
+        "excess_miss_pp": 1.7669,
+        "underperformance_z": 0.553,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          18.4318
+        ],
+        "favorite_100yen_stake_yen": 1700,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 42.5882,
+        "market_mean_overround": 1.33387
+      },
+      {
+        "group": {
+          "cars_group": "9",
+          "band": "50-75"
+        },
+        "races": 3,
+        "favorite_hits": 0,
+        "favorite_misses": 3,
+        "favorite_hit_pct": 0.0,
+        "favorite_miss_pct": 100.0,
+        "market_expected_hit_pct": 1.2926,
+        "market_expected_miss_pct": 98.7074,
+        "excess_miss_pp": 1.2926,
+        "underperformance_z": 0.1982,
+        "favorite_hit_pct_wilson_95": [
+          0.0,
+          56.1497
+        ],
+        "favorite_100yen_stake_yen": 300,
+        "favorite_100yen_payout_yen": 0,
+        "favorite_roi_pct": 0.0,
+        "favorite_mean_odds": 58.6333,
+        "market_mean_overround": 1.33365
+      }
+    ],
+    "by_year": [
+      {
+        "group": {
+          "year": "2020"
+        },
+        "races": 78,
+        "favorite_hits": 3,
+        "favorite_misses": 75,
+        "favorite_hit_pct": 3.8462,
+        "favorite_miss_pct": 96.1538,
+        "market_expected_hit_pct": 9.9604,
+        "market_expected_miss_pct": 90.0396,
+        "excess_miss_pp": 6.1142,
+        "underperformance_z": 1.8367,
+        "favorite_hit_pct_wilson_95": [
+          1.3166,
+          10.7084
+        ],
+        "favorite_100yen_stake_yen": 7800,
+        "favorite_100yen_payout_yen": 1720,
+        "favorite_roi_pct": 22.0513,
+        "favorite_mean_odds": 9.5846,
+        "market_mean_overround": 1.3362
+      },
+      {
+        "group": {
+          "year": "2021"
+        },
+        "races": 2527,
+        "favorite_hits": 264,
+        "favorite_misses": 2263,
+        "favorite_hit_pct": 10.4472,
+        "favorite_miss_pct": 89.5528,
+        "market_expected_hit_pct": 10.1285,
+        "market_expected_miss_pct": 89.8715,
+        "excess_miss_pp": -0.3187,
+        "underperformance_z": -0.5441,
+        "favorite_hit_pct_wilson_95": [
+          9.314,
+          11.7004
+        ],
+        "favorite_100yen_stake_yen": 252700,
+        "favorite_100yen_payout_yen": 187000,
+        "favorite_roi_pct": 74.0008,
+        "favorite_mean_odds": 10.6138,
+        "market_mean_overround": 1.33645
+      },
+      {
+        "group": {
+          "year": "2022"
+        },
+        "races": 3512,
+        "favorite_hits": 331,
+        "favorite_misses": 3181,
+        "favorite_hit_pct": 9.4248,
+        "favorite_miss_pct": 90.5752,
+        "market_expected_hit_pct": 9.0548,
+        "market_expected_miss_pct": 90.9452,
+        "excess_miss_pp": -0.37,
+        "underperformance_z": -0.7809,
+        "favorite_hit_pct_wilson_95": [
+          8.5024,
+          10.436
+        ],
+        "favorite_100yen_stake_yen": 351200,
+        "favorite_100yen_payout_yen": 247930,
+        "favorite_roi_pct": 70.5951,
+        "favorite_mean_odds": 11.404,
+        "market_mean_overround": 1.33652
+      },
+      {
+        "group": {
+          "year": "2023"
+        },
+        "races": 11114,
+        "favorite_hits": 1324,
+        "favorite_misses": 9790,
+        "favorite_hit_pct": 11.9129,
+        "favorite_miss_pct": 88.0871,
+        "market_expected_hit_pct": 11.2853,
+        "market_expected_miss_pct": 88.7147,
+        "excess_miss_pp": -0.6276,
+        "underperformance_z": -2.1489,
+        "favorite_hit_pct_wilson_95": [
+          11.3238,
+          12.5284
+        ],
+        "favorite_100yen_stake_yen": 1111400,
+        "favorite_100yen_payout_yen": 842000,
+        "favorite_roi_pct": 75.7603,
+        "favorite_mean_odds": 9.1996,
+        "market_mean_overround": 1.33711
+      },
+      {
+        "group": {
+          "year": "2024"
+        },
+        "races": 10524,
+        "favorite_hits": 1272,
+        "favorite_misses": 9252,
+        "favorite_hit_pct": 12.0867,
+        "favorite_miss_pct": 87.9133,
+        "market_expected_hit_pct": 11.267,
+        "market_expected_miss_pct": 88.733,
+        "excess_miss_pp": -0.8197,
+        "underperformance_z": -2.7325,
+        "favorite_hit_pct_wilson_95": [
+          11.4777,
+          12.7233
+        ],
+        "favorite_100yen_stake_yen": 1052400,
+        "favorite_100yen_payout_yen": 823350,
+        "favorite_roi_pct": 78.2355,
+        "favorite_mean_odds": 9.2596,
+        "market_mean_overround": 1.33706
+      },
+      {
+        "group": {
+          "year": "2025"
+        },
+        "races": 10672,
+        "favorite_hits": 1261,
+        "favorite_misses": 9411,
+        "favorite_hit_pct": 11.816,
+        "favorite_miss_pct": 88.184,
+        "market_expected_hit_pct": 11.3395,
+        "market_expected_miss_pct": 88.6605,
+        "excess_miss_pp": -0.4765,
+        "underperformance_z": -1.5997,
+        "favorite_hit_pct_wilson_95": [
+          11.2172,
+          12.4422
+        ],
+        "favorite_100yen_stake_yen": 1067200,
+        "favorite_100yen_payout_yen": 799050,
+        "favorite_roi_pct": 74.8735,
+        "favorite_mean_odds": 9.4765,
+        "market_mean_overround": 1.33706
+      },
+      {
+        "group": {
+          "year": "2026"
+        },
+        "races": 6613,
+        "favorite_hits": 833,
+        "favorite_misses": 5780,
+        "favorite_hit_pct": 12.5964,
+        "favorite_miss_pct": 87.4036,
+        "market_expected_hit_pct": 11.4655,
+        "market_expected_miss_pct": 88.5345,
+        "excess_miss_pp": -1.1309,
+        "underperformance_z": -2.9736,
+        "favorite_hit_pct_wilson_95": [
+          11.8183,
+          13.4179
+        ],
+        "favorite_100yen_stake_yen": 661300,
+        "favorite_100yen_payout_yen": 513600,
+        "favorite_roi_pct": 77.6652,
+        "favorite_mean_odds": 9.251,
+        "market_mean_overround": 1.3371
+      }
+    ],
+    "by_car_count": [
+      {
+        "group": {
+          "cars_group": "5"
+        },
+        "races": 581,
+        "favorite_hits": 113,
+        "favorite_misses": 468,
+        "favorite_hit_pct": 19.4492,
+        "favorite_miss_pct": 80.5508,
+        "market_expected_hit_pct": 17.6585,
+        "market_expected_miss_pct": 82.3415,
+        "excess_miss_pp": -1.7907,
+        "underperformance_z": -1.1617,
+        "favorite_hit_pct_wilson_95": [
+          16.4358,
+          22.864
+        ],
+        "favorite_100yen_stake_yen": 58100,
+        "favorite_100yen_payout_yen": 46710,
+        "favorite_roi_pct": 80.3959,
+        "favorite_mean_odds": 5.2552,
+        "market_mean_overround": 1.33985
+      },
+      {
+        "group": {
+          "cars_group": "6"
+        },
+        "races": 2429,
+        "favorite_hits": 368,
+        "favorite_misses": 2061,
+        "favorite_hit_pct": 15.1503,
+        "favorite_miss_pct": 84.8497,
+        "market_expected_hit_pct": 13.7024,
+        "market_expected_miss_pct": 86.2976,
+        "excess_miss_pp": -1.4479,
+        "underperformance_z": -2.1252,
+        "favorite_hit_pct_wilson_95": [
+          13.7795,
+          16.6311
+        ],
+        "favorite_100yen_stake_yen": 242900,
+        "favorite_100yen_payout_yen": 189460,
+        "favorite_roi_pct": 77.9992,
+        "favorite_mean_odds": 6.9922,
+        "market_mean_overround": 1.3379
+      },
+      {
+        "group": {
+          "cars_group": "7"
+        },
+        "races": 31145,
+        "favorite_hits": 3845,
+        "favorite_misses": 27300,
+        "favorite_hit_pct": 12.3455,
+        "favorite_miss_pct": 87.6545,
+        "market_expected_hit_pct": 12.0379,
+        "market_expected_miss_pct": 87.9621,
+        "excess_miss_pp": -0.3076,
+        "underperformance_z": -1.7161,
+        "favorite_hit_pct_wilson_95": [
+          11.9848,
+          12.7155
+        ],
+        "favorite_100yen_stake_yen": 3114500,
+        "favorite_100yen_payout_yen": 2257210,
+        "favorite_roi_pct": 72.4742,
+        "favorite_mean_odds": 8.5041,
+        "market_mean_overround": 1.33713
+      },
+      {
+        "group": {
+          "cars_group": "8"
+        },
+        "races": 647,
+        "favorite_hits": 46,
+        "favorite_misses": 601,
+        "favorite_hit_pct": 7.1097,
+        "favorite_miss_pct": 92.8903,
+        "market_expected_hit_pct": 6.9316,
+        "market_expected_miss_pct": 93.0684,
+        "excess_miss_pp": -0.1781,
+        "underperformance_z": -0.1799,
+        "favorite_hit_pct_wilson_95": [
+          5.3724,
+          9.3534
+        ],
+        "favorite_100yen_stake_yen": 64700,
+        "favorite_100yen_payout_yen": 51930,
+        "favorite_roi_pct": 80.2628,
+        "favorite_mean_odds": 12.9705,
+        "market_mean_overround": 1.33505
+      },
+      {
+        "group": {
+          "cars_group": "9"
+        },
+        "races": 10238,
+        "favorite_hits": 916,
+        "favorite_misses": 9322,
+        "favorite_hit_pct": 8.9471,
+        "favorite_miss_pct": 91.0529,
+        "market_expected_hit_pct": 7.4292,
+        "market_expected_miss_pct": 92.5708,
+        "excess_miss_pp": -1.5179,
+        "underperformance_z": -5.9408,
+        "favorite_hit_pct_wilson_95": [
+          8.4095,
+          9.5154
+        ],
+        "favorite_100yen_stake_yen": 1023800,
+        "favorite_100yen_payout_yen": 869340,
+        "favorite_roi_pct": 84.9131,
+        "favorite_mean_odds": 13.3163,
+        "market_mean_overround": 1.33637
+      }
+    ]
+  }
+}
