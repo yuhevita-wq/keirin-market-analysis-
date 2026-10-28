@@ -13,6 +13,10 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            research/market_residual_20261028
+            research/snowberg_observation_corrected_20261027
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -26,3 +30,4 @@ jobs:
           path: |
             research/market_residual_20261028/results.json
             research/market_residual_20261028/results.csv
+
