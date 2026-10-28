@@ -57,6 +57,8 @@ def market_rows():
             if rid in seen:
                 raise RuntimeError("Duplicate market race ID "+rid)
             seen.add(rid)
+            # Archive partition year is the actual race date year; the race ID encodes meeting start year.
+            r["_archive_year"] = int(p.name[5:9])
             yield r
 
 def compute_row(record, actual):
@@ -77,7 +79,7 @@ def compute_row(record, actual):
         raise ValueError("Actual finish not in odds book")
     n=len(cars)
     return {
-      "race_id":record["race_id"],"year":int(record["race_id"][2:6]),
+      "race_id":record["race_id"],"year":record["_archive_year"],
       "cars":n,"race_type":record["race_type"],"band":band(price),
       "price":price,"favorite":best_combo,"actual":ordered_key,
       "hit":int(best_combo==ordered_key),"market_p":(1/price)/inv_total,
