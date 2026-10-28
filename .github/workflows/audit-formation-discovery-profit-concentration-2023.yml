@@ -1,0 +1,68 @@
+name: Audit 479 generated formations payout concentration 2023 Mar Apr
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/audit-formation-discovery-profit-concentration-2023.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: audit-formation-discovery-profit-concentration-2023
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    env:
+      PYTHONPATH: '.'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: python -m pip install -e '.[scrape]'
+      - name: Confirm the original discovery source is unchanged
+        run: |
+          python -m py_compile research/formation_discovery_profit_audit_20261028/audit_original_479.py
+          python - <<'PY'
+          from pathlib import Path
+          from research.formation_discovery_profit_audit_20261028 import audit_original_479 as d
+          assert d.START=="2023-01-01" and d.END=="2023-04-30"
+          assert len(d.SOURCES)==4
+          original=Path("research/formation_discovery_from_outcomes_20261028/discover.py").read_text(encoding="utf-8")
+          audited=Path(d.__file__).read_text(encoding="utf-8")
+          for func in ("def binprice(","def load_lines(","def role_features(","def rectangles(","def union("):
+            assert original.split(func,1)[1].split("\ndef ",1)[0]==audited.split(func,1)[1].split("\ndef ",1)[0],func
+          for phrase in ("    # Discovery from outcome-first empirical conditional distributions.",
+                         "    # The empirical ratio is regularized to prevent small-cell overfit;"):
+            assert phrase in original and phrase in audited
+          print("AUDIT_METHODS_UNCHANGED")
+          PY
+      - name: Recompute all 479 selected portfolios and their full payout distributions
+        env:
+          KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        run: python research/formation_discovery_profit_audit_20261028/audit_original_479.py
+      - name: Attach accounting
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: profit-audit-479-${{ github.run_id }}
+          path: |
+            research/formation_discovery_profit_audit_20261028/profit_concentration_full.json
+            research/formation_discovery_profit_audit_20261028/profit_concentration_summary.json
+          if-no-files-found: warn
+      - name: Save immutable research audit report
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/formation_discovery_profit_audit_20261028/profit_concentration_full.json research/formation_discovery_profit_audit_20261028/profit_concentration_summary.json
+          git commit -m 'research: preserve exact 479-ticket-portfolio concentration accounting'
+          for i in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
