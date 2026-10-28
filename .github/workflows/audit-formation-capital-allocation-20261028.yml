@@ -1,0 +1,57 @@
+name: Audit 3rentan formation capital allocation
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/audit-formation-capital-allocation-20261028.yml'
+      - 'research/formation_capital_allocation_20261028/evaluate.py'
+permissions:
+  contents: write
+concurrency:
+  group: 3rentan-capital-allocation-audit
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      PYTHONPATH: .
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - run: python -m py_compile research/formation_capital_allocation_20261028/evaluate.py
+      - run: python research/formation_capital_allocation_20261028/evaluate.py
+      - name: Publish full results as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 3rentan-formation-allocation-${{ github.run_id }}
+          path: |
+            research/formation_capital_allocation_20261028/compact.json
+            research/formation_capital_allocation_20261028/summary.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Commit aggregated report only
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          cp research/formation_capital_allocation_20261028/compact.json /tmp/capital-allocation-compact.json
+          for i in 1 2 3 4; do
+            git fetch origin main
+            git reset --hard origin/main
+            mkdir -p research/formation_capital_allocation_20261028
+            cp /tmp/capital-allocation-compact.json research/formation_capital_allocation_20261028/compact.json
+            git add research/formation_capital_allocation_20261028/compact.json
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m 'research: archive 3rentan formation capital allocation audit'
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
