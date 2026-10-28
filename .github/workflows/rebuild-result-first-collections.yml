@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/rebuild-result-first-collections.yml'
+      - 'research/unrestricted_result_first_collections_20261028/discover.py'
   workflow_dispatch:
 permissions:
   contents: write
@@ -20,6 +21,7 @@ jobs:
       - run: python -m py_compile research/unrestricted_result_first_collections_20261028/discover.py
       - run: python research/unrestricted_result_first_collections_20261028/discover.py
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: result-first-collections
           path: research/unrestricted_result_first_collections_20261028/*.json
