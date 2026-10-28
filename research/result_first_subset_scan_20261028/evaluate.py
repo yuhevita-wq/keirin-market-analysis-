@@ -20,6 +20,7 @@ sys.path.insert(0,str(ROOT))
 from research.snowberg_observation_corrected_20261027 import observe as corrected
 
 OUT=ROOT/"research/result_first_subset_scan_20261028"
+YEAR_RANGE=tuple(str(y) for y in range(2021,2027))
 DISCOVERY=("2021","2022","2023")
 VALIDATION=("2024",)
 HOLDOUT=("2025","2026")
