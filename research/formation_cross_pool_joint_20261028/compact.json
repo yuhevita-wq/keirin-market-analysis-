@@ -1,0 +1,230 @@
+{
+  "status": "CROSS_POOL_FORMATION_PRICE_DISAGREEMENT_EXPERIMENT_COMPLETE",
+  "source_commit": "0587ef580769575de51a40a467ec4253661d4cff",
+  "generated_utc": "2026-10-28T08:55:28.414575+00:00",
+  "audit": {
+    "callbacks": 133673,
+    "usable_races": 122081,
+    "year_2021": 21827,
+    "no_form_32_points": 11360,
+    "bad_odds": 232,
+    "year_2022": 22273,
+    "year_2023": 22742,
+    "year_2024": 22396,
+    "year_2025": 22074,
+    "year_2026": 10769
+  },
+  "method": {
+    "external_idea": "Coherent joint probabilities, cross-market marginals, and anomalous collection prices; inspired by external racing price-model research and combinatorial market constraints.",
+    "p3p_joint": "q3p[sorted(a,b,c)] * q3t[a,b,c]/sum_{permutations of sorted(a,b,c)}q3t[perm]",
+    "p2t_joint": "q2t[a,b] * q3t[a,b,c]/sum_{k!=a,b}q3t[a,b,k]",
+    "average": "50:50 mixture of coherent p3p_joint and p2t_joint",
+    "selection": "Given formation candidates, maximize expected equal-stake 3連単 basket ROI from indicated external pool projection; thresholds applied before outcome observation.",
+    "ticket_space": "Actual A×B×C Cartesian formation per candidate; union of two proper formations, remove duplicate exact bets.",
+    "comparison_family": "One existing base and seven hold/shift modifications; does NOT explore all possible formations or prove global optimum.",
+    "selection_parameters": "Grid min estimated equal-stake ROI, min synthetic odds, max points. 2021-24 training->2025 test, 2021-25 training->2026H1 test.",
+    "risk": "No-bet if no training grid surpasses break-even after minimum exposure (200 pooled, >=25 each year).",
+    "financial_returns": "Exactly 100 yen per unique point; actual result must exactly be among paid bets, no credit for partial wins."
+  },
+  "chronological": [
+    {
+      "training_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "test_year": "2025",
+      "candidate_count": 30,
+      "best_rule": {
+        "mode": "2t",
+        "point_cap": 8,
+        "min_synthetic_odds": 3.5,
+        "min_predicted_equal_stake_roi": 0.8
+      },
+      "train": {
+        "race_count": 396,
+        "avg_points": 5.891414141414141,
+        "stake_yen": 233300,
+        "payout_yen": 172040,
+        "profit_yen": -61260,
+        "ROI": 0.7374196313759108,
+        "hit_count": 63,
+        "hit_rate": 0.1590909090909091,
+        "mean_synthetic_odds": 4.9334713305161735,
+        "mean_trio_model_predicted_roi": 0.74831540598239,
+        "mean_exacta_model_predicted_roi": 0.8666803716396685,
+        "mean_relative_model_disagreement": 1.156808668919177,
+        "mean_trifecta_only_predicted_roi": 0.7491977469614263
+      },
+      "blind_year_test_even_if_not_bought": {
+        "race_count": 93,
+        "avg_points": 6.10752688172043,
+        "stake_yen": 56800,
+        "payout_yen": 19150,
+        "profit_yen": -37650,
+        "ROI": 0.3371478873239437,
+        "hit_count": 9,
+        "hit_rate": 0.0967741935483871,
+        "mean_synthetic_odds": 4.911528756220095,
+        "mean_trio_model_predicted_roi": 0.7493226957328378,
+        "mean_exacta_model_predicted_roi": 0.861352808757645,
+        "mean_relative_model_disagreement": 1.1496246516002302,
+        "mean_trifecta_only_predicted_roi": 0.7492460162100051
+      },
+      "buy_decision": "SKIP",
+      "actual_blind_year_result": {
+        "stake_yen": 0,
+        "payout_yen": 0,
+        "profit_yen": 0
+      },
+      "top5": [
+        {
+          "roi": 0.73742,
+          "mode": "2t",
+          "point_cap": 8,
+          "min_syn": 3.5,
+          "min_pred": 0.8,
+          "races": 396
+        },
+        {
+          "roi": 0.71528,
+          "mode": "2t",
+          "point_cap": 16,
+          "min_syn": 3.0,
+          "min_pred": 0.8,
+          "races": 934
+        },
+        {
+          "roi": 0.70834,
+          "mode": "2t",
+          "point_cap": 16,
+          "min_syn": 3.5,
+          "min_pred": 0.8,
+          "races": 578
+        },
+        {
+          "roi": 0.68851,
+          "mode": "2t",
+          "point_cap": 8,
+          "min_syn": 3.0,
+          "min_pred": 0.8,
+          "races": 546
+        },
+        {
+          "roi": 0.68007,
+          "mode": "2t",
+          "point_cap": 12,
+          "min_syn": 3.0,
+          "min_pred": 0.8,
+          "races": 847
+        }
+      ]
+    },
+    {
+      "training_years": [
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "test_year": "2026",
+      "candidate_count": 34,
+      "best_rule": {
+        "mode": "2t",
+        "point_cap": 12,
+        "min_synthetic_odds": 5.0,
+        "min_predicted_equal_stake_roi": 0.8
+      },
+      "train": {
+        "race_count": 225,
+        "avg_points": 6.235555555555556,
+        "stake_yen": 140300,
+        "payout_yen": 113130,
+        "profit_yen": -27170,
+        "ROI": 0.8063435495367071,
+        "hit_count": 32,
+        "hit_rate": 0.14222222222222222,
+        "mean_synthetic_odds": 6.056156003545861,
+        "mean_trio_model_predicted_roi": 0.7473916247027989,
+        "mean_exacta_model_predicted_roi": 0.8763654336696994,
+        "mean_relative_model_disagreement": 1.1694942712514598,
+        "mean_trifecta_only_predicted_roi": 0.749353866002529
+      },
+      "blind_year_test_even_if_not_bought": {
+        "race_count": 26,
+        "avg_points": 6.653846153846154,
+        "stake_yen": 17300,
+        "payout_yen": 11270,
+        "profit_yen": -6030,
+        "ROI": 0.6514450867052023,
+        "hit_count": 3,
+        "hit_rate": 0.11538461538461539,
+        "mean_synthetic_odds": 6.197898011561909,
+        "mean_trio_model_predicted_roi": 0.7673683454296398,
+        "mean_exacta_model_predicted_roi": 0.8519269294822305,
+        "mean_relative_model_disagreement": 1.1368783978202495,
+        "mean_trifecta_only_predicted_roi": 0.7493568332261902
+      },
+      "buy_decision": "SKIP",
+      "actual_blind_year_result": {
+        "stake_yen": 0,
+        "payout_yen": 0,
+        "profit_yen": 0
+      },
+      "top5": [
+        {
+          "roi": 0.80634,
+          "mode": "2t",
+          "point_cap": 12,
+          "min_syn": 5.0,
+          "min_pred": 0.8,
+          "races": 225
+        },
+        {
+          "roi": 0.79669,
+          "mode": "2t",
+          "point_cap": 16,
+          "min_syn": 5.0,
+          "min_pred": 0.8,
+          "races": 226
+        },
+        {
+          "roi": 0.79669,
+          "mode": "2t",
+          "point_cap": 24,
+          "min_syn": 5.0,
+          "min_pred": 0.8,
+          "races": 226
+        },
+        {
+          "roi": 0.79669,
+          "mode": "2t",
+          "point_cap": 32,
+          "min_syn": 5.0,
+          "min_pred": 0.8,
+          "races": 226
+        },
+        {
+          "roi": 0.68004,
+          "mode": "3p",
+          "point_cap": 12,
+          "min_syn": 3.0,
+          "min_pred": 0.8,
+          "races": 745
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Historical FINAL odds only. No T-15 snapshots; cannot claim pre-close executability.",
+    "No race-level alignment of quotes from the independently pooled markets beyond archived final data.",
+    "The conditional within-triple and within-top-two uses trifecta market, so external projections are not independent forecasts.",
+    "Market priors are NOT calibrated true probabilities; price discordance is a screening indicator, not proof of market error.",
+    "Uses only eight existing candidate shapes (usually large), even with 8–32 point caps. Arbitrary shape optimization remains open.",
+    "Selection over many rules risks multiple comparisons; held-out years previously used in other projects, therefore not virgin data.",
+    "Any found positive ROI needs independent future period and proper wager-sized settlement.",
+    "Original research code, models, running purchase rules and websites unchanged."
+  ]
+}
