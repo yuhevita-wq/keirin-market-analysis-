@@ -1,0 +1,585 @@
+{
+  "status": "COMPLETE",
+  "generated_utc": "2026-10-28T01:14:34.099354+00:00",
+  "source_commit": "b9b9eb50404de6d8e65a374bf449f2e8fc609493",
+  "source_audit": {
+    "usable_races": 133673,
+    "year_2021": 23669,
+    "year_2022": 24331,
+    "year_2023": 24966,
+    "year_2024": 24598,
+    "year_2025": 24234,
+    "year_2026": 11875
+  },
+  "archive_audit": {
+    "label_count_2021": 23883,
+    "conflicting_books": 0,
+    "missing_result": 663,
+    "days": 2005,
+    "label_count_2022": 24687,
+    "label_count_2023": 25365,
+    "label_count_2024": 25482,
+    "label_count_2025": 25083,
+    "label_count_2026": 12406
+  },
+  "adjacent_pairs": 113157,
+  "hypotheses": [
+    "Lower previous realized odds predict worse next-favorite calibration and return.",
+    "Higher previous realized odds predict better next-favorite calibration and return.",
+    "Alternative: association disappears after conditioning on current market and race context."
+  ],
+  "fixed_before_run": {
+    "scope": "All available validated non-girls four-market 2021-01-01..2026-06-30",
+    "favorite": "Minimum-odds ticket; total unit split uniformly across minimum-odds ties.",
+    "raw_bands": [
+      "5",
+      "10",
+      "20",
+      "50",
+      "100",
+      "300",
+      "1000",
+      "above1000"
+    ],
+    "primary_predictor": "log(previous winning odds), all bands",
+    "expected_sign": "positive for both calibration and return slopes",
+    "fixed_effects": [
+      "year",
+      "venue",
+      "current_race_number",
+      "current_race_type",
+      "current_car_count",
+      "floor(log(current favorite odds)/0.1)"
+    ],
+    "inference": "Within-stratum OLS, calendar-date clustered sandwich SE; normal 95% CI; Holm over eight tests."
+  },
+  "adjusted": [
+    {
+      "status": "ESTIMATED",
+      "market": "2shatan",
+      "all_pairs": 113157,
+      "used_pairs_within_varying_strata": 32955,
+      "excluded_no_variation": 80202,
+      "varying_strata": 14855,
+      "date_clusters": 2005,
+      "outcomes": [
+        {
+          "outcome": "hit_minus_market_support",
+          "slope_per_log_previous_odds": -0.0024022869173911036,
+          "cluster_daily_se": 0.0019486614565682482,
+          "ci95_normal": [
+            -0.0062216633722648705,
+            0.0014170895374826628
+          ],
+          "effect_per_doubling_previous_odds": -0.0016651384036856856,
+          "two_sided_p": 0.21765478192141044,
+          "holm_p_eight_tests": 0.8706191276856418
+        },
+        {
+          "outcome": "return_units",
+          "slope_per_log_previous_odds": -0.004653269272116221,
+          "cluster_daily_se": 0.005925479913774441,
+          "ci95_normal": [
+            -0.016267209903114123,
+            0.006960671358881682
+          ],
+          "effect_per_doubling_previous_odds": -0.0032254004763535874,
+          "two_sided_p": 0.43227869536901664,
+          "holm_p_eight_tests": 1.0
+        }
+      ]
+    },
+    {
+      "status": "ESTIMATED",
+      "market": "2shafuku",
+      "all_pairs": 113157,
+      "used_pairs_within_varying_strata": 35852,
+      "excluded_no_variation": 77305,
+      "varying_strata": 15781,
+      "date_clusters": 2005,
+      "outcomes": [
+        {
+          "outcome": "hit_minus_market_support",
+          "slope_per_log_previous_odds": 0.004136471213732272,
+          "cluster_daily_se": 0.0020225193283915045,
+          "ci95_normal": [
+            0.000172333330084924,
+            0.00810060909737962
+          ],
+          "effect_per_doubling_previous_odds": 0.0028671833592658993,
+          "two_sided_p": 0.04083442905670703,
+          "holm_p_eight_tests": 0.28584100339694923
+        },
+        {
+          "outcome": "return_units",
+          "slope_per_log_previous_odds": 0.008532274181932278,
+          "cluster_daily_se": 0.00422746089861458,
+          "ci95_normal": [
+            0.0002464508206477013,
+            0.016818097543216854
+          ],
+          "effect_per_doubling_previous_odds": 0.005914121792970772,
+          "two_sided_p": 0.043560276623106464,
+          "holm_p_eight_tests": 0.28584100339694923
+        }
+      ]
+    },
+    {
+      "status": "ESTIMATED",
+      "market": "3rentan",
+      "all_pairs": 113157,
+      "used_pairs_within_varying_strata": 26462,
+      "excluded_no_variation": 86695,
+      "varying_strata": 12260,
+      "date_clusters": 2005,
+      "outcomes": [
+        {
+          "outcome": "hit_minus_market_support",
+          "slope_per_log_previous_odds": -8.838097265367977e-05,
+          "cluster_daily_se": 0.0014059494151662326,
+          "ci95_normal": [
+            -0.0028440418263794955,
+            0.002667279881072136
+          ],
+          "effect_per_doubling_previous_odds": -6.126102201004375e-05,
+          "two_sided_p": 0.9498762923340668,
+          "holm_p_eight_tests": 1.0
+        },
+        {
+          "outcome": "return_units",
+          "slope_per_log_previous_odds": -0.0037949969172513336,
+          "cluster_daily_se": 0.009327793520435959,
+          "ci95_normal": [
+            -0.022077472217305813,
+            0.014487478382803147
+          ],
+          "effect_per_doubling_previous_odds": -0.002630491413426446,
+          "two_sided_p": 0.6841194111682516,
+          "holm_p_eight_tests": 1.0
+        }
+      ]
+    },
+    {
+      "status": "ESTIMATED",
+      "market": "3renpuku",
+      "all_pairs": 113157,
+      "used_pairs_within_varying_strata": 32970,
+      "excluded_no_variation": 80187,
+      "varying_strata": 14864,
+      "date_clusters": 2005,
+      "outcomes": [
+        {
+          "outcome": "hit_minus_market_support",
+          "slope_per_log_previous_odds": 0.003577463648021907,
+          "cluster_daily_se": 0.0020945635030137715,
+          "ci95_normal": [
+            -0.0005278808178850853,
+            0.007682808113928899
+          ],
+          "effect_per_doubling_previous_odds": 0.002479708841182081,
+          "two_sided_p": 0.08764084413662879,
+          "holm_p_eight_tests": 0.4382042206831439
+        },
+        {
+          "outcome": "return_units",
+          "slope_per_log_previous_odds": 0.01857467906852567,
+          "cluster_daily_se": 0.007147032463673445,
+          "ci95_normal": [
+            0.00456649543972572,
+            0.032582862697325625
+          ],
+          "effect_per_doubling_previous_odds": 0.0128749864261544,
+          "two_sided_p": 0.009351324027539368,
+          "holm_p_eight_tests": 0.07481059222031494
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Retrospective hypothesis test on already observed years; no untouched holdout claim.",
+    "Final odds return proxy, not official payouts, and not executable pre-close betting results.",
+    "No before/after odds snapshots or confirmed preceding-result publication times.",
+    "No individual betting histories; cannot identify psychological mechanism or hot hand.",
+    "Rider score/line composition not controlled; context strata and market price do not remove all confounding.",
+    "Log-linear slope is a summary; raw price-band tables must also be examined for nonlinearity.",
+    "Odds-bin conditioning is approximate and sparse strata reduce adjusted sample, explicitly counted.",
+    "Daily clustering addresses within-date dependence, not all cross-date dependence.",
+    "Inverse odds normalized within market are support proxies; hit-minus-support is calibration, not profit.",
+    "Same observations create correlated market tests; Holm remains valid without independence.",
+    "No plaintext source quotes or keys published; no archive, AI or purchase-rule changes."
+  ],
+  "raw": [
+    {
+      "year": "ALL",
+      "market": "2shafuku",
+      "previous_band": "10",
+      "n": 20901,
+      "support": 0.36458294729500623,
+      "hit": 0.37243832033555013,
+      "return": 0.7470081176339309,
+      "odds": 2.373398401990305,
+      "calibration": 0.007855373040544957,
+      "tie_races": 191
+    },
+    {
+      "year": "ALL",
+      "market": "2shafuku",
+      "previous_band": "100",
+      "n": 4207,
+      "support": 0.3554663013763036,
+      "hit": 0.36344188257665794,
+      "return": 0.7439149037318756,
+      "odds": 2.46039933444259,
+      "calibration": 0.007975581200355271,
+      "tie_races": 48
+    },
+    {
+      "year": "ALL",
+      "market": "2shafuku",
+      "previous_band": "1000",
+      "n": 66,
+      "support": 0.4480456292923486,
+      "hit": 0.4696969696969697,
+      "return": 0.7939393939393941,
+      "odds": 1.884848484848485,
+      "calibration": 0.021651340404621137,
+      "tie_races": 0
+    },
+    {
+      "year": "ALL",
+      "market": "2shafuku",
+      "previous_band": "20",
+      "n": 17276,
+      "support": 0.3596349393015591,
+      "hit": 0.37514470942347766,
+      "return": 0.7663984718684891,
+      "odds": 2.411484139847171,
+      "calibration": 0.01550977012191924,
+      "tie_races": 198
+    },
+    {
+      "year": "ALL",
+      "market": "2shafuku",
+      "previous_band": "300",
+      "n": 1464,
+      "support": 0.3681634600070094,
+      "hit": 0.3907103825136612,
+      "return": 0.7815573770491804,
+      "odds": 2.408879781420765,
+      "calibration": 0.022546922506651797,
+      "tie_races": 14
+    },
+    {
+      "year": "ALL",
+      "market": "2shafuku",
+      "previous_band": "5",
+      "n": 55286,
+      "support": 0.3899235591689393,
+      "hit": 0.40307672828564195,
+      "return": 0.7550986385944499,
+      "odds": 2.2312845928445095,
+      "calibration": 0.013153169116699101,
+      "tie_races": 511
+    },
+    {
+      "year": "ALL",
+      "market": "2shafuku",
+      "previous_band": "50",
+      "n": 13957,
+      "support": 0.3583231031699493,
+      "hit": 0.36887105633971,
+      "return": 0.7547777698168203,
+      "odds": 2.4394210790284303,
+      "calibration": 0.010547953169760971,
+      "tie_races": 162
+    },
+    {
+      "year": "ALL",
+      "market": "2shatan",
+      "previous_band": "10",
+      "n": 20341,
+      "support": 0.257251689213154,
+      "hit": 0.2608033036723858,
+      "return": 0.7395211641512235,
+      "odds": 3.468261147436212,
+      "calibration": 0.003551614459233029,
+      "tie_races": 258
+    },
+    {
+      "year": "ALL",
+      "market": "2shatan",
+      "previous_band": "100",
+      "n": 8545,
+      "support": 0.24728272581668156,
+      "hit": 0.248683440608543,
+      "return": 0.7378057343475719,
+      "odds": 3.6519368051492127,
+      "calibration": 0.0014007147918618603,
+      "tie_races": 110
+    },
+    {
+      "year": "ALL",
+      "market": "2shatan",
+      "previous_band": "1000",
+      "n": 699,
+      "support": 0.2676774705051788,
+      "hit": 0.28898426323319026,
+      "return": 0.7912017167381975,
+      "odds": 3.4643776824034287,
+      "calibration": 0.021306792728011666,
+      "tie_races": 6
+    },
+    {
+      "year": "ALL",
+      "market": "2shatan",
+      "previous_band": "20",
+      "n": 19863,
+      "support": 0.2516118574864785,
+      "hit": 0.2563560388662337,
+      "return": 0.7429189951165467,
+      "odds": 3.550943966168249,
+      "calibration": 0.004744181379754082,
+      "tie_races": 248
+    },
+    {
+      "year": "ALL",
+      "market": "2shatan",
+      "previous_band": "300",
+      "n": 4851,
+      "support": 0.24624084527107853,
+      "hit": 0.25056689342403626,
+      "return": 0.7294887652030498,
+      "odds": 3.6914450628736315,
+      "calibration": 0.004326048152956702,
+      "tie_races": 57
+    },
+    {
+      "year": "ALL",
+      "market": "2shatan",
+      "previous_band": "5",
+      "n": 38071,
+      "support": 0.2833871345011996,
+      "hit": 0.2950320891667323,
+      "return": 0.7559209547074319,
+      "odds": 3.2295815712747378,
+      "calibration": 0.011644954665533279,
+      "tie_races": 494
+    },
+    {
+      "year": "ALL",
+      "market": "2shatan",
+      "previous_band": "50",
+      "n": 20759,
+      "support": 0.2469008624580956,
+      "hit": 0.25567223854713617,
+      "return": 0.7583457777349588,
+      "odds": 3.6408015800376003,
+      "calibration": 0.00877137608904201,
+      "tie_races": 291
+    },
+    {
+      "year": "ALL",
+      "market": "2shatan",
+      "previous_band": "above1000",
+      "n": 28,
+      "support": 0.37543506195097043,
+      "hit": 0.39285714285714285,
+      "return": 0.6964285714285715,
+      "odds": 2.3428571428571416,
+      "calibration": 0.017422080906172446,
+      "tie_races": 0
+    },
+    {
+      "year": "ALL",
+      "market": "3renpuku",
+      "previous_band": "10",
+      "n": 24151,
+      "support": 0.24595490218640692,
+      "hit": 0.2566698411383932,
+      "return": 0.7628227954674035,
+      "odds": 3.6324914082232715,
+      "calibration": 0.01071493895198609,
+      "tie_races": 403
+    },
+    {
+      "year": "ALL",
+      "market": "3renpuku",
+      "previous_band": "100",
+      "n": 7649,
+      "support": 0.23030342093644537,
+      "hit": 0.24571839456138056,
+      "return": 0.7865734082886655,
+      "odds": 3.988168388024576,
+      "calibration": 0.015414973624935087,
+      "tie_races": 130
+    },
+    {
+      "year": "ALL",
+      "market": "3renpuku",
+      "previous_band": "1000",
+      "n": 397,
+      "support": 0.21422199938189368,
+      "hit": 0.25818639798488663,
+      "return": 0.9238035264483628,
+      "odds": 4.451637279596981,
+      "calibration": 0.043964398602993005,
+      "tie_races": 11
+    },
+    {
+      "year": "ALL",
+      "market": "3renpuku",
+      "previous_band": "20",
+      "n": 20014,
+      "support": 0.23605931902716473,
+      "hit": 0.258956230638553,
+      "return": 0.8082729589287481,
+      "odds": 3.8022584191066287,
+      "calibration": 0.02289691161138735,
+      "tie_races": 316
+    },
+    {
+      "year": "ALL",
+      "market": "3renpuku",
+      "previous_band": "300",
+      "n": 3897,
+      "support": 0.22255149174127983,
+      "hit": 0.2542981780857069,
+      "return": 0.8555812163202474,
+      "odds": 4.237618681036693,
+      "calibration": 0.031746686344427004,
+      "tie_races": 75
+    },
+    {
+      "year": "ALL",
+      "market": "3renpuku",
+      "previous_band": "5",
+      "n": 37609,
+      "support": 0.2677173277785537,
+      "hit": 0.2847456725783722,
+      "return": 0.7723009563313766,
+      "odds": 3.346768060836494,
+      "calibration": 0.01702834479981929,
+      "tie_races": 602
+    },
+    {
+      "year": "ALL",
+      "market": "3renpuku",
+      "previous_band": "50",
+      "n": 19435,
+      "support": 0.23093872610667154,
+      "hit": 0.2500128633907898,
+      "return": 0.8020015436068956,
+      "odds": 3.920648314895774,
+      "calibration": 0.019074137284117845,
+      "tie_races": 309
+    },
+    {
+      "year": "ALL",
+      "market": "3renpuku",
+      "previous_band": "above1000",
+      "n": 5,
+      "support": 0.21075743321155413,
+      "hit": 0.2,
+      "return": 0.42000000000000004,
+      "odds": 4.32,
+      "calibration": -0.01075743321155414,
+      "tie_races": 1
+    },
+    {
+      "year": "ALL",
+      "market": "3rentan",
+      "previous_band": "10",
+      "n": 12754,
+      "support": 0.13964111535656498,
+      "hit": 0.1506194135173279,
+      "return": 0.7674494276305475,
+      "odds": 7.5165908734514915,
+      "calibration": 0.01097829816076301,
+      "tie_races": 120
+    },
+    {
+      "year": "ALL",
+      "market": "3rentan",
+      "previous_band": "100",
+      "n": 17751,
+      "support": 0.11867633846820251,
+      "hit": 0.1284153005464481,
+      "return": 0.7845219987606329,
+      "odds": 8.653287138752718,
+      "calibration": 0.009738962078245046,
+      "tie_races": 171
+    },
+    {
+      "year": "ALL",
+      "market": "3rentan",
+      "previous_band": "1000",
+      "n": 8864,
+      "support": 0.11393200455256933,
+      "hit": 0.12404106498194946,
+      "return": 0.7860446750902531,
+      "odds": 9.295837093862819,
+      "calibration": 0.01010906042937979,
+      "tie_races": 71
+    },
+    {
+      "year": "ALL",
+      "market": "3rentan",
+      "previous_band": "20",
+      "n": 16899,
+      "support": 0.1317293718770985,
+      "hit": 0.14240487602816734,
+      "return": 0.7741819042546884,
+      "odds": 7.842298360849748,
+      "calibration": 0.010675504151068951,
+      "tie_races": 186
+    },
+    {
+      "year": "ALL",
+      "market": "3rentan",
+      "previous_band": "300",
+      "n": 19312,
+      "support": 0.11510261197581338,
+      "hit": 0.11916597624965478,
+      "return": 0.7615679370339682,
+      "odds": 9.022183098591503,
+      "calibration": 0.0040633642738414156,
+      "tie_races": 163
+    },
+    {
+      "year": "ALL",
+      "market": "3rentan",
+      "previous_band": "5",
+      "n": 9738,
+      "support": 0.15775203901383145,
+      "hit": 0.16979872663791332,
+      "return": 0.7570702402957472,
+      "odds": 7.088868350790694,
+      "calibration": 0.012046687624081842,
+      "tie_races": 79
+    },
+    {
+      "year": "ALL",
+      "market": "3rentan",
+      "previous_band": "50",
+      "n": 25346,
+      "support": 0.12377284959072664,
+      "hit": 0.13181567111181253,
+      "return": 0.7553105026434158,
+      "odds": 8.300477392882524,
+      "calibration": 0.008042821521086254,
+      "tie_races": 235
+    },
+    {
+      "year": "ALL",
+      "market": "3rentan",
+      "previous_band": "above1000",
+      "n": 2493,
+      "support": 0.1148008056848293,
+      "hit": 0.12936221419975932,
+      "return": 0.8489570798235058,
+      "odds": 9.55872442839953,
+      "calibration": 0.014561408514930211,
+      "tie_races": 15
+    }
+  ]
+}

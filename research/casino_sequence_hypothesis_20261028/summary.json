@@ -1,0 +1,3341 @@
+{
+  "status": "COMPLETE",
+  "generated_utc": "2026-10-28T01:14:34.099354+00:00",
+  "source_commit": "b9b9eb50404de6d8e65a374bf449f2e8fc609493",
+  "source_audit": {
+    "usable_races": 133673,
+    "year_2021": 23669,
+    "year_2022": 24331,
+    "year_2023": 24966,
+    "year_2024": 24598,
+    "year_2025": 24234,
+    "year_2026": 11875
+  },
+  "archive_audit": {
+    "label_count_2021": 23883,
+    "conflicting_books": 0,
+    "missing_result": 663,
+    "days": 2005,
+    "label_count_2022": 24687,
+    "label_count_2023": 25365,
+    "label_count_2024": 25482,
+    "label_count_2025": 25083,
+    "label_count_2026": 12406
+  },
+  "adjacent_pairs": 113157,
+  "hypotheses": [
+    "Lower previous realized odds predict worse next-favorite calibration and return.",
+    "Higher previous realized odds predict better next-favorite calibration and return.",
+    "Alternative: association disappears after conditioning on current market and race context."
+  ],
+  "fixed_before_run": {
+    "scope": "All available validated non-girls four-market 2021-01-01..2026-06-30",
+    "favorite": "Minimum-odds ticket; total unit split uniformly across minimum-odds ties.",
+    "raw_bands": [
+      "5",
+      "10",
+      "20",
+      "50",
+      "100",
+      "300",
+      "1000",
+      "above1000"
+    ],
+    "primary_predictor": "log(previous winning odds), all bands",
+    "expected_sign": "positive for both calibration and return slopes",
+    "fixed_effects": [
+      "year",
+      "venue",
+      "current_race_number",
+      "current_race_type",
+      "current_car_count",
+      "floor(log(current favorite odds)/0.1)"
+    ],
+    "inference": "Within-stratum OLS, calendar-date clustered sandwich SE; normal 95% CI; Holm over eight tests."
+  },
+  "raw": [
+    {
+      "year": "2021",
+      "market": "2shafuku",
+      "previous_band": "10",
+      "n": 3748,
+      "support": 0.3651301442382951,
+      "hit": 0.3715314834578442,
+      "return": 0.7370064034151543,
+      "odds": 2.357363927427957,
+      "calibration": 0.006401339219548604,
+      "tie_races": 39
+    },
+    {
+      "year": "2021",
+      "market": "2shafuku",
+      "previous_band": "100",
+      "n": 662,
+      "support": 0.3539441394906239,
+      "hit": 0.3731117824773414,
+      "return": 0.7870090634441089,
+      "odds": 2.48277945619335,
+      "calibration": 0.019167642986717585,
+      "tie_races": 9
+    },
+    {
+      "year": "2021",
+      "market": "2shafuku",
+      "previous_band": "1000",
+      "n": 7,
+      "support": 0.4027023943123931,
+      "hit": 0.42857142857142855,
+      "return": 0.6285714285714287,
+      "odds": 2.0428571428571427,
+      "calibration": 0.025869034259035497,
+      "tie_races": 0
+    },
+    {
+      "year": "2021",
+      "market": "2shafuku",
+      "previous_band": "20",
+      "n": 3018,
+      "support": 0.35880900253479675,
+      "hit": 0.3817097415506958,
+      "return": 0.7747846255798527,
+      "odds": 2.415705765407563,
+      "calibration": 0.022900739015899726,
+      "tie_races": 39
+    },
+    {
+      "year": "2021",
+      "market": "2shafuku",
+      "previous_band": "300",
+      "n": 197,
+      "support": 0.3416413109122539,
+      "hit": 0.31218274111675126,
+      "return": 0.7015228426395939,
+      "odds": 2.5928934010152287,
+      "calibration": -0.029458569795502626,
+      "tie_races": 1
+    },
+    {
+      "year": "2021",
+      "market": "2shafuku",
+      "previous_band": "5",
+      "n": 10209,
+      "support": 0.3865679975981071,
+      "hit": 0.39909230417605385,
+      "return": 0.7562134717732715,
+      "odds": 2.234332451758257,
+      "calibration": 0.012524306577945609,
+      "tie_races": 99
+    },
+    {
+      "year": "2021",
+      "market": "2shafuku",
+      "previous_band": "50",
+      "n": 2361,
+      "support": 0.3568725702714794,
+      "hit": 0.38733587462939434,
+      "return": 0.8075180008470982,
+      "odds": 2.4375688267683153,
+      "calibration": 0.030463304357915427,
+      "tie_races": 27
+    },
+    {
+      "year": "2021",
+      "market": "2shatan",
+      "previous_band": "10",
+      "n": 3758,
+      "support": 0.26039986188753045,
+      "hit": 0.2579829696647153,
+      "return": 0.7357104843001598,
+      "odds": 3.4012772751463483,
+      "calibration": -0.002416892222814675,
+      "tie_races": 52
+    },
+    {
+      "year": "2021",
+      "market": "2shatan",
+      "previous_band": "100",
+      "n": 1449,
+      "support": 0.25236229085305567,
+      "hit": 0.2577639751552795,
+      "return": 0.7623878536922017,
+      "odds": 3.5666666666666633,
+      "calibration": 0.0054016843022238244,
+      "tie_races": 13
+    },
+    {
+      "year": "2021",
+      "market": "2shatan",
+      "previous_band": "1000",
+      "n": 99,
+      "support": 0.26885248911545917,
+      "hit": 0.2676767676767677,
+      "return": 0.8292929292929292,
+      "odds": 3.5020202020202027,
+      "calibration": -0.0011757214386913975,
+      "tie_races": 1
+    },
+    {
+      "year": "2021",
+      "market": "2shatan",
+      "previous_band": "20",
+      "n": 3516,
+      "support": 0.256599437841187,
+      "hit": 0.26820250284414104,
+      "return": 0.7556171786120585,
+      "odds": 3.4888225255972687,
+      "calibration": 0.011603065002954892,
+      "tie_races": 36
+    },
+    {
+      "year": "2021",
+      "market": "2shatan",
+      "previous_band": "300",
+      "n": 807,
+      "support": 0.24870322444970008,
+      "hit": 0.26332094175960347,
+      "return": 0.7764560099132586,
+      "odds": 3.7064436183395255,
+      "calibration": 0.01461771730990334,
+      "tie_races": 11
+    },
+    {
+      "year": "2021",
+      "market": "2shatan",
+      "previous_band": "5",
+      "n": 7086,
+      "support": 0.2829283623107707,
+      "hit": 0.2941010443127293,
+      "return": 0.7534151848715798,
+      "odds": 3.206999717753311,
+      "calibration": 0.011172682001958962,
+      "tie_races": 78
+    },
+    {
+      "year": "2021",
+      "market": "2shatan",
+      "previous_band": "50",
+      "n": 3485,
+      "support": 0.24862015017451258,
+      "hit": 0.26657101865136296,
+      "return": 0.7851793400286946,
+      "odds": 3.5808895265423297,
+      "calibration": 0.017950868476850203,
+      "tie_races": 41
+    },
+    {
+      "year": "2021",
+      "market": "2shatan",
+      "previous_band": "above1000",
+      "n": 2,
+      "support": 0.2833002557757741,
+      "hit": 0.5,
+      "return": 0.9,
+      "odds": 3.25,
+      "calibration": 0.2166997442242259,
+      "tie_races": 0
+    },
+    {
+      "year": "2021",
+      "market": "3renpuku",
+      "previous_band": "10",
+      "n": 4430,
+      "support": 0.24276106447852702,
+      "hit": 0.2469902182091798,
+      "return": 0.7425319789315263,
+      "odds": 3.6429345372460533,
+      "calibration": 0.004229153730652932,
+      "tie_races": 90
+    },
+    {
+      "year": "2021",
+      "market": "3renpuku",
+      "previous_band": "100",
+      "n": 1278,
+      "support": 0.22160350407105217,
+      "hit": 0.2335680751173709,
+      "return": 0.787284820031299,
+      "odds": 4.089749608763695,
+      "calibration": 0.011964571046318807,
+      "tie_races": 31
+    },
+    {
+      "year": "2021",
+      "market": "3renpuku",
+      "previous_band": "1000",
+      "n": 71,
+      "support": 0.21106987955906878,
+      "hit": 0.2323943661971831,
+      "return": 1.0190140845070423,
+      "odds": 4.866197183098593,
+      "calibration": 0.021324486638114298,
+      "tie_races": 2
+    },
+    {
+      "year": "2021",
+      "market": "3renpuku",
+      "previous_band": "20",
+      "n": 3490,
+      "support": 0.2329376413429647,
+      "hit": 0.2689111747851003,
+      "return": 0.852679083094556,
+      "odds": 3.8228080229226307,
+      "calibration": 0.035973533442135545,
+      "tie_races": 62
+    },
+    {
+      "year": "2021",
+      "market": "3renpuku",
+      "previous_band": "300",
+      "n": 576,
+      "support": 0.21340608471152708,
+      "hit": 0.22743055555555555,
+      "return": 0.795920138888889,
+      "odds": 4.398958333333331,
+      "calibration": 0.014024470844028605,
+      "tie_races": 9
+    },
+    {
+      "year": "2021",
+      "market": "3renpuku",
+      "previous_band": "5",
+      "n": 7053,
+      "support": 0.2626147814784614,
+      "hit": 0.27581643744978496,
+      "return": 0.7686043763882976,
+      "odds": 3.3505458670069532,
+      "calibration": 0.013201655971322612,
+      "tie_races": 113
+    },
+    {
+      "year": "2021",
+      "market": "3renpuku",
+      "previous_band": "50",
+      "n": 3304,
+      "support": 0.22856535701278952,
+      "hit": 0.237590799031477,
+      "return": 0.7566737288135591,
+      "odds": 3.916495157384977,
+      "calibration": 0.009025442018688016,
+      "tie_races": 62
+    },
+    {
+      "year": "2021",
+      "market": "3rentan",
+      "previous_band": "10",
+      "n": 2422,
+      "support": 0.13612725464435366,
+      "hit": 0.1412056151940545,
+      "return": 0.7219240297274974,
+      "odds": 7.567960363336087,
+      "calibration": 0.0050783605497006345,
+      "tie_races": 19
+    },
+    {
+      "year": "2021",
+      "market": "3rentan",
+      "previous_band": "100",
+      "n": 3075,
+      "support": 0.1150998117647805,
+      "hit": 0.12,
+      "return": 0.7357073170731708,
+      "odds": 8.793333333333326,
+      "calibration": 0.004900188235219254,
+      "tie_races": 27
+    },
+    {
+      "year": "2021",
+      "market": "3rentan",
+      "previous_band": "1000",
+      "n": 1458,
+      "support": 0.1104381635793219,
+      "hit": 0.12208504801097393,
+      "return": 0.8114540466392317,
+      "odds": 9.40816186556928,
+      "calibration": 0.011646884431652033,
+      "tie_races": 11
+    },
+    {
+      "year": "2021",
+      "market": "3rentan",
+      "previous_band": "20",
+      "n": 3258,
+      "support": 0.12787748825870282,
+      "hit": 0.13505217925107427,
+      "return": 0.7590392879066908,
+      "odds": 7.8637814610190295,
+      "calibration": 0.007174690992371469,
+      "tie_races": 45
+    },
+    {
+      "year": "2021",
+      "market": "3rentan",
+      "previous_band": "300",
+      "n": 3254,
+      "support": 0.11320275257457092,
+      "hit": 0.11493546404425323,
+      "return": 0.7367086662569152,
+      "odds": 8.986447449293188,
+      "calibration": 0.0017327114696824855,
+      "tie_races": 28
+    },
+    {
+      "year": "2021",
+      "market": "3rentan",
+      "previous_band": "5",
+      "n": 1709,
+      "support": 0.14652140099105743,
+      "hit": 0.14628437682855472,
+      "return": 0.7221181977764777,
+      "odds": 7.3002340550029405,
+      "calibration": -0.0002370241625026238,
+      "tie_races": 17
+    },
+    {
+      "year": "2021",
+      "market": "3rentan",
+      "previous_band": "50",
+      "n": 4640,
+      "support": 0.12352484046546533,
+      "hit": 0.13480603448275863,
+      "return": 0.7506142241379314,
+      "odds": 8.202112068965528,
+      "calibration": 0.01128119401729314,
+      "tie_races": 35
+    },
+    {
+      "year": "2021",
+      "market": "3rentan",
+      "previous_band": "above1000",
+      "n": 386,
+      "support": 0.11020322162931573,
+      "hit": 0.12046632124352331,
+      "return": 0.7862694300518134,
+      "odds": 10.204663212435232,
+      "calibration": 0.010263099614207656,
+      "tie_races": 6
+    },
+    {
+      "year": "2022",
+      "market": "2shafuku",
+      "previous_band": "10",
+      "n": 3860,
+      "support": 0.3636139976035832,
+      "hit": 0.38687392055267705,
+      "return": 0.7822970639032824,
+      "odds": 2.3658031088082883,
+      "calibration": 0.023259922949094375,
+      "tie_races": 26
+    },
+    {
+      "year": "2022",
+      "market": "2shafuku",
+      "previous_band": "100",
+      "n": 761,
+      "support": 0.350467813335186,
+      "hit": 0.36268068331143233,
+      "return": 0.742772667542707,
+      "odds": 2.486990801576872,
+      "calibration": 0.012212869976246486,
+      "tie_races": 9
+    },
+    {
+      "year": "2022",
+      "market": "2shafuku",
+      "previous_band": "1000",
+      "n": 16,
+      "support": 0.47277666436753807,
+      "hit": 0.4375,
+      "return": 0.7312500000000001,
+      "odds": 1.6812500000000001,
+      "calibration": -0.0352766643675381,
+      "tie_races": 0
+    },
+    {
+      "year": "2022",
+      "market": "2shafuku",
+      "previous_band": "20",
+      "n": 3192,
+      "support": 0.3606658379380682,
+      "hit": 0.37781954887218044,
+      "return": 0.769752506265664,
+      "odds": 2.392731829573932,
+      "calibration": 0.01715371093411268,
+      "tie_races": 36
+    },
+    {
+      "year": "2022",
+      "market": "2shafuku",
+      "previous_band": "300",
+      "n": 250,
+      "support": 0.37434935313566114,
+      "hit": 0.384,
+      "return": 0.7447999999999999,
+      "odds": 2.3704000000000005,
+      "calibration": 0.009650646864338804,
+      "tie_races": 1
+    },
+    {
+      "year": "2022",
+      "market": "2shafuku",
+      "previous_band": "5",
+      "n": 10106,
+      "support": 0.38811826026595647,
+      "hit": 0.3999109439936671,
+      "return": 0.7502968533544434,
+      "odds": 2.2225014842667625,
+      "calibration": 0.011792683727709447,
+      "tie_races": 85
+    },
+    {
+      "year": "2022",
+      "market": "2shafuku",
+      "previous_band": "50",
+      "n": 2557,
+      "support": 0.35734689516325063,
+      "hit": 0.3666405944466171,
+      "return": 0.7440750879937426,
+      "odds": 2.4340633554947164,
+      "calibration": 0.00929369928336786,
+      "tie_races": 22
+    },
+    {
+      "year": "2022",
+      "market": "2shatan",
+      "previous_band": "10",
+      "n": 3709,
+      "support": 0.25806002511374926,
+      "hit": 0.2698840657859261,
+      "return": 0.7662981935831753,
+      "odds": 3.4505527096252435,
+      "calibration": 0.011824040672176198,
+      "tie_races": 48
+    },
+    {
+      "year": "2022",
+      "market": "2shatan",
+      "previous_band": "100",
+      "n": 1594,
+      "support": 0.24246200810703036,
+      "hit": 0.2465495608531995,
+      "return": 0.7327791718946048,
+      "odds": 3.675345043914684,
+      "calibration": 0.00408755274616892,
+      "tie_races": 15
+    },
+    {
+      "year": "2022",
+      "market": "2shatan",
+      "previous_band": "1000",
+      "n": 129,
+      "support": 0.2524339800389006,
+      "hit": 0.24031007751937986,
+      "return": 0.6294573643410853,
+      "odds": 3.611627906976744,
+      "calibration": -0.01212390251952072,
+      "tie_races": 0
+    },
+    {
+      "year": "2022",
+      "market": "2shatan",
+      "previous_band": "20",
+      "n": 3609,
+      "support": 0.24982180185464103,
+      "hit": 0.257689110556941,
+      "return": 0.7637572734829584,
+      "odds": 3.5493765586034907,
+      "calibration": 0.007867308702300298,
+      "tie_races": 41
+    },
+    {
+      "year": "2022",
+      "market": "2shatan",
+      "previous_band": "300",
+      "n": 894,
+      "support": 0.24593105518088884,
+      "hit": 0.24272930648769575,
+      "return": 0.7100111856823265,
+      "odds": 3.7184563758389286,
+      "calibration": -0.0032017486931930237,
+      "tie_races": 13
+    },
+    {
+      "year": "2022",
+      "market": "2shatan",
+      "previous_band": "5",
+      "n": 7023,
+      "support": 0.28207483144469864,
+      "hit": 0.2946746404670369,
+      "return": 0.7632991599031745,
+      "odds": 3.2078171721486664,
+      "calibration": 0.012599809022337838,
+      "tie_races": 95
+    },
+    {
+      "year": "2022",
+      "market": "2shatan",
+      "previous_band": "50",
+      "n": 3774,
+      "support": 0.24873488023792945,
+      "hit": 0.25675675675675674,
+      "return": 0.771634870164282,
+      "odds": 3.597244303126655,
+      "calibration": 0.008021876518827069,
+      "tie_races": 52
+    },
+    {
+      "year": "2022",
+      "market": "2shatan",
+      "previous_band": "above1000",
+      "n": 10,
+      "support": 0.30327100375657345,
+      "hit": 0.0,
+      "return": 0.0,
+      "odds": 2.59,
+      "calibration": -0.30327100375657345,
+      "tie_races": 0
+    },
+    {
+      "year": "2022",
+      "market": "3renpuku",
+      "previous_band": "10",
+      "n": 4483,
+      "support": 0.2411088642783626,
+      "hit": 0.24715592237341066,
+      "return": 0.7420700423823349,
+      "odds": 3.6594914120008784,
+      "calibration": 0.006047058095047341,
+      "tie_races": 59
+    },
+    {
+      "year": "2022",
+      "market": "3renpuku",
+      "previous_band": "100",
+      "n": 1395,
+      "support": 0.22461870272177456,
+      "hit": 0.2577060931899642,
+      "return": 0.8460215053763445,
+      "odds": 4.061146953405021,
+      "calibration": 0.03308739046818965,
+      "tie_races": 14
+    },
+    {
+      "year": "2022",
+      "market": "3renpuku",
+      "previous_band": "1000",
+      "n": 64,
+      "support": 0.19614934586279045,
+      "hit": 0.1953125,
+      "return": 0.9109375,
+      "odds": 4.6796875,
+      "calibration": -0.000836845862790433,
+      "tie_races": 3
+    },
+    {
+      "year": "2022",
+      "market": "3renpuku",
+      "previous_band": "20",
+      "n": 3584,
+      "support": 0.23506634308982746,
+      "hit": 0.2606724330357143,
+      "return": 0.8267787388392872,
+      "odds": 3.777901785714273,
+      "calibration": 0.025606089945887273,
+      "tie_races": 50
+    },
+    {
+      "year": "2022",
+      "market": "3renpuku",
+      "previous_band": "300",
+      "n": 676,
+      "support": 0.2165666306290212,
+      "hit": 0.26997041420118345,
+      "return": 0.9549556213017765,
+      "odds": 4.239497041420109,
+      "calibration": 0.053403783572162515,
+      "tie_races": 18
+    },
+    {
+      "year": "2022",
+      "market": "3renpuku",
+      "previous_band": "5",
+      "n": 6908,
+      "support": 0.2655383599600182,
+      "hit": 0.2852972399150743,
+      "return": 0.7749565720903299,
+      "odds": 3.337898089171984,
+      "calibration": 0.019758879955056353,
+      "tie_races": 107
+    },
+    {
+      "year": "2022",
+      "market": "3renpuku",
+      "previous_band": "50",
+      "n": 3631,
+      "support": 0.2251562231027252,
+      "hit": 0.24965574221977416,
+      "return": 0.8471770862021486,
+      "odds": 3.970503993390248,
+      "calibration": 0.024499519117049385,
+      "tie_races": 51
+    },
+    {
+      "year": "2022",
+      "market": "3renpuku",
+      "previous_band": "above1000",
+      "n": 1,
+      "support": 0.265458870537933,
+      "hit": 0.0,
+      "return": 0.0,
+      "odds": 2.8,
+      "calibration": -0.265458870537933,
+      "tie_races": 0
+    },
+    {
+      "year": "2022",
+      "market": "3rentan",
+      "previous_band": "10",
+      "n": 2464,
+      "support": 0.13682121615264348,
+      "hit": 0.15056818181818182,
+      "return": 0.7905032467532468,
+      "odds": 7.443912337662342,
+      "calibration": 0.01374696566553807,
+      "tie_races": 27
+    },
+    {
+      "year": "2022",
+      "market": "3rentan",
+      "previous_band": "100",
+      "n": 3279,
+      "support": 0.11590093675609543,
+      "hit": 0.1305275998780116,
+      "return": 0.8606739859713326,
+      "odds": 8.744739249771262,
+      "calibration": 0.014626663121916095,
+      "tie_races": 36
+    },
+    {
+      "year": "2022",
+      "market": "3rentan",
+      "previous_band": "1000",
+      "n": 1628,
+      "support": 0.10945724463916459,
+      "hit": 0.11824324324324324,
+      "return": 0.7617014742014739,
+      "odds": 9.37518427518427,
+      "calibration": 0.008785998604078521,
+      "tie_races": 11
+    },
+    {
+      "year": "2022",
+      "market": "3rentan",
+      "previous_band": "20",
+      "n": 3146,
+      "support": 0.13095693535480768,
+      "hit": 0.1492371265098538,
+      "return": 0.8067546090273375,
+      "odds": 7.870311506675153,
+      "calibration": 0.01828019115504624,
+      "tie_races": 27
+    },
+    {
+      "year": "2022",
+      "market": "3rentan",
+      "previous_band": "300",
+      "n": 3500,
+      "support": 0.11330077345858863,
+      "hit": 0.11385714285714285,
+      "return": 0.7414714285714279,
+      "odds": 9.113828571428582,
+      "calibration": 0.0005563693985540612,
+      "tie_races": 31
+    },
+    {
+      "year": "2022",
+      "market": "3rentan",
+      "previous_band": "5",
+      "n": 1663,
+      "support": 0.1544901095390239,
+      "hit": 0.16656644618159952,
+      "return": 0.737312086590499,
+      "odds": 7.072519542994584,
+      "calibration": 0.012076336642575661,
+      "tie_races": 11
+    },
+    {
+      "year": "2022",
+      "market": "3rentan",
+      "previous_band": "50",
+      "n": 4616,
+      "support": 0.12032255721362883,
+      "hit": 0.12185875216637782,
+      "return": 0.7176234835355281,
+      "odds": 8.348830155979195,
+      "calibration": 0.001536194952749036,
+      "tie_races": 37
+    },
+    {
+      "year": "2022",
+      "market": "3rentan",
+      "previous_band": "above1000",
+      "n": 446,
+      "support": 0.10708584634061008,
+      "hit": 0.13452914798206278,
+      "return": 1.0917040358744394,
+      "odds": 9.958968609865476,
+      "calibration": 0.02744330164145285,
+      "tie_races": 3
+    },
+    {
+      "year": "2023",
+      "market": "2shafuku",
+      "previous_band": "10",
+      "n": 3946,
+      "support": 0.3638899495792674,
+      "hit": 0.3597313735428282,
+      "return": 0.7213507349214385,
+      "odds": 2.3853522554485593,
+      "calibration": -0.004158576036439943,
+      "tie_races": 41
+    },
+    {
+      "year": "2023",
+      "market": "2shafuku",
+      "previous_band": "100",
+      "n": 816,
+      "support": 0.34850895964975537,
+      "hit": 0.35232843137254904,
+      "return": 0.7299019607843139,
+      "odds": 2.485661764705882,
+      "calibration": 0.0038194717227936314,
+      "tie_races": 8
+    },
+    {
+      "year": "2023",
+      "market": "2shafuku",
+      "previous_band": "1000",
+      "n": 10,
+      "support": 0.5008960728254055,
+      "hit": 0.5,
+      "return": 0.7100000000000002,
+      "odds": 1.69,
+      "calibration": -0.0008960728254055472,
+      "tie_races": 0
+    },
+    {
+      "year": "2023",
+      "market": "2shafuku",
+      "previous_band": "20",
+      "n": 3267,
+      "support": 0.35965156287103034,
+      "hit": 0.3714416896235078,
+      "return": 0.7605754514845426,
+      "odds": 2.408050198959286,
+      "calibration": 0.011790126752478139,
+      "tie_races": 39
+    },
+    {
+      "year": "2023",
+      "market": "2shafuku",
+      "previous_band": "300",
+      "n": 276,
+      "support": 0.36119083772087407,
+      "hit": 0.4003623188405797,
+      "return": 0.8034420289855074,
+      "odds": 2.4130434782608687,
+      "calibration": 0.03917148111970572,
+      "tie_races": 3
+    },
+    {
+      "year": "2023",
+      "market": "2shafuku",
+      "previous_band": "5",
+      "n": 10240,
+      "support": 0.3903186712656137,
+      "hit": 0.4126953125,
+      "return": 0.7761865234375019,
+      "odds": 2.238769531249997,
+      "calibration": 0.022376641234385482,
+      "tie_races": 81
+    },
+    {
+      "year": "2023",
+      "market": "2shafuku",
+      "previous_band": "50",
+      "n": 2674,
+      "support": 0.3589193049753298,
+      "hit": 0.35957367240089755,
+      "return": 0.7280478683620034,
+      "odds": 2.43534031413613,
+      "calibration": 0.0006543674255680055,
+      "tie_races": 36
+    },
+    {
+      "year": "2023",
+      "market": "2shatan",
+      "previous_band": "10",
+      "n": 3780,
+      "support": 0.25700136657913325,
+      "hit": 0.26481481481481484,
+      "return": 0.7442063492063494,
+      "odds": 3.478121693121696,
+      "calibration": 0.007813448235681366,
+      "tie_races": 36
+    },
+    {
+      "year": "2023",
+      "market": "2shatan",
+      "previous_band": "100",
+      "n": 1646,
+      "support": 0.24711340778296703,
+      "hit": 0.261543134872418,
+      "return": 0.7705042527339,
+      "odds": 3.6356014580802025,
+      "calibration": 0.014429727089450717,
+      "tie_races": 22
+    },
+    {
+      "year": "2023",
+      "market": "2shatan",
+      "previous_band": "1000",
+      "n": 144,
+      "support": 0.2703719137537059,
+      "hit": 0.3125,
+      "return": 0.8305555555555555,
+      "odds": 3.3805555555555578,
+      "calibration": 0.042128086246294036,
+      "tie_races": 3
+    },
+    {
+      "year": "2023",
+      "market": "2shatan",
+      "previous_band": "20",
+      "n": 3681,
+      "support": 0.25263982373407734,
+      "hit": 0.24707959793534365,
+      "return": 0.7135832654170058,
+      "odds": 3.550991578375433,
+      "calibration": -0.005560225798733552,
+      "tie_races": 52
+    },
+    {
+      "year": "2023",
+      "market": "2shatan",
+      "previous_band": "300",
+      "n": 920,
+      "support": 0.24430035246807338,
+      "hit": 0.2375,
+      "return": 0.677065217391305,
+      "odds": 3.704239130434782,
+      "calibration": -0.00680035246807364,
+      "tie_races": 10
+    },
+    {
+      "year": "2023",
+      "market": "2shatan",
+      "previous_band": "5",
+      "n": 7102,
+      "support": 0.2838173328887335,
+      "hit": 0.30916173847742423,
+      "return": 0.7908359147657933,
+      "odds": 3.2366094058011896,
+      "calibration": 0.02534440558869032,
+      "tie_races": 94
+    },
+    {
+      "year": "2023",
+      "market": "2shatan",
+      "previous_band": "50",
+      "n": 3952,
+      "support": 0.24830596947663328,
+      "hit": 0.2541751012145749,
+      "return": 0.7453441295546555,
+      "odds": 3.6256578947368445,
+      "calibration": 0.005869131737941275,
+      "tie_races": 59
+    },
+    {
+      "year": "2023",
+      "market": "2shatan",
+      "previous_band": "above1000",
+      "n": 4,
+      "support": 0.44144137851871756,
+      "hit": 1.0,
+      "return": 2.075,
+      "odds": 2.075,
+      "calibration": 0.5585586214812823,
+      "tie_races": 0
+    },
+    {
+      "year": "2023",
+      "market": "3renpuku",
+      "previous_band": "10",
+      "n": 4447,
+      "support": 0.2470573811576659,
+      "hit": 0.2560902481073383,
+      "return": 0.7623454013941989,
+      "odds": 3.6274342253204352,
+      "calibration": 0.009032866949672513,
+      "tie_races": 71
+    },
+    {
+      "year": "2023",
+      "market": "3renpuku",
+      "previous_band": "100",
+      "n": 1488,
+      "support": 0.23293842843157536,
+      "hit": 0.24798387096774194,
+      "return": 0.7841733870967739,
+      "odds": 3.9831989247311785,
+      "calibration": 0.015045442536166305,
+      "tie_races": 26
+    },
+    {
+      "year": "2023",
+      "market": "3renpuku",
+      "previous_band": "1000",
+      "n": 53,
+      "support": 0.19896631997634193,
+      "hit": 0.32075471698113206,
+      "return": 1.1584905660377356,
+      "odds": 4.411320754716981,
+      "calibration": 0.12178839700479006,
+      "tie_races": 2
+    },
+    {
+      "year": "2023",
+      "market": "3renpuku",
+      "previous_band": "20",
+      "n": 3876,
+      "support": 0.23496186199579383,
+      "hit": 0.25722394220846234,
+      "return": 0.8010577915376678,
+      "odds": 3.8280443756449913,
+      "calibration": 0.022262080212668463,
+      "tie_races": 63
+    },
+    {
+      "year": "2023",
+      "market": "3renpuku",
+      "previous_band": "300",
+      "n": 757,
+      "support": 0.22331849057218278,
+      "hit": 0.23712021136063408,
+      "return": 0.806472919418758,
+      "odds": 4.224966974900923,
+      "calibration": 0.013801720788451443,
+      "tie_races": 15
+    },
+    {
+      "year": "2023",
+      "market": "3renpuku",
+      "previous_band": "5",
+      "n": 6922,
+      "support": 0.2648736524705274,
+      "hit": 0.28842819994221325,
+      "return": 0.7971828951170172,
+      "odds": 3.379904651834737,
+      "calibration": 0.02355454747168526,
+      "tie_races": 113
+    },
+    {
+      "year": "2023",
+      "market": "3renpuku",
+      "previous_band": "50",
+      "n": 3686,
+      "support": 0.23098294203950445,
+      "hit": 0.2599023331524688,
+      "return": 0.819560499186109,
+      "odds": 3.9150298426478614,
+      "calibration": 0.028919391112964318,
+      "tie_races": 53
+    },
+    {
+      "year": "2023",
+      "market": "3rentan",
+      "previous_band": "10",
+      "n": 2376,
+      "support": 0.14040131232775935,
+      "hit": 0.15761784511784513,
+      "return": 0.7635521885521879,
+      "odds": 7.488762626262623,
+      "calibration": 0.017216532790085545,
+      "tie_races": 19
+    },
+    {
+      "year": "2023",
+      "market": "3rentan",
+      "previous_band": "100",
+      "n": 3341,
+      "support": 0.11969408419543519,
+      "hit": 0.12870398084405865,
+      "return": 0.7897934750074822,
+      "odds": 8.50068841664174,
+      "calibration": 0.009009896648623424,
+      "tie_races": 35
+    },
+    {
+      "year": "2023",
+      "market": "3rentan",
+      "previous_band": "1000",
+      "n": 1745,
+      "support": 0.11484761268017427,
+      "hit": 0.12836676217765042,
+      "return": 0.810429799426935,
+      "odds": 9.29896848137536,
+      "calibration": 0.01351914949747626,
+      "tie_races": 15
+    },
+    {
+      "year": "2023",
+      "market": "3rentan",
+      "previous_band": "20",
+      "n": 3084,
+      "support": 0.13271191588381046,
+      "hit": 0.14007782101167315,
+      "return": 0.7489785992217903,
+      "odds": 7.871173800259414,
+      "calibration": 0.007365905127862364,
+      "tie_races": 40
+    },
+    {
+      "year": "2023",
+      "market": "3rentan",
+      "previous_band": "300",
+      "n": 3667,
+      "support": 0.11664225382303987,
+      "hit": 0.12557949277338423,
+      "return": 0.8170848104717752,
+      "odds": 8.895064085083177,
+      "calibration": 0.00893723895034463,
+      "tie_races": 24
+    },
+    {
+      "year": "2023",
+      "market": "3rentan",
+      "previous_band": "5",
+      "n": 1865,
+      "support": 0.15828876776743403,
+      "hit": 0.17560321715817695,
+      "return": 0.8191957104557637,
+      "odds": 7.012493297587143,
+      "calibration": 0.01731444939074303,
+      "tie_races": 20
+    },
+    {
+      "year": "2023",
+      "market": "3rentan",
+      "previous_band": "50",
+      "n": 4676,
+      "support": 0.12525337449469814,
+      "hit": 0.13708297690333618,
+      "return": 0.7723374679213,
+      "odds": 8.222241231822073,
+      "calibration": 0.011829602408638168,
+      "tie_races": 43
+    },
+    {
+      "year": "2023",
+      "market": "3rentan",
+      "previous_band": "above1000",
+      "n": 475,
+      "support": 0.11657172955210822,
+      "hit": 0.10736842105263159,
+      "return": 0.684,
+      "odds": 9.302526315789473,
+      "calibration": -0.0092033084994766,
+      "tie_races": 0
+    },
+    {
+      "year": "2024",
+      "market": "2shafuku",
+      "previous_band": "10",
+      "n": 3769,
+      "support": 0.3679952432146661,
+      "hit": 0.3867073494295569,
+      "return": 0.7608782170336944,
+      "odds": 2.352958344388439,
+      "calibration": 0.01871210621488986,
+      "tie_races": 38
+    },
+    {
+      "year": "2024",
+      "market": "2shafuku",
+      "previous_band": "100",
+      "n": 786,
+      "support": 0.3660127030966617,
+      "hit": 0.37404580152671757,
+      "return": 0.7263358778625958,
+      "odds": 2.3856234096692104,
+      "calibration": 0.008033098430055764,
+      "tie_races": 8
+    },
+    {
+      "year": "2024",
+      "market": "2shafuku",
+      "previous_band": "1000",
+      "n": 11,
+      "support": 0.42935992929670536,
+      "hit": 0.6363636363636364,
+      "return": 1.1272727272727272,
+      "odds": 1.8909090909090909,
+      "calibration": 0.20700370706693097,
+      "tie_races": 0
+    },
+    {
+      "year": "2024",
+      "market": "2shafuku",
+      "previous_band": "20",
+      "n": 3183,
+      "support": 0.36081930773479254,
+      "hit": 0.37323279924599434,
+      "return": 0.7620483820295322,
+      "odds": 2.3942192899780097,
+      "calibration": 0.01241349151120127,
+      "tie_races": 30
+    },
+    {
+      "year": "2024",
+      "market": "2shafuku",
+      "previous_band": "300",
+      "n": 285,
+      "support": 0.36674961341027956,
+      "hit": 0.38596491228070173,
+      "return": 0.7661403508771928,
+      "odds": 2.3803508771929818,
+      "calibration": 0.019215298870422177,
+      "tie_races": 3
+    },
+    {
+      "year": "2024",
+      "market": "2shafuku",
+      "previous_band": "5",
+      "n": 10198,
+      "support": 0.39261299813421346,
+      "hit": 0.41084853239197233,
+      "return": 0.7670687062822781,
+      "odds": 2.2138360462835838,
+      "calibration": 0.018235534257759634,
+      "tie_races": 87
+    },
+    {
+      "year": "2024",
+      "market": "2shafuku",
+      "previous_band": "50",
+      "n": 2542,
+      "support": 0.3582963531710514,
+      "hit": 0.3648701809598741,
+      "return": 0.7525177025963793,
+      "odds": 2.430881195908738,
+      "calibration": 0.006573827788822731,
+      "tie_races": 38
+    },
+    {
+      "year": "2024",
+      "market": "2shatan",
+      "previous_band": "10",
+      "n": 3654,
+      "support": 0.2592443846784547,
+      "hit": 0.2684729064039409,
+      "return": 0.7587712096332795,
+      "odds": 3.4357142857142775,
+      "calibration": 0.009228521725485665,
+      "tie_races": 38
+    },
+    {
+      "year": "2024",
+      "market": "2shatan",
+      "previous_band": "100",
+      "n": 1525,
+      "support": 0.2511719246680912,
+      "hit": 0.2304918032786885,
+      "return": 0.6689180327868852,
+      "odds": 3.61580327868853,
+      "calibration": -0.0206801213894028,
+      "tie_races": 26
+    },
+    {
+      "year": "2024",
+      "market": "2shatan",
+      "previous_band": "1000",
+      "n": 130,
+      "support": 0.2704453998237462,
+      "hit": 0.2692307692307692,
+      "return": 0.7138461538461538,
+      "odds": 3.389230769230771,
+      "calibration": -0.0012146305929769312,
+      "tie_races": 0
+    },
+    {
+      "year": "2024",
+      "market": "2shatan",
+      "previous_band": "20",
+      "n": 3689,
+      "support": 0.25476121490082726,
+      "hit": 0.2596909731634589,
+      "return": 0.7457441040932511,
+      "odds": 3.498644619137977,
+      "calibration": 0.004929758262631674,
+      "tie_races": 37
+    },
+    {
+      "year": "2024",
+      "market": "2shatan",
+      "previous_band": "300",
+      "n": 886,
+      "support": 0.24698483519024883,
+      "hit": 0.2652370203160271,
+      "return": 0.7647855530474041,
+      "odds": 3.652031602708811,
+      "calibration": 0.018252185125778423,
+      "tie_races": 11
+    },
+    {
+      "year": "2024",
+      "market": "2shatan",
+      "previous_band": "5",
+      "n": 7075,
+      "support": 0.28604404920449905,
+      "hit": 0.2953356890459364,
+      "return": 0.7545300353356892,
+      "odds": 3.2058515901060085,
+      "calibration": 0.00929163984143779,
+      "tie_races": 95
+    },
+    {
+      "year": "2024",
+      "market": "2shatan",
+      "previous_band": "50",
+      "n": 3809,
+      "support": 0.24759952129257784,
+      "hit": 0.2605670779732213,
+      "return": 0.7702415332108168,
+      "odds": 3.62895773168811,
+      "calibration": 0.012967556680643711,
+      "tie_races": 54
+    },
+    {
+      "year": "2024",
+      "market": "2shatan",
+      "previous_band": "above1000",
+      "n": 6,
+      "support": 0.43487716638185203,
+      "hit": 0.6666666666666666,
+      "return": 0.9499999999999998,
+      "odds": 2.033333333333333,
+      "calibration": 0.2317895002848146,
+      "tie_races": 0
+    },
+    {
+      "year": "2024",
+      "market": "3renpuku",
+      "previous_band": "10",
+      "n": 4430,
+      "support": 0.2488848409987928,
+      "hit": 0.2769375470278405,
+      "return": 0.825568096313018,
+      "odds": 3.592076749435665,
+      "calibration": 0.02805270602904743,
+      "tie_races": 74
+    },
+    {
+      "year": "2024",
+      "market": "3renpuku",
+      "previous_band": "100",
+      "n": 1416,
+      "support": 0.2358567200788537,
+      "hit": 0.23481638418079095,
+      "return": 0.7195268361581926,
+      "odds": 3.8843926553672286,
+      "calibration": -0.0010403358980625372,
+      "tie_races": 26
+    },
+    {
+      "year": "2024",
+      "market": "3renpuku",
+      "previous_band": "1000",
+      "n": 97,
+      "support": 0.21567433932215332,
+      "hit": 0.27319587628865977,
+      "return": 0.8835051546391753,
+      "odds": 4.2649484536082465,
+      "calibration": 0.05752153696650655,
+      "tie_races": 2
+    },
+    {
+      "year": "2024",
+      "market": "3renpuku",
+      "previous_band": "20",
+      "n": 3675,
+      "support": 0.23846345542087177,
+      "hit": 0.2624489795918367,
+      "return": 0.804095238095239,
+      "odds": 3.7506122448979573,
+      "calibration": 0.023985524170965097,
+      "tie_races": 56
+    },
+    {
+      "year": "2024",
+      "market": "3renpuku",
+      "previous_band": "300",
+      "n": 728,
+      "support": 0.2192243913472195,
+      "hit": 0.2403846153846154,
+      "return": 0.7932692307692305,
+      "odds": 4.347939560439566,
+      "calibration": 0.021160224037395613,
+      "tie_races": 16
+    },
+    {
+      "year": "2024",
+      "market": "3renpuku",
+      "previous_band": "5",
+      "n": 6874,
+      "support": 0.27137354687972776,
+      "hit": 0.28561730191058093,
+      "return": 0.7665624090776839,
+      "odds": 3.3166278731451864,
+      "calibration": 0.01424375503085339,
+      "tie_races": 113
+    },
+    {
+      "year": "2024",
+      "market": "3renpuku",
+      "previous_band": "50",
+      "n": 3552,
+      "support": 0.23193823010474696,
+      "hit": 0.23944256756756757,
+      "return": 0.7435247747747742,
+      "odds": 3.915399774774781,
+      "calibration": 0.007504337462821063,
+      "tie_races": 60
+    },
+    {
+      "year": "2024",
+      "market": "3renpuku",
+      "previous_band": "above1000",
+      "n": 2,
+      "support": 0.27976643133007195,
+      "hit": 0.5,
+      "return": 1.05,
+      "odds": 2.85,
+      "calibration": 0.22023356866992805,
+      "tie_races": 0
+    },
+    {
+      "year": "2024",
+      "market": "3rentan",
+      "previous_band": "10",
+      "n": 2299,
+      "support": 0.14392806561529004,
+      "hit": 0.15963462374945628,
+      "return": 0.8167029143105681,
+      "odds": 7.320095693779897,
+      "calibration": 0.015706558134166358,
+      "tie_races": 25
+    },
+    {
+      "year": "2024",
+      "market": "3rentan",
+      "previous_band": "100",
+      "n": 3240,
+      "support": 0.1245327061694911,
+      "hit": 0.14058641975308642,
+      "return": 0.8062345679012353,
+      "odds": 8.291790123456819,
+      "calibration": 0.016053713583595332,
+      "tie_races": 23
+    },
+    {
+      "year": "2024",
+      "market": "3rentan",
+      "previous_band": "1000",
+      "n": 1577,
+      "support": 0.11578526936109848,
+      "hit": 0.12301838934686113,
+      "return": 0.7344958782498413,
+      "odds": 9.082688649334171,
+      "calibration": 0.007233119985762633,
+      "tie_races": 17
+    },
+    {
+      "year": "2024",
+      "market": "3rentan",
+      "previous_band": "20",
+      "n": 3033,
+      "support": 0.1355694064557095,
+      "hit": 0.15446752390372567,
+      "return": 0.8366963402571708,
+      "odds": 7.617507418397624,
+      "calibration": 0.018898117448015915,
+      "tie_races": 23
+    },
+    {
+      "year": "2024",
+      "market": "3rentan",
+      "previous_band": "300",
+      "n": 3551,
+      "support": 0.11735129960711789,
+      "hit": 0.1186520229043462,
+      "return": 0.7491692480991269,
+      "odds": 8.840889890171784,
+      "calibration": 0.0013007232972283536,
+      "tie_races": 29
+    },
+    {
+      "year": "2024",
+      "market": "3rentan",
+      "previous_band": "5",
+      "n": 1895,
+      "support": 0.16221553364180022,
+      "hit": 0.16279683377308707,
+      "return": 0.723931398416887,
+      "odds": 6.9101846965699165,
+      "calibration": 0.0005813001312869191,
+      "tie_races": 10
+    },
+    {
+      "year": "2024",
+      "market": "3rentan",
+      "previous_band": "50",
+      "n": 4681,
+      "support": 0.12606835299123498,
+      "hit": 0.1337321085238197,
+      "return": 0.7563234351634266,
+      "odds": 8.167806024353778,
+      "calibration": 0.007663755532584962,
+      "tie_races": 49
+    },
+    {
+      "year": "2024",
+      "market": "3rentan",
+      "previous_band": "above1000",
+      "n": 498,
+      "support": 0.11654464682550837,
+      "hit": 0.14056224899598393,
+      "return": 0.8700803212851405,
+      "odds": 9.47168674698795,
+      "calibration": 0.024017602170475553,
+      "tie_races": 3
+    },
+    {
+      "year": "2025",
+      "market": "2shafuku",
+      "previous_band": "10",
+      "n": 3704,
+      "support": 0.3685803221891687,
+      "hit": 0.3615010799136069,
+      "return": 0.7186285097192212,
+      "odds": 2.365199784017278,
+      "calibration": -0.007079242275563034,
+      "tie_races": 37
+    },
+    {
+      "year": "2025",
+      "market": "2shafuku",
+      "previous_band": "100",
+      "n": 838,
+      "support": 0.3624907080336007,
+      "hit": 0.35143198090692124,
+      "return": 0.7204653937947487,
+      "odds": 2.4186157517899756,
+      "calibration": -0.011058727126679853,
+      "tie_races": 8
+    },
+    {
+      "year": "2025",
+      "market": "2shafuku",
+      "previous_band": "1000",
+      "n": 16,
+      "support": 0.455416535252764,
+      "hit": 0.3125,
+      "return": 0.4125,
+      "odds": 2.00625,
+      "calibration": -0.14291653525276404,
+      "tie_races": 0
+    },
+    {
+      "year": "2025",
+      "market": "2shafuku",
+      "previous_band": "20",
+      "n": 3024,
+      "support": 0.364507053918152,
+      "hit": 0.3801256613756614,
+      "return": 0.7696263227513223,
+      "odds": 2.404596560846565,
+      "calibration": 0.01561860745750881,
+      "tie_races": 34
+    },
+    {
+      "year": "2025",
+      "market": "2shafuku",
+      "previous_band": "300",
+      "n": 326,
+      "support": 0.38623477904268494,
+      "hit": 0.4156441717791411,
+      "return": 0.8021472392638032,
+      "odds": 2.3739263803680997,
+      "calibration": 0.029409392736456003,
+      "tie_races": 3
+    },
+    {
+      "year": "2025",
+      "market": "2shafuku",
+      "previous_band": "5",
+      "n": 9827,
+      "support": 0.39894724154980427,
+      "hit": 0.39808690342932734,
+      "return": 0.7251653607408184,
+      "odds": 2.2028391167192543,
+      "calibration": -0.0008603381204782083,
+      "tie_races": 110
+    },
+    {
+      "year": "2025",
+      "market": "2shafuku",
+      "previous_band": "50",
+      "n": 2543,
+      "support": 0.3693681884137201,
+      "hit": 0.3823567964346572,
+      "return": 0.7602962380390605,
+      "odds": 2.387062524577278,
+      "calibration": 0.012988608020936583,
+      "tie_races": 27
+    },
+    {
+      "year": "2025",
+      "market": "2shatan",
+      "previous_band": "10",
+      "n": 3595,
+      "support": 0.2574795141741666,
+      "hit": 0.24895688456189152,
+      "return": 0.6930458970792764,
+      "odds": 3.47791376912379,
+      "calibration": -0.008522629612274986,
+      "tie_races": 62
+    },
+    {
+      "year": "2025",
+      "market": "2shatan",
+      "previous_band": "100",
+      "n": 1576,
+      "support": 0.2506233761886614,
+      "hit": 0.2592005076142132,
+      "return": 0.7671637055837556,
+      "odds": 3.6355964467005104,
+      "calibration": 0.008577131425552283,
+      "tie_races": 30
+    },
+    {
+      "year": "2025",
+      "market": "2shatan",
+      "previous_band": "1000",
+      "n": 134,
+      "support": 0.27475131499414907,
+      "hit": 0.2947761194029851,
+      "return": 0.7809701492537313,
+      "odds": 3.4485074626865675,
+      "calibration": 0.020024804408836087,
+      "tie_races": 1
+    },
+    {
+      "year": "2025",
+      "market": "2shatan",
+      "previous_band": "20",
+      "n": 3558,
+      "support": 0.2485798759422107,
+      "hit": 0.24901630129286115,
+      "return": 0.7205733558178746,
+      "odds": 3.5995503091624435,
+      "calibration": 0.00043642535065021925,
+      "tie_races": 46
+    },
+    {
+      "year": "2025",
+      "market": "2shatan",
+      "previous_band": "300",
+      "n": 932,
+      "support": 0.24655664905344207,
+      "hit": 0.2451716738197425,
+      "return": 0.7264484978540778,
+      "odds": 3.6493562231759635,
+      "calibration": -0.001384975233699742,
+      "tie_races": 7
+    },
+    {
+      "year": "2025",
+      "market": "2shatan",
+      "previous_band": "5",
+      "n": 6735,
+      "support": 0.2852408240854876,
+      "hit": 0.285449146250928,
+      "return": 0.7189829250185595,
+      "odds": 3.2401930215293246,
+      "calibration": 0.0002083221654399899,
+      "tie_races": 95
+    },
+    {
+      "year": "2025",
+      "market": "2shatan",
+      "previous_band": "50",
+      "n": 3742,
+      "support": 0.24765250685795465,
+      "hit": 0.2528059861036879,
+      "return": 0.7447888829502944,
+      "odds": 3.6601015499732767,
+      "calibration": 0.005153479245733309,
+      "tie_races": 54
+    },
+    {
+      "year": "2025",
+      "market": "2shatan",
+      "previous_band": "above1000",
+      "n": 6,
+      "support": 0.42297377885731763,
+      "hit": 0.3333333333333333,
+      "return": 0.6166666666666667,
+      "odds": 2.1166666666666667,
+      "calibration": -0.08964044552398436,
+      "tie_races": 0
+    },
+    {
+      "year": "2025",
+      "market": "3renpuku",
+      "previous_band": "10",
+      "n": 4234,
+      "support": 0.2529614594770735,
+      "hit": 0.2612187057156353,
+      "return": 0.7455951818611243,
+      "odds": 3.5768540387340537,
+      "calibration": 0.008257246238561545,
+      "tie_races": 70
+    },
+    {
+      "year": "2025",
+      "market": "3renpuku",
+      "previous_band": "100",
+      "n": 1378,
+      "support": 0.23536375424735653,
+      "hit": 0.2467343976777939,
+      "return": 0.7499274310595063,
+      "odds": 3.9227866473149526,
+      "calibration": 0.01137064343043732,
+      "tie_races": 23
+    },
+    {
+      "year": "2025",
+      "market": "3renpuku",
+      "previous_band": "1000",
+      "n": 80,
+      "support": 0.23848559483669898,
+      "hit": 0.2625,
+      "return": 0.7237500000000001,
+      "odds": 4.25625,
+      "calibration": 0.024014405163300966,
+      "tie_races": 2
+    },
+    {
+      "year": "2025",
+      "market": "3renpuku",
+      "previous_band": "20",
+      "n": 3545,
+      "support": 0.2418206916865481,
+      "hit": 0.25148095909732016,
+      "return": 0.7700141043723561,
+      "odds": 3.774922425952037,
+      "calibration": 0.00966026741077218,
+      "tie_races": 52
+    },
+    {
+      "year": "2025",
+      "market": "3renpuku",
+      "previous_band": "300",
+      "n": 789,
+      "support": 0.23432133035566272,
+      "hit": 0.2858048162230672,
+      "return": 0.9112801013941696,
+      "odds": 4.044993662864379,
+      "calibration": 0.051483485867404484,
+      "tie_races": 10
+    },
+    {
+      "year": "2025",
+      "market": "3renpuku",
+      "previous_band": "5",
+      "n": 6757,
+      "support": 0.27529540306737327,
+      "hit": 0.2945833949977801,
+      "return": 0.775025899067633,
+      "odds": 3.312357555128019,
+      "calibration": 0.01928799193040721,
+      "tie_races": 110
+    },
+    {
+      "year": "2025",
+      "market": "3renpuku",
+      "previous_band": "50",
+      "n": 3495,
+      "support": 0.23951241737395412,
+      "hit": 0.26180257510729615,
+      "return": 0.8231759656652349,
+      "odds": 3.8295851216022934,
+      "calibration": 0.022290157733342097,
+      "tie_races": 61
+    },
+    {
+      "year": "2025",
+      "market": "3rentan",
+      "previous_band": "10",
+      "n": 2193,
+      "support": 0.14338925908929723,
+      "hit": 0.1511627906976744,
+      "return": 0.78515731874145,
+      "odds": 7.4912448700410375,
+      "calibration": 0.0077735316083776,
+      "tie_races": 18
+    },
+    {
+      "year": "2025",
+      "market": "3rentan",
+      "previous_band": "100",
+      "n": 3186,
+      "support": 0.12056631177752336,
+      "hit": 0.1253923414940364,
+      "return": 0.7577997489014441,
+      "odds": 8.657878217200235,
+      "calibration": 0.004826029716513191,
+      "tie_races": 35
+    },
+    {
+      "year": "2025",
+      "market": "3rentan",
+      "previous_band": "1000",
+      "n": 1654,
+      "support": 0.11929225912258412,
+      "hit": 0.12454655380894801,
+      "return": 0.7684099153567119,
+      "odds": 9.107013301088275,
+      "calibration": 0.0052542946863638855,
+      "tie_races": 10
+    },
+    {
+      "year": "2025",
+      "market": "3rentan",
+      "previous_band": "20",
+      "n": 2954,
+      "support": 0.13416037503948036,
+      "hit": 0.13507109004739337,
+      "return": 0.7329383886255916,
+      "odds": 7.772477995937731,
+      "calibration": 0.0009107150079128692,
+      "tie_races": 35
+    },
+    {
+      "year": "2025",
+      "market": "3rentan",
+      "previous_band": "300",
+      "n": 3522,
+      "support": 0.11874478846013704,
+      "hit": 0.12819420783645655,
+      "return": 0.7747870528109028,
+      "odds": 8.910249858035192,
+      "calibration": 0.00944941937631959,
+      "tie_races": 42
+    },
+    {
+      "year": "2025",
+      "market": "3rentan",
+      "previous_band": "5",
+      "n": 1826,
+      "support": 0.1652530117351075,
+      "hit": 0.18784227820372398,
+      "return": 0.7648138006571747,
+      "odds": 7.0201533406352725,
+      "calibration": 0.02258926646861662,
+      "tie_races": 15
+    },
+    {
+      "year": "2025",
+      "market": "3rentan",
+      "previous_band": "50",
+      "n": 4473,
+      "support": 0.12506585270824594,
+      "hit": 0.13078470824949698,
+      "return": 0.7565392354124751,
+      "odds": 8.387145092778898,
+      "calibration": 0.0057188555412510484,
+      "tie_races": 43
+    },
+    {
+      "year": "2025",
+      "market": "3rentan",
+      "previous_band": "above1000",
+      "n": 470,
+      "support": 0.1205966790931835,
+      "hit": 0.12872340425531914,
+      "return": 0.7895744680851063,
+      "odds": 9.160638297872346,
+      "calibration": 0.008126725162135666,
+      "tie_races": 1
+    },
+    {
+      "year": "2026",
+      "market": "2shafuku",
+      "previous_band": "10",
+      "n": 1874,
+      "support": 0.35217985269657637,
+      "hit": 0.3641942369263607,
+      "return": 0.7765474919957305,
+      "odds": 2.4532550693703263,
+      "calibration": 0.012014384229783862,
+      "tie_races": 10
+    },
+    {
+      "year": "2026",
+      "market": "2shafuku",
+      "previous_band": "100",
+      "n": 344,
+      "support": 0.3447476586014583,
+      "hit": 0.37790697674418605,
+      "return": 0.794040697674419,
+      "odds": 2.571220930232558,
+      "calibration": 0.03315931814272764,
+      "tie_races": 6
+    },
+    {
+      "year": "2026",
+      "market": "2shafuku",
+      "previous_band": "1000",
+      "n": 6,
+      "support": 0.3615139381109341,
+      "hit": 0.6666666666666666,
+      "return": 1.7,
+      "odds": 2.233333333333334,
+      "calibration": 0.30515272855573267,
+      "tie_races": 0
+    },
+    {
+      "year": "2026",
+      "market": "2shafuku",
+      "previous_band": "20",
+      "n": 1592,
+      "support": 0.3474770374104294,
+      "hit": 0.3592964824120603,
+      "return": 0.7582914572864314,
+      "odds": 2.495728643216075,
+      "calibration": 0.011819445001630647,
+      "tie_races": 20
+    },
+    {
+      "year": "2026",
+      "market": "2shafuku",
+      "previous_band": "300",
+      "n": 130,
+      "support": 0.3690444608909707,
+      "hit": 0.45,
+      "return": 0.9092307692307693,
+      "odds": 2.3453846153846145,
+      "calibration": 0.08095553910902922,
+      "tie_races": 3
+    },
+    {
+      "year": "2026",
+      "market": "2shafuku",
+      "previous_band": "5",
+      "n": 4706,
+      "support": 0.37554886847530433,
+      "hit": 0.3911673041507296,
+      "return": 0.7536726165179195,
+      "odds": 2.3244581385465413,
+      "calibration": 0.01561843567542548,
+      "tie_races": 49
+    },
+    {
+      "year": "2026",
+      "market": "2shafuku",
+      "previous_band": "50",
+      "n": 1280,
+      "support": 0.33981292749894904,
+      "hit": 0.33984375,
+      "return": 0.7282421874999999,
+      "odds": 2.5830468750000017,
+      "calibration": 3.082250105112157e-05,
+      "tie_races": 12
+    },
+    {
+      "year": "2026",
+      "market": "2shatan",
+      "previous_band": "10",
+      "n": 1845,
+      "support": 0.2453367454873583,
+      "hit": 0.24796747967479674,
+      "return": 0.7362872628726289,
+      "odds": 3.665745257452572,
+      "calibration": 0.0026307341874380547,
+      "tie_races": 22
+    },
+    {
+      "year": "2026",
+      "market": "2shatan",
+      "previous_band": "100",
+      "n": 755,
+      "support": 0.23325191593632158,
+      "hit": 0.22251655629139072,
+      "return": 0.707814569536424,
+      "odds": 3.9088741721854308,
+      "calibration": -0.010735359644930944,
+      "tie_races": 4
+    },
+    {
+      "year": "2026",
+      "market": "2shatan",
+      "previous_band": "1000",
+      "n": 63,
+      "support": 0.27012759156880317,
+      "hit": 0.3968253968253968,
+      "return": 1.1539682539682543,
+      "odds": 3.4841269841269846,
+      "calibration": 0.12669780525659358,
+      "tie_races": 1
+    },
+    {
+      "year": "2026",
+      "market": "2shatan",
+      "previous_band": "20",
+      "n": 1810,
+      "support": 0.24294326374268438,
+      "hit": 0.25718232044198897,
+      "return": 0.7745303867403308,
+      "odds": 3.6856906077348097,
+      "calibration": 0.014239056699304488,
+      "tie_races": 36
+    },
+    {
+      "year": "2026",
+      "market": "2shatan",
+      "previous_band": "300",
+      "n": 412,
+      "support": 0.24410871305919526,
+      "hit": 0.2524271844660194,
+      "return": 0.7277912621359225,
+      "odds": 3.754854368932038,
+      "calibration": 0.00831847140682456,
+      "tie_races": 5
+    },
+    {
+      "year": "2026",
+      "market": "2shatan",
+      "previous_band": "5",
+      "n": 3050,
+      "support": 0.2762165195119796,
+      "hit": 0.28557377049180327,
+      "return": 0.7482459016393436,
+      "odds": 3.347409836065574,
+      "calibration": 0.009357250979824037,
+      "tie_races": 37
+    },
+    {
+      "year": "2026",
+      "market": "2shatan",
+      "previous_band": "50",
+      "n": 1997,
+      "support": 0.23491281610110282,
+      "hit": 0.23360040060090134,
+      "return": 0.7148472709063592,
+      "odds": 3.844066099148722,
+      "calibration": -0.0013124155002013837,
+      "tie_races": 31
+    },
+    {
+      "year": "2026",
+      "market": "3renpuku",
+      "previous_band": "10",
+      "n": 2127,
+      "support": 0.24046612573832551,
+      "hit": 0.2468265162200282,
+      "return": 0.7534320639398208,
+      "odds": 3.7593323930418476,
+      "calibration": 0.006360390481702399,
+      "tie_races": 39
+    },
+    {
+      "year": "2026",
+      "market": "3renpuku",
+      "previous_band": "100",
+      "n": 694,
+      "support": 0.23072297947045095,
+      "hit": 0.25936599423631124,
+      "return": 0.880475504322767,
+      "odds": 4.006628242074929,
+      "calibration": 0.028643014765860175,
+      "tie_races": 10
+    },
+    {
+      "year": "2026",
+      "market": "3renpuku",
+      "previous_band": "1000",
+      "n": 32,
+      "support": 0.2175668972115119,
+      "hit": 0.28125,
+      "return": 0.971875,
+      "odds": 4.196875,
+      "calibration": 0.06368310278848814,
+      "tie_races": 0
+    },
+    {
+      "year": "2026",
+      "market": "3renpuku",
+      "previous_band": "20",
+      "n": 1844,
+      "support": 0.23033695297862958,
+      "hit": 0.2478308026030369,
+      "return": 0.7853036876355743,
+      "odds": 3.9119848156182218,
+      "calibration": 0.017493849624407008,
+      "tie_races": 33
+    },
+    {
+      "year": "2026",
+      "market": "3renpuku",
+      "previous_band": "300",
+      "n": 371,
+      "support": 0.22758822722958083,
+      "hit": 0.2628032345013477,
+      "return": 0.8711590296495952,
+      "odds": 4.202695417789757,
+      "calibration": 0.035215007271766845,
+      "tie_races": 7
+    },
+    {
+      "year": "2026",
+      "market": "3renpuku",
+      "previous_band": "5",
+      "n": 3095,
+      "support": 0.26590362322252636,
+      "hit": 0.27221324717285944,
+      "return": 0.7259450726979002,
+      "odds": 3.4259127625201886,
+      "calibration": 0.006309623950332976,
+      "tie_races": 46
+    },
+    {
+      "year": "2026",
+      "market": "3renpuku",
+      "previous_band": "50",
+      "n": 1767,
+      "support": 0.22819940000864583,
+      "hit": 0.25127334465195245,
+      "return": 0.8329654782116589,
+      "odds": 4.028353140916807,
+      "calibration": 0.02307394464330664,
+      "tie_races": 22
+    },
+    {
+      "year": "2026",
+      "market": "3renpuku",
+      "previous_band": "above1000",
+      "n": 2,
+      "support": 0.1143977164298469,
+      "hit": 0.0,
+      "return": 0.0,
+      "odds": 6.55,
+      "calibration": -0.1143977164298469,
+      "tie_races": 1
+    },
+    {
+      "year": "2026",
+      "market": "3rentan",
+      "previous_band": "10",
+      "n": 1000,
+      "support": 0.13521831178575167,
+      "hit": 0.135,
+      "return": 0.6780999999999999,
+      "odds": 8.14470000000001,
+      "calibration": -0.00021831178575189902,
+      "tie_races": 12
+    },
+    {
+      "year": "2026",
+      "market": "3rentan",
+      "previous_band": "100",
+      "n": 1630,
+      "support": 0.11358553296922996,
+      "hit": 0.12116564417177914,
+      "return": 0.7216871165644176,
+      "odds": 9.22748466257668,
+      "calibration": 0.007580111202549322,
+      "tie_races": 15
+    },
+    {
+      "year": "2026",
+      "market": "3rentan",
+      "previous_band": "1000",
+      "n": 802,
+      "support": 0.1126760612028124,
+      "hit": 0.13092269326683292,
+      "return": 0.8739401496259352,
+      "odds": 9.732294264339139,
+      "calibration": 0.01824663206402044,
+      "tie_races": 7
+    },
+    {
+      "year": "2026",
+      "market": "3rentan",
+      "previous_band": "20",
+      "n": 1424,
+      "support": 0.1268988579673751,
+      "hit": 0.1386938202247191,
+      "return": 0.7438553370786515,
+      "odds": 8.292345505617963,
+      "calibration": 0.011794962257343939,
+      "tie_races": 16
+    },
+    {
+      "year": "2026",
+      "market": "3rentan",
+      "previous_band": "300",
+      "n": 1818,
+      "support": 0.10741827495249207,
+      "hit": 0.10753575357535754,
+      "return": 0.7313806380638068,
+      "odds": 9.737073707370719,
+      "calibration": 0.00011747862286560584,
+      "tie_races": 9
+    },
+    {
+      "year": "2026",
+      "market": "3rentan",
+      "previous_band": "5",
+      "n": 780,
+      "support": 0.15962595114589173,
+      "hit": 0.1891025641025641,
+      "return": 0.7896153846153847,
+      "odds": 7.43820512820512,
+      "calibration": 0.029476612956672463,
+      "tie_races": 6
+    },
+    {
+      "year": "2026",
+      "market": "3rentan",
+      "previous_band": "50",
+      "n": 2260,
+      "support": 0.12095228460863541,
+      "hit": 0.1331858407079646,
+      "return": 0.8021681415929205,
+      "odds": 8.668805309734525,
+      "calibration": 0.012233556099329173,
+      "tie_races": 28
+    },
+    {
+      "year": "2026",
+      "market": "3rentan",
+      "previous_band": "above1000",
+      "n": 218,
+      "support": 0.11838730607935954,
+      "hit": 0.15825688073394495,
+      "return": 0.9025229357798165,
+      "odds": 9.211467889908253,
+      "calibration": 0.03986957465458543,
+      "tie_races": 2
+    },
+    {
+      "year": "ALL",
+      "market": "2shafuku",
+      "previous_band": "10",
+      "n": 20901,
+      "support": 0.36458294729500623,
+      "hit": 0.37243832033555013,
+      "return": 0.7470081176339309,
+      "odds": 2.373398401990305,
+      "calibration": 0.007855373040544957,
+      "tie_races": 191
+    },
+    {
+      "year": "ALL",
+      "market": "2shafuku",
+      "previous_band": "100",
+      "n": 4207,
+      "support": 0.3554663013763036,
+      "hit": 0.36344188257665794,
+      "return": 0.7439149037318756,
+      "odds": 2.46039933444259,
+      "calibration": 0.007975581200355271,
+      "tie_races": 48
+    },
+    {
+      "year": "ALL",
+      "market": "2shafuku",
+      "previous_band": "1000",
+      "n": 66,
+      "support": 0.4480456292923486,
+      "hit": 0.4696969696969697,
+      "return": 0.7939393939393941,
+      "odds": 1.884848484848485,
+      "calibration": 0.021651340404621137,
+      "tie_races": 0
+    },
+    {
+      "year": "ALL",
+      "market": "2shafuku",
+      "previous_band": "20",
+      "n": 17276,
+      "support": 0.3596349393015591,
+      "hit": 0.37514470942347766,
+      "return": 0.7663984718684891,
+      "odds": 2.411484139847171,
+      "calibration": 0.01550977012191924,
+      "tie_races": 198
+    },
+    {
+      "year": "ALL",
+      "market": "2shafuku",
+      "previous_band": "300",
+      "n": 1464,
+      "support": 0.3681634600070094,
+      "hit": 0.3907103825136612,
+      "return": 0.7815573770491804,
+      "odds": 2.408879781420765,
+      "calibration": 0.022546922506651797,
+      "tie_races": 14
+    },
+    {
+      "year": "ALL",
+      "market": "2shafuku",
+      "previous_band": "5",
+      "n": 55286,
+      "support": 0.3899235591689393,
+      "hit": 0.40307672828564195,
+      "return": 0.7550986385944499,
+      "odds": 2.2312845928445095,
+      "calibration": 0.013153169116699101,
+      "tie_races": 511
+    },
+    {
+      "year": "ALL",
+      "market": "2shafuku",
+      "previous_band": "50",
+      "n": 13957,
+      "support": 0.3583231031699493,
+      "hit": 0.36887105633971,
+      "return": 0.7547777698168203,
+      "odds": 2.4394210790284303,
+      "calibration": 0.010547953169760971,
+      "tie_races": 162
+    },
+    {
+      "year": "ALL",
+      "market": "2shatan",
+      "previous_band": "10",
+      "n": 20341,
+      "support": 0.257251689213154,
+      "hit": 0.2608033036723858,
+      "return": 0.7395211641512235,
+      "odds": 3.468261147436212,
+      "calibration": 0.003551614459233029,
+      "tie_races": 258
+    },
+    {
+      "year": "ALL",
+      "market": "2shatan",
+      "previous_band": "100",
+      "n": 8545,
+      "support": 0.24728272581668156,
+      "hit": 0.248683440608543,
+      "return": 0.7378057343475719,
+      "odds": 3.6519368051492127,
+      "calibration": 0.0014007147918618603,
+      "tie_races": 110
+    },
+    {
+      "year": "ALL",
+      "market": "2shatan",
+      "previous_band": "1000",
+      "n": 699,
+      "support": 0.2676774705051788,
+      "hit": 0.28898426323319026,
+      "return": 0.7912017167381975,
+      "odds": 3.4643776824034287,
+      "calibration": 0.021306792728011666,
+      "tie_races": 6
+    },
+    {
+      "year": "ALL",
+      "market": "2shatan",
+      "previous_band": "20",
+      "n": 19863,
+      "support": 0.2516118574864785,
+      "hit": 0.2563560388662337,
+      "return": 0.7429189951165467,
+      "odds": 3.550943966168249,
+      "calibration": 0.004744181379754082,
+      "tie_races": 248
+    },
+    {
+      "year": "ALL",
+      "market": "2shatan",
+      "previous_band": "300",
+      "n": 4851,
+      "support": 0.24624084527107853,
+      "hit": 0.25056689342403626,
+      "return": 0.7294887652030498,
+      "odds": 3.6914450628736315,
+      "calibration": 0.004326048152956702,
+      "tie_races": 57
+    },
+    {
+      "year": "ALL",
+      "market": "2shatan",
+      "previous_band": "5",
+      "n": 38071,
+      "support": 0.2833871345011996,
+      "hit": 0.2950320891667323,
+      "return": 0.7559209547074319,
+      "odds": 3.2295815712747378,
+      "calibration": 0.011644954665533279,
+      "tie_races": 494
+    },
+    {
+      "year": "ALL",
+      "market": "2shatan",
+      "previous_band": "50",
+      "n": 20759,
+      "support": 0.2469008624580956,
+      "hit": 0.25567223854713617,
+      "return": 0.7583457777349588,
+      "odds": 3.6408015800376003,
+      "calibration": 0.00877137608904201,
+      "tie_races": 291
+    },
+    {
+      "year": "ALL",
+      "market": "2shatan",
+      "previous_band": "above1000",
+      "n": 28,
+      "support": 0.37543506195097043,
+      "hit": 0.39285714285714285,
+      "return": 0.6964285714285715,
+      "odds": 2.3428571428571416,
+      "calibration": 0.017422080906172446,
+      "tie_races": 0
+    },
+    {
+      "year": "ALL",
+      "market": "3renpuku",
+      "previous_band": "10",
+      "n": 24151,
+      "support": 0.24595490218640692,
+      "hit": 0.2566698411383932,
+      "return": 0.7628227954674035,
+      "odds": 3.6324914082232715,
+      "calibration": 0.01071493895198609,
+      "tie_races": 403
+    },
+    {
+      "year": "ALL",
+      "market": "3renpuku",
+      "previous_band": "100",
+      "n": 7649,
+      "support": 0.23030342093644537,
+      "hit": 0.24571839456138056,
+      "return": 0.7865734082886655,
+      "odds": 3.988168388024576,
+      "calibration": 0.015414973624935087,
+      "tie_races": 130
+    },
+    {
+      "year": "ALL",
+      "market": "3renpuku",
+      "previous_band": "1000",
+      "n": 397,
+      "support": 0.21422199938189368,
+      "hit": 0.25818639798488663,
+      "return": 0.9238035264483628,
+      "odds": 4.451637279596981,
+      "calibration": 0.043964398602993005,
+      "tie_races": 11
+    },
+    {
+      "year": "ALL",
+      "market": "3renpuku",
+      "previous_band": "20",
+      "n": 20014,
+      "support": 0.23605931902716473,
+      "hit": 0.258956230638553,
+      "return": 0.8082729589287481,
+      "odds": 3.8022584191066287,
+      "calibration": 0.02289691161138735,
+      "tie_races": 316
+    },
+    {
+      "year": "ALL",
+      "market": "3renpuku",
+      "previous_band": "300",
+      "n": 3897,
+      "support": 0.22255149174127983,
+      "hit": 0.2542981780857069,
+      "return": 0.8555812163202474,
+      "odds": 4.237618681036693,
+      "calibration": 0.031746686344427004,
+      "tie_races": 75
+    },
+    {
+      "year": "ALL",
+      "market": "3renpuku",
+      "previous_band": "5",
+      "n": 37609,
+      "support": 0.2677173277785537,
+      "hit": 0.2847456725783722,
+      "return": 0.7723009563313766,
+      "odds": 3.346768060836494,
+      "calibration": 0.01702834479981929,
+      "tie_races": 602
+    },
+    {
+      "year": "ALL",
+      "market": "3renpuku",
+      "previous_band": "50",
+      "n": 19435,
+      "support": 0.23093872610667154,
+      "hit": 0.2500128633907898,
+      "return": 0.8020015436068956,
+      "odds": 3.920648314895774,
+      "calibration": 0.019074137284117845,
+      "tie_races": 309
+    },
+    {
+      "year": "ALL",
+      "market": "3renpuku",
+      "previous_band": "above1000",
+      "n": 5,
+      "support": 0.21075743321155413,
+      "hit": 0.2,
+      "return": 0.42000000000000004,
+      "odds": 4.32,
+      "calibration": -0.01075743321155414,
+      "tie_races": 1
+    },
+    {
+      "year": "ALL",
+      "market": "3rentan",
+      "previous_band": "10",
+      "n": 12754,
+      "support": 0.13964111535656498,
+      "hit": 0.1506194135173279,
+      "return": 0.7674494276305475,
+      "odds": 7.5165908734514915,
+      "calibration": 0.01097829816076301,
+      "tie_races": 120
+    },
+    {
+      "year": "ALL",
+      "market": "3rentan",
+      "previous_band": "100",
+      "n": 17751,
+      "support": 0.11867633846820251,
+      "hit": 0.1284153005464481,
+      "return": 0.7845219987606329,
+      "odds": 8.653287138752718,
+      "calibration": 0.009738962078245046,
+      "tie_races": 171
+    },
+    {
+      "year": "ALL",
+      "market": "3rentan",
+      "previous_band": "1000",
+      "n": 8864,
+      "support": 0.11393200455256933,
+      "hit": 0.12404106498194946,
+      "return": 0.7860446750902531,
+      "odds": 9.295837093862819,
+      "calibration": 0.01010906042937979,
+      "tie_races": 71
+    },
+    {
+      "year": "ALL",
+      "market": "3rentan",
+      "previous_band": "20",
+      "n": 16899,
+      "support": 0.1317293718770985,
+      "hit": 0.14240487602816734,
+      "return": 0.7741819042546884,
+      "odds": 7.842298360849748,
+      "calibration": 0.010675504151068951,
+      "tie_races": 186
+    },
+    {
+      "year": "ALL",
+      "market": "3rentan",
+      "previous_band": "300",
+      "n": 19312,
+      "support": 0.11510261197581338,
+      "hit": 0.11916597624965478,
+      "return": 0.7615679370339682,
+      "odds": 9.022183098591503,
+      "calibration": 0.0040633642738414156,
+      "tie_races": 163
+    },
+    {
+      "year": "ALL",
+      "market": "3rentan",
+      "previous_band": "5",
+      "n": 9738,
+      "support": 0.15775203901383145,
+      "hit": 0.16979872663791332,
+      "return": 0.7570702402957472,
+      "odds": 7.088868350790694,
+      "calibration": 0.012046687624081842,
+      "tie_races": 79
+    },
+    {
+      "year": "ALL",
+      "market": "3rentan",
+      "previous_band": "50",
+      "n": 25346,
+      "support": 0.12377284959072664,
+      "hit": 0.13181567111181253,
+      "return": 0.7553105026434158,
+      "odds": 8.300477392882524,
+      "calibration": 0.008042821521086254,
+      "tie_races": 235
+    },
+    {
+      "year": "ALL",
+      "market": "3rentan",
+      "previous_band": "above1000",
+      "n": 2493,
+      "support": 0.1148008056848293,
+      "hit": 0.12936221419975932,
+      "return": 0.8489570798235058,
+      "odds": 9.55872442839953,
+      "calibration": 0.014561408514930211,
+      "tie_races": 15
+    }
+  ],
+  "adjusted": [
+    {
+      "status": "ESTIMATED",
+      "market": "2shatan",
+      "all_pairs": 113157,
+      "used_pairs_within_varying_strata": 32955,
+      "excluded_no_variation": 80202,
+      "varying_strata": 14855,
+      "date_clusters": 2005,
+      "outcomes": [
+        {
+          "outcome": "hit_minus_market_support",
+          "slope_per_log_previous_odds": -0.0024022869173911036,
+          "cluster_daily_se": 0.0019486614565682482,
+          "ci95_normal": [
+            -0.0062216633722648705,
+            0.0014170895374826628
+          ],
+          "effect_per_doubling_previous_odds": -0.0016651384036856856,
+          "two_sided_p": 0.21765478192141044,
+          "holm_p_eight_tests": 0.8706191276856418
+        },
+        {
+          "outcome": "return_units",
+          "slope_per_log_previous_odds": -0.004653269272116221,
+          "cluster_daily_se": 0.005925479913774441,
+          "ci95_normal": [
+            -0.016267209903114123,
+            0.006960671358881682
+          ],
+          "effect_per_doubling_previous_odds": -0.0032254004763535874,
+          "two_sided_p": 0.43227869536901664,
+          "holm_p_eight_tests": 1.0
+        }
+      ]
+    },
+    {
+      "status": "ESTIMATED",
+      "market": "2shafuku",
+      "all_pairs": 113157,
+      "used_pairs_within_varying_strata": 35852,
+      "excluded_no_variation": 77305,
+      "varying_strata": 15781,
+      "date_clusters": 2005,
+      "outcomes": [
+        {
+          "outcome": "hit_minus_market_support",
+          "slope_per_log_previous_odds": 0.004136471213732272,
+          "cluster_daily_se": 0.0020225193283915045,
+          "ci95_normal": [
+            0.000172333330084924,
+            0.00810060909737962
+          ],
+          "effect_per_doubling_previous_odds": 0.0028671833592658993,
+          "two_sided_p": 0.04083442905670703,
+          "holm_p_eight_tests": 0.28584100339694923
+        },
+        {
+          "outcome": "return_units",
+          "slope_per_log_previous_odds": 0.008532274181932278,
+          "cluster_daily_se": 0.00422746089861458,
+          "ci95_normal": [
+            0.0002464508206477013,
+            0.016818097543216854
+          ],
+          "effect_per_doubling_previous_odds": 0.005914121792970772,
+          "two_sided_p": 0.043560276623106464,
+          "holm_p_eight_tests": 0.28584100339694923
+        }
+      ]
+    },
+    {
+      "status": "ESTIMATED",
+      "market": "3rentan",
+      "all_pairs": 113157,
+      "used_pairs_within_varying_strata": 26462,
+      "excluded_no_variation": 86695,
+      "varying_strata": 12260,
+      "date_clusters": 2005,
+      "outcomes": [
+        {
+          "outcome": "hit_minus_market_support",
+          "slope_per_log_previous_odds": -8.838097265367977e-05,
+          "cluster_daily_se": 0.0014059494151662326,
+          "ci95_normal": [
+            -0.0028440418263794955,
+            0.002667279881072136
+          ],
+          "effect_per_doubling_previous_odds": -6.126102201004375e-05,
+          "two_sided_p": 0.9498762923340668,
+          "holm_p_eight_tests": 1.0
+        },
+        {
+          "outcome": "return_units",
+          "slope_per_log_previous_odds": -0.0037949969172513336,
+          "cluster_daily_se": 0.009327793520435959,
+          "ci95_normal": [
+            -0.022077472217305813,
+            0.014487478382803147
+          ],
+          "effect_per_doubling_previous_odds": -0.002630491413426446,
+          "two_sided_p": 0.6841194111682516,
+          "holm_p_eight_tests": 1.0
+        }
+      ]
+    },
+    {
+      "status": "ESTIMATED",
+      "market": "3renpuku",
+      "all_pairs": 113157,
+      "used_pairs_within_varying_strata": 32970,
+      "excluded_no_variation": 80187,
+      "varying_strata": 14864,
+      "date_clusters": 2005,
+      "outcomes": [
+        {
+          "outcome": "hit_minus_market_support",
+          "slope_per_log_previous_odds": 0.003577463648021907,
+          "cluster_daily_se": 0.0020945635030137715,
+          "ci95_normal": [
+            -0.0005278808178850853,
+            0.007682808113928899
+          ],
+          "effect_per_doubling_previous_odds": 0.002479708841182081,
+          "two_sided_p": 0.08764084413662879,
+          "holm_p_eight_tests": 0.4382042206831439
+        },
+        {
+          "outcome": "return_units",
+          "slope_per_log_previous_odds": 0.01857467906852567,
+          "cluster_daily_se": 0.007147032463673445,
+          "ci95_normal": [
+            0.00456649543972572,
+            0.032582862697325625
+          ],
+          "effect_per_doubling_previous_odds": 0.0128749864261544,
+          "two_sided_p": 0.009351324027539368,
+          "holm_p_eight_tests": 0.07481059222031494
+        }
+      ]
+    }
+  ],
+  "orientation_checks": [
+    {
+      "race_id": "2220210101010001",
+      "public_url": "https://keirin.kdreams.jp/maebashi/racedetail/2220210101010001/",
+      "cars": 7,
+      "year": "2021",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 42,
+          "original_matches": 0,
+          "corrected_matches": 42
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 0,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "3820201231020006",
+      "public_url": "https://keirin.kdreams.jp/shizuoka/racedetail/3820201231020006/",
+      "cars": 6,
+      "year": "2021",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 30,
+          "original_matches": 0,
+          "corrected_matches": 30
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 0,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "4520201230030001",
+      "public_url": "https://keirin.kdreams.jp/toyohashi/racedetail/4520201230030001/",
+      "cars": 5,
+      "year": "2021",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 20,
+          "original_matches": 0,
+          "corrected_matches": 20
+        },
+        "3rentan": {
+          "labelled_prices_checked": 60,
+          "original_matches": 0,
+          "corrected_matches": 60
+        }
+      }
+    },
+    {
+      "race_id": "2820210104010001",
+      "public_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820210104010001/",
+      "cars": 9,
+      "year": "2021",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 72,
+          "original_matches": 0,
+          "corrected_matches": 72
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 8,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "2820210104020001",
+      "public_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820210104020001/",
+      "cars": 8,
+      "year": "2021",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 56,
+          "original_matches": 0,
+          "corrected_matches": 56
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 0,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "2220220101010001",
+      "public_url": "https://keirin.kdreams.jp/maebashi/racedetail/2220220101010001/",
+      "cars": 7,
+      "year": "2022",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 42,
+          "original_matches": 0,
+          "corrected_matches": 42
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 0,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "2220220101010006",
+      "public_url": "https://keirin.kdreams.jp/maebashi/racedetail/2220220101010006/",
+      "cars": 6,
+      "year": "2022",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 30,
+          "original_matches": 0,
+          "corrected_matches": 30
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 0,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "6220211230030001",
+      "public_url": "https://keirin.kdreams.jp/hiroshima/racedetail/6220211230030001/",
+      "cars": 5,
+      "year": "2022",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 20,
+          "original_matches": 0,
+          "corrected_matches": 20
+        },
+        "3rentan": {
+          "labelled_prices_checked": 60,
+          "original_matches": 0,
+          "corrected_matches": 60
+        }
+      }
+    },
+    {
+      "race_id": "2820220104010001",
+      "public_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820220104010001/",
+      "cars": 9,
+      "year": "2022",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 72,
+          "original_matches": 0,
+          "corrected_matches": 72
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 0,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "2820220104020003",
+      "public_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820220104020003/",
+      "cars": 8,
+      "year": "2022",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 56,
+          "original_matches": 0,
+          "corrected_matches": 56
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 0,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "1320230101010001",
+      "public_url": "https://keirin.kdreams.jp/iwakitaira/racedetail/1320230101010001/",
+      "cars": 6,
+      "year": "2023",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 30,
+          "original_matches": 0,
+          "corrected_matches": 30
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 0,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "1320230101010003",
+      "public_url": "https://keirin.kdreams.jp/iwakitaira/racedetail/1320230101010003/",
+      "cars": 7,
+      "year": "2023",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 42,
+          "original_matches": 0,
+          "corrected_matches": 42
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 0,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "4420230101010006",
+      "public_url": "https://keirin.kdreams.jp/ogaki/racedetail/4420230101010006/",
+      "cars": 5,
+      "year": "2023",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 20,
+          "original_matches": 2,
+          "corrected_matches": 20
+        },
+        "3rentan": {
+          "labelled_prices_checked": 60,
+          "original_matches": 0,
+          "corrected_matches": 60
+        }
+      }
+    },
+    {
+      "race_id": "2820230104010001",
+      "public_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820230104010001/",
+      "cars": 9,
+      "year": "2023",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 72,
+          "original_matches": 0,
+          "corrected_matches": 72
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 39,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "5520230112030001",
+      "public_url": "https://keirin.kdreams.jp/wakayama/racedetail/5520230112030001/",
+      "cars": 8,
+      "year": "2023",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 56,
+          "original_matches": 0,
+          "corrected_matches": 56
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 2,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "2420240101010001",
+      "public_url": "https://keirin.kdreams.jp/utsunomiya/racedetail/2420240101010001/",
+      "cars": 7,
+      "year": "2024",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 42,
+          "original_matches": 0,
+          "corrected_matches": 42
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 0,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "2720240101010006",
+      "public_url": "https://keirin.kdreams.jp/keiokaku/racedetail/2720240101010006/",
+      "cars": 6,
+      "year": "2024",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 30,
+          "original_matches": 2,
+          "corrected_matches": 30
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 0,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "7320231231020001",
+      "public_url": "https://keirin.kdreams.jp/komatsushima/racedetail/7320231231020001/",
+      "cars": 5,
+      "year": "2024",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 20,
+          "original_matches": 0,
+          "corrected_matches": 20
+        },
+        "3rentan": {
+          "labelled_prices_checked": 60,
+          "original_matches": 0,
+          "corrected_matches": 60
+        }
+      }
+    },
+    {
+      "race_id": "2520240105010001",
+      "public_url": "https://keirin.kdreams.jp/omiya/racedetail/2520240105010001/",
+      "cars": 9,
+      "year": "2024",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 72,
+          "original_matches": 0,
+          "corrected_matches": 72
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 6,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "2520240105020002",
+      "public_url": "https://keirin.kdreams.jp/omiya/racedetail/2520240105020002/",
+      "cars": 8,
+      "year": "2024",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 56,
+          "original_matches": 0,
+          "corrected_matches": 56
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 0,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "2220250101010002",
+      "public_url": "https://keirin.kdreams.jp/maebashi/racedetail/2220250101010002/",
+      "cars": 5,
+      "year": "2025",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 20,
+          "original_matches": 0,
+          "corrected_matches": 20
+        },
+        "3rentan": {
+          "labelled_prices_checked": 60,
+          "original_matches": 0,
+          "corrected_matches": 60
+        }
+      }
+    },
+    {
+      "race_id": "2220250101010003",
+      "public_url": "https://keirin.kdreams.jp/maebashi/racedetail/2220250101010003/",
+      "cars": 6,
+      "year": "2025",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 30,
+          "original_matches": 0,
+          "corrected_matches": 30
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 0,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "2220250101010005",
+      "public_url": "https://keirin.kdreams.jp/maebashi/racedetail/2220250101010005/",
+      "cars": 7,
+      "year": "2025",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 42,
+          "original_matches": 0,
+          "corrected_matches": 42
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 0,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "2820250104010001",
+      "public_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820250104010001/",
+      "cars": 9,
+      "year": "2025",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 72,
+          "original_matches": 0,
+          "corrected_matches": 72
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 24,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "2820250104020001",
+      "public_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820250104020001/",
+      "cars": 8,
+      "year": "2025",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 56,
+          "original_matches": 0,
+          "corrected_matches": 56
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 0,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "2420260101010001",
+      "public_url": "https://keirin.kdreams.jp/utsunomiya/racedetail/2420260101010001/",
+      "cars": 7,
+      "year": "2026",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 42,
+          "original_matches": 2,
+          "corrected_matches": 42
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 2,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "5620251231020006",
+      "public_url": "https://keirin.kdreams.jp/kishiwada/racedetail/5620251231020006/",
+      "cars": 6,
+      "year": "2026",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 30,
+          "original_matches": 0,
+          "corrected_matches": 30
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 0,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "8120251230030005",
+      "public_url": "https://keirin.kdreams.jp/kokura/racedetail/8120251230030005/",
+      "cars": 5,
+      "year": "2026",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 20,
+          "original_matches": 0,
+          "corrected_matches": 20
+        },
+        "3rentan": {
+          "labelled_prices_checked": 60,
+          "original_matches": 0,
+          "corrected_matches": 60
+        }
+      }
+    },
+    {
+      "race_id": "2820260104010001",
+      "public_url": "https://keirin.kdreams.jp/tachikawa/racedetail/2820260104010001/",
+      "cars": 9,
+      "year": "2026",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 72,
+          "original_matches": 0,
+          "corrected_matches": 72
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 30,
+          "corrected_matches": 100
+        }
+      }
+    },
+    {
+      "race_id": "5520260109030001",
+      "public_url": "https://keirin.kdreams.jp/wakayama/racedetail/5520260109030001/",
+      "cars": 8,
+      "year": "2026",
+      "result_match": true,
+      "markets": {
+        "2shatan": {
+          "labelled_prices_checked": 56,
+          "original_matches": 0,
+          "corrected_matches": 56
+        },
+        "3rentan": {
+          "labelled_prices_checked": 100,
+          "original_matches": 2,
+          "corrected_matches": 100
+        }
+      }
+    }
+  ],
+  "limits": [
+    "Retrospective hypothesis test on already observed years; no untouched holdout claim.",
+    "Final odds return proxy, not official payouts, and not executable pre-close betting results.",
+    "No before/after odds snapshots or confirmed preceding-result publication times.",
+    "No individual betting histories; cannot identify psychological mechanism or hot hand.",
+    "Rider score/line composition not controlled; context strata and market price do not remove all confounding.",
+    "Log-linear slope is a summary; raw price-band tables must also be examined for nonlinearity.",
+    "Odds-bin conditioning is approximate and sparse strata reduce adjusted sample, explicitly counted.",
+    "Daily clustering addresses within-date dependence, not all cross-date dependence.",
+    "Inverse odds normalized within market are support proxies; hit-minus-support is calibration, not profit.",
+    "Same observations create correlated market tests; Holm remains valid without independence.",
+    "No plaintext source quotes or keys published; no archive, AI or purchase-rule changes."
+  ]
+}
