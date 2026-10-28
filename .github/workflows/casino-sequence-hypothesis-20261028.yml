@@ -1,0 +1,50 @@
+name: Casino paper | full archive hypothesis test
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/casino-sequence-hypothesis-20261028.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: casino-sequence-hypothesis-20261028
+  cancel-in-progress: false
+jobs:
+  observe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      PYTHONUNBUFFERED: '1'
+      PYTHONPATH: '.'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e '.[scrape]'
+      - run: python -m py_compile research/casino_sequence_hypothesis_20261028/verify.py
+      - name: Test calibration and return with daily clustered inference
+        env:
+          KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        run: python research/casino_sequence_hypothesis_20261028/verify.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: casino-sequence-observation-${{ github.run_id }}
+          path: research/casino_sequence_hypothesis_20261028/*.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Preserve aggregate observation
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/casino_sequence_hypothesis_20261028/*.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'research: save full archive sequential hypothesis tests'
+          for attempt in 1 2 3 4; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
