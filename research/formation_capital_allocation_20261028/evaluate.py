@@ -109,7 +109,7 @@ def assign_units(weights,total=10,minimum=1):
     assert sum(out)==total
     return out
 
-def allocation(method,tickets,prices,rank,invsum,factors):
+def allocation(method,tickets,prices,rank,invsum,factors,precomputed_norm):
     n=len(tickets)
     if not n:return [0]*n
     if method=="equal":return assign_units([1]*n)
@@ -120,8 +120,7 @@ def allocation(method,tickets,prices,rank,invsum,factors):
     if method=="positive_ev_only":
         # Calibrate all outcomes, not just selected tickets. Raw implied
         # normalized market p(t) = (1/odds(t))/invsum.
-        norm=sum((1/o)/invsum*factors[bucket(t,rank)] for t,o in prices.items())
-        ev={t:factors[bucket(t,rank)]/(invsum*norm) for t in tickets}
+        ev={t:factors[bucket(t,rank)]/(invsum*precomputed_norm) for t in tickets}
         eligible=[(t,max(0,(ev[t]-1.05))) for t in tickets if ev[t]>1.05]
         if not eligible:return [0]*n
         avail={t:i for i,t in enumerate(tickets)}
@@ -148,11 +147,14 @@ def evaluate():
     examples=defaultdict(list)
     for year,rid,finish,prices,rank,favorite,invsum in odds_rows(label_data):
         audit["verified_complete_races"]+=1
+        # This all-market normalization is shared by all 20 candidate sets.
+        # Recomputing it within every candidate would be wasteful and identical.
+        calibrated_norm=sum((1/o)/invsum*factors[bucket(t,rank)] for t,o in prices.items())
         for cand,mask in candidates:
             tickets=valid_tickets(mask,rank,prices,favorite)
             if not tickets:continue
             for method in METHODS:
-                u=allocation(method,tickets,prices,rank,invsum,factors)
+                u=allocation(method,tickets,prices,rank,invsum,factors,calibrated_norm)
                 stat=results[(cand,year,method)]
                 stat["races_in_formation"]+=1
                 stat["total_selected_points"]+=len(tickets)
