@@ -82,6 +82,7 @@ def compute_row(record, actual):
       "race_id":record["race_id"],"year":record["_archive_year"],
       "cars":n,"race_type":record["race_type"],"band":band(price),
       "price":price,"favorite":best_combo,"actual":ordered_key,
+      "favorite_tied":sum(float(o)==price for o in prices.values())>1,
       "hit":int(best_combo==ordered_key),"market_p":(1/price)/inv_total,
       "overround":inv_total
     }
@@ -157,6 +158,10 @@ def main():
        "forward_bands":aggregate([r for r in rows if r["year"]>=2025],["band"]),
        "year_bands":aggregate(rows,["year","band"]),
        "car_count_bands":aggregate(rows,["cars_group","band"]),
+       "period_car_bands":aggregate(rows,["period","cars_group","band"]),
+       "car_15_25_by_period":aggregate([r for r in rows if 15<=r["price"]<25],["period","cars_group"]),
+       "car_15_25_all":aggregate([r for r in rows if 15<=r["price"]<25],["cars_group"]),
+       "unique_favorite_bands":aggregate([r for r in rows if not r["favorite_tied"]],["band"]),
        "by_year":aggregate(rows,["year"]),
        "by_car_count":aggregate(rows,["cars_group"]),
     }
@@ -192,7 +197,7 @@ def main():
             "Final odds are not guaranteed available at bet placement time.",
             "Grouped-bin significance exploratory; many price bands, no multiplicity correction.",
             "Check forward 2025-2026H1 rather than just in-sample 2021-2024. No individual ticket or formation profit proven."],
-       "counters":dict(counters),"result_input_diagnostics":label_diagnostics,
+       "counters":dict(counters),"favorite_tie_races":sum(int(r["favorite_tied"]) for r in rows),\n       "result_input_diagnostics":label_diagnostics,
        "invalid_examples":bad,"total":summarize(rows),"price_band_edges":EDGES[:-1]+["inf"],
        "repeated_excess_miss_candidates_exploratory":candidates,
        "tables":tables
