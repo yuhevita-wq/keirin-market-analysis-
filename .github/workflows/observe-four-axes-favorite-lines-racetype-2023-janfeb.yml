@@ -1,0 +1,71 @@
+name: Observe four axes - line, class, favorite, race type (Jan-Feb 2023)
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/observe-four-axes-favorite-lines-racetype-2023-janfeb.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: observe-four-axes-favorite-lines-racetype-2023-janfeb
+  cancel-in-progress: false
+jobs:
+  observation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    env:
+      PYTHONUNBUFFERED: '1'
+      PYTHONPATH: '.'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install research dependencies
+        run: python -m pip install -e '.[scrape]'
+      - name: Validate exact-period, full-set and classification semantics
+        run: |
+          python -m py_compile research/favorite_odds_line_stage_four_axis_20261028/observe_four_axes_janfeb.py
+          python -m unittest research.snowberg_observation_corrected_20261027.test_orientation
+          python - <<'PY'
+          import research.favorite_odds_line_stage_four_axis_20261028.observe_four_axes_janfeb as m
+          assert m.START=="2023-01-01" and m.END=="2023-02-28"
+          assert len(m.REGISTRY)==34
+          assert m.classified_grade("data/2023/s_class_f1_all_parts/2023_q1/races.csv")=="S級"
+          assert m.classified_grade("data/a_class_12/2023_01_02/races.csv")=="A級1・2班"
+          assert m.normalized_stage("Ａ級準決勝")=="準決勝"
+          assert m.normalized_stage("Ｓ級決勝")=="決勝"
+          assert m.normalized_stage("Ｓ級初特選")=="初日特選"
+          assert m.normalized_stage("Ａ級特予選")=="特予選"
+          print("PERIOD_AND_4_AXIS_SCHEMA_VALIDATED")
+          PY
+      - name: Observe line/class/price/race-stage cross on matching odds/result set
+        env:
+          KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        run: python research/favorite_odds_line_stage_four_axis_20261028/observe_four_axes_janfeb.py
+      - name: Upload unselected four-axis observation data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: four-axis-formation-observation-${{ github.run_id }}
+          path: |
+            research/favorite_odds_line_stage_four_axis_20261028/summary.json
+            research/favorite_odds_line_stage_four_axis_20261028/compact.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Commit observation-only aggregates
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/favorite_odds_line_stage_four_axis_20261028/summary.json research/favorite_odds_line_stage_four_axis_20261028/compact.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'research: record Jan-Feb 2023 four-axis formation-set observation'
+          for try in 1 2 3 4; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
