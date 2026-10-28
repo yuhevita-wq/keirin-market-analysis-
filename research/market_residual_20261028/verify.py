@@ -74,7 +74,7 @@ def run(source=SOURCE, out=OUT):
     out.mkdir(parents=True, exist_ok=True)
     (out/'results.json').write_text(json.dumps(report, ensure_ascii=False, indent=2)+'\n')
     with (out/'results.csv').open('w', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(f, fieldnames=list(rows[0]), lineterminator="\n")
         writer.writeheader(); writer.writerows(rows)
     print(json.dumps({'status': report['status'], 'races': data['audit']['usable_races_sealed_four_markets_orientation_verified'],
                       'cells': len(rows), 'sha256': report['source_sha256']}, ensure_ascii=False))
