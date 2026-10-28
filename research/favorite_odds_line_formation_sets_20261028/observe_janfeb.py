@@ -201,6 +201,9 @@ def observe(rid,day,books,finish,rtype,source):
     sizelines=sorted(lines,key=lambda z:(-len(z),tuple(z)))
     line_shape="-".join(str(len(x)) for x in sizelines)
     kind=ldata[2]
+    if len(lines)<2:
+        AUDIT["one_line_race_no_crossline_comparison"]+=1
+        return
     AUDIT["eligible_races"]+=1;AUDIT["fav_"+band]+=1
     AUDIT["line_shape_"+line_shape]+=1
     allforms=all_family_templates(lines,cars)
