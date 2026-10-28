@@ -1,0 +1,6883 @@
+{
+  "status": "RESEARCH_COMPLETE_RESULTS_FIRST",
+  "generated_utc": "2026-10-28T14:00:37.562285+00:00",
+  "scope": "7/9 car exact-result matched complete 3連単 archive 2021-2025, 2026H1",
+  "audit": {
+    "verified_result_labels": 136906,
+    "result_conflicts": 0,
+    "all_quoted_races": 45849,
+    "usable_races": 41830,
+    "unmatched_result": 328,
+    "excluded_other_car_counts": 3691
+  },
+  "races_by_year_band_field": {
+    "2021:0-3:7": 89,
+    "2021:0-3:9": 1,
+    "2021:12-15:7": 213,
+    "2021:12-15:9": 126,
+    "2021:15-20:7": 156,
+    "2021:15-20:9": 148,
+    "2021:20-25:7": 38,
+    "2021:20-25:9": 96,
+    "2021:25+:7": 7,
+    "2021:25+:9": 87,
+    "2021:3-5:7": 347,
+    "2021:3-5:9": 20,
+    "2021:5-8:7": 514,
+    "2021:5-8:9": 71,
+    "2021:8-12:7": 468,
+    "2021:8-12:9": 113,
+    "2022:0-3:7": 69,
+    "2022:0-3:9": 10,
+    "2022:12-15:7": 120,
+    "2022:12-15:9": 336,
+    "2022:15-20:7": 82,
+    "2022:15-20:9": 359,
+    "2022:20-25:7": 19,
+    "2022:20-25:9": 205,
+    "2022:25+:7": 5,
+    "2022:25+:9": 124,
+    "2022:3-5:7": 190,
+    "2022:3-5:9": 103,
+    "2022:5-8:7": 318,
+    "2022:5-8:9": 385,
+    "2022:8-12:7": 292,
+    "2022:8-12:9": 480,
+    "2023:0-3:7": 487,
+    "2023:0-3:9": 7,
+    "2023:12-15:7": 911,
+    "2023:12-15:9": 388,
+    "2023:15-20:7": 558,
+    "2023:15-20:9": 453,
+    "2023:20-25:7": 114,
+    "2023:20-25:9": 191,
+    "2023:25+:7": 24,
+    "2023:25+:9": 99,
+    "2023:3-5:7": 1416,
+    "2023:3-5:9": 112,
+    "2023:5-8:7": 2504,
+    "2023:5-8:9": 411,
+    "2023:8-12:7": 1957,
+    "2023:8-12:9": 561,
+    "2024:0-3:7": 505,
+    "2024:0-3:9": 18,
+    "2024:12-15:7": 888,
+    "2024:12-15:9": 347,
+    "2024:15-20:7": 512,
+    "2024:15-20:9": 395,
+    "2024:20-25:7": 128,
+    "2024:20-25:9": 186,
+    "2024:25+:7": 22,
+    "2024:25+:9": 132,
+    "2024:3-5:7": 1336,
+    "2024:3-5:9": 167,
+    "2024:5-8:7": 2261,
+    "2024:5-8:9": 462,
+    "2024:8-12:7": 1885,
+    "2024:8-12:9": 513,
+    "2025:0-3:7": 538,
+    "2025:0-3:9": 20,
+    "2025:12-15:7": 902,
+    "2025:12-15:9": 362,
+    "2025:15-20:7": 611,
+    "2025:15-20:9": 442,
+    "2025:20-25:7": 140,
+    "2025:20-25:9": 220,
+    "2025:25+:7": 27,
+    "2025:25+:9": 156,
+    "2025:3-5:7": 1454,
+    "2025:3-5:9": 159,
+    "2025:5-8:7": 2216,
+    "2025:5-8:9": 361,
+    "2025:8-12:7": 1928,
+    "2025:8-12:9": 482,
+    "2026:0-3:7": 381,
+    "2026:0-3:9": 5,
+    "2026:12-15:7": 667,
+    "2026:12-15:9": 174,
+    "2026:15-20:7": 458,
+    "2026:15-20:9": 181,
+    "2026:20-25:7": 101,
+    "2026:20-25:9": 81,
+    "2026:25+:7": 28,
+    "2026:25+:9": 54,
+    "2026:3-5:7": 943,
+    "2026:3-5:9": 54,
+    "2026:5-8:7": 1483,
+    "2026:5-8:9": 168,
+    "2026:8-12:7": 1271,
+    "2026:8-12:9": 222
+  },
+  "method": {
+    "no_predefined_line_cross_or_buy_form": true,
+    "actual_finish_plus_all_price_quotes": true,
+    "candidate": "Cartesian actual car subsets of arbitrary size in each finish position; no point cap",
+    "rank_is_only_intermediate": "car ordering by total support across all ordered market prices; never present market-rank codes as purchasable formation",
+    "favorite_exclusion": "skip WHOLE race if proposed complete formation contains exact most popular trifecta",
+    "chronology": "2021-23 discover, frozen compare 2024, replay 2025 and 2026H1",
+    "point_stake_yen": 100,
+    "discovery": "deterministic multistart bit-flip hill climb, NOT exhaustive global optimization",
+    "starting_conditions": "rank-triplet single-bit seeds chosen at random plus random three-slot subsets and all-cars subset",
+    "train_objective": "worst year real whole-formation ROI + weakest year's observed/market residual with minimum support",
+    "min_train_market_expected_hits": 8,
+    "min_train_entered_races": 60,
+    "historical_prices": "FINAL, not T-minus-15 odds"
+  },
+  "limitations": [
+    "Research only, not a purchased system or proven market advantage.",
+    "Train best may overfit; hundreds of correlated candidate masks explored.",
+    "2024 onward not used to select patterns, but previously seen in other analyses.",
+    "No independent pre-close executable-price audit.",
+    "Small 5,6,8 car fields not part of this first pass.",
+    "One Cartesian formation only; multi-component union research later."
+  ],
+  "groups": [
+    {
+      "band": "0-3",
+      "cars": 7,
+      "search": {
+        "status": "completed",
+        "candidate_masks_examined": 1551,
+        "discovered_distinct_local_structures": 19,
+        "optimizer_is_heuristic": true
+      },
+      "top3": [
+        {
+          "development": {
+            "races": 60,
+            "points": 1,
+            "hits": 12,
+            "market_expected_hits": 9.996119,
+            "observed_over_market": 1.20047,
+            "stake_yen": 6000,
+            "payout_yen": 6610,
+            "profit_yen": 610,
+            "roi_pct": 110.1667,
+            "market_reference_roi_pct": 74.3036
+          },
+          "validation": {
+            "races": 50,
+            "points": 1,
+            "hits": 6,
+            "market_expected_hits": 8.126174,
+            "observed_over_market": 0.73835,
+            "stake_yen": 5000,
+            "payout_yen": 2310,
+            "profit_yen": -2690,
+            "roi_pct": 46.2,
+            "market_reference_roi_pct": 74.2789
+          },
+          "forward": {
+            "races": 70,
+            "points": 1,
+            "hits": 10,
+            "market_expected_hits": 11.530095,
+            "observed_over_market": 0.8673,
+            "stake_yen": 7000,
+            "payout_yen": 4640,
+            "profit_yen": -2360,
+            "roi_pct": 66.2857,
+            "market_reference_roi_pct": 74.3043
+          },
+          "formation": {
+            "race_id": "1120260614010002",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "1-4-3",
+            "1着": [
+              1
+            ],
+            "2着": [
+              4
+            ],
+            "3着": [
+              3
+            ],
+            "valid_points": 1,
+            "favorite": "4-1-3",
+            "favorite_odds": 2.8,
+            "ticket_odds": [
+              {
+                "numbers": "1-4-3",
+                "odds": 3.0,
+                "stake_yen": 100
+              }
+            ],
+            "result": "1-7-4",
+            "total_stake_yen": 100,
+            "payout_yen": 0,
+            "profit_yen": -100
+          }
+        },
+        {
+          "development": {
+            "races": 645,
+            "points": 3,
+            "hits": 22,
+            "market_expected_hits": 19.402725,
+            "observed_over_market": 1.13386,
+            "stake_yen": 193500,
+            "payout_yen": 174500,
+            "profit_yen": -19000,
+            "roi_pct": 90.1809,
+            "market_reference_roi_pct": 74.2246
+          },
+          "validation": {
+            "races": 505,
+            "points": 3,
+            "hits": 9,
+            "market_expected_hits": 13.782613,
+            "observed_over_market": 0.653,
+            "stake_yen": 151500,
+            "payout_yen": 57580,
+            "profit_yen": -93920,
+            "roi_pct": 38.0066,
+            "market_reference_roi_pct": 74.2532
+          },
+          "forward": {
+            "races": 919,
+            "points": 3,
+            "hits": 30,
+            "market_expected_hits": 27.10848,
+            "observed_over_market": 1.10666,
+            "stake_yen": 275700,
+            "payout_yen": 196700,
+            "profit_yen": -79000,
+            "roi_pct": 71.3457,
+            "market_reference_roi_pct": 74.2526
+          },
+          "formation": {
+            "race_id": "1120250416010011",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "1-7-452",
+            "1着": [
+              1
+            ],
+            "2着": [
+              7
+            ],
+            "3着": [
+              4,
+              5,
+              2
+            ],
+            "valid_points": 3,
+            "favorite": "1-4-5",
+            "favorite_odds": 2.5,
+            "ticket_odds": [
+              {
+                "numbers": "1-7-2",
+                "odds": 104.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-4",
+                "odds": 67.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-5",
+                "odds": 113.4,
+                "stake_yen": 100
+              }
+            ],
+            "result": "1-4-5",
+            "total_stake_yen": 300,
+            "payout_yen": 0,
+            "profit_yen": -300
+          }
+        },
+        {
+          "development": {
+            "races": 622,
+            "points": 8,
+            "hits": 76,
+            "market_expected_hits": 72.093209,
+            "observed_over_market": 1.05419,
+            "stake_yen": 497600,
+            "payout_yen": 395720,
+            "profit_yen": -101880,
+            "roi_pct": 79.5257,
+            "market_reference_roi_pct": 74.2247
+          },
+          "validation": {
+            "races": 493,
+            "points": 8,
+            "hits": 43,
+            "market_expected_hits": 53.87835,
+            "observed_over_market": 0.79809,
+            "stake_yen": 394400,
+            "payout_yen": 238180,
+            "profit_yen": -156220,
+            "roi_pct": 60.3905,
+            "market_reference_roi_pct": 74.2558
+          },
+          "forward": {
+            "races": 900,
+            "points": 8,
+            "hits": 102,
+            "market_expected_hits": 104.488324,
+            "observed_over_market": 0.97619,
+            "stake_yen": 720000,
+            "payout_yen": 417450,
+            "profit_yen": -302550,
+            "roi_pct": 57.9792,
+            "market_reference_roi_pct": 74.2518
+          },
+          "formation": {
+            "race_id": "1120250416010011",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "1-157-45273",
+            "1着": [
+              1
+            ],
+            "2着": [
+              1,
+              5,
+              7
+            ],
+            "3着": [
+              4,
+              5,
+              2,
+              7,
+              3
+            ],
+            "valid_points": 8,
+            "favorite": "1-4-5",
+            "favorite_odds": 2.5,
+            "ticket_odds": [
+              {
+                "numbers": "1-5-2",
+                "odds": 41.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-5-3",
+                "odds": 103.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-5-4",
+                "odds": 10.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-5-7",
+                "odds": 77.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-2",
+                "odds": 104.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-3",
+                "odds": 385.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-4",
+                "odds": 67.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-5",
+                "odds": 113.4,
+                "stake_yen": 100
+              }
+            ],
+            "result": "1-4-5",
+            "total_stake_yen": 800,
+            "payout_yen": 0,
+            "profit_yen": -800
+          }
+        }
+      ]
+    },
+    {
+      "band": "0-3",
+      "cars": 9,
+      "search": {
+        "status": "insufficient_train_races"
+      },
+      "top3": []
+    },
+    {
+      "band": "3-5",
+      "cars": 7,
+      "search": {
+        "status": "completed",
+        "candidate_masks_examined": 1797,
+        "discovered_distinct_local_structures": 24,
+        "optimizer_is_heuristic": true
+      },
+      "top3": [
+        {
+          "development": {
+            "races": 1953,
+            "points": 7,
+            "hits": 46,
+            "market_expected_hits": 33.66945,
+            "observed_over_market": 1.36622,
+            "stake_yen": 1367100,
+            "payout_yen": 1548530,
+            "profit_yen": 181430,
+            "roi_pct": 113.2712,
+            "market_reference_roi_pct": 74.6539
+          },
+          "validation": {
+            "races": 1336,
+            "points": 7,
+            "hits": 31,
+            "market_expected_hits": 24.585081,
+            "observed_over_market": 1.26093,
+            "stake_yen": 935200,
+            "payout_yen": 524280,
+            "profit_yen": -410920,
+            "roi_pct": 56.0607,
+            "market_reference_roi_pct": 74.6598
+          },
+          "forward": {
+            "races": 2397,
+            "points": 7,
+            "hits": 39,
+            "market_expected_hits": 45.419286,
+            "observed_over_market": 0.85867,
+            "stake_yen": 1677900,
+            "payout_yen": 766160,
+            "profit_yen": -911740,
+            "roi_pct": 45.6618,
+            "market_reference_roi_pct": 74.6609
+          },
+          "formation": {
+            "race_id": "1120250416020010",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "174-16-51",
+            "1着": [
+              1,
+              7,
+              4
+            ],
+            "2着": [
+              1,
+              6
+            ],
+            "3着": [
+              5,
+              1
+            ],
+            "valid_points": 7,
+            "favorite": "5-1-7",
+            "favorite_odds": 4.2,
+            "ticket_odds": [
+              {
+                "numbers": "1-6-5",
+                "odds": 485.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-1-5",
+                "odds": 304.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-6-1",
+                "odds": 3538.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-6-5",
+                "odds": 2347.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-1-5",
+                "odds": 84.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-6-1",
+                "odds": 1646.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-6-5",
+                "odds": 862.2,
+                "stake_yen": 100
+              }
+            ],
+            "result": "7-2-4",
+            "total_stake_yen": 700,
+            "payout_yen": 0,
+            "profit_yen": -700
+          }
+        },
+        {
+          "development": {
+            "races": 1953,
+            "points": 4,
+            "hits": 12,
+            "market_expected_hits": 8.070446,
+            "observed_over_market": 1.48691,
+            "stake_yen": 781200,
+            "payout_yen": 894170,
+            "profit_yen": 112970,
+            "roi_pct": 114.4611,
+            "market_reference_roi_pct": 74.6539
+          },
+          "validation": {
+            "races": 1336,
+            "points": 4,
+            "hits": 4,
+            "market_expected_hits": 5.789322,
+            "observed_over_market": 0.69093,
+            "stake_yen": 534400,
+            "payout_yen": 235940,
+            "profit_yen": -298460,
+            "roi_pct": 44.1504,
+            "market_reference_roi_pct": 74.6598
+          },
+          "forward": {
+            "races": 2397,
+            "points": 4,
+            "hits": 6,
+            "market_expected_hits": 10.070508,
+            "observed_over_market": 0.5958,
+            "stake_yen": 958800,
+            "payout_yen": 222620,
+            "profit_yen": -736180,
+            "roi_pct": 23.2186,
+            "market_reference_roi_pct": 74.6609
+          },
+          "formation": {
+            "race_id": "1120250416020010",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "17-36-16",
+            "1着": [
+              1,
+              7
+            ],
+            "2着": [
+              3,
+              6
+            ],
+            "3着": [
+              1,
+              6
+            ],
+            "valid_points": 4,
+            "favorite": "5-1-7",
+            "favorite_odds": 4.2,
+            "ticket_odds": [
+              {
+                "numbers": "1-3-6",
+                "odds": 644.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-3-1",
+                "odds": 651.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-3-6",
+                "odds": 884.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-6-1",
+                "odds": 1646.5,
+                "stake_yen": 100
+              }
+            ],
+            "result": "7-2-4",
+            "total_stake_yen": 400,
+            "payout_yen": 0,
+            "profit_yen": -400
+          }
+        },
+        {
+          "development": {
+            "races": 1953,
+            "points": 2,
+            "hits": 30,
+            "market_expected_hits": 17.97889,
+            "observed_over_market": 1.66862,
+            "stake_yen": 390600,
+            "payout_yen": 404790,
+            "profit_yen": 14190,
+            "roi_pct": 103.6329,
+            "market_reference_roi_pct": 74.6539
+          },
+          "validation": {
+            "races": 1336,
+            "points": 2,
+            "hits": 15,
+            "market_expected_hits": 12.999263,
+            "observed_over_market": 1.15391,
+            "stake_yen": 267200,
+            "payout_yen": 234400,
+            "profit_yen": -32800,
+            "roi_pct": 87.7246,
+            "market_reference_roi_pct": 74.6598
+          },
+          "forward": {
+            "races": 2397,
+            "points": 2,
+            "hits": 21,
+            "market_expected_hits": 23.541116,
+            "observed_over_market": 0.89206,
+            "stake_yen": 479400,
+            "payout_yen": 251210,
+            "profit_yen": -228190,
+            "roi_pct": 52.4009,
+            "market_reference_roi_pct": 74.6609
+          },
+          "formation": {
+            "race_id": "1120250416020010",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "7-1-56",
+            "1着": [
+              7
+            ],
+            "2着": [
+              1
+            ],
+            "3着": [
+              5,
+              6
+            ],
+            "valid_points": 2,
+            "favorite": "5-1-7",
+            "favorite_odds": 4.2,
+            "ticket_odds": [
+              {
+                "numbers": "7-1-5",
+                "odds": 84.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-1-6",
+                "odds": 849.8,
+                "stake_yen": 100
+              }
+            ],
+            "result": "7-2-4",
+            "total_stake_yen": 200,
+            "payout_yen": 0,
+            "profit_yen": -200
+          }
+        }
+      ]
+    },
+    {
+      "band": "3-5",
+      "cars": 9,
+      "search": {
+        "status": "completed",
+        "candidate_masks_examined": 1646,
+        "discovered_distinct_local_structures": 13,
+        "optimizer_is_heuristic": true
+      },
+      "top3": [
+        {
+          "development": {
+            "races": 206,
+            "points": 9,
+            "hits": 41,
+            "market_expected_hits": 34.399062,
+            "observed_over_market": 1.19189,
+            "stake_yen": 185400,
+            "payout_yen": 303470,
+            "profit_yen": 118070,
+            "roi_pct": 163.6839,
+            "market_reference_roi_pct": 74.5077
+          },
+          "validation": {
+            "races": 139,
+            "points": 9,
+            "hits": 23,
+            "market_expected_hits": 21.789958,
+            "observed_over_market": 1.05553,
+            "stake_yen": 125100,
+            "payout_yen": 72600,
+            "profit_yen": -52500,
+            "roi_pct": 58.0336,
+            "market_reference_roi_pct": 74.5116
+          },
+          "forward": {
+            "races": 182,
+            "points": 9,
+            "hits": 24,
+            "market_expected_hits": 25.872363,
+            "observed_over_market": 0.92763,
+            "stake_yen": 163800,
+            "payout_yen": 67710,
+            "profit_yen": -96090,
+            "roi_pct": 41.337,
+            "market_reference_roi_pct": 74.5169
+          },
+          "formation": {
+            "race_id": "1220250920020004",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "1-1786-1234",
+            "1着": [
+              1
+            ],
+            "2着": [
+              1,
+              7,
+              8,
+              6
+            ],
+            "3着": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "valid_points": 9,
+            "favorite": "1-7-9",
+            "favorite_odds": 3.4,
+            "ticket_odds": [
+              {
+                "numbers": "1-6-2",
+                "odds": 1463.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-6-3",
+                "odds": 2179.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-6-4",
+                "odds": 3219.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-2",
+                "odds": 10.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-3",
+                "odds": 17.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-4",
+                "odds": 41.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-8-2",
+                "odds": 1220.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-8-3",
+                "odds": 685.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-8-4",
+                "odds": 2123.7,
+                "stake_yen": 100
+              }
+            ],
+            "result": "1-7-9",
+            "total_stake_yen": 900,
+            "payout_yen": 0,
+            "profit_yen": -900
+          }
+        },
+        {
+          "development": {
+            "races": 202,
+            "points": 301,
+            "hits": 134,
+            "market_expected_hits": 130.255834,
+            "observed_over_market": 1.02874,
+            "stake_yen": 6080200,
+            "payout_yen": 3589990,
+            "profit_yen": -2490210,
+            "roi_pct": 59.0439,
+            "market_reference_roi_pct": 74.5104
+          },
+          "validation": {
+            "races": 134,
+            "points": 301,
+            "hits": 76,
+            "market_expected_hits": 84.361169,
+            "observed_over_market": 0.90089,
+            "stake_yen": 4033400,
+            "payout_yen": 888530,
+            "profit_yen": -3144870,
+            "roi_pct": 22.0293,
+            "market_reference_roi_pct": 74.5115
+          },
+          "forward": {
+            "races": 175,
+            "points": 301,
+            "hits": 108,
+            "market_expected_hits": 107.932041,
+            "observed_over_market": 1.00063,
+            "stake_yen": 5267500,
+            "payout_yen": 2210770,
+            "profit_yen": -3056730,
+            "roi_pct": 41.97,
+            "market_reference_roi_pct": 74.5128
+          },
+          "formation": {
+            "race_id": "1220250920020004",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "179258-179234586-17234586",
+            "1着": [
+              1,
+              7,
+              9,
+              2,
+              5,
+              8
+            ],
+            "2着": [
+              1,
+              7,
+              9,
+              2,
+              3,
+              4,
+              5,
+              8,
+              6
+            ],
+            "3着": [
+              1,
+              7,
+              2,
+              3,
+              4,
+              5,
+              8,
+              6
+            ],
+            "valid_points": 301,
+            "favorite": "1-7-9",
+            "favorite_odds": 3.4,
+            "ticket_odds": [
+              {
+                "numbers": "1-2-3",
+                "odds": 151.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-2-4",
+                "odds": 170.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-2-5",
+                "odds": 186.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-2-6",
+                "odds": 576.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-2-7",
+                "odds": 45.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-2-8",
+                "odds": 694.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-3-2",
+                "odds": 206.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-3-4",
+                "odds": 630.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-3-5",
+                "odds": 349.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-3-6",
+                "odds": 1041.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-3-7",
+                "odds": 84.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-3-8",
+                "odds": 459.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-4-2",
+                "odds": 270.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-4-3",
+                "odds": 798.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-4-5",
+                "odds": 924.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-4-6",
+                "odds": 1941.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-4-7",
+                "odds": 175.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-4-8",
+                "odds": 1540.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-5-2",
+                "odds": 486.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-5-3",
+                "odds": 653.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-5-4",
+                "odds": 1106.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-5-6",
+                "odds": 1041.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-5-7",
+                "odds": 207.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-5-8",
+                "odds": 1235.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-6-2",
+                "odds": 1463.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-6-3",
+                "odds": 2179.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-6-4",
+                "odds": 3219.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-6-5",
+                "odds": 1934.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-6-7",
+                "odds": 524.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-6-8",
+                "odds": 3868.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-2",
+                "odds": 10.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-3",
+                "odds": 17.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-4",
+                "odds": 41.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-5",
+                "odds": 35.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-6",
+                "odds": 85.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-8",
+                "odds": 85.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-8-2",
+                "odds": 1220.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-8-3",
+                "odds": 685.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-8-4",
+                "odds": 2123.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-8-5",
+                "odds": 1273.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-8-6",
+                "odds": 3327.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-8-7",
+                "odds": 369.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-9-2",
+                "odds": 58.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-9-3",
+                "odds": 80.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-9-4",
+                "odds": 204.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-9-5",
+                "odds": 126.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-9-6",
+                "odds": 323.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-9-7",
+                "odds": 13.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-9-8",
+                "odds": 274.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-1-3",
+                "odds": 386.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-1-4",
+                "odds": 359.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-1-5",
+                "odds": 424.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-1-6",
+                "odds": 1084.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-1-7",
+                "odds": 168.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-1-8",
+                "odds": 1579.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-3-1",
+                "odds": 623.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-3-4",
+                "odds": 1205.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-3-5",
+                "odds": 994.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-3-6",
+                "odds": 2953.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-3-7",
+                "odds": 1232.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-3-8",
+                "odds": 2179.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-4-1",
+                "odds": 301.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-4-3",
+                "odds": 768.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-4-5",
+                "odds": 499.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-4-6",
+                "odds": 785.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-4-7",
+                "odds": 554.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-4-8",
+                "odds": 1316.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-5-1",
+                "odds": 681.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-5-3",
+                "odds": 1055.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-5-4",
+                "odds": 954.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-5-6",
+                "odds": 1680.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-5-7",
+                "odds": 1429.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-5-8",
+                "odds": 3043.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-6-1",
+                "odds": 2141.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-6-3",
+                "odds": 3992.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-6-4",
+                "odds": 2079.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-6-5",
+                "odds": 2599.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-6-7",
+                "odds": 5092.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-6-8",
+                "odds": 9242.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-7-1",
+                "odds": 256.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-7-3",
+                "odds": 861.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-7-4",
+                "odds": 630.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-7-5",
+                "odds": 1010.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-7-6",
+                "odds": 3061.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-7-8",
+                "odds": 2533.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-8-1",
+                "odds": 3061.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-8-3",
+                "odds": 3024.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-8-4",
+                "odds": 3929.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-8-5",
+                "odds": 3539.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-8-6",
+                "odds": 7921.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-8-7",
+                "odds": 4664.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-9-1",
+                "odds": 745.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-9-3",
+                "odds": 2458.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-9-4",
+                "odds": 2028.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-9-5",
+                "odds": 2626.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-9-6",
+                "odds": 6481.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-9-7",
+                "odds": 1046.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-9-8",
+                "odds": 4753.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-1-2",
+                "odds": 1199.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-1-3",
+                "odds": 1663.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-1-4",
+                "odds": 2114.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-1-6",
+                "odds": 2179.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-1-7",
+                "odds": 853.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-1-8",
+                "odds": 2179.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-2-1",
+                "odds": 1589.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-2-3",
+                "odds": 2387.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-2-4",
+                "odds": 2310.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-2-6",
+                "odds": 4265.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-2-7",
+                "odds": 2258.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-2-8",
+                "odds": 5041.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-3-1",
+                "odds": 1604.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-3-2",
+                "odds": 2626.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-3-4",
+                "odds": 3929.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-3-6",
+                "odds": 4753.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-3-7",
+                "odds": 2640.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-3-8",
+                "odds": 2179.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-4-1",
+                "odds": 5671.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-4-2",
+                "odds": 3564.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-4-3",
+                "odds": 5309.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-4-6",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-4-7",
+                "odds": 5198.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-4-8",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-6-1",
+                "odds": 5671.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-6-2",
+                "odds": 6836.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-6-3",
+                "odds": 6317.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-6-4",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-6-7",
+                "odds": 6931.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-6-8",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-7-1",
+                "odds": 1075.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-7-2",
+                "odds": 2354.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-7-3",
+                "odds": 2835.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-7-4",
+                "odds": 3838.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-7-6",
+                "odds": 6566.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-7-8",
+                "odds": 6012.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-8-1",
+                "odds": 6086.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-8-2",
+                "odds": 6931.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-8-3",
+                "odds": 2697.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-8-4",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-8-6",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-8-7",
+                "odds": 8317.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-9-1",
+                "odds": 3043.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-9-2",
+                "odds": 6012.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-9-3",
+                "odds": 6931.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-9-4",
+                "odds": 8049.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-9-6",
+                "odds": 7232.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-9-7",
+                "odds": 3465.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-9-8",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-1-2",
+                "odds": 23.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-1-3",
+                "odds": 26.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-1-4",
+                "odds": 50.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-1-5",
+                "odds": 67.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-1-6",
+                "odds": 121.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-1-8",
+                "odds": 100.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-2-1",
+                "odds": 114.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-2-3",
+                "odds": 327.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-2-4",
+                "odds": 326.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-2-5",
+                "odds": 389.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-2-6",
+                "odds": 1082.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-2-8",
+                "odds": 1061.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-3-1",
+                "odds": 129.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-3-2",
+                "odds": 415.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-3-4",
+                "odds": 880.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-3-5",
+                "odds": 557.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-3-6",
+                "odds": 1446.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-3-8",
+                "odds": 546.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-4-1",
+                "odds": 288.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-4-2",
+                "odds": 345.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-4-3",
+                "odds": 1157.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-4-5",
+                "odds": 1776.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-4-6",
+                "odds": 2884.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-4-8",
+                "odds": 2045.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-5-1",
+                "odds": 500.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-5-2",
+                "odds": 1144.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-5-3",
+                "odds": 1390.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-5-4",
+                "odds": 2208.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-5-6",
+                "odds": 3006.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-5-8",
+                "odds": 2953.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-6-1",
+                "odds": 889.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-6-2",
+                "odds": 3240.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-6-3",
+                "odds": 3539.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-6-4",
+                "odds": 5041.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-6-5",
+                "odds": 4536.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-6-8",
+                "odds": 8049.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-8-1",
+                "odds": 499.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-8-2",
+                "odds": 1795.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-8-3",
+                "odds": 682.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-8-4",
+                "odds": 2482.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-8-5",
+                "odds": 3119.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-8-6",
+                "odds": 5198.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-9-1",
+                "odds": 90.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-9-2",
+                "odds": 396.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-9-3",
+                "odds": 653.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-9-4",
+                "odds": 1134.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-9-5",
+                "odds": 954.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-9-6",
+                "odds": 2179.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-9-8",
+                "odds": 1814.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-1-2",
+                "odds": 2422.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-1-3",
+                "odds": 1044.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-1-4",
+                "odds": 4416.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-1-5",
+                "odds": 2803.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-1-6",
+                "odds": 8604.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-1-7",
+                "odds": 1026.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-2-1",
+                "odds": 2772.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-2-3",
+                "odds": 3024.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-2-4",
+                "odds": 4416.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-2-5",
+                "odds": 4339.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-2-6",
+                "odds": 8317.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-2-7",
+                "odds": 5309.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-3-1",
+                "odds": 632.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-3-2",
+                "odds": 1348.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-3-4",
+                "odds": 2198.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-3-5",
+                "odds": 831.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-3-6",
+                "odds": 1769.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-3-7",
+                "odds": 838.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-4-1",
+                "odds": 5736.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-4-2",
+                "odds": 5253.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-4-3",
+                "odds": 5424.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-4-5",
+                "odds": 9981.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-4-6",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-4-7",
+                "odds": 6654.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-5-1",
+                "odds": 6317.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-5-2",
+                "odds": 6836.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-5-3",
+                "odds": 2868.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-5-4",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-5-6",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-5-7",
+                "odds": 5871.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-6-1",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-6-2",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-6-3",
+                "odds": 7921.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-6-4",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-6-5",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-6-7",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-7-1",
+                "odds": 1152.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-7-2",
+                "odds": 3929.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-7-3",
+                "odds": 1421.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-7-4",
+                "odds": 4990.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-7-5",
+                "odds": 4708.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-7-6",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-9-1",
+                "odds": 3465.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-9-2",
+                "odds": 9981.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-9-3",
+                "odds": 4578.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-9-4",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-9-5",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-9-6",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-9-7",
+                "odds": 5092.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-1-2",
+                "odds": 429.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-1-3",
+                "odds": 673.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-1-4",
+                "odds": 1327.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-1-5",
+                "odds": 819.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-1-6",
+                "odds": 1934.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-1-7",
+                "odds": 136.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-1-8",
+                "odds": 1763.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-2-1",
+                "odds": 730.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-2-3",
+                "odds": 2507.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-2-4",
+                "odds": 2585.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-2-5",
+                "odds": 3441.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-2-6",
+                "odds": 9785.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-2-7",
+                "odds": 1446.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-2-8",
+                "odds": 6566.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-3-1",
+                "odds": 1680.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-3-2",
+                "odds": 3696.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-3-4",
+                "odds": 7232.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-3-5",
+                "odds": 5545.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-3-6",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-3-7",
+                "odds": 2918.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-3-8",
+                "odds": 7029.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-4-1",
+                "odds": 2970.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-4-2",
+                "odds": 4339.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-4-3",
+                "odds": 8049.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-4-5",
+                "odds": 9785.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-4-6",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-4-7",
+                "odds": 4496.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-4-8",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-5-1",
+                "odds": 2278.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-5-2",
+                "odds": 7029.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-5-3",
+                "odds": 6317.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-5-4",
+                "odds": 9242.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-5-6",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-5-7",
+                "odds": 3465.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-5-8",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-6-1",
+                "odds": 7677.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-6-2",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-6-3",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-6-4",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-6-5",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-6-7",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-6-8",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-7-1",
+                "odds": 194.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-7-2",
+                "odds": 861.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-7-3",
+                "odds": 1356.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-7-4",
+                "odds": 2742.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-7-5",
+                "odds": 2028.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-7-6",
+                "odds": 5803.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-7-8",
+                "odds": 3809.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-8-1",
+                "odds": 4455.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-8-2",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-8-3",
+                "odds": 7561.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-8-4",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-8-5",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-8-6",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-8-7",
+                "odds": 5545.2,
+                "stake_yen": 100
+              }
+            ],
+            "result": "1-7-9",
+            "total_stake_yen": 30100,
+            "payout_yen": 0,
+            "profit_yen": -30100
+          }
+        },
+        {
+          "development": {
+            "races": 235,
+            "points": 94,
+            "hits": 34,
+            "market_expected_hits": 32.267854,
+            "observed_over_market": 1.05368,
+            "stake_yen": 2209000,
+            "payout_yen": 1329960,
+            "profit_yen": -879040,
+            "roi_pct": 60.2064,
+            "market_reference_roi_pct": 74.5003
+          },
+          "validation": {
+            "races": 167,
+            "points": 94,
+            "hits": 25,
+            "market_expected_hits": 23.510164,
+            "observed_over_market": 1.06337,
+            "stake_yen": 1569800,
+            "payout_yen": 388590,
+            "profit_yen": -1181210,
+            "roi_pct": 24.7541,
+            "market_reference_roi_pct": 74.514
+          },
+          "forward": {
+            "races": 213,
+            "points": 94,
+            "hits": 29,
+            "market_expected_hits": 30.482611,
+            "observed_over_market": 0.95136,
+            "stake_yen": 2002200,
+            "payout_yen": 498070,
+            "profit_yen": -1504130,
+            "roi_pct": 24.8761,
+            "market_reference_roi_pct": 74.5212
+          },
+          "formation": {
+            "race_id": "1220250920010009",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "92173586-9736-9245",
+            "1着": [
+              9,
+              2,
+              1,
+              7,
+              3,
+              5,
+              8,
+              6
+            ],
+            "2着": [
+              9,
+              7,
+              3,
+              6
+            ],
+            "3着": [
+              9,
+              2,
+              4,
+              5
+            ],
+            "valid_points": 94,
+            "favorite": "9-2-7",
+            "favorite_odds": 4.3,
+            "ticket_odds": [
+              {
+                "numbers": "1-3-2",
+                "odds": 403.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-3-4",
+                "odds": 391.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-3-5",
+                "odds": 518.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-3-9",
+                "odds": 214.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-6-2",
+                "odds": 6323.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-6-4",
+                "odds": 5378.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-6-5",
+                "odds": 6691.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-6-9",
+                "odds": 4392.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-2",
+                "odds": 343.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-4",
+                "odds": 640.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-5",
+                "odds": 1245.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-9",
+                "odds": 219.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-9-2",
+                "odds": 21.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-9-4",
+                "odds": 61.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-9-5",
+                "odds": 265.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-3-4",
+                "odds": 1722.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-3-5",
+                "odds": 995.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-3-9",
+                "odds": 354.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-6-4",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-6-5",
+                "odds": 8991.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-6-9",
+                "odds": 3811.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-7-4",
+                "odds": 664.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-7-5",
+                "odds": 1184.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-7-9",
+                "odds": 115.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-9-4",
+                "odds": 120.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-9-5",
+                "odds": 213.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-6-2",
+                "odds": 4110.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-6-4",
+                "odds": 5641.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-6-5",
+                "odds": 1167.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-6-9",
+                "odds": 1899.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-7-2",
+                "odds": 2557.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-7-4",
+                "odds": 3619.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-7-5",
+                "odds": 2714.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-7-9",
+                "odds": 1354.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-9-2",
+                "odds": 368.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-9-4",
+                "odds": 1555.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-9-5",
+                "odds": 733.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-3-2",
+                "odds": 1332.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-3-4",
+                "odds": 2603.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-3-9",
+                "odds": 669.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-6-2",
+                "odds": 9281.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-6-4",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-6-9",
+                "odds": 7992.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-7-2",
+                "odds": 4081.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-7-4",
+                "odds": 5932.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-7-9",
+                "odds": 2877.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-9-2",
+                "odds": 935.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-9-4",
+                "odds": 4200.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-3-2",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-3-4",
+                "odds": 8589.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-3-5",
+                "odds": 2387.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-3-9",
+                "odds": 4640.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-7-2",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-7-4",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-7-5",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-7-9",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-9-2",
+                "odds": 7377.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-9-4",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-9-5",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-3-2",
+                "odds": 2348.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-3-4",
+                "odds": 4495.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-3-5",
+                "odds": 3530.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-3-9",
+                "odds": 1460.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-6-2",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-6-4",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-6-5",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-6-9",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-9-2",
+                "odds": 120.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-9-4",
+                "odds": 812.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-9-5",
+                "odds": 1413.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-3-2",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-3-4",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-3-5",
+                "odds": 9591.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-3-9",
+                "odds": 8991.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-6-2",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-6-4",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-6-5",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-6-9",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-7-2",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-7-4",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-7-5",
+                "odds": 9433.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-7-9",
+                "odds": 8853.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-9-2",
+                "odds": 4603.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-9-4",
+                "odds": 8105.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-9-5",
+                "odds": 9999.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-3-2",
+                "odds": 94.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-3-4",
+                "odds": 434.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-3-5",
+                "odds": 349.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-6-2",
+                "odds": 1341.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-6-4",
+                "odds": 5328.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-6-5",
+                "odds": 5480.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-7-2",
+                "odds": 11.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-7-4",
+                "odds": 115.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-7-5",
+                "odds": 200.8,
+                "stake_yen": 100
+              }
+            ],
+            "result": "9-2-7",
+            "total_stake_yen": 9400,
+            "payout_yen": 0,
+            "profit_yen": -9400
+          }
+        }
+      ]
+    },
+    {
+      "band": "5-8",
+      "cars": 7,
+      "search": {
+        "status": "completed",
+        "candidate_masks_examined": 1791,
+        "discovered_distinct_local_structures": 25,
+        "optimizer_is_heuristic": true
+      },
+      "top3": [
+        {
+          "development": {
+            "races": 3336,
+            "points": 3,
+            "hits": 16,
+            "market_expected_hits": 8.917291,
+            "observed_over_market": 1.79427,
+            "stake_yen": 1000800,
+            "payout_yen": 969430,
+            "profit_yen": -31370,
+            "roi_pct": 96.8655,
+            "market_reference_roi_pct": 74.8082
+          },
+          "validation": {
+            "races": 2261,
+            "points": 3,
+            "hits": 11,
+            "market_expected_hits": 6.056309,
+            "observed_over_market": 1.81629,
+            "stake_yen": 678300,
+            "payout_yen": 852360,
+            "profit_yen": 174060,
+            "roi_pct": 125.6612,
+            "market_reference_roi_pct": 74.8117
+          },
+          "forward": {
+            "races": 3699,
+            "points": 3,
+            "hits": 7,
+            "market_expected_hits": 9.956094,
+            "observed_over_market": 0.70309,
+            "stake_yen": 1109700,
+            "payout_yen": 483780,
+            "profit_yen": -625920,
+            "roi_pct": 43.5956,
+            "market_reference_roi_pct": 74.8095
+          },
+          "formation": {
+            "race_id": "1120250416010007",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "123-6-7",
+            "1着": [
+              1,
+              2,
+              3
+            ],
+            "2着": [
+              6
+            ],
+            "3着": [
+              7
+            ],
+            "valid_points": 3,
+            "favorite": "5-1-7",
+            "favorite_odds": 5.5,
+            "ticket_odds": [
+              {
+                "numbers": "1-6-7",
+                "odds": 3460.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-6-7",
+                "odds": 2778.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-6-7",
+                "odds": 966.9,
+                "stake_yen": 100
+              }
+            ],
+            "result": "1-5-4",
+            "total_stake_yen": 300,
+            "payout_yen": 0,
+            "profit_yen": -300
+          }
+        },
+        {
+          "development": {
+            "races": 3336,
+            "points": 4,
+            "hits": 43,
+            "market_expected_hits": 33.129217,
+            "observed_over_market": 1.29795,
+            "stake_yen": 1334400,
+            "payout_yen": 1380540,
+            "profit_yen": 46140,
+            "roi_pct": 103.4577,
+            "market_reference_roi_pct": 74.8082
+          },
+          "validation": {
+            "races": 2261,
+            "points": 4,
+            "hits": 22,
+            "market_expected_hits": 23.04441,
+            "observed_over_market": 0.95468,
+            "stake_yen": 904400,
+            "payout_yen": 415070,
+            "profit_yen": -489330,
+            "roi_pct": 45.8945,
+            "market_reference_roi_pct": 74.8117
+          },
+          "forward": {
+            "races": 3699,
+            "points": 4,
+            "hits": 63,
+            "market_expected_hits": 38.566478,
+            "observed_over_market": 1.63354,
+            "stake_yen": 1479600,
+            "payout_yen": 2093180,
+            "profit_yen": 613580,
+            "roi_pct": 141.4693,
+            "market_reference_roi_pct": 74.8095
+          },
+          "formation": {
+            "race_id": "1120250416010007",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "46-51-14",
+            "1着": [
+              4,
+              6
+            ],
+            "2着": [
+              5,
+              1
+            ],
+            "3着": [
+              1,
+              4
+            ],
+            "valid_points": 4,
+            "favorite": "5-1-7",
+            "favorite_odds": 5.5,
+            "ticket_odds": [
+              {
+                "numbers": "4-5-1",
+                "odds": 39.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-1-4",
+                "odds": 5977.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-5-1",
+                "odds": 2376.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-5-4",
+                "odds": 3400.9,
+                "stake_yen": 100
+              }
+            ],
+            "result": "1-5-4",
+            "total_stake_yen": 400,
+            "payout_yen": 0,
+            "profit_yen": -400
+          }
+        },
+        {
+          "development": {
+            "races": 3333,
+            "points": 7,
+            "hits": 72,
+            "market_expected_hits": 64.728262,
+            "observed_over_market": 1.11234,
+            "stake_yen": 2333100,
+            "payout_yen": 2589000,
+            "profit_yen": 255900,
+            "roi_pct": 110.9682,
+            "market_reference_roi_pct": 74.8082
+          },
+          "validation": {
+            "races": 2257,
+            "points": 7,
+            "hits": 48,
+            "market_expected_hits": 47.313197,
+            "observed_over_market": 1.01452,
+            "stake_yen": 1579900,
+            "payout_yen": 1355060,
+            "profit_yen": -224840,
+            "roi_pct": 85.7687,
+            "market_reference_roi_pct": 74.8118
+          },
+          "forward": {
+            "races": 3696,
+            "points": 7,
+            "hits": 77,
+            "market_expected_hits": 75.536881,
+            "observed_over_market": 1.01937,
+            "stake_yen": 2587200,
+            "payout_yen": 1248670,
+            "profit_yen": -1338530,
+            "roi_pct": 48.2634,
+            "market_reference_roi_pct": 74.8096
+          },
+          "formation": {
+            "race_id": "1120250416010007",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "26-16-527",
+            "1着": [
+              2,
+              6
+            ],
+            "2着": [
+              1,
+              6
+            ],
+            "3着": [
+              5,
+              2,
+              7
+            ],
+            "valid_points": 7,
+            "favorite": "5-1-7",
+            "favorite_odds": 5.5,
+            "ticket_odds": [
+              {
+                "numbers": "2-1-5",
+                "odds": 142.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-1-7",
+                "odds": 440.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-6-5",
+                "odds": 1297.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-6-7",
+                "odds": 2778.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-1-2",
+                "odds": 6363.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-1-5",
+                "odds": 2944.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-1-7",
+                "odds": 7586.8,
+                "stake_yen": 100
+              }
+            ],
+            "result": "1-5-4",
+            "total_stake_yen": 700,
+            "payout_yen": 0,
+            "profit_yen": -700
+          }
+        }
+      ]
+    },
+    {
+      "band": "5-8",
+      "cars": 9,
+      "search": {
+        "status": "completed",
+        "candidate_masks_examined": 1922,
+        "discovered_distinct_local_structures": 16,
+        "optimizer_is_heuristic": true
+      },
+      "top3": [
+        {
+          "development": {
+            "races": 867,
+            "points": 9,
+            "hits": 19,
+            "market_expected_hits": 10.098396,
+            "observed_over_market": 1.88149,
+            "stake_yen": 780300,
+            "payout_yen": 2035180,
+            "profit_yen": 1254880,
+            "roi_pct": 260.8202,
+            "market_reference_roi_pct": 74.702
+          },
+          "validation": {
+            "races": 462,
+            "points": 9,
+            "hits": 6,
+            "market_expected_hits": 5.884129,
+            "observed_over_market": 1.01969,
+            "stake_yen": 415800,
+            "payout_yen": 185250,
+            "profit_yen": -230550,
+            "roi_pct": 44.5527,
+            "market_reference_roi_pct": 74.7009
+          },
+          "forward": {
+            "races": 529,
+            "points": 9,
+            "hits": 5,
+            "market_expected_hits": 6.579023,
+            "observed_over_market": 0.75999,
+            "stake_yen": 476100,
+            "payout_yen": 333520,
+            "profit_yen": -142580,
+            "roi_pct": 70.0525,
+            "market_reference_roi_pct": 74.708
+          },
+          "formation": {
+            "race_id": "1120250812010007",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "536-1728-2",
+            "1着": [
+              5,
+              3,
+              6
+            ],
+            "2着": [
+              1,
+              7,
+              2,
+              8
+            ],
+            "3着": [
+              2
+            ],
+            "valid_points": 9,
+            "favorite": "1-5-7",
+            "favorite_odds": 7.6,
+            "ticket_odds": [
+              {
+                "numbers": "3-1-2",
+                "odds": 151.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-7-2",
+                "odds": 707.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-8-2",
+                "odds": 1461.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-1-2",
+                "odds": 117.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-7-2",
+                "odds": 928.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-8-2",
+                "odds": 3631.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-1-2",
+                "odds": 2139.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-7-2",
+                "odds": 8556.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-8-2",
+                "odds": 4548.1,
+                "stake_yen": 100
+              }
+            ],
+            "result": "1-5-7",
+            "total_stake_yen": 900,
+            "payout_yen": 0,
+            "profit_yen": -900
+          }
+        },
+        {
+          "development": {
+            "races": 867,
+            "points": 21,
+            "hits": 13,
+            "market_expected_hits": 12.049646,
+            "observed_over_market": 1.07887,
+            "stake_yen": 1820700,
+            "payout_yen": 3908340,
+            "profit_yen": 2087640,
+            "roi_pct": 214.6614,
+            "market_reference_roi_pct": 74.702
+          },
+          "validation": {
+            "races": 462,
+            "points": 21,
+            "hits": 7,
+            "market_expected_hits": 5.66028,
+            "observed_over_market": 1.23669,
+            "stake_yen": 970200,
+            "payout_yen": 395540,
+            "profit_yen": -574660,
+            "roi_pct": 40.7689,
+            "market_reference_roi_pct": 74.7009
+          },
+          "forward": {
+            "races": 529,
+            "points": 21,
+            "hits": 4,
+            "market_expected_hits": 7.322851,
+            "observed_over_market": 0.54624,
+            "stake_yen": 1110900,
+            "payout_yen": 227530,
+            "profit_yen": -883370,
+            "roi_pct": 20.4816,
+            "market_reference_roi_pct": 74.708
+          },
+          "formation": {
+            "race_id": "1120250812010007",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "196-126-12986",
+            "1着": [
+              1,
+              9,
+              6
+            ],
+            "2着": [
+              1,
+              2,
+              6
+            ],
+            "3着": [
+              1,
+              2,
+              9,
+              8,
+              6
+            ],
+            "valid_points": 21,
+            "favorite": "1-5-7",
+            "favorite_odds": 7.6,
+            "ticket_odds": [
+              {
+                "numbers": "1-2-6",
+                "odds": 498.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-2-8",
+                "odds": 316.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-2-9",
+                "odds": 244.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-6-2",
+                "odds": 1306.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-6-8",
+                "odds": 1179.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-6-9",
+                "odds": 1546.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-1-2",
+                "odds": 2139.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-1-8",
+                "odds": 2263.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-1-9",
+                "odds": 2331.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-2-1",
+                "odds": 2629.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-2-8",
+                "odds": 5939.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-2-9",
+                "odds": 8077.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-1-2",
+                "odds": 772.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-1-6",
+                "odds": 1699.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-1-8",
+                "odds": 1063.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-2-1",
+                "odds": 1075.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-2-6",
+                "odds": 3883.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-2-8",
+                "odds": 2884.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-6-1",
+                "odds": 3068.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-6-2",
+                "odds": 6194.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-6-8",
+                "odds": 4296.5,
+                "stake_yen": 100
+              }
+            ],
+            "result": "1-5-7",
+            "total_stake_yen": 2100,
+            "payout_yen": 0,
+            "profit_yen": -2100
+          }
+        },
+        {
+          "development": {
+            "races": 867,
+            "points": 16,
+            "hits": 20,
+            "market_expected_hits": 14.207768,
+            "observed_over_market": 1.40768,
+            "stake_yen": 1387200,
+            "payout_yen": 2191060,
+            "profit_yen": 803860,
+            "roi_pct": 157.9484,
+            "market_reference_roi_pct": 74.702
+          },
+          "validation": {
+            "races": 462,
+            "points": 16,
+            "hits": 10,
+            "market_expected_hits": 7.779829,
+            "observed_over_market": 1.28538,
+            "stake_yen": 739200,
+            "payout_yen": 357020,
+            "profit_yen": -382180,
+            "roi_pct": 48.2982,
+            "market_reference_roi_pct": 74.7009
+          },
+          "forward": {
+            "races": 529,
+            "points": 16,
+            "hits": 4,
+            "market_expected_hits": 8.905589,
+            "observed_over_market": 0.44916,
+            "stake_yen": 846400,
+            "payout_yen": 93980,
+            "profit_yen": -752420,
+            "roi_pct": 11.1035,
+            "market_reference_roi_pct": 74.708
+          },
+          "formation": {
+            "race_id": "1120250812010007",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "53986-13-28",
+            "1着": [
+              5,
+              3,
+              9,
+              8,
+              6
+            ],
+            "2着": [
+              1,
+              3
+            ],
+            "3着": [
+              2,
+              8
+            ],
+            "valid_points": 16,
+            "favorite": "1-5-7",
+            "favorite_odds": 7.6,
+            "ticket_odds": [
+              {
+                "numbers": "3-1-2",
+                "odds": 151.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-1-8",
+                "odds": 263.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-1-2",
+                "odds": 117.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-1-8",
+                "odds": 302.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-3-2",
+                "odds": 1018.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-3-8",
+                "odds": 1934.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-1-2",
+                "odds": 2139.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-1-8",
+                "odds": 2263.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-3-2",
+                "odds": 4762.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-3-8",
+                "odds": 4740.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-1-2",
+                "odds": 334.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-3-2",
+                "odds": 1276.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-1-2",
+                "odds": 772.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-1-8",
+                "odds": 1063.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-3-2",
+                "odds": 357.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-3-8",
+                "odds": 309.4,
+                "stake_yen": 100
+              }
+            ],
+            "result": "1-5-7",
+            "total_stake_yen": 1600,
+            "payout_yen": 0,
+            "profit_yen": -1600
+          }
+        }
+      ]
+    },
+    {
+      "band": "8-12",
+      "cars": 7,
+      "search": {
+        "status": "completed",
+        "candidate_masks_examined": 1838,
+        "discovered_distinct_local_structures": 25,
+        "optimizer_is_heuristic": true
+      },
+      "top3": [
+        {
+          "development": {
+            "races": 2717,
+            "points": 3,
+            "hits": 22,
+            "market_expected_hits": 15.462294,
+            "observed_over_market": 1.42282,
+            "stake_yen": 815100,
+            "payout_yen": 1383150,
+            "profit_yen": 568050,
+            "roi_pct": 169.6908,
+            "market_reference_roi_pct": 74.8835
+          },
+          "validation": {
+            "races": 1885,
+            "points": 3,
+            "hits": 10,
+            "market_expected_hits": 10.559026,
+            "observed_over_market": 0.94706,
+            "stake_yen": 565500,
+            "payout_yen": 254890,
+            "profit_yen": -310610,
+            "roi_pct": 45.0734,
+            "market_reference_roi_pct": 74.8824
+          },
+          "forward": {
+            "races": 3199,
+            "points": 3,
+            "hits": 15,
+            "market_expected_hits": 17.943738,
+            "observed_over_market": 0.83595,
+            "stake_yen": 959700,
+            "payout_yen": 310970,
+            "profit_yen": -648730,
+            "roi_pct": 32.4028,
+            "market_reference_roi_pct": 74.8821
+          },
+          "formation": {
+            "race_id": "1120250416010006",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "2175-3-5",
+            "1着": [
+              2,
+              1,
+              7,
+              5
+            ],
+            "2着": [
+              3
+            ],
+            "3着": [
+              5
+            ],
+            "valid_points": 3,
+            "favorite": "1-7-2",
+            "favorite_odds": 8.1,
+            "ticket_odds": [
+              {
+                "numbers": "1-3-5",
+                "odds": 283.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-3-5",
+                "odds": 232.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-3-5",
+                "odds": 886.8,
+                "stake_yen": 100
+              }
+            ],
+            "result": "1-7-2",
+            "total_stake_yen": 300,
+            "payout_yen": 0,
+            "profit_yen": -300
+          }
+        },
+        {
+          "development": {
+            "races": 2717,
+            "points": 2,
+            "hits": 17,
+            "market_expected_hits": 11.090905,
+            "observed_over_market": 1.53279,
+            "stake_yen": 543400,
+            "payout_yen": 848700,
+            "profit_yen": 305300,
+            "roi_pct": 156.1833,
+            "market_reference_roi_pct": 74.8835
+          },
+          "validation": {
+            "races": 1885,
+            "points": 2,
+            "hits": 10,
+            "market_expected_hits": 7.675566,
+            "observed_over_market": 1.30284,
+            "stake_yen": 377000,
+            "payout_yen": 254890,
+            "profit_yen": -122110,
+            "roi_pct": 67.6101,
+            "market_reference_roi_pct": 74.8824
+          },
+          "forward": {
+            "races": 3199,
+            "points": 2,
+            "hits": 14,
+            "market_expected_hits": 12.93682,
+            "observed_over_market": 1.08218,
+            "stake_yen": 639800,
+            "payout_yen": 303140,
+            "profit_yen": -336660,
+            "roi_pct": 47.3804,
+            "market_reference_roi_pct": 74.8821
+          },
+          "formation": {
+            "race_id": "1120250416010006",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "2153-3-53",
+            "1着": [
+              2,
+              1,
+              5,
+              3
+            ],
+            "2着": [
+              3
+            ],
+            "3着": [
+              5,
+              3
+            ],
+            "valid_points": 2,
+            "favorite": "1-7-2",
+            "favorite_odds": 8.1,
+            "ticket_odds": [
+              {
+                "numbers": "1-3-5",
+                "odds": 283.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-3-5",
+                "odds": 232.4,
+                "stake_yen": 100
+              }
+            ],
+            "result": "1-7-2",
+            "total_stake_yen": 200,
+            "payout_yen": 0,
+            "profit_yen": -200
+          }
+        },
+        {
+          "development": {
+            "races": 2717,
+            "points": 4,
+            "hits": 20,
+            "market_expected_hits": 12.653709,
+            "observed_over_market": 1.58056,
+            "stake_yen": 1086800,
+            "payout_yen": 1388580,
+            "profit_yen": 301780,
+            "roi_pct": 127.7678,
+            "market_reference_roi_pct": 74.8835
+          },
+          "validation": {
+            "races": 1885,
+            "points": 4,
+            "hits": 9,
+            "market_expected_hits": 9.124533,
+            "observed_over_market": 0.98635,
+            "stake_yen": 754000,
+            "payout_yen": 656640,
+            "profit_yen": -97360,
+            "roi_pct": 87.0875,
+            "market_reference_roi_pct": 74.8824
+          },
+          "forward": {
+            "races": 3199,
+            "points": 4,
+            "hits": 12,
+            "market_expected_hits": 15.564229,
+            "observed_over_market": 0.771,
+            "stake_yen": 1279600,
+            "payout_yen": 1046440,
+            "profit_yen": -233160,
+            "roi_pct": 81.7787,
+            "market_reference_roi_pct": 74.8821
+          },
+          "formation": {
+            "race_id": "1120250416010006",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "63-23-76",
+            "1着": [
+              6,
+              3
+            ],
+            "2着": [
+              2,
+              3
+            ],
+            "3着": [
+              7,
+              6
+            ],
+            "valid_points": 4,
+            "favorite": "1-7-2",
+            "favorite_odds": 8.1,
+            "ticket_odds": [
+              {
+                "numbers": "3-2-6",
+                "odds": 1457.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-2-7",
+                "odds": 1299.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-2-7",
+                "odds": 1373.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-3-7",
+                "odds": 9311.4,
+                "stake_yen": 100
+              }
+            ],
+            "result": "1-7-2",
+            "total_stake_yen": 400,
+            "payout_yen": 0,
+            "profit_yen": -400
+          }
+        }
+      ]
+    },
+    {
+      "band": "8-12",
+      "cars": 9,
+      "search": {
+        "status": "completed",
+        "candidate_masks_examined": 1980,
+        "discovered_distinct_local_structures": 19,
+        "optimizer_is_heuristic": true
+      },
+      "top3": [
+        {
+          "development": {
+            "races": 1139,
+            "points": 2,
+            "hits": 20,
+            "market_expected_hits": 22.419366,
+            "observed_over_market": 0.89209,
+            "stake_yen": 227800,
+            "payout_yen": 765030,
+            "profit_yen": 537230,
+            "roi_pct": 335.8341,
+            "market_reference_roi_pct": 74.8365
+          },
+          "validation": {
+            "races": 501,
+            "points": 2,
+            "hits": 6,
+            "market_expected_hits": 9.893924,
+            "observed_over_market": 0.60643,
+            "stake_yen": 100200,
+            "payout_yen": 40520,
+            "profit_yen": -59680,
+            "roi_pct": 40.4391,
+            "market_reference_roi_pct": 74.83
+          },
+          "forward": {
+            "races": 686,
+            "points": 2,
+            "hits": 15,
+            "market_expected_hits": 12.832229,
+            "observed_over_market": 1.16893,
+            "stake_yen": 137200,
+            "payout_yen": 55930,
+            "profit_yen": -81270,
+            "roi_pct": 40.7653,
+            "market_reference_roi_pct": 74.8282
+          },
+          "formation": {
+            "race_id": "1120250812010001",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "45-7-2",
+            "1着": [
+              4,
+              5
+            ],
+            "2着": [
+              7
+            ],
+            "3着": [
+              2
+            ],
+            "valid_points": 2,
+            "favorite": "1-4-7",
+            "favorite_odds": 9.1,
+            "ticket_odds": [
+              {
+                "numbers": "4-7-2",
+                "odds": 73.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-7-2",
+                "odds": 477.2,
+                "stake_yen": 100
+              }
+            ],
+            "result": "2-1-5",
+            "total_stake_yen": 200,
+            "payout_yen": 0,
+            "profit_yen": -200
+          }
+        },
+        {
+          "development": {
+            "races": 1154,
+            "points": 9,
+            "hits": 15,
+            "market_expected_hits": 8.185963,
+            "observed_over_market": 1.83241,
+            "stake_yen": 1038600,
+            "payout_yen": 2651710,
+            "profit_yen": 1613110,
+            "roi_pct": 255.3158,
+            "market_reference_roi_pct": 74.8366
+          },
+          "validation": {
+            "races": 513,
+            "points": 9,
+            "hits": 3,
+            "market_expected_hits": 3.683572,
+            "observed_over_market": 0.81443,
+            "stake_yen": 461700,
+            "payout_yen": 256850,
+            "profit_yen": -204850,
+            "roi_pct": 55.6314,
+            "market_reference_roi_pct": 74.8304
+          },
+          "forward": {
+            "races": 704,
+            "points": 9,
+            "hits": 6,
+            "market_expected_hits": 5.044348,
+            "observed_over_market": 1.18945,
+            "stake_yen": 633600,
+            "payout_yen": 353540,
+            "profit_yen": -280060,
+            "roi_pct": 55.7986,
+            "market_reference_roi_pct": 74.8285
+          },
+          "formation": {
+            "race_id": "1120250812010001",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "293-4178-8",
+            "1着": [
+              2,
+              9,
+              3
+            ],
+            "2着": [
+              4,
+              1,
+              7,
+              8
+            ],
+            "3着": [
+              8
+            ],
+            "valid_points": 9,
+            "favorite": "1-4-7",
+            "favorite_odds": 9.1,
+            "ticket_odds": [
+              {
+                "numbers": "2-1-8",
+                "odds": 1154.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-4-8",
+                "odds": 805.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-7-8",
+                "odds": 1384.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-1-8",
+                "odds": 1297.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-4-8",
+                "odds": 1296.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-7-8",
+                "odds": 2793.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-1-8",
+                "odds": 2210.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-4-8",
+                "odds": 1313.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-7-8",
+                "odds": 2595.5,
+                "stake_yen": 100
+              }
+            ],
+            "result": "2-1-5",
+            "total_stake_yen": 900,
+            "payout_yen": 0,
+            "profit_yen": -900
+          }
+        },
+        {
+          "development": {
+            "races": 1154,
+            "points": 20,
+            "hits": 31,
+            "market_expected_hits": 21.728092,
+            "observed_over_market": 1.42672,
+            "stake_yen": 2308000,
+            "payout_yen": 3535490,
+            "profit_yen": 1227490,
+            "roi_pct": 153.1841,
+            "market_reference_roi_pct": 74.8366
+          },
+          "validation": {
+            "races": 513,
+            "points": 20,
+            "hits": 10,
+            "market_expected_hits": 9.404463,
+            "observed_over_market": 1.06332,
+            "stake_yen": 1026000,
+            "payout_yen": 1425160,
+            "profit_yen": 399160,
+            "roi_pct": 138.9045,
+            "market_reference_roi_pct": 74.8304
+          },
+          "forward": {
+            "races": 704,
+            "points": 20,
+            "hits": 15,
+            "market_expected_hits": 13.012742,
+            "observed_over_market": 1.15272,
+            "stake_yen": 1408000,
+            "payout_yen": 475560,
+            "profit_yen": -932440,
+            "roi_pct": 33.7756,
+            "market_reference_roi_pct": 74.8285
+          },
+          "formation": {
+            "race_id": "1120250812010001",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "78-7258-75986",
+            "1着": [
+              7,
+              8
+            ],
+            "2着": [
+              7,
+              2,
+              5,
+              8
+            ],
+            "3着": [
+              7,
+              5,
+              9,
+              8,
+              6
+            ],
+            "valid_points": 20,
+            "favorite": "1-4-7",
+            "favorite_odds": 9.1,
+            "ticket_odds": [
+              {
+                "numbers": "7-2-5",
+                "odds": 698.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-2-6",
+                "odds": 5066.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-2-8",
+                "odds": 1710.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-2-9",
+                "odds": 1180.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-5-6",
+                "odds": 7271.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-5-8",
+                "odds": 3024.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-5-9",
+                "odds": 2005.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-8-5",
+                "odds": 4786.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-8-6",
+                "odds": 6661.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-8-9",
+                "odds": 3033.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-2-5",
+                "odds": 1747.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-2-6",
+                "odds": 2843.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-2-7",
+                "odds": 4389.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-2-9",
+                "odds": 2886.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-5-6",
+                "odds": 3502.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-5-7",
+                "odds": 4811.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-5-9",
+                "odds": 4159.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-7-5",
+                "odds": 5603.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-7-6",
+                "odds": 5808.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-7-9",
+                "odds": 5040.1,
+                "stake_yen": 100
+              }
+            ],
+            "result": "2-1-5",
+            "total_stake_yen": 2000,
+            "payout_yen": 0,
+            "profit_yen": -2000
+          }
+        }
+      ]
+    },
+    {
+      "band": "12-15",
+      "cars": 7,
+      "search": {
+        "status": "completed",
+        "candidate_masks_examined": 1690,
+        "discovered_distinct_local_structures": 23,
+        "optimizer_is_heuristic": true
+      },
+      "top3": [
+        {
+          "development": {
+            "races": 1235,
+            "points": 12,
+            "hits": 80,
+            "market_expected_hits": 60.357909,
+            "observed_over_market": 1.32543,
+            "stake_yen": 1482000,
+            "payout_yen": 2156040,
+            "profit_yen": 674040,
+            "roi_pct": 145.4818,
+            "market_reference_roi_pct": 74.9119
+          },
+          "validation": {
+            "races": 875,
+            "points": 12,
+            "hits": 33,
+            "market_expected_hits": 41.995982,
+            "observed_over_market": 0.78579,
+            "stake_yen": 1050000,
+            "payout_yen": 509650,
+            "profit_yen": -540350,
+            "roi_pct": 48.5381,
+            "market_reference_roi_pct": 74.9118
+          },
+          "forward": {
+            "races": 1544,
+            "points": 12,
+            "hits": 88,
+            "market_expected_hits": 72.152969,
+            "observed_over_market": 1.21963,
+            "stake_yen": 1852800,
+            "payout_yen": 1281050,
+            "profit_yen": -571750,
+            "roi_pct": 69.1413,
+            "market_reference_roi_pct": 74.9109
+          },
+          "formation": {
+            "race_id": "1120250416030005",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "3412-452-12",
+            "1着": [
+              3,
+              4,
+              1,
+              2
+            ],
+            "2着": [
+              4,
+              5,
+              2
+            ],
+            "3着": [
+              1,
+              2
+            ],
+            "valid_points": 12,
+            "favorite": "7-1-5",
+            "favorite_odds": 12.0,
+            "ticket_odds": [
+              {
+                "numbers": "1-4-2",
+                "odds": 1225.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-5-2",
+                "odds": 340.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-4-1",
+                "odds": 1573.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-5-1",
+                "odds": 624.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-2-1",
+                "odds": 720.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-4-1",
+                "odds": 117.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-4-2",
+                "odds": 144.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-5-1",
+                "odds": 280.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-5-2",
+                "odds": 372.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-2-1",
+                "odds": 1175.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-5-1",
+                "odds": 481.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-5-2",
+                "odds": 619.2,
+                "stake_yen": 100
+              }
+            ],
+            "result": "4-5-3",
+            "total_stake_yen": 1200,
+            "payout_yen": 0,
+            "profit_yen": -1200
+          }
+        },
+        {
+          "development": {
+            "races": 1239,
+            "points": 5,
+            "hits": 36,
+            "market_expected_hits": 24.964515,
+            "observed_over_market": 1.44205,
+            "stake_yen": 619500,
+            "payout_yen": 974440,
+            "profit_yen": 354940,
+            "roi_pct": 157.2946,
+            "market_reference_roi_pct": 74.9119
+          },
+          "validation": {
+            "races": 884,
+            "points": 5,
+            "hits": 17,
+            "market_expected_hits": 17.258661,
+            "observed_over_market": 0.98501,
+            "stake_yen": 442000,
+            "payout_yen": 299250,
+            "profit_yen": -142750,
+            "roi_pct": 67.7036,
+            "market_reference_roi_pct": 74.9118
+          },
+          "forward": {
+            "races": 1559,
+            "points": 5,
+            "hits": 32,
+            "market_expected_hits": 29.539181,
+            "observed_over_market": 1.08331,
+            "stake_yen": 779500,
+            "payout_yen": 464740,
+            "profit_yen": -314760,
+            "roi_pct": 59.6203,
+            "market_reference_roi_pct": 74.9108
+          },
+          "formation": {
+            "race_id": "1120250416030005",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "341-45-2",
+            "1着": [
+              3,
+              4,
+              1
+            ],
+            "2着": [
+              4,
+              5
+            ],
+            "3着": [
+              2
+            ],
+            "valid_points": 5,
+            "favorite": "7-1-5",
+            "favorite_odds": 12.0,
+            "ticket_odds": [
+              {
+                "numbers": "1-4-2",
+                "odds": 1225.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-5-2",
+                "odds": 340.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-4-2",
+                "odds": 144.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-5-2",
+                "odds": 372.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-5-2",
+                "odds": 619.2,
+                "stake_yen": 100
+              }
+            ],
+            "result": "4-5-3",
+            "total_stake_yen": 500,
+            "payout_yen": 0,
+            "profit_yen": -500
+          }
+        },
+        {
+          "development": {
+            "races": 1239,
+            "points": 4,
+            "hits": 30,
+            "market_expected_hits": 20.407847,
+            "observed_over_market": 1.47002,
+            "stake_yen": 495600,
+            "payout_yen": 741050,
+            "profit_yen": 245450,
+            "roi_pct": 149.5258,
+            "market_reference_roi_pct": 74.9119
+          },
+          "validation": {
+            "races": 886,
+            "points": 4,
+            "hits": 13,
+            "market_expected_hits": 14.251312,
+            "observed_over_market": 0.9122,
+            "stake_yen": 354400,
+            "payout_yen": 241780,
+            "profit_yen": -112620,
+            "roi_pct": 68.2223,
+            "market_reference_roi_pct": 74.9118
+          },
+          "forward": {
+            "races": 1559,
+            "points": 4,
+            "hits": 25,
+            "market_expected_hits": 23.848504,
+            "observed_over_market": 1.04828,
+            "stake_yen": 623600,
+            "payout_yen": 273220,
+            "profit_yen": -350380,
+            "roi_pct": 43.8133,
+            "market_reference_roi_pct": 74.9108
+          },
+          "formation": {
+            "race_id": "1120250416030005",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "31-45-2",
+            "1着": [
+              3,
+              1
+            ],
+            "2着": [
+              4,
+              5
+            ],
+            "3着": [
+              2
+            ],
+            "valid_points": 4,
+            "favorite": "7-1-5",
+            "favorite_odds": 12.0,
+            "ticket_odds": [
+              {
+                "numbers": "1-4-2",
+                "odds": 1225.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-5-2",
+                "odds": 340.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-4-2",
+                "odds": 144.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-5-2",
+                "odds": 372.5,
+                "stake_yen": 100
+              }
+            ],
+            "result": "4-5-3",
+            "total_stake_yen": 400,
+            "payout_yen": 0,
+            "profit_yen": -400
+          }
+        }
+      ]
+    },
+    {
+      "band": "12-15",
+      "cars": 9,
+      "search": {
+        "status": "completed",
+        "candidate_masks_examined": 1905,
+        "discovered_distinct_local_structures": 17,
+        "optimizer_is_heuristic": true
+      },
+      "top3": [
+        {
+          "development": {
+            "races": 850,
+            "points": 3,
+            "hits": 12,
+            "market_expected_hits": 8.047325,
+            "observed_over_market": 1.49118,
+            "stake_yen": 255000,
+            "payout_yen": 493160,
+            "profit_yen": 238160,
+            "roi_pct": 193.3961,
+            "market_reference_roi_pct": 74.8897
+          },
+          "validation": {
+            "races": 347,
+            "points": 3,
+            "hits": 0,
+            "market_expected_hits": 3.355981,
+            "observed_over_market": 0.0,
+            "stake_yen": 104100,
+            "payout_yen": 0,
+            "profit_yen": -104100,
+            "roi_pct": 0.0,
+            "market_reference_roi_pct": 74.8818
+          },
+          "forward": {
+            "races": 536,
+            "points": 3,
+            "hits": 4,
+            "market_expected_hits": 5.074516,
+            "observed_over_market": 0.78825,
+            "stake_yen": 160800,
+            "payout_yen": 59290,
+            "profit_yen": -101510,
+            "roi_pct": 36.8719,
+            "market_reference_roi_pct": 74.8782
+          },
+          "formation": {
+            "race_id": "1120250812010004",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "7-25-59",
+            "1着": [
+              7
+            ],
+            "2着": [
+              2,
+              5
+            ],
+            "3着": [
+              5,
+              9
+            ],
+            "valid_points": 3,
+            "favorite": "2-7-4",
+            "favorite_odds": 14.5,
+            "ticket_odds": [
+              {
+                "numbers": "7-2-5",
+                "odds": 86.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-2-9",
+                "odds": 235.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-5-9",
+                "odds": 918.8,
+                "stake_yen": 100
+              }
+            ],
+            "result": "2-3-5",
+            "total_stake_yen": 300,
+            "payout_yen": 0,
+            "profit_yen": -300
+          }
+        },
+        {
+          "development": {
+            "races": 850,
+            "points": 4,
+            "hits": 17,
+            "market_expected_hits": 10.006831,
+            "observed_over_market": 1.69884,
+            "stake_yen": 340000,
+            "payout_yen": 800860,
+            "profit_yen": 460860,
+            "roi_pct": 235.5471,
+            "market_reference_roi_pct": 74.8897
+          },
+          "validation": {
+            "races": 347,
+            "points": 4,
+            "hits": 8,
+            "market_expected_hits": 4.267813,
+            "observed_over_market": 1.8745,
+            "stake_yen": 138800,
+            "payout_yen": 125600,
+            "profit_yen": -13200,
+            "roi_pct": 90.4899,
+            "market_reference_roi_pct": 74.8818
+          },
+          "forward": {
+            "races": 536,
+            "points": 4,
+            "hits": 8,
+            "market_expected_hits": 6.469086,
+            "observed_over_market": 1.23665,
+            "stake_yen": 214400,
+            "payout_yen": 140470,
+            "profit_yen": -73930,
+            "roi_pct": 65.5177,
+            "market_reference_roi_pct": 74.8782
+          },
+          "formation": {
+            "race_id": "1120250812010004",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "54-29-7",
+            "1着": [
+              5,
+              4
+            ],
+            "2着": [
+              2,
+              9
+            ],
+            "3着": [
+              7
+            ],
+            "valid_points": 4,
+            "favorite": "2-7-4",
+            "favorite_odds": 14.5,
+            "ticket_odds": [
+              {
+                "numbers": "4-2-7",
+                "odds": 144.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-9-7",
+                "odds": 5562.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-2-7",
+                "odds": 83.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-9-7",
+                "odds": 1210.2,
+                "stake_yen": 100
+              }
+            ],
+            "result": "2-3-5",
+            "total_stake_yen": 400,
+            "payout_yen": 0,
+            "profit_yen": -400
+          }
+        },
+        {
+          "development": {
+            "races": 850,
+            "points": 4,
+            "hits": 15,
+            "market_expected_hits": 12.524544,
+            "observed_over_market": 1.19765,
+            "stake_yen": 340000,
+            "payout_yen": 520620,
+            "profit_yen": 180620,
+            "roi_pct": 153.1235,
+            "market_reference_roi_pct": 74.8897
+          },
+          "validation": {
+            "races": 347,
+            "points": 4,
+            "hits": 3,
+            "market_expected_hits": 5.242626,
+            "observed_over_market": 0.57223,
+            "stake_yen": 138800,
+            "payout_yen": 53350,
+            "profit_yen": -85450,
+            "roi_pct": 38.4366,
+            "market_reference_roi_pct": 74.8818
+          },
+          "forward": {
+            "races": 536,
+            "points": 4,
+            "hits": 10,
+            "market_expected_hits": 7.859454,
+            "observed_over_market": 1.27235,
+            "stake_yen": 214400,
+            "payout_yen": 112160,
+            "profit_yen": -102240,
+            "roi_pct": 52.3134,
+            "market_reference_roi_pct": 74.8782
+          },
+          "formation": {
+            "race_id": "1120250812010004",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "7-25-2579",
+            "1着": [
+              7
+            ],
+            "2着": [
+              2,
+              5
+            ],
+            "3着": [
+              2,
+              5,
+              7,
+              9
+            ],
+            "valid_points": 4,
+            "favorite": "2-7-4",
+            "favorite_odds": 14.5,
+            "ticket_odds": [
+              {
+                "numbers": "7-2-5",
+                "odds": 86.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-2-9",
+                "odds": 235.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-5-2",
+                "odds": 170.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-5-9",
+                "odds": 918.8,
+                "stake_yen": 100
+              }
+            ],
+            "result": "2-3-5",
+            "total_stake_yen": 400,
+            "payout_yen": 0,
+            "profit_yen": -400
+          }
+        }
+      ]
+    },
+    {
+      "band": "15-20",
+      "cars": 7,
+      "search": {
+        "status": "completed",
+        "candidate_masks_examined": 1779,
+        "discovered_distinct_local_structures": 23,
+        "optimizer_is_heuristic": true
+      },
+      "top3": [
+        {
+          "development": {
+            "races": 704,
+            "points": 2,
+            "hits": 31,
+            "market_expected_hits": 19.896756,
+            "observed_over_market": 1.55804,
+            "stake_yen": 140800,
+            "payout_yen": 184640,
+            "profit_yen": 43840,
+            "roi_pct": 131.1364,
+            "market_reference_roi_pct": 74.9288
+          },
+          "validation": {
+            "races": 441,
+            "points": 2,
+            "hits": 14,
+            "market_expected_hits": 12.603939,
+            "observed_over_market": 1.11076,
+            "stake_yen": 88200,
+            "payout_yen": 79790,
+            "profit_yen": -8410,
+            "roi_pct": 90.4649,
+            "market_reference_roi_pct": 74.9279
+          },
+          "forward": {
+            "races": 931,
+            "points": 2,
+            "hits": 25,
+            "market_expected_hits": 26.792038,
+            "observed_over_market": 0.93311,
+            "stake_yen": 186200,
+            "payout_yen": 122630,
+            "profit_yen": -63570,
+            "roi_pct": 65.8593,
+            "market_reference_roi_pct": 74.9279
+          },
+          "formation": {
+            "race_id": "1120250416030006",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "4-27-3",
+            "1着": [
+              4
+            ],
+            "2着": [
+              2,
+              7
+            ],
+            "3着": [
+              3
+            ],
+            "valid_points": 2,
+            "favorite": "4-3-2",
+            "favorite_odds": 17.7,
+            "ticket_odds": [
+              {
+                "numbers": "4-2-3",
+                "odds": 21.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-7-3",
+                "odds": 56.4,
+                "stake_yen": 100
+              }
+            ],
+            "result": "2-4-3",
+            "total_stake_yen": 200,
+            "payout_yen": 0,
+            "profit_yen": -200
+          }
+        },
+        {
+          "development": {
+            "races": 766,
+            "points": 5,
+            "hits": 36,
+            "market_expected_hits": 27.797632,
+            "observed_over_market": 1.29507,
+            "stake_yen": 383000,
+            "payout_yen": 452970,
+            "profit_yen": 69970,
+            "roi_pct": 118.2689,
+            "market_reference_roi_pct": 74.9291
+          },
+          "validation": {
+            "races": 487,
+            "points": 5,
+            "hits": 26,
+            "market_expected_hits": 17.761363,
+            "observed_over_market": 1.46385,
+            "stake_yen": 243500,
+            "payout_yen": 363490,
+            "profit_yen": 119990,
+            "roi_pct": 149.2772,
+            "market_reference_roi_pct": 74.9283
+          },
+          "forward": {
+            "races": 1024,
+            "points": 5,
+            "hits": 33,
+            "market_expected_hits": 38.015478,
+            "observed_over_market": 0.86807,
+            "stake_yen": 512000,
+            "payout_yen": 364590,
+            "profit_yen": -147410,
+            "roi_pct": 71.209,
+            "market_reference_roi_pct": 74.9282
+          },
+          "formation": {
+            "race_id": "1120250416010012",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "16-356-7",
+            "1着": [
+              1,
+              6
+            ],
+            "2着": [
+              3,
+              5,
+              6
+            ],
+            "3着": [
+              7
+            ],
+            "valid_points": 5,
+            "favorite": "1-7-3",
+            "favorite_odds": 16.0,
+            "ticket_odds": [
+              {
+                "numbers": "1-3-7",
+                "odds": 38.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-5-7",
+                "odds": 99.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-6-7",
+                "odds": 205.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-3-7",
+                "odds": 110.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-5-7",
+                "odds": 723.4,
+                "stake_yen": 100
+              }
+            ],
+            "result": "3-1-5",
+            "total_stake_yen": 500,
+            "payout_yen": 0,
+            "profit_yen": -500
+          }
+        },
+        {
+          "development": {
+            "races": 766,
+            "points": 3,
+            "hits": 31,
+            "market_expected_hits": 24.152788,
+            "observed_over_market": 1.2835,
+            "stake_yen": 229800,
+            "payout_yen": 293500,
+            "profit_yen": 63700,
+            "roi_pct": 127.7198,
+            "market_reference_roi_pct": 74.9291
+          },
+          "validation": {
+            "races": 487,
+            "points": 3,
+            "hits": 20,
+            "market_expected_hits": 15.50032,
+            "observed_over_market": 1.2903,
+            "stake_yen": 146100,
+            "payout_yen": 165950,
+            "profit_yen": 19850,
+            "roi_pct": 113.5866,
+            "market_reference_roi_pct": 74.9283
+          },
+          "forward": {
+            "races": 1024,
+            "points": 3,
+            "hits": 28,
+            "market_expected_hits": 33.240082,
+            "observed_over_market": 0.84236,
+            "stake_yen": 307200,
+            "payout_yen": 219560,
+            "profit_yen": -87640,
+            "roi_pct": 71.4714,
+            "market_reference_roi_pct": 74.9282
+          },
+          "formation": {
+            "race_id": "1120250416010012",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "1-356-7",
+            "1着": [
+              1
+            ],
+            "2着": [
+              3,
+              5,
+              6
+            ],
+            "3着": [
+              7
+            ],
+            "valid_points": 3,
+            "favorite": "1-7-3",
+            "favorite_odds": 16.0,
+            "ticket_odds": [
+              {
+                "numbers": "1-3-7",
+                "odds": 38.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-5-7",
+                "odds": 99.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-6-7",
+                "odds": 205.1,
+                "stake_yen": 100
+              }
+            ],
+            "result": "3-1-5",
+            "total_stake_yen": 300,
+            "payout_yen": 0,
+            "profit_yen": -300
+          }
+        }
+      ]
+    },
+    {
+      "band": "15-20",
+      "cars": 9,
+      "search": {
+        "status": "completed",
+        "candidate_masks_examined": 2115,
+        "discovered_distinct_local_structures": 21,
+        "optimizer_is_heuristic": true
+      },
+      "top3": [
+        {
+          "development": {
+            "races": 898,
+            "points": 5,
+            "hits": 16,
+            "market_expected_hits": 15.273031,
+            "observed_over_market": 1.0476,
+            "stake_yen": 449000,
+            "payout_yen": 753790,
+            "profit_yen": 304790,
+            "roi_pct": 167.882,
+            "market_reference_roi_pct": 74.9231
+          },
+          "validation": {
+            "races": 371,
+            "points": 5,
+            "hits": 11,
+            "market_expected_hits": 6.09323,
+            "observed_over_market": 1.80528,
+            "stake_yen": 185500,
+            "payout_yen": 118860,
+            "profit_yen": -66640,
+            "roi_pct": 64.0755,
+            "market_reference_roi_pct": 74.9143
+          },
+          "forward": {
+            "races": 579,
+            "points": 5,
+            "hits": 6,
+            "market_expected_hits": 9.922982,
+            "observed_over_market": 0.60466,
+            "stake_yen": 289500,
+            "payout_yen": 161910,
+            "profit_yen": -127590,
+            "roi_pct": 55.9275,
+            "market_reference_roi_pct": 74.9133
+          },
+          "formation": {
+            "race_id": "1120250812020002",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "398-96-1",
+            "1着": [
+              3,
+              9,
+              8
+            ],
+            "2着": [
+              9,
+              6
+            ],
+            "3着": [
+              1
+            ],
+            "valid_points": 5,
+            "favorite": "3-5-1",
+            "favorite_odds": 18.1,
+            "ticket_odds": [
+              {
+                "numbers": "3-6-1",
+                "odds": 861.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-9-1",
+                "odds": 111.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-6-1",
+                "odds": 3635.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-9-1",
+                "odds": 2785.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-6-1",
+                "odds": 1722.9,
+                "stake_yen": 100
+              }
+            ],
+            "result": "1-9-4",
+            "total_stake_yen": 500,
+            "payout_yen": 0,
+            "profit_yen": -500
+          }
+        },
+        {
+          "development": {
+            "races": 786,
+            "points": 36,
+            "hits": 106,
+            "market_expected_hits": 90.277324,
+            "observed_over_market": 1.17416,
+            "stake_yen": 2829600,
+            "payout_yen": 3854750,
+            "profit_yen": 1025150,
+            "roi_pct": 136.2295,
+            "market_reference_roi_pct": 74.9212
+          },
+          "validation": {
+            "races": 329,
+            "points": 36,
+            "hits": 35,
+            "market_expected_hits": 36.524182,
+            "observed_over_market": 0.95827,
+            "stake_yen": 1184400,
+            "payout_yen": 1217130,
+            "profit_yen": 32730,
+            "roi_pct": 102.7634,
+            "market_reference_roi_pct": 74.9133
+          },
+          "forward": {
+            "races": 513,
+            "points": 36,
+            "hits": 62,
+            "market_expected_hits": 58.163232,
+            "observed_over_market": 1.06597,
+            "stake_yen": 1846800,
+            "payout_yen": 1492030,
+            "profit_yen": -354770,
+            "roi_pct": 80.79,
+            "market_reference_roi_pct": 74.9109
+          },
+          "formation": {
+            "race_id": "1120250812020002",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "31548-124-978",
+            "1着": [
+              3,
+              1,
+              5,
+              4,
+              8
+            ],
+            "2着": [
+              1,
+              2,
+              4
+            ],
+            "3着": [
+              9,
+              7,
+              8
+            ],
+            "valid_points": 36,
+            "favorite": "3-5-1",
+            "favorite_odds": 18.1,
+            "ticket_odds": [
+              {
+                "numbers": "1-2-7",
+                "odds": 223.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-2-8",
+                "odds": 436.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-2-9",
+                "odds": 145.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-4-7",
+                "odds": 48.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-4-8",
+                "odds": 173.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-4-9",
+                "odds": 132.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-1-7",
+                "odds": 89.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-1-8",
+                "odds": 263.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-1-9",
+                "odds": 109.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-2-7",
+                "odds": 180.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-2-8",
+                "odds": 212.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-2-9",
+                "odds": 60.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-4-7",
+                "odds": 706.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-4-8",
+                "odds": 859.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "3-4-9",
+                "odds": 553.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-1-7",
+                "odds": 234.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-1-8",
+                "odds": 628.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-1-9",
+                "odds": 493.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-2-7",
+                "odds": 2330.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-2-8",
+                "odds": 3004.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-2-9",
+                "odds": 1400.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-1-7",
+                "odds": 572.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-1-8",
+                "odds": 1722.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-1-9",
+                "odds": 840.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-2-7",
+                "odds": 1356.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-2-8",
+                "odds": 2025.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-2-9",
+                "odds": 610.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-4-7",
+                "odds": 2578.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-4-8",
+                "odds": 4178.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-4-9",
+                "odds": 2840.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-1-7",
+                "odds": 2101.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-1-9",
+                "odds": 2908.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-2-7",
+                "odds": 4107.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-2-9",
+                "odds": 1123.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-4-7",
+                "odds": 6009.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-4-9",
+                "odds": 6109.9,
+                "stake_yen": 100
+              }
+            ],
+            "result": "1-9-4",
+            "total_stake_yen": 3600,
+            "payout_yen": 0,
+            "profit_yen": -3600
+          }
+        },
+        {
+          "development": {
+            "races": 960,
+            "points": 7,
+            "hits": 19,
+            "market_expected_hits": 15.24179,
+            "observed_over_market": 1.24657,
+            "stake_yen": 672000,
+            "payout_yen": 808360,
+            "profit_yen": 136360,
+            "roi_pct": 120.2917,
+            "market_reference_roi_pct": 74.9226
+          },
+          "validation": {
+            "races": 395,
+            "points": 7,
+            "hits": 6,
+            "market_expected_hits": 6.550192,
+            "observed_over_market": 0.916,
+            "stake_yen": 276500,
+            "payout_yen": 139770,
+            "profit_yen": -136730,
+            "roi_pct": 50.5497,
+            "market_reference_roi_pct": 74.9148
+          },
+          "forward": {
+            "races": 623,
+            "points": 7,
+            "hits": 9,
+            "market_expected_hits": 10.321863,
+            "observed_over_market": 0.87194,
+            "stake_yen": 436100,
+            "payout_yen": 141800,
+            "profit_yen": -294300,
+            "roi_pct": 32.5155,
+            "market_reference_roi_pct": 74.9124
+          },
+          "formation": {
+            "race_id": "1120250812020002",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "395-2978-3",
+            "1着": [
+              3,
+              9,
+              5
+            ],
+            "2着": [
+              2,
+              9,
+              7,
+              8
+            ],
+            "3着": [
+              3
+            ],
+            "valid_points": 7,
+            "favorite": "3-5-1",
+            "favorite_odds": 18.1,
+            "ticket_odds": [
+              {
+                "numbers": "5-2-3",
+                "odds": 327.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-7-3",
+                "odds": 508.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-8-3",
+                "odds": 912.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-9-3",
+                "odds": 310.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-2-3",
+                "odds": 56.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-7-3",
+                "odds": 524.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-8-3",
+                "odds": 1146.8,
+                "stake_yen": 100
+              }
+            ],
+            "result": "1-9-4",
+            "total_stake_yen": 700,
+            "payout_yen": 0,
+            "profit_yen": -700
+          }
+        }
+      ]
+    },
+    {
+      "band": "20-25",
+      "cars": 7,
+      "search": {
+        "status": "completed",
+        "candidate_masks_examined": 1238,
+        "discovered_distinct_local_structures": 12,
+        "optimizer_is_heuristic": true
+      },
+      "top3": [
+        {
+          "development": {
+            "races": 159,
+            "points": 10,
+            "hits": 15,
+            "market_expected_hits": 9.67783,
+            "observed_over_market": 1.54993,
+            "stake_yen": 159000,
+            "payout_yen": 277670,
+            "profit_yen": 118670,
+            "roi_pct": 174.6352,
+            "market_reference_roi_pct": 74.9423
+          },
+          "validation": {
+            "races": 118,
+            "points": 10,
+            "hits": 7,
+            "market_expected_hits": 6.873474,
+            "observed_over_market": 1.01841,
+            "stake_yen": 118000,
+            "payout_yen": 140830,
+            "profit_yen": 22830,
+            "roi_pct": 119.3475,
+            "market_reference_roi_pct": 74.9418
+          },
+          "forward": {
+            "races": 219,
+            "points": 10,
+            "hits": 18,
+            "market_expected_hits": 13.503544,
+            "observed_over_market": 1.33298,
+            "stake_yen": 219000,
+            "payout_yen": 203750,
+            "profit_yen": -15250,
+            "roi_pct": 93.0365,
+            "market_reference_roi_pct": 74.9412
+          },
+          "formation": {
+            "race_id": "1120250929030012",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "17-145-134",
+            "1着": [
+              1,
+              7
+            ],
+            "2着": [
+              1,
+              4,
+              5
+            ],
+            "3着": [
+              1,
+              3,
+              4
+            ],
+            "valid_points": 10,
+            "favorite": "7-3-1",
+            "favorite_odds": 22.0,
+            "ticket_odds": [
+              {
+                "numbers": "1-4-3",
+                "odds": 36.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-5-3",
+                "odds": 415.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-5-4",
+                "odds": 469.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-1-3",
+                "odds": 47.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-1-4",
+                "odds": 66.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-4-1",
+                "odds": 158.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-4-3",
+                "odds": 188.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-5-1",
+                "odds": 527.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-5-3",
+                "odds": 179.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-5-4",
+                "odds": 867.0,
+                "stake_yen": 100
+              }
+            ],
+            "result": "7-4-1",
+            "total_stake_yen": 1000,
+            "payout_yen": 15840,
+            "profit_yen": 14840
+          }
+        },
+        {
+          "development": {
+            "races": 147,
+            "points": 12,
+            "hits": 16,
+            "market_expected_hits": 9.847867,
+            "observed_over_market": 1.62472,
+            "stake_yen": 176400,
+            "payout_yen": 314820,
+            "profit_yen": 138420,
+            "roi_pct": 178.4694,
+            "market_reference_roi_pct": 74.9423
+          },
+          "validation": {
+            "races": 107,
+            "points": 12,
+            "hits": 4,
+            "market_expected_hits": 7.572205,
+            "observed_over_market": 0.52825,
+            "stake_yen": 128400,
+            "payout_yen": 82950,
+            "profit_yen": -45450,
+            "roi_pct": 64.6028,
+            "market_reference_roi_pct": 74.9422
+          },
+          "forward": {
+            "races": 211,
+            "points": 12,
+            "hits": 11,
+            "market_expected_hits": 14.928949,
+            "observed_over_market": 0.73682,
+            "stake_yen": 253200,
+            "payout_yen": 118020,
+            "profit_yen": -135180,
+            "roi_pct": 46.6114,
+            "market_reference_roi_pct": 74.9407
+          },
+          "formation": {
+            "race_id": "1120250929030012",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "16-625-376",
+            "1着": [
+              1,
+              6
+            ],
+            "2着": [
+              6,
+              2,
+              5
+            ],
+            "3着": [
+              3,
+              7,
+              6
+            ],
+            "valid_points": 12,
+            "favorite": "7-3-1",
+            "favorite_odds": 22.0,
+            "ticket_odds": [
+              {
+                "numbers": "1-2-3",
+                "odds": 151.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-2-6",
+                "odds": 120.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-2-7",
+                "odds": 173.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-5-3",
+                "odds": 415.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-5-6",
+                "odds": 668.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-5-7",
+                "odds": 609.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-6-3",
+                "odds": 88.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-6-7",
+                "odds": 88.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-2-3",
+                "odds": 81.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-2-7",
+                "odds": 91.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-5-3",
+                "odds": 607.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-5-7",
+                "odds": 1011.8,
+                "stake_yen": 100
+              }
+            ],
+            "result": "7-4-1",
+            "total_stake_yen": 1200,
+            "payout_yen": 0,
+            "profit_yen": -1200
+          }
+        },
+        {
+          "development": {
+            "races": 151,
+            "points": 14,
+            "hits": 16,
+            "market_expected_hits": 11.965744,
+            "observed_over_market": 1.33715,
+            "stake_yen": 211400,
+            "payout_yen": 334420,
+            "profit_yen": 123020,
+            "roi_pct": 158.193,
+            "market_reference_roi_pct": 74.9427
+          },
+          "validation": {
+            "races": 114,
+            "points": 14,
+            "hits": 11,
+            "market_expected_hits": 8.792487,
+            "observed_over_market": 1.25107,
+            "stake_yen": 159600,
+            "payout_yen": 138990,
+            "profit_yen": -20610,
+            "roi_pct": 87.0865,
+            "market_reference_roi_pct": 74.9419
+          },
+          "forward": {
+            "races": 212,
+            "points": 14,
+            "hits": 15,
+            "market_expected_hits": 16.328974,
+            "observed_over_market": 0.91861,
+            "stake_yen": 296800,
+            "payout_yen": 174090,
+            "profit_yen": -122710,
+            "roi_pct": 58.6557,
+            "market_reference_roi_pct": 74.9406
+          },
+          "formation": {
+            "race_id": "1120250929030012",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "176425-37-72",
+            "1着": [
+              1,
+              7,
+              6,
+              4,
+              2,
+              5
+            ],
+            "2着": [
+              3,
+              7
+            ],
+            "3着": [
+              7,
+              2
+            ],
+            "valid_points": 14,
+            "favorite": "7-3-1",
+            "favorite_odds": 22.0,
+            "ticket_odds": [
+              {
+                "numbers": "1-3-2",
+                "odds": 154.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-3-7",
+                "odds": 58.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-7-2",
+                "odds": 144.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-3-7",
+                "odds": 203.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-3-2",
+                "odds": 868.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-3-7",
+                "odds": 470.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-7-2",
+                "odds": 894.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-3-2",
+                "odds": 1216.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-3-7",
+                "odds": 394.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-7-2",
+                "odds": 2132.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-3-2",
+                "odds": 174.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-3-7",
+                "odds": 130.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-7-2",
+                "odds": 131.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-3-2",
+                "odds": 70.4,
+                "stake_yen": 100
+              }
+            ],
+            "result": "7-4-1",
+            "total_stake_yen": 1400,
+            "payout_yen": 0,
+            "profit_yen": -1400
+          }
+        }
+      ]
+    },
+    {
+      "band": "20-25",
+      "cars": 9,
+      "search": {
+        "status": "completed",
+        "candidate_masks_examined": 1716,
+        "discovered_distinct_local_structures": 14,
+        "optimizer_is_heuristic": true
+      },
+      "top3": [
+        {
+          "development": {
+            "races": 476,
+            "points": 6,
+            "hits": 14,
+            "market_expected_hits": 10.523099,
+            "observed_over_market": 1.33041,
+            "stake_yen": 285600,
+            "payout_yen": 897180,
+            "profit_yen": 611580,
+            "roi_pct": 314.1387,
+            "market_reference_roi_pct": 74.9446
+          },
+          "validation": {
+            "races": 180,
+            "points": 6,
+            "hits": 2,
+            "market_expected_hits": 3.990279,
+            "observed_over_market": 0.50122,
+            "stake_yen": 108000,
+            "payout_yen": 13050,
+            "profit_yen": -94950,
+            "roi_pct": 12.0833,
+            "market_reference_roi_pct": 74.9435
+          },
+          "forward": {
+            "races": 295,
+            "points": 6,
+            "hits": 6,
+            "market_expected_hits": 6.584277,
+            "observed_over_market": 0.91126,
+            "stake_yen": 177000,
+            "payout_yen": 133930,
+            "profit_yen": -43070,
+            "roi_pct": 75.6667,
+            "market_reference_roi_pct": 74.9333
+          },
+          "formation": {
+            "race_id": "1120250812010005",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "298-5-63",
+            "1着": [
+              2,
+              9,
+              8
+            ],
+            "2着": [
+              5
+            ],
+            "3着": [
+              6,
+              3
+            ],
+            "valid_points": 6,
+            "favorite": "5-7-3",
+            "favorite_odds": 23.3,
+            "ticket_odds": [
+              {
+                "numbers": "2-5-3",
+                "odds": 128.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-5-6",
+                "odds": 88.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-5-3",
+                "odds": 2689.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-5-6",
+                "odds": 3151.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-5-3",
+                "odds": 973.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "9-5-6",
+                "odds": 1635.7,
+                "stake_yen": 100
+              }
+            ],
+            "result": "6-2-7",
+            "total_stake_yen": 600,
+            "payout_yen": 0,
+            "profit_yen": -600
+          }
+        },
+        {
+          "development": {
+            "races": 430,
+            "points": 6,
+            "hits": 13,
+            "market_expected_hits": 12.377144,
+            "observed_over_market": 1.05032,
+            "stake_yen": 258000,
+            "payout_yen": 480430,
+            "profit_yen": 222430,
+            "roi_pct": 186.2132,
+            "market_reference_roi_pct": 74.9451
+          },
+          "validation": {
+            "races": 167,
+            "points": 6,
+            "hits": 4,
+            "market_expected_hits": 5.309099,
+            "observed_over_market": 0.75342,
+            "stake_yen": 100200,
+            "payout_yen": 32920,
+            "profit_yen": -67280,
+            "roi_pct": 32.8543,
+            "market_reference_roi_pct": 74.9452
+          },
+          "forward": {
+            "races": 268,
+            "points": 6,
+            "hits": 8,
+            "market_expected_hits": 8.108846,
+            "observed_over_market": 0.98658,
+            "stake_yen": 160800,
+            "payout_yen": 91740,
+            "profit_yen": -69060,
+            "roi_pct": 57.0522,
+            "market_reference_roi_pct": 74.9327
+          },
+          "formation": {
+            "race_id": "1120250812010005",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "2-25784-258",
+            "1着": [
+              2
+            ],
+            "2着": [
+              2,
+              5,
+              7,
+              8,
+              4
+            ],
+            "3着": [
+              2,
+              5,
+              8
+            ],
+            "valid_points": 6,
+            "favorite": "5-7-3",
+            "favorite_odds": 23.3,
+            "ticket_odds": [
+              {
+                "numbers": "2-4-5",
+                "odds": 844.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-4-8",
+                "odds": 634.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-5-8",
+                "odds": 72.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-7-5",
+                "odds": 58.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-7-8",
+                "odds": 79.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-8-5",
+                "odds": 63.0,
+                "stake_yen": 100
+              }
+            ],
+            "result": "6-2-7",
+            "total_stake_yen": 600,
+            "payout_yen": 0,
+            "profit_yen": -600
+          }
+        },
+        {
+          "development": {
+            "races": 483,
+            "points": 18,
+            "hits": 40,
+            "market_expected_hits": 23.099574,
+            "observed_over_market": 1.73163,
+            "stake_yen": 869400,
+            "payout_yen": 1678650,
+            "profit_yen": 809250,
+            "roi_pct": 193.0814,
+            "market_reference_roi_pct": 74.9452
+          },
+          "validation": {
+            "races": 182,
+            "points": 18,
+            "hits": 6,
+            "market_expected_hits": 8.971878,
+            "observed_over_market": 0.66876,
+            "stake_yen": 327600,
+            "payout_yen": 56740,
+            "profit_yen": -270860,
+            "roi_pct": 17.3199,
+            "market_reference_roi_pct": 74.9434
+          },
+          "forward": {
+            "races": 296,
+            "points": 18,
+            "hits": 15,
+            "market_expected_hits": 13.870337,
+            "observed_over_market": 1.08144,
+            "stake_yen": 532800,
+            "payout_yen": 186530,
+            "profit_yen": -346270,
+            "roi_pct": 35.0094,
+            "market_reference_roi_pct": 74.9343
+          },
+          "formation": {
+            "race_id": "1120250812010005",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "2518-24-2574",
+            "1着": [
+              2,
+              5,
+              1,
+              8
+            ],
+            "2着": [
+              2,
+              4
+            ],
+            "3着": [
+              2,
+              5,
+              7,
+              4
+            ],
+            "valid_points": 18,
+            "favorite": "5-7-3",
+            "favorite_odds": 23.3,
+            "ticket_odds": [
+              {
+                "numbers": "1-2-4",
+                "odds": 101.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-2-5",
+                "odds": 87.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-2-7",
+                "odds": 136.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-4-2",
+                "odds": 112.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-4-5",
+                "odds": 143.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-4-7",
+                "odds": 190.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-4-5",
+                "odds": 844.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "2-4-7",
+                "odds": 1123.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-2-4",
+                "odds": 420.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-2-7",
+                "odds": 88.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-4-2",
+                "odds": 1115.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-4-7",
+                "odds": 1011.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-2-4",
+                "odds": 1180.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-2-5",
+                "odds": 563.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-2-7",
+                "odds": 726.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-4-2",
+                "odds": 2845.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-4-5",
+                "odds": 6263.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-4-7",
+                "odds": 8780.0,
+                "stake_yen": 100
+              }
+            ],
+            "result": "6-2-7",
+            "total_stake_yen": 1800,
+            "payout_yen": 0,
+            "profit_yen": -1800
+          }
+        }
+      ]
+    },
+    {
+      "band": "25+",
+      "cars": 7,
+      "search": {
+        "status": "insufficient_train_races"
+      },
+      "top3": []
+    },
+    {
+      "band": "25+",
+      "cars": 9,
+      "search": {
+        "status": "completed",
+        "candidate_masks_examined": 1647,
+        "discovered_distinct_local_structures": 13,
+        "optimizer_is_heuristic": true
+      },
+      "top3": [
+        {
+          "development": {
+            "races": 309,
+            "points": 26,
+            "hits": 15,
+            "market_expected_hits": 10.46161,
+            "observed_over_market": 1.43381,
+            "stake_yen": 803400,
+            "payout_yen": 1656930,
+            "profit_yen": 853530,
+            "roi_pct": 206.2397,
+            "market_reference_roi_pct": 74.9605
+          },
+          "validation": {
+            "races": 130,
+            "points": 26,
+            "hits": 3,
+            "market_expected_hits": 4.301957,
+            "observed_over_market": 0.69736,
+            "stake_yen": 338000,
+            "payout_yen": 37310,
+            "profit_yen": -300690,
+            "roi_pct": 11.0385,
+            "market_reference_roi_pct": 74.9568
+          },
+          "forward": {
+            "races": 206,
+            "points": 26,
+            "hits": 7,
+            "market_expected_hits": 6.739558,
+            "observed_over_market": 1.03864,
+            "stake_yen": 535600,
+            "payout_yen": 409100,
+            "profit_yen": -126500,
+            "roi_pct": 76.3816,
+            "market_reference_roi_pct": 74.9584
+          },
+          "formation": {
+            "race_id": "1120250812010011",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "5468-251438-48",
+            "1着": [
+              5,
+              4,
+              6,
+              8
+            ],
+            "2着": [
+              2,
+              5,
+              1,
+              4,
+              3,
+              8
+            ],
+            "3着": [
+              4,
+              8
+            ],
+            "valid_points": 26,
+            "favorite": "9-1-2",
+            "favorite_odds": 29.8,
+            "ticket_odds": [
+              {
+                "numbers": "4-1-8",
+                "odds": 1289.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-2-8",
+                "odds": 607.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-3-8",
+                "odds": 1188.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-5-8",
+                "odds": 482.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-1-4",
+                "odds": 372.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-1-8",
+                "odds": 570.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-2-4",
+                "odds": 89.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-2-8",
+                "odds": 192.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-3-4",
+                "odds": 197.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-3-8",
+                "odds": 636.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-4-8",
+                "odds": 426.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "5-8-4",
+                "odds": 599.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-1-4",
+                "odds": 2361.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-1-8",
+                "odds": 2728.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-2-4",
+                "odds": 281.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-2-8",
+                "odds": 369.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-3-4",
+                "odds": 1852.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-3-8",
+                "odds": 3180.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-4-8",
+                "odds": 2102.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-5-4",
+                "odds": 687.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-5-8",
+                "odds": 912.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-8-4",
+                "odds": 2062.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-1-4",
+                "odds": 1912.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-2-4",
+                "odds": 892.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-3-4",
+                "odds": 2409.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-5-4",
+                "odds": 975.1,
+                "stake_yen": 100
+              }
+            ],
+            "result": "2-6-3",
+            "total_stake_yen": 2600,
+            "payout_yen": 0,
+            "profit_yen": -2600
+          }
+        },
+        {
+          "development": {
+            "races": 310,
+            "points": 26,
+            "hits": 16,
+            "market_expected_hits": 8.643694,
+            "observed_over_market": 1.85106,
+            "stake_yen": 806000,
+            "payout_yen": 1537570,
+            "profit_yen": 731570,
+            "roi_pct": 190.7655,
+            "market_reference_roi_pct": 74.9606
+          },
+          "validation": {
+            "races": 132,
+            "points": 26,
+            "hits": 3,
+            "market_expected_hits": 3.662292,
+            "observed_over_market": 0.81916,
+            "stake_yen": 343200,
+            "payout_yen": 75800,
+            "profit_yen": -267400,
+            "roi_pct": 22.0862,
+            "market_reference_roi_pct": 74.957
+          },
+          "forward": {
+            "races": 210,
+            "points": 26,
+            "hits": 4,
+            "market_expected_hits": 5.999451,
+            "observed_over_market": 0.66673,
+            "stake_yen": 546000,
+            "payout_yen": 328170,
+            "profit_yen": -217830,
+            "roi_pct": 60.1044,
+            "market_reference_roi_pct": 74.9586
+          },
+          "formation": {
+            "race_id": "1120250812010011",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "46-25197463-28",
+            "1着": [
+              4,
+              6
+            ],
+            "2着": [
+              2,
+              5,
+              1,
+              9,
+              7,
+              4,
+              6,
+              3
+            ],
+            "3着": [
+              2,
+              8
+            ],
+            "valid_points": 26,
+            "favorite": "9-1-2",
+            "favorite_odds": 29.8,
+            "ticket_odds": [
+              {
+                "numbers": "4-1-2",
+                "odds": 535.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-1-8",
+                "odds": 1289.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-2-8",
+                "odds": 607.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-3-2",
+                "odds": 393.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-3-8",
+                "odds": 1188.4,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-5-2",
+                "odds": 121.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-5-8",
+                "odds": 482.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-6-2",
+                "odds": 411.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-6-8",
+                "odds": 1377.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-7-2",
+                "odds": 331.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-7-8",
+                "odds": 447.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-9-2",
+                "odds": 690.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "4-9-8",
+                "odds": 1490.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-1-2",
+                "odds": 544.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-1-8",
+                "odds": 2728.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-2-8",
+                "odds": 369.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-3-2",
+                "odds": 859.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-3-8",
+                "odds": 3180.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-4-2",
+                "odds": 624.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-4-8",
+                "odds": 2102.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-5-2",
+                "odds": 208.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-5-8",
+                "odds": 912.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-7-2",
+                "odds": 427.3,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-7-8",
+                "odds": 858.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-9-2",
+                "odds": 691.1,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "6-9-8",
+                "odds": 3052.3,
+                "stake_yen": 100
+              }
+            ],
+            "result": "2-6-3",
+            "total_stake_yen": 2600,
+            "payout_yen": 0,
+            "profit_yen": -2600
+          }
+        },
+        {
+          "development": {
+            "races": 303,
+            "points": 22,
+            "hits": 18,
+            "market_expected_hits": 10.21716,
+            "observed_over_market": 1.76174,
+            "stake_yen": 666600,
+            "payout_yen": 817150,
+            "profit_yen": 150550,
+            "roi_pct": 122.5848,
+            "market_reference_roi_pct": 74.9607
+          },
+          "validation": {
+            "races": 125,
+            "points": 22,
+            "hits": 10,
+            "market_expected_hits": 3.931592,
+            "observed_over_market": 2.5435,
+            "stake_yen": 275000,
+            "payout_yen": 705190,
+            "profit_yen": 430190,
+            "roi_pct": 256.4327,
+            "market_reference_roi_pct": 74.9568
+          },
+          "forward": {
+            "races": 202,
+            "points": 22,
+            "hits": 9,
+            "market_expected_hits": 6.782744,
+            "observed_over_market": 1.3269,
+            "stake_yen": 444400,
+            "payout_yen": 1103000,
+            "profit_yen": 658600,
+            "roi_pct": 248.1998,
+            "market_reference_roi_pct": 74.9587
+          },
+          "formation": {
+            "race_id": "1120250812010011",
+            "example_selection": "first eligible archive race in forward period, NOT picked for result or payout",
+            "formation": "178-19-21463",
+            "1着": [
+              1,
+              7,
+              8
+            ],
+            "2着": [
+              1,
+              9
+            ],
+            "3着": [
+              2,
+              1,
+              4,
+              6,
+              3
+            ],
+            "valid_points": 22,
+            "favorite": "9-1-2",
+            "favorite_odds": 29.8,
+            "ticket_odds": [
+              {
+                "numbers": "1-9-2",
+                "odds": 51.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-9-3",
+                "odds": 164.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-9-4",
+                "odds": 174.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "1-9-6",
+                "odds": 276.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-1-2",
+                "odds": 438.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-1-3",
+                "odds": 1080.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-1-4",
+                "odds": 918.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-1-6",
+                "odds": 1606.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-9-1",
+                "odds": 474.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-9-2",
+                "odds": 703.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-9-3",
+                "odds": 1291.8,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-9-4",
+                "odds": 1188.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "7-9-6",
+                "odds": 1807.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-1-2",
+                "odds": 785.9,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-1-3",
+                "odds": 2364.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-1-4",
+                "odds": 1912.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-1-6",
+                "odds": 2304.0,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-9-1",
+                "odds": 600.6,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-9-2",
+                "odds": 1468.7,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-9-3",
+                "odds": 2716.5,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-9-4",
+                "odds": 2380.2,
+                "stake_yen": 100
+              },
+              {
+                "numbers": "8-9-6",
+                "odds": 2848.1,
+                "stake_yen": 100
+              }
+            ],
+            "result": "2-6-3",
+            "total_stake_yen": 2200,
+            "payout_yen": 0,
+            "profit_yen": -2200
+          }
+        }
+      ]
+    }
+  ]
+}
