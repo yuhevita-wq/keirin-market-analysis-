@@ -1,0 +1,1425 @@
+{
+  "state": "CALIBRATOR_V2_2024_COMPLETE",
+  "2023_base_archive_run": 40807880319,
+  "2023_probability_archived_source_sha256": "33ab7e485b976c583f26c8da4eee5b613dd9c64af543f66e628f98a8146e925b",
+  "raw_probability_archive": "data/audits/independent_trifecta_all_tickets_2024.jsonl.gz",
+  "2024_labels_only_for_calibration": true,
+  "market_odds_seen": false,
+  "2025_test_labels_seen": false,
+  "train_period": [
+    "2024-01-01",
+    "2024-06-30"
+  ],
+  "temporal_development_validation_period": [
+    "2024-07-01",
+    "2024-12-31"
+  ],
+  "note_on_independence": "2024 all-year aggregate had already been examined before this experiment, so H2 is chronological development validation, not a genuinely sealed test. 2025 must remain sealed.",
+  "first_half_races": 12561,
+  "second_half_races": 12787,
+  "full_year_races": 25348,
+  "full_year_ticket_predictions": 5820462,
+  "data_coverage": {
+    "verified_2024_result_labels": 25482,
+    "races_with_2024_manifest": 25372,
+    "usable_matching_cards_and_line": 25348,
+    "coverage_pct_of_verified_labels": 99.4741,
+    "class_counts": {
+      "A1_A2": 12066,
+      "A3": 5659,
+      "S_F1": 5189,
+      "S_grade": 2434
+    },
+    "field_size_counts": {
+      "7": 21301,
+      "6": 1378,
+      "5": 325,
+      "9": 2231,
+      "8": 113
+    },
+    "duplicate_line_conflicts_observed": 0,
+    "exclusions": {
+      "duplicate_manifests": 1449,
+      "duplicated_entry_rows": 10133,
+      "no_published_line": 24
+    }
+  },
+  "frozen_2023_base_model_not_modified": true,
+  "features": [
+    "log_baseline_probability",
+    "same_line_12",
+    "same_line_13",
+    "same_line_23",
+    "same_line_123",
+    "three_distinct_lines",
+    "first_is_line_leader",
+    "first_is_score_rank_1"
+  ],
+  "log_linear_probability_formula": "P_v2(t|X) = exp(sum_j(theta_j * feature_j(t,X))) / sum_u exp(sum_j(theta_j * feature_j(u,X))), where feature_0=ln(P_v1(t|X))",
+  "regularization_strength": 50.0,
+  "training_method": "L-BFGS-B penalized multiclass negative log-likelihood on 2024 H1",
+  "first_half_fit": {
+    "temperature_only": {
+      "model": "temperature_only",
+      "trained_races": 12561,
+      "training_first_date": "2024-01-01",
+      "training_last_date": "2024-06-30",
+      "columns": [
+        "log_baseline_probability"
+      ],
+      "initial_regularized_objective": 4.384921592,
+      "optimized_regularized_objective": 4.380574722,
+      "iterations": 4,
+      "success": true,
+      "raw_parameters": {
+        "log_baseline_probability": 1.074227593,
+        "same_line_12": 0.0,
+        "same_line_13": 0.0,
+        "same_line_23": 0.0,
+        "same_line_123": 0.0,
+        "three_distinct_lines": 0.0,
+        "first_is_line_leader": 0.0,
+        "first_is_score_rank_1": 0.0
+      },
+      "parameter_bounds": [
+        [
+          0.5,
+          2.0
+        ]
+      ]
+    },
+    "temperature_plus_line_role": {
+      "model": "temperature_plus_line_role",
+      "trained_races": 12561,
+      "training_first_date": "2024-01-01",
+      "training_last_date": "2024-06-30",
+      "columns": [
+        "log_baseline_probability",
+        "same_line_12",
+        "same_line_13",
+        "same_line_23",
+        "same_line_123",
+        "three_distinct_lines",
+        "first_is_line_leader",
+        "first_is_score_rank_1"
+      ],
+      "initial_regularized_objective": 4.384921592,
+      "optimized_regularized_objective": 4.378105694,
+      "iterations": 12,
+      "success": true,
+      "raw_parameters": {
+        "log_baseline_probability": 1.038625363,
+        "same_line_12": 0.043400094,
+        "same_line_13": 0.061675794,
+        "same_line_23": 0.053116753,
+        "same_line_123": 0.088362747,
+        "three_distinct_lines": 0.018532853,
+        "first_is_line_leader": 0.060161352,
+        "first_is_score_rank_1": -0.006493851
+      },
+      "parameter_bounds": [
+        [
+          0.5,
+          2.0
+        ],
+        [
+          -1.0,
+          1.0
+        ],
+        [
+          -1.0,
+          1.0
+        ],
+        [
+          -1.0,
+          1.0
+        ],
+        [
+          -1.0,
+          1.0
+        ],
+        [
+          -1.0,
+          1.0
+        ],
+        [
+          -1.0,
+          1.0
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    }
+  },
+  "second_half_temporal_validation": {
+    "baseline_2023": {
+      "overall": {
+        "races": 12787,
+        "nll": 4.39226244,
+        "brier": 0.9695565,
+        "top1_hit_rate_pct": 10.2526,
+        "top3_hit_rate_pct": 21.98326,
+        "mean_probability_actual_pct": 2.697643
+      },
+      "bands": {
+        "0–0.1%": {
+          "ticket_count": 1042490,
+          "mean_predicted_pct": 0.0456734,
+          "actual_frequency_pct": 0.0462355,
+          "expected_hits": 476.141,
+          "actual_hits": 482,
+          "observed_expected_ratio": 1.01231,
+          "z_score_if_well_calibrated": 0.2761,
+          "reference_95pct_hits": [
+            434.54,
+            517.74
+          ]
+        },
+        "0.1–0.5%": {
+          "ticket_count": 1256021,
+          "mean_predicted_pct": 0.2447983,
+          "actual_frequency_pct": 0.2147257,
+          "expected_hits": 3074.718,
+          "actual_hits": 2697,
+          "observed_expected_ratio": 0.87715,
+          "z_score_if_well_calibrated": -7.9255,
+          "reference_95pct_hits": [
+            2981.31,
+            3168.13
+          ]
+        },
+        "0.5–1%": {
+          "ticket_count": 351780,
+          "mean_predicted_pct": 0.7018739,
+          "actual_frequency_pct": 0.6572289,
+          "expected_hits": 2469.052,
+          "actual_hits": 2312,
+          "observed_expected_ratio": 0.93639,
+          "z_score_if_well_calibrated": -3.5402,
+          "reference_95pct_hits": [
+            2382.1,
+            2556.0
+          ]
+        },
+        "1–2%": {
+          "ticket_count": 180321,
+          "mean_predicted_pct": 1.389747,
+          "actual_frequency_pct": 1.374216,
+          "expected_hits": 2506.006,
+          "actual_hits": 2478,
+          "observed_expected_ratio": 0.98882,
+          "z_score_if_well_calibrated": -0.6305,
+          "reference_95pct_hits": [
+            2418.94,
+            2593.07
+          ]
+        },
+        "2–5%": {
+          "ticket_count": 89404,
+          "mean_predicted_pct": 2.9228399,
+          "actual_frequency_pct": 3.1531028,
+          "expected_hits": 2613.136,
+          "actual_hits": 2819,
+          "observed_expected_ratio": 1.07878,
+          "z_score_if_well_calibrated": 4.5771,
+          "reference_95pct_hits": [
+            2524.98,
+            2701.29
+          ]
+        },
+        "5–10%": {
+          "ticket_count": 15330,
+          "mean_predicted_pct": 6.7898998,
+          "actual_frequency_pct": 7.6712329,
+          "expected_hits": 1040.892,
+          "actual_hits": 1176,
+          "observed_expected_ratio": 1.1298,
+          "z_score_if_well_calibrated": 4.4548,
+          "reference_95pct_hits": [
+            981.45,
+            1100.34
+          ]
+        },
+        "10–20%": {
+          "ticket_count": 4559,
+          "mean_predicted_pct": 12.7377965,
+          "actual_frequency_pct": 17.3502961,
+          "expected_hits": 580.716,
+          "actual_hits": 791,
+          "observed_expected_ratio": 1.36211,
+          "z_score_if_well_calibrated": 9.4691,
+          "reference_95pct_hits": [
+            537.19,
+            624.24
+          ]
+        },
+        "20–100%": {
+          "ticket_count": 119,
+          "mean_predicted_pct": 22.1347743,
+          "actual_frequency_pct": 26.8907563,
+          "expected_hits": 26.34,
+          "actual_hits": 32,
+          "observed_expected_ratio": 1.21486,
+          "z_score_if_well_calibrated": 1.252,
+          "reference_95pct_hits": [
+            17.48,
+            35.2
+          ]
+        }
+      },
+      "ticket_weighted_ECE_pp": 0.0382837,
+      "above_5pct_weighted_ECE_pp": 1.7545573,
+      "structure": {
+        "same_line_12": {
+          "races": 12787,
+          "expected_frequency_pct": 54.3772,
+          "actual_frequency_pct": 56.823336,
+          "actual_minus_expected_pp": 2.446136,
+          "z_score": 5.64582
+        },
+        "same_line_13": {
+          "races": 12787,
+          "expected_frequency_pct": 33.705366,
+          "actual_frequency_pct": 38.570423,
+          "actual_minus_expected_pp": 4.865057,
+          "z_score": 12.06139
+        },
+        "same_line_23": {
+          "races": 12787,
+          "expected_frequency_pct": 33.819549,
+          "actual_frequency_pct": 37.467741,
+          "actual_minus_expected_pp": 3.648192,
+          "z_score": 9.02268
+        },
+        "same_line_123": {
+          "races": 12787,
+          "expected_frequency_pct": 18.360943,
+          "actual_frequency_pct": 23.125049,
+          "actual_minus_expected_pp": 4.764106,
+          "z_score": 14.722
+        },
+        "three_distinct_lines": {
+          "races": 12787,
+          "expected_frequency_pct": 14.819771,
+          "actual_frequency_pct": 13.388598,
+          "actual_minus_expected_pp": -1.431174,
+          "z_score": -4.71656
+        },
+        "first_is_line_leader": {
+          "races": 12787,
+          "expected_frequency_pct": 57.937283,
+          "actual_frequency_pct": 58.942676,
+          "actual_minus_expected_pp": 1.005394,
+          "z_score": 2.38538
+        }
+      },
+      "by_class": {
+        "A1_A2": {
+          "races": 6047,
+          "nll": 4.33189282,
+          "brier": 0.96966955,
+          "top1_hit_rate_pct": 9.64114,
+          "top3_hit_rate_pct": 22.24243,
+          "mean_probability_actual_pct": 2.717013
+        },
+        "A3": {
+          "races": 2923,
+          "nll": 4.13025988,
+          "brier": 0.95848868,
+          "top1_hit_rate_pct": 13.88984,
+          "top3_hit_rate_pct": 25.96647,
+          "mean_probability_actual_pct": 3.48351
+        },
+        "S_F1": {
+          "races": 2580,
+          "nll": 4.50766468,
+          "brier": 0.97565132,
+          "top1_hit_rate_pct": 8.68217,
+          "top3_hit_rate_pct": 18.99225,
+          "mean_probability_actual_pct": 2.352943
+        },
+        "S_grade": {
+          "races": 1237,
+          "nll": 5.06578771,
+          "brier": 0.98244497,
+          "top1_hit_rate_pct": 7.92239,
+          "top3_hit_rate_pct": 17.54244,
+          "mean_probability_actual_pct": 1.464909
+        }
+      },
+      "by_field": {
+        "5": {
+          "races": 140,
+          "nll": 3.34911848,
+          "brier": 0.93496658,
+          "top1_hit_rate_pct": 12.14286,
+          "top3_hit_rate_pct": 35.0,
+          "mean_probability_actual_pct": 6.466495
+        },
+        "6": {
+          "races": 682,
+          "nll": 3.96591134,
+          "brier": 0.96287653,
+          "top1_hit_rate_pct": 10.41056,
+          "top3_hit_rate_pct": 23.31378,
+          "mean_probability_actual_pct": 3.700858
+        },
+        "7": {
+          "races": 10780,
+          "nll": 4.35335206,
+          "brier": 0.96891102,
+          "top1_hit_rate_pct": 10.45455,
+          "top3_hit_rate_pct": 22.282,
+          "mean_probability_actual_pct": 2.730923
+        },
+        "8": {
+          "races": 67,
+          "nll": 4.83679846,
+          "brier": 0.98113263,
+          "top1_hit_rate_pct": 10.44776,
+          "top3_hit_rate_pct": 19.40299,
+          "mean_probability_actual_pct": 1.664407
+        },
+        "9": {
+          "races": 1118,
+          "nll": 5.13151251,
+          "brier": 0.98349307,
+          "top1_hit_rate_pct": 7.96064,
+          "top3_hit_rate_pct": 16.81574,
+          "mean_probability_actual_pct": 1.354739
+        }
+      },
+      "by_month": {
+        "2024-07": {
+          "races": 2233,
+          "nll": 4.42828848,
+          "brier": 0.97257043,
+          "top1_hit_rate_pct": 9.71787,
+          "top3_hit_rate_pct": 20.46574,
+          "mean_probability_actual_pct": 2.521237
+        },
+        "2024-08": {
+          "races": 2170,
+          "nll": 4.43757223,
+          "brier": 0.97216307,
+          "top1_hit_rate_pct": 8.84793,
+          "top3_hit_rate_pct": 21.05991,
+          "mean_probability_actual_pct": 2.578742
+        },
+        "2024-09": {
+          "races": 2130,
+          "nll": 4.36558441,
+          "brier": 0.96806694,
+          "top1_hit_rate_pct": 10.23474,
+          "top3_hit_rate_pct": 22.8169,
+          "mean_probability_actual_pct": 2.757666
+        },
+        "2024-10": {
+          "races": 2140,
+          "nll": 4.39953006,
+          "brier": 0.96876369,
+          "top1_hit_rate_pct": 11.16822,
+          "top3_hit_rate_pct": 22.52336,
+          "mean_probability_actual_pct": 2.733272
+        },
+        "2024-11": {
+          "races": 2066,
+          "nll": 4.37127549,
+          "brier": 0.96762015,
+          "top1_hit_rate_pct": 10.98742,
+          "top3_hit_rate_pct": 22.16844,
+          "mean_probability_actual_pct": 2.793215
+        },
+        "2024-12": {
+          "races": 2048,
+          "nll": 4.34629667,
+          "brier": 0.9678395,
+          "top1_hit_rate_pct": 10.64453,
+          "top3_hit_rate_pct": 22.99805,
+          "mean_probability_actual_pct": 2.819901
+        }
+      },
+      "by_line_shape_top12": {
+        "3-2-2": {
+          "races": 5085,
+          "nll": 4.39250386,
+          "brier": 0.97102125,
+          "top1_hit_rate_pct": 9.81318,
+          "top3_hit_rate_pct": 21.14061,
+          "mean_probability_actual_pct": 2.544596
+        },
+        "3-3-1": {
+          "races": 1926,
+          "nll": 4.20121297,
+          "brier": 0.96669845,
+          "top1_hit_rate_pct": 11.3188,
+          "top3_hit_rate_pct": 24.09138,
+          "mean_probability_actual_pct": 2.961407
+        },
+        "2-2-2-1": {
+          "races": 1104,
+          "nll": 4.82040246,
+          "brier": 0.98673567,
+          "top1_hit_rate_pct": 5.07246,
+          "top3_hit_rate_pct": 12.0471,
+          "mean_probability_actual_pct": 1.453484
+        },
+        "3-2-1-1": {
+          "races": 1078,
+          "nll": 4.44286289,
+          "brier": 0.96824221,
+          "top1_hit_rate_pct": 10.9462,
+          "top3_hit_rate_pct": 23.46939,
+          "mean_probability_actual_pct": 2.810793
+        },
+        "4-3": {
+          "races": 671,
+          "nll": 3.94718695,
+          "brier": 0.95300395,
+          "top1_hit_rate_pct": 14.45604,
+          "top3_hit_rate_pct": 30.84948,
+          "mean_probability_actual_pct": 3.796633
+        },
+        "4-2-1": {
+          "races": 492,
+          "nll": 3.98391452,
+          "brier": 0.94747348,
+          "top1_hit_rate_pct": 15.85366,
+          "top3_hit_rate_pct": 33.73984,
+          "mean_probability_actual_pct": 4.319182
+        },
+        "3-2-2-2": {
+          "races": 404,
+          "nll": 5.04590654,
+          "brier": 0.98097277,
+          "top1_hit_rate_pct": 9.90099,
+          "top3_hit_rate_pct": 18.56436,
+          "mean_probability_actual_pct": 1.462269
+        },
+        "3-3-3": {
+          "races": 312,
+          "nll": 4.83193795,
+          "brier": 0.97920203,
+          "top1_hit_rate_pct": 8.33333,
+          "top3_hit_rate_pct": 21.47436,
+          "mean_probability_actual_pct": 1.592164
+        },
+        "3-2-1": {
+          "races": 224,
+          "nll": 4.0038106,
+          "brier": 0.96491025,
+          "top1_hit_rate_pct": 11.16071,
+          "top3_hit_rate_pct": 24.10714,
+          "mean_probability_actual_pct": 3.609068
+        },
+        "3-3": {
+          "races": 184,
+          "nll": 3.90210076,
+          "brier": 0.96490006,
+          "top1_hit_rate_pct": 9.23913,
+          "top3_hit_rate_pct": 21.73913,
+          "mean_probability_actual_pct": 3.617625
+        },
+        "3-3-2-1": {
+          "races": 162,
+          "nll": 5.32246762,
+          "brier": 0.98711846,
+          "top1_hit_rate_pct": 7.40741,
+          "top3_hit_rate_pct": 13.58025,
+          "mean_probability_actual_pct": 1.20612
+        },
+        "2-2-1-1-1": {
+          "races": 128,
+          "nll": 4.84620055,
+          "brier": 0.9883289,
+          "top1_hit_rate_pct": 4.6875,
+          "top3_hit_rate_pct": 12.5,
+          "mean_probability_actual_pct": 1.331488
+        }
+      }
+    },
+    "temperature_only": {
+      "overall": {
+        "races": 12787,
+        "nll": 4.38728459,
+        "brier": 0.96876183,
+        "top1_hit_rate_pct": 10.2526,
+        "top3_hit_rate_pct": 21.98326,
+        "mean_probability_actual_pct": 2.979999
+      },
+      "bands": {
+        "0–0.1%": {
+          "ticket_count": 1155325,
+          "mean_predicted_pct": 0.0423514,
+          "actual_frequency_pct": 0.0502023,
+          "expected_hits": 489.297,
+          "actual_hits": 580,
+          "observed_expected_ratio": 1.18537,
+          "z_score_if_well_calibrated": 4.2143,
+          "reference_95pct_hits": [
+            447.11,
+            531.48
+          ]
+        },
+        "0.1–0.5%": {
+          "ticket_count": 1177402,
+          "mean_predicted_pct": 0.2414702,
+          "actual_frequency_pct": 0.2329706,
+          "expected_hits": 2843.075,
+          "actual_hits": 2743,
+          "observed_expected_ratio": 0.9648,
+          "z_score_if_well_calibrated": -2.154,
+          "reference_95pct_hits": [
+            2752.01,
+            2934.14
+          ]
+        },
+        "0.5–1%": {
+          "ticket_count": 319617,
+          "mean_predicted_pct": 0.7025895,
+          "actual_frequency_pct": 0.6839436,
+          "expected_hits": 2245.595,
+          "actual_hits": 2186,
+          "observed_expected_ratio": 0.97346,
+          "z_score_if_well_calibrated": -1.3941,
+          "reference_95pct_hits": [
+            2161.81,
+            2329.38
+          ]
+        },
+        "1–2%": {
+          "ticket_count": 171057,
+          "mean_predicted_pct": 1.3914477,
+          "actual_frequency_pct": 1.3504271,
+          "expected_hits": 2380.169,
+          "actual_hits": 2310,
+          "observed_expected_ratio": 0.97052,
+          "z_score_if_well_calibrated": -1.6117,
+          "reference_95pct_hits": [
+            2294.84,
+            2465.5
+          ]
+        },
+        "2–5%": {
+          "ticket_count": 92803,
+          "mean_predicted_pct": 2.955165,
+          "actual_frequency_pct": 2.9869724,
+          "expected_hits": 2742.482,
+          "actual_hits": 2772,
+          "observed_expected_ratio": 1.01076,
+          "z_score_if_well_calibrated": 0.6435,
+          "reference_95pct_hits": [
+            2652.58,
+            2832.39
+          ]
+        },
+        "5–10%": {
+          "ticket_count": 17090,
+          "mean_predicted_pct": 6.7849003,
+          "actual_frequency_pct": 6.7290813,
+          "expected_hits": 1159.539,
+          "actual_hits": 1150,
+          "observed_expected_ratio": 0.99177,
+          "z_score_if_well_calibrated": -0.3,
+          "reference_95pct_hits": [
+            1097.22,
+            1221.86
+          ]
+        },
+        "10–20%": {
+          "ticket_count": 6383,
+          "mean_predicted_pct": 13.2940509,
+          "actual_frequency_pct": 14.8989503,
+          "expected_hits": 848.559,
+          "actual_hits": 951,
+          "observed_expected_ratio": 1.12072,
+          "z_score_if_well_calibrated": 3.8551,
+          "reference_95pct_hits": [
+            796.48,
+            900.64
+          ]
+        },
+        "20–100%": {
+          "ticket_count": 347,
+          "mean_predicted_pct": 22.5601861,
+          "actual_frequency_pct": 27.3775216,
+          "expected_hits": 78.284,
+          "actual_hits": 95,
+          "observed_expected_ratio": 1.21353,
+          "z_score_if_well_calibrated": 2.1572,
+          "reference_95pct_hits": [
+            63.1,
+            93.47
+          ]
+        }
+      },
+      "ticket_weighted_ECE_pp": 0.0162841,
+      "above_5pct_weighted_ECE_pp": 0.540287,
+      "structure": {
+        "same_line_12": {
+          "races": 12787,
+          "expected_frequency_pct": 56.968715,
+          "actual_frequency_pct": 56.823336,
+          "actual_minus_expected_pp": -0.145379,
+          "z_score": -0.33795
+        },
+        "same_line_13": {
+          "races": 12787,
+          "expected_frequency_pct": 34.758357,
+          "actual_frequency_pct": 38.570423,
+          "actual_minus_expected_pp": 3.812066,
+          "z_score": 9.42342
+        },
+        "same_line_23": {
+          "races": 12787,
+          "expected_frequency_pct": 34.886711,
+          "actual_frequency_pct": 37.467741,
+          "actual_minus_expected_pp": 2.58103,
+          "z_score": 6.36215
+        },
+        "same_line_123": {
+          "races": 12787,
+          "expected_frequency_pct": 20.101668,
+          "actual_frequency_pct": 23.125049,
+          "actual_minus_expected_pp": 3.023381,
+          "z_score": 9.07796
+        },
+        "three_distinct_lines": {
+          "races": 12787,
+          "expected_frequency_pct": 13.589552,
+          "actual_frequency_pct": 13.388598,
+          "actual_minus_expected_pp": -0.200955,
+          "z_score": -0.68654
+        },
+        "first_is_line_leader": {
+          "races": 12787,
+          "expected_frequency_pct": 58.556163,
+          "actual_frequency_pct": 58.942676,
+          "actual_minus_expected_pp": 0.386513,
+          "z_score": 0.92333
+        }
+      },
+      "by_class": {
+        "A1_A2": {
+          "races": 6047,
+          "nll": 4.32662838,
+          "brier": 0.96906535,
+          "top1_hit_rate_pct": 9.64114,
+          "top3_hit_rate_pct": 22.24243,
+          "mean_probability_actual_pct": 2.994711
+        },
+        "A3": {
+          "races": 2923,
+          "nll": 4.11905181,
+          "brier": 0.95664027,
+          "top1_hit_rate_pct": 13.88984,
+          "top3_hit_rate_pct": 25.96647,
+          "mean_probability_actual_pct": 3.869052
+        },
+        "S_F1": {
+          "races": 2580,
+          "nll": 4.51291042,
+          "brier": 0.97561798,
+          "top1_hit_rate_pct": 8.68217,
+          "top3_hit_rate_pct": 18.99225,
+          "mean_probability_actual_pct": 2.579562
+        },
+        "S_grade": {
+          "races": 1237,
+          "nll": 5.05560944,
+          "brier": 0.9816212,
+          "top1_hit_rate_pct": 7.92239,
+          "top3_hit_rate_pct": 17.54244,
+          "mean_probability_actual_pct": 1.642459
+        }
+      },
+      "by_field": {
+        "5": {
+          "races": 140,
+          "nll": 3.35448685,
+          "brier": 0.93540182,
+          "top1_hit_rate_pct": 12.14286,
+          "top3_hit_rate_pct": 35.0,
+          "mean_probability_actual_pct": 6.930798
+        },
+        "6": {
+          "races": 682,
+          "nll": 3.97052579,
+          "brier": 0.96328848,
+          "top1_hit_rate_pct": 10.41056,
+          "top3_hit_rate_pct": 23.31378,
+          "mean_probability_actual_pct": 4.011937
+        },
+        "7": {
+          "races": 10780,
+          "nll": 4.34828275,
+          "brier": 0.96803028,
+          "top1_hit_rate_pct": 10.45455,
+          "top3_hit_rate_pct": 22.282,
+          "mean_probability_actual_pct": 3.021062
+        },
+        "8": {
+          "races": 67,
+          "nll": 4.82981983,
+          "brier": 0.98065868,
+          "top1_hit_rate_pct": 10.44776,
+          "top3_hit_rate_pct": 19.40299,
+          "mean_probability_actual_pct": 1.850313
+        },
+        "9": {
+          "races": 1118,
+          "nll": 5.12038932,
+          "brier": 0.98261892,
+          "top1_hit_rate_pct": 7.96064,
+          "top3_hit_rate_pct": 16.81574,
+          "mean_probability_actual_pct": 1.527525
+        }
+      },
+      "by_month": {
+        "2024-07": {
+          "races": 2233,
+          "nll": 4.42545329,
+          "brier": 0.97218258,
+          "top1_hit_rate_pct": 9.71787,
+          "top3_hit_rate_pct": 20.46574,
+          "mean_probability_actual_pct": 2.772202
+        },
+        "2024-08": {
+          "races": 2170,
+          "nll": 4.4360317,
+          "brier": 0.97184739,
+          "top1_hit_rate_pct": 8.84793,
+          "top3_hit_rate_pct": 21.05991,
+          "mean_probability_actual_pct": 2.836755
+        },
+        "2024-09": {
+          "races": 2130,
+          "nll": 4.35823805,
+          "brier": 0.96695431,
+          "top1_hit_rate_pct": 10.23474,
+          "top3_hit_rate_pct": 22.8169,
+          "mean_probability_actual_pct": 3.053941
+        },
+        "2024-10": {
+          "races": 2140,
+          "nll": 4.39456161,
+          "brier": 0.96783257,
+          "top1_hit_rate_pct": 11.16822,
+          "top3_hit_rate_pct": 22.52336,
+          "mean_probability_actual_pct": 3.023939
+        },
+        "2024-11": {
+          "races": 2066,
+          "nll": 4.36423156,
+          "brier": 0.96649997,
+          "top1_hit_rate_pct": 10.98742,
+          "top3_hit_rate_pct": 22.16844,
+          "mean_probability_actual_pct": 3.095965
+        },
+        "2024-12": {
+          "races": 2048,
+          "nll": 4.33987828,
+          "brier": 0.96689534,
+          "top1_hit_rate_pct": 10.64453,
+          "top3_hit_rate_pct": 22.99805,
+          "mean_probability_actual_pct": 3.118542
+        }
+      },
+      "by_line_shape_top12": {
+        "3-2-2": {
+          "races": 5085,
+          "nll": 4.38670153,
+          "brier": 0.97019547,
+          "top1_hit_rate_pct": 9.81318,
+          "top3_hit_rate_pct": 21.14061,
+          "mean_probability_actual_pct": 2.812637
+        },
+        "3-3-1": {
+          "races": 1926,
+          "nll": 4.19309375,
+          "brier": 0.96599584,
+          "top1_hit_rate_pct": 11.3188,
+          "top3_hit_rate_pct": 24.09138,
+          "mean_probability_actual_pct": 3.264565
+        },
+        "2-2-2-1": {
+          "races": 1104,
+          "nll": 4.8331627,
+          "brier": 0.98716562,
+          "top1_hit_rate_pct": 5.07246,
+          "top3_hit_rate_pct": 12.0471,
+          "mean_probability_actual_pct": 1.556549
+        },
+        "3-2-1-1": {
+          "races": 1078,
+          "nll": 4.44480926,
+          "brier": 0.96725046,
+          "top1_hit_rate_pct": 10.9462,
+          "top3_hit_rate_pct": 23.46939,
+          "mean_probability_actual_pct": 3.127502
+        },
+        "4-3": {
+          "races": 671,
+          "nll": 3.92649418,
+          "brier": 0.95063737,
+          "top1_hit_rate_pct": 14.45604,
+          "top3_hit_rate_pct": 30.84948,
+          "mean_probability_actual_pct": 4.22739
+        },
+        "4-2-1": {
+          "races": 492,
+          "nll": 3.96811695,
+          "brier": 0.94519593,
+          "top1_hit_rate_pct": 15.85366,
+          "top3_hit_rate_pct": 33.73984,
+          "mean_probability_actual_pct": 4.854283
+        },
+        "3-2-2-2": {
+          "races": 404,
+          "nll": 5.02441742,
+          "brier": 0.97955707,
+          "top1_hit_rate_pct": 9.90099,
+          "top3_hit_rate_pct": 18.56436,
+          "mean_probability_actual_pct": 1.6624
+        },
+        "3-3-3": {
+          "races": 312,
+          "nll": 4.80426941,
+          "brier": 0.97776953,
+          "top1_hit_rate_pct": 8.33333,
+          "top3_hit_rate_pct": 21.47436,
+          "mean_probability_actual_pct": 1.793211
+        },
+        "3-2-1": {
+          "races": 224,
+          "nll": 4.01099933,
+          "brier": 0.96559319,
+          "top1_hit_rate_pct": 11.16071,
+          "top3_hit_rate_pct": 24.10714,
+          "mean_probability_actual_pct": 3.918856
+        },
+        "3-3": {
+          "races": 184,
+          "nll": 3.90620993,
+          "brier": 0.96576379,
+          "top1_hit_rate_pct": 9.23913,
+          "top3_hit_rate_pct": 21.73913,
+          "mean_probability_actual_pct": 3.895794
+        },
+        "3-3-2-1": {
+          "races": 162,
+          "nll": 5.32978367,
+          "brier": 0.98689848,
+          "top1_hit_rate_pct": 7.40741,
+          "top3_hit_rate_pct": 13.58025,
+          "mean_probability_actual_pct": 1.353964
+        },
+        "2-2-1-1-1": {
+          "races": 128,
+          "nll": 4.85642554,
+          "brier": 0.98900282,
+          "top1_hit_rate_pct": 4.6875,
+          "top3_hit_rate_pct": 12.5,
+          "mean_probability_actual_pct": 1.416282
+        }
+      }
+    },
+    "temperature_plus_line_role": {
+      "overall": {
+        "races": 12787,
+        "nll": 4.38340153,
+        "brier": 0.96852678,
+        "top1_hit_rate_pct": 10.40119,
+        "top3_hit_rate_pct": 21.9598,
+        "mean_probability_actual_pct": 3.05909
+      },
+      "bands": {
+        "0–0.1%": {
+          "ticket_count": 1133131,
+          "mean_predicted_pct": 0.0431005,
+          "actual_frequency_pct": 0.0490676,
+          "expected_hits": 488.385,
+          "actual_hits": 556,
+          "observed_expected_ratio": 1.13845,
+          "z_score_if_well_calibrated": 3.1448,
+          "reference_95pct_hits": [
+            446.24,
+            530.53
+          ]
+        },
+        "0.1–0.5%": {
+          "ticket_count": 1200103,
+          "mean_predicted_pct": 0.2418479,
+          "actual_frequency_pct": 0.229147,
+          "expected_hits": 2902.424,
+          "actual_hits": 2750,
+          "observed_expected_ratio": 0.94748,
+          "z_score_if_well_calibrated": -3.2585,
+          "reference_95pct_hits": [
+            2810.74,
+            2994.11
+          ]
+        },
+        "0.5–1%": {
+          "ticket_count": 327042,
+          "mean_predicted_pct": 0.7009512,
+          "actual_frequency_pct": 0.6983812,
+          "expected_hits": 2292.405,
+          "actual_hits": 2284,
+          "observed_expected_ratio": 0.99633,
+          "z_score_if_well_calibrated": -0.195,
+          "reference_95pct_hits": [
+            2207.94,
+            2376.87
+          ]
+        },
+        "1–2%": {
+          "ticket_count": 166695,
+          "mean_predicted_pct": 1.3889426,
+          "actual_frequency_pct": 1.382165,
+          "expected_hits": 2315.298,
+          "actual_hits": 2304,
+          "observed_expected_ratio": 0.99512,
+          "z_score_if_well_calibrated": -0.2622,
+          "reference_95pct_hits": [
+            2230.85,
+            2399.74
+          ]
+        },
+        "2–5%": {
+          "ticket_count": 89699,
+          "mean_predicted_pct": 2.9437267,
+          "actual_frequency_pct": 3.0390528,
+          "expected_hits": 2640.493,
+          "actual_hits": 2726,
+          "observed_expected_ratio": 1.03238,
+          "z_score_if_well_calibrated": 1.892,
+          "reference_95pct_hits": [
+            2551.91,
+            2729.07
+          ]
+        },
+        "5–10%": {
+          "ticket_count": 15615,
+          "mean_predicted_pct": 6.7399129,
+          "actual_frequency_pct": 6.3912904,
+          "expected_hits": 1052.437,
+          "actual_hits": 998,
+          "observed_expected_ratio": 0.94827,
+          "z_score_if_well_calibrated": -1.7944,
+          "reference_95pct_hits": [
+            992.98,
+            1111.9
+          ]
+        },
+        "10–20%": {
+          "ticket_count": 7220,
+          "mean_predicted_pct": 13.5504761,
+          "actual_frequency_pct": 14.4044321,
+          "expected_hits": 978.344,
+          "actual_hits": 1040,
+          "observed_expected_ratio": 1.06302,
+          "z_score_if_well_calibrated": 2.1777,
+          "reference_95pct_hits": [
+            922.85,
+            1033.84
+          ]
+        },
+        "20–100%": {
+          "ticket_count": 519,
+          "mean_predicted_pct": 22.5842685,
+          "actual_frequency_pct": 24.8554913,
+          "expected_hits": 117.212,
+          "actual_hits": 129,
+          "observed_expected_ratio": 1.10057,
+          "z_score_if_well_calibrated": 1.2448,
+          "reference_95pct_hits": [
+            98.65,
+            135.77
+          ]
+        }
+      },
+      "ticket_weighted_ECE_pp": 0.0154124,
+      "above_5pct_weighted_ECE_pp": 0.5475751,
+      "structure": {
+        "same_line_12": {
+          "races": 12787,
+          "expected_frequency_pct": 57.209718,
+          "actual_frequency_pct": 56.823336,
+          "actual_minus_expected_pp": -0.386381,
+          "z_score": -0.90029
+        },
+        "same_line_13": {
+          "races": 12787,
+          "expected_frequency_pct": 36.748195,
+          "actual_frequency_pct": 38.570423,
+          "actual_minus_expected_pp": 1.822229,
+          "z_score": 4.46294
+        },
+        "same_line_23": {
+          "races": 12787,
+          "expected_frequency_pct": 36.805443,
+          "actual_frequency_pct": 37.467741,
+          "actual_minus_expected_pp": 0.662298,
+          "z_score": 1.61853
+        },
+        "same_line_123": {
+          "races": 12787,
+          "expected_frequency_pct": 22.125868,
+          "actual_frequency_pct": 23.125049,
+          "actual_minus_expected_pp": 0.999181,
+          "z_score": 2.90726
+        },
+        "three_distinct_lines": {
+          "races": 12787,
+          "expected_frequency_pct": 13.488381,
+          "actual_frequency_pct": 13.388598,
+          "actual_minus_expected_pp": -0.099784,
+          "z_score": -0.34213
+        },
+        "first_is_line_leader": {
+          "races": 12787,
+          "expected_frequency_pct": 59.499654,
+          "actual_frequency_pct": 58.942676,
+          "actual_minus_expected_pp": -0.556977,
+          "z_score": -1.33109
+        }
+      },
+      "by_class": {
+        "A1_A2": {
+          "races": 6047,
+          "nll": 4.32349309,
+          "brier": 0.96902418,
+          "top1_hit_rate_pct": 9.65768,
+          "top3_hit_rate_pct": 22.25897,
+          "mean_probability_actual_pct": 3.064859
+        },
+        "A3": {
+          "races": 2923,
+          "nll": 4.11036129,
+          "brier": 0.95570567,
+          "top1_hit_rate_pct": 14.23195,
+          "top3_hit_rate_pct": 26.06911,
+          "mean_probability_actual_pct": 4.007897
+        },
+        "S_F1": {
+          "races": 2580,
+          "nll": 4.51020737,
+          "brier": 0.97564603,
+          "top1_hit_rate_pct": 8.95349,
+          "top3_hit_rate_pct": 18.75969,
+          "mean_probability_actual_pct": 2.632254
+        },
+        "S_grade": {
+          "races": 1237,
+          "nll": 5.05696974,
+          "brier": 0.98154263,
+          "top1_hit_rate_pct": 8.00323,
+          "top3_hit_rate_pct": 17.4616,
+          "mean_probability_actual_pct": 1.679132
+        }
+      },
+      "by_field": {
+        "5": {
+          "races": 140,
+          "nll": 3.33289665,
+          "brier": 0.93262246,
+          "top1_hit_rate_pct": 14.28571,
+          "top3_hit_rate_pct": 35.0,
+          "mean_probability_actual_pct": 7.135744
+        },
+        "6": {
+          "races": 682,
+          "nll": 3.96990188,
+          "brier": 0.9631881,
+          "top1_hit_rate_pct": 10.41056,
+          "top3_hit_rate_pct": 23.75367,
+          "mean_probability_actual_pct": 4.107125
+        },
+        "7": {
+          "races": 10780,
+          "nll": 4.34378488,
+          "brier": 0.96779575,
+          "top1_hit_rate_pct": 10.61224,
+          "top3_hit_rate_pct": 22.23562,
+          "mean_probability_actual_pct": 3.102464
+        },
+        "8": {
+          "races": 67,
+          "nll": 4.81870818,
+          "brier": 0.98029369,
+          "top1_hit_rate_pct": 8.95522,
+          "top3_hit_rate_pct": 17.91045,
+          "mean_probability_actual_pct": 1.902573
+        },
+        "9": {
+          "races": 1118,
+          "nll": 5.12309683,
+          "brier": 0.98262306,
+          "top1_hit_rate_pct": 7.96064,
+          "top3_hit_rate_pct": 16.81574,
+          "mean_probability_actual_pct": 1.560362
+        }
+      },
+      "by_month": {
+        "2024-07": {
+          "races": 2233,
+          "nll": 4.41564285,
+          "brier": 0.97170812,
+          "top1_hit_rate_pct": 9.71787,
+          "top3_hit_rate_pct": 20.73444,
+          "mean_probability_actual_pct": 2.859395
+        },
+        "2024-08": {
+          "races": 2170,
+          "nll": 4.4295257,
+          "brier": 0.97150624,
+          "top1_hit_rate_pct": 9.07834,
+          "top3_hit_rate_pct": 21.33641,
+          "mean_probability_actual_pct": 2.920439
+        },
+        "2024-09": {
+          "races": 2130,
+          "nll": 4.35512561,
+          "brier": 0.96663586,
+          "top1_hit_rate_pct": 10.61033,
+          "top3_hit_rate_pct": 22.8169,
+          "mean_probability_actual_pct": 3.135958
+        },
+        "2024-10": {
+          "races": 2140,
+          "nll": 4.3923356,
+          "brier": 0.96772343,
+          "top1_hit_rate_pct": 11.30841,
+          "top3_hit_rate_pct": 22.38318,
+          "mean_probability_actual_pct": 3.097451
+        },
+        "2024-11": {
+          "races": 2066,
+          "nll": 4.3647097,
+          "brier": 0.96648924,
+          "top1_hit_rate_pct": 10.98742,
+          "top3_hit_rate_pct": 21.87803,
+          "mean_probability_actual_pct": 3.16665
+        },
+        "2024-12": {
+          "races": 2048,
+          "nll": 4.33830473,
+          "brier": 0.96676261,
+          "top1_hit_rate_pct": 10.79102,
+          "top3_hit_rate_pct": 22.70508,
+          "mean_probability_actual_pct": 3.1952
+        }
+      },
+      "by_line_shape_top12": {
+        "3-2-2": {
+          "races": 5085,
+          "nll": 4.38329826,
+          "brier": 0.96998312,
+          "top1_hit_rate_pct": 10.04916,
+          "top3_hit_rate_pct": 21.2586,
+          "mean_probability_actual_pct": 2.889563
+        },
+        "3-3-1": {
+          "races": 1926,
+          "nll": 4.18906312,
+          "brier": 0.9658954,
+          "top1_hit_rate_pct": 11.37072,
+          "top3_hit_rate_pct": 24.09138,
+          "mean_probability_actual_pct": 3.380261
+        },
+        "2-2-2-1": {
+          "races": 1104,
+          "nll": 4.82774409,
+          "brier": 0.98696953,
+          "top1_hit_rate_pct": 5.07246,
+          "top3_hit_rate_pct": 11.77536,
+          "mean_probability_actual_pct": 1.51394
+        },
+        "3-2-1-1": {
+          "races": 1078,
+          "nll": 4.43770467,
+          "brier": 0.96671761,
+          "top1_hit_rate_pct": 11.41002,
+          "top3_hit_rate_pct": 23.09833,
+          "mean_probability_actual_pct": 3.242391
+        },
+        "4-3": {
+          "races": 671,
+          "nll": 3.92502011,
+          "brier": 0.95065316,
+          "top1_hit_rate_pct": 14.45604,
+          "top3_hit_rate_pct": 30.70045,
+          "mean_probability_actual_pct": 4.337608
+        },
+        "4-2-1": {
+          "races": 492,
+          "nll": 3.96036356,
+          "brier": 0.94500284,
+          "top1_hit_rate_pct": 15.85366,
+          "top3_hit_rate_pct": 32.72358,
+          "mean_probability_actual_pct": 5.003872
+        },
+        "3-2-2-2": {
+          "races": 404,
+          "nll": 5.02789649,
+          "brier": 0.97937136,
+          "top1_hit_rate_pct": 10.14851,
+          "top3_hit_rate_pct": 19.05941,
+          "mean_probability_actual_pct": 1.700376
+        },
+        "3-3-3": {
+          "races": 312,
+          "nll": 4.8091844,
+          "brier": 0.97765964,
+          "top1_hit_rate_pct": 8.33333,
+          "top3_hit_rate_pct": 21.15385,
+          "mean_probability_actual_pct": 1.842169
+        },
+        "3-2-1": {
+          "races": 224,
+          "nll": 4.00798647,
+          "brier": 0.96475456,
+          "top1_hit_rate_pct": 11.16071,
+          "top3_hit_rate_pct": 25.0,
+          "mean_probability_actual_pct": 4.090721
+        },
+        "3-3": {
+          "races": 184,
+          "nll": 3.91888146,
+          "brier": 0.96728733,
+          "top1_hit_rate_pct": 9.23913,
+          "top3_hit_rate_pct": 20.1087,
+          "mean_probability_actual_pct": 3.964628
+        },
+        "3-3-2-1": {
+          "races": 162,
+          "nll": 5.33630374,
+          "brier": 0.9873126,
+          "top1_hit_rate_pct": 8.02469,
+          "top3_hit_rate_pct": 12.96296,
+          "mean_probability_actual_pct": 1.373991
+        },
+        "2-2-1-1-1": {
+          "races": 128,
+          "nll": 4.85511337,
+          "brier": 0.98885182,
+          "top1_hit_rate_pct": 4.6875,
+          "top3_hit_rate_pct": 11.71875,
+          "mean_probability_actual_pct": 1.372259
+        }
+      }
+    }
+  },
+  "second_half_nll_improvement": {
+    "temperature_only": {
+      "days": 184,
+      "nll_baseline_minus_calibrated": 0.004977851,
+      "day_cluster_standard_error": 0.000913221,
+      "approx_95pct_interval": [
+        0.003187937,
+        0.006767764
+      ]
+    },
+    "temperature_plus_line_role": {
+      "days": 184,
+      "nll_baseline_minus_calibrated": 0.008860909,
+      "day_cluster_standard_error": 0.001099944,
+      "approx_95pct_interval": [
+        0.006705019,
+        0.011016799
+      ]
+    }
+  },
+  "research_primary_gate": {
+    "passes_all_three": true,
+    "nll_better": true,
+    "brier_better": true,
+    "above_5pct_ece_better": true
+  },
+  "final_selected_type_for_sealed_2025": "temperature_plus_line_role",
+  "full_2024_correction_fit": {
+    "model": "full2024_structural",
+    "trained_races": 25348,
+    "training_first_date": "2024-01-01",
+    "training_last_date": "2024-12-31",
+    "columns": [
+      "log_baseline_probability",
+      "same_line_12",
+      "same_line_13",
+      "same_line_23",
+      "same_line_123",
+      "three_distinct_lines",
+      "first_is_line_leader",
+      "first_is_score_rank_1"
+    ],
+    "initial_regularized_objective": 4.38862474,
+    "optimized_regularized_objective": 4.380551068,
+    "iterations": 12,
+    "success": true,
+    "raw_parameters": {
+      "log_baseline_probability": 1.042377755,
+      "same_line_12": 0.027328984,
+      "same_line_13": 0.097143453,
+      "same_line_23": 0.049695971,
+      "same_line_123": 0.098774089,
+      "three_distinct_lines": 0.02337977,
+      "first_is_line_leader": 0.047455352,
+      "first_is_score_rank_1": -0.012055286
+    },
+    "parameter_bounds": [
+      [
+        0.5,
+        2.0
+      ],
+      [
+        -1.0,
+        1.0
+      ],
+      [
+        -1.0,
+        1.0
+      ],
+      [
+        -1.0,
+        1.0
+      ],
+      [
+        -1.0,
+        1.0
+      ],
+      [
+        -1.0,
+        1.0
+      ],
+      [
+        -1.0,
+        1.0
+      ],
+      [
+        -1.0,
+        1.0
+      ]
+    ]
+  },
+  "final_for_2025_sha256_fields": {
+    "log_baseline_probability": 1.04237775478,
+    "same_line_12": 0.0273289836,
+    "same_line_13": 0.09714345273,
+    "same_line_23": 0.04969597073,
+    "same_line_123": 0.09877408871,
+    "three_distinct_lines": 0.02337977035,
+    "first_is_line_leader": 0.04745535166,
+    "first_is_score_rank_1": -0.01205528593
+  },
+  "limitations": [
+    "The baseline 2023 formula was learned on historical archived inputs, whose actual pre-race availability has not been independently certified.",
+    "The probabilities from 2024 were already inspected in an all-year audit before this correction design; only the 2025 result can establish a new untouched-period improvement.",
+    "2024 H2 figures are based ONLY on correction coefficients fitted on 2024 H1; do not compare 2024 full-year refit against 2024 in-sample scores as independent validation.",
+    "2025 and 2026 not read, no market odds, no payouts or ROI.",
+    "Class-specific structures are reported but coefficients are global to minimize overfitting.",
+    "Probability mass always sums to one over all exact trifecta permutations per race."
+  ]
+}

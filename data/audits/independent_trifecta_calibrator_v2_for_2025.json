@@ -1,0 +1,38 @@
+{
+  "schema": "frozen_keirin_3trifecta_no_odds_postcalibrator_v2",
+  "model_type": "temperature_plus_line_role",
+  "source_2023_formula": "research/independent_trifecta_2023/observe.py",
+  "base_probability_artifact_2024_run_id": 40807880319,
+  "input": "P_v1 for every exact ordered podium outcome plus the pre-race line and score ranks",
+  "feature_order": [
+    "log_baseline_probability",
+    "same_line_12",
+    "same_line_13",
+    "same_line_23",
+    "same_line_123",
+    "three_distinct_lines",
+    "first_is_line_leader",
+    "first_is_score_rank_1"
+  ],
+  "coefficients": [
+    1.04237775478,
+    0.0273289836,
+    0.09714345273,
+    0.04969597073,
+    0.09877408871,
+    0.02337977035,
+    0.04745535166,
+    -0.01205528593
+  ],
+  "formula": "softmax(theta_0 * log(P_v1) + theta_1 * I_12 + theta_2 * I_13 + theta_3 * I_23 + theta_4 * I_123 + theta_5 * I_all_distinct + theta_6 * I_winner_leader + theta_7 * I_winner_highest_score)",
+  "normalization": "whole-race exact-trifecta grid; sum=1",
+  "fit_period": [
+    "2024-01-01",
+    "2024-12-31"
+  ],
+  "2024_split_validation_must_use_first_half_coefficients_only": true,
+  "holdout_2025_not_used": true,
+  "no_odds_features": true,
+  "selection": "Full-year fit is created only after temporal development validation; no in-sample 2024 performance claim",
+  "limits": "Retrospective archive availability was not independently certified"
+}
