@@ -119,6 +119,8 @@ class Eval:
         self.groupcounts=Counter()
         self.minp_by_n=defaultdict(list)
         self.lowp_actual=defaultdict(int)
+        self.low_probability_winners=[]
+        self.extreme_gap_winner_records=[]
     def add(self,rid,e,priors):
         self.n+=1
         cars=sorted(e["scores"],key=int);n=len(cars)
@@ -148,6 +150,30 @@ class Eval:
             owned=max(e["scores"][x] for x in e["groups"][e["positions"][c][0]-1])
             gap_to_best=max(e["scores"].values())-e["scores"][c]
             won=int(c==truth)
+            if won and p[c]<.001:
+                self.low_probability_winners.append({
+                    "race_id":rid,"date":e["date"],"winner":c,
+                    "p1_pct":round(100*p[c],10),
+                    "role":role,"line_size":line_size,
+                    "race_class":grade,"field_rank":rank_by_score,
+                    "winner_score":e["scores"][c],
+                    "field_score_max":max(e["scores"].values()),
+                    "gap_to_best":round(gap_to_best,4),
+                    "line_shape":v2.line_shape(e),
+                    "all_scores":dict(sorted(e["scores"].items(),key=lambda kv:int(kv[0]))),
+                })
+            if won and c==least and gap_to_best>=22:
+                self.extreme_gap_winner_records.append({
+                    "race_id":rid,"date":e["date"],"winner":c,
+                    "p1_pct":round(100*p[c],10),
+                    "role":role,"line_size":line_size,
+                    "race_class":grade,"field_rank":rank_by_score,
+                    "winner_score":e["scores"][c],
+                    "field_score_max":max(e["scores"].values()),
+                    "gap_to_best":round(gap_to_best,4),
+                    "line_shape":v2.line_shape(e),
+                    "all_scores":dict(sorted(e["scores"].items(),key=lambda kv:int(kv[0]))),
+                })
             groups=(
                 ("all_candidates","all"),
                 ("V6_pred_bin",bbin(p[c])),
@@ -189,6 +215,8 @@ class Eval:
          "all_line_shapes":dict(sorted(self.groupcounts.items())),
          "distinct_line_shapes":len(self.groupcounts),
          "raw_counts":dict(self.lowp_actual),
+         "rare_win_case_audit":self.low_probability_winners,
+         "extreme_score_gap_win_case_audit":self.extreme_gap_winner_records,
          "by_axis":{
             ax:{lab:z.pack() for (axis,lab),z in sorted(self.cells.items()) if axis==ax}
             for ax in sorted({axis for axis,lab in self.cells})},
