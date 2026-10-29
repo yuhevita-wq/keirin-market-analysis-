@@ -1,0 +1,132 @@
+name: V7 | empirical minimum per-rider winning probability, V6 first-stage audit
+
+on:
+  push:
+    branches:
+      - research/v7-empirical-win-probability-floor
+    paths:
+      - 'research/independent_trifecta_2023/v7_empirical_win_probability_floor.py'
+      - '.github/workflows/trifecta-v7-empirical-win-probability-floor.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: empirical-win-probability-floor-V7
+  cancel-in-progress: false
+
+jobs:
+  empirical-floor-census:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - name: Sparse checkout all eligible entrants, line cards, and outcome labels
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/observe.py
+            /research/independent_trifecta_2023/line_dependence_v2.py
+            /research/independent_trifecta_2023/aab_guarded_v3.py
+            /research/independent_trifecta_2023/v4_pattern_floor_2026.py
+            /research/independent_trifecta_2023/v5_rider_score_role_size_interactions.py
+            /research/independent_trifecta_2023/v6_opponent_competition_structure.py
+            /research/independent_trifecta_2024/calibration_audit.py
+            /research/independent_trifecta_2024/validate_2025.py
+            /data/a_class_12/2023_*/races.csv
+            /data/a_class_12/2023_*/entries.csv
+            /data/a3_challenge/2023_*/races.csv
+            /data/a3_challenge/2023_*/entries.csv
+            /data/2023/**/races.csv
+            /data/2023/**/entries.csv
+            /data/grade_races/g1g2/*2023*.zip
+            /data/grade_races/g3/2023/*.zip
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+            /data/a_class_12/2024_*/races.csv
+            /data/a_class_12/2024_*/entries.csv
+            /data/a3_challenge/2024_*/races.csv
+            /data/a3_challenge/2024_*/entries.csv
+            /data/2024/**/races.csv
+            /data/2024/**/entries.csv
+            /data/grade_races/g1g2/*2024*.zip
+            /data/grade_races/g3/2024/*.zip
+            /data/result_universe_v2/combined/results_2024.jsonl.gz
+            /data/a_class_12/2025_*/races.csv
+            /data/a_class_12/2025_*/entries.csv
+            /data/a3_challenge/2025_*/races.csv
+            /data/a3_challenge/2025_*/entries.csv
+            /data/2025/**/races.csv
+            /data/2025/**/entries.csv
+            /data/grade_races/g1g2/*2025*.zip
+            /data/grade_races/g3/2025/*.zip
+            /data/result_universe_v2/combined/results_2025.jsonl.gz
+            /data/a_class_12/2026_*/races.csv
+            /data/a_class_12/2026_*/entries.csv
+            /data/a_class_12/pilot_2026*/races.csv
+            /data/a_class_12/pilot_2026*/entries.csv
+            /data/a3_challenge/2026_*/races.csv
+            /data/a3_challenge/2026_*/entries.csv
+            /data/2026_h1/**/races.csv
+            /data/2026_h1/**/entries.csv
+            /data/2026_future_block1/**/races.csv
+            /data/2026_future_block1/**/entries.csv
+            /data/grade_races/g3/2026_h1/*.zip
+            /data/result_universe_v2/combined/results_2026.jsonl.gz
+            /research/independent_trifecta_2023/v7_empirical_win_probability_floor.py
+
+      - name: Verify frozen predecessors and no market odds
+        run: |
+          set -euo pipefail
+          python -m py_compile research/independent_trifecta_2023/v7_empirical_win_probability_floor.py
+          test "$(git hash-object research/independent_trifecta_2023/observe.py)" = "19701f16c80fcc95dc8c032ed47b80dfcfe93bc6"
+          test "$(git hash-object research/independent_trifecta_2023/line_dependence_v2.py)" = "2bb7362490b7b7f7eb0e8390face22f248649216"
+          test "$(git hash-object research/independent_trifecta_2023/aab_guarded_v3.py)" = "04bb3a7956a5a5d43a987194df557838b6ac81e5"
+          for year in 2023 2024 2025 2026; do
+            test -s "data/result_universe_v2/combined/results_$year.jsonl.gz"
+          done
+          echo ALL_HISTORICAL_MODELS_IMMUTABLE
+
+      - name: Census all riders per race, select floor using 2023 DEV only, replay 2024-2026
+        run: |
+          set -euo pipefail
+          python research/independent_trifecta_2023/v7_empirical_win_probability_floor.py
+
+      - name: Check cohort sizes, no racing market, and no false minimum assertion
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          p='data/audits/empirical_rider_win_probability_floor_v7_2023_2026.json'
+          r=json.load(open(p))
+          assert r['state']=='PRACTICAL_MINIMUM_RIDER_FIRST_STAGE_WIN_PROBABILITY_AUDIT_COMPLETE'
+          assert r['no_modification_of_V3_V5_V6']
+          assert r['no_ticket_or_payout_or_market_data']
+          assert r['universal_positive_floor_per_individual_not_identifiable_from_finite_data']
+          assert r['uniform_floor_benchmark_is_not_adopted']
+          assert r['selected_uniform_floor_benchmark_epsilon_2023_only'] in (0,.001,.003,.01,.03,.06,.10)
+          for yr,n in (('2023_DEV',4192),('2024',25348),('2025',24635),('2026',11797)):
+              y=r['years'][yr]
+              assert y['races']==n
+              assert y['distinct_line_shapes']>10
+              assert sum(y['all_line_shapes'].values())==n
+              assert y['by_axis']['V6_prediction_order']['least']['rider_exposures']==n
+              assert y['by_axis']['V6_prediction_order']['second_least']['rider_exposures']==n
+              assert sum(v['observed_wins'] for v in y['by_axis']['V6_pred_bin'].values())==n
+              assert abs(sum(v['V6_first_stage_expected_wins'] for v in y['by_axis']['V6_pred_bin'].values())-n)<.01
+          print('V7_ALL_RIDER_FIRST_PROBABILITY_CENSUS_VERIFIED')
+          PY
+
+      - name: Upload measured V6 win-probability floor and null mixing control
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: empirical-v7-any-rider-can-win-floor-2023-2026
+          path: data/audits/empirical_rider_win_probability_floor_v7_2023_2026.json
+          retention-days: 90
+          if-no-files-found: warn
