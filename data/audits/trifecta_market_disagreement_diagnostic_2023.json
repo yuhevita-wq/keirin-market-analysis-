@@ -1,0 +1,1471 @@
+{
+  "state": "COMPLETE_2023_MARKET_DISAGREEMENT_OUTCOME_DIAGNOSTIC",
+  "no_model_retraining": true,
+  "no_takeout_rate_assumed": true,
+  "no_betting_or_roi": true,
+  "market_price_phase": "final",
+  "sources": [
+    "data/audits/trifecta_market_association_full_matches_2023.jsonl.gz",
+    "data/audits/trifecta_market_association_2023.json"
+  ],
+  "counts": {
+    "exact_joined_races": 5226,
+    "forward_nov_dec": 391,
+    "in_sample_jan_oct": 4835
+  },
+  "explanation": "q=(1/O)/sum(1/O) is relative market share; no estimated deduction rate, and NOT a claimed true probability",
+  "log_loss_vs_market_normalized_shape": {
+    "all": {
+      "races": 5226,
+      "mean_logloss_original_ai": 4.6507395,
+      "mean_logloss_corrected_ai_backcast": 4.64019124,
+      "mean_logloss_market_relative_shape": 4.23583123,
+      "mean_brier_original_ai": 0.97416143,
+      "mean_brier_corrected_ai_backcast": 0.97321127,
+      "mean_brier_market_relative_shape": 0.95544709,
+      "ai_corrected_minus_market_logloss_improvement": -0.40436001,
+      "ai_corrected_vs_market_day_cluster_95pct_ci": [
+        -0.4296751,
+        -0.37904493
+      ],
+      "ai_original_minus_market_logloss_improvement": -0.41490827,
+      "ai_original_vs_market_day_cluster_95pct_ci": [
+        -0.44002659,
+        -0.38978996
+      ],
+      "model_corrected_beats_market_per_race_pct": 31.01799,
+      "model_original_beats_market_per_race_pct": 30.27172,
+      "days": 263
+    },
+    "in_sample_2023_jan_oct": {
+      "races": 4835,
+      "mean_logloss_original_ai": 4.61936817,
+      "mean_logloss_corrected_ai_backcast": 4.60952027,
+      "mean_logloss_market_relative_shape": 4.20680949,
+      "mean_brier_original_ai": 0.9733992,
+      "mean_brier_corrected_ai_backcast": 0.97243124,
+      "mean_brier_market_relative_shape": 0.95406126,
+      "ai_corrected_minus_market_logloss_improvement": -0.40271078,
+      "ai_corrected_vs_market_day_cluster_95pct_ci": [
+        -0.42857911,
+        -0.37684245
+      ],
+      "ai_original_minus_market_logloss_improvement": -0.41255868,
+      "ai_original_vs_market_day_cluster_95pct_ci": [
+        -0.43813569,
+        -0.38698167
+      ],
+      "model_corrected_beats_market_per_race_pct": 31.0031,
+      "model_original_beats_market_per_race_pct": 30.40331,
+      "days": 228
+    },
+    "forward_2023_nov_dec": {
+      "races": 391,
+      "mean_logloss_original_ai": 5.03866884,
+      "mean_logloss_corrected_ai_backcast": 5.01946011,
+      "mean_logloss_market_relative_shape": 4.59470613,
+      "mean_brier_original_ai": 0.98358693,
+      "mean_brier_corrected_ai_backcast": 0.98285685,
+      "mean_brier_market_relative_shape": 0.97258391,
+      "ai_corrected_minus_market_logloss_improvement": -0.42475398,
+      "ai_corrected_vs_market_day_cluster_95pct_ci": [
+        -0.53424553,
+        -0.31526243
+      ],
+      "ai_original_minus_market_logloss_improvement": -0.44396272,
+      "ai_original_vs_market_day_cluster_95pct_ci": [
+        -0.55524036,
+        -0.33268507
+      ],
+      "model_corrected_beats_market_per_race_pct": 31.20205,
+      "model_original_beats_market_per_race_pct": 28.6445,
+      "days": 35
+    }
+  },
+  "ratio_bands_ai_prob_divided_by_relative_market_q": {
+    "all": {
+      "p/q<0.25": {
+        "tickets": 91840,
+        "observed_hits": 596,
+        "expected_hits_ai_corrected": 100.30329,
+        "expected_hits_ai_original": 105.20402,
+        "expected_hits_relative_market_shape": 598.11136,
+        "raw_reciprocal_odds_sum": 799.81721,
+        "empirical_frequency_pct": 0.6489547,
+        "mean_corrected_ai_p_pct": 0.1092153,
+        "mean_original_ai_p_pct": 0.1145514,
+        "mean_market_relative_q_pct": 0.6512537,
+        "mean_raw_inverse_odds_pct": 0.8708811,
+        "delta_hits_vs_corrected_ai": 495.69671,
+        "delta_hits_vs_market_relative_shape": -2.11136
+      },
+      "0.25-0.5": {
+        "tickets": 212772,
+        "observed_hits": 1283,
+        "expected_hits_ai_corrected": 476.84719,
+        "expected_hits_ai_original": 480.81032,
+        "expected_hits_relative_market_shape": 1265.86849,
+        "raw_reciprocal_odds_sum": 1693.67049,
+        "empirical_frequency_pct": 0.6029929,
+        "mean_corrected_ai_p_pct": 0.2241118,
+        "mean_original_ai_p_pct": 0.2259744,
+        "mean_market_relative_q_pct": 0.5949413,
+        "mean_raw_inverse_odds_pct": 0.7960025,
+        "delta_hits_vs_corrected_ai": 806.15281,
+        "delta_hits_vs_market_relative_shape": 17.13151
+      },
+      "0.5-0.8": {
+        "tickets": 251063,
+        "observed_hits": 1200,
+        "expected_hits_ai_corrected": 766.38232,
+        "expected_hits_ai_original": 761.61505,
+        "expected_hits_relative_market_shape": 1201.56513,
+        "raw_reciprocal_odds_sum": 1606.99497,
+        "empirical_frequency_pct": 0.4779677,
+        "mean_corrected_ai_p_pct": 0.305255,
+        "mean_original_ai_p_pct": 0.3033562,
+        "mean_market_relative_q_pct": 0.4785911,
+        "mean_raw_inverse_odds_pct": 0.6400764,
+        "delta_hits_vs_corrected_ai": 433.61768,
+        "delta_hits_vs_market_relative_shape": -1.56513
+      },
+      "0.8-1.25": {
+        "tickets": 297063,
+        "observed_hits": 971,
+        "expected_hits_ai_corrected": 963.24882,
+        "expected_hits_ai_original": 957.37761,
+        "expected_hits_relative_market_shape": 966.26816,
+        "raw_reciprocal_odds_sum": 1291.87557,
+        "empirical_frequency_pct": 0.3268667,
+        "mean_corrected_ai_p_pct": 0.3242574,
+        "mean_original_ai_p_pct": 0.322281,
+        "mean_market_relative_q_pct": 0.3252738,
+        "mean_raw_inverse_odds_pct": 0.4348827,
+        "delta_hits_vs_corrected_ai": 7.75118,
+        "delta_hits_vs_market_relative_shape": 4.73184
+      },
+      "1.25-2": {
+        "tickets": 316481,
+        "observed_hits": 682,
+        "expected_hits_ai_corrected": 1025.71805,
+        "expected_hits_ai_original": 1022.43677,
+        "expected_hits_relative_market_shape": 657.35506,
+        "raw_reciprocal_odds_sum": 878.82017,
+        "empirical_frequency_pct": 0.2154948,
+        "mean_corrected_ai_p_pct": 0.324101,
+        "mean_original_ai_p_pct": 0.3230642,
+        "mean_market_relative_q_pct": 0.2077076,
+        "mean_raw_inverse_odds_pct": 0.277685,
+        "delta_hits_vs_corrected_ai": -343.71805,
+        "delta_hits_vs_market_relative_shape": 24.64494
+      },
+      "2-4": {
+        "tickets": 347172,
+        "observed_hits": 398,
+        "expected_hits_ai_corrected": 1111.32677,
+        "expected_hits_ai_original": 1114.54956,
+        "expected_hits_relative_market_shape": 412.76085,
+        "raw_reciprocal_odds_sum": 551.91107,
+        "empirical_frequency_pct": 0.1146406,
+        "mean_corrected_ai_p_pct": 0.3201084,
+        "mean_original_ai_p_pct": 0.3210367,
+        "mean_market_relative_q_pct": 0.1188923,
+        "mean_raw_inverse_odds_pct": 0.1589734,
+        "delta_hits_vs_corrected_ai": -713.32677,
+        "delta_hits_vs_market_relative_shape": -14.76085
+      },
+      "4+": {
+        "tickets": 216157,
+        "observed_hits": 96,
+        "expected_hits_ai_corrected": 782.17356,
+        "expected_hits_ai_original": 784.00667,
+        "expected_hits_relative_market_shape": 124.07095,
+        "raw_reciprocal_odds_sum": 166.01915,
+        "empirical_frequency_pct": 0.0444122,
+        "mean_corrected_ai_p_pct": 0.3618544,
+        "mean_original_ai_p_pct": 0.3627024,
+        "mean_market_relative_q_pct": 0.0573985,
+        "mean_raw_inverse_odds_pct": 0.0768049,
+        "delta_hits_vs_corrected_ai": -686.17356,
+        "delta_hits_vs_market_relative_shape": -28.07095
+      }
+    },
+    "in_sample_2023_jan_oct": {
+      "p/q<0.25": {
+        "tickets": 82163,
+        "observed_hits": 549,
+        "expected_hits_ai_corrected": 92.20288,
+        "expected_hits_ai_original": 96.75089,
+        "expected_hits_relative_market_shape": 548.90111,
+        "raw_reciprocal_odds_sum": 734.0279,
+        "empirical_frequency_pct": 0.668184,
+        "mean_corrected_ai_p_pct": 0.1122195,
+        "mean_original_ai_p_pct": 0.1177548,
+        "mean_market_relative_q_pct": 0.6680636,
+        "mean_raw_inverse_odds_pct": 0.8933801,
+        "delta_hits_vs_corrected_ai": 456.79712,
+        "delta_hits_vs_market_relative_shape": 0.09889
+      },
+      "0.25-0.5": {
+        "tickets": 189858,
+        "observed_hits": 1193,
+        "expected_hits_ai_corrected": 440.57846,
+        "expected_hits_ai_original": 444.13083,
+        "expected_hits_relative_market_shape": 1169.20574,
+        "raw_reciprocal_odds_sum": 1564.45013,
+        "empirical_frequency_pct": 0.6283644,
+        "mean_corrected_ai_p_pct": 0.2320568,
+        "mean_original_ai_p_pct": 0.2339279,
+        "mean_market_relative_q_pct": 0.6158317,
+        "mean_raw_inverse_odds_pct": 0.8240106,
+        "delta_hits_vs_corrected_ai": 752.42154,
+        "delta_hits_vs_market_relative_shape": 23.79426
+      },
+      "0.5-0.8": {
+        "tickets": 224683,
+        "observed_hits": 1115,
+        "expected_hits_ai_corrected": 711.92137,
+        "expected_hits_ai_original": 707.1371,
+        "expected_hits_relative_market_shape": 1116.42401,
+        "raw_reciprocal_odds_sum": 1493.20819,
+        "empirical_frequency_pct": 0.4962547,
+        "mean_corrected_ai_p_pct": 0.3168559,
+        "mean_original_ai_p_pct": 0.3147266,
+        "mean_market_relative_q_pct": 0.4968885,
+        "mean_raw_inverse_odds_pct": 0.6645844,
+        "delta_hits_vs_corrected_ai": 403.07863,
+        "delta_hits_vs_market_relative_shape": -1.42401
+      },
+      "0.8-1.25": {
+        "tickets": 265673,
+        "observed_hits": 885,
+        "expected_hits_ai_corrected": 894.21117,
+        "expected_hits_ai_original": 888.79773,
+        "expected_hits_relative_market_shape": 896.96426,
+        "raw_reciprocal_odds_sum": 1199.26999,
+        "empirical_frequency_pct": 0.3331163,
+        "mean_corrected_ai_p_pct": 0.3365834,
+        "mean_original_ai_p_pct": 0.3345458,
+        "mean_market_relative_q_pct": 0.3376197,
+        "mean_raw_inverse_odds_pct": 0.4514083,
+        "delta_hits_vs_corrected_ai": -9.21117,
+        "delta_hits_vs_market_relative_shape": -11.96426
+      },
+      "1.25-2": {
+        "tickets": 282119,
+        "observed_hits": 637,
+        "expected_hits_ai_corrected": 948.05845,
+        "expected_hits_ai_original": 945.58255,
+        "expected_hits_relative_market_shape": 607.43816,
+        "raw_reciprocal_odds_sum": 812.11868,
+        "empirical_frequency_pct": 0.2257912,
+        "mean_corrected_ai_p_pct": 0.3360491,
+        "mean_original_ai_p_pct": 0.3351715,
+        "mean_market_relative_q_pct": 0.2153127,
+        "mean_raw_inverse_odds_pct": 0.2878639,
+        "delta_hits_vs_corrected_ai": -311.05845,
+        "delta_hits_vs_market_relative_shape": 29.56184
+      },
+      "2-4": {
+        "tickets": 308719,
+        "observed_hits": 372,
+        "expected_hits_ai_corrected": 1027.78989,
+        "expected_hits_ai_original": 1030.84444,
+        "expected_hits_relative_market_shape": 381.91322,
+        "raw_reciprocal_odds_sum": 510.68469,
+        "empirical_frequency_pct": 0.1204979,
+        "mean_corrected_ai_p_pct": 0.3329208,
+        "mean_original_ai_p_pct": 0.3339103,
+        "mean_market_relative_q_pct": 0.123709,
+        "mean_raw_inverse_odds_pct": 0.1654206,
+        "delta_hits_vs_corrected_ai": -655.78989,
+        "delta_hits_vs_market_relative_shape": -9.91322
+      },
+      "4+": {
+        "tickets": 190675,
+        "observed_hits": 84,
+        "expected_hits_ai_corrected": 720.23779,
+        "expected_hits_ai_original": 721.75646,
+        "expected_hits_relative_market_shape": 114.1535,
+        "raw_reciprocal_odds_sum": 152.75887,
+        "empirical_frequency_pct": 0.044054,
+        "mean_corrected_ai_p_pct": 0.3777306,
+        "mean_original_ai_p_pct": 0.3785271,
+        "mean_market_relative_q_pct": 0.0598681,
+        "mean_raw_inverse_odds_pct": 0.0801148,
+        "delta_hits_vs_corrected_ai": -636.23779,
+        "delta_hits_vs_market_relative_shape": -30.1535
+      }
+    },
+    "forward_2023_nov_dec": {
+      "p/q<0.25": {
+        "tickets": 9677,
+        "observed_hits": 47,
+        "expected_hits_ai_corrected": 8.10042,
+        "expected_hits_ai_original": 8.45313,
+        "expected_hits_relative_market_shape": 49.21025,
+        "raw_reciprocal_odds_sum": 65.78931,
+        "empirical_frequency_pct": 0.4856877,
+        "mean_corrected_ai_p_pct": 0.0837079,
+        "mean_original_ai_p_pct": 0.0873528,
+        "mean_market_relative_q_pct": 0.508528,
+        "mean_raw_inverse_odds_pct": 0.6798524,
+        "delta_hits_vs_corrected_ai": 38.89958,
+        "delta_hits_vs_market_relative_shape": -2.21025
+      },
+      "0.25-0.5": {
+        "tickets": 22914,
+        "observed_hits": 90,
+        "expected_hits_ai_corrected": 36.26873,
+        "expected_hits_ai_original": 36.67949,
+        "expected_hits_relative_market_shape": 96.66276,
+        "raw_reciprocal_odds_sum": 129.22037,
+        "empirical_frequency_pct": 0.392773,
+        "mean_corrected_ai_p_pct": 0.158282,
+        "mean_original_ai_p_pct": 0.1600746,
+        "mean_market_relative_q_pct": 0.4218502,
+        "mean_raw_inverse_odds_pct": 0.5639363,
+        "delta_hits_vs_corrected_ai": 53.73127,
+        "delta_hits_vs_market_relative_shape": -6.66276
+      },
+      "0.5-0.8": {
+        "tickets": 26380,
+        "observed_hits": 85,
+        "expected_hits_ai_corrected": 54.46095,
+        "expected_hits_ai_original": 54.47796,
+        "expected_hits_relative_market_shape": 85.14112,
+        "raw_reciprocal_odds_sum": 113.78678,
+        "empirical_frequency_pct": 0.3222138,
+        "mean_corrected_ai_p_pct": 0.2064479,
+        "mean_original_ai_p_pct": 0.2065123,
+        "mean_market_relative_q_pct": 0.3227487,
+        "mean_raw_inverse_odds_pct": 0.4313373,
+        "delta_hits_vs_corrected_ai": 30.53905,
+        "delta_hits_vs_market_relative_shape": -0.14112
+      },
+      "0.8-1.25": {
+        "tickets": 31390,
+        "observed_hits": 86,
+        "expected_hits_ai_corrected": 69.03765,
+        "expected_hits_ai_original": 68.57988,
+        "expected_hits_relative_market_shape": 69.30389,
+        "raw_reciprocal_odds_sum": 92.60558,
+        "empirical_frequency_pct": 0.2739726,
+        "mean_corrected_ai_p_pct": 0.2199352,
+        "mean_original_ai_p_pct": 0.2184768,
+        "mean_market_relative_q_pct": 0.2207833,
+        "mean_raw_inverse_odds_pct": 0.2950162,
+        "delta_hits_vs_corrected_ai": 16.96235,
+        "delta_hits_vs_market_relative_shape": 16.69611
+      },
+      "1.25-2": {
+        "tickets": 34362,
+        "observed_hits": 45,
+        "expected_hits_ai_corrected": 77.6596,
+        "expected_hits_ai_original": 76.85422,
+        "expected_hits_relative_market_shape": 49.9169,
+        "raw_reciprocal_odds_sum": 66.70149,
+        "empirical_frequency_pct": 0.1309586,
+        "mean_corrected_ai_p_pct": 0.2260043,
+        "mean_original_ai_p_pct": 0.2236605,
+        "mean_market_relative_q_pct": 0.1452677,
+        "mean_raw_inverse_odds_pct": 0.1941141,
+        "delta_hits_vs_corrected_ai": -32.6596,
+        "delta_hits_vs_market_relative_shape": -4.9169
+      },
+      "2-4": {
+        "tickets": 38453,
+        "observed_hits": 26,
+        "expected_hits_ai_corrected": 83.53688,
+        "expected_hits_ai_original": 83.70512,
+        "expected_hits_relative_market_shape": 30.84762,
+        "raw_reciprocal_odds_sum": 41.22637,
+        "empirical_frequency_pct": 0.067615,
+        "mean_corrected_ai_p_pct": 0.2172441,
+        "mean_original_ai_p_pct": 0.2176816,
+        "mean_market_relative_q_pct": 0.0802216,
+        "mean_raw_inverse_odds_pct": 0.1072124,
+        "delta_hits_vs_corrected_ai": -57.53688,
+        "delta_hits_vs_market_relative_shape": -4.84762
+      },
+      "4+": {
+        "tickets": 25482,
+        "observed_hits": 12,
+        "expected_hits_ai_corrected": 61.93577,
+        "expected_hits_ai_original": 62.25022,
+        "expected_hits_relative_market_shape": 9.91745,
+        "raw_reciprocal_odds_sum": 13.26028,
+        "empirical_frequency_pct": 0.0470921,
+        "mean_corrected_ai_p_pct": 0.2430569,
+        "mean_original_ai_p_pct": 0.2442909,
+        "mean_market_relative_q_pct": 0.0389194,
+        "mean_raw_inverse_odds_pct": 0.0520378,
+        "delta_hits_vs_corrected_ai": -49.93577,
+        "delta_hits_vs_market_relative_shape": 2.08255
+      }
+    }
+  },
+  "ratio_bands_ai_prob_times_raw_odds_without_any_takeout_assumption": {
+    "all": {
+      "p*O<0.25": {
+        "tickets": 158108,
+        "observed_hits": 999,
+        "expected_hits_ai_corrected": 219.64343,
+        "expected_hits_ai_original": 227.43624,
+        "expected_hits_relative_market_shape": 1005.54158,
+        "raw_reciprocal_odds_sum": 1344.78638,
+        "empirical_frequency_pct": 0.6318466,
+        "mean_corrected_ai_p_pct": 0.1389199,
+        "mean_original_ai_p_pct": 0.1438487,
+        "mean_market_relative_q_pct": 0.635984,
+        "mean_raw_inverse_odds_pct": 0.8505492,
+        "delta_hits_vs_corrected_ai": 779.35657,
+        "delta_hits_vs_market_relative_shape": -6.54158
+      },
+      "0.25-0.5": {
+        "tickets": 291260,
+        "observed_hits": 1638,
+        "expected_hits_ai_corrected": 791.05602,
+        "expected_hits_ai_original": 789.80139,
+        "expected_hits_relative_market_shape": 1605.16808,
+        "raw_reciprocal_odds_sum": 2147.51982,
+        "empirical_frequency_pct": 0.5623841,
+        "mean_corrected_ai_p_pct": 0.2715979,
+        "mean_original_ai_p_pct": 0.2711671,
+        "mean_market_relative_q_pct": 0.5511117,
+        "mean_raw_inverse_odds_pct": 0.7373205,
+        "delta_hits_vs_corrected_ai": 846.94398,
+        "delta_hits_vs_market_relative_shape": 32.83192
+      },
+      "0.5-0.8": {
+        "tickets": 297069,
+        "observed_hits": 1120,
+        "expected_hits_ai_corrected": 946.896,
+        "expected_hits_ai_original": 940.46382,
+        "expected_hits_relative_market_shape": 1119.04792,
+        "raw_reciprocal_odds_sum": 1496.25444,
+        "empirical_frequency_pct": 0.3770168,
+        "mean_corrected_ai_p_pct": 0.3187462,
+        "mean_original_ai_p_pct": 0.3165809,
+        "mean_market_relative_q_pct": 0.3766963,
+        "mean_raw_inverse_odds_pct": 0.5036724,
+        "delta_hits_vs_corrected_ai": 173.104,
+        "delta_hits_vs_market_relative_shape": 0.95208
+      },
+      "0.8-1.25": {
+        "tickets": 306907,
+        "observed_hits": 765,
+        "expected_hits_ai_corrected": 996.55368,
+        "expected_hits_ai_original": 991.54819,
+        "expected_hits_relative_market_shape": 751.9691,
+        "raw_reciprocal_odds_sum": 1005.30111,
+        "empirical_frequency_pct": 0.2492612,
+        "mean_corrected_ai_p_pct": 0.3247087,
+        "mean_original_ai_p_pct": 0.3230777,
+        "mean_market_relative_q_pct": 0.2450153,
+        "mean_raw_inverse_odds_pct": 0.3275589,
+        "delta_hits_vs_corrected_ai": -231.55368,
+        "delta_hits_vs_market_relative_shape": 13.0309
+      },
+      "1.25-2": {
+        "tickets": 284656,
+        "observed_hits": 439,
+        "expected_hits_ai_corrected": 915.84107,
+        "expected_hits_ai_original": 917.15727,
+        "expected_hits_relative_market_shape": 441.5803,
+        "raw_reciprocal_odds_sum": 590.36737,
+        "empirical_frequency_pct": 0.1542212,
+        "mean_corrected_ai_p_pct": 0.3217361,
+        "mean_original_ai_p_pct": 0.3221985,
+        "mean_market_relative_q_pct": 0.1551277,
+        "mean_raw_inverse_odds_pct": 0.2073968,
+        "delta_hits_vs_corrected_ai": -476.84107,
+        "delta_hits_vs_market_relative_shape": -2.5803
+      },
+      "2-4": {
+        "tickets": 266580,
+        "observed_hits": 234,
+        "expected_hits_ai_corrected": 865.53887,
+        "expected_hits_ai_original": 869.31447,
+        "expected_hits_relative_market_shape": 242.45906,
+        "raw_reciprocal_odds_sum": 324.25428,
+        "empirical_frequency_pct": 0.0877785,
+        "mean_corrected_ai_p_pct": 0.3246826,
+        "mean_original_ai_p_pct": 0.3260989,
+        "mean_market_relative_q_pct": 0.0909517,
+        "mean_raw_inverse_odds_pct": 0.1216349,
+        "delta_hits_vs_corrected_ai": -631.53887,
+        "delta_hits_vs_market_relative_shape": -8.45906
+      },
+      "4+": {
+        "tickets": 127968,
+        "observed_hits": 31,
+        "expected_hits_ai_corrected": 490.47093,
+        "expected_hits_ai_original": 490.27862,
+        "expected_hits_relative_market_shape": 60.23396,
+        "raw_reciprocal_odds_sum": 80.62523,
+        "empirical_frequency_pct": 0.0242248,
+        "mean_corrected_ai_p_pct": 0.3832762,
+        "mean_original_ai_p_pct": 0.383126,
+        "mean_market_relative_q_pct": 0.0470695,
+        "mean_raw_inverse_odds_pct": 0.0630042,
+        "delta_hits_vs_corrected_ai": -459.47093,
+        "delta_hits_vs_market_relative_shape": -29.23396
+      }
+    },
+    "in_sample_2023_jan_oct": {
+      "p*O<0.25": {
+        "tickets": 141490,
+        "observed_hits": 920,
+        "expected_hits_ai_corrected": 202.27675,
+        "expected_hits_ai_original": 209.49875,
+        "expected_hits_relative_market_shape": 924.59993,
+        "raw_reciprocal_odds_sum": 1236.57344,
+        "empirical_frequency_pct": 0.6502226,
+        "mean_corrected_ai_p_pct": 0.1429619,
+        "mean_original_ai_p_pct": 0.1480661,
+        "mean_market_relative_q_pct": 0.6534737,
+        "mean_raw_inverse_odds_pct": 0.8739653,
+        "delta_hits_vs_corrected_ai": 717.72325,
+        "delta_hits_vs_market_relative_shape": -4.59993
+      },
+      "0.25-0.5": {
+        "tickets": 260085,
+        "observed_hits": 1519,
+        "expected_hits_ai_corrected": 733.48501,
+        "expected_hits_ai_original": 731.99508,
+        "expected_hits_relative_market_shape": 1487.74195,
+        "raw_reciprocal_odds_sum": 1990.56314,
+        "empirical_frequency_pct": 0.5840398,
+        "mean_corrected_ai_p_pct": 0.2820174,
+        "mean_original_ai_p_pct": 0.2814446,
+        "mean_market_relative_q_pct": 0.5720214,
+        "mean_raw_inverse_odds_pct": 0.765351,
+        "delta_hits_vs_corrected_ai": 785.51499,
+        "delta_hits_vs_market_relative_shape": 31.25805
+      },
+      "0.5-0.8": {
+        "tickets": 265525,
+        "observed_hits": 1036,
+        "expected_hits_ai_corrected": 878.03023,
+        "expected_hits_ai_original": 872.00757,
+        "expected_hits_relative_market_shape": 1037.89413,
+        "raw_reciprocal_odds_sum": 1387.8097,
+        "empirical_frequency_pct": 0.3901704,
+        "mean_corrected_ai_p_pct": 0.330677,
+        "mean_original_ai_p_pct": 0.3284088,
+        "mean_market_relative_q_pct": 0.3908838,
+        "mean_raw_inverse_odds_pct": 0.5226663,
+        "delta_hits_vs_corrected_ai": 157.96977,
+        "delta_hits_vs_market_relative_shape": -1.89413
+      },
+      "0.8-1.25": {
+        "tickets": 274001,
+        "observed_hits": 706,
+        "expected_hits_ai_corrected": 923.18669,
+        "expected_hits_ai_original": 918.85122,
+        "expected_hits_relative_market_shape": 696.78606,
+        "raw_reciprocal_odds_sum": 931.56765,
+        "empirical_frequency_pct": 0.2576633,
+        "mean_corrected_ai_p_pct": 0.3369282,
+        "mean_original_ai_p_pct": 0.3353459,
+        "mean_market_relative_q_pct": 0.2543006,
+        "mean_raw_inverse_odds_pct": 0.339987,
+        "delta_hits_vs_corrected_ai": -217.18669,
+        "delta_hits_vs_market_relative_shape": 9.21394
+      },
+      "1.25-2": {
+        "tickets": 253718,
+        "observed_hits": 413,
+        "expected_hits_ai_corrected": 847.99653,
+        "expected_hits_ai_original": 849.31514,
+        "expected_hits_relative_market_shape": 408.8355,
+        "raw_reciprocal_odds_sum": 546.60651,
+        "empirical_frequency_pct": 0.1627791,
+        "mean_corrected_ai_p_pct": 0.334228,
+        "mean_original_ai_p_pct": 0.3347477,
+        "mean_market_relative_q_pct": 0.1611378,
+        "mean_raw_inverse_odds_pct": 0.2154386,
+        "delta_hits_vs_corrected_ai": -434.99653,
+        "delta_hits_vs_market_relative_shape": 4.1645
+      },
+      "2-4": {
+        "tickets": 236359,
+        "observed_hits": 214,
+        "expected_hits_ai_corrected": 797.66317,
+        "expected_hits_ai_original": 801.48339,
+        "expected_hits_relative_market_shape": 223.58795,
+        "raw_reciprocal_odds_sum": 299.03095,
+        "empirical_frequency_pct": 0.0905402,
+        "mean_corrected_ai_p_pct": 0.3374795,
+        "mean_original_ai_p_pct": 0.3390958,
+        "mean_market_relative_q_pct": 0.0945968,
+        "mean_raw_inverse_odds_pct": 0.1265156,
+        "delta_hits_vs_corrected_ai": -583.66317,
+        "delta_hits_vs_market_relative_shape": -9.58795
+      },
+      "4+": {
+        "tickets": 112712,
+        "observed_hits": 27,
+        "expected_hits_ai_corrected": 452.36161,
+        "expected_hits_ai_original": 451.84886,
+        "expected_hits_relative_market_shape": 55.55448,
+        "raw_reciprocal_odds_sum": 74.36707,
+        "empirical_frequency_pct": 0.0239549,
+        "mean_corrected_ai_p_pct": 0.4013429,
+        "mean_original_ai_p_pct": 0.400888,
+        "mean_market_relative_q_pct": 0.0492889,
+        "mean_raw_inverse_odds_pct": 0.0659797,
+        "delta_hits_vs_corrected_ai": -425.36161,
+        "delta_hits_vs_market_relative_shape": -28.55448
+      }
+    },
+    "forward_2023_nov_dec": {
+      "p*O<0.25": {
+        "tickets": 16618,
+        "observed_hits": 79,
+        "expected_hits_ai_corrected": 17.36669,
+        "expected_hits_ai_original": 17.93749,
+        "expected_hits_relative_market_shape": 80.94166,
+        "raw_reciprocal_odds_sum": 108.21294,
+        "empirical_frequency_pct": 0.4753881,
+        "mean_corrected_ai_p_pct": 0.1045053,
+        "mean_original_ai_p_pct": 0.1079401,
+        "mean_market_relative_q_pct": 0.4870722,
+        "mean_raw_inverse_odds_pct": 0.6511791,
+        "delta_hits_vs_corrected_ai": 61.63331,
+        "delta_hits_vs_market_relative_shape": -1.94166
+      },
+      "0.25-0.5": {
+        "tickets": 31175,
+        "observed_hits": 119,
+        "expected_hits_ai_corrected": 57.57101,
+        "expected_hits_ai_original": 57.80631,
+        "expected_hits_relative_market_shape": 117.42613,
+        "raw_reciprocal_odds_sum": 156.95667,
+        "empirical_frequency_pct": 0.3817161,
+        "mean_corrected_ai_p_pct": 0.1846704,
+        "mean_original_ai_p_pct": 0.1854252,
+        "mean_market_relative_q_pct": 0.3766676,
+        "mean_raw_inverse_odds_pct": 0.5034697,
+        "delta_hits_vs_corrected_ai": 61.42899,
+        "delta_hits_vs_market_relative_shape": 1.57387
+      },
+      "0.5-0.8": {
+        "tickets": 31544,
+        "observed_hits": 84,
+        "expected_hits_ai_corrected": 68.86577,
+        "expected_hits_ai_original": 68.45626,
+        "expected_hits_relative_market_shape": 81.1538,
+        "raw_reciprocal_odds_sum": 108.44474,
+        "empirical_frequency_pct": 0.2662947,
+        "mean_corrected_ai_p_pct": 0.2183165,
+        "mean_original_ai_p_pct": 0.2170183,
+        "mean_market_relative_q_pct": 0.2572717,
+        "mean_raw_inverse_odds_pct": 0.3437888,
+        "delta_hits_vs_corrected_ai": 15.13423,
+        "delta_hits_vs_market_relative_shape": 2.8462
+      },
+      "0.8-1.25": {
+        "tickets": 32906,
+        "observed_hits": 59,
+        "expected_hits_ai_corrected": 73.36699,
+        "expected_hits_ai_original": 72.69697,
+        "expected_hits_relative_market_shape": 55.18304,
+        "raw_reciprocal_odds_sum": 73.73346,
+        "empirical_frequency_pct": 0.1792986,
+        "mean_corrected_ai_p_pct": 0.2229593,
+        "mean_original_ai_p_pct": 0.2209231,
+        "mean_market_relative_q_pct": 0.167699,
+        "mean_raw_inverse_odds_pct": 0.224073,
+        "delta_hits_vs_corrected_ai": -14.36699,
+        "delta_hits_vs_market_relative_shape": 3.81696
+      },
+      "1.25-2": {
+        "tickets": 30938,
+        "observed_hits": 26,
+        "expected_hits_ai_corrected": 67.84453,
+        "expected_hits_ai_original": 67.84212,
+        "expected_hits_relative_market_shape": 32.7448,
+        "raw_reciprocal_odds_sum": 43.76086,
+        "empirical_frequency_pct": 0.084039,
+        "mean_corrected_ai_p_pct": 0.2192919,
+        "mean_original_ai_p_pct": 0.2192841,
+        "mean_market_relative_q_pct": 0.1058401,
+        "mean_raw_inverse_odds_pct": 0.141447,
+        "delta_hits_vs_corrected_ai": -41.84453,
+        "delta_hits_vs_market_relative_shape": -6.7448
+      },
+      "2-4": {
+        "tickets": 30221,
+        "observed_hits": 20,
+        "expected_hits_ai_corrected": 67.87569,
+        "expected_hits_ai_original": 67.83108,
+        "expected_hits_relative_market_shape": 18.87111,
+        "raw_reciprocal_odds_sum": 25.22334,
+        "empirical_frequency_pct": 0.0661791,
+        "mean_corrected_ai_p_pct": 0.2245978,
+        "mean_original_ai_p_pct": 0.2244502,
+        "mean_market_relative_q_pct": 0.0624437,
+        "mean_raw_inverse_odds_pct": 0.0834629,
+        "delta_hits_vs_corrected_ai": -47.87569,
+        "delta_hits_vs_market_relative_shape": 1.12889
+      },
+      "4+": {
+        "tickets": 15256,
+        "observed_hits": 4,
+        "expected_hits_ai_corrected": 38.10932,
+        "expected_hits_ai_original": 38.42977,
+        "expected_hits_relative_market_shape": 4.67948,
+        "raw_reciprocal_odds_sum": 6.25816,
+        "empirical_frequency_pct": 0.0262192,
+        "mean_corrected_ai_p_pct": 0.2497989,
+        "mean_original_ai_p_pct": 0.2518994,
+        "mean_market_relative_q_pct": 0.030673,
+        "mean_raw_inverse_odds_pct": 0.041021,
+        "delta_hits_vs_corrected_ai": -34.10932,
+        "delta_hits_vs_market_relative_shape": -0.67948
+      }
+    }
+  },
+  "line_shape_log_loss": {
+    "in_sample_2023_jan_oct": {
+      "3-3": {
+        "races": 59,
+        "mean_logloss_original_ai": 3.88417949,
+        "mean_logloss_corrected_ai_backcast": 3.89447973,
+        "mean_logloss_market_relative_shape": 3.57734644,
+        "mean_brier_original_ai": 0.96235478,
+        "mean_brier_corrected_ai_backcast": 0.96473545,
+        "mean_brier_market_relative_shape": 0.92707078,
+        "ai_corrected_minus_market_logloss_improvement": -0.31713329,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.47855433,
+          -0.15571224
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.30683305,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.4761586,
+          -0.1375075
+        ],
+        "model_corrected_beats_market_per_race_pct": 37.28814,
+        "model_original_beats_market_per_race_pct": 35.59322,
+        "days": 42
+      },
+      "3-2-2": {
+        "races": 1113,
+        "mean_logloss_original_ai": 4.35608847,
+        "mean_logloss_corrected_ai_backcast": 4.3473577,
+        "mean_logloss_market_relative_shape": 3.99998421,
+        "mean_brier_original_ai": 0.96952511,
+        "mean_brier_corrected_ai_backcast": 0.96833857,
+        "mean_brier_market_relative_shape": 0.95125079,
+        "ai_corrected_minus_market_logloss_improvement": -0.34737349,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.392985,
+          -0.30176197
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.35610426,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.40141991,
+          -0.31078861
+        ],
+        "model_corrected_beats_market_per_race_pct": 32.8841,
+        "model_original_beats_market_per_race_pct": 32.07547,
+        "days": 126
+      },
+      "3-2-1-1": {
+        "races": 267,
+        "mean_logloss_original_ai": 4.42604178,
+        "mean_logloss_corrected_ai_backcast": 4.42104677,
+        "mean_logloss_market_relative_shape": 4.00064512,
+        "mean_brier_original_ai": 0.97092027,
+        "mean_brier_corrected_ai_backcast": 0.97067702,
+        "mean_brier_market_relative_shape": 0.94842107,
+        "ai_corrected_minus_market_logloss_improvement": -0.42040165,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.51883141,
+          -0.32197189
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.42539666,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.52444733,
+          -0.32634598
+        ],
+        "model_corrected_beats_market_per_race_pct": 32.58427,
+        "model_original_beats_market_per_race_pct": 32.20974,
+        "days": 99
+      },
+      "3-2-1": {
+        "races": 104,
+        "mean_logloss_original_ai": 4.16062558,
+        "mean_logloss_corrected_ai_backcast": 4.16130347,
+        "mean_logloss_market_relative_shape": 3.84896484,
+        "mean_brier_original_ai": 0.96444904,
+        "mean_brier_corrected_ai_backcast": 0.96419618,
+        "mean_brier_market_relative_shape": 0.9384482,
+        "ai_corrected_minus_market_logloss_improvement": -0.31233863,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.43443742,
+          -0.19023984
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.31166075,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.43425664,
+          -0.18906485
+        ],
+        "model_corrected_beats_market_per_race_pct": 30.76923,
+        "model_original_beats_market_per_race_pct": 31.73077,
+        "days": 60
+      },
+      "3-3-1": {
+        "races": 537,
+        "mean_logloss_original_ai": 4.23996596,
+        "mean_logloss_corrected_ai_backcast": 4.22552733,
+        "mean_logloss_market_relative_shape": 3.83406993,
+        "mean_brier_original_ai": 0.96610842,
+        "mean_brier_corrected_ai_backcast": 0.96497704,
+        "mean_brier_market_relative_shape": 0.94184954,
+        "ai_corrected_minus_market_logloss_improvement": -0.3914574,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.46973015,
+          -0.31318466
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.40589603,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.48454198,
+          -0.32725009
+        ],
+        "model_corrected_beats_market_per_race_pct": 30.91248,
+        "model_original_beats_market_per_race_pct": 31.28492,
+        "days": 118
+      },
+      "2-2-2": {
+        "races": 32,
+        "mean_logloss_original_ai": 4.189779,
+        "mean_logloss_corrected_ai_backcast": 4.19259125,
+        "mean_logloss_market_relative_shape": 4.08830431,
+        "mean_brier_original_ai": 0.97829426,
+        "mean_brier_corrected_ai_backcast": 0.97879448,
+        "mean_brier_market_relative_shape": 0.97631276,
+        "ai_corrected_minus_market_logloss_improvement": -0.10428694,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.38015385,
+          0.17157998
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.10147469,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.36798948,
+          0.1650401
+        ],
+        "model_corrected_beats_market_per_race_pct": 40.625,
+        "model_original_beats_market_per_race_pct": 40.625,
+        "days": 25
+      },
+      "4-2-1": {
+        "races": 136,
+        "mean_logloss_original_ai": 3.86539253,
+        "mean_logloss_corrected_ai_backcast": 3.82485699,
+        "mean_logloss_market_relative_shape": 3.44656407,
+        "mean_brier_original_ai": 0.9306184,
+        "mean_brier_corrected_ai_backcast": 0.92341839,
+        "mean_brier_market_relative_shape": 0.88662427,
+        "ai_corrected_minus_market_logloss_improvement": -0.37829291,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.49702219,
+          -0.25956364
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.41882846,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.54029937,
+          -0.29735755
+        ],
+        "model_corrected_beats_market_per_race_pct": 30.88235,
+        "model_original_beats_market_per_race_pct": 28.67647,
+        "days": 80
+      },
+      "2-2-2-1": {
+        "races": 199,
+        "mean_logloss_original_ai": 4.79535245,
+        "mean_logloss_corrected_ai_backcast": 4.79977955,
+        "mean_logloss_market_relative_shape": 4.36348078,
+        "mean_brier_original_ai": 0.98699528,
+        "mean_brier_corrected_ai_backcast": 0.98717386,
+        "mean_brier_market_relative_shape": 0.97463863,
+        "ai_corrected_minus_market_logloss_improvement": -0.43629877,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.57796745,
+          -0.29463009
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.43187166,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.57087579,
+          -0.29286754
+        ],
+        "model_corrected_beats_market_per_race_pct": 34.67337,
+        "model_original_beats_market_per_race_pct": 34.17085,
+        "days": 88
+      },
+      "3-2": {
+        "races": 23,
+        "mean_logloss_original_ai": 3.16589221,
+        "mean_logloss_corrected_ai_backcast": 3.1402037,
+        "mean_logloss_market_relative_shape": 2.87387332,
+        "mean_brier_original_ai": 0.93816428,
+        "mean_brier_corrected_ai_backcast": 0.93584988,
+        "mean_brier_market_relative_shape": 0.88561125,
+        "ai_corrected_minus_market_logloss_improvement": -0.26633038,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.66103655,
+          0.12837579
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.29201889,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.68663448,
+          0.10259671
+        ],
+        "model_corrected_beats_market_per_race_pct": 21.73913,
+        "model_original_beats_market_per_race_pct": 21.73913,
+        "days": 18
+      },
+      "4-2": {
+        "races": 15,
+        "mean_logloss_original_ai": 3.54592441,
+        "mean_logloss_corrected_ai_backcast": 3.51584932,
+        "mean_logloss_market_relative_shape": 3.39352916,
+        "mean_brier_original_ai": 0.91518327,
+        "mean_brier_corrected_ai_backcast": 0.90720878,
+        "mean_brier_market_relative_shape": 0.88915732,
+        "ai_corrected_minus_market_logloss_improvement": -0.12232016,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.54860025,
+          0.30395993
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.15239525,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.60935191,
+          0.3045614
+        ],
+        "model_corrected_beats_market_per_race_pct": 40.0,
+        "model_original_beats_market_per_race_pct": 40.0,
+        "days": 13
+      },
+      "4-3": {
+        "races": 215,
+        "mean_logloss_original_ai": 3.93425974,
+        "mean_logloss_corrected_ai_backcast": 3.92458671,
+        "mean_logloss_market_relative_shape": 3.47240131,
+        "mean_brier_original_ai": 0.95034991,
+        "mean_brier_corrected_ai_backcast": 0.94797576,
+        "mean_brier_market_relative_shape": 0.91139889,
+        "ai_corrected_minus_market_logloss_improvement": -0.4521854,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.55468797,
+          -0.34968283
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.46185843,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.5642213,
+          -0.35949555
+        ],
+        "model_corrected_beats_market_per_race_pct": 27.44186,
+        "model_original_beats_market_per_race_pct": 26.97674,
+        "days": 97
+      },
+      "2-2-1-1-1": {
+        "races": 25,
+        "mean_logloss_original_ai": 5.00575695,
+        "mean_logloss_corrected_ai_backcast": 5.02133501,
+        "mean_logloss_market_relative_shape": 4.75352056,
+        "mean_brier_original_ai": 0.98647856,
+        "mean_brier_corrected_ai_backcast": 0.9863698,
+        "mean_brier_market_relative_shape": 0.97961443,
+        "ai_corrected_minus_market_logloss_improvement": -0.26781445,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.51115847,
+          -0.02447043
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.25223639,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.49409823,
+          -0.01037454
+        ],
+        "model_corrected_beats_market_per_race_pct": 36.0,
+        "model_original_beats_market_per_race_pct": 44.0,
+        "days": 24
+      },
+      "3-1-1-1-1": {
+        "races": 18,
+        "mean_logloss_original_ai": 3.94656406,
+        "mean_logloss_corrected_ai_backcast": 3.87782876,
+        "mean_logloss_market_relative_shape": 3.3860733,
+        "mean_brier_original_ai": 0.93894747,
+        "mean_brier_corrected_ai_backcast": 0.92955275,
+        "mean_brier_market_relative_shape": 0.8835809,
+        "ai_corrected_minus_market_logloss_improvement": -0.49175546,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.86164934,
+          -0.12186158
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.56049076,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.93268298,
+          -0.18829854
+        ],
+        "model_corrected_beats_market_per_race_pct": 22.22222,
+        "model_original_beats_market_per_race_pct": 22.22222,
+        "days": 17
+      },
+      "3-3-3": {
+        "races": 505,
+        "mean_logloss_original_ai": 4.9954587,
+        "mean_logloss_corrected_ai_backcast": 4.97893874,
+        "mean_logloss_market_relative_shape": 4.52962536,
+        "mean_brier_original_ai": 0.98476355,
+        "mean_brier_corrected_ai_backcast": 0.98429355,
+        "mean_brier_market_relative_shape": 0.97290437,
+        "ai_corrected_minus_market_logloss_improvement": -0.44931338,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.52328807,
+          -0.37533869
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.46583335,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.53947659,
+          -0.3921901
+        ],
+        "model_corrected_beats_market_per_race_pct": 27.72277,
+        "model_original_beats_market_per_race_pct": 27.12871,
+        "days": 152
+      },
+      "3-3-2-1": {
+        "races": 322,
+        "mean_logloss_original_ai": 5.02778667,
+        "mean_logloss_corrected_ai_backcast": 5.0110754,
+        "mean_logloss_market_relative_shape": 4.58678449,
+        "mean_brier_original_ai": 0.9824656,
+        "mean_brier_corrected_ai_backcast": 0.98127315,
+        "mean_brier_market_relative_shape": 0.96854609,
+        "ai_corrected_minus_market_logloss_improvement": -0.4242909,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.52009034,
+          -0.32849146
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.44100217,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.53459224,
+          -0.34741211
+        ],
+        "model_corrected_beats_market_per_race_pct": 30.74534,
+        "model_original_beats_market_per_race_pct": 28.57143,
+        "days": 142
+      },
+      "4-3-2": {
+        "races": 36,
+        "mean_logloss_original_ai": 5.07559966,
+        "mean_logloss_corrected_ai_backcast": 5.04193424,
+        "mean_logloss_market_relative_shape": 4.36072165,
+        "mean_brier_original_ai": 0.97698911,
+        "mean_brier_corrected_ai_backcast": 0.97336663,
+        "mean_brier_market_relative_shape": 0.95686742,
+        "ai_corrected_minus_market_logloss_improvement": -0.6812126,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -1.0480872,
+          -0.314338
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.71487802,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -1.0725115,
+          -0.35724454
+        ],
+        "model_corrected_beats_market_per_race_pct": 22.22222,
+        "model_original_beats_market_per_race_pct": 22.22222,
+        "days": 31
+      },
+      "3-2-2-1-1": {
+        "races": 130,
+        "mean_logloss_original_ai": 5.42295079,
+        "mean_logloss_corrected_ai_backcast": 5.42524276,
+        "mean_logloss_market_relative_shape": 4.96314065,
+        "mean_brier_original_ai": 0.98763482,
+        "mean_brier_corrected_ai_backcast": 0.98724337,
+        "mean_brier_market_relative_shape": 0.97890626,
+        "ai_corrected_minus_market_logloss_improvement": -0.4621021,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.5914505,
+          -0.3327537
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.45981014,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.58604977,
+          -0.33357051
+        ],
+        "model_corrected_beats_market_per_race_pct": 29.23077,
+        "model_original_beats_market_per_race_pct": 26.92308,
+        "days": 90
+      },
+      "3-2-2-2": {
+        "races": 684,
+        "mean_logloss_original_ai": 5.20830969,
+        "mean_logloss_corrected_ai_backcast": 5.20063715,
+        "mean_logloss_market_relative_shape": 4.77840209,
+        "mean_brier_original_ai": 0.9871613,
+        "mean_brier_corrected_ai_backcast": 0.98725912,
+        "mean_brier_market_relative_shape": 0.97511261,
+        "ai_corrected_minus_market_logloss_improvement": -0.42223506,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.4862774,
+          -0.35819272
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.4299076,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.49395504,
+          -0.36586016
+        ],
+        "model_corrected_beats_market_per_race_pct": 29.53216,
+        "model_original_beats_market_per_race_pct": 29.97076,
+        "days": 166
+      },
+      "3-3-1-1-1": {
+        "races": 24,
+        "mean_logloss_original_ai": 5.08161071,
+        "mean_logloss_corrected_ai_backcast": 5.06466261,
+        "mean_logloss_market_relative_shape": 4.85452135,
+        "mean_brier_original_ai": 0.98212791,
+        "mean_brier_corrected_ai_backcast": 0.97994523,
+        "mean_brier_market_relative_shape": 0.98387879,
+        "ai_corrected_minus_market_logloss_improvement": -0.21014126,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.52735533,
+          0.10707281
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.22708936,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.51487616,
+          0.06069744
+        ],
+        "model_corrected_beats_market_per_race_pct": 50.0,
+        "model_original_beats_market_per_race_pct": 41.66667,
+        "days": 19
+      },
+      "5-1-1": {
+        "races": 18,
+        "mean_logloss_original_ai": 4.31139268,
+        "mean_logloss_corrected_ai_backcast": 4.34012026,
+        "mean_logloss_market_relative_shape": 3.64933302,
+        "mean_brier_original_ai": 0.96794835,
+        "mean_brier_corrected_ai_backcast": 0.96958398,
+        "mean_brier_market_relative_shape": 0.92781189,
+        "ai_corrected_minus_market_logloss_improvement": -0.69078724,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -1.03417422,
+          -0.34740027
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.66205967,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.99314661,
+          -0.33097273
+        ],
+        "model_corrected_beats_market_per_race_pct": 11.11111,
+        "model_original_beats_market_per_race_pct": 11.11111,
+        "days": 17
+      },
+      "4-3-1-1": {
+        "races": 15,
+        "mean_logloss_original_ai": 5.18793636,
+        "mean_logloss_corrected_ai_backcast": 5.2047464,
+        "mean_logloss_market_relative_shape": 4.65810852,
+        "mean_brier_original_ai": 0.98841973,
+        "mean_brier_corrected_ai_backcast": 0.98995042,
+        "mean_brier_market_relative_shape": 0.98416313,
+        "ai_corrected_minus_market_logloss_improvement": -0.54663788,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -1.11210452,
+          0.01882875
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.52982784,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -1.07522347,
+          0.01556778
+        ],
+        "model_corrected_beats_market_per_race_pct": 33.33333,
+        "model_original_beats_market_per_race_pct": 26.66667,
+        "days": 12
+      },
+      "4-2-2-1": {
+        "races": 22,
+        "mean_logloss_original_ai": 5.32119018,
+        "mean_logloss_corrected_ai_backcast": 5.32177492,
+        "mean_logloss_market_relative_shape": 4.93648368,
+        "mean_brier_original_ai": 0.98735675,
+        "mean_brier_corrected_ai_backcast": 0.98849455,
+        "mean_brier_market_relative_shape": 0.97029769,
+        "ai_corrected_minus_market_logloss_improvement": -0.38529124,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.86017987,
+          0.08959739
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.38470649,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.86772166,
+          0.09830867
+        ],
+        "model_corrected_beats_market_per_race_pct": 40.90909,
+        "model_original_beats_market_per_race_pct": 36.36364,
+        "days": 21
+      },
+      "4-1-1-1": {
+        "races": 26,
+        "mean_logloss_original_ai": 3.6292749,
+        "mean_logloss_corrected_ai_backcast": 3.58187043,
+        "mean_logloss_market_relative_shape": 3.15983578,
+        "mean_brier_original_ai": 0.92411013,
+        "mean_brier_corrected_ai_backcast": 0.91688913,
+        "mean_brier_market_relative_shape": 0.90744287,
+        "ai_corrected_minus_market_logloss_improvement": -0.42203465,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.6471224,
+          -0.1969469
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.46943912,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.69348779,
+          -0.24539044
+        ],
+        "model_corrected_beats_market_per_race_pct": 30.76923,
+        "model_original_beats_market_per_race_pct": 26.92308,
+        "days": 23
+      },
+      "3-2-2-1": {
+        "races": 23,
+        "mean_logloss_original_ai": 4.75198093,
+        "mean_logloss_corrected_ai_backcast": 4.74574203,
+        "mean_logloss_market_relative_shape": 4.16044787,
+        "mean_brier_original_ai": 0.98344999,
+        "mean_brier_corrected_ai_backcast": 0.98399158,
+        "mean_brier_market_relative_shape": 0.96159742,
+        "ai_corrected_minus_market_logloss_improvement": -0.58529416,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.85905734,
+          -0.31153098
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.59153306,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.87325173,
+          -0.30981439
+        ],
+        "model_corrected_beats_market_per_race_pct": 17.3913,
+        "model_original_beats_market_per_race_pct": 17.3913,
+        "days": 18
+      },
+      "3-3-2": {
+        "races": 46,
+        "mean_logloss_original_ai": 4.94390908,
+        "mean_logloss_corrected_ai_backcast": 4.94042251,
+        "mean_logloss_market_relative_shape": 4.65086635,
+        "mean_brier_original_ai": 0.98079858,
+        "mean_brier_corrected_ai_backcast": 0.9801259,
+        "mean_brier_market_relative_shape": 0.97558084,
+        "ai_corrected_minus_market_logloss_improvement": -0.28955616,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.5176392,
+          -0.06147311
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.29304272,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.50979087,
+          -0.07629458
+        ],
+        "model_corrected_beats_market_per_race_pct": 41.30435,
+        "model_original_beats_market_per_race_pct": 34.78261,
+        "days": 34
+      },
+      "2-2-2-2": {
+        "races": 16,
+        "mean_logloss_original_ai": 5.47127009,
+        "mean_logloss_corrected_ai_backcast": 5.48667412,
+        "mean_logloss_market_relative_shape": 5.24783669,
+        "mean_brier_original_ai": 0.99633482,
+        "mean_brier_corrected_ai_backcast": 0.99690365,
+        "mean_brier_market_relative_shape": 1.00090472,
+        "ai_corrected_minus_market_logloss_improvement": -0.23883743,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.60153785,
+          0.123863
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.2234334,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.56876095,
+          0.12189416
+        ],
+        "model_corrected_beats_market_per_race_pct": 50.0,
+        "model_original_beats_market_per_race_pct": 50.0,
+        "days": 14
+      },
+      "2-2-2-2-1": {
+        "races": 88,
+        "mean_logloss_original_ai": 5.52808516,
+        "mean_logloss_corrected_ai_backcast": 5.52664022,
+        "mean_logloss_market_relative_shape": 5.09877264,
+        "mean_brier_original_ai": 0.99161469,
+        "mean_brier_corrected_ai_backcast": 0.99147129,
+        "mean_brier_market_relative_shape": 0.98453279,
+        "ai_corrected_minus_market_logloss_improvement": -0.42786757,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.60316318,
+          -0.25257196
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.42931252,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.60119587,
+          -0.25742916
+        ],
+        "model_corrected_beats_market_per_race_pct": 28.40909,
+        "model_original_beats_market_per_race_pct": 27.27273,
+        "days": 64
+      }
+    },
+    "forward_2023_nov_dec": {
+      "3-3-3": {
+        "races": 81,
+        "mean_logloss_original_ai": 4.89707679,
+        "mean_logloss_corrected_ai_backcast": 4.86763544,
+        "mean_logloss_market_relative_shape": 4.51081381,
+        "mean_brier_original_ai": 0.98304946,
+        "mean_brier_corrected_ai_backcast": 0.98253979,
+        "mean_brier_market_relative_shape": 0.9737409,
+        "ai_corrected_minus_market_logloss_improvement": -0.35682163,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.54717209,
+          -0.16647117
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.38626298,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.57199655,
+          -0.20052942
+        ],
+        "model_corrected_beats_market_per_race_pct": 34.5679,
+        "model_original_beats_market_per_race_pct": 29.62963,
+        "days": 28
+      },
+      "3-2-2-2": {
+        "races": 134,
+        "mean_logloss_original_ai": 5.08378682,
+        "mean_logloss_corrected_ai_backcast": 5.06911449,
+        "mean_logloss_market_relative_shape": 4.58681398,
+        "mean_brier_original_ai": 0.98514389,
+        "mean_brier_corrected_ai_backcast": 0.9848868,
+        "mean_brier_market_relative_shape": 0.97025748,
+        "ai_corrected_minus_market_logloss_improvement": -0.48230051,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.68496885,
+          -0.27963216
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.49697284,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.70402734,
+          -0.28991834
+        ],
+        "model_corrected_beats_market_per_race_pct": 29.10448,
+        "model_original_beats_market_per_race_pct": 26.86567,
+        "days": 34
+      },
+      "3-3-2-1": {
+        "races": 65,
+        "mean_logloss_original_ai": 4.87901473,
+        "mean_logloss_corrected_ai_backcast": 4.83658408,
+        "mean_logloss_market_relative_shape": 4.70347108,
+        "mean_brier_original_ai": 0.97975571,
+        "mean_brier_corrected_ai_backcast": 0.97750386,
+        "mean_brier_market_relative_shape": 0.97616739,
+        "ai_corrected_minus_market_logloss_improvement": -0.133113,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.32363413,
+          0.05740812
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.17554365,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.36553856,
+          0.01445126
+        ],
+        "model_corrected_beats_market_per_race_pct": 41.53846,
+        "model_original_beats_market_per_race_pct": 41.53846,
+        "days": 30
+      },
+      "3-2-2-1-1": {
+        "races": 29,
+        "mean_logloss_original_ai": 5.3241396,
+        "mean_logloss_corrected_ai_backcast": 5.30913264,
+        "mean_logloss_market_relative_shape": 4.66818735,
+        "mean_brier_original_ai": 0.98327993,
+        "mean_brier_corrected_ai_backcast": 0.9810636,
+        "mean_brier_market_relative_shape": 0.96928047,
+        "ai_corrected_minus_market_logloss_improvement": -0.64094529,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.85746691,
+          -0.42442367
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.65595226,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.86615672,
+          -0.44574779
+        ],
+        "model_corrected_beats_market_per_race_pct": 27.58621,
+        "model_original_beats_market_per_race_pct": 17.24138,
+        "days": 20
+      },
+      "2-2-2-2-1": {
+        "races": 22,
+        "mean_logloss_original_ai": 5.53795274,
+        "mean_logloss_corrected_ai_backcast": 5.54172286,
+        "mean_logloss_market_relative_shape": 4.95370125,
+        "mean_brier_original_ai": 0.98987768,
+        "mean_brier_corrected_ai_backcast": 0.98952303,
+        "mean_brier_market_relative_shape": 0.98133148,
+        "ai_corrected_minus_market_logloss_improvement": -0.58802161,
+        "ai_corrected_vs_market_day_cluster_95pct_ci": [
+          -0.92662636,
+          -0.24941687
+        ],
+        "ai_original_minus_market_logloss_improvement": -0.58425149,
+        "ai_original_vs_market_day_cluster_95pct_ci": [
+          -0.91182458,
+          -0.2566784
+        ],
+        "model_corrected_beats_market_per_race_pct": 18.18182,
+        "model_original_beats_market_per_race_pct": 18.18182,
+        "days": 13
+      }
+    }
+  },
+  "examples_forward_2023": {
+    "ai_overestimates_market_4plus": {
+      "race_id": "6120231102010001",
+      "date": "2023-11-02",
+      "trifecta": "2-1-3",
+      "ai_p_pct": 0.15714186770000002,
+      "market_q_pct": 0.031086760300000002,
+      "raw_inverse_odds_pct": 0.0414989418,
+      "final_odds": 2409.7,
+      "actual_win": false
+    },
+    "market_overestimates_ai_under_quarter": {
+      "race_id": "6120231102010001",
+      "date": "2023-11-02",
+      "trifecta": "4-1-9",
+      "ai_p_pct": 0.0023143554,
+      "market_q_pct": 0.0097967365,
+      "raw_inverse_odds_pct": 0.013078049800000002,
+      "final_odds": 7646.4,
+      "actual_win": false
+    }
+  },
+  "important_limits": [
+    "2023 Jan-Oct comparison includes in-sample targets for original AI.",
+    "2023 Nov-Dec original AI is unused in model fitting, but the corrected AI uses coefficients fit on future 2024 data. Corrected AI 2023 results are retrospective backcast, not chronological OOS.",
+    "The 2023 final odds are not purchase-time T-15 odds. Never infer tradability or profit.",
+    "Q is relative normalized MARKET SHAPE (no rate assumed); raw 1/O data also preserved separately.",
+    "Within each race tickets are mutually exclusive. Log loss is aggregated by race.",
+    "This observation is NOT proof of a market inefficiency: the market may be more accurate than independent AI."
+  ]
+}
