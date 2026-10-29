@@ -166,7 +166,7 @@ def choice(e,prefix,wg,wr,delta5,wline,wrider,alpha,baseline="V6"):
     if abs(sum(out.values())-1)>TOL:raise AssertionError("Choice mass not one")
     return out
 
-def train(e_train,wg,wr,delta5):
+def fit_opponent(e_train,wg,wr,delta5):
     wl={};wc={}
     cases=list(e_train.values())
     rng=random.Random(SEED)
@@ -341,7 +341,7 @@ def select_dev(results):
     opt=[a for a,r in results.items() if a>0 and
          r["V6"].nll/r["V6"].n<r["V5"].nll/r["V5"].n-1e-8 and
          r["V6"].brier/r["V6"].n<=r["V5"].brier/r["V5"].n+1e-8]
-    return min(opt,key=lambda x:(results[x]["V6"].nll/x,x)) if opt else 0.
+    return min(opt,key=lambda x:(results[x]["V6"].nll/results[x]["V6"].n,x)) if opt else 0.
 
 def main():
     data,coverage=original.ingest()
@@ -352,7 +352,7 @@ def main():
     pw,n=v3.train_pattern_gate(train)
     dists.pw=pw
     delta5=v5.fit_residual(train,wg,wr)
-    wl,wc=train and train_opponent(train,wg,wr,delta5)
+    wl,wc=fit_opponent(train,wg,wr,delta5)
     del train,data
     development={}
     for alpha in SCALES:
@@ -446,9 +446,6 @@ def main():
                                            for k,v in x["all_models"].items()},
                          "year_pass":x["year_guard_passed"]} for y,x in tests.items()}
           },ensure_ascii=False),flush=True)
-
-def train_opponent(train,wg,wr,delta5):
-    return train(train,wg,wr,delta5)
 
 if __name__=="__main__":
     main()
