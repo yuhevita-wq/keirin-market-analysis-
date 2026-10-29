@@ -1,0 +1,119 @@
+name: Independent 3連単 probability v2 | 2024 correction, 2025 sealed
+
+on:
+  push:
+    branches:
+      - research/trifecta-probability-calibration-v2
+    paths:
+      - 'research/trifecta_calibration_v2/**'
+      - '.github/workflows/trifecta-calibration-v2-2024.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: independent-trifecta-v2-2024-calibration
+  cancel-in-progress: false
+
+jobs:
+  fit-calibrator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/trifecta_calibration_v2/calibrate.py
+            /research/independent_trifecta_2023/observe.py
+            /research/independent_trifecta_2024/calibration_audit.py
+            /data/a_class_12/2024_*/entries.csv
+            /data/a_class_12/2024_*/races.csv
+            /data/a3_challenge/2024_*/entries.csv
+            /data/a3_challenge/2024_*/races.csv
+            /data/2024/**/entries.csv
+            /data/2024/**/races.csv
+            /data/grade_races/g1g2/*2024*.zip
+            /data/grade_races/g3/2024/*.zip
+            /data/result_universe_v2/combined/results_2024.jsonl.gz
+      - name: Retrieve immutable complete 2024 prediction archive from previous successful audit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          mkdir -p data/audits
+          gh run download 40807880319 --repo "$GH_REPO" \
+            --name 2024-trifecta-no-odds-frozen-2023-audit --dir data/audits
+          test -s data/audits/independent_trifecta_all_tickets_2024.jsonl.gz
+          du -h data/audits/independent_trifecta_all_tickets_2024.jsonl.gz
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install numerical optimizer
+        run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.12,<2'
+      - name: Lock input functions, check syntax and normalization on synthetic race
+        run: |
+          python -m py_compile research/trifecta_calibration_v2/calibrate.py \
+            research/independent_trifecta_2023/observe.py \
+            research/independent_trifecta_2024/calibration_audit.py
+          python - <<'PY'
+          import sys
+          sys.path.insert(0,"research/trifecta_calibration_v2")
+          import calibrate as C
+          import numpy as np
+          z=np.asarray([0.10,0.20,0.30,0.40])
+          assert abs(C.softmax(np.log(z)).sum()-1)<1e-12
+          assert np.max(np.abs(C.softmax(np.log(z))-z))<1e-12
+          assert all(C.band_index(x)==i for i,x in enumerate([0.0005,0.002,0.007,0.015,0.03,0.08,0.15,0.3]))
+          print("NORMALIZATION_AND_BIN_CONTRACT_PASSED")
+          PY
+      - name: Fit Jan-Jun 2024 post-calibration; evaluate Jul-Dec; freeze full-2024 coefficients for untouched 2025
+        run: python research/trifecta_calibration_v2/calibrate.py
+        env:
+          PYTHONUNBUFFERED: '1'
+          OPENBLAS_NUM_THREADS: '2'
+          OMP_NUM_THREADS: '2'
+          MKL_NUM_THREADS: '2'
+      - name: Validate provenance, split integrity and 2025 seal
+        run: |
+          python - <<'PY'
+          import json,math
+          p="data/audits/"
+          r=json.load(open(p+"independent_trifecta_calibrator_v2_2024_report.json"))
+          w=json.load(open(p+"independent_trifecta_calibrator_v2_for_2025.json"))
+          assert r["full_year_races"]==25348
+          assert r["full_year_ticket_predictions"]==5820462
+          assert r["first_half_races"]+r["second_half_races"]==25348
+          assert r["2025_test_labels_seen"] is False
+          assert r["market_odds_seen"] is False
+          assert w["holdout_2025_not_used"]
+          assert len(w["coefficients"])==8
+          assert all(math.isfinite(x) for x in w["coefficients"])
+          print("2024_COMPLETE_CALIBRATION_VALIDATED",r["second_half_nll_improvement"],
+               "SELECTED",r["final_selected_type_for_sealed_2025"])
+          PY
+      - name: Archive calibration and scoring parameters
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: independent-trifecta-v2-2024-calibration
+          path: |
+            data/audits/independent_trifecta_calibrator_v2_2024_report.json
+            data/audits/independent_trifecta_calibrator_v2_for_2025.json
+            data/audits/independent_trifecta_calibrator_v2_example_2024.json
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Publish frozen calibrator and report on research branch
+        if: success()
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add --sparse data/audits/independent_trifecta_calibrator_v2_2024_report.json \
+            data/audits/independent_trifecta_calibrator_v2_for_2025.json \
+            data/audits/independent_trifecta_calibrator_v2_example_2024.json
+          git diff --cached --quiet || git commit -m "Save 2024 calibration research and frozen odds-free 2025 probabilities"
+          git push origin HEAD:research/trifecta-probability-calibration-v2
