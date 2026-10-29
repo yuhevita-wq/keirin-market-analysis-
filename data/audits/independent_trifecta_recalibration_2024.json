@@ -1,0 +1,1870 @@
+{
+  "state": "COMPLETE_FROZEN_2023_CALIBRATED_2024_H1_TEST_2024_H2",
+  "original_2023_model_changed": false,
+  "2023_base_observation_training": "2023-01-01 through 2023-10-31",
+  "2024_calibrator_fit": [
+    "2024-01-01",
+    "2024-06-30"
+  ],
+  "2024_unseen_assessment": [
+    "2024-07-01",
+    "2024-12-31"
+  ],
+  "2025_or_later_accessed": false,
+  "odds_or_market_data_accessed": false,
+  "source_baseline_run": 40807880319,
+  "source_baseline_archive_sha256_uncompressed": "4c5df90ac29ab9938cafd760dbc65d4aa793dacdcbd23bffcd3535327de9f7b9",
+  "source_2024_verified_baseline_nll": 4.38862474,
+  "baseline_nll_reproduced_all_2024": 4.38862474,
+  "races": {
+    "calibration_fit": 12561,
+    "strict_test": 12787,
+    "entire_2024": 25348
+  },
+  "total_2024_ticket_probabilities": 5820462,
+  "smoothing_unchanged": {
+    "alpha_temperature": "fitted only Jan-Jun",
+    "line_coefficient_regularizer": 0.002
+  },
+  "fitted_coefficients": {
+    "unchanged": {
+      "alpha": 1.0,
+      "line_coefs": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "params": [],
+      "train_penalized_nll": null,
+      "converged": true,
+      "iterations": 0
+    },
+    "temperature": {
+      "alpha": 1.0744172581919151,
+      "line_coefs": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "params": [
+        1.0744172581919151
+      ],
+      "train_penalized_nll": 4.380563729985426,
+      "converged": true,
+      "iterations": 4
+    },
+    "line_structure": {
+      "alpha": 1.0,
+      "line_coefs": [
+        0.08305940179108477,
+        0.06558949171352639,
+        0.06092177177908487,
+        0.11893439193302109
+      ],
+      "params": [
+        0.08305940179108477,
+        0.06558949171352639,
+        0.06092177177908487,
+        0.11893439193302109
+      ],
+      "train_penalized_nll": 4.37934505738067,
+      "converged": true,
+      "iterations": 12
+    },
+    "joint": {
+      "alpha": 1.0436305765843565,
+      "line_coefs": [
+        0.015204702734728442,
+        0.03738683356985902,
+        0.03236425239577047,
+        0.1268511426254791
+      ],
+      "params": [
+        1.0436305765843565,
+        0.015204702734728442,
+        0.03738683356985902,
+        0.03236425239577047,
+        0.1268511426254791
+      ],
+      "train_penalized_nll": 4.378493895072485,
+      "converged": true,
+      "iterations": 14
+    }
+  },
+  "model_selected_using_2024_H1_only": "joint",
+  "selection_rule": "Minimum 2024 Jan-Jun multiclass NLL, ties in model order",
+  "untouched_2024_H2_test": {
+    "models": {
+      "unchanged": {
+        "overall": {
+          "races": 12787,
+          "nll": 4.39226243,
+          "brier": 0.9695565,
+          "mean_probability_of_realized_pct": 2.697643,
+          "top1_hit_pct": 10.2526,
+          "top3_hit_pct": 21.98326
+        },
+        "by_class": {
+          "A1_A2": {
+            "races": 6047,
+            "nll": 4.33189282,
+            "brier": 0.96966955,
+            "mean_probability_of_realized_pct": 2.717013,
+            "top1_hit_pct": 9.64114,
+            "top3_hit_pct": 22.24243
+          },
+          "A3": {
+            "races": 2923,
+            "nll": 4.13025988,
+            "brier": 0.95848868,
+            "mean_probability_of_realized_pct": 3.483511,
+            "top1_hit_pct": 13.88984,
+            "top3_hit_pct": 25.96647
+          },
+          "S_F1": {
+            "races": 2580,
+            "nll": 4.50766468,
+            "brier": 0.97565132,
+            "mean_probability_of_realized_pct": 2.352943,
+            "top1_hit_pct": 8.68217,
+            "top3_hit_pct": 18.99225
+          },
+          "S_grade": {
+            "races": 1237,
+            "nll": 5.06578771,
+            "brier": 0.98244497,
+            "mean_probability_of_realized_pct": 1.464909,
+            "top1_hit_pct": 7.92239,
+            "top3_hit_pct": 17.54244
+          }
+        },
+        "by_line_shape_top_8": {
+          "3-2-2": {
+            "races": 5085,
+            "nll": 4.39250386,
+            "brier": 0.97102125,
+            "mean_probability_of_realized_pct": 2.544597,
+            "top1_hit_pct": 9.81318,
+            "top3_hit_pct": 21.14061
+          },
+          "3-3-1": {
+            "races": 1926,
+            "nll": 4.20121297,
+            "brier": 0.96669845,
+            "mean_probability_of_realized_pct": 2.961407,
+            "top1_hit_pct": 11.3188,
+            "top3_hit_pct": 24.09138
+          },
+          "2-2-2-1": {
+            "races": 1104,
+            "nll": 4.82040246,
+            "brier": 0.98673567,
+            "mean_probability_of_realized_pct": 1.453484,
+            "top1_hit_pct": 5.07246,
+            "top3_hit_pct": 12.0471
+          },
+          "3-2-1-1": {
+            "races": 1078,
+            "nll": 4.44286289,
+            "brier": 0.96824221,
+            "mean_probability_of_realized_pct": 2.810793,
+            "top1_hit_pct": 10.9462,
+            "top3_hit_pct": 23.46939
+          },
+          "4-3": {
+            "races": 671,
+            "nll": 3.94718695,
+            "brier": 0.95300395,
+            "mean_probability_of_realized_pct": 3.796633,
+            "top1_hit_pct": 14.45604,
+            "top3_hit_pct": 30.84948
+          },
+          "4-2-1": {
+            "races": 492,
+            "nll": 3.98391452,
+            "brier": 0.94747348,
+            "mean_probability_of_realized_pct": 4.319182,
+            "top1_hit_pct": 15.85366,
+            "top3_hit_pct": 33.73984
+          },
+          "3-2-2-2": {
+            "races": 404,
+            "nll": 5.04590654,
+            "brier": 0.98097277,
+            "mean_probability_of_realized_pct": 1.462269,
+            "top1_hit_pct": 9.90099,
+            "top3_hit_pct": 18.56436
+          },
+          "3-3-3": {
+            "races": 312,
+            "nll": 4.83193793,
+            "brier": 0.97920203,
+            "mean_probability_of_realized_pct": 1.592164,
+            "top1_hit_pct": 8.33333,
+            "top3_hit_pct": 21.47436
+          }
+        },
+        "calibration_bands": {
+          "0-0.1%": {
+            "tickets": 1042490,
+            "expected_hits": 476.1405,
+            "actual_hits": 482,
+            "mean_predicted_pct": 0.045673,
+            "empirical_pct": 0.046235,
+            "ratio_actual_to_expected": 1.01231,
+            "z_under_calibrated_null": 0.2761
+          },
+          "0.1-0.5%": {
+            "tickets": 1256021,
+            "expected_hits": 3074.7176,
+            "actual_hits": 2697,
+            "mean_predicted_pct": 0.244798,
+            "empirical_pct": 0.214726,
+            "ratio_actual_to_expected": 0.87715,
+            "z_under_calibrated_null": -7.9255
+          },
+          "0.5-1%": {
+            "tickets": 351780,
+            "expected_hits": 2469.0521,
+            "actual_hits": 2312,
+            "mean_predicted_pct": 0.701874,
+            "empirical_pct": 0.657229,
+            "ratio_actual_to_expected": 0.93639,
+            "z_under_calibrated_null": -3.5402
+          },
+          "1-2%": {
+            "tickets": 180321,
+            "expected_hits": 2506.0057,
+            "actual_hits": 2478,
+            "mean_predicted_pct": 1.389747,
+            "empirical_pct": 1.374216,
+            "ratio_actual_to_expected": 0.98882,
+            "z_under_calibrated_null": -0.6305
+          },
+          "2-5%": {
+            "tickets": 89404,
+            "expected_hits": 2613.1358,
+            "actual_hits": 2819,
+            "mean_predicted_pct": 2.92284,
+            "empirical_pct": 3.153103,
+            "ratio_actual_to_expected": 1.07878,
+            "z_under_calibrated_null": 4.5771
+          },
+          "5-10%": {
+            "tickets": 15330,
+            "expected_hits": 1040.8916,
+            "actual_hits": 1176,
+            "mean_predicted_pct": 6.7899,
+            "empirical_pct": 7.671233,
+            "ratio_actual_to_expected": 1.1298,
+            "z_under_calibrated_null": 4.4548
+          },
+          "10-20%": {
+            "tickets": 4559,
+            "expected_hits": 580.7161,
+            "actual_hits": 791,
+            "mean_predicted_pct": 12.737797,
+            "empirical_pct": 17.350296,
+            "ratio_actual_to_expected": 1.36211,
+            "z_under_calibrated_null": 9.4691
+          },
+          "20-100%": {
+            "tickets": 119,
+            "expected_hits": 26.3404,
+            "actual_hits": 32,
+            "mean_predicted_pct": 22.134774,
+            "empirical_pct": 26.890756,
+            "ratio_actual_to_expected": 1.21486,
+            "z_under_calibrated_null": 1.252
+          }
+        },
+        "structural": {
+          "same_line_12": {
+            "races": 12787,
+            "expected_pct": 54.3772,
+            "empirical_pct": 56.82334,
+            "delta_pct_point": 2.44614,
+            "null_z": 5.6458
+          },
+          "same_line_13": {
+            "races": 12787,
+            "expected_pct": 33.70537,
+            "empirical_pct": 38.57042,
+            "delta_pct_point": 4.86506,
+            "null_z": 12.0614
+          },
+          "same_line_23": {
+            "races": 12787,
+            "expected_pct": 33.81955,
+            "empirical_pct": 37.46774,
+            "delta_pct_point": 3.64819,
+            "null_z": 9.0227
+          },
+          "same_line_123": {
+            "races": 12787,
+            "expected_pct": 18.36094,
+            "empirical_pct": 23.12505,
+            "delta_pct_point": 4.76411,
+            "null_z": 14.722
+          }
+        },
+        "ticket_weighted_ece_pp": 0.03828373
+      },
+      "temperature": {
+        "overall": {
+          "races": 12787,
+          "nll": 4.38728285,
+          "brier": 0.96876063,
+          "mean_probability_of_realized_pct": 2.980736,
+          "top1_hit_pct": 10.2526,
+          "top3_hit_pct": 21.98326
+        },
+        "by_class": {
+          "A1_A2": {
+            "races": 6047,
+            "nll": 4.32662583,
+            "brier": 0.96906469,
+            "mean_probability_of_realized_pct": 2.995434,
+            "top1_hit_pct": 9.64114,
+            "top3_hit_pct": 22.24243
+          },
+          "A3": {
+            "races": 2923,
+            "nll": 4.11903458,
+            "brier": 0.95663646,
+            "mean_probability_of_realized_pct": 3.870059,
+            "top1_hit_pct": 13.88984,
+            "top3_hit_pct": 25.96647
+          },
+          "S_F1": {
+            "races": 2580,
+            "nll": 4.51293423,
+            "brier": 0.9756187,
+            "mean_probability_of_realized_pct": 2.580152,
+            "top1_hit_pct": 8.68217,
+            "top3_hit_pct": 18.99225
+          },
+          "S_grade": {
+            "races": 1237,
+            "nll": 5.05559495,
+            "brier": 0.98161957,
+            "mean_probability_of_realized_pct": 1.642929,
+            "top1_hit_pct": 7.92239,
+            "top3_hit_pct": 17.54244
+          }
+        },
+        "by_line_shape_top_8": {
+          "3-2-2": {
+            "races": 5085,
+            "nll": 4.38669734,
+            "brier": 0.97019414,
+            "mean_probability_of_realized_pct": 2.813338,
+            "top1_hit_pct": 9.81318,
+            "top3_hit_pct": 21.14061
+          },
+          "3-3-1": {
+            "races": 1926,
+            "nll": 4.19308465,
+            "brier": 0.96599499,
+            "mean_probability_of_realized_pct": 3.265354,
+            "top1_hit_pct": 11.3188,
+            "top3_hit_pct": 24.09138
+          },
+          "2-2-2-1": {
+            "races": 1104,
+            "nll": 4.83320398,
+            "brier": 0.98716713,
+            "mean_probability_of_realized_pct": 1.556815,
+            "top1_hit_pct": 5.07246,
+            "top3_hit_pct": 12.0471
+          },
+          "3-2-1-1": {
+            "races": 1078,
+            "nll": 4.44482572,
+            "brier": 0.96724884,
+            "mean_probability_of_realized_pct": 3.12833,
+            "top1_hit_pct": 10.9462,
+            "top3_hit_pct": 23.46939
+          },
+          "4-3": {
+            "races": 671,
+            "nll": 3.92645325,
+            "brier": 0.95063233,
+            "mean_probability_of_realized_pct": 4.228516,
+            "top1_hit_pct": 14.45604,
+            "top3_hit_pct": 30.84948
+          },
+          "4-2-1": {
+            "races": 492,
+            "nll": 3.96809036,
+            "brier": 0.94519168,
+            "mean_probability_of_realized_pct": 4.855679,
+            "top1_hit_pct": 15.85366,
+            "top3_hit_pct": 33.73984
+          },
+          "3-2-2-2": {
+            "races": 404,
+            "nll": 5.02437419,
+            "brier": 0.97955384,
+            "mean_probability_of_realized_pct": 1.662933,
+            "top1_hit_pct": 9.90099,
+            "top3_hit_pct": 18.56436
+          },
+          "3-3-3": {
+            "races": 312,
+            "nll": 4.80421043,
+            "brier": 0.97776627,
+            "mean_probability_of_realized_pct": 1.793743,
+            "top1_hit_pct": 8.33333,
+            "top3_hit_pct": 21.47436
+          }
+        },
+        "calibration_bands": {
+          "0-0.1%": {
+            "tickets": 1155654,
+            "expected_hits": 489.369,
+            "actual_hits": 581,
+            "mean_predicted_pct": 0.042346,
+            "empirical_pct": 0.050275,
+            "ratio_actual_to_expected": 1.18724,
+            "z_under_calibrated_null": 4.257
+          },
+          "0.1-0.5%": {
+            "tickets": 1177086,
+            "expected_hits": 2842.0903,
+            "actual_hits": 2742,
+            "mean_predicted_pct": 0.241451,
+            "empirical_pct": 0.232948,
+            "ratio_actual_to_expected": 0.96478,
+            "z_under_calibrated_null": -2.1546
+          },
+          "0.5-1%": {
+            "tickets": 319602,
+            "expected_hits": 2245.3167,
+            "actual_hits": 2186,
+            "mean_predicted_pct": 0.702535,
+            "empirical_pct": 0.683976,
+            "ratio_actual_to_expected": 0.97358,
+            "z_under_calibrated_null": -1.3876
+          },
+          "1-2%": {
+            "tickets": 171054,
+            "expected_hits": 2380.1601,
+            "actual_hits": 2310,
+            "mean_predicted_pct": 1.391467,
+            "empirical_pct": 1.350451,
+            "ratio_actual_to_expected": 0.97052,
+            "z_under_calibrated_null": -1.6115
+          },
+          "2-5%": {
+            "tickets": 92807,
+            "expected_hits": 2742.953,
+            "actual_hits": 2772,
+            "mean_predicted_pct": 2.955545,
+            "empirical_pct": 2.986844,
+            "ratio_actual_to_expected": 1.01059,
+            "z_under_calibrated_null": 0.6332
+          },
+          "5-10%": {
+            "tickets": 17091,
+            "expected_hits": 1159.9226,
+            "actual_hits": 1150,
+            "mean_predicted_pct": 6.786745,
+            "empirical_pct": 6.728688,
+            "ratio_actual_to_expected": 0.99145,
+            "z_under_calibrated_null": -0.312
+          },
+          "10-20%": {
+            "tickets": 6383,
+            "expected_hits": 848.8756,
+            "actual_hits": 951,
+            "mean_predicted_pct": 13.299006,
+            "empirical_pct": 14.89895,
+            "ratio_actual_to_expected": 1.12031,
+            "z_under_calibrated_null": 3.8426
+          },
+          "20-100%": {
+            "tickets": 347,
+            "expected_hits": 78.3127,
+            "actual_hits": 95,
+            "mean_predicted_pct": 22.568491,
+            "empirical_pct": 27.377522,
+            "ratio_actual_to_expected": 1.21309,
+            "z_under_calibrated_null": 2.1532
+          }
+        },
+        "structural": {
+          "same_line_12": {
+            "races": 12787,
+            "expected_pct": 56.97531,
+            "empirical_pct": 56.82334,
+            "delta_pct_point": -0.15197,
+            "null_z": -0.3533
+          },
+          "same_line_13": {
+            "races": 12787,
+            "expected_pct": 34.76111,
+            "empirical_pct": 38.57042,
+            "delta_pct_point": 3.80931,
+            "null_z": 9.4166
+          },
+          "same_line_23": {
+            "races": 12787,
+            "expected_pct": 34.88951,
+            "empirical_pct": 37.46774,
+            "delta_pct_point": 2.57823,
+            "null_z": 6.3552
+          },
+          "same_line_123": {
+            "races": 12787,
+            "expected_pct": 20.10622,
+            "empirical_pct": 23.12505,
+            "delta_pct_point": 3.01883,
+            "null_z": 9.0637
+          }
+        },
+        "ticket_weighted_ece_pp": 0.01629169
+      },
+      "line_structure": {
+        "overall": {
+          "races": 12787,
+          "nll": 4.38440042,
+          "brier": 0.96868011,
+          "mean_probability_of_realized_pct": 2.970792,
+          "top1_hit_pct": 10.27606,
+          "top3_hit_pct": 22.07711
+        },
+        "by_class": {
+          "A1_A2": {
+            "races": 6047,
+            "nll": 4.32304377,
+            "brier": 0.96898305,
+            "mean_probability_of_realized_pct": 2.985366,
+            "top1_hit_pct": 9.62461,
+            "top3_hit_pct": 22.39127
+          },
+          "A3": {
+            "races": 2923,
+            "nll": 4.12288877,
+            "brier": 0.95668299,
+            "mean_probability_of_realized_pct": 3.854555,
+            "top1_hit_pct": 13.92405,
+            "top3_hit_pct": 26.00068
+          },
+          "S_F1": {
+            "races": 2580,
+            "nll": 4.50406982,
+            "brier": 0.97540706,
+            "mean_probability_of_realized_pct": 2.575273,
+            "top1_hit_pct": 8.79845,
+            "top3_hit_pct": 19.06977
+          },
+          "S_grade": {
+            "races": 1237,
+            "nll": 5.05269077,
+            "brier": 0.98151778,
+            "mean_probability_of_realized_pct": 1.636168,
+            "top1_hit_pct": 7.92239,
+            "top3_hit_pct": 17.54244
+          }
+        },
+        "by_line_shape_top_8": {
+          "3-2-2": {
+            "races": 5085,
+            "nll": 4.38631056,
+            "brier": 0.97020293,
+            "mean_probability_of_realized_pct": 2.807579,
+            "top1_hit_pct": 9.79351,
+            "top3_hit_pct": 21.45526
+          },
+          "3-3-1": {
+            "races": 1926,
+            "nll": 4.19106762,
+            "brier": 0.96605481,
+            "mean_probability_of_realized_pct": 3.288504,
+            "top1_hit_pct": 11.3188,
+            "top3_hit_pct": 23.93562
+          },
+          "2-2-2-1": {
+            "races": 1104,
+            "nll": 4.82399171,
+            "brier": 0.98683424,
+            "mean_probability_of_realized_pct": 1.476848,
+            "top1_hit_pct": 5.07246,
+            "top3_hit_pct": 12.0471
+          },
+          "3-2-1-1": {
+            "races": 1078,
+            "nll": 4.4372233,
+            "brier": 0.96691693,
+            "mean_probability_of_realized_pct": 3.159767,
+            "top1_hit_pct": 11.13173,
+            "top3_hit_pct": 23.28386
+          },
+          "4-3": {
+            "races": 671,
+            "nll": 3.92921431,
+            "brier": 0.95109992,
+            "mean_probability_of_realized_pct": 4.178542,
+            "top1_hit_pct": 14.45604,
+            "top3_hit_pct": 30.70045
+          },
+          "4-2-1": {
+            "races": 492,
+            "nll": 3.96003582,
+            "brier": 0.94518292,
+            "mean_probability_of_realized_pct": 4.822543,
+            "top1_hit_pct": 16.26016,
+            "top3_hit_pct": 33.53659
+          },
+          "3-2-2-2": {
+            "races": 404,
+            "nll": 5.02780137,
+            "brier": 0.9794984,
+            "mean_probability_of_realized_pct": 1.653337,
+            "top1_hit_pct": 9.40594,
+            "top3_hit_pct": 19.05941
+          },
+          "3-3-3": {
+            "races": 312,
+            "nll": 4.80946204,
+            "brier": 0.97776949,
+            "mean_probability_of_realized_pct": 1.793869,
+            "top1_hit_pct": 8.33333,
+            "top3_hit_pct": 21.15385
+          }
+        },
+        "calibration_bands": {
+          "0-0.1%": {
+            "tickets": 1091573,
+            "expected_hits": 490.2231,
+            "actual_hits": 521,
+            "mean_predicted_pct": 0.04491,
+            "empirical_pct": 0.047729,
+            "ratio_actual_to_expected": 1.06278,
+            "z_under_calibrated_null": 1.4294
+          },
+          "0.1-0.5%": {
+            "tickets": 1235088,
+            "expected_hits": 3000.6806,
+            "actual_hits": 2770,
+            "mean_predicted_pct": 0.242953,
+            "empirical_pct": 0.224276,
+            "ratio_actual_to_expected": 0.92312,
+            "z_under_calibrated_null": -4.876
+          },
+          "0.5-1%": {
+            "tickets": 332833,
+            "expected_hits": 2327.042,
+            "actual_hits": 2300,
+            "mean_predicted_pct": 0.699162,
+            "empirical_pct": 0.691037,
+            "ratio_actual_to_expected": 0.98838,
+            "z_under_calibrated_null": -0.624
+          },
+          "1-2%": {
+            "tickets": 171682,
+            "expected_hits": 2382.1256,
+            "actual_hits": 2403,
+            "mean_predicted_pct": 1.387522,
+            "empirical_pct": 1.399681,
+            "ratio_actual_to_expected": 1.00876,
+            "z_under_calibrated_null": 0.4789
+          },
+          "2-5%": {
+            "tickets": 86113,
+            "expected_hits": 2539.4934,
+            "actual_hits": 2652,
+            "mean_predicted_pct": 2.949024,
+            "empirical_pct": 3.079674,
+            "ratio_actual_to_expected": 1.0443,
+            "z_under_calibrated_null": 2.5244
+          },
+          "5-10%": {
+            "tickets": 15301,
+            "expected_hits": 1025.7861,
+            "actual_hits": 1004,
+            "mean_predicted_pct": 6.704046,
+            "empirical_pct": 6.561663,
+            "ratio_actual_to_expected": 0.97876,
+            "z_under_calibrated_null": -0.7269
+          },
+          "10-20%": {
+            "tickets": 7071,
+            "expected_hits": 941.8699,
+            "actual_hits": 1041,
+            "mean_predicted_pct": 13.32018,
+            "empirical_pct": 14.722104,
+            "ratio_actual_to_expected": 1.10525,
+            "z_under_calibrated_null": 3.5649
+          },
+          "20-100%": {
+            "tickets": 363,
+            "expected_hits": 79.7793,
+            "actual_hits": 96,
+            "mean_predicted_pct": 21.977764,
+            "empirical_pct": 26.446281,
+            "ratio_actual_to_expected": 1.20332,
+            "z_under_calibrated_null": 2.0715
+          }
+        },
+        "structural": {
+          "same_line_12": {
+            "races": 12787,
+            "expected_pct": 57.21709,
+            "empirical_pct": 56.82334,
+            "delta_pct_point": -0.39375,
+            "null_z": -0.9171
+          },
+          "same_line_13": {
+            "races": 12787,
+            "expected_pct": 36.76494,
+            "empirical_pct": 38.57042,
+            "delta_pct_point": 1.80548,
+            "null_z": 4.418
+          },
+          "same_line_23": {
+            "races": 12787,
+            "expected_pct": 36.8182,
+            "empirical_pct": 37.46774,
+            "delta_pct_point": 0.64954,
+            "null_z": 1.5862
+          },
+          "same_line_123": {
+            "races": 12787,
+            "expected_pct": 22.14285,
+            "empirical_pct": 23.12505,
+            "delta_pct_point": 0.9822,
+            "null_z": 2.8535
+          }
+        },
+        "ticket_weighted_ece_pp": 0.01901405
+      },
+      "joint": {
+        "overall": {
+          "races": 12787,
+          "nll": 4.38348374,
+          "brier": 0.96853284,
+          "mean_probability_of_realized_pct": 3.055207,
+          "top1_hit_pct": 10.24478,
+          "top3_hit_pct": 22.09275
+        },
+        "by_class": {
+          "A1_A2": {
+            "races": 6047,
+            "nll": 4.32269037,
+            "brier": 0.96892104,
+            "mean_probability_of_realized_pct": 3.066772,
+            "top1_hit_pct": 9.60807,
+            "top3_hit_pct": 22.44088
+          },
+          "A3": {
+            "races": 2923,
+            "nll": 4.11680594,
+            "brier": 0.95613414,
+            "mean_probability_of_realized_pct": 3.977162,
+            "top1_hit_pct": 13.88984,
+            "top3_hit_pct": 26.00068
+          },
+          "S_F1": {
+            "races": 2580,
+            "nll": 4.50756556,
+            "brier": 0.97551221,
+            "mean_probability_of_realized_pct": 2.639813,
+            "top1_hit_pct": 8.75969,
+            "top3_hit_pct": 19.03101
+          },
+          "S_grade": {
+            "races": 1237,
+            "nll": 5.0520251,
+            "brier": 0.9813762,
+            "mean_probability_of_realized_pct": 1.686506,
+            "top1_hit_pct": 7.84155,
+            "top3_hit_pct": 17.54244
+          }
+        },
+        "by_line_shape_top_8": {
+          "3-2-2": {
+            "races": 5085,
+            "nll": 4.38439683,
+            "brier": 0.97003007,
+            "mean_probability_of_realized_pct": 2.88566,
+            "top1_hit_pct": 9.79351,
+            "top3_hit_pct": 21.35693
+          },
+          "3-3-1": {
+            "races": 1926,
+            "nll": 4.19000972,
+            "brier": 0.96597189,
+            "mean_probability_of_realized_pct": 3.372943,
+            "top1_hit_pct": 11.3188,
+            "top3_hit_pct": 24.24714
+          },
+          "2-2-2-1": {
+            "races": 1104,
+            "nll": 4.82715494,
+            "brier": 0.98694364,
+            "mean_probability_of_realized_pct": 1.514627,
+            "top1_hit_pct": 5.07246,
+            "top3_hit_pct": 12.0471
+          },
+          "3-2-1-1": {
+            "races": 1078,
+            "nll": 4.43908932,
+            "brier": 0.96677005,
+            "mean_probability_of_realized_pct": 3.242796,
+            "top1_hit_pct": 10.9462,
+            "top3_hit_pct": 23.19109
+          },
+          "4-3": {
+            "races": 671,
+            "nll": 3.92199612,
+            "brier": 0.95033764,
+            "mean_probability_of_realized_pct": 4.331168,
+            "top1_hit_pct": 14.45604,
+            "top3_hit_pct": 30.70045
+          },
+          "4-2-1": {
+            "races": 492,
+            "nll": 3.95809193,
+            "brier": 0.94466436,
+            "mean_probability_of_realized_pct": 5.000674,
+            "top1_hit_pct": 16.05691,
+            "top3_hit_pct": 33.73984
+          },
+          "3-2-2-2": {
+            "races": 404,
+            "nll": 5.02186547,
+            "brier": 0.97917562,
+            "mean_probability_of_realized_pct": 1.710856,
+            "top1_hit_pct": 9.65347,
+            "top3_hit_pct": 19.05941
+          },
+          "3-3-3": {
+            "races": 312,
+            "nll": 4.80281712,
+            "brier": 0.97743859,
+            "mean_probability_of_realized_pct": 1.850924,
+            "top1_hit_pct": 8.33333,
+            "top3_hit_pct": 21.15385
+          }
+        },
+        "calibration_bands": {
+          "0-0.1%": {
+            "tickets": 1135617,
+            "expected_hits": 491.4766,
+            "actual_hits": 556,
+            "mean_predicted_pct": 0.043278,
+            "empirical_pct": 0.04896,
+            "ratio_actual_to_expected": 1.13128,
+            "z_under_calibrated_null": 2.992
+          },
+          "0.1-0.5%": {
+            "tickets": 1197827,
+            "expected_hits": 2897.4331,
+            "actual_hits": 2756,
+            "mean_predicted_pct": 0.241891,
+            "empirical_pct": 0.230083,
+            "ratio_actual_to_expected": 0.95119,
+            "z_under_calibrated_null": -3.025
+          },
+          "0.5-1%": {
+            "tickets": 324903,
+            "expected_hits": 2273.647,
+            "actual_hits": 2254,
+            "mean_predicted_pct": 0.699793,
+            "empirical_pct": 0.693746,
+            "ratio_actual_to_expected": 0.99136,
+            "z_under_calibrated_null": -0.4574
+          },
+          "1-2%": {
+            "tickets": 168275,
+            "expected_hits": 2329.5017,
+            "actual_hits": 2319,
+            "mean_predicted_pct": 1.384342,
+            "empirical_pct": 1.378101,
+            "ratio_actual_to_expected": 0.99549,
+            "z_under_calibrated_null": -0.2432
+          },
+          "2-5%": {
+            "tickets": 89899,
+            "expected_hits": 2640.8384,
+            "actual_hits": 2723,
+            "mean_predicted_pct": 2.937561,
+            "empirical_pct": 3.028955,
+            "ratio_actual_to_expected": 1.03111,
+            "z_under_calibrated_null": 1.8172
+          },
+          "5-10%": {
+            "tickets": 15907,
+            "expected_hits": 1076.199,
+            "actual_hits": 1029,
+            "mean_predicted_pct": 6.765569,
+            "empirical_pct": 6.46885,
+            "ratio_actual_to_expected": 0.95614,
+            "z_under_calibrated_null": -1.5398
+          },
+          "10-20%": {
+            "tickets": 7077,
+            "expected_hits": 961.8359,
+            "actual_hits": 1021,
+            "mean_predicted_pct": 13.591011,
+            "empirical_pct": 14.427017,
+            "ratio_actual_to_expected": 1.06151,
+            "z_under_calibrated_null": 2.1081
+          },
+          "20-100%": {
+            "tickets": 519,
+            "expected_hits": 116.0684,
+            "actual_hits": 129,
+            "mean_predicted_pct": 22.363845,
+            "empirical_pct": 24.855491,
+            "ratio_actual_to_expected": 1.11141,
+            "z_under_calibrated_null": 1.3712
+          }
+        },
+        "structural": {
+          "same_line_12": {
+            "races": 12787,
+            "expected_pct": 57.22493,
+            "empirical_pct": 56.82334,
+            "delta_pct_point": -0.40159,
+            "null_z": -0.9358
+          },
+          "same_line_13": {
+            "races": 12787,
+            "expected_pct": 36.7651,
+            "empirical_pct": 38.57042,
+            "delta_pct_point": 1.80532,
+            "null_z": 4.4214
+          },
+          "same_line_23": {
+            "races": 12787,
+            "expected_pct": 36.82002,
+            "empirical_pct": 37.46774,
+            "delta_pct_point": 0.64772,
+            "null_z": 1.5828
+          },
+          "same_line_123": {
+            "races": 12787,
+            "expected_pct": 22.13587,
+            "empirical_pct": 23.12505,
+            "delta_pct_point": 0.98917,
+            "null_z": 2.878
+          }
+        },
+        "ticket_weighted_ece_pp": 0.01488292
+      }
+    },
+    "nll_improvement_vs_unchanged_daily_cluster_95pct_ci": {
+      "temperature": {
+        "nll_improvement": 0.00497959,
+        "date_cluster_se": 0.00091554,
+        "approx_95pct_ci": [
+          0.00318512,
+          0.00677405
+        ],
+        "days": 184
+      },
+      "line_structure": {
+        "nll_improvement": 0.00786202,
+        "date_cluster_se": 0.00099507,
+        "approx_95pct_ci": [
+          0.00591167,
+          0.00981236
+        ],
+        "days": 184
+      },
+      "joint": {
+        "nll_improvement": 0.00877869,
+        "date_cluster_se": 0.00105476,
+        "approx_95pct_ci": [
+          0.00671137,
+          0.01084602
+        ],
+        "days": 184
+      }
+    }
+  },
+  "calibration_fit_H1": {
+    "models": {
+      "unchanged": {
+        "overall": {
+          "races": 12561,
+          "nll": 4.38492159,
+          "brier": 0.96874094,
+          "mean_probability_of_realized_pct": 2.769983,
+          "top1_hit_pct": 10.90677,
+          "top3_hit_pct": 22.20365
+        },
+        "by_class": {
+          "A1_A2": {
+            "races": 6019,
+            "nll": 4.35134248,
+            "brier": 0.96971746,
+            "mean_probability_of_realized_pct": 2.739304,
+            "top1_hit_pct": 10.4004,
+            "top3_hit_pct": 21.88071
+          },
+          "A3": {
+            "races": 2736,
+            "nll": 4.05022379,
+            "brier": 0.95217443,
+            "mean_probability_of_realized_pct": 3.887644,
+            "top1_hit_pct": 15.82602,
+            "top3_hit_pct": 29.13012
+          },
+          "S_F1": {
+            "races": 2609,
+            "nll": 4.49027625,
+            "brier": 0.97686558,
+            "mean_probability_of_realized_pct": 2.312023,
+            "top1_hit_pct": 8.70065,
+            "top3_hit_pct": 18.43618
+          },
+          "S_grade": {
+            "races": 1197,
+            "nll": 5.08916183,
+            "brier": 0.98398829,
+            "mean_probability_of_realized_pct": 1.367777,
+            "top1_hit_pct": 7.01754,
+            "top3_hit_pct": 16.20718
+          }
+        },
+        "by_line_shape_top_8": {
+          "3-2-2": {
+            "races": 4853,
+            "nll": 4.40680298,
+            "brier": 0.97181569,
+            "mean_probability_of_realized_pct": 2.519852,
+            "top1_hit_pct": 10.24109,
+            "top3_hit_pct": 20.81187
+          },
+          "3-3-1": {
+            "races": 1989,
+            "nll": 4.28342744,
+            "brier": 0.96921847,
+            "mean_probability_of_realized_pct": 2.84257,
+            "top1_hit_pct": 10.45752,
+            "top3_hit_pct": 22.57416
+          },
+          "3-2-1-1": {
+            "races": 1042,
+            "nll": 4.45358081,
+            "brier": 0.9705323,
+            "mean_probability_of_realized_pct": 2.714265,
+            "top1_hit_pct": 10.9405,
+            "top3_hit_pct": 20.72937
+          },
+          "2-2-2-1": {
+            "races": 1005,
+            "nll": 4.75387933,
+            "brier": 0.98533795,
+            "mean_probability_of_realized_pct": 1.517112,
+            "top1_hit_pct": 5.47264,
+            "top3_hit_pct": 12.73632
+          },
+          "4-3": {
+            "races": 747,
+            "nll": 3.87879504,
+            "brier": 0.94171997,
+            "mean_probability_of_realized_pct": 4.396269,
+            "top1_hit_pct": 20.34806,
+            "top3_hit_pct": 36.41232
+          },
+          "4-2-1": {
+            "races": 507,
+            "nll": 3.91813909,
+            "brier": 0.9390999,
+            "mean_probability_of_realized_pct": 4.794837,
+            "top1_hit_pct": 19.32939,
+            "top3_hit_pct": 34.91124
+          },
+          "3-2-2-2": {
+            "races": 448,
+            "nll": 5.17826154,
+            "brier": 0.98454002,
+            "mean_probability_of_realized_pct": 1.275059,
+            "top1_hit_pct": 7.8125,
+            "top3_hit_pct": 15.17857
+          },
+          "3-3-3": {
+            "races": 276,
+            "nll": 4.85084759,
+            "brier": 0.98027976,
+            "mean_probability_of_realized_pct": 1.546608,
+            "top1_hit_pct": 8.69565,
+            "top3_hit_pct": 20.28986
+          }
+        },
+        "calibration_bands": {
+          "0-0.1%": {
+            "tickets": 1028101,
+            "expected_hits": 467.395,
+            "actual_hits": 477,
+            "mean_predicted_pct": 0.045462,
+            "empirical_pct": 0.046396,
+            "ratio_actual_to_expected": 1.02055,
+            "z_under_calibrated_null": 0.4568
+          },
+          "0.1-0.5%": {
+            "tickets": 1226872,
+            "expected_hits": 3001.6696,
+            "actual_hits": 2703,
+            "mean_predicted_pct": 0.24466,
+            "empirical_pct": 0.220316,
+            "ratio_actual_to_expected": 0.9005,
+            "z_under_calibrated_null": -6.3418
+          },
+          "0.5-1%": {
+            "tickets": 341572,
+            "expected_hits": 2397.7768,
+            "actual_hits": 2212,
+            "mean_predicted_pct": 0.701983,
+            "empirical_pct": 0.647594,
+            "ratio_actual_to_expected": 0.92252,
+            "z_under_calibrated_null": -4.2444
+          },
+          "1-2%": {
+            "tickets": 176045,
+            "expected_hits": 2445.1441,
+            "actual_hits": 2399,
+            "mean_predicted_pct": 1.388931,
+            "empirical_pct": 1.36272,
+            "ratio_actual_to_expected": 0.98113,
+            "z_under_calibrated_null": -1.0507
+          },
+          "2-5%": {
+            "tickets": 87491,
+            "expected_hits": 2559.1618,
+            "actual_hits": 2706,
+            "mean_predicted_pct": 2.925057,
+            "empirical_pct": 3.09289,
+            "ratio_actual_to_expected": 1.05738,
+            "z_under_calibrated_null": 3.2982
+          },
+          "5-10%": {
+            "tickets": 15471,
+            "expected_hits": 1050.6284,
+            "actual_hits": 1208,
+            "mean_predicted_pct": 6.790953,
+            "empirical_pct": 7.808157,
+            "ratio_actual_to_expected": 1.14979,
+            "z_under_calibrated_null": 5.1711
+          },
+          "10-20%": {
+            "tickets": 4738,
+            "expected_hits": 606.3423,
+            "actual_hits": 811,
+            "mean_predicted_pct": 12.79743,
+            "empirical_pct": 17.116927,
+            "ratio_actual_to_expected": 1.33753,
+            "z_under_calibrated_null": 9.0237
+          },
+          "20-100%": {
+            "tickets": 148,
+            "expected_hits": 32.8821,
+            "actual_hits": 45,
+            "mean_predicted_pct": 22.217641,
+            "empirical_pct": 30.405405,
+            "ratio_actual_to_expected": 1.36853,
+            "z_under_calibrated_null": 2.3999
+          }
+        },
+        "structural": {
+          "same_line_12": {
+            "races": 12561,
+            "expected_pct": 54.86188,
+            "empirical_pct": 57.75018,
+            "delta_pct_point": 2.88829,
+            "null_z": 6.6148
+          },
+          "same_line_13": {
+            "races": 12561,
+            "expected_pct": 34.36124,
+            "empirical_pct": 37.49701,
+            "delta_pct_point": 3.13578,
+            "null_z": 7.6753
+          },
+          "same_line_23": {
+            "races": 12561,
+            "expected_pct": 34.45461,
+            "empirical_pct": 37.52886,
+            "delta_pct_point": 3.07425,
+            "null_z": 7.509
+          },
+          "same_line_123": {
+            "races": 12561,
+            "expected_pct": 19.03223,
+            "empirical_pct": 22.92811,
+            "delta_pct_point": 3.89588,
+            "null_z": 11.7772
+          }
+        },
+        "ticket_weighted_ece_pp": 0.03684096
+      },
+      "temperature": {
+        "overall": {
+          "races": 12561,
+          "nll": 4.38056373,
+          "brier": 0.96790772,
+          "mean_probability_of_realized_pct": 3.063421,
+          "top1_hit_pct": 10.90677,
+          "top3_hit_pct": 22.20365
+        },
+        "by_class": {
+          "A1_A2": {
+            "races": 6019,
+            "nll": 4.34865466,
+            "brier": 0.96914932,
+            "mean_probability_of_realized_pct": 3.022178,
+            "top1_hit_pct": 10.4004,
+            "top3_hit_pct": 21.88071
+          },
+          "A3": {
+            "races": 2736,
+            "nll": 4.03612198,
+            "brier": 0.94953991,
+            "mean_probability_of_realized_pct": 4.336755,
+            "top1_hit_pct": 15.82602,
+            "top3_hit_pct": 29.13012
+          },
+          "S_F1": {
+            "races": 2609,
+            "nll": 4.49522374,
+            "brier": 0.97719726,
+            "mean_probability_of_realized_pct": 2.526401,
+            "top1_hit_pct": 8.70065,
+            "top3_hit_pct": 18.43618
+          },
+          "S_grade": {
+            "races": 1197,
+            "nll": 5.07839612,
+            "brier": 0.98340039,
+            "mean_probability_of_realized_pct": 1.530823,
+            "top1_hit_pct": 7.01754,
+            "top3_hit_pct": 16.20718
+          }
+        },
+        "by_line_shape_top_8": {
+          "3-2-2": {
+            "races": 4853,
+            "nll": 4.40253537,
+            "brier": 0.97117227,
+            "mean_probability_of_realized_pct": 2.784958,
+            "top1_hit_pct": 10.24109,
+            "top3_hit_pct": 20.81187
+          },
+          "3-3-1": {
+            "races": 1989,
+            "nll": 4.28158345,
+            "brier": 0.96891077,
+            "mean_probability_of_realized_pct": 3.129485,
+            "top1_hit_pct": 10.45752,
+            "top3_hit_pct": 22.57416
+          },
+          "3-2-1-1": {
+            "races": 1042,
+            "nll": 4.4572916,
+            "brier": 0.97004766,
+            "mean_probability_of_realized_pct": 3.011457,
+            "top1_hit_pct": 10.9405,
+            "top3_hit_pct": 20.72937
+          },
+          "2-2-2-1": {
+            "races": 1005,
+            "nll": 4.761127,
+            "brier": 0.98561795,
+            "mean_probability_of_realized_pct": 1.627557,
+            "top1_hit_pct": 5.47264,
+            "top3_hit_pct": 12.73632
+          },
+          "4-3": {
+            "races": 747,
+            "nll": 3.85382689,
+            "brier": 0.93729325,
+            "mean_probability_of_realized_pct": 4.944137,
+            "top1_hit_pct": 20.34806,
+            "top3_hit_pct": 36.41232
+          },
+          "4-2-1": {
+            "races": 507,
+            "nll": 3.89865369,
+            "brier": 0.93523972,
+            "mean_probability_of_realized_pct": 5.432118,
+            "top1_hit_pct": 19.32939,
+            "top3_hit_pct": 34.91124
+          },
+          "3-2-2-2": {
+            "races": 448,
+            "nll": 5.16586864,
+            "brier": 0.98373862,
+            "mean_probability_of_realized_pct": 1.440908,
+            "top1_hit_pct": 7.8125,
+            "top3_hit_pct": 15.17857
+          },
+          "3-3-3": {
+            "races": 276,
+            "nll": 4.82515904,
+            "brier": 0.97903154,
+            "mean_probability_of_realized_pct": 1.741923,
+            "top1_hit_pct": 8.69565,
+            "top3_hit_pct": 20.28986
+          }
+        },
+        "calibration_bands": {
+          "0-0.1%": {
+            "tickets": 1138977,
+            "expected_hits": 479.9306,
+            "actual_hits": 588,
+            "mean_predicted_pct": 0.042137,
+            "empirical_pct": 0.051625,
+            "ratio_actual_to_expected": 1.22518,
+            "z_under_calibrated_null": 5.0705
+          },
+          "0.1-0.5%": {
+            "tickets": 1149830,
+            "expected_hits": 2774.3797,
+            "actual_hits": 2733,
+            "mean_predicted_pct": 0.241286,
+            "empirical_pct": 0.237687,
+            "ratio_actual_to_expected": 0.98509,
+            "z_under_calibrated_null": -0.9015
+          },
+          "0.5-1%": {
+            "tickets": 310089,
+            "expected_hits": 2179.2638,
+            "actual_hits": 2092,
+            "mean_predicted_pct": 0.702787,
+            "empirical_pct": 0.674645,
+            "ratio_actual_to_expected": 0.95996,
+            "z_under_calibrated_null": -2.0699
+          },
+          "1-2%": {
+            "tickets": 166877,
+            "expected_hits": 2320.5811,
+            "actual_hits": 2225,
+            "mean_predicted_pct": 1.390594,
+            "empirical_pct": 1.333317,
+            "ratio_actual_to_expected": 0.95881,
+            "z_under_calibrated_null": -2.2209
+          },
+          "2-5%": {
+            "tickets": 90646,
+            "expected_hits": 2681.7498,
+            "actual_hits": 2669,
+            "mean_predicted_pct": 2.958487,
+            "empirical_pct": 2.944421,
+            "ratio_actual_to_expected": 0.99525,
+            "z_under_calibrated_null": -0.2809
+          },
+          "5-10%": {
+            "tickets": 17100,
+            "expected_hits": 1163.2513,
+            "actual_hits": 1176,
+            "mean_predicted_pct": 6.802639,
+            "empirical_pct": 6.877193,
+            "ratio_actual_to_expected": 1.01096,
+            "z_under_calibrated_null": 0.4007
+          },
+          "10-20%": {
+            "tickets": 6503,
+            "expected_hits": 867.7712,
+            "actual_hits": 946,
+            "mean_predicted_pct": 13.344168,
+            "empirical_pct": 14.547132,
+            "ratio_actual_to_expected": 1.09015,
+            "z_under_calibrated_null": 2.913
+          },
+          "20-100%": {
+            "tickets": 416,
+            "expected_hits": 94.0724,
+            "actual_hits": 132,
+            "mean_predicted_pct": 22.613565,
+            "empirical_pct": 31.730769,
+            "ratio_actual_to_expected": 1.40317,
+            "z_under_calibrated_null": 4.4642
+          }
+        },
+        "structural": {
+          "same_line_12": {
+            "races": 12561,
+            "expected_pct": 57.47184,
+            "empirical_pct": 57.75018,
+            "delta_pct_point": 0.27833,
+            "null_z": 0.6424
+          },
+          "same_line_13": {
+            "races": 12561,
+            "expected_pct": 35.45322,
+            "empirical_pct": 37.49701,
+            "delta_pct_point": 2.0438,
+            "null_z": 4.9883
+          },
+          "same_line_23": {
+            "races": 12561,
+            "expected_pct": 35.55837,
+            "empirical_pct": 37.52886,
+            "delta_pct_point": 1.97049,
+            "null_z": 4.7974
+          },
+          "same_line_123": {
+            "races": 12561,
+            "expected_pct": 20.82718,
+            "empirical_pct": 22.92811,
+            "delta_pct_point": 2.10093,
+            "null_z": 6.1739
+          }
+        },
+        "ticket_weighted_ece_pp": 0.01645406
+      },
+      "line_structure": {
+        "overall": {
+          "races": 12561,
+          "nll": 4.379316,
+          "brier": 0.96796495,
+          "mean_probability_of_realized_pct": 3.046724,
+          "top1_hit_pct": 10.94658,
+          "top3_hit_pct": 22.24345
+        },
+        "by_class": {
+          "A1_A2": {
+            "races": 6019,
+            "nll": 4.34775336,
+            "brier": 0.96923774,
+            "mean_probability_of_realized_pct": 3.005112,
+            "top1_hit_pct": 10.45024,
+            "top3_hit_pct": 21.99701
+          },
+          "A3": {
+            "races": 2736,
+            "nll": 4.03779444,
+            "brier": 0.94964017,
+            "mean_probability_of_realized_pct": 4.314284,
+            "top1_hit_pct": 15.89912,
+            "top3_hit_pct": 29.20322
+          },
+          "S_F1": {
+            "races": 2609,
+            "nll": 4.48791817,
+            "brier": 0.97712421,
+            "mean_probability_of_realized_pct": 2.5157,
+            "top1_hit_pct": 8.73898,
+            "top3_hit_pct": 18.55117
+          },
+          "S_grade": {
+            "races": 1197,
+            "nll": 5.08193543,
+            "brier": 0.98348642,
+            "mean_probability_of_realized_pct": 1.516114,
+            "top1_hit_pct": 6.934,
+            "top3_hit_pct": 15.62239
+          }
+        },
+        "by_line_shape_top_8": {
+          "3-2-2": {
+            "races": 4853,
+            "nll": 4.40344923,
+            "brier": 0.97124388,
+            "mean_probability_of_realized_pct": 2.77599,
+            "top1_hit_pct": 10.26169,
+            "top3_hit_pct": 20.97672
+          },
+          "3-3-1": {
+            "races": 1989,
+            "nll": 4.28069375,
+            "brier": 0.96926129,
+            "mean_probability_of_realized_pct": 3.137525,
+            "top1_hit_pct": 10.45752,
+            "top3_hit_pct": 22.2725
+          },
+          "3-2-1-1": {
+            "races": 1042,
+            "nll": 4.44884082,
+            "brier": 0.96975778,
+            "mean_probability_of_realized_pct": 3.043089,
+            "top1_hit_pct": 11.03647,
+            "top3_hit_pct": 21.11324
+          },
+          "2-2-2-1": {
+            "races": 1005,
+            "nll": 4.75535765,
+            "brier": 0.98539458,
+            "mean_probability_of_realized_pct": 1.542561,
+            "top1_hit_pct": 5.47264,
+            "top3_hit_pct": 12.73632
+          },
+          "4-3": {
+            "races": 747,
+            "nll": 3.85421194,
+            "brier": 0.93788287,
+            "mean_probability_of_realized_pct": 4.884142,
+            "top1_hit_pct": 20.34806,
+            "top3_hit_pct": 36.41232
+          },
+          "4-2-1": {
+            "races": 507,
+            "nll": 3.90075731,
+            "brier": 0.9358049,
+            "mean_probability_of_realized_pct": 5.363275,
+            "top1_hit_pct": 19.52663,
+            "top3_hit_pct": 35.10848
+          },
+          "3-2-2-2": {
+            "races": 448,
+            "nll": 5.17187082,
+            "brier": 0.98384973,
+            "mean_probability_of_realized_pct": 1.421227,
+            "top1_hit_pct": 7.58929,
+            "top3_hit_pct": 14.73214
+          },
+          "3-3-3": {
+            "races": 276,
+            "nll": 4.83673293,
+            "brier": 0.97922215,
+            "mean_probability_of_realized_pct": 1.73184,
+            "top1_hit_pct": 8.69565,
+            "top3_hit_pct": 19.2029
+          }
+        },
+        "calibration_bands": {
+          "0-0.1%": {
+            "tickets": 1076450,
+            "expected_hits": 481.0559,
+            "actual_hits": 533,
+            "mean_predicted_pct": 0.044689,
+            "empirical_pct": 0.049515,
+            "ratio_actual_to_expected": 1.10798,
+            "z_under_calibrated_null": 2.4357
+          },
+          "0.1-0.5%": {
+            "tickets": 1206456,
+            "expected_hits": 2929.0469,
+            "actual_hits": 2732,
+            "mean_predicted_pct": 0.242781,
+            "empirical_pct": 0.226448,
+            "ratio_actual_to_expected": 0.93273,
+            "z_under_calibrated_null": -4.215
+          },
+          "0.5-1%": {
+            "tickets": 323115,
+            "expected_hits": 2259.3208,
+            "actual_hits": 2218,
+            "mean_predicted_pct": 0.699231,
+            "empirical_pct": 0.686443,
+            "ratio_actual_to_expected": 0.98171,
+            "z_under_calibrated_null": -0.9666
+          },
+          "1-2%": {
+            "tickets": 166935,
+            "expected_hits": 2313.5356,
+            "actual_hits": 2320,
+            "mean_predicted_pct": 1.38589,
+            "empirical_pct": 1.389762,
+            "ratio_actual_to_expected": 1.00279,
+            "z_under_calibrated_null": 0.1503
+          },
+          "2-5%": {
+            "tickets": 84570,
+            "expected_hits": 2494.7854,
+            "actual_hits": 2564,
+            "mean_predicted_pct": 2.949965,
+            "empirical_pct": 3.031808,
+            "ratio_actual_to_expected": 1.02774,
+            "z_under_calibrated_null": 1.5668
+          },
+          "5-10%": {
+            "tickets": 15292,
+            "expected_hits": 1027.5476,
+            "actual_hits": 1036,
+            "mean_predicted_pct": 6.719511,
+            "empirical_pct": 6.774784,
+            "ratio_actual_to_expected": 1.00823,
+            "z_under_calibrated_null": 0.2819
+          },
+          "10-20%": {
+            "tickets": 7188,
+            "expected_hits": 960.5041,
+            "actual_hits": 1022,
+            "mean_predicted_pct": 13.362605,
+            "empirical_pct": 14.218141,
+            "ratio_actual_to_expected": 1.06402,
+            "z_under_calibrated_null": 2.1913
+          },
+          "20-100%": {
+            "tickets": 432,
+            "expected_hits": 95.2039,
+            "actual_hits": 136,
+            "mean_predicted_pct": 22.037941,
+            "empirical_pct": 31.481481,
+            "ratio_actual_to_expected": 1.42851,
+            "z_under_calibrated_null": 4.763
+          }
+        },
+        "structural": {
+          "same_line_12": {
+            "races": 12561,
+            "expected_pct": 57.73357,
+            "empirical_pct": 57.75018,
+            "delta_pct_point": 0.01661,
+            "null_z": 0.0384
+          },
+          "same_line_13": {
+            "races": 12561,
+            "expected_pct": 37.48389,
+            "empirical_pct": 37.49701,
+            "delta_pct_point": 0.01312,
+            "null_z": 0.0317
+          },
+          "same_line_23": {
+            "races": 12561,
+            "expected_pct": 37.51667,
+            "empirical_pct": 37.52886,
+            "delta_pct_point": 0.01218,
+            "null_z": 0.0294
+          },
+          "same_line_123": {
+            "races": 12561,
+            "expected_pct": 22.90432,
+            "empirical_pct": 22.92811,
+            "delta_pct_point": 0.02379,
+            "null_z": 0.0677
+          }
+        },
+        "ticket_weighted_ece_pp": 0.01655079
+      },
+      "joint": {
+        "overall": {
+          "races": 12561,
+          "nll": 4.37847513,
+          "brier": 0.96778618,
+          "mean_probability_of_realized_pct": 3.135855,
+          "top1_hit_pct": 10.95454,
+          "top3_hit_pct": 22.20365
+        },
+        "by_class": {
+          "A1_A2": {
+            "races": 6019,
+            "nll": 4.34720067,
+            "brier": 0.96915257,
+            "mean_probability_of_realized_pct": 3.089799,
+            "top1_hit_pct": 10.46685,
+            "top3_hit_pct": 21.89733
+          },
+          "A3": {
+            "races": 2736,
+            "nll": 4.03219409,
+            "brier": 0.94884288,
+            "mean_probability_of_realized_pct": 4.459037,
+            "top1_hit_pct": 15.93567,
+            "top3_hit_pct": 29.23977
+          },
+          "S_F1": {
+            "races": 2609,
+            "nll": 4.49219852,
+            "brier": 0.97735186,
+            "mean_probability_of_realized_pct": 2.575561,
+            "top1_hit_pct": 8.70065,
+            "top3_hit_pct": 18.47451
+          },
+          "S_grade": {
+            "races": 1197,
+            "nll": 5.07936195,
+            "brier": 0.98336491,
+            "mean_probability_of_realized_pct": 1.564253,
+            "top1_hit_pct": 6.934,
+            "top3_hit_pct": 15.78947
+          }
+        },
+        "by_line_shape_top_8": {
+          "3-2-2": {
+            "races": 4853,
+            "nll": 4.40191444,
+            "brier": 0.97112871,
+            "mean_probability_of_realized_pct": 2.853194,
+            "top1_hit_pct": 10.26169,
+            "top3_hit_pct": 20.85308
+          },
+          "3-3-1": {
+            "races": 1989,
+            "nll": 4.28129564,
+            "brier": 0.96925479,
+            "mean_probability_of_realized_pct": 3.219295,
+            "top1_hit_pct": 10.45752,
+            "top3_hit_pct": 22.4736
+          },
+          "3-2-1-1": {
+            "races": 1042,
+            "nll": 4.45195099,
+            "brier": 0.96977735,
+            "mean_probability_of_realized_pct": 3.118873,
+            "top1_hit_pct": 11.13244,
+            "top3_hit_pct": 21.30518
+          },
+          "2-2-2-1": {
+            "races": 1005,
+            "nll": 4.75769726,
+            "brier": 0.98546843,
+            "mean_probability_of_realized_pct": 1.581891,
+            "top1_hit_pct": 5.47264,
+            "top3_hit_pct": 12.73632
+          },
+          "4-3": {
+            "races": 747,
+            "nll": 3.84715814,
+            "brier": 0.93642259,
+            "mean_probability_of_realized_pct": 5.077462,
+            "top1_hit_pct": 20.34806,
+            "top3_hit_pct": 35.74297
+          },
+          "4-2-1": {
+            "races": 507,
+            "nll": 3.89432703,
+            "brier": 0.9346215,
+            "mean_probability_of_realized_pct": 5.58398,
+            "top1_hit_pct": 19.52663,
+            "top3_hit_pct": 34.91124
+          },
+          "3-2-2-2": {
+            "races": 448,
+            "nll": 5.16918373,
+            "brier": 0.98365476,
+            "mean_probability_of_realized_pct": 1.471137,
+            "top1_hit_pct": 7.58929,
+            "top3_hit_pct": 14.73214
+          },
+          "3-3-3": {
+            "races": 276,
+            "nll": 4.82686204,
+            "brier": 0.97887875,
+            "mean_probability_of_realized_pct": 1.790707,
+            "top1_hit_pct": 8.69565,
+            "top3_hit_pct": 19.56522
+          }
+        },
+        "calibration_bands": {
+          "0-0.1%": {
+            "tickets": 1119747,
+            "expected_hits": 482.209,
+            "actual_hits": 571,
+            "mean_predicted_pct": 0.043064,
+            "empirical_pct": 0.050994,
+            "ratio_actual_to_expected": 1.18413,
+            "z_under_calibrated_null": 4.1572
+          },
+          "0.1-0.5%": {
+            "tickets": 1170049,
+            "expected_hits": 2828.5381,
+            "actual_hits": 2730,
+            "mean_predicted_pct": 0.241745,
+            "empirical_pct": 0.233324,
+            "ratio_actual_to_expected": 0.96516,
+            "z_under_calibrated_null": -2.1328
+          },
+          "0.5-1%": {
+            "tickets": 315302,
+            "expected_hits": 2207.6181,
+            "actual_hits": 2174,
+            "mean_predicted_pct": 0.70016,
+            "empirical_pct": 0.689498,
+            "ratio_actual_to_expected": 0.98477,
+            "z_under_calibrated_null": -0.7934
+          },
+          "1-2%": {
+            "tickets": 163660,
+            "expected_hits": 2264.1935,
+            "actual_hits": 2230,
+            "mean_predicted_pct": 1.383474,
+            "empirical_pct": 1.362581,
+            "ratio_actual_to_expected": 0.9849,
+            "z_under_calibrated_null": -0.8021
+          },
+          "2-5%": {
+            "tickets": 87974,
+            "expected_hits": 2585.7042,
+            "actual_hits": 2623,
+            "mean_predicted_pct": 2.939169,
+            "empirical_pct": 2.981563,
+            "ratio_actual_to_expected": 1.01442,
+            "z_under_calibrated_null": 0.8334
+          },
+          "5-10%": {
+            "tickets": 15882,
+            "expected_hits": 1075.0248,
+            "actual_hits": 1053,
+            "mean_predicted_pct": 6.768825,
+            "empirical_pct": 6.630147,
+            "ratio_actual_to_expected": 0.97951,
+            "z_under_calibrated_null": -0.7192
+          },
+          "10-20%": {
+            "tickets": 7217,
+            "expected_hits": 981.5427,
+            "actual_hits": 998,
+            "mean_predicted_pct": 13.600425,
+            "empirical_pct": 13.828461,
+            "ratio_actual_to_expected": 1.01677,
+            "z_under_calibrated_null": 0.5808
+          },
+          "20-100%": {
+            "tickets": 607,
+            "expected_hits": 136.1695,
+            "actual_hits": 182,
+            "mean_predicted_pct": 22.433193,
+            "empirical_pct": 29.983526,
+            "ratio_actual_to_expected": 1.33657,
+            "z_under_calibrated_null": 4.4809
+          }
+        },
+        "structural": {
+          "same_line_12": {
+            "races": 12561,
+            "expected_pct": 57.74709,
+            "empirical_pct": 57.75018,
+            "delta_pct_point": 0.00309,
+            "null_z": 0.0071
+          },
+          "same_line_13": {
+            "races": 12561,
+            "expected_pct": 37.48957,
+            "empirical_pct": 37.49701,
+            "delta_pct_point": 0.00745,
+            "null_z": 0.018
+          },
+          "same_line_23": {
+            "races": 12561,
+            "expected_pct": 37.52237,
+            "empirical_pct": 37.52886,
+            "delta_pct_point": 0.00649,
+            "null_z": 0.0157
+          },
+          "same_line_123": {
+            "races": 12561,
+            "expected_pct": 22.90273,
+            "empirical_pct": 22.92811,
+            "delta_pct_point": 0.02538,
+            "null_z": 0.0724
+          }
+        },
+        "ticket_weighted_ece_pp": 0.01307958
+      }
+    }
+  },
+  "acceptance_rule": "H1-selected model must improve H2 NLL with day-cluster 95% CI lower bound above zero AND reduce fixed-bin ticket ECE; else original unchanged",
+  "accepted": true,
+  "model_adopted": "joint",
+  "all_year_recalibrated_probabilities": "data/audits/independent_trifecta_recalibrated_2024.jsonl.gz",
+  "all_year_export_note": "Jan-Jun probabilities are in-sample for calibrator; only Jul-Dec are strictly held out. Full archive is an Actions artifact, not tracked Git.",
+  "sample": "data/audits/independent_trifecta_recalibration_sample_2024.json",
+  "limitations": [
+    "2024 model selection uses Jan-Jun only; Jul-Dec used once to assess and accept, not refit or retune.",
+    "2025 data is reserved for final independent validation; no 2025 predictions or results opened.",
+    "Predictive pre-race archival timestamps of rider scores and published line forecasts are retrospectively recorded and not independently proven.",
+    "Ticket-level calibration bins group dependent mutually exclusive outcomes; null variance computed at race-group level.",
+    "Data-driven choice between multiple calibrators introduces selection optimism in H1, avoided in H2.",
+    "Calibration ECE over 5.8m tickets can be misleadingly small; focus on NLL, fixed probability bands and structural residuals.",
+    "Original baseline ticket probabilities were rounded to 12 decimals in frozen artifact; verified mean NLL matches baseline audit."
+  ]
+}
