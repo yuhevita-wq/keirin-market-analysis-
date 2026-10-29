@@ -1,0 +1,92 @@
+name: Independent 3ren-tan AI | isolate line/role dependence 2023
+
+on:
+  push:
+    branches:
+      - research/trifecta-line-dependence-v2-2023
+    paths:
+      - 'research/independent_trifecta_2023/line_dependence_v2.py'
+      - '.github/workflows/independent-trifecta-line-dependence-v2-2023.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: independent-trifecta-line-dependence-v2-2023
+  cancel-in-progress: false
+
+jobs:
+  compare-frozen-vs-structural-line-ai:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - name: Restore 2023 result-only race cards with published predicted lines and original AI
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/observe.py
+            /research/independent_trifecta_2023/line_dependence_v2.py
+            /data/a_class_12/2023_*/races.csv
+            /data/a_class_12/2023_*/entries.csv
+            /data/a3_challenge/2023_*/races.csv
+            /data/a3_challenge/2023_*/entries.csv
+            /data/2023/**/races.csv
+            /data/2023/**/entries.csv
+            /data/grade_races/g1g2/*2023*.zip
+            /data/grade_races/g3/2023/*.zip
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+
+      - name: Guard untouched original model and prevent odds or later result contamination
+        run: |
+          set -euo pipefail
+          test "$(git hash-object research/independent_trifecta_2023/observe.py)" = "19701f16c80fcc95dc8c032ed47b80dfcfe93bc6"
+          python -m py_compile research/independent_trifecta_2023/observe.py research/independent_trifecta_2023/line_dependence_v2.py
+          test -s data/result_universe_v2/combined/results_2023.jsonl.gz
+          test ! -e data/odds_only/odds_2023.jsonl.gz
+          test ! -e data/result_universe_v2/combined/results_2024.jsonl.gz
+          echo ORIGINAL_AI_UNMODIFIED_ODDS_AND_FUTURE_EXCLUDED
+
+      - name: Train new structural group-then-role AI on Jan-Oct ONLY and test four model variants on unseen Nov-Dec
+        run: |
+          set -euo pipefail
+          python research/independent_trifecta_2023/line_dependence_v2.py
+
+      - name: Strict probability conservation and exact baseline reproduction
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          f='data/audits/independent_trifecta_line_dependence_v2_2023.json'
+          x=json.load(open(f))
+          assert x['state']=='COMPLETED_INDEPENDENT_TRIFECTA_LINE_DEPENDENCE_V2_2023'
+          assert x['train_races']==19248 and x['unknown_test_races']==4192
+          assert x['original_AI_modified'] is False
+          assert x['market_odds_or_payout_in_features_labels_or_evaluation'] is False
+          assert x['2024_or_later_data_accessed'] is False
+          assert x['used_holdout_to_choose_hyperparameters'] is False
+          for model,counts in x['unknown_test_all_trifecta_proper_scoring_rules'].items():
+              assert counts['races']==4192
+              assert abs(counts['sum_of_all_trifecta_probs_per_race']-1)<1e-9
+              assert counts['trifecta_ticket_combinations']>4192*100
+          old=x['unknown_test_full_probability_allocation']['frozen_original']['line_pattern']['AAA']
+          assert old['actual_events']==1017,old
+          assert abs(old['predicted_events']-793.50138)<0.5,old
+          print('ALL_VARIANTS_PROBABILITY_100_PERCENT_AND_FROZEN_BASELINE_REPRODUCED')
+          PY
+
+      - name: Upload complete role/shape/stage decomposition and four-way unknown test
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: independent-trifecta-line-dependence-v2-2023-full-diagnostics
+          path: data/audits/independent_trifecta_line_dependence_v2_2023.json
+          retention-days: 90
+          if-no-files-found: warn
