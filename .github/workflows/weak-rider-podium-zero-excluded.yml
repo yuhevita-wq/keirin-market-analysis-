@@ -1,0 +1,131 @@
+name: Weak rider top-3 arrivals | exclude every zero-score race
+
+on:
+  push:
+    branches:
+      - research/weak-rider-podium-zero-excluded
+    paths:
+      - 'research/independent_trifecta_2023/weak_rider_podium_zero_excluded.py'
+      - '.github/workflows/weak-rider-podium-zero-excluded.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: weak-rider-podium-zero-excluded
+  cancel-in-progress: false
+
+jobs:
+  all-race-shape-podium-observation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - name: Sparse checkout published pre-race cards and actual finishing results
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/observe.py
+            /research/independent_trifecta_2023/line_dependence_v2.py
+            /research/independent_trifecta_2023/aab_guarded_v3.py
+            /research/independent_trifecta_2023/v4_pattern_floor_2026.py
+            /research/independent_trifecta_2023/v5_rider_score_role_size_interactions.py
+            /research/independent_trifecta_2023/v6_opponent_competition_structure.py
+            /research/independent_trifecta_2024/calibration_audit.py
+            /research/independent_trifecta_2024/validate_2025.py
+            /data/a_class_12/2023_*/races.csv
+            /data/a_class_12/2023_*/entries.csv
+            /data/a3_challenge/2023_*/races.csv
+            /data/a3_challenge/2023_*/entries.csv
+            /data/2023/**/races.csv
+            /data/2023/**/entries.csv
+            /data/grade_races/g1g2/*2023*.zip
+            /data/grade_races/g3/2023/*.zip
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+            /data/a_class_12/2024_*/races.csv
+            /data/a_class_12/2024_*/entries.csv
+            /data/a3_challenge/2024_*/races.csv
+            /data/a3_challenge/2024_*/entries.csv
+            /data/2024/**/races.csv
+            /data/2024/**/entries.csv
+            /data/grade_races/g1g2/*2024*.zip
+            /data/grade_races/g3/2024/*.zip
+            /data/result_universe_v2/combined/results_2024.jsonl.gz
+            /data/a_class_12/2025_*/races.csv
+            /data/a_class_12/2025_*/entries.csv
+            /data/a3_challenge/2025_*/races.csv
+            /data/a3_challenge/2025_*/entries.csv
+            /data/2025/**/races.csv
+            /data/2025/**/entries.csv
+            /data/grade_races/g1g2/*2025*.zip
+            /data/grade_races/g3/2025/*.zip
+            /data/result_universe_v2/combined/results_2025.jsonl.gz
+            /data/a_class_12/2026_*/races.csv
+            /data/a_class_12/2026_*/entries.csv
+            /data/a_class_12/pilot_2026*/races.csv
+            /data/a_class_12/pilot_2026*/entries.csv
+            /data/a3_challenge/2026_*/races.csv
+            /data/a3_challenge/2026_*/entries.csv
+            /data/2026_h1/**/races.csv
+            /data/2026_h1/**/entries.csv
+            /data/2026_future_block1/**/races.csv
+            /data/2026_future_block1/**/entries.csv
+            /data/grade_races/g3/2026_h1/*.zip
+            /data/result_universe_v2/combined/results_2026.jsonl.gz
+            /research/independent_trifecta_2023/weak_rider_podium_zero_excluded.py
+
+      - name: Validate study script and unchanged score-ranking source
+        run: |
+          set -euo pipefail
+          python -m py_compile research/independent_trifecta_2023/weak_rider_podium_zero_excluded.py
+          test "$(git hash-object research/independent_trifecta_2023/observe.py)" = "19701f16c80fcc95dc8c032ed47b80dfcfe93bc6"
+          test "$(git hash-object research/independent_trifecta_2023/line_dependence_v2.py)" = "2bb7362490b7b7f7eb0e8390face22f248649216"
+          for year in 2023 2024 2025 2026; do
+            test -s "data/result_universe_v2/combined/results_$year.jsonl.gz"
+          done
+
+      - name: Examine weakest half of field 1st/2nd/3rd entry and all line roles, with ANY zero-score race entirely excluded
+        run: |
+          set -euo pipefail
+          python research/independent_trifecta_2023/weak_rider_podium_zero_excluded.py
+
+      - name: Verify full race-exclusion gate, podium placement conservation, frozen old vs line-aware probability loss
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          p='data/audits/weak_rider_podium_zero_excluded_2023_2026.json'
+          r=json.load(open(p))
+          assert r['state']=='WEAK_RIDER_PODIUM_ALL_LINE_SHAPES_WITH_ZERO_SCORE_RACES_EXCLUDED'
+          assert r['not_a_ticket_ev_or_market_proof']
+          assert r['no_betting_odds_or_payout']
+          assert r['model_fit_only_2023_jan_oct']
+          assert r['line_shapes_not_privileged']
+          for yr,n in [('2024',25348),('2025',24635),('2026',11797)]:
+              x=r['year_results'][yr]
+              assert x['total_races_before_score_gate']==n
+              assert x['eligible_races']+sum(x['excluded_races'].values())==n
+              assert x['excluded_races'].get('UNKNOWN_ZERO_OR_INVALID_SCORE',0)>0
+              a=x['primary_weak']
+              assert a['top3']==a['first']+a['second']+a['third']
+              assert a['exposures']>x['eligible_races']
+              assert x['line_shape_coverage']>10
+              assert sum(x['primary_weak_podium_pattern'].values())==a['top3']
+              assert sum(x['primary_weak_podium_companion'].values())==a['top3']
+              assert x['empirical_rate_model_comparison']['evaluated_weak_riders']==a['exposures']
+          print('WEAK_KNOWN_RIDER_PODIUM_ZERO_RACE_EXCLUSION_VERIFIED')
+          PY
+
+      - name: Upload all-shape lower-half finish distributions and score interaction prediction validation
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: weak-rider-podium-zero-excluded-all-shapes-2023-2026
+          path: data/audits/weak_rider_podium_zero_excluded_2023_2026.json
+          retention-days: 90
+          if-no-files-found: warn
