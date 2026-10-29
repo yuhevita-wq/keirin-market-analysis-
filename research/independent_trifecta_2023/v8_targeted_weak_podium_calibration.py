@@ -211,7 +211,7 @@ def evaluate(data,wg,wr,d5,wl,wc,pw,deltas,tag):
     return result
 
 def main():
-    events,source=r23.ingest()
+    events,source=obs.ingest()
     rawtrain={k:v for k,v in events.items() if v["date"]<="2023-10-31"}
     cleantrain={k:v for k,v in rawtrain.items() if weak.score_gate(v)=="ELIGIBLE"}
     november={k:v for k,v in events.items() if v["date"].startswith("2023-11")
