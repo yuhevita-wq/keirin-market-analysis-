@@ -121,6 +121,10 @@ class Eval:
         self.lowp_actual=defaultdict(int)
         self.low_probability_winners=[]
         self.extreme_gap_winner_records=[]
+        self.zero_score_race_groups=defaultdict(lambda:{
+            "n":0,"winner_score_zero":0,"least":Cell(),
+            "all_under_0_1pct":Cell(),"all_under_0_01pct":Cell(),
+            "nll":defaultdict(float),"brier":defaultdict(float)})
     def add(self,rid,e,priors):
         self.n+=1
         cars=sorted(e["scores"],key=int);n=len(cars)
@@ -128,6 +132,10 @@ class Eval:
         if set(p)!=set(cars) or abs(sum(p.values())-1)>1e-8:
             raise AssertionError(("first-stage distribution invalid",rid))
         truth=e["order"][0]
+        score_group="contains_zero_score" if any(s==0 for s in e["scores"].values()) else "all_scores_positive"
+        zgroup=self.zero_score_race_groups[score_group]
+        zgroup["n"]+=1
+        zgroup["winner_score_zero"]+=int(e["scores"][truth]==0)
         if truth not in p:raise AssertionError("winner missing")
         selected={}
         for eps in self.epsilons:
@@ -136,6 +144,8 @@ class Eval:
             selected[eps]=q
             self.nll[eps]-=math.log(max(q[truth],1e-300))
             self.brier[eps]+=1-2*q[truth]+sum(x*x for x in q.values())
+            zgroup["nll"][eps]-=math.log(max(q[truth],1e-300))
+            zgroup["brier"][eps]+=1-2*q[truth]+sum(x*x for x in q.values())
         chosen=selected[self.epsilons[-1]]
         order=sorted(cars,key=lambda c:(p[c],int(c)))
         least=order[0]
@@ -186,6 +196,7 @@ class Eval:
             for axis,key in groups:
                 self.cells[axis,key].add(p[c],chosen[c],won,rid)
             if c==least:
+                zgroup["least"].add(p[c],chosen[c],won,rid)
                 extra=(
                     ("least_by_field_size",str(n)),
                     ("least_by_role",role),
@@ -198,6 +209,10 @@ class Eval:
                 )
                 for axis,key in extra:
                     self.cells[axis,key].add(p[c],chosen[c],won,rid)
+            if p[c]<.001:
+                zgroup["all_under_0_1pct"].add(p[c],chosen[c],won,rid)
+            if p[c]<.0001:
+                zgroup["all_under_0_01pct"].add(p[c],chosen[c],won,rid)
             if p[c]<.01 and won:self.lowp_actual["under_1pct"]+=1
             if p[c]<.001 and won:self.lowp_actual["under_0.1pct"]+=1
             if p[c]<.0001 and won:self.lowp_actual["under_0.01pct"]+=1
@@ -215,6 +230,16 @@ class Eval:
          "all_line_shapes":dict(sorted(self.groupcounts.items())),
          "distinct_line_shapes":len(self.groupcounts),
          "raw_counts":dict(self.lowp_actual),
+         "zero_score_stratified":{k:{
+             "races":group["n"],"winner_score_was_zero":group["winner_score_zero"],
+             "least":group["least"].pack(),
+             "V6_pred_below_0_1pct":group["all_under_0_1pct"].pack(),
+             "V6_pred_below_0_01pct":group["all_under_0_01pct"].pack(),
+             "epsilon_scores":{str(e):{
+                "NLL":round(group["nll"][e]/group["n"],9),
+                "Brier":round(group["brier"][e]/group["n"],9)}
+                for e in self.epsilons},
+            } for k,group in self.zero_score_race_groups.items()},
          "rare_win_case_audit":self.low_probability_winners,
          "extreme_score_gap_win_case_audit":self.extreme_gap_winner_records,
          "by_axis":{
@@ -264,6 +289,12 @@ def main():
                     ("rider_exposures","observed_wins","V6_first_stage_expected_wins",
                      "observed_win_pct","V6_mean_pred_pct","raw_wilson_95pct_descriptive")},
             "NLLs":{eps:o["mean_NLL"] for eps,o in result[yr]["epsilon_scores"].items()},
+            "zero_score_strata":{k:{"races":v["races"],"winner_score_zero":v["winner_score_was_zero"],
+                                "least_observed":v["least"]["observed_wins"],
+                                "least_predicted":v["least"]["V6_first_stage_expected_wins"],
+                                "under_0_1pct_wins":v["V6_pred_below_0_1pct"]["observed_wins"],
+                                "under_0_01pct_wins":v["V6_pred_below_0_01pct"]["observed_wins"]}
+                                  for k,v in result[yr]["zero_score_stratified"].items()},
             "rare_bins":{k:v for k,v in result[yr]["by_axis"]["V6_pred_bin"].items()
                          if k in ("under_0.01pct","0.01_to_0.05pct",
                                   "0.05_to_0.1pct","0.1_to_0.5pct","0.5_to_1pct")},
