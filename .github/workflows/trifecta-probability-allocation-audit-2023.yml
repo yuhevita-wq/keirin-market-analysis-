@@ -1,0 +1,107 @@
+name: Identify overallocated vs underallocated trifecta probabilities | Full 2023 23440 races
+
+on:
+  push:
+    branches:
+      - research/trifecta-all-ticket-allocation-errors-2023
+    paths:
+      - 'research/independent_trifecta_2023/probability_allocation_audit.py'
+      - '.github/workflows/trifecta-probability-allocation-audit-2023.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: 2023-full-trifecta-probability-allocation-fixed
+  cancel-in-progress: false
+
+jobs:
+  inspect-all-2023-probabilities:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - name: Restore ALL eligible 2023 source races, scores, published lines, results
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/observe.py
+            /research/independent_trifecta_2023/probability_allocation_audit.py
+            /data/audits/independent_trifecta_recalibration_2024.json
+            /data/a_class_12/2023_*/races.csv
+            /data/a_class_12/2023_*/entries.csv
+            /data/a3_challenge/2023_*/races.csv
+            /data/a3_challenge/2023_*/entries.csv
+            /data/2023/**/races.csv
+            /data/2023/**/entries.csv
+            /data/grade_races/g1g2/*2023*.zip
+            /data/grade_races/g3/2023/*.zip
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+
+      - name: Verify original 2023 independent model has NOT changed and odds are isolated
+        run: |
+          set -euo pipefail
+          python -m py_compile research/independent_trifecta_2023/probability_allocation_audit.py
+          test "$(git hash-object research/independent_trifecta_2023/observe.py)" = "19701f16c80fcc95dc8c032ed47b80dfcfe93bc6"
+          test -s data/result_universe_v2/combined/results_2023.jsonl.gz
+          test ! -e data/odds_only/odds_2023.jsonl.gz
+          test ! -e data/result_universe_v2/combined/results_2024.jsonl.gz
+          echo 'ALL_2023_RESULT_UNIVERSE_AVAILABLE_AND_NO_MARKET_INPUT'
+
+      - name: Reconstruct fixed AI probability for ALL 2023 eligible trifecta races
+        env:
+          PYTHONUNBUFFERED: '1'
+          OPENBLAS_NUM_THREADS: '1'
+          OMP_NUM_THREADS: '1'
+        run: |
+          set -euo pipefail
+          python research/independent_trifecta_2023/probability_allocation_audit.py
+
+      - name: Reconcile each complete disjoint grouping to all 23,440 race outcomes
+        run: |
+          python - <<'PY'
+          import json
+          j=json.load(open('data/audits/independent_trifecta_allocation_errors_2023.json'))
+          assert j["state"]=="COMPLETED_FROZEN_AI_ALL_2023_TRIFECTA_ALLOCATION_ERROR_AUDIT"
+          assert j["market_odds_or_payout_used"] is False
+          assert j["AI_retrained"] is False
+          assert j["races_2023_all_eligible"]==23440
+          assert j["races_JanOct_original_AI_training"]==19248
+          assert j["races_NovDec_original_AI_unused"]==4192
+          assert j["all_2023_trifecta_ticket_combinations_per_model"]>23440*200
+          for model,v in j['models'].items():
+              for per,expected in (('all_2023',23440),('JanOct_in_sample',19248),('NovDec_original_AI_holdout',4192)):
+                  for axis,d in v[per].items():
+                      actual=sum(z['actual_event_count'] for z in d.values())
+                      pred=sum(z['AI_predicted_event_count'] for z in d.values())
+                      assert actual==expected,(model,per,axis,actual)
+                      assert abs(pred-expected)<0.01,(model,per,axis,pred)
+          print('ALL_RACE_AND_ALL_TRIFECTA_PROBABILITY_PARTITIONS_VALIDATED')
+          PY
+
+      - name: Publish comprehensive all-ticket structural error report as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: independent-2023-full-trifecta-probability-overunder-allocation
+          retention-days: 90
+          if-no-files-found: warn
+          compression-level: 5
+          path: data/audits/independent_trifecta_allocation_errors_2023.json
+
+      - name: Store report in independent research branch (never change production AI)
+        if: success()
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add --sparse data/audits/independent_trifecta_allocation_errors_2023.json
+          if git diff --cached --quiet; then
+            echo 'No report changes'
+          else
+            git commit -m 'research: report over/under allocated 3ren-tan probabilities across all 23440 2023 AI-eligible races'
+            git push origin HEAD:research/trifecta-all-ticket-allocation-errors-2023
+          fi
