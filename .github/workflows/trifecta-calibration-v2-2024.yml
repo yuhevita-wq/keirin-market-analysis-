@@ -15,7 +15,7 @@ permissions:
 
 concurrency:
   group: independent-trifecta-v2-2024-calibration
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   fit-calibrator:
@@ -120,4 +120,5 @@ jobs:
             data/audits/independent_trifecta_calibrator_v2_for_2025.json \
             data/audits/independent_trifecta_calibrator_v2_example_2024.json
           git diff --cached --quiet || git commit -m "Save 2024 calibration research and frozen odds-free 2025 probabilities"
+          git pull --rebase origin research/trifecta-probability-calibration-v2
           git push origin HEAD:research/trifecta-probability-calibration-v2
