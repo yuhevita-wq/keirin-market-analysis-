@@ -1,0 +1,1 @@
+G1/G2 non-girls rescue set for 2021-2025. Source: GitHub Release grade-race-databank-2026-09-02. Five ZIP archives are expected in this directory and are verified against the canonical byte sizes recorded in data/grade_races/RELEASE_INDEX.csv.

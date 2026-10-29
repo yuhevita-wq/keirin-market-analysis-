@@ -1,0 +1,72 @@
+{
+  "strategy": "mainline_v1",
+  "rules": {
+    "main_line": "2+ rider line maximizing leader score + second rider score; ties: higher leader score, then 3+ rider line, then lower line_id",
+    "third_candidates": "main-line third rider + leaders of other lines + overall top-4 score riders; remove A/B and duplicates",
+    "bets": "A-B-X and B-A-X, 100 yen each",
+    "segment": "within each race_date x track, sort S級予選 by race_no and split ordinal positions into equal-width terciles",
+    "no_post_result_filters": true
+  },
+  "overall": {
+    "races": 1464,
+    "mainline_top2_races": 578,
+    "mainline_top2_rate": 0.3948087431693989,
+    "third_captured_races_given_top2": 526,
+    "third_capture_rate_given_top2": 0.9100346020761245,
+    "average_third_candidates": 3.8695355191256833,
+    "average_bet_count": 7.7390710382513666,
+    "hit_races": 532,
+    "hit_rate": 0.3633879781420765,
+    "stake_yen": 1133000,
+    "payout_yen": 895740,
+    "profit_yen": -237260,
+    "roi": 0.7905913503971757
+  },
+  "by_segment": {
+    "前半": {
+      "races": 547,
+      "mainline_top2_races": 170,
+      "mainline_top2_rate": 0.31078610603290674,
+      "third_captured_races_given_top2": 156,
+      "third_capture_rate_given_top2": 0.9176470588235294,
+      "average_third_candidates": 3.822669104204753,
+      "average_bet_count": 7.645338208409506,
+      "hit_races": 158,
+      "hit_rate": 0.28884826325411334,
+      "stake_yen": 418200,
+      "payout_yen": 311430,
+      "profit_yen": -106770,
+      "roi": 0.7446915351506457
+    },
+    "中盤": {
+      "races": 459,
+      "mainline_top2_races": 169,
+      "mainline_top2_rate": 0.3681917211328976,
+      "third_captured_races_given_top2": 146,
+      "third_capture_rate_given_top2": 0.863905325443787,
+      "average_third_candidates": 3.8344226579520697,
+      "average_bet_count": 7.668845315904139,
+      "hit_races": 148,
+      "hit_rate": 0.3224400871459695,
+      "stake_yen": 352000,
+      "payout_yen": 243520,
+      "profit_yen": -108480,
+      "roi": 0.6918181818181818
+    },
+    "後半": {
+      "races": 458,
+      "mainline_top2_races": 239,
+      "mainline_top2_rate": 0.5218340611353712,
+      "third_captured_races_given_top2": 224,
+      "third_capture_rate_given_top2": 0.9372384937238494,
+      "average_third_candidates": 3.960698689956332,
+      "average_bet_count": 7.921397379912664,
+      "hit_races": 226,
+      "hit_rate": 0.49344978165938863,
+      "stake_yen": 362800,
+      "payout_yen": 340790,
+      "profit_yen": -22010,
+      "roi": 0.9393329658213891
+    }
+  }
+}

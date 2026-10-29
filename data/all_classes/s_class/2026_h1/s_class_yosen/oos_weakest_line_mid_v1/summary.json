@@ -1,0 +1,417 @@
+{
+  "status": "WEAKEST_LINE_MID_V1_2026_H1_OOS_EVALUATION",
+  "spec_path": "data/strategy_specs/weakest_line_mid_v1_pre2026.json",
+  "spec_frozen_before_evaluation": true,
+  "evaluation_window": "2026-01-01/2026-06-30",
+  "strategy": {
+    "segment": "中盤",
+    "conditions": [
+      {
+        "feature": "weak_lead_score",
+        "operator": "<=",
+        "threshold": 98
+      },
+      {
+        "feature": "rival_minus_weak_score",
+        "operator": "<=",
+        "threshold": 6
+      }
+    ],
+    "formation": {
+      "id": "WEAK1_MAINPAIR_12",
+      "bets": "all 6 permutations of A,B,W1L plus all 6 permutations of A,B,W1B",
+      "points": 12,
+      "stake_yen_per_point": 100,
+      "stake_yen_per_race": 1200
+    }
+  },
+  "structural_middle_races": 88,
+  "exclusions": {
+    "main_under_3": 97,
+    "fewer_than_3_lines": 50
+  },
+  "result": {
+    "races": 25,
+    "hits": 3,
+    "hit_rate_pct": 12.0,
+    "stake_yen": 30000,
+    "payout_yen": 3140,
+    "profit_yen": -26860,
+    "roi_pct": 10.466666666666667,
+    "median_hit_payout_yen": 890,
+    "mean_hit_payout_yen": 1046.6666666666667,
+    "max_hit_payout_yen": 1410,
+    "high5000_hits": 0,
+    "high10000_hits": 0,
+    "high20000_hits": 0,
+    "top1_payout_share": 0.44904458598726116,
+    "max_losing_streak": 15
+  },
+  "monthly": {
+    "2026-01": {
+      "races": 4,
+      "hits": 1,
+      "stake_yen": 4800,
+      "payout_yen": 890,
+      "profit_yen": -3910,
+      "roi_pct": 18.541666666666668
+    },
+    "2026-02": {
+      "races": 4,
+      "hits": 0,
+      "stake_yen": 4800,
+      "payout_yen": 0,
+      "profit_yen": -4800,
+      "roi_pct": 0.0
+    },
+    "2026-03": {
+      "races": 2,
+      "hits": 0,
+      "stake_yen": 2400,
+      "payout_yen": 0,
+      "profit_yen": -2400,
+      "roi_pct": 0.0
+    },
+    "2026-04": {
+      "races": 8,
+      "hits": 1,
+      "stake_yen": 9600,
+      "payout_yen": 1410,
+      "profit_yen": -8190,
+      "roi_pct": 14.6875
+    },
+    "2026-05": {
+      "races": 3,
+      "hits": 0,
+      "stake_yen": 3600,
+      "payout_yen": 0,
+      "profit_yen": -3600,
+      "roi_pct": 0.0
+    },
+    "2026-06": {
+      "races": 4,
+      "hits": 1,
+      "stake_yen": 4800,
+      "payout_yen": 840,
+      "profit_yen": -3960,
+      "roi_pct": 17.5
+    }
+  },
+  "selected_races": [
+    {
+      "race_id": "2420260101010009",
+      "race_date": "2026-01-01",
+      "track": "宇都宮競輪",
+      "race_no": 9,
+      "weak_lead_score": 92.85,
+      "rival_minus_weak_score": 4.75,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "3520260108010008",
+      "race_date": "2026-01-08",
+      "track": "平塚競輪",
+      "race_no": 8,
+      "weak_lead_score": 94.04,
+      "rival_minus_weak_score": 0.8300000000000125,
+      "stake_yen": 1200,
+      "hit": true,
+      "payout_yen": 890,
+      "matched_winners": [
+        {
+          "combination": "4-2-3",
+          "payout_yen": 890
+        }
+      ]
+    },
+    {
+      "race_id": "2720260109010010",
+      "race_date": "2026-01-09",
+      "track": "京王閣競輪",
+      "race_no": 10,
+      "weak_lead_score": 96.06,
+      "rival_minus_weak_score": 1.8799999999999955,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "8720260127010008",
+      "race_date": "2026-01-27",
+      "track": "熊本競輪",
+      "race_no": 8,
+      "weak_lead_score": 93.26,
+      "rival_minus_weak_score": 5.939999999999998,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "4320260207010010",
+      "race_date": "2026-02-07",
+      "track": "岐阜競輪",
+      "race_no": 10,
+      "weak_lead_score": 93.76,
+      "rival_minus_weak_score": 4.359999999999957,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "4320260216010008",
+      "race_date": "2026-02-16",
+      "track": "岐阜競輪",
+      "race_no": 8,
+      "weak_lead_score": 92.76,
+      "rival_minus_weak_score": 1.3400000000000034,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "8320260217010009",
+      "race_date": "2026-02-17",
+      "track": "久留米競輪",
+      "race_no": 9,
+      "weak_lead_score": 95.69,
+      "rival_minus_weak_score": 5.819999999999993,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "3720260220010008",
+      "race_date": "2026-02-20",
+      "track": "伊東競輪",
+      "race_no": 8,
+      "weak_lead_score": 94.75,
+      "rival_minus_weak_score": 2.289999999999992,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "3620260308010008",
+      "race_date": "2026-03-08",
+      "track": "小田原競輪",
+      "race_no": 8,
+      "weak_lead_score": 96.82,
+      "rival_minus_weak_score": 5.550000000000011,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "2820260328010010",
+      "race_date": "2026-03-28",
+      "track": "立川競輪",
+      "race_no": 10,
+      "weak_lead_score": 97.3,
+      "rival_minus_weak_score": 4.430000000000007,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "4420260408010008",
+      "race_date": "2026-04-08",
+      "track": "大垣競輪",
+      "race_no": 8,
+      "weak_lead_score": 96.82,
+      "rival_minus_weak_score": 1.6100000000000136,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "4420260408010009",
+      "race_date": "2026-04-08",
+      "track": "大垣競輪",
+      "race_no": 9,
+      "weak_lead_score": 96.6,
+      "rival_minus_weak_score": 5.930000000000007,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "8320260410010009",
+      "race_date": "2026-04-10",
+      "track": "久留米競輪",
+      "race_no": 9,
+      "weak_lead_score": 96.85,
+      "rival_minus_weak_score": 5.980000000000018,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "1220260412010009",
+      "race_date": "2026-04-12",
+      "track": "青森競輪",
+      "race_no": 9,
+      "weak_lead_score": 92.42,
+      "rival_minus_weak_score": 2.549999999999983,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "1120260415010008",
+      "race_date": "2026-04-15",
+      "track": "函館競輪",
+      "race_no": 8,
+      "weak_lead_score": 94.46,
+      "rival_minus_weak_score": 4.969999999999999,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "3720260418010010",
+      "race_date": "2026-04-18",
+      "track": "伊東競輪",
+      "race_no": 10,
+      "weak_lead_score": 97.8,
+      "rival_minus_weak_score": 2.3500000000000227,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "2220260422010009",
+      "race_date": "2026-04-22",
+      "track": "前橋競輪",
+      "race_no": 9,
+      "weak_lead_score": 96.85,
+      "rival_minus_weak_score": 5.509999999999991,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "6120260428010008",
+      "race_date": "2026-04-28",
+      "track": "玉野競輪",
+      "race_no": 8,
+      "weak_lead_score": 95.73,
+      "rival_minus_weak_score": 3.2099999999999795,
+      "stake_yen": 1200,
+      "hit": true,
+      "payout_yen": 1410,
+      "matched_winners": [
+        {
+          "combination": "2-5-3",
+          "payout_yen": 1410
+        }
+      ]
+    },
+    {
+      "race_id": "5320260501010009",
+      "race_date": "2026-05-01",
+      "track": "奈良競輪",
+      "race_no": 9,
+      "weak_lead_score": 92.4,
+      "rival_minus_weak_score": 5.8799999999999955,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "6220260506010009",
+      "race_date": "2026-05-06",
+      "track": "広島競輪",
+      "race_no": 9,
+      "weak_lead_score": 93.82,
+      "rival_minus_weak_score": 3.710000000000008,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "8720260507010009",
+      "race_date": "2026-05-07",
+      "track": "熊本競輪",
+      "race_no": 9,
+      "weak_lead_score": 93.44,
+      "rival_minus_weak_score": 4.3799999999999955,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "1320260608010008",
+      "race_date": "2026-06-08",
+      "track": "いわき平競輪",
+      "race_no": 8,
+      "weak_lead_score": 93.81,
+      "rival_minus_weak_score": 0.5300000000000296,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "2220260609010009",
+      "race_date": "2026-06-09",
+      "track": "前橋競輪",
+      "race_no": 9,
+      "weak_lead_score": 97.53,
+      "rival_minus_weak_score": 5.060000000000002,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    },
+    {
+      "race_id": "8620260615010009",
+      "race_date": "2026-06-15",
+      "track": "別府競輪",
+      "race_no": 9,
+      "weak_lead_score": 97.7,
+      "rival_minus_weak_score": 4.219999999999999,
+      "stake_yen": 1200,
+      "hit": true,
+      "payout_yen": 840,
+      "matched_winners": [
+        {
+          "combination": "2-5-3",
+          "payout_yen": 840
+        }
+      ]
+    },
+    {
+      "race_id": "2720260617010008",
+      "race_date": "2026-06-17",
+      "track": "京王閣競輪",
+      "race_no": 8,
+      "weak_lead_score": 94.69,
+      "rival_minus_weak_score": 2.420000000000016,
+      "stake_yen": 1200,
+      "hit": false,
+      "payout_yen": 0,
+      "matched_winners": []
+    }
+  ]
+}

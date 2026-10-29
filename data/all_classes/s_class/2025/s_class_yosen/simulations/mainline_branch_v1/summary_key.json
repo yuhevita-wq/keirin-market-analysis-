@@ -1,0 +1,41 @@
+{
+  "scope": "2025 exact S級予選, 後半, main line size >=3 only",
+  "label": "main-line leader and second rider occupy 1st/2nd in either order",
+  "all": {"races": 353, "mainline_top2": 197, "rate": 0.5580736543909348},
+  "H1": {"races": 173, "mainline_top2": 104, "rate": 0.6011560693641619},
+  "H2": {"races": 180, "mainline_top2": 93, "rate": 0.5166666666666667},
+  "mean_differences_mainline_minus_other": {
+    "main_pair_top2_sum": 8.007783417935698,
+    "main_pair_top3_sum": 7.866448652869963,
+    "main_pair_win_sum": 5.824733177144346,
+    "main_leader_top2": 5.710233632695562,
+    "main_leader_top3": 5.5332422230899425,
+    "pair_score_gap": 1.0700741897696204,
+    "main_third_score": -1.2542008330079284,
+    "main_third_top3": -2.1193153715996367
+  },
+  "best_single_split_H1": {
+    "feature": "main_leader_top2",
+    "threshold": 35.45,
+    "low": {"races": 53, "mainline_top2": 20, "rate": 0.37735849056603776},
+    "high": {"races": 120, "mainline_top2": 84, "rate": 0.7}
+  },
+  "other_strong_H1_splits": [
+    {"feature":"main_pair_top3_sum","threshold":106.1,"low_rate":0.49056603773584906,"high_rate":0.7761194029850746},
+    {"feature":"main_pair_top2_sum","threshold":68.35,"low_rate":0.4107142857142857,"high_rate":0.6923076923076923},
+    {"feature":"main_pair_win_sum","threshold":54.7,"low_rate":0.5524475524475524,"high_rate":0.8333333333333334}
+  ],
+  "depth2_H1_tree": {
+    "root": "main_leader_top2 <= 35.45",
+    "low_branch_split": "main_leader_b <= 7.5",
+    "high_branch_split": "main_third_score <= 98.015",
+    "leaves": [
+      {"path":"LL","H1_rate":0.18181818181818182,"H2_rate":0.5294117647058824,"H1_n":22,"H2_n":17},
+      {"path":"LR","H1_rate":0.5161290322580645,"H2_rate":0.4,"H1_n":31,"H2_n":25},
+      {"path":"RL","H1_rate":0.7848101265822784,"H2_rate":0.5376344086021505,"H1_n":79,"H2_n":93},
+      {"path":"RR","H1_rate":0.5365853658536586,"H2_rate":0.5333333333333333,"H1_n":41,"H2_n":45}
+    ]
+  },
+  "interpretation": "Pair/leader recent-place rates separate outcomes better than raw score gaps in this first audit, but the H1 depth-2 tree does not reproduce strongly in H2. Do not use the tree as a betting filter yet.",
+  "leakage_rule": "Results are labels only; all branch features are pre-race fields."
+}
