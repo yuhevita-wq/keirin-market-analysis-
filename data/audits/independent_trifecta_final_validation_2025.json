@@ -1,0 +1,847 @@
+{
+  "state": "COMPLETE_2025_FINAL_OUT_OF_TIME_VALIDATION",
+  "2025_no_training_or_parameter_selection": true,
+  "no_odds_or_prices_used": true,
+  "2023_original_model_training": [
+    "2023-01-01",
+    "2023-10-31"
+  ],
+  "2024_calibration_fit": [
+    "2024-01-01",
+    "2024-06-30"
+  ],
+  "2024_acceptance_test": [
+    "2024-07-01",
+    "2024-12-31"
+  ],
+  "2025_final_test": [
+    "2025-01-01",
+    "2025-12-31"
+  ],
+  "frozen_calibrator": "joint",
+  "frozen_coefficients": {
+    "alpha": 1.0436305765843565,
+    "line_coefs": [
+      0.015204702734728442,
+      0.03738683356985902,
+      0.03236425239577047,
+      0.1268511426254791
+    ],
+    "params": [
+      1.0436305765843565,
+      0.015204702734728442,
+      0.03738683356985902,
+      0.03236425239577047,
+      0.1268511426254791
+    ],
+    "train_penalized_nll": 4.378493895072485,
+    "converged": true,
+    "iterations": 14
+  },
+  "2025_result_coverage": {
+    "verified_2025_top3_results": 25083,
+    "result_races_with_manifest": 24671,
+    "eligible_2025": 24635,
+    "matched_percent_of_results": 98.2139,
+    "class_counts": {
+      "A1_A2": 11587,
+      "A3": 5445,
+      "S_F1": 5119,
+      "S_grade": 2484
+    },
+    "field_sizes": {
+      "6": 1126,
+      "7": 20905,
+      "5": 235,
+      "9": 2221,
+      "8": 148
+    },
+    "exclusions": {
+      "duplicate_manifests": 1466,
+      "duplicate_entry_rows": 10254,
+      "missing_published_line": 36
+    },
+    "individual_files_source_count": {
+      "data/a_class_12/2025_01_02/races.csv": 13489,
+      "data/a_class_12/2025_03_04/races.csv": 13127,
+      "data/a_class_12/2025_05_06/races.csv": 13554,
+      "data/a_class_12/2025_07_08/races.csv": 13667,
+      "data/a_class_12/2025_09_10/races.csv": 13428,
+      "data/a_class_12/2025_11_12/races.csv": 13513,
+      "data/a3_challenge/2025_01_02/races.csv": 6149,
+      "data/a3_challenge/2025_03_04/races.csv": 5861,
+      "data/a3_challenge/2025_05_06/races.csv": 5924,
+      "data/a3_challenge/2025_07_08/races.csv": 6981,
+      "data/a3_challenge/2025_09_10/races.csv": 6543,
+      "data/a3_challenge/2025_11_12/races.csv": 6007,
+      "data/2025/s_class_f1_all_parts/2025_q1/races.csv": 8608,
+      "data/2025/s_class_f1_all_parts/2025_q2/races.csv": 8668,
+      "data/2025/s_class_f1_all_parts/2025_q3/races.csv": 9013,
+      "data/2025/s_class_f1_all_parts/2025_q4/races.csv": 9031,
+      "data/2025/s_class_yosen/races.csv": 207,
+      "data/grade_races/g1g2/g1-g2-2025-non-girls.zip:races.csv": 4383,
+      "data/grade_races/g3/2025/g3-2025-q1.zip:races.csv": 5059,
+      "data/grade_races/g3/2025/g3-2025-q2.zip:races.csv": 4078,
+      "data/grade_races/g3/2025/g3-2025-q3.zip:races.csv": 4304,
+      "data/grade_races/g3/2025/g3-2025-q4.zip:races.csv": 4091
+    }
+  },
+  "prior_2023_train_count": 19248,
+  "total_2025_3trifecta_ticket_probabilities": 5708382,
+  "metrics": {
+    "unchanged": {
+      "races": 24635,
+      "nll": 4.42546144,
+      "brier": 0.96990429,
+      "mean_probability_of_actual_pct": 2.679968,
+      "top1_hit_pct": 10.54597,
+      "top3_hit_pct": 21.57905
+    },
+    "adopted": {
+      "races": 24635,
+      "nll": 4.41786345,
+      "brier": 0.96892829,
+      "mean_probability_of_actual_pct": 3.040059,
+      "top1_hit_pct": 10.54191,
+      "top3_hit_pct": 21.72519
+    }
+  },
+  "calibration_bands": {
+    "unchanged": {
+      "0-0.1%": {
+        "tickets": 2024506,
+        "mean_prediction_pct": 0.045897,
+        "actual_frequency_pct": 0.050185,
+        "expected_hits": 929.183,
+        "observed_hits": 1016,
+        "observed_over_expected": 1.09343,
+        "z_score": 2.9296
+      },
+      "0.1-0.5%": {
+        "tickets": 2450145,
+        "mean_prediction_pct": 0.244392,
+        "actual_frequency_pct": 0.219252,
+        "expected_hits": 5987.947,
+        "observed_hits": 5372,
+        "observed_over_expected": 0.89714,
+        "z_score": -9.2769
+      },
+      "0.5-1%": {
+        "tickets": 679284,
+        "mean_prediction_pct": 0.701217,
+        "actual_frequency_pct": 0.671148,
+        "expected_hits": 4763.252,
+        "observed_hits": 4559,
+        "observed_over_expected": 0.95712,
+        "z_score": -3.3155
+      },
+      "1-2%": {
+        "tickets": 345959,
+        "mean_prediction_pct": 1.388443,
+        "actual_frequency_pct": 1.367214,
+        "expected_hits": 4803.444,
+        "observed_hits": 4730,
+        "observed_over_expected": 0.98471,
+        "z_score": -1.1937
+      },
+      "2-5%": {
+        "tickets": 169879,
+        "mean_prediction_pct": 2.921151,
+        "actual_frequency_pct": 2.970349,
+        "expected_hits": 4962.421,
+        "observed_hits": 5046,
+        "observed_over_expected": 1.01684,
+        "z_score": 1.3459
+      },
+      "5-10%": {
+        "tickets": 29445,
+        "mean_prediction_pct": 6.779422,
+        "actual_frequency_pct": 7.828154,
+        "expected_hits": 1996.201,
+        "observed_hits": 2305,
+        "observed_over_expected": 1.15469,
+        "z_score": 7.3509
+      },
+      "10-20%": {
+        "tickets": 8957,
+        "mean_prediction_pct": 12.799402,
+        "actual_frequency_pct": 17.215586,
+        "expected_hits": 1146.442,
+        "observed_hits": 1542,
+        "observed_over_expected": 1.34503,
+        "z_score": 12.6829
+      },
+      "20-100%": {
+        "tickets": 207,
+        "mean_prediction_pct": 22.274834,
+        "actual_frequency_pct": 31.400966,
+        "expected_hits": 46.109,
+        "observed_hits": 65,
+        "observed_over_expected": 1.40971,
+        "z_score": 3.1608
+      }
+    },
+    "adopted": {
+      "0-0.1%": {
+        "tickets": 2207326,
+        "mean_prediction_pct": 0.043505,
+        "actual_frequency_pct": 0.054591,
+        "expected_hits": 960.304,
+        "observed_hits": 1205,
+        "observed_over_expected": 1.25481,
+        "z_score": 8.1216
+      },
+      "0.1-0.5%": {
+        "tickets": 2335636,
+        "mean_prediction_pct": 0.241568,
+        "actual_frequency_pct": 0.234454,
+        "expected_hits": 5642.159,
+        "observed_hits": 5476,
+        "observed_over_expected": 0.97055,
+        "z_score": -2.5508
+      },
+      "0.5-1%": {
+        "tickets": 626709,
+        "mean_prediction_pct": 0.699443,
+        "actual_frequency_pct": 0.706867,
+        "expected_hits": 4383.47,
+        "observed_hits": 4430,
+        "observed_over_expected": 1.01061,
+        "z_score": 0.7803
+      },
+      "1-2%": {
+        "tickets": 322444,
+        "mean_prediction_pct": 1.383354,
+        "actual_frequency_pct": 1.351553,
+        "expected_hits": 4460.541,
+        "observed_hits": 4358,
+        "observed_over_expected": 0.97701,
+        "z_score": -1.7153
+      },
+      "2-5%": {
+        "tickets": 171064,
+        "mean_prediction_pct": 2.937062,
+        "actual_frequency_pct": 2.872025,
+        "expected_hits": 5024.256,
+        "observed_hits": 4913,
+        "observed_over_expected": 0.97786,
+        "z_score": -1.7811
+      },
+      "5-10%": {
+        "tickets": 30478,
+        "mean_prediction_pct": 6.771124,
+        "actual_frequency_pct": 6.788503,
+        "expected_hits": 2063.703,
+        "observed_hits": 2069,
+        "observed_over_expected": 1.00257,
+        "z_score": 0.1247
+      },
+      "10-20%": {
+        "tickets": 13692,
+        "mean_prediction_pct": 13.657649,
+        "actual_frequency_pct": 13.686824,
+        "expected_hits": 1870.005,
+        "observed_hits": 1874,
+        "observed_over_expected": 1.00214,
+        "z_score": 0.1021
+      },
+      "20-100%": {
+        "tickets": 1033,
+        "mean_prediction_pct": 22.319644,
+        "actual_frequency_pct": 30.009681,
+        "expected_hits": 230.562,
+        "observed_hits": 310,
+        "observed_over_expected": 1.34454,
+        "z_score": 5.9632
+      }
+    }
+  },
+  "structure_calibration": {
+    "unchanged": {
+      "same_line_12": {
+        "expected_pct": 54.26848,
+        "actual_pct": 57.4589,
+        "difference_pp": 3.19042,
+        "null_z": 10.2372
+      },
+      "same_line_13": {
+        "expected_pct": 33.77139,
+        "actual_pct": 38.22204,
+        "difference_pp": 4.45065,
+        "null_z": 15.3229
+      },
+      "same_line_23": {
+        "expected_pct": 33.8491,
+        "actual_pct": 37.53603,
+        "difference_pp": 3.68692,
+        "null_z": 12.6677
+      },
+      "same_line_123": {
+        "expected_pct": 18.53335,
+        "actual_pct": 23.32048,
+        "difference_pp": 4.78713,
+        "null_z": 20.4707
+      }
+    },
+    "adopted": {
+      "same_line_12": {
+        "expected_pct": 57.1408,
+        "actual_pct": 57.4589,
+        "difference_pp": 0.3181,
+        "null_z": 1.0306
+      },
+      "same_line_13": {
+        "expected_pct": 36.86383,
+        "actual_pct": 38.22204,
+        "difference_pp": 1.35821,
+        "null_z": 4.6198
+      },
+      "same_line_23": {
+        "expected_pct": 36.88171,
+        "actual_pct": 37.53603,
+        "difference_pp": 0.65432,
+        "null_z": 2.2214
+      },
+      "same_line_123": {
+        "expected_pct": 22.3433,
+        "actual_pct": 23.32048,
+        "difference_pp": 0.97718,
+        "null_z": 3.936
+      }
+    }
+  },
+  "ece_ticket_weighted_pp": {
+    "unchanged": 0.03130988,
+    "adopted": 0.0133122
+  },
+  "nll_improvement": {
+    "unchanged_minus_calibrated": 0.00759799,
+    "day_cluster_robust_se": 0.00079668,
+    "95pct_reference_interval": [
+      0.00603651,
+      0.00915948
+    ],
+    "number_of_days": 365
+  },
+  "by_class": {
+    "A1_A2": {
+      "unchanged": {
+        "races": 11587,
+        "nll": 4.39050791,
+        "brier": 0.97089138,
+        "mean_probability_of_actual_pct": 2.651255,
+        "top1_hit_pct": 9.8645,
+        "top3_hit_pct": 21.5759
+      },
+      "adopted": {
+        "races": 11587,
+        "nll": 4.38417468,
+        "brier": 0.97027512,
+        "mean_probability_of_actual_pct": 2.997682,
+        "top1_hit_pct": 9.79546,
+        "top3_hit_pct": 21.80892
+      }
+    },
+    "S_F1": {
+      "unchanged": {
+        "races": 5119,
+        "nll": 4.51729687,
+        "brier": 0.97644982,
+        "mean_probability_of_actual_pct": 2.317541,
+        "top1_hit_pct": 8.82985,
+        "top3_hit_pct": 18.53878
+      },
+      "adopted": {
+        "races": 5119,
+        "nll": 4.5188981,
+        "brier": 0.97664849,
+        "mean_probability_of_actual_pct": 2.596046,
+        "top1_hit_pct": 8.92752,
+        "top3_hit_pct": 18.59738
+      }
+    },
+    "A3": {
+      "unchanged": {
+        "races": 5445,
+        "nll": 4.08798357,
+        "brier": 0.95502789,
+        "mean_probability_of_actual_pct": 3.690861,
+        "top1_hit_pct": 15.00459,
+        "top3_hit_pct": 27.27273
+      },
+      "adopted": {
+        "races": 5445,
+        "nll": 4.07052912,
+        "brier": 0.95210439,
+        "mean_probability_of_actual_pct": 4.228457,
+        "top1_hit_pct": 15.07805,
+        "top3_hit_pct": 27.36455
+      }
+    },
+    "S_grade": {
+      "unchanged": {
+        "races": 2484,
+        "nll": 5.13901544,
+        "brier": 0.98442043,
+        "mean_probability_of_actual_pct": 1.344883,
+        "top1_hit_pct": 7.48792,
+        "top3_hit_pct": 15.37842
+      },
+      "adopted": {
+        "races": 2484,
+        "nll": 5.12816572,
+        "brier": 0.98361458,
+        "mean_probability_of_actual_pct": 1.547744,
+        "top1_hit_pct": 7.40741,
+        "top3_hit_pct": 15.41868
+      }
+    }
+  },
+  "by_month": {
+    "2025-01": {
+      "unchanged": {
+        "races": 2169,
+        "nll": 4.49295667,
+        "brier": 0.97334754,
+        "mean_probability_of_actual_pct": 2.53912,
+        "top1_hit_pct": 9.31305,
+        "top3_hit_pct": 19.08714
+      },
+      "adopted": {
+        "races": 2169,
+        "nll": 4.49210949,
+        "brier": 0.97306395,
+        "mean_probability_of_actual_pct": 2.864229,
+        "top1_hit_pct": 9.26694,
+        "top3_hit_pct": 19.22545
+      }
+    },
+    "2025-02": {
+      "unchanged": {
+        "races": 1929,
+        "nll": 4.46592322,
+        "brier": 0.97181437,
+        "mean_probability_of_actual_pct": 2.550945,
+        "top1_hit_pct": 10.41991,
+        "top3_hit_pct": 20.68429
+      },
+      "adopted": {
+        "races": 1929,
+        "nll": 4.46071244,
+        "brier": 0.97106736,
+        "mean_probability_of_actual_pct": 2.891471,
+        "top1_hit_pct": 10.36807,
+        "top3_hit_pct": 21.04717
+      }
+    },
+    "2025-03": {
+      "unchanged": {
+        "races": 2073,
+        "nll": 4.44072288,
+        "brier": 0.97113288,
+        "mean_probability_of_actual_pct": 2.579592,
+        "top1_hit_pct": 10.75736,
+        "top3_hit_pct": 20.59817
+      },
+      "adopted": {
+        "races": 2073,
+        "nll": 4.43457182,
+        "brier": 0.97055699,
+        "mean_probability_of_actual_pct": 2.911507,
+        "top1_hit_pct": 10.8056,
+        "top3_hit_pct": 20.74288
+      }
+    },
+    "2025-04": {
+      "unchanged": {
+        "races": 1912,
+        "nll": 4.34809176,
+        "brier": 0.96614538,
+        "mean_probability_of_actual_pct": 2.892733,
+        "top1_hit_pct": 12.18619,
+        "top3_hit_pct": 23.37866
+      },
+      "adopted": {
+        "races": 1912,
+        "nll": 4.33620745,
+        "brier": 0.96440638,
+        "mean_probability_of_actual_pct": 3.302103,
+        "top1_hit_pct": 12.23849,
+        "top3_hit_pct": 23.69247
+      }
+    },
+    "2025-05": {
+      "unchanged": {
+        "races": 2007,
+        "nll": 4.36548746,
+        "brier": 0.96701272,
+        "mean_probability_of_actual_pct": 2.852787,
+        "top1_hit_pct": 11.01146,
+        "top3_hit_pct": 23.01943
+      },
+      "adopted": {
+        "races": 2007,
+        "nll": 4.35532061,
+        "brier": 0.96556711,
+        "mean_probability_of_actual_pct": 3.24884,
+        "top1_hit_pct": 10.96163,
+        "top3_hit_pct": 23.06926
+      }
+    },
+    "2025-06": {
+      "unchanged": {
+        "races": 2053,
+        "nll": 4.39960209,
+        "brier": 0.96844846,
+        "mean_probability_of_actual_pct": 2.768083,
+        "top1_hit_pct": 11.15441,
+        "top3_hit_pct": 22.50365
+      },
+      "adopted": {
+        "races": 2053,
+        "nll": 4.39218934,
+        "brier": 0.96747281,
+        "mean_probability_of_actual_pct": 3.133868,
+        "top1_hit_pct": 11.15441,
+        "top3_hit_pct": 22.60107
+      }
+    },
+    "2025-07": {
+      "unchanged": {
+        "races": 2228,
+        "nll": 4.4707113,
+        "brier": 0.97200098,
+        "mean_probability_of_actual_pct": 2.562393,
+        "top1_hit_pct": 9.91921,
+        "top3_hit_pct": 20.73609
+      },
+      "adopted": {
+        "races": 2228,
+        "nll": 4.46345255,
+        "brier": 0.97114122,
+        "mean_probability_of_actual_pct": 2.905168,
+        "top1_hit_pct": 10.00898,
+        "top3_hit_pct": 20.51167
+      }
+    },
+    "2025-08": {
+      "unchanged": {
+        "races": 2059,
+        "nll": 4.41927735,
+        "brier": 0.96889616,
+        "mean_probability_of_actual_pct": 2.690781,
+        "top1_hit_pct": 10.9762,
+        "top3_hit_pct": 22.09811
+      },
+      "adopted": {
+        "races": 2059,
+        "nll": 4.40716603,
+        "brier": 0.96727631,
+        "mean_probability_of_actual_pct": 3.06407,
+        "top1_hit_pct": 11.02477,
+        "top3_hit_pct": 22.68091
+      }
+    },
+    "2025-09": {
+      "unchanged": {
+        "races": 2091,
+        "nll": 4.44821538,
+        "brier": 0.97092812,
+        "mean_probability_of_actual_pct": 2.6378,
+        "top1_hit_pct": 10.04304,
+        "top3_hit_pct": 20.80344
+      },
+      "adopted": {
+        "races": 2091,
+        "nll": 4.43951546,
+        "brier": 0.97006694,
+        "mean_probability_of_actual_pct": 2.996645,
+        "top1_hit_pct": 9.99522,
+        "top3_hit_pct": 20.94692
+      }
+    },
+    "2025-10": {
+      "unchanged": {
+        "races": 2085,
+        "nll": 4.42876217,
+        "brier": 0.96854522,
+        "mean_probability_of_actual_pct": 2.724687,
+        "top1_hit_pct": 11.03118,
+        "top3_hit_pct": 21.96643
+      },
+      "adopted": {
+        "races": 2085,
+        "nll": 4.41986344,
+        "brier": 0.96720876,
+        "mean_probability_of_actual_pct": 3.097621,
+        "top1_hit_pct": 10.93525,
+        "top3_hit_pct": 22.01439
+      }
+    },
+    "2025-11": {
+      "unchanged": {
+        "races": 2006,
+        "nll": 4.39094512,
+        "brier": 0.96702376,
+        "mean_probability_of_actual_pct": 2.837289,
+        "top1_hit_pct": 11.41575,
+        "top3_hit_pct": 23.72881
+      },
+      "adopted": {
+        "races": 2006,
+        "nll": 4.38219966,
+        "brier": 0.96557118,
+        "mean_probability_of_actual_pct": 3.230021,
+        "top1_hit_pct": 11.4656,
+        "top3_hit_pct": 23.47956
+      }
+    },
+    "2025-12": {
+      "unchanged": {
+        "races": 2023,
+        "nll": 4.42150624,
+        "brier": 0.97294679,
+        "mean_probability_of_actual_pct": 2.554884,
+        "top1_hit_pct": 8.55166,
+        "top3_hit_pct": 20.71181
+      },
+      "adopted": {
+        "races": 2023,
+        "nll": 4.41716036,
+        "brier": 0.97303941,
+        "mean_probability_of_actual_pct": 2.87329,
+        "top1_hit_pct": 8.50222,
+        "top3_hit_pct": 21.10727
+      }
+    }
+  },
+  "by_line_shape_top_12": {
+    "3-2-2": {
+      "unchanged": {
+        "races": 9401,
+        "nll": 4.40141205,
+        "brier": 0.97205237,
+        "mean_probability_of_actual_pct": 2.507509,
+        "top1_hit_pct": 9.69046,
+        "top3_hit_pct": 20.73184
+      },
+      "adopted": {
+        "races": 9401,
+        "nll": 4.39534868,
+        "brier": 0.97151094,
+        "mean_probability_of_actual_pct": 2.835461,
+        "top1_hit_pct": 9.69046,
+        "top3_hit_pct": 20.92331
+      }
+    },
+    "3-3-1": {
+      "unchanged": {
+        "races": 3916,
+        "nll": 4.29954538,
+        "brier": 0.96879753,
+        "mean_probability_of_actual_pct": 2.853813,
+        "top1_hit_pct": 11.28703,
+        "top3_hit_pct": 22.82942
+      },
+      "adopted": {
+        "races": 3916,
+        "nll": 4.29414464,
+        "brier": 0.96840899,
+        "mean_probability_of_actual_pct": 3.249189,
+        "top1_hit_pct": 11.28703,
+        "top3_hit_pct": 23.18693
+      }
+    },
+    "3-2-1-1": {
+      "unchanged": {
+        "races": 2328,
+        "nll": 4.47843213,
+        "brier": 0.96979898,
+        "mean_probability_of_actual_pct": 2.740343,
+        "top1_hit_pct": 11.51203,
+        "top3_hit_pct": 23.02405
+      },
+      "adopted": {
+        "races": 2328,
+        "nll": 4.47477871,
+        "brier": 0.96848804,
+        "mean_probability_of_actual_pct": 3.172622,
+        "top1_hit_pct": 11.55498,
+        "top3_hit_pct": 23.10997
+      }
+    },
+    "2-2-2-1": {
+      "unchanged": {
+        "races": 2183,
+        "nll": 4.81357846,
+        "brier": 0.98691209,
+        "mean_probability_of_actual_pct": 1.444127,
+        "top1_hit_pct": 4.67247,
+        "top3_hit_pct": 10.71919
+      },
+      "adopted": {
+        "races": 2183,
+        "nll": 4.82010412,
+        "brier": 0.98715859,
+        "mean_probability_of_actual_pct": 1.503653,
+        "top1_hit_pct": 4.67247,
+        "top3_hit_pct": 10.71919
+      }
+    },
+    "4-3": {
+      "unchanged": {
+        "races": 1274,
+        "nll": 3.94641729,
+        "brier": 0.95064476,
+        "mean_probability_of_actual_pct": 3.942682,
+        "top1_hit_pct": 15.38462,
+        "top3_hit_pct": 32.1821
+      },
+      "adopted": {
+        "races": 1274,
+        "nll": 3.92205373,
+        "brier": 0.94772015,
+        "mean_probability_of_actual_pct": 4.502664,
+        "top1_hit_pct": 15.38462,
+        "top3_hit_pct": 31.55416
+      }
+    },
+    "4-2-1": {
+      "unchanged": {
+        "races": 904,
+        "nll": 3.84875412,
+        "brier": 0.93207447,
+        "mean_probability_of_actual_pct": 5.109773,
+        "top1_hit_pct": 21.79204,
+        "top3_hit_pct": 37.16814
+      },
+      "adopted": {
+        "races": 904,
+        "nll": 3.80493065,
+        "brier": 0.92495526,
+        "mean_probability_of_actual_pct": 6.01519,
+        "top1_hit_pct": 21.90265,
+        "top3_hit_pct": 38.16372
+      }
+    },
+    "3-2-2-2": {
+      "unchanged": {
+        "races": 859,
+        "nll": 5.18617586,
+        "brier": 0.98455943,
+        "mean_probability_of_actual_pct": 1.272706,
+        "top1_hit_pct": 7.68335,
+        "top3_hit_pct": 15.48312
+      },
+      "adopted": {
+        "races": 859,
+        "nll": 5.17187083,
+        "brier": 0.98349031,
+        "mean_probability_of_actual_pct": 1.47715,
+        "top1_hit_pct": 7.45052,
+        "top3_hit_pct": 15.25029
+      }
+    },
+    "3-3-3": {
+      "unchanged": {
+        "races": 516,
+        "nll": 5.00648629,
+        "brier": 0.98344921,
+        "mean_probability_of_actual_pct": 1.372743,
+        "top1_hit_pct": 8.72093,
+        "top3_hit_pct": 16.27907
+      },
+      "adopted": {
+        "races": 516,
+        "nll": 4.98921195,
+        "brier": 0.98250627,
+        "mean_probability_of_actual_pct": 1.585326,
+        "top1_hit_pct": 8.72093,
+        "top3_hit_pct": 16.08527
+      }
+    },
+    "3-2-1": {
+      "unchanged": {
+        "races": 378,
+        "nll": 3.87334825,
+        "brier": 0.95147183,
+        "mean_probability_of_actual_pct": 4.327294,
+        "top1_hit_pct": 14.81481,
+        "top3_hit_pct": 28.83598
+      },
+      "adopted": {
+        "races": 378,
+        "nll": 3.8601547,
+        "brier": 0.949067,
+        "mean_probability_of_actual_pct": 4.944454,
+        "top1_hit_pct": 14.55026,
+        "top3_hit_pct": 29.10053
+      }
+    },
+    "3-3-2-1": {
+      "unchanged": {
+        "races": 355,
+        "nll": 5.00879337,
+        "brier": 0.98218468,
+        "mean_probability_of_actual_pct": 1.437863,
+        "top1_hit_pct": 7.32394,
+        "top3_hit_pct": 17.1831
+      },
+      "adopted": {
+        "races": 355,
+        "nll": 4.98953895,
+        "brier": 0.98082893,
+        "mean_probability_of_actual_pct": 1.67919,
+        "top1_hit_pct": 7.32394,
+        "top3_hit_pct": 17.74648
+      }
+    },
+    "3-3": {
+      "unchanged": {
+        "races": 285,
+        "nll": 3.9935744,
+        "brier": 0.96821173,
+        "mean_probability_of_actual_pct": 3.456155,
+        "top1_hit_pct": 10.17544,
+        "top3_hit_pct": 23.50877
+      },
+      "adopted": {
+        "races": 285,
+        "nll": 4.00612786,
+        "brier": 0.97004639,
+        "mean_probability_of_actual_pct": 3.825952,
+        "top1_hit_pct": 10.17544,
+        "top3_hit_pct": 23.50877
+      }
+    },
+    "2-2-1-1-1": {
+      "unchanged": {
+        "races": 243,
+        "nll": 4.86901354,
+        "brier": 0.98862037,
+        "mean_probability_of_actual_pct": 1.348013,
+        "top1_hit_pct": 4.93827,
+        "top3_hit_pct": 9.87654
+      },
+      "adopted": {
+        "races": 243,
+        "nll": 4.87667894,
+        "brier": 0.98902305,
+        "mean_probability_of_actual_pct": 1.402669,
+        "top1_hit_pct": 4.93827,
+        "top3_hit_pct": 9.87654
+      }
+    }
+  },
+  "strict_final_test_passed": true,
+  "strict_success_criterion": "NLL improvement day-cluster 95% lower bound > 0 AND fixed-bin ECE reduction on 2025",
+  "full_2025_probability_file": "data/audits/independent_trifecta_all_probabilities_2025.jsonl.gz",
+  "sample_210_combinations": "data/audits/independent_trifecta_final_validation_sample_2025.json",
+  "limitations": [
+    "Score and predicted-line historical snapshots cannot guarantee original at-cutoff availability.",
+    "Only exact-ID results with usable riders and published full line enter; exclusion counts disclosed.",
+    "Bins contain dependent mutually exclusive 3連単 tickets; null variances aggregate race-level event masses.",
+    "2025 remains an independent validation relative to the 2023 model and 2024 calibrator; future re-tuning on 2025 invalidates that status.",
+    "No profit/ROI or market comparison conducted."
+  ]
+}
