@@ -55,7 +55,7 @@ jobs:
           test -s data/result_universe_v2/combined/results_2024.jsonl.gz
           test -s data/grade_races/g1g2/g1-g2-2024-non-girls.zip
           git hash-object research/independent_trifecta_2023/observe.py
-          test "$(git hash-object research/independent_trifecta_2023/observe.py)" = "$(git rev-parse 88a57ccf04e08fce8dc5a1cf11722b2b6e387439:research/independent_trifecta_2023/observe.py)"
+          test "$(git hash-object research/independent_trifecta_2023/observe.py)" = "19701f16c80fcc95dc8c032ed47b80dfcfe93bc6"
           echo "FROZEN_2023_SOURCE_CONFIRMED"
       - name: Audit ALL 2024 trifecta probabilities and uncertainty; NEVER refit on 2024
         run: python research/independent_trifecta_2024/calibration_audit.py
