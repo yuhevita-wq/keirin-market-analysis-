@@ -32,9 +32,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          mkdir -p data/audits
+          mkdir -p data/audits /tmp/market-2023-source-artifact
           gh run download 40820189970 -R "${{ github.repository }}" \
-            -n independent-2023-trifecta-market-association -D data/audits
+            -n independent-2023-trifecta-market-association -D /tmp/market-2023-source-artifact
+          cp /tmp/market-2023-source-artifact/trifecta_market_association_full_matches_2023.jsonl.gz data/audits/
           test -s data/audits/trifecta_market_association_full_matches_2023.jsonl.gz
           test -s data/audits/trifecta_market_association_2023.json
       - name: Compute outcome frequencies across disagreement groups, separately for Nov-Dec
