@@ -231,7 +231,7 @@ def evaluate_group(events,period,train_parts,table,coverage):
         if counts["evaluated_complete_market"]%2500==0:
             print("V6_PRICE_CENSUS_PROGRESS",period,counts["evaluated_complete_market"],flush=True)
     coverage[period]["reasons"]=dict(counts)
-    if sum(counts.values())-counts.get("evaluated_complete_market",0) != len(eligible):
+    if sum(counts.values()) != len(eligible):
         # All score-valid events must fall into exactly one outcome.
         raise AssertionError(("Coverage accounting mismatch",period,coverage[period]))
     print("V6_PRICE_YEAR_COMPLETED",json.dumps({
