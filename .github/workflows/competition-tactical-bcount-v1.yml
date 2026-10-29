@@ -1,0 +1,115 @@
+name: Tactical competition | pre-race B-count leaders 2023-2026
+on:
+  push:
+    branches:
+      - research/competitive-relation-stability-2023-2026
+    paths:
+      - 'research/competition_relation_stability_v1/tactical_attack_pressure.py'
+      - '.github/workflows/competition-tactical-bcount-v1.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: tactical-bcount-competition-v1
+  cancel-in-progress: false
+jobs:
+  pre-race-b-count-rivalry:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - name: Checkout historical tactical B counts and published lines
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/observe.py
+            /research/independent_trifecta_2023/line_dependence_v2.py
+            /research/independent_trifecta_2023/aab_guarded_v3.py
+            /research/independent_trifecta_2023/v4_pattern_floor_2026.py
+            /research/independent_trifecta_2023/v5_rider_score_role_size_interactions.py
+            /research/independent_trifecta_2023/v6_opponent_competition_structure.py
+            /research/independent_trifecta_2024/calibration_audit.py
+            /research/independent_trifecta_2024/validate_2025.py
+            /data/a_class_12/2023_*/races.csv
+            /data/a_class_12/2023_*/entries.csv
+            /data/a3_challenge/2023_*/races.csv
+            /data/a3_challenge/2023_*/entries.csv
+            /data/2023/**/races.csv
+            /data/2023/**/entries.csv
+            /data/grade_races/g1g2/*2023*.zip
+            /data/grade_races/g3/2023/*.zip
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+            /data/a_class_12/2024_*/races.csv
+            /data/a_class_12/2024_*/entries.csv
+            /data/a3_challenge/2024_*/races.csv
+            /data/a3_challenge/2024_*/entries.csv
+            /data/2024/**/races.csv
+            /data/2024/**/entries.csv
+            /data/grade_races/g1g2/*2024*.zip
+            /data/grade_races/g3/2024/*.zip
+            /data/result_universe_v2/combined/results_2024.jsonl.gz
+            /data/a_class_12/2025_*/races.csv
+            /data/a_class_12/2025_*/entries.csv
+            /data/a3_challenge/2025_*/races.csv
+            /data/a3_challenge/2025_*/entries.csv
+            /data/2025/**/races.csv
+            /data/2025/**/entries.csv
+            /data/grade_races/g1g2/*2025*.zip
+            /data/grade_races/g3/2025/*.zip
+            /data/result_universe_v2/combined/results_2025.jsonl.gz
+            /data/a_class_12/2026_*/races.csv
+            /data/a_class_12/2026_*/entries.csv
+            /data/a_class_12/pilot_2026*/races.csv
+            /data/a_class_12/pilot_2026*/entries.csv
+            /data/a3_challenge/2026_*/races.csv
+            /data/a3_challenge/2026_*/entries.csv
+            /data/2026_h1/**/races.csv
+            /data/2026_h1/**/entries.csv
+            /data/2026_future_block1/**/races.csv
+            /data/2026_future_block1/**/entries.csv
+            /data/grade_races/g3/2026_h1/*.zip
+            /data/result_universe_v2/combined/results_2026.jsonl.gz
+            /research/independent_trifecta_2023/weak_rider_podium_zero_excluded.py
+            /research/independent_trifecta_2023/v8_targeted_weak_podium_calibration.py
+            /research/independent_trifecta_2023/v10_rank_role_slot_v6_calibration.py
+            /research/competition_relation_stability_v1/observe.py
+            /research/competition_relation_stability_v1/tactical_attack_pressure.py
+
+      - name: Verify source files and syntax
+        run: |
+          set -euo pipefail
+          python -m py_compile research/competition_relation_stability_v1/tactical_attack_pressure.py
+          python -m py_compile research/competition_relation_stability_v1/observe.py
+          for year in 2023 2024 2025 2026; do
+            test -s "data/result_universe_v2/combined/results_$year.jsonl.gz"
+          done
+          echo TACTICAL_B_SOURCE_PUBLISHED_CARD_VERIFIED
+      - name: Matched comparison between two high-B leaders and one high/one low B
+        run: |
+          set -euo pipefail
+          python research/competition_relation_stability_v1/tactical_attack_pressure.py
+      - name: Assert genuine B count entries, stratified by year
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open("data/audits/tactical_rivalry_bcount_2023_2026.json"))
+          assert d["state"]=="TACTICAL_BCOUNT_TWO_FRONTLINE_COMPETITION_PRE_RACE_COMPLETE"
+          assert d["no_V6_changes"] and d["no_odds_or_payout"]
+          assert d["periods"]["2024_to_2026"]["races"]>55000
+          assert d["b_count_source"]["matched_entry_rows"]>100000
+          print("TACTICAL_BCOUNT_PRE_RACE_RELATIONS_VERIFIED")
+          PY
+      - name: Preserve full competitor B-count mechanism audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: competition-tactical-bcount-2023-2026
+          path: data/audits/tactical_rivalry_bcount_2023_2026.json
+          retention-days: 90
+          if-no-files-found: warn
