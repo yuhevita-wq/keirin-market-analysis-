@@ -68,51 +68,55 @@ class Scores:
         if len(p)!=k or abs(sum(p.values())-1)>1e-8:
             raise AssertionError(("probability count/mass invalid",n,len(p),sum(p.values())))
         t=tuple(e["order"][:3])
-        if t not in p:raise AssertionError("Actual top 3 absent from all outcomes")
+        if t not in p:raise AssertionError("Actual top 3 absent")
         cars=sorted(e["scores"],key=lambda car:(-e["scores"][car],int(car)))
         weakset=set(cars[math.ceil(n/2):])
         least=cars[-1]
         p1=defaultdict(float)
-        for triple,prob in p.items():
-            p1[triple[0]]+=prob
-        if min(p1.values())<=0:raise AssertionError("baseline winner marginal zero")
-        # Strictly normalised race-specific unexplained outcome distributions:
-        # - a winner-only surprise keeps the original conditional 2nd/3rd
-        # - all-slot surprise ignores talent and line for an entire triple
+        base_weak=[0.,0.,0.]
+        base_rare=0.
+        for ticket,prob in p.items():
+            p1[ticket[0]]+=prob
+            if prob<.0001:base_rare+=prob
+            for i,c in enumerate(ticket):
+                if c in weakset:base_weak[i]+=prob
+        if min(p1.values())<=0:raise AssertionError("baseline first marginal zero")
+        psq=sum(x*x for x in p.values())
+        base_least=p1[least]
+        actual_weak=[int(c in weakset) for c in t]
+        actual_rare=int(p[t]<.0001)
+        # Compute all moment/marginal statistics ONCE; mix analytically
+        # for each epsilon. This preserves full-ticket Brier exactly.
         shocks={
           "whole-race-uniform":{t:1./k for t in p},
           "uniform-winner-only":{t:prob/(n*p1[t[0]]) for t,prob in p.items()}
         }
-        psq=sum(x*x for x in p.values())
         for mode,r in shocks.items():
             if abs(sum(r.values())-1)>1e-8:raise AssertionError("Shock mass not one")
-            rsq=sum(x*x for x in r.values())
-            dot=sum(p[t]*r[t] for t in p)
+            rsq=0.;dot=0.;shock_weak=[0.,0.,0.]
+            shock_least=0.;shock_rare=0.
+            for xyz,prob in p.items():
+                rprob=r[xyz]
+                rsq+=rprob*rprob
+                dot+=prob*rprob
+                if xyz[0]==least:shock_least+=rprob
+                if prob<.0001:shock_rare+=rprob
+                for i,c in enumerate(xyz):
+                    if c in weakset:shock_weak[i]+=rprob
             for epsilon in EPS:
-                key=str(epsilon)
-                z=self.m[mode][key]
-                pp=p[t];rr=r[t]
-                qtrue=(1-epsilon)*pp+epsilon*rr
+                z=self.m[mode][str(epsilon)]
+                qtrue=(1-epsilon)*p[t]+epsilon*r[t]
                 qsq=(1-epsilon)**2*psq+2*epsilon*(1-epsilon)*dot+epsilon**2*rsq
                 z["nll"]-=math.log(max(1e-300,qtrue))
                 z["brier"]+=1-2*qtrue+qsq
                 z["ptrue"]+=qtrue
-                weak_slot=[0.,0.,0.]
-                least_expected=0.
-                rare_expected=0.
-                for xyz,base in p.items():
-                    mix=(1-epsilon)*base+epsilon*r[xyz]
-                    if xyz[0]==least:least_expected+=mix
-                    if base<.0001:rare_expected+=mix
-                    for i,c in enumerate(xyz):
-                        if c in weakset:weak_slot[i]+=mix
                 for i in range(3):
-                    z["weak_expected"][i]+=weak_slot[i]
-                    z["weak_actual"][i]+=int(t[i] in weakset)
-                z["least_winner_expected"]+=least_expected
+                    z["weak_expected"][i]+=(1-epsilon)*base_weak[i]+epsilon*shock_weak[i]
+                    z["weak_actual"][i]+=actual_weak[i]
+                z["least_winner_expected"]+=(1-epsilon)*base_least+epsilon*shock_least
                 z["least_winner_actual"]+=int(t[0]==least)
-                z["rare_baseline_ticket_expected"]+=rare_expected
-                z["rare_baseline_ticket_actual"]+=int(p[t]<.0001)
+                z["rare_baseline_ticket_expected"]+=(1-epsilon)*base_rare+epsilon*shock_rare
+                z["rare_baseline_ticket_actual"]+=actual_rare
         self.n+=1
     def pack(self):
         if not self.n:raise AssertionError("zero racing observations")
