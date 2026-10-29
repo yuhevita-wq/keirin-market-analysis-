@@ -67,8 +67,8 @@ def key(e,c,grade,year,mode):
     if mode=="strict":
         return (year,grade,role,size,len(e["scores"]),rank,
                 binned_gap(gap_top),binned_gap(gap_line),
-                category(max(e["scores"][x] for x in own_group)-
-                         e["scores"][c]))
+                category(max(e["scores"].values())-
+                         max(e["scores"][x] for x in own_group)))
     raise ValueError(mode)
 
 def qualify_rider(e,c):
