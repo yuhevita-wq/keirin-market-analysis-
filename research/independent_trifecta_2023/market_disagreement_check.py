@@ -143,6 +143,13 @@ def main():
             ss["original_logloss"]+=losses[0]
             ss["corrected_logloss"]+=losses[1]
             ss["market_relative_logloss"]+=losses[2]
+            for name,v in zip(("original_brier","corrected_brier","market_relative_brier"),briers):
+                ss[name]+=v
+            ss["corrected_beats_market_races"]+=int(losses[1]<losses[2])
+            ss["original_beats_market_races"]+=int(losses[0]<losses[2])
+            bys=ss["by_day"][day]
+            for k in range(3):bys[k]+=losses[k]
+            bys[3]+=1
             for t,pp,p0,qq,rr,oo in zip(key_names,p,po,q,raw_inv,odds):
                 win=t==truth
                 ratio=pp/qq
