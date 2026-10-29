@@ -1,0 +1,67 @@
+name: V6 full-ticket | dual errors vs real total ROI
+on:
+  push:
+    branches:
+      - research/v6-all-trifecta-75pct-check
+    paths:
+      - 'research/independent_trifecta_2023/v6_two_errors_vs_total_roi.py'
+      - '.github/workflows/v6-two-errors-vs-total-roi.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: v6-two-errors-vs-real-total-roi
+  cancel-in-progress: false
+jobs:
+  compare-payout-and-probability-errors:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout postprocessing code only; model is not retrained or changed
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/v6_two_errors_vs_total_roi.py
+      - name: Download exact successful V6 full-ticket V10-frozen audit
+        uses: actions/download-artifact@v4
+        with:
+          name: v6-all-trifecta-75pct-audit
+          run-id: 40942071797
+          github-token: ${{ github.token }}
+          path: data/audits
+      - name: Verify input is real and read all frozen-V6 probability buckets
+        run: |
+          set -euo pipefail
+          test -s data/audits/v6_all_trifecta_p_vs_settled_75pct_2023_2026.json
+          python -m py_compile research/independent_trifecta_2023/v6_two_errors_vs_total_roi.py
+          python research/independent_trifecta_2023/v6_two_errors_vs_total_roi.py \
+            --input data/audits/v6_all_trifecta_p_vs_settled_75pct_2023_2026.json \
+            --output data/audits/v6_two_errors_vs_total_roi_2023_2026.json
+      - name: Check BOTH simultaneous error measures and no 75pct baseline
+        run: |
+          python - <<'PY'
+          import json,math
+          d=json.load(open('data/audits/v6_two_errors_vs_total_roi_2023_2026.json'))
+          assert d['state']=='V6_FULL_TICKET_DUAL_ERROR_VS_ACTUAL_TOTAL_ROI_COMPLETE'
+          assert len(d['cohorts']['2024_to_2026']['coarse_probability_bands'])==10
+          b=d['cohorts']['2024_to_2026']
+          assert b['races']==60776
+          assert b['tickets']==13994280
+          assert abs(b['cohort_total_roi_pct']-59.751639)<.00001
+          for p in b['coarse_probability_bands']:
+              assert abs(p['actual_roi_pct']-b['cohort_total_roi_pct']-p['actual_roi_minus_total_roi_percentage_points'])<1e-5
+              assert abs(p['actual_wins']-p['v6_expected_wins']-p['actual_minus_expected_wins'])<1e-4
+          print('V6_BOTH_ROI_VS_ACTUAL_BASELINE_AND_HIT_CALIBRATION_VERIFIED')
+          PY
+      - name: Preserve report with all probability groups and all five period summaries
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v6-two-errors-real-total-roi-2023-2026
+          path: data/audits/v6_two_errors_vs_total_roi_2023_2026.json
+          retention-days: 90
+          if-no-files-found: warn
