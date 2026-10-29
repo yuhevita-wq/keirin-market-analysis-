@@ -1,0 +1,113 @@
+name: Independent 3ren-tan V3 | 2025 blind rare-probability calibration audit
+
+on:
+  push:
+    branches:
+      - research/trifecta-v3-2025-tail-probability-audit
+    paths:
+      - 'research/independent_trifecta_2023/v3_2025_tail_audit.py'
+      - '.github/workflows/independent-trifecta-v3-tail-2025.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: independent-trifecta-v3-tail-2025-frozen
+  cancel-in-progress: false
+
+jobs:
+  verify-all-2025-trifecta-probabilities:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - name: Restore ONLY 2023 training inputs and untrained 2025 test results, never market odds
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/observe.py
+            /research/independent_trifecta_2023/line_dependence_v2.py
+            /research/independent_trifecta_2023/aab_guarded_v3.py
+            /research/independent_trifecta_2023/v3_2025_tail_audit.py
+            /research/independent_trifecta_2024/calibration_audit.py
+            /research/independent_trifecta_2024/validate_2025.py
+            /data/a_class_12/2023_*/races.csv
+            /data/a_class_12/2023_*/entries.csv
+            /data/a3_challenge/2023_*/races.csv
+            /data/a3_challenge/2023_*/entries.csv
+            /data/2023/**/races.csv
+            /data/2023/**/entries.csv
+            /data/grade_races/g1g2/*2023*.zip
+            /data/grade_races/g3/2023/*.zip
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+            /data/a_class_12/2025_*/races.csv
+            /data/a_class_12/2025_*/entries.csv
+            /data/a3_challenge/2025_*/races.csv
+            /data/a3_challenge/2025_*/entries.csv
+            /data/2025/**/races.csv
+            /data/2025/**/entries.csv
+            /data/grade_races/g1g2/*2025*.zip
+            /data/grade_races/g3/2025/*.zip
+            /data/result_universe_v2/combined/results_2025.jsonl.gz
+
+      - name: Guard original AI, V2 and V3 source hashes and absence of market/future-label files
+        run: |
+          set -euo pipefail
+          python -m py_compile research/independent_trifecta_2023/observe.py research/independent_trifecta_2023/line_dependence_v2.py research/independent_trifecta_2023/aab_guarded_v3.py research/independent_trifecta_2023/v3_2025_tail_audit.py research/independent_trifecta_2024/validate_2025.py
+          test "$(git hash-object research/independent_trifecta_2023/observe.py)" = "19701f16c80fcc95dc8c032ed47b80dfcfe93bc6"
+          test "$(git hash-object research/independent_trifecta_2023/line_dependence_v2.py)" = "2bb7362490b7b7f7eb0e8390face22f248649216"
+          test "$(git hash-object research/independent_trifecta_2023/aab_guarded_v3.py)" = "04bb3a7956a5a5d43a987194df557838b6ac81e5"
+          test -s data/result_universe_v2/combined/results_2023.jsonl.gz
+          test -s data/result_universe_v2/combined/results_2025.jsonl.gz
+          test ! -e data/result_universe_v2/combined/results_2024.jsonl.gz
+          test ! -e data/odds_only/odds_2023.jsonl.gz
+          test ! -e data/odds_only/odds_2025.jsonl.gz
+          echo FROZEN_V2_V3_SOURCE_VERIFIED_ODDS_NOT_READ_2024_NOT_FITTED
+
+      - name: Score all ordered 2025 3ren-tan tickets in ultra-rare bins, keeping every race normalized
+        run: |
+          set -euo pipefail
+          python research/independent_trifecta_2023/v3_2025_tail_audit.py
+
+      - name: Verify every 2025 disjoint probability partition and original AAA conservation
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          path='data/audits/independent_trifecta_v3_2025_tail_calibration.json'
+          x=json.load(open(path,encoding='utf-8'))
+          assert x['state']=='COMPLETE_UNTOUCHED_2025_V2_V3_FULL_TRIFECTA_TAIL_AUDIT'
+          assert x['2025_races']==24635
+          assert x['V3_weight_frozen_at_2024_acceptance']==0.15
+          assert x['AAA_probabilities_held_fixed_ticket_by_ticket'] is True
+          assert x['2024_or_2025_outcomes_used_to_fit_or_select'] is False
+          assert x['market_odds_used'] is False
+          for name,m in x['models'].items():
+              o=m['overall']
+              assert o['races']==24635 and o['all_three_way_tickets']>24635*100
+              assert abs(o['mean_probability_sum']-1)<1e-9
+              for ax in ('self_probability_bands','same_tickets_grouped_by_V2_probability_bands','line_patterns'):
+                  d=m[ax]
+                  assert sum(v['actual_winning_events'] for v in d.values())==o['races'],(name,ax)
+                  assert abs(sum(v['expected_winning_events'] for v in d.values())-o['races'])<0.01,(name,ax)
+          old=x['models']['frozen_v2']['line_patterns']['AAA']
+          new=x['models']['frozen_v3']['line_patterns']['AAA']
+          assert abs(old['expected_winning_events']-new['expected_winning_events'])<1e-8
+          print('ALL_2025_LOW_TAIL_PARTITIONS_FROZEN_V3_CHECK_PASSED')
+          PY
+
+      - name: Preserve comprehensive 2025 no-odds calibration audit as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: independent-trifecta-v3-2025-rare-probability-calibration
+          path: data/audits/independent_trifecta_v3_2025_tail_calibration.json
+          retention-days: 90
+          if-no-files-found: warn
