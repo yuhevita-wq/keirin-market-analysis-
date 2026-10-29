@@ -104,6 +104,7 @@ def describe(e):
        "dispersion":dispersion,
        "third_multi_line_size":third_multi[1] if third_multi else None,
        "best_multi_line_size":multi[0][1] if multi else None,
+       "best_is_multi":best[1]>=2,
        "race_class":e.get("race_class","UNSPECIFIED"),
        "parity_bin":cut(multi_gap,[2,4,7,12]),
        "third_deficit_bin":cut(third_def,[5,8,12,17,23]),
@@ -167,7 +168,7 @@ def h2(r,f):
     if f["num_multi"]<2 or f["best_multi_line_size"] is None:return None
     # Best multi-line head need not be overall best if solo has higher score;
     # skip to keep structural outcome's "best_head" fixed.
-    if f["best_head_gap"]<0 or f["multi_top_head_gap"]>12:return None
+    if not f["best_is_multi"] or f["multi_top_head_gap"]>12:return None
     # For H2, group best by head must be an actual multi-rider line.
     if f["best_multi_line_size"]<2:return None
     if f["best_bante_gap"]<=3:arm="BANTE_CLOSE_SCORE"
@@ -209,7 +210,7 @@ def matched(rows,experiment):
         w=a*b/(a+b)
         denom+=w
         for k in target:totals[k]+=w*(ca[k]/a-cb[k]/b)
-    raw_summ={arms[z]:{"races":raw[x][0],
+    raw_summ={arms[0 if z=="a" else 1]:{"races":raw[x][0],
                        "observed_pct":{k:round(100*raw[x][1][k]/raw[x][0],6)
                                 if raw[x][0] else None for k in target}}
               for z,x in (("a","a"),("b","b"))}
@@ -304,7 +305,7 @@ def main():
     base,fine,total=train_statistics(training)
     print("COMPETITION_2023_FROZEN_PRIORS",
           json.dumps({"train":len(training),"dev":len(dev),
-                      "coarse_groups":len(base),"fine_groups":len(fine)},flush=True))
+                      "coarse_groups":len(base),"fine_groups":len(fine)}),flush=True)
     report={
        "state":"COMPETITOR_RELATIONSHIP_STABILITY_CAUSALITY_LIMITED_AUDIT",
        "source_definition":"Pre-race published line and scores (not actual racing moves)",
