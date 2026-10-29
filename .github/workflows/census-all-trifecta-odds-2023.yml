@@ -1,0 +1,76 @@
+name: Census all original 2023 trifecta prices (not only 3連複-complete odds)
+
+on:
+  push:
+    branches:
+      - research/trifecta-market-association-2023
+    paths:
+      - research/independent_trifecta_2023/census_all_raw_odds.py
+      - .github/workflows/census-all-trifecta-odds-2023.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: audit-all-raw-trifecta-2023
+  cancel-in-progress: false
+
+jobs:
+  census:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/census_all_raw_odds.py
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+            /data/odds_only/odds_2023.jsonl.gz
+            /data/2023/**/trifecta_final_odds*.csv
+            /data/grade_races/g1g2/*2023*.zip
+            /data/grade_races/g3/2023/*.zip
+            /data/odds_universe_v1/data/2023/**/trifecta_final_odds.csv.gz
+            /data/odds_universe_v1/data/a_class_12/2023_*/**/trifecta_final_odds.csv.gz
+            /data/odds_universe_v1/data/a3_challenge/2023_*/**/trifecta_final_odds.csv.gz
+            /data/odds_universe_v1/grade_archive_repairs/*2023*/**/trifecta_final_odds.csv.gz
+            /data/unarchived_races_v1/batch_*/trifecta_final_odds.csv.gz
+      - name: Run exhaustive original-source audit; no odds or results invented
+        env:
+          PYTHONUNBUFFERED: '1'
+        run: |
+          python -m py_compile research/independent_trifecta_2023/census_all_raw_odds.py
+          python research/independent_trifecta_2023/census_all_raw_odds.py
+      - name: Verify 2023 annual truth and all-source consistency
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('data/audits/trifecta_raw_source_census_2023.json'))
+          assert p['verified_result_races']==25365,p['verified_result_races']
+          assert p['raw_source_files_scanned']>100,p['raw_source_files_scanned']
+          assert p['raw_trifecta_price_any_races']+p['results_missing_all_trifecta_prices']==p['verified_result_races']
+          assert p['complete_trifecta_price_grid_races']>=6000
+          assert p['no_market_modelling_or_profit_claims'] is True
+          print("ALL_2023_ORIGINAL_TRIFECTA_SOURCE_CENSUS_OK",p['verified_result_races'])
+          PY
+      - name: Save full original-source and missing-races reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: complete-raw-trifecta-2023-source-census
+          if-no-files-found: warn
+          retention-days: 90
+          path: |
+            data/audits/trifecta_raw_source_census_2023.json
+            data/audits/trifecta_raw_source_census_2023_missing.json
+      - name: Publish 2023 coverage audit to research branch
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add --sparse data/audits/trifecta_raw_source_census_2023.json data/audits/trifecta_raw_source_census_2023_missing.json
+          git diff --cached --quiet || git commit -m 'Audit 2023 trifecta odds complete original coverage and missing races'
+          git push origin HEAD:research/trifecta-market-association-2023
