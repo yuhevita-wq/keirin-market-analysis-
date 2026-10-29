@@ -1,0 +1,62 @@
+name: Independent 2023 trifecta observation (NO ODDS)
+on:
+  push:
+    branches:
+      - research/trifecta-probability-observation-2023
+    paths:
+      - 'research/independent_trifecta_2023/**'
+      - '.github/workflows/independent-trifecta-2023.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  observe-2023:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout only 2023 pre-race cards, line and results (NO odds)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/*
+            /data/a_class_12/2023_*/entries.csv
+            /data/a_class_12/2023_*/races.csv
+            /data/a3_challenge/2023_*/entries.csv
+            /data/a3_challenge/2023_*/races.csv
+            /data/2023/**/entries.csv
+            /data/2023/**/races.csv
+            /data/grade_races/**/2023/*.zip
+            /data/grade_races/**/2023*/*.zip
+            /data/grade_races/**/*2023*.zip
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+      - name: Validate script syntax and input files
+        run: |
+          python -m py_compile research/independent_trifecta_2023/observe.py
+          test -s data/result_universe_v2/combined/results_2023.jsonl.gz
+          find data/a_class_12 -name entries.csv | head -n 10
+          find data/2023 -name races.csv | head -n 10
+      - name: Run 2023 observation and strict Nov-Dec untouched evaluation
+        env:
+          PYTHONUNBUFFERED: '1'
+        run: python research/independent_trifecta_2023/observe.py
+      - name: Archive auditable results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: independent-trifecta-observation-2023
+          path: |
+            data/audits/independent_trifecta_observation_2023.json
+            data/audits/independent_trifecta_sample_2023.json
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Commit only aggregate report and full sample probabilities
+        if: success()
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/audits/independent_trifecta_observation_2023.json data/audits/independent_trifecta_sample_2023.json
+          git diff --cached --quiet || git commit -m "Record odds-free 2023 trifecta observation and heldout metrics"
+          git push origin HEAD:research/trifecta-probability-observation-2023
