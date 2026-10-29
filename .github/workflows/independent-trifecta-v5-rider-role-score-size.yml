@@ -1,0 +1,132 @@
+name: Independent trifecta V5 | rider score role and line-size interactions on frozen V3
+
+on:
+  push:
+    branches:
+      - research/trifecta-v5-rider-role-score-size-interactions
+    paths:
+      - 'research/independent_trifecta_2023/v5_rider_score_role_size_interactions.py'
+      - '.github/workflows/independent-trifecta-v5-rider-role-score-size.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: independent-trifecta-v5-rider-role-score-size
+  cancel-in-progress: false
+
+jobs:
+  audit-all-conditional-stages:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - name: Sparse checkout immutable 2023-trained model and 2024-2026 result-only datasets
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/observe.py
+            /research/independent_trifecta_2023/line_dependence_v2.py
+            /research/independent_trifecta_2023/aab_guarded_v3.py
+            /research/independent_trifecta_2023/v4_pattern_floor_2026.py
+            /research/independent_trifecta_2023/v5_rider_score_role_size_interactions.py
+            /research/independent_trifecta_2024/calibration_audit.py
+            /research/independent_trifecta_2024/validate_2025.py
+            /data/a_class_12/2023_*/races.csv
+            /data/a_class_12/2023_*/entries.csv
+            /data/a3_challenge/2023_*/races.csv
+            /data/a3_challenge/2023_*/entries.csv
+            /data/2023/**/races.csv
+            /data/2023/**/entries.csv
+            /data/grade_races/g1g2/*2023*.zip
+            /data/grade_races/g3/2023/*.zip
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+            /data/a_class_12/2024_*/races.csv
+            /data/a_class_12/2024_*/entries.csv
+            /data/a3_challenge/2024_*/races.csv
+            /data/a3_challenge/2024_*/entries.csv
+            /data/2024/**/races.csv
+            /data/2024/**/entries.csv
+            /data/grade_races/g1g2/*2024*.zip
+            /data/grade_races/g3/2024/*.zip
+            /data/result_universe_v2/combined/results_2024.jsonl.gz
+            /data/a_class_12/2025_*/races.csv
+            /data/a_class_12/2025_*/entries.csv
+            /data/a3_challenge/2025_*/races.csv
+            /data/a3_challenge/2025_*/entries.csv
+            /data/2025/**/races.csv
+            /data/2025/**/entries.csv
+            /data/grade_races/g1g2/*2025*.zip
+            /data/grade_races/g3/2025/*.zip
+            /data/result_universe_v2/combined/results_2025.jsonl.gz
+            /data/a_class_12/2026_*/races.csv
+            /data/a_class_12/2026_*/entries.csv
+            /data/a_class_12/pilot_2026*/races.csv
+            /data/a_class_12/pilot_2026*/entries.csv
+            /data/a3_challenge/2026_*/races.csv
+            /data/a3_challenge/2026_*/entries.csv
+            /data/2026_h1/**/races.csv
+            /data/2026_h1/**/entries.csv
+            /data/2026_future_block1/**/races.csv
+            /data/2026_future_block1/**/entries.csv
+            /data/grade_races/g3/2026_h1/*.zip
+            /data/result_universe_v2/combined/results_2026.jsonl.gz
+
+      - name: Verify immutable V2 and V3, no market odds, no earlier model changes
+        run: |
+          set -euo pipefail
+          python -m py_compile research/independent_trifecta_2023/v5_rider_score_role_size_interactions.py research/independent_trifecta_2023/aab_guarded_v3.py research/independent_trifecta_2023/v4_pattern_floor_2026.py
+          test "$(git hash-object research/independent_trifecta_2023/observe.py)" = "19701f16c80fcc95dc8c032ed47b80dfcfe93bc6"
+          test "$(git hash-object research/independent_trifecta_2023/line_dependence_v2.py)" = "2bb7362490b7b7f7eb0e8390face22f248649216"
+          test "$(git hash-object research/independent_trifecta_2023/aab_guarded_v3.py)" = "04bb3a7956a5a5d43a987194df557838b6ac81e5"
+          for year in 2023 2024 2025 2026; do
+            test -s "data/result_universe_v2/combined/results_$year.jsonl.gz"
+            test ! -e "data/odds_only/odds_$year.jsonl.gz"
+          done
+          echo FROZEN_MODELS_NO_MARKET_ALL_YEARS_VERIFIED
+
+      - name: Fit 2023-only rider interactions, choose on 2023 development, evaluate full 3ren-tan 2024-2026
+        run: |
+          set -euo pipefail
+          python research/independent_trifecta_2023/v5_rider_score_role_size_interactions.py
+
+      - name: Verify immutable original V3, full probability conservation and no later-year fitting
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          a=json.load(open('data/audits/independent_trifecta_v5_rider_role_score_size_2023_2026.json'))
+          assert a['state']=='V5_RIDER_ROLE_SCORE_LINE_SIZE_INTERACTION_RESEARCH_COMPLETE'
+          assert a['baseline_V2_and_V3_unchanged']
+          assert a['V3_line_selection_head_unchanged']
+          assert a['all_line_shapes_no_favored_pattern']
+          assert a['no_market_odds_payout']
+          assert a['all_probabilities_sum_one']
+          assert a['historical_years_are_fresh_blind_holdout'] is False
+          assert a['promoted_to_original_V3'] is False
+          assert a['selected_scale'] in (0,0.25,0.5,1)
+          for year,n,baseline in (('2024',25348,4.31982650),('2025',24635,4.36613863),('2026',11797,4.40591444)):
+              data=a['test_results'][year]
+              assert data['V3']['races']==n
+              assert abs(data['V3']['NLL']-baseline)<1e-5
+              assert len(data['V3']['pattern_mass_calibration'])==5
+              assert sum(x['actual'] for x in data['challenger']['pattern_mass_calibration'].values())==n
+              assert data['challenger']['all_line_shapes']['count']>10
+          print('V5_ALL_TRIFECTA_V3_REPRODUCTION_AND_INTERACTION_AUDIT_SUCCESS')
+          PY
+
+      - name: Upload V5 all-trifecta 2023-2026 comparison and bounded score-role-size interaction weights
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: independent-trifecta-v5-rider-score-role-size-all-shapes-2024-2026
+          path: data/audits/independent_trifecta_v5_rider_role_score_size_2023_2026.json
+          retention-days: 90
+          if-no-files-found: warn
