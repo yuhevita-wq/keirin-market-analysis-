@@ -1,0 +1,96 @@
+name: Odds-free trifecta | frozen 2024 correction strictly tested on 2025
+
+on:
+  push:
+    branches:
+      - research/independent-trifecta-recalibration-2024
+    paths:
+      - research/independent_trifecta_2024/validate_2025.py
+      - .github/workflows/independent-trifecta-final-validation-2025.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: independent-trifecta-final-2025-no-odds
+  cancel-in-progress: false
+
+jobs:
+  final-out-of-time:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/observe.py
+            /research/independent_trifecta_2024/validate_2025.py
+            /data/audits/independent_trifecta_recalibration_2024.json
+            /data/a_class_12/2023_*/races.csv
+            /data/a_class_12/2023_*/entries.csv
+            /data/a3_challenge/2023_*/races.csv
+            /data/a3_challenge/2023_*/entries.csv
+            /data/2023/**/races.csv
+            /data/2023/**/entries.csv
+            /data/grade_races/g1g2/*2023*.zip
+            /data/grade_races/g3/2023/*.zip
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+            /data/a_class_12/2025_*/races.csv
+            /data/a_class_12/2025_*/entries.csv
+            /data/a3_challenge/2025_*/races.csv
+            /data/a3_challenge/2025_*/entries.csv
+            /data/2025/**/races.csv
+            /data/2025/**/entries.csv
+            /data/grade_races/g1g2/*2025*.zip
+            /data/grade_races/g3/2025/*.zip
+            /data/result_universe_v2/combined/results_2025.jsonl.gz
+      - name: Verify both 2023 base and 2024 calibrator are frozen
+        run: |
+          python -m py_compile research/independent_trifecta_2024/validate_2025.py
+          test "$(git hash-object research/independent_trifecta_2023/observe.py)" = "19701f16c80fcc95dc8c032ed47b80dfcfe93bc6"
+          test "$(git hash-object data/audits/independent_trifecta_recalibration_2024.json)" = "c539bb3ad76762e11eec4438c5445ecd4ba9d222"
+          test -s data/result_universe_v2/combined/results_2023.jsonl.gz
+          test -s data/result_universe_v2/combined/results_2025.jsonl.gz
+          test ! -e data/result_universe_v2/combined/results_2024.jsonl.gz
+          echo "FROZEN_2023_MODEL_AND_2024_CALIBRATION_VERIFIED"
+      - name: Run 2025 out-of-time scoring without refitting on 2025
+        run: python research/independent_trifecta_2024/validate_2025.py
+        env:
+          PYTHONUNBUFFERED: '1'
+      - name: Confirm full-year independent test and probabilities
+        run: |
+          python - <<'PY'
+          import json,gzip
+          p=json.load(open('data/audits/independent_trifecta_final_validation_2025.json'))
+          assert p['2025_no_training_or_parameter_selection'] is True
+          assert p['no_odds_or_prices_used'] is True
+          assert p['2025_result_coverage']['eligible_2025'] > 20000
+          assert p['total_2025_3trifecta_ticket_probabilities']>4_000_000
+          with gzip.open('data/audits/independent_trifecta_all_probabilities_2025.jsonl.gz','rt') as f:
+              n=sum(1 for _ in f)
+          assert n==p['2025_result_coverage']['eligible_2025']
+          print('2025_STRICT_FINAL_VERIFIED',n,p['strict_final_test_passed'])
+          PY
+      - name: Preserve full 2025 no-odds trifecta distributions, logs and result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: independent-trifecta-2025-final-no-odds
+          retention-days: 90
+          if-no-files-found: warn
+          path: |
+            data/audits/independent_trifecta_final_validation_2025.json
+            data/audits/independent_trifecta_final_validation_sample_2025.json
+            data/audits/independent_trifecta_all_probabilities_2025.jsonl.gz
+      - name: Commit immutable 2025 final holdout audit to research branch
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --sparse data/audits/independent_trifecta_final_validation_2025.json data/audits/independent_trifecta_final_validation_sample_2025.json
+          git diff --cached --quiet || git commit -m "Publish 2025 sealed holdout assessment of frozen 2023 model and 2024 calibrator"
+          git push origin HEAD:research/independent-trifecta-recalibration-2024
