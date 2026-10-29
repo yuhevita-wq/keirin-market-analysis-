@@ -202,7 +202,7 @@ def bucket_result(s,byday):
     # Each race contributes a single Bernoulli success for this bucket.
     # The per-ticket 3連単 indicators within a race are NOT independent.
     tickets,exp_hits,actual,var=s
-    sd=math.sqrt(var)
+    sd=math.sqrt(max(var,0.0))
     day_se=math.sqrt(sum(v*v for v in byday.values()))
     return {"ticket_count":tickets,"predicted_hits":round(exp_hits,5),
             "actual_hits":actual,"mean_predicted_pct":round(100*exp_hits/tickets,7) if tickets else None,
@@ -214,7 +214,7 @@ def bucket_result(s,byday):
             "date_cluster_residual_se_hits":round(day_se,4)}
 
 def structure_result(v,byday):
-    obs,expected,var,n=v;sd=math.sqrt(var)
+    obs,expected,var,n=v;sd=math.sqrt(max(var,0.0))
     return {"races":n,"actual_count":obs,"expected_count":round(expected,4),
             "actual_rate_pct":round(100*obs/n,5),
             "expected_rate_pct":round(100*expected/n,5),
@@ -283,14 +283,14 @@ def main():
                         for ev in EVENTS:
                             if fl[ev]:ep[ev]+=p
                 for group,m in masses.items():
-                    raw_buckets[name][group][3]+=m*(1-m)
+                    raw_buckets[name][group][3]+=min(1.0,max(0.0,m))*(1.0-min(1.0,max(0.0,m)))
                     bucket_day[name][day,group]+=int(group==bucket(ptrue))-m
                 if name!= "uniform":
                     for ev in EVENTS:
                         pred=ep[ev]
                         obs=int(win_flags[ev])
                         z=raw_events[name][ev]
-                        z[0]+=obs;z[1]+=pred;z[2]+=pred*(1-pred);z[3]+=1
+                        z[0]+=obs;z[1]+=pred;z[2]+=max(0.,min(1.,pred))*(1.-max(0.,min(1.,pred)));z[3]+=1
                         event_day[name][day,ev]+=obs-pred
             primary=models_dist[PRIMARY]
             all_ticket_record={
