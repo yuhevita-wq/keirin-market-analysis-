@@ -1,0 +1,100 @@
+name: 2023 reverse price gap | Market shorter than independent AI fair odds | 100yen buy all
+
+on:
+  push:
+    branches:
+      - research/trifecta-market-shorter-odds-buy-all-2023
+    paths:
+      - 'research/independent_trifecta_2023/market_shorter_odds_buyall.py'
+      - '.github/workflows/trifecta-market-shorter-odds-buyall-2023.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: reverse-price-gap-buyall-2023
+  cancel-in-progress: false
+
+jobs:
+  simulate-market-shorter-odds:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - name: Checkout code and frozen 2023 audit
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/market_shorter_odds_buyall.py
+            /data/audits/trifecta_market_association_2023.json
+      - name: Retrieve exact 2023 trifecta AI probability and finalized market odds archive
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/trifecta-reverse-buyall data/audits
+          gh run download 40820189970 -R "${{ github.repository }}" \
+            -n independent-2023-trifecta-market-association \
+            -D /tmp/trifecta-reverse-buyall
+          cp /tmp/trifecta-reverse-buyall/trifecta_market_association_full_matches_2023.jsonl.gz data/audits/
+          test -s data/audits/trifecta_market_association_full_matches_2023.jsonl.gz
+          echo 'ALL_2023_MATCHED_3RENTAN_PROBABILITIES_AND_ODDS_READY'
+      - name: Reproduce historical hypothetical purchases at fixed 100 yen per eligible ticket
+        env:
+          PYTHONUNBUFFERED: '1'
+        run: |
+          set -euo pipefail
+          python -m py_compile research/independent_trifecta_2023/market_shorter_odds_buyall.py
+          python research/independent_trifecta_2023/market_shorter_odds_buyall.py
+      - name: Validate no selection using realized results and check payouts
+        run: |
+          python - <<'PY'
+          import json
+          p='data/audits/trifecta_market_shorter_odds_buyall_2023.json'
+          j=json.load(open(p,encoding='utf-8'))
+          assert j["not_real_world_purchase"]
+          assert j["not_retrained_AI"]
+          assert j["takeout_rate_not_assumed"]
+          assert j["coverage"]["2023_AI_eligible_races"]==23440
+          assert j["coverage"]["races_exact_ticket_join"]==5226
+          assert j["coverage"]["3ren_tan_ticket_comparisons"]==1732548
+          assert j["coverage"]["NovDec_original_AI_holdout_races"]==391
+          for model,entry in j["models"].items():
+              baseline=entry["summary"]["all"]["baseline"]
+              assert baseline["actual_winning_tickets"]==5226
+              assert baseline["100yen_stake_yen"]==173254800
+              all_short=entry["summary"]["all"]["ratio_below_1"]
+              assert all_short["purchased_trifecta_tickets"]>0
+              assert all_short["100yen_stake_yen"]==100*all_short["purchased_trifecta_tickets"]
+              assert all_short["profit_loss_yen"]==all_short["market_odds_payout_total_yen"]-all_short["100yen_stake_yen"]
+              n=entry["summary"]["NovDec_holdout_original_only"]["ratio_below_1"]
+              assert 0<n["purchased_trifecta_tickets"]<all_short["purchased_trifecta_tickets"]
+              print(model,"REVERSE_PRICE_GAP_CHECKED","all_2023",all_short,
+                    "2023_NovDec",n,flush=True)
+          PY
+      - name: Upload full 2023 buy-all simulated wager ledger and analysis results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 2023-reverse-price-gap-market-shorter-odds-buyall
+          retention-days: 90
+          if-no-files-found: warn
+          compression-level: 1
+          path: |
+            data/audits/trifecta_market_shorter_odds_buyall_2023.json
+            data/audits/trifecta_market_shorter_odds_buyall_tickets_2023.jsonl.gz
+      - name: Commit compact report to research branch; keep existing AI unchanged
+        if: success()
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add --sparse data/audits/trifecta_market_shorter_odds_buyall_2023.json
+          if git diff --cached --quiet; then
+            echo 'No report changes'
+          else
+            git commit -m 'research: publish 2023 reverse market-shorter-odds 100-yen buy-all actual payout analysis'
+            git push origin HEAD:research/trifecta-market-shorter-odds-buy-all-2023
+          fi
