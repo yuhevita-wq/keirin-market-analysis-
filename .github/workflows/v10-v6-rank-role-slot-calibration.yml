@@ -1,0 +1,133 @@
+name: V10 calibration | V6 observed vs expected rank role slot
+
+on:
+  push:
+    branches:
+      - research/v10-v6-rank-role-slot-calibration-zeroexcluded
+    paths:
+      - 'research/independent_trifecta_2023/v10_rank_role_slot_v6_calibration.py'
+      - '.github/workflows/v10-v6-rank-role-slot-calibration.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v10-v6-rank-role-slot-calibration
+  cancel-in-progress: false
+
+jobs:
+  nozero-full-trifecta-mixture:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - name: Checkout complete pre-race rider line cards and actual top-three outcomes
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/observe.py
+            /research/independent_trifecta_2023/line_dependence_v2.py
+            /research/independent_trifecta_2023/aab_guarded_v3.py
+            /research/independent_trifecta_2023/v4_pattern_floor_2026.py
+            /research/independent_trifecta_2023/v5_rider_score_role_size_interactions.py
+            /research/independent_trifecta_2023/v6_opponent_competition_structure.py
+            /research/independent_trifecta_2024/calibration_audit.py
+            /research/independent_trifecta_2024/validate_2025.py
+            /data/a_class_12/2023_*/races.csv
+            /data/a_class_12/2023_*/entries.csv
+            /data/a3_challenge/2023_*/races.csv
+            /data/a3_challenge/2023_*/entries.csv
+            /data/2023/**/races.csv
+            /data/2023/**/entries.csv
+            /data/grade_races/g1g2/*2023*.zip
+            /data/grade_races/g3/2023/*.zip
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+            /data/a_class_12/2024_*/races.csv
+            /data/a_class_12/2024_*/entries.csv
+            /data/a3_challenge/2024_*/races.csv
+            /data/a3_challenge/2024_*/entries.csv
+            /data/2024/**/races.csv
+            /data/2024/**/entries.csv
+            /data/grade_races/g1g2/*2024*.zip
+            /data/grade_races/g3/2024/*.zip
+            /data/result_universe_v2/combined/results_2024.jsonl.gz
+            /data/a_class_12/2025_*/races.csv
+            /data/a_class_12/2025_*/entries.csv
+            /data/a3_challenge/2025_*/races.csv
+            /data/a3_challenge/2025_*/entries.csv
+            /data/2025/**/races.csv
+            /data/2025/**/entries.csv
+            /data/grade_races/g1g2/*2025*.zip
+            /data/grade_races/g3/2025/*.zip
+            /data/result_universe_v2/combined/results_2025.jsonl.gz
+            /data/a_class_12/2026_*/races.csv
+            /data/a_class_12/2026_*/entries.csv
+            /data/a_class_12/pilot_2026*/races.csv
+            /data/a_class_12/pilot_2026*/entries.csv
+            /data/a3_challenge/2026_*/races.csv
+            /data/a3_challenge/2026_*/entries.csv
+            /data/2026_h1/**/races.csv
+            /data/2026_h1/**/entries.csv
+            /data/2026_future_block1/**/races.csv
+            /data/2026_future_block1/**/entries.csv
+            /data/grade_races/g3/2026_h1/*.zip
+            /data/result_universe_v2/combined/results_2026.jsonl.gz
+            /research/independent_trifecta_2023/weak_rider_podium_zero_excluded.py
+            /research/independent_trifecta_2023/v8_targeted_weak_podium_calibration.py
+            /research/independent_trifecta_2023/v10_rank_role_slot_v6_calibration.py
+
+      - name: Verify original training architecture and immutable archived data
+        run: |
+          set -euo pipefail
+          python -m py_compile research/independent_trifecta_2023/v10_rank_role_slot_v6_calibration.py
+          test "$(git hash-object research/independent_trifecta_2023/observe.py)" = "19701f16c80fcc95dc8c032ed47b80dfcfe93bc6"
+          test "$(git hash-object research/independent_trifecta_2023/line_dependence_v2.py)" = "2bb7362490b7b7f7eb0e8390face22f248649216"
+          for year in 2023 2024 2025 2026; do
+            test -s "data/result_universe_v2/combined/results_$year.jsonl.gz"
+          done
+          echo V9_CLEAN_SOURCE_FILES_VERIFIED
+
+      - name: Fit 2023 score-verified V6, directly compare each position marginal against observed result
+        run: |
+          set -euo pipefail
+          python research/independent_trifecta_2023/v10_rank_role_slot_v6_calibration.py
+
+      - name: Verify zero-score exclusion and complete per-slot V6 probability conservation
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          d=json.load(open('data/audits/v10_v6_rider_rank_role_slot_calibration_nozero_2023_2026.json'))
+          assert d['state']=='V10_V6_SCORE_RANK_LINE_ROLE_SLOT_CALIBRATION_COMPLETE'
+          assert d['race_level_zero_exclusion']
+          assert d['no_probability_correction_or_floor']
+          assert d['no_result_leakage_into_predictions']
+          assert d['no_market_odds_or_profit']
+          assert d['all_slot_marginals_normalized_per_race']
+          for year,n in [('2024',25348),('2025',24635),('2026',11797)]:
+              a=d['results_by_period'][year]
+              assert a['source_races']==n
+              assert a['eligible_races']+sum(a['excluded_unknown_score_races'].values())==n
+              assert a['excluded_unknown_score_races'].get('UNKNOWN_ZERO_OR_INVALID_SCORE',0)>0
+              assert a['slot_sum_errors']==0
+              assert a['cells']['weak_all']['lower_half']['rider_exposures']>a['eligible_races']
+              for slot in ('first','second','third'):
+                  assert a['cells']['all_riders']['ALL'][slot]['observed']==a['eligible_races']
+          print('V10_V6_RANK_ROLE_SLOT_ZERO_FREE_CALIBRATION_VERIFIED')
+          PY
+
+      - name: Upload complete observed and predicted V6 marginals by exact score rank x line role x slot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v10-v6-rank-role-slot-calibration-nozero-2023-2026
+          path: data/audits/v10_v6_rider_rank_role_slot_calibration_nozero_2023_2026.json
+          retention-days: 90
+          if-no-files-found: warn
