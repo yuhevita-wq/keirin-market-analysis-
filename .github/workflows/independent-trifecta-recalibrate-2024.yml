@@ -1,0 +1,104 @@
+name: Odds-free trifecta calibration | 2024 H1 fit, 2024 H2 sealed test
+
+on:
+  push:
+    branches:
+      - research/independent-trifecta-recalibration-2024
+    paths:
+      - research/independent_trifecta_2024/recalibrate.py
+      - .github/workflows/independent-trifecta-recalibrate-2024.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: independent-trifecta-calibrator-2024-h1-h2
+  cancel-in-progress: false
+
+jobs:
+  recalibrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/observe.py
+            /research/independent_trifecta_2024/calibration_audit.py
+            /research/independent_trifecta_2024/recalibrate.py
+            /data/a_class_12/2024_*/races.csv
+            /data/a_class_12/2024_*/entries.csv
+            /data/a3_challenge/2024_*/races.csv
+            /data/a3_challenge/2024_*/entries.csv
+            /data/2024/**/races.csv
+            /data/2024/**/entries.csv
+            /data/grade_races/g1g2/*2024*.zip
+            /data/grade_races/g3/2024/*.zip
+            /data/result_universe_v2/combined/results_2024.jsonl.gz
+      - name: Install numerical optimizer
+        run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.12,<2'
+      - name: Restore immutable all-trifecta original 2024 probabilities
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p data/audits
+          gh run download 40807880319 -R "${{ github.repository }}" \
+            -n 2024-trifecta-no-odds-frozen-2023-audit -D data/audits
+          test -s data/audits/independent_trifecta_all_tickets_2024.jsonl.gz
+          test -s data/audits/independent_trifecta_calibration_2024.json
+      - name: Validate strict source isolation and script syntax
+        run: |
+          python -m py_compile research/independent_trifecta_2024/recalibrate.py
+          test "$(git hash-object research/independent_trifecta_2023/observe.py)" = "19701f16c80fcc95dc8c032ed47b80dfcfe93bc6"
+          test -s data/result_universe_v2/combined/results_2024.jsonl.gz
+          test ! -e data/result_universe_v2/combined/results_2025.jsonl.gz
+          echo "FROZEN_ORIGINAL_MODEL_PRESERVED_AND_2025_UNAVAILABLE"
+      - name: Fit Jan-Jun 2024 calibration and assess ONLY on Jul-Dec 2024
+        env:
+          PYTHONUNBUFFERED: '1'
+          OPENBLAS_NUM_THREADS: '1'
+          OMP_NUM_THREADS: '1'
+        run: python research/independent_trifecta_2024/recalibrate.py
+      - name: Verify all outputs
+        run: |
+          python - <<'PY'
+          import json,gzip
+          from pathlib import Path
+          path=Path('data/audits/independent_trifecta_recalibration_2024.json')
+          assert path.is_file()
+          obj=json.loads(path.read_text())
+          assert obj['2025_or_later_accessed'] is False
+          assert obj['odds_or_market_data_accessed'] is False
+          assert obj['original_2023_model_changed'] is False
+          assert obj['races']['entire_2024']==25348
+          assert obj['total_2024_ticket_probabilities']==5820462
+          assert set(obj['untouched_2024_H2_test']['models'])=={'unchanged','temperature','line_structure','joint'}
+          with gzip.open('data/audits/independent_trifecta_recalibrated_2024.jsonl.gz','rt') as f:
+              rows=sum(1 for x in f)
+          assert rows==25348
+          print("AUDIT_VERIFIED",obj["model_adopted"],obj["races"])
+          PY
+      - name: Store all 2024 recalibrated trifecta probability distributions
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: independent-trifecta-2024-probability-recalibration
+          retention-days: 90
+          if-no-files-found: warn
+          path: |
+            data/audits/independent_trifecta_recalibration_2024.json
+            data/audits/independent_trifecta_recalibration_sample_2024.json
+            data/audits/independent_trifecta_recalibrated_2024.jsonl.gz
+      - name: Commit short report, coefficients, and 210-ticket sample to research branch
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --sparse data/audits/independent_trifecta_recalibration_2024.json data/audits/independent_trifecta_recalibration_sample_2024.json
+          git diff --cached --quiet || git commit -m "Publish 2024 H1-fitted H2-validated trifecta calibration and error audit"
+          git push origin HEAD:research/independent-trifecta-recalibration-2024
