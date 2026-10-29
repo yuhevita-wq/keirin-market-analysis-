@@ -29,6 +29,8 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /research/trifecta_calibration_v2/calibrate.py
+            /research/trifecta_calibration_v2/scoring.py
+            /research/trifecta_calibration_v2/test_scoring.py
             /research/independent_trifecta_2023/observe.py
             /research/independent_trifecta_2024/calibration_audit.py
             /data/a_class_12/2024_*/entries.csv
@@ -71,6 +73,8 @@ jobs:
           assert all(C.band_index(x)==i for i,x in enumerate([0.0005,0.002,0.007,0.015,0.03,0.08,0.15,0.3]))
           print("NORMALIZATION_AND_BIN_CONTRACT_PASSED")
           PY
+      - name: Verify result-free V2 scoring for 7/9 riders, conservation and card validation
+        run: python research/trifecta_calibration_v2/test_scoring.py
       - name: Fit Jan-Jun 2024 post-calibration; evaluate Jul-Dec; freeze full-2024 coefficients for untouched 2025
         run: python research/trifecta_calibration_v2/calibrate.py
         env:
