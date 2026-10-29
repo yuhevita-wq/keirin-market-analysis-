@@ -1,0 +1,122 @@
+name: Independent trifecta | neutral all-line-shape V3 selection replay
+
+on:
+  push:
+    branches:
+      - research/trifecta-v3-neutral-all-line-shapes
+    paths:
+      - 'research/independent_trifecta_2023/v3_all_shaped_neutral_selector.py'
+      - '.github/workflows/independent-trifecta-v3-neutral-all-shapes.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: independent-trifecta-v3-neutral-all-shapes
+  cancel-in-progress: false
+
+jobs:
+  eliminate-geometric-selection-bias:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - name: Restore original unchanged AI, frozen V2/V3, all 2023-25 race geometries
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/observe.py
+            /research/independent_trifecta_2023/line_dependence_v2.py
+            /research/independent_trifecta_2023/aab_guarded_v3.py
+            /research/independent_trifecta_2023/v3_all_shaped_neutral_selector.py
+            /research/independent_trifecta_2024/calibration_audit.py
+            /research/independent_trifecta_2024/validate_2025.py
+            /data/a_class_12/2023_*/races.csv
+            /data/a_class_12/2023_*/entries.csv
+            /data/a3_challenge/2023_*/races.csv
+            /data/a3_challenge/2023_*/entries.csv
+            /data/2023/**/races.csv
+            /data/2023/**/entries.csv
+            /data/grade_races/g1g2/*2023*.zip
+            /data/grade_races/g3/2023/*.zip
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+            /data/a_class_12/2024_*/races.csv
+            /data/a_class_12/2024_*/entries.csv
+            /data/a3_challenge/2024_*/races.csv
+            /data/a3_challenge/2024_*/entries.csv
+            /data/2024/**/races.csv
+            /data/2024/**/entries.csv
+            /data/grade_races/g1g2/*2024*.zip
+            /data/grade_races/g3/2024/*.zip
+            /data/result_universe_v2/combined/results_2024.jsonl.gz
+            /data/a_class_12/2025_*/races.csv
+            /data/a_class_12/2025_*/entries.csv
+            /data/a3_challenge/2025_*/races.csv
+            /data/a3_challenge/2025_*/entries.csv
+            /data/2025/**/races.csv
+            /data/2025/**/entries.csv
+            /data/grade_races/g1g2/*2025*.zip
+            /data/grade_races/g3/2025/*.zip
+            /data/result_universe_v2/combined/results_2025.jsonl.gz
+
+      - name: Assert original sources unmodified, new selector compiles, odds excluded
+        run: |
+          set -euo pipefail
+          python -m py_compile research/independent_trifecta_2023/v3_all_shaped_neutral_selector.py research/independent_trifecta_2023/aab_guarded_v3.py
+          test "$(git hash-object research/independent_trifecta_2023/observe.py)" = "19701f16c80fcc95dc8c032ed47b80dfcfe93bc6"
+          test "$(git hash-object research/independent_trifecta_2023/line_dependence_v2.py)" = "2bb7362490b7b7f7eb0e8390face22f248649216"
+          test "$(git hash-object research/independent_trifecta_2023/aab_guarded_v3.py)" = "04bb3a7956a5a5d43a987194df557838b6ac81e5"
+          test -s data/result_universe_v2/combined/results_2023.jsonl.gz
+          test -s data/result_universe_v2/combined/results_2024.jsonl.gz
+          test -s data/result_universe_v2/combined/results_2025.jsonl.gz
+          test ! -e data/result_universe_v2/combined/results_2026.jsonl.gz
+          test ! -e data/odds_only/odds_2025.jsonl.gz
+          echo ORIGINAL_AND_V2_V3_FROZEN_NOT_MARKET_ODDS
+
+      - name: Replay neutral all-shapes selector, retaining every geometry as diagnostic
+        run: |
+          set -euo pipefail
+          python research/independent_trifecta_2023/v3_all_shaped_neutral_selector.py
+
+      - name: Verify all shapes are reported with no special shape selection gate
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          p='data/audits/trifecta_v3_neutral_selection_2023_2025.json'
+          a=json.load(open(p))
+          assert a['state']=='NEUTRAL_LINE_SHAPE_BIAS_REMOVED_V3_VALIDATED'
+          assert a['line_shape_special_selection_rules']==[]
+          assert a['market_odds_read'] is False
+          assert a['2024_or_2025_used_in_parameter_selection'] is False
+          assert a['2023_development_races']==4192
+          assert a['2024_evaluation_races']==25348
+          assert a['2025_replay_races']==24635
+          assert a['historical_selection_preserved'] is True
+          assert a['neutral_selected_lambda']==0.15
+          assert abs(a['2024_neutral_candidate']['NLL']-4.31982650)<1e-5
+          assert abs(a['2025_neutral_candidate']['NLL']-4.36613863)<1e-5
+          for yr in ('2024','2025'):
+              c=a[yr+'_neutral_candidate']
+              assert sum(z['races'] for z in c['all_line_shapes'].values())==c['races']
+              assert len(c['all_line_shapes'])>3
+              for sh,record in c['all_line_shapes'].items():
+                  assert sum(z['actual'] for z in record['patterns'].values())==record['races']
+          print('NEUTRAL_V3_ALL_SHAPES_COMPLETE_WITH_HISTORICAL_SELECTION_REPRODUCED')
+          PY
+
+      - name: Upload neutral full-shape diagnostics and candidate-selection evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: independent-trifecta-neutral-line-shapes-audit-2023-2025
+          path: data/audits/trifecta_v3_neutral_selection_2023_2025.json
+          retention-days: 90
+          if-no-files-found: warn
