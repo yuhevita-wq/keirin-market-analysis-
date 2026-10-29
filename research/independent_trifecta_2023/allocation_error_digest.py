@@ -123,6 +123,45 @@ data={
  ]
 }
 OUTPUT.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+TOPLINE=ROOT/"data/audits/independent_trifecta_allocation_errors_2023_topline.json"
+def slim(x):
+ if not x:return None
+ return {k:x[k] for k in ("AI_predicted_event_count","actual_event_count",
+      "actual_minus_AI_expected","actual_over_predicted_count",
+      "race_event_z","day_cluster_z")}
+def simple_axis(model,per,axis):
+ d=model[per][axis]
+ return {k:slim(v) for k,v in d.items()
+         if (axis in ("line_pattern","role1","role2","role3","score_rank1",
+                       "score_rank2","score_rank3","predicted_probability_band",
+                       "predicted_trifecta_rank_band")
+             or v["AI_predicted_event_count"]>=20)}
+def smallleaders(model):
+ z=leaders(model,10)
+ return [
+   {"axis":e["axis"],"label":e["structure"],
+    "holdout":slim(e["holdout"]),"train":slim(e["train"]),
+    "replicated_sign":e["error_direction_also_present_in_training"]}
+   for e in z["all_holdout_top"]]
+lite={
+ "all_races":23440,"original_AI_training_races":19248,"original_AI_holdout_races":4192,
+ "format":"actual minus expected: positive = AI too little; negative = AI too much",
+ "model_original_2023":{
+    "holdout":{
+      k:simple_axis(original,"NovDec_original_AI_holdout",k)
+      for k in ("line_pattern","role1","role2","role3",
+                "score_rank1","score_rank2","score_rank3",
+                "predicted_probability_band","predicted_trifecta_rank_band")},
+    "train":{"line_pattern":simple_axis(original,"JanOct_in_sample","line_pattern")},
+    "top_holdout_groups":smallleaders(original)
+ },
+ "2024calibrated_retrofit_2023_not_forward":{
+    "holdout_line_pattern":simple_axis(updated,"NovDec_original_AI_holdout","line_pattern"),
+    "top_holdout_groups":smallleaders(updated)[:6]
+ },
+ "interpretation":"Correlation of misallocations with structure does not prove causal reason. 2024 calibration 2023 scores are future-fitted retrospection.",
+}
+TOPLINE.write_text(json.dumps(lite,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
 print("ALLOCATION_ERROR_DIAGNOSTIC_DIGEST",json.dumps({
  "source_bytes":SOURCE.stat().st_size,"digest_bytes":OUTPUT.stat().st_size,
  "all_races":data["counts"]["all_2023_races"],
