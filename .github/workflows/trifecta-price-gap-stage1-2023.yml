@@ -1,0 +1,97 @@
+name: 2023 all-3ren-tan price gap Stage 1 | observed frequency vs independent AI
+
+on:
+  push:
+    branches:
+      - research/trifecta-price-gap-stage1-2023
+    paths:
+      - 'research/independent_trifecta_2023/price_gap_stage1.py'
+      - '.github/workflows/trifecta-price-gap-stage1-2023.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: trifecta-price-gap-stage1-2023-frozen-model
+  cancel-in-progress: false
+
+jobs:
+  observe-raw-gap:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - name: Checkout frozen price-gap calculation and original audit metadata
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/price_gap_stage1.py
+            /data/audits/trifecta_market_association_2023.json
+      - name: Restore all exact-ID 2023 trifecta odds and AI probabilities
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/trifecta-stage1-input data/audits
+          gh run download 40820189970 -R "${{ github.repository }}" \
+            -n independent-2023-trifecta-market-association -D /tmp/trifecta-stage1-input
+          cp /tmp/trifecta-stage1-input/trifecta_market_association_full_matches_2023.jsonl.gz data/audits/
+          test -s data/audits/trifecta_market_association_full_matches_2023.jsonl.gz
+          test -s data/audits/trifecta_market_association_2023.json
+          echo 'COMPLETE_2023_FULL_JOIN_INPUT_RESTORED'
+      - name: Run fixed Stage 1 raw price gap versus observed trifecta outcome
+        env:
+          PYTHONUNBUFFERED: '1'
+        run: |
+          set -euo pipefail
+          python -m py_compile research/independent_trifecta_2023/price_gap_stage1.py
+          python research/independent_trifecta_2023/price_gap_stage1.py
+      - name: Verify population, full ticket grid, odds source and AI version separation
+        run: |
+          python - <<'PY'
+          import json
+          p='data/audits/trifecta_price_gap_stage1_2023.json'
+          j=json.load(open(p,encoding='utf-8'))
+          c=j['coverage']
+          assert c['2023_complete_price_books']==6301
+          assert c['2023_independent_AI_eligible_races']==23440
+          assert c['2023_races_full_exact_price_AI_join']==5226
+          assert c['all_matched_exact_trifecta_pairs']==1732548
+          assert c['split']['forward_2023_nov_dec']==391
+          assert c['split']['in_sample_2023_jan_oct']==4835
+          assert j['no_market_takeout_adjustment_or_assumption']
+          assert j['no_2023_model_retraining']
+          assert j['not_actual_purchase']
+          for model in j['models']:
+              b=j['models'][model]['all']['band']
+              assert sum(x['candidate_trifecta_tickets'] for x in b.values() if x)==1732548
+              assert sum(x['realized_winners'] for x in b.values() if x)==5226
+              assert abs(sum(x['predicted_winners_sum_AI'] for x in b.values() if x)-5226)<0.002
+          print('COMPLETE_2023_FULL_MATCH_PRICE_GAP_AUDIT_VALIDATED')
+          PY
+      - name: Keep full price-gap candidate ledger for independent reproduction
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 2023-independent-AI-market-price-gap-stage1
+          retention-days: 90
+          if-no-files-found: warn
+          compression-level: 1
+          path: |
+            data/audits/trifecta_price_gap_stage1_2023.json
+            data/audits/trifecta_price_gap_stage1_candidates_2023.jsonl.gz
+      - name: Publish report on research branch only
+        if: success()
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add --sparse data/audits/trifecta_price_gap_stage1_2023.json
+          if git diff --cached --quiet; then
+            echo 'No report changes'
+          else
+            git commit -m 'research: publish raw 2023 trifecta price gap actual frequency by band'
+            git push origin HEAD:research/trifecta-price-gap-stage1-2023
+          fi
