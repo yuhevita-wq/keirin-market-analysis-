@@ -255,9 +255,9 @@ def probabilities(f,base,fine,total):
     return ans
 
 def proper_score(rows,base,fine,total):
-    d=defaultdict(lambda:{"n":0,"base_brier":0.,"relation_brier":0.,
-                          "base_logloss":0.,"relation_logloss":0.,
-                          "base_expected":0.,"relation_expected":0.,"observed":0})
+    d=defaultdict(lambda:{"n":0,"baseline_brier":0.,"relation_brier":0.,
+                          "baseline_logloss":0.,"relation_logloss":0.,
+                          "baseline_expected":0.,"relation_expected":0.,"observed":0})
     for rid,e,f,y in rows:
         p=probabilities(f,base,fine,total)
         for metric in PREDICT:
@@ -269,16 +269,16 @@ def proper_score(rows,base,fine,total):
                 o[label+"_expected"]+=q
     return {metric:{"n":v["n"],
         "mean_rate_pct":round(100*v["observed"]/v["n"],6),
-        "baseline_predicted_pct":round(100*v["base_expected"]/v["n"],6),
+        "baseline_predicted_pct":round(100*v["baseline_expected"]/v["n"],6),
         "relation_predicted_pct":round(100*v["relation_expected"]/v["n"],6),
-        "baseline_brier":round(v["base_brier"]/v["n"],9),
+        "baseline_brier":round(v["baseline_brier"]/v["n"],9),
         "relation_brier":round(v["relation_brier"]/v["n"],9),
         "relative_brier_improvement_pct":round(
-            100*(v["base_brier"]-v["relation_brier"])/v["base_brier"],6),
-        "baseline_log_loss":round(v["base_logloss"]/v["n"],9),
+            100*(v["baseline_brier"]-v["relation_brier"])/v["baseline_brier"],6),
+        "baseline_log_loss":round(v["baseline_logloss"]/v["n"],9),
         "relation_log_loss":round(v["relation_logloss"]/v["n"],9),
         "relative_logloss_improvement_pct":round(
-            100*(v["base_logloss"]-v["relation_logloss"])/v["base_logloss"],6)
+            100*(v["baseline_logloss"]-v["relation_logloss"])/v["baseline_logloss"],6)
     } for metric,v in sorted(d.items())}
 
 def prepare(events,year):
