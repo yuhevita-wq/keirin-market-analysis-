@@ -1,0 +1,73 @@
+name: 2023 matched trifecta AI/market disagreement | outcome control
+
+on:
+  push:
+    branches:
+      - research/trifecta-market-association-2023
+    paths:
+      - research/independent_trifecta_2023/market_disagreement_check.py
+      - .github/workflows/observe-trifecta-odds-disagreement-2023.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: independent-2023-trifecta-market-disagreement-check
+  cancel-in-progress: false
+
+jobs:
+  independent-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/market_disagreement_check.py
+            /data/audits/trifecta_market_association_2023.json
+      - name: Restore exact joined archived odds/probability grid (never regenerate model)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p data/audits
+          gh run download 40820189970 -R "${{ github.repository }}" \
+            -n independent-2023-trifecta-market-association -D data/audits
+          test -s data/audits/trifecta_market_association_full_matches_2023.jsonl.gz
+          test -s data/audits/trifecta_market_association_2023.json
+      - name: Compute outcome frequencies across disagreement groups, separately for Nov-Dec
+        env:
+          PYTHONUNBUFFERED: '1'
+        run: |
+          python -m py_compile research/independent_trifecta_2023/market_disagreement_check.py
+          python research/independent_trifecta_2023/market_disagreement_check.py
+      - name: Validate forward/outcome split and no odds takeout assumptions
+        run: |
+          python - <<'PY'
+          import json
+          s=json.load(open('data/audits/trifecta_market_disagreement_diagnostic_2023.json'))
+          assert s['counts']['exact_joined_races']==5226
+          assert s['counts']['forward_nov_dec']==391
+          assert s['no_model_retraining'] and s['no_takeout_rate_assumed']
+          assert s['no_betting_or_roi']
+          assert s['log_loss_vs_market_normalized_shape']['forward_2023_nov_dec']['races']==391
+          print("INDEPENDENT_MARKET_DIAGNOSTIC_VERIFIED",s['counts'])
+          PY
+      - name: Archive full difference diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: independent-2023-trifecta-market-disagreement-check
+          retention-days: 90
+          path: data/audits/trifecta_market_disagreement_diagnostic_2023.json
+          if-no-files-found: warn
+      - name: Publish diagnostic report to research branch
+        if: success()
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add --sparse data/audits/trifecta_market_disagreement_diagnostic_2023.json
+          git diff --cached --quiet || git commit -m 'Record 2023 market-versus-AI odds disagreement outcome diagnostic'
+          git push origin HEAD:research/trifecta-market-association-2023
