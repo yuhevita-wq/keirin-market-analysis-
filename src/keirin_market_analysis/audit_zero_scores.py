@@ -5,6 +5,7 @@ import json
 from collections import defaultdict
 from pathlib import Path
 
+from .score_quality import ScoreState, classify_score
 from .audit_input_roles import expected_roles
 from .simulate_mainline_v1 import segment_for
 
@@ -24,7 +25,13 @@ def audit(year: int):
     for g in groups.values():
         g.sort(key=lambda r:int(r['race_no'])); n=len(g)
         for pos,r in enumerate(g,1): seg[r['race_id']]=segment_for(pos,n)
-    zeros=[e for e in entries if float(e['score'])==0.0]
+    # 0 is not evidence of poor ability. Keep the original field intact;
+    # record unknown states before any score-dependent role selection.
+    by_state=defaultdict(int)
+    for e in entries:
+        by_state[classify_score(e.get('score')).state.value]+=1
+    zeros=[e for e in entries
+           if classify_score(e.get('score')).state is ScoreState.UNVERIFIED_ZERO]
     zero_ids={(e['race_id'],e['car_no']) for e in zeros}
     role_hits=[]
     for r in races:
@@ -35,6 +42,9 @@ def audit(year: int):
             if car and (r['race_id'],str(car)) in zero_ids:
                 role_hits.append({'race_id':r['race_id'],'date':r['race_date'],'track':r['track'],'race_no':r['race_no'],'segment':seg[r['race_id']],'role':role,'car_no':car})
     return {
+        'score_state_counts':dict(by_state),
+        'unverified_zero_is_not_proven_low_ability':True,
+        'unknown_score_prediction_policy':'HOLD_FOR_SCORE until source-verified or validated uncertainty model',
         'zero_score_entries':len(zeros),
         'zero_score_races':len({e['race_id'] for e in zeros}),
         'zero_score_selected_role_occurrences':len(role_hits),
