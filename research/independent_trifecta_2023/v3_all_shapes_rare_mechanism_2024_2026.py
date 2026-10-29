@@ -81,6 +81,7 @@ class Cell:
         self.exposures=0;self.nullvar=0.
         self.day=defaultdict(float)
     def add(self,p,nactual,ntickets,day):
+        """One mutually exclusive partition PER RACE OR PER SINGLE PODIUM STAGE."""
         if not (-1e-8<=p<=1+1e-8):
             raise AssertionError(("Bad race/group probability",p))
         if nactual not in (0,1):
@@ -172,19 +173,19 @@ def stage_conditionals(e,cache,conditional_local):
             hit=int(g==gid)
             label=bucket(p,CONDITION_BINS)
             record(conditional_local,f"stage{st}_line_prob_bin",label,p,hit)
-            record(conditional_local,"all_stages_line_prob_bin",label,p,hit)
         for c in groupmembers[gid]:
             p=cp[c]
             hit=int(c==actual[st-1])
             label=bucket(p,CONDITION_BINS)
             record(conditional_local,f"stage{st}_within_line_rider_prob_bin",label,p,hit)
-            record(conditional_local,"all_stages_within_line_rider_prob_bin",label,p,hit)
         for g,members in groupmembers.items():
             for c in members:
                 p=gp[g]*cp[c]
                 hit=int(c==actual[st-1])
                 label=bucket(p,CONDITION_BINS)
                 record(conditional_local,f"stage{st}_rider_probability_bin",label,p,hit)
+    # Each stage is a distinct mutually-exclusive experiment. Do not combine
+    # three stage-wise 100% conditional distributions into a single race.
     for st in (1,2,3):
         for ax in (f"stage{st}_line_prob_bin",f"stage{st}_within_line_rider_prob_bin",
                    f"stage{st}_rider_probability_bin"):
@@ -322,7 +323,7 @@ def run_one(label,events,wg,wr,pattern_weights):
             "rare_by_bottleneck_type","rare_by_shape_and_bottleneck",
             "rare_by_pattern_and_bottleneck","rare_finer_probability_bin")},
         "conditional_stage_diagnostics":{k:v for k,v in packed.items() if (
-            k.startswith("stage") or k.startswith("all_stages"))},
+            k.startswith("stage"))},
         "rare_trifecta_actual_observations":winners,
     }
 
