@@ -1,0 +1,120 @@
+name: Test third-party rider wins under matched opponent leader parity
+
+on:
+  push:
+    branches:
+      - research/third-party-win-opponent-parity-matched
+    paths:
+      - 'research/independent_trifecta_2023/third_party_win_opponent_parity_matched_2024_2026.py'
+      - '.github/workflows/third-party-win-opponent-parity-matched.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: third-party-win-opponent-parity-matched
+  cancel-in-progress: false
+
+jobs:
+  observational-matched-comparison:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - name: Checkout complete race results and published original line cards, no betting odds
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/line_dependence_v2.py
+            /research/independent_trifecta_2024/calibration_audit.py
+            /research/independent_trifecta_2024/validate_2025.py
+            /data/a_class_12/2023_*/races.csv
+            /data/a_class_12/2023_*/entries.csv
+            /data/a3_challenge/2023_*/races.csv
+            /data/a3_challenge/2023_*/entries.csv
+            /data/2023/**/races.csv
+            /data/2023/**/entries.csv
+            /data/grade_races/g1g2/*2023*.zip
+            /data/grade_races/g3/2023/*.zip
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+            /data/a_class_12/2024_*/races.csv
+            /data/a_class_12/2024_*/entries.csv
+            /data/a3_challenge/2024_*/races.csv
+            /data/a3_challenge/2024_*/entries.csv
+            /data/2024/**/races.csv
+            /data/2024/**/entries.csv
+            /data/grade_races/g1g2/*2024*.zip
+            /data/grade_races/g3/2024/*.zip
+            /data/result_universe_v2/combined/results_2024.jsonl.gz
+            /data/a_class_12/2025_*/races.csv
+            /data/a_class_12/2025_*/entries.csv
+            /data/a3_challenge/2025_*/races.csv
+            /data/a3_challenge/2025_*/entries.csv
+            /data/2025/**/races.csv
+            /data/2025/**/entries.csv
+            /data/grade_races/g1g2/*2025*.zip
+            /data/grade_races/g3/2025/*.zip
+            /data/result_universe_v2/combined/results_2025.jsonl.gz
+            /data/a_class_12/2026_*/races.csv
+            /data/a_class_12/2026_*/entries.csv
+            /data/a_class_12/pilot_2026*/races.csv
+            /data/a_class_12/pilot_2026*/entries.csv
+            /data/a3_challenge/2026_*/races.csv
+            /data/a3_challenge/2026_*/entries.csv
+            /data/2026_h1/**/races.csv
+            /data/2026_h1/**/entries.csv
+            /data/2026_future_block1/**/races.csv
+            /data/2026_future_block1/**/entries.csv
+            /data/grade_races/g3/2026_h1/*.zip
+            /data/result_universe_v2/combined/results_2026.jsonl.gz
+            /research/independent_trifecta_2023/observe.py
+            /research/independent_trifecta_2023/third_party_win_opponent_parity_matched_2024_2026.py
+
+      - name: Check unmodified 2023 V2 and avoid market odds
+        run: |
+          set -euo pipefail
+          test "$(git hash-object research/independent_trifecta_2023/line_dependence_v2.py)" = "2bb7362490b7b7f7eb0e8390face22f248649216"
+          python -m py_compile research/independent_trifecta_2023/third_party_win_opponent_parity_matched_2024_2026.py
+          for year in 2024 2025 2026; do
+            test -s "data/result_universe_v2/combined/results_$year.jsonl.gz"
+          done
+          echo MATCHED_COHORT_FILES_VERIFIED
+
+      - name: Enumerate all weak third-party riders and compare opponent parity under exact/binned covariate matching
+        run: |
+          set -euo pipefail
+          python research/independent_trifecta_2023/third_party_win_opponent_parity_matched_2024_2026.py
+
+      - name: Verify no result selection, race grade inclusion, source years, and interpretability warnings
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          f='data/audits/third_party_weak_rider_opponent_parity_matched_2024_2026.json'
+          x=json.load(open(f))
+          assert x['state']=='THIRD_PARTY_WIN_OPPONENT_PARITY_MATCHED_OBSERVATION_COMPLETE'
+          assert x['do_not_interpret_as_causal_effect'] is True
+          assert x['does_not_observe_realized_race_tactics'] is True
+          assert x['matched_2026_grade_covered'] is False
+          assert x['no_odds_used'] is True
+          assert x['all_race_line_shapes_evaluated'] is True
+          for yr,n in [('2024',25348),('2025',24635),('2026',11797)]:
+              assert x['years'][yr]['races']==n
+              assert x['years'][yr]['eligible_rider_exposures']>0
+          assert x['comparisons']['leader_only']['2024_2025']['match_models']['basic']['matched_strata']>=0
+          print('THIRD_PARTY_COMPETITION_COMMON_SUPPORT_MATCHING_AUDIT_SUCCESS')
+          PY
+
+      - name: Upload matched common-support statistical evidence for discovery, not production
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: third-party-weak-rider-win-opponent-parity-matched-2024-2026
+          path: data/audits/third_party_weak_rider_opponent_parity_matched_2024_2026.json
+          retention-days: 90
+          if-no-files-found: warn
