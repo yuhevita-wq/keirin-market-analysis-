@@ -1,0 +1,96 @@
+name: Frozen 2023 trifecta | complete probability calibration on 2024 (NO ODDS)
+
+on:
+  push:
+    branches:
+      - research/independent-trifecta-calibration-2024
+    paths:
+      - research/independent_trifecta_2024/**
+      - .github/workflows/independent-trifecta-calibration-2024.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: frozen-2023-trifecta-2024-audit
+  cancel-in-progress: false
+
+jobs:
+  audit-2024:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout ONLY 2023 training and 2024 pre-race/result data, no odds
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/observe.py
+            /research/independent_trifecta_2024/calibration_audit.py
+            /data/a_class_12/2023_*/races.csv
+            /data/a_class_12/2023_*/entries.csv
+            /data/a_class_12/2024_*/races.csv
+            /data/a_class_12/2024_*/entries.csv
+            /data/a3_challenge/2023_*/races.csv
+            /data/a3_challenge/2023_*/entries.csv
+            /data/a3_challenge/2024_*/races.csv
+            /data/a3_challenge/2024_*/entries.csv
+            /data/2023/**/races.csv
+            /data/2023/**/entries.csv
+            /data/2024/**/races.csv
+            /data/2024/**/entries.csv
+            /data/grade_races/g1g2/*2023*.zip
+            /data/grade_races/g1g2/*2024*.zip
+            /data/grade_races/g3/2023/*.zip
+            /data/grade_races/g3/2024/*.zip
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+            /data/result_universe_v2/combined/results_2024.jsonl.gz
+      - name: Confirm exact input provenance, frozen model, script syntax
+        run: |
+          python -m py_compile research/independent_trifecta_2023/observe.py research/independent_trifecta_2024/calibration_audit.py
+          test -s data/result_universe_v2/combined/results_2023.jsonl.gz
+          test -s data/result_universe_v2/combined/results_2024.jsonl.gz
+          test -s data/grade_races/g1g2/g1-g2-2024-non-girls.zip
+          git hash-object research/independent_trifecta_2023/observe.py
+          test "$(git hash-object research/independent_trifecta_2023/observe.py)" = "$(git rev-parse 88a57ccf04e08fce8dc5a1cf11722b2b6e387439:research/independent_trifecta_2023/observe.py)"
+          echo "FROZEN_2023_SOURCE_CONFIRMED"
+      - name: Audit ALL 2024 trifecta probabilities and uncertainty; NEVER refit on 2024
+        run: python research/independent_trifecta_2024/calibration_audit.py
+        env:
+          PYTHONUNBUFFERED: '1'
+      - name: Validate resulting reports and ensure 2025/2026 are untouched
+        run: |
+          python -m json.tool data/audits/independent_trifecta_calibration_2024.json >/dev/null
+          python -m json.tool data/audits/independent_trifecta_sample_2024.json >/dev/null
+          test -s data/audits/independent_trifecta_all_tickets_2024.jsonl.gz
+          python - <<'PY'
+          import json
+          p=json.load(open('data/audits/independent_trifecta_calibration_2024.json'))
+          assert p['outcomes_used_in_2024_training'] is False
+          assert p['prices_read'] is False
+          assert p['test_races'] >= 15000
+          assert p['number_of_3trifecta_ticket_predictions'] > 3000000
+          print('VALIDATED',p['test_races'],p['number_of_3trifecta_ticket_predictions'])
+          PY
+      - name: Archive per-race ALL 3連単 probability distributions and diagnostic report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 2024-trifecta-no-odds-frozen-2023-audit
+          path: |
+            data/audits/independent_trifecta_calibration_2024.json
+            data/audits/independent_trifecta_sample_2024.json
+            data/audits/independent_trifecta_all_tickets_2024.jsonl.gz
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Publish audit and 210-ticket example; keep full-year distributions in artifact
+        if: success()
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add --sparse data/audits/independent_trifecta_calibration_2024.json data/audits/independent_trifecta_sample_2024.json
+          git diff --cached --quiet || git commit -m 'Publish 2024 frozen 2023 no-odds trifecta probability calibration audit'
+          git push origin HEAD:research/independent-trifecta-calibration-2024
