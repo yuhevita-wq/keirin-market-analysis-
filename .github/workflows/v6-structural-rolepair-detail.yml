@@ -1,0 +1,45 @@
+name: V6 full-ticket donor and recipient | role-pair detail
+on:
+  push:
+    branches:
+      - research/v6-probability-mass-donor-recipient
+    paths:
+      - 'research/independent_trifecta_2023/v6_structural_rolepair_postprocess.py'
+      - '.github/workflows/v6-structural-rolepair-detail.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  detail:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout read-only postprocessor
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/v6_structural_rolepair_postprocess.py
+      - name: Download completed, verified all-V6-ticket census
+        uses: actions/download-artifact@v4
+        with:
+          name: v6-donor-receiver-by-ticket-structure-2023dev-2026
+          run-id: 40972234043
+          github-token: ${{ github.token }}
+          path: data/audits
+      - name: Extract nonoverlapping first and second rider roles
+        run: |
+          set -euo pipefail
+          test -s data/audits/v6_probability_donor_receiver_structural_2023dev_2026.json
+          python research/independent_trifecta_2023/v6_structural_rolepair_postprocess.py \
+            data/audits/v6_probability_donor_receiver_structural_2023dev_2026.json \
+            data/audits/v6_donor_receiver_rolepair_summary_2023dev_2026.json
+      - name: Save exact year-by-year role-pair deviations
+        uses: actions/upload-artifact@v4
+        with:
+          name: v6-rolepair-donor-receiver-2023dev-2026
+          path: data/audits/v6_donor_receiver_rolepair_summary_2023dev_2026.json
+          retention-days: 90
