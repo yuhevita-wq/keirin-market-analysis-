@@ -1,0 +1,113 @@
+name: Independent 3ren-tan V3 | AAB gain with AAA and all-pattern nonregression
+
+on:
+  push:
+    branches:
+      - research/trifecta-aab-guarded-structural-v3
+    paths:
+      - 'research/independent_trifecta_2023/aab_guarded_v3.py'
+      - '.github/workflows/independent-trifecta-aab-guarded-v3.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: independent-trifecta-aab-guarded-v3
+  cancel-in-progress: false
+
+jobs:
+  train-and-independent-forward-test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - name: Checkout exact frozen 2023 original and V2 research plus 2024 blind data
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/observe.py
+            /research/independent_trifecta_2023/line_dependence_v2.py
+            /research/independent_trifecta_2023/aab_guarded_v3.py
+            /research/independent_trifecta_2024/calibration_audit.py
+            /data/a_class_12/2023_*/races.csv
+            /data/a_class_12/2023_*/entries.csv
+            /data/a3_challenge/2023_*/races.csv
+            /data/a3_challenge/2023_*/entries.csv
+            /data/2023/**/races.csv
+            /data/2023/**/entries.csv
+            /data/grade_races/g1g2/*2023*.zip
+            /data/grade_races/g3/2023/*.zip
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+            /data/a_class_12/2024_*/races.csv
+            /data/a_class_12/2024_*/entries.csv
+            /data/a3_challenge/2024_*/races.csv
+            /data/a3_challenge/2024_*/entries.csv
+            /data/2024/**/races.csv
+            /data/2024/**/entries.csv
+            /data/grade_races/g1g2/*2024*.zip
+            /data/grade_races/g3/2024/*.zip
+            /data/result_universe_v2/combined/results_2024.jsonl.gz
+
+      - name: Fail if either frozen model changed, or if market inputs are present
+        run: |
+          set -euo pipefail
+          python -m py_compile research/independent_trifecta_2023/observe.py research/independent_trifecta_2023/line_dependence_v2.py research/independent_trifecta_2023/aab_guarded_v3.py research/independent_trifecta_2024/calibration_audit.py
+          test "$(git hash-object research/independent_trifecta_2023/observe.py)" = "19701f16c80fcc95dc8c032ed47b80dfcfe93bc6"
+          test "$(git hash-object research/independent_trifecta_2023/line_dependence_v2.py)" = "2bb7362490b7b7f7eb0e8390face22f248649216"
+          test -s data/result_universe_v2/combined/results_2023.jsonl.gz
+          test -s data/result_universe_v2/combined/results_2024.jsonl.gz
+          test ! -e data/odds_only/odds_2023.jsonl.gz
+          test ! -e data/odds_only/odds_2024.jsonl.gz
+          test ! -e data/result_universe_v2/combined/results_2025.jsonl.gz
+          echo OLD_MODELS_IMMUTABLE_MARKET_EXCLUDED
+
+      - name: Learn Jan-Oct 2023 structural pattern model and select on already-seen development, then blindly test 2024
+        run: |
+          set -euo pipefail
+          python research/independent_trifecta_2023/aab_guarded_v3.py
+
+      - name: Validate AAB tradeoffs and one hundred percent normalization with explicit rejection path
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          x=json.load(open('data/audits/independent_trifecta_aab_guarded_v3_2024.json'))
+          assert x['state']=='COMPLETED_AAB_GUARDED_STRUCTURAL_V3_2024'
+          assert x['baseline_original_AI_changed'] is False
+          assert x['baseline_V2_changed'] is False
+          assert x['odds_market_payout_used'] is False
+          assert x['2024_labels_used_for_fit_or_selection'] is False
+          assert x['train_2023_JanOct_races']==19248
+          assert x['development_2023_NovDec_races']==4192
+          assert x['test_2024_full_year_races']>=20000
+          before=x['2024_forward_test_frozen_V2']
+          after=x['2024_forward_test_preselected_V3']
+          for obj in (before,after):
+              assert abs(obj['mean_total_trifecta_probability']-1)<1e-9
+              assert sum(p['actual'] for p in obj['line_patterns'].values())==obj['races']
+              assert abs(sum(p['predicted'] for p in obj['line_patterns'].values())-obj['races'])<0.01
+          assert abs(before['line_patterns']['AAA']['predicted']-after['line_patterns']['AAA']['predicted'])<1e-6
+          if x['2024_strict_accepted']:
+              assert x['preselected_weight_using_development_only']>0
+              assert x['2024_forward_test_guard']['passed']
+              assert x['2024_day_cluster_NLL_CI']['approx_95pct_CI'][0]>0
+          else:
+              print('NOT_ADOPTED_INSUFFICIENT_EVIDENCE_OR_OTHER_PATTERN_REGRESSION')
+          print('ALL_AAB_V3_INVARIANTS_VERIFIED')
+          PY
+
+      - name: Upload 2023 development diagnostics and 2024 fully independent forward-test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: independent-trifecta-aab-guarded-v3-2024-evaluation
+          path: data/audits/independent_trifecta_aab_guarded_v3_2024.json
+          retention-days: 90
+          if-no-files-found: warn
