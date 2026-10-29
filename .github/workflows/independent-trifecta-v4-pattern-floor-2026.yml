@@ -1,0 +1,135 @@
+name: Independent 3ren-tan V4 | spread <=2% within line patterns and test 2026
+
+on:
+  push:
+    branches:
+      - research/trifecta-v4-probability-floor-2026
+    paths:
+      - 'research/independent_trifecta_2023/v4_pattern_floor_2026.py'
+      - '.github/workflows/independent-trifecta-v4-pattern-floor-2026.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: independent-trifecta-v4-2026-forward-test
+  cancel-in-progress: false
+
+jobs:
+  select-on-2024-confirm-2025-blind-2026:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - name: Sparse checkout 2023 fit, 2024 tuning, 2025 confirmation, available 2026 result cards, NO odds
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/observe.py
+            /research/independent_trifecta_2023/line_dependence_v2.py
+            /research/independent_trifecta_2023/aab_guarded_v3.py
+            /research/independent_trifecta_2023/v4_pattern_floor_2026.py
+            /research/independent_trifecta_2024/calibration_audit.py
+            /research/independent_trifecta_2024/validate_2025.py
+            /data/a_class_12/2023_*/races.csv
+            /data/a_class_12/2023_*/entries.csv
+            /data/a3_challenge/2023_*/races.csv
+            /data/a3_challenge/2023_*/entries.csv
+            /data/2023/**/races.csv
+            /data/2023/**/entries.csv
+            /data/grade_races/g1g2/*2023*.zip
+            /data/grade_races/g3/2023/*.zip
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+            /data/a_class_12/2024_*/races.csv
+            /data/a_class_12/2024_*/entries.csv
+            /data/a3_challenge/2024_*/races.csv
+            /data/a3_challenge/2024_*/entries.csv
+            /data/2024/**/races.csv
+            /data/2024/**/entries.csv
+            /data/grade_races/g1g2/*2024*.zip
+            /data/grade_races/g3/2024/*.zip
+            /data/result_universe_v2/combined/results_2024.jsonl.gz
+            /data/a_class_12/2025_*/races.csv
+            /data/a_class_12/2025_*/entries.csv
+            /data/a3_challenge/2025_*/races.csv
+            /data/a3_challenge/2025_*/entries.csv
+            /data/2025/**/races.csv
+            /data/2025/**/entries.csv
+            /data/grade_races/g1g2/*2025*.zip
+            /data/grade_races/g3/2025/*.zip
+            /data/result_universe_v2/combined/results_2025.jsonl.gz
+            /data/a_class_12/2026_*/races.csv
+            /data/a_class_12/2026_*/entries.csv
+            /data/a_class_12/pilot_2026*/races.csv
+            /data/a_class_12/pilot_2026*/entries.csv
+            /data/a3_challenge/2026_*/races.csv
+            /data/a3_challenge/2026_*/entries.csv
+            /data/2026_h1/**/races.csv
+            /data/2026_h1/**/entries.csv
+            /data/2026_future_block1/**/races.csv
+            /data/2026_future_block1/**/entries.csv
+            /data/grade_races/g3/2026_h1/*.zip
+            /data/result_universe_v2/combined/results_2026.jsonl.gz
+
+      - name: Enforce absolutely frozen V2 and V3 sources, 2026 coverage and no market-odds access
+        run: |
+          set -euo pipefail
+          python -m py_compile research/independent_trifecta_2023/*.py research/independent_trifecta_2024/*.py
+          test "$(git hash-object research/independent_trifecta_2023/observe.py)" = "19701f16c80fcc95dc8c032ed47b80dfcfe93bc6"
+          test "$(git hash-object research/independent_trifecta_2023/line_dependence_v2.py)" = "2bb7362490b7b7f7eb0e8390face22f248649216"
+          test "$(git hash-object research/independent_trifecta_2023/aab_guarded_v3.py)" = "04bb3a7956a5a5d43a987194df557838b6ac81e5"
+          test -s data/result_universe_v2/combined/results_2023.jsonl.gz
+          test -s data/result_universe_v2/combined/results_2024.jsonl.gz
+          test -s data/result_universe_v2/combined/results_2025.jsonl.gz
+          test -s data/result_universe_v2/combined/results_2026.jsonl.gz
+          test ! -e data/odds_only/odds_2025.jsonl.gz
+          test ! -e data/odds_only/odds_2026.jsonl.gz
+          echo V2_V3_IMMUTABLE_NO_MARKET_ODDS
+
+      - name: Choose tiny conditional floors using 2024 only and test fixed candidate on 2025 and 2026
+        run: |
+          set -euo pipefail
+          python research/independent_trifecta_2023/v4_pattern_floor_2026.py
+
+      - name: Verify no probability mass leak, exact five-pattern preservation and no unauthorised 2025-26 fitting
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          x=json.load(open('data/audits/independent_trifecta_v4_pattern_floor_2026.json',encoding='utf-8'))
+          assert x['state']=='V4_CONDITIONAL_PATTERN_FLOOR_2026_FORWARD_EVALUATION_COMPLETE'
+          assert x['odds_or_market_prices_used'] is False
+          assert x['2025_2026_used_to_fit_model_or_select_epsilon'] is False
+          assert x['all_five_pattern_masses_preserved_race_by_race'] is True
+          assert x['all_trifecta_probs_sum_exactly_one'] is True
+          assert x['2023_train_races']==19248
+          assert x['2024_fit_races']==25348
+          assert x['2025_confirm_races']==24635
+          assert x['2026_first_forward_test_races']>=3000
+          assert x['2024_epsilon_selected_once'] in (0,0.0025,0.005,0.01,0.02)
+          for key in ('2025_reproduction_results','2026_forward_results'):
+              models=x[key]
+              if '0.0' in models:
+                  b=models['0.0']
+                  assert b['races']>=3000
+                  assert sum(v['realized_events'] for v in b['by_realized_pattern_NLL'].values())==b['races']
+          if not x['strict_adoption_allowed']:
+              print('NO_ADOPTION_2026_CROSS_VALIDATION_GUARD_FAILED_OR_EPS_ZERO')
+          print('2026_CONDITIONAL_V4_STRUCTURE_AND_PROBABILITY_GUARDS_PASSED')
+          PY
+
+      - name: Upload V4 2024 fit, 2025 confirmation and 2026 blind test with ultra-rare ticket residuals
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: independent-trifecta-v4-conditional-rare-probability-2026
+          path: data/audits/independent_trifecta_v4_pattern_floor_2026.json
+          retention-days: 90
+          if-no-files-found: warn
