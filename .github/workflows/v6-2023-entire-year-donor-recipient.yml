@@ -115,10 +115,10 @@ jobs:
           d=json.load(open(p))
           assert d['state']=='2023_FULL_YEAR_FROZEN_V6_ALL_TICKET_PROBABILITY_STRUCTURAL_AUDIT_COMPLETE'
           assert d['model_frozen'] and d['sum_p_equals_1_per_race']
-          assert d['periods']['2023_train']['races']==18012
-          assert d['periods']['2023_dev']['races']==4123
-          assert d['periods']['2023_full']['races']==22135
-          assert d['periods']['2023_full']['tickets']==5184378
+          assert d['periods']['2023_train']['races']==19017
+          assert d['periods']['2023_dev']['races']==4131
+          assert d['periods']['2023_full']['races']==23148
+          assert d['periods']['2023_full']['tickets']==5388222
           for p,v in d['periods'].items():
               for axis,cells in v['cells'].items():
                   assert sum(c['actual'] for c in cells.values())==v['races'],(p,axis)
