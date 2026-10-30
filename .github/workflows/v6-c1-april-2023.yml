@@ -117,7 +117,7 @@ jobs:
           m=json.load(open("data/audits/v6_c1_full_data_crossfit_2023_2026/v6_c1_fitted_model.json"))
           assert m["model_name"]=="V6-C1" and m["total_races"]==84065
           assert m["selected_stage"]=="pattern_pband_role_interactions"
-          assert m["no_aprket_odds_in_features_or_labels"]
+          assert m["no_market_odds_in_features_or_labels"]
           assert len(m["cell_multipliers"])==250
           print("APR2023_FROZEN_C1_MODEL_AND_SOURCE_FILES_VERIFIED")
           PY
