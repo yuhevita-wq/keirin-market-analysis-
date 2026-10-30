@@ -4,7 +4,7 @@
 V6 is fit identically to the previous audits on 2023 Jan-Oct score-valid cards.
 2023 Jan-Oct = IN SAMPLE, Nov-Dec = development / not used for fit, but
 previously inspected. Full 2023 includes both, and is NOT a full holdout.
-No odds teachers, no new fitting, no rewriting V6.
+No odds, no payout filters, no new fitting, no rewriting V6.
 """
 from __future__ import annotations
 import json,sys
@@ -47,10 +47,8 @@ def main():
     args=(wg,wr,d5,wl,wc,pw)
     del train
     print("V6_2023_FROZEN_MODEL_REFIT_IDENTICAL",flush=True)
-    payouts,conflicted,payout_src=prior.load_settled_payments(set(events))
     cell_sets={name:defaultdict(audit.Cell) for name in ("2023_train","2023_dev")}
     counts={name:Counter() for name in ("2023_train","2023_dev")}
-    monthly=defaultdict(lambda:defaultdict(lambda:[0.,0]))
     tickets=Counter()
     for rid,e in events.items():
         period="2023_train" if e["date"]<="2023-10-31" else "2023_dev"
@@ -58,13 +56,6 @@ def main():
         count["source"]+=1
         if prior.weak.score_gate(e)!="ELIGIBLE":
             count["invalid_pre_race_card"]+=1;continue
-        if rid in conflicted:
-            count["payout_conflict"]+=1;continue
-        pay=payouts.get(rid)
-        if pay is None:
-            count["missing_verifiable_winner_payout"]+=1;continue
-        if pay[0]!=tuple(e["order"][:3]):
-            count["payout_result_disagreement"]+=1;continue
         dist=row_probs(e,*args)
         tickets[period]+=audit.race(cell_sets[period],e,dist)
         count["evaluated"]+=1
@@ -85,10 +76,9 @@ def main():
             ensure_ascii=False),flush=True)
     total_races=sum(c["evaluated"] for c in counts.values())
     total_tickets=sum(tickets.values())
-    assert total_races==22135,("Unexpected 2023 cohort versus previous full census",total_races)
-    assert total_tickets==5184378,("Unexpected full 2023 all-ticket count",total_tickets)
-    assert counts["2023_dev"]["evaluated"]==4123
-    assert tickets["2023_dev"]==950010
+    assert total_races==23148,("Unexpected 2023 full score-valid population",total_races)
+    assert total_tickets==5388222,("Unexpected full 2023 all-ticket count",total_tickets)
+    assert counts["2023_dev"]["evaluated"]==4131
     outputs["2023_full"]={"races":total_races,"tickets":total_tickets,
                           "cells":audit.pack(full,total_races)}
     for label,z in outputs.items():
@@ -117,13 +107,12 @@ def main():
         "2023_Nov_Dec":"Not used for fitting but already inspected in previous studies",
         "model_frozen":True,
         "odds_as_teacher":False,
-        "race_winning_payout":"Only used to ensure exact prior audit coverage, not model fitting",
+        "population":"Every 2023 source race with valid pre-race score/card and recorded top-three outcome; no payout files required",
         "sum_p_equals_1_per_race":True,
         "periods":outputs,
         "top_structural_donor_recipient":{axis:top(axis) for axis in (
             "PAT","R1","RK1","P_PAT","P_PAT_R1","P_PAT_R1_R2","P_PAT_R1_RK1")},
         "source":src,
-        "payout_source":payout_src,
     }
     OUT.parent.mkdir(parents=True,exist_ok=True)
     OUT.write_text(json.dumps(results,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
