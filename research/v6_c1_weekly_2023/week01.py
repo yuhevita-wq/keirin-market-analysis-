@@ -12,7 +12,7 @@ This is an integrity *prerequisite*, not a profit backtest.
   collected retrospectively (historical "final" prices).
 """
 from __future__ import annotations
-import gzip,hashlib,json,math,statistics,sys,tempfile
+import csv,gzip,hashlib,io,json,math,statistics,sys,tempfile,zipfile
 from collections import Counter,defaultdict
 from datetime import date,timedelta
 from pathlib import Path
@@ -20,7 +20,6 @@ ROOT=Path(__file__).resolve().parents[2]
 for p in ("","research/independent_trifecta_2023","research/deletion_ai"):
     sys.path.insert(0,str(ROOT/p))
 import research.deletion_ai.secure_seven_bet_bridge as bridge
-import v6_settled_payout_only_2023_2026 as payout
 
 START="2023-01-01"
 END="2023-01-07"
@@ -30,6 +29,70 @@ ABS_MATCH_YEN=1.1
 FRACTION_MATCH=.02
 MIN_CHECKED_PAYOUTS=40
 REQUIRED_MATCH_SHARE=.98
+
+def payout_sources():
+    # Canonical source paths only; aliases under all_classes deliberately omitted.
+    for root in ("data/a_class_12","data/a3_challenge",
+                 "data/2023","data/2024","data/2025",
+                 "data/2026_h1","data/2026_future_block1"):
+        folder=ROOT/root
+        if folder.exists():
+            for p in sorted(folder.rglob("payouts.csv")):yield ("csv",p)
+    folder=ROOT/"data/grade_races"
+    if folder.exists():
+        for p in sorted(folder.rglob("*.zip")):
+            if any(str(y) in str(p) for y in (2023,2024,2025,2026)):
+                yield ("zip",p)
+
+def rows_csv(p):
+    with p.open("r",encoding="utf-8-sig",newline="") as f:
+        yield from csv.DictReader(f)
+
+def rows_zip(p):
+    with zipfile.ZipFile(p) as z:
+        names=[n for n in z.namelist() if n.rsplit("/",1)[-1]=="payouts.csv"]
+        for name in names:
+            with z.open(name) as raw:
+                with io.TextIOWrapper(raw,encoding="utf-8-sig",newline="") as f:
+                    yield from csv.DictReader(f)
+
+def load_settled_payments(wanted):
+    # Return a single paid 3ren-tan combination/payout per race.
+    # Conflicting recorded outcomes are NOT silently resolved.
+    found=defaultdict(set);audit=Counter()
+    for typ,path in payout_sources():
+        audit["source_files_checked"]+=1
+        try:
+            iterator=rows_zip(path) if typ=="zip" else rows_csv(path)
+            for row in iterator:
+                rid=str(row.get("race_id","")).strip()
+                if rid not in wanted:continue
+                if str(row.get("ticket_type","")).strip() not in ("3連単","trifecta"):continue
+                audit["three_ticket_source_rows"]+=1
+                if str(row.get("status","")).strip().lower() not in ("paid","confirmed"):
+                    audit["not_paid"]+=1;continue
+                combo=str(row.get("combination","")).strip()
+                bits=combo.split("-")
+                if len(bits)!=3 or len(set(bits))!=3 or not all(c.isdigit() and len(c)==1 for c in bits):
+                    audit["invalid_winner_combination"]+=1;continue
+                try:v=int(str(row.get("payout_yen","")).replace(",",""))
+                except (ValueError,TypeError):
+                    audit["invalid_payout"]+=1;continue
+                if v<=0:
+                    audit["nonpositive_payout"]+=1;continue
+                found[rid].add((tuple(bits),v))
+        except (OSError,zipfile.BadZipFile,UnicodeError) as ex:
+            audit["unreadable_source"]+=1
+            print("PAYOUT_SOURCE_UNREADABLE",str(path),type(ex).__name__,flush=True)
+    values={};conflicted=set()
+    for rid,variants in found.items():
+        if len(variants)==1:values[rid]=next(iter(variants))
+        else:conflicted.add(rid)
+    audit["races_valid_payout_row"]=len(values)
+    audit["races_conflicting_paid_rows"]=len(conflicted)
+    print("V6_SETTLED_PAYOUT_SOURCE_AUDIT",json.dumps(dict(audit)),flush=True)
+    return values,conflicted,dict(audit)
+
 
 def pack_amount_ratio(x):
     if not x:return None
@@ -96,7 +159,7 @@ def main():
     finally:
         temp.cleanup()
 
-    official,conflicts,source_audit=payout.load_settled_payments(set(odds))
+    official,conflicts,source_audit=load_settled_payments(set(odds))
     podium,podium_audit=bridge.verified_results(2023)
     public={}
     with gzip.open(PUBLIC_ODDS,"rt",encoding="utf-8") as fh:
