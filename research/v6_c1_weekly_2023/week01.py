@@ -12,7 +12,7 @@ This is an integrity *prerequisite*, not a profit backtest.
   collected retrospectively (historical "final" prices).
 """
 from __future__ import annotations
-import csv,gzip,hashlib,io,json,math,statistics,sys,tempfile,zipfile
+import csv,gzip,hashlib,io,itertools,json,math,statistics,sys,tempfile,zipfile
 from collections import Counter,defaultdict
 from datetime import date,timedelta
 from pathlib import Path
@@ -149,6 +149,7 @@ def main():
                 odds[rid]={"day":day,
                            "3rentan":dist,
                            "stamp_day":stamp[:10] if stamp else None,
+                           "stamp_hour":stamp[11:13] if len(stamp)>=13 else "unknown",
                            "market_inverse_total":inverse}
         print("W01_SEALED_ARCHIVE_VERIFIED",json.dumps({
             "days":stats["days_decrypted"],
@@ -171,11 +172,14 @@ def main():
                 public[rid]=d
     ratios=[]; p_ratios=[]; invs=[]
     same_combo_public_vs_vault=0
+    full_grid=Counter(); best_ordering=Counter();vault_inv=[];public_inv=[]
+    stamp_hours=Counter()
     exact_on_source=Counter()
     audit_examples=[]
     for rid,rec in odds.items():
         day=rec["day"];daily[day]["all_verified_books"]+=1
         invs.append(rec["market_inverse_total"])
+        stamp_hours[rec["stamp_hour"]]+=1
         if rid not in podium:
             stats["missing_official_podium"]+=1
             continue
@@ -216,6 +220,26 @@ def main():
                "overround_sum_inverse":round(rec["market_inverse_total"],5)})
         pub=public.get(rid)
         if pub:
+            full_public=(pub.get("odds") or {}).get("3連単",{})
+            vault=rec["3rentan"]
+            if set(full_public)==set(vault):
+                full_grid["races_with_exact_ticket_universe"]+=1
+                full_grid["total_ticket_pairs"]+=len(vault)
+                for k,v in vault.items():
+                    full_grid["same_ticket_price_exact"]+=int(abs(float(v)-float(full_public[k]))<=.01)
+                vals_source=Counter(round(float(v),1) for v in vault.values())
+                vals_public=Counter(round(float(v),1) for v in full_public.values())
+                full_grid["same_multiset_prices"]+=sum((vals_source&vals_public).values())
+                public_inv.append(sum(1/float(v) for v in full_public.values()))
+                vault_inv.append(rec["market_inverse_total"])
+                for perm in itertools.permutations((0,1,2)):
+                    matches=0
+                    for k,v in vault.items():
+                        remapped="-".join(k.split("-")[i] for i in perm)
+                        if abs(float(v)-float(full_public[remapped]))<=.01:
+                            matches+=1
+                    best_ordering[str(perm)]+=matches
+
             stats["public_overlap_races"]+=1
             book=(pub.get("odds") or {}).get("3連単",{})
             if winner in book:
@@ -249,6 +273,11 @@ def main():
       "quote_to_official_payout_ratio":pack_amount_ratio(ratios),
       "public_quote_to_official_ratio":pack_amount_ratio(p_ratios),
       "market_full_inverse_odds_mass":pack_amount_ratio(invs),
+      "full_grid_cross_source_comparison":dict(full_grid),
+      "ticket_order_permutation_exact_match_counts":dict(best_ordering),
+      "vault_overround_on_common_races":pack_amount_ratio(vault_inv),
+      "public_overround_on_common_races":pack_amount_ratio(public_inv),
+      "source_timestamp_hour_distribution":dict(stamp_hours),
       "public_winning_quote_identical_to_vault_count":same_combo_public_vs_vault,
       "anonymized_diagnostic_examples":audit_examples,
       "integrity_standard":{
@@ -271,6 +300,10 @@ def main():
         "period":[START,END],"status":status,"counts":dict(stats),
         "ratio":report["quote_to_official_payout_ratio"],
         "public_ratio":report["public_quote_to_official_ratio"],
+        "grid":report["full_grid_cross_source_comparison"],
+        "permutation_matches":report["ticket_order_permutation_exact_match_counts"],
+        "vault_inverse":report["vault_overround_on_common_races"],
+        "public_inverse":report["public_overround_on_common_races"],
         "by_day":report["daily"]
     },ensure_ascii=False),flush=True)
     if not viable:
