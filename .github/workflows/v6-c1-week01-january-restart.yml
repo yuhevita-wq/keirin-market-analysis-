@@ -1,0 +1,76 @@
+name: W01 Jan 2023 | full-vault market-vs-paid integrity first
+on:
+  push:
+    branches:
+      - research/v6-c1-weekly-restart-2023w01
+    paths:
+      - 'research/v6_c1_weekly_2023/week01.py'
+      - '.github/workflows/v6-c1-week01-january-restart.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v6-c1-week01-january-restart-price-audit
+  cancel-in-progress: false
+
+jobs:
+  verify-first-week:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    env:
+      PYTHONUNBUFFERED: '1'
+      PRIVATE_KEY_PRESENT: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM != '' }}
+    steps:
+      - name: Checkout only Jan 1-7 source files, seals and payout records
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/v6_c1_weekly_2023/week01.py
+            /research/deletion_ai/secure_seven_bet_bridge.py
+            /research/independent_trifecta_2023/v6_settled_payout_only_2023_2026.py
+            /odds_market/collect_all_odds.py
+            /odds_market/vault_public_cert.pem
+            /data/audits/odds_seven_bet_runs/*.json
+            /data/odds_only/odds_2023.jsonl.gz
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+            /data/a_class_12/2023_*/payouts.csv
+            /data/a3_challenge/2023_*/payouts.csv
+            /data/2023/**/payouts.csv
+            /data/grade_races/g1g2/*2023*.zip
+            /data/grade_races/g3/2023/*.zip
+            /data/odds_ciphertext/2023/2023-01-01/**
+            /data/odds_ciphertext/2023/2023-01-02/**
+            /data/odds_ciphertext/2023/2023-01-03/**
+            /data/odds_ciphertext/2023/2023-01-04/**
+            /data/odds_ciphertext/2023/2023-01-05/**
+            /data/odds_ciphertext/2023/2023-01-06/**
+            /data/odds_ciphertext/2023/2023-01-07/**
+      - name: Verify SHA-protected source integrity and Python syntax
+        run: |
+          set -euo pipefail
+          test "$PRIVATE_KEY_PRESENT" = "true" || { echo '::error::MISSING_AUTHORIZED_GITHUB_SECRET'; exit 1; }
+          python -m pip install --quiet requests beautifulsoup4
+          python -m py_compile research/v6_c1_weekly_2023/week01.py
+          for d in 1 2 3 4 5 6 7; do
+            test -d "data/odds_ciphertext/2023/2023-01-0$d"
+          done
+          echo JAN2023_WEEK01_SEVEN_SOURCE_DAYS_AVAILABLE
+      - name: Week 1 | verify FULL 3rentan quote of actual winner against official payout
+        env:
+          KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        run: |
+          set -euo pipefail
+          python research/v6_c1_weekly_2023/week01.py
+      - name: Upload compact data-integrity audit even when purchases blocked
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 2023-Jan-01-to-07-week01-price-and-payout-integrity-no-plaintext
+          path: data/audits/v6_c1_weekly_restart_2023w01_integrity.json
+          if-no-files-found: warn
+          retention-days: 90
