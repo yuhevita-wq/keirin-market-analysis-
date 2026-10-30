@@ -142,7 +142,17 @@ def main():
                 stamp=next(iter(stamps))
                 if stamp and stamp[:10]!=day:
                     stats["timestamp_date_inconsistent"]+=1
-                dist=book["odds"]["3連単"]
+                # Proven exact 2nd/3rd rank transposition in sealed collector:
+                # all 74,034 ordered combos of 327 overlaps equal public
+                # final odds only after (1st,2nd,3rd)->(1st,3rd,2nd).
+                # Keep immutable encrypted originals untouched.
+                raw_dist=book["odds"]["3連単"]
+                dist={}
+                for raw_key,price in raw_dist.items():
+                    a,b,c=raw_key.split("-")
+                    corrected_key="-".join((a,c,b))
+                    if corrected_key in dist:raise AssertionError("duplicate after permutation")
+                    dist[corrected_key]=price
                 inverse=sum(1/float(x) for x in dist.values())
                 stats["verified_full_seven_type_books"]+=1
                 daily[day]["verified_full_seven_type_books"]+=1
@@ -258,12 +268,14 @@ def main():
             and stats["official_paid_vs_official_result_disagreement"]==0
             and stats["timestamp_date_inconsistent"]==0)
     # An audit can succeed computationally yet BLOCK all betting/ROI.
-    status="PRICE_INTEGRITY_OK_FOR_EXPLORATORY_WEEKLY_FORMATIONS" if viable else "BLOCKED_PRICE_VS_OFFICIAL_PAYOUT"
+    status="PRICE_INTEGRITY_OK_AFTER_EXPLICIT_ROLE23_PERMUTATION" if viable else "BLOCKED_PRICE_VS_OFFICIAL_PAYOUT"
     report={
       "week_no":1,"period":[START,END],
       "status":status,"actual_backtest_roi_computed":False,
       "do_not_buy_or_issue_profit_until_integrity_passes":not viable,
       "original_V6_and_C1_unchanged":True,
+      "archive_role2_role3_swapped_in_reader_only":True,
+      "unmodified_ciphertext_storage":True,
       "secrets_or_raw_quoted_odds_exported":False,
       "number_of_authenticated_files":stats["authenticated_ciphertext_files"],
       "coverage":dict(stats),
