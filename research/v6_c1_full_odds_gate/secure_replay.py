@@ -129,7 +129,7 @@ def simplify(name,rid,day,entry,gate_report=None):
         res["distinct_supported_trios"]=gate_report["distinct_supported_trios"]
     return res
 
-def outcome_audit(all_events,decisions):
+def outcome_audit(all_events,decisions,quoted):
     # This call is executed AFTER every candidate formation was independently
     # selected and a SHA256 seal recorded. Source itself requires verified
     # official payout match. No label enters selection/model.
@@ -138,12 +138,21 @@ def outcome_audit(all_events,decisions):
     summary={};month={};hits_by_model={}
     for name,rows in decisions.items():
         stats=Counter();bym=defaultdict(Counter)
+        full_price_proxy=Counter();proxy_month=defaultdict(Counter)
         largest=[]
         for d in rows:
             rid=d["race_id"];e=all_events.get(rid)
             if e is None:raise AssertionError(("No result card",rid))
             true="-".join(e["order"][:3])
             winner=true in d["tickets"]
+            quote=quoted[name][rid]
+            proxy_paid=round(100*float(quote[true])) if winner else 0
+            for proxy_stats in (full_price_proxy,proxy_month[race_month(d["date"])]):
+                proxy_stats["races"]+=1
+                proxy_stats["stake_yen"]+=d["stake_yen"]
+                proxy_stats["payout_yen"]+=proxy_paid
+                proxy_stats["hits"]+=int(winner)
+                proxy_stats["ticket_points"]+=d["points"]
             status="verified_loss";paid=0
             if winner:
                 if rid in conflicts:status="official_payout_conflict"
@@ -151,6 +160,9 @@ def outcome_audit(all_events,decisions):
                 elif "-".join(official[rid][0])!=true:status="official_podium_disagreement"
                 else:
                     paid=official[rid][1];status="verified_win"
+                    stats["verified_payout_comparison_count"]+=1
+                    if abs(paid-proxy_paid)>1:
+                        stats["verified_payout_does_not_match_final_quote"]+=1
             z=stats
             z["all_selected"]+=1
             z["settle_"+status]+=1
@@ -170,10 +182,14 @@ def outcome_audit(all_events,decisions):
                     "roi_pct":round(100*z["payout_yen"]/stake,5) if stake else None,
                     "hit_pct":round(100*z["hits"]/z["races"],5) if z["races"] else None}
         summary[name]={"overall":report(stats),
+                       "historical_final_quote_proxy_all_selected":report(full_price_proxy),
+                       "official_payout_matches_final_quote_pct":round(100*(stats["verified_payout_comparison_count"]-stats["verified_payout_does_not_match_final_quote"])/stats["verified_payout_comparison_count"],4) if stats["verified_payout_comparison_count"] else None,
+                       "official_payout_quote_mismatches":stats["verified_payout_does_not_match_final_quote"],
                        "settlement_status":{k:v for k,v in stats.items() if k.startswith("settle_")},
                        "top5_paid":[{"payout_yen":v,"race_id":rid,"date":day,"formation":f}
                                     for v,rid,day,f in sorted(largest,reverse=True)[:5]]}
         month[name]={dt:report(v) for dt,v in sorted(bym.items())}
+        summary[name]["historical_final_quote_proxy_by_month"]={dt:report(v) for dt,v in sorted(proxy_month.items())}
         hits_by_model[name]={d["race_id"] for d in rows if "-".join(all_events[d["race_id"]]["order"][:3]) in d["tickets"]}
     comparisons={
        "old_c1_vs_new_gate":{
@@ -192,6 +208,8 @@ def main():
     calibrator=read_model()
     counters=Counter();by_month=defaultdict(Counter)
     decisions={model:[] for model in MODELS}
+    # Keep only bought ticket quotes in ephemeral RAM, never persist prices.
+    quoted={model:{} for model in MODELS}
     seen_ids=set()
     for day,rid,book in source_days(counters):
         m=race_month(day)
@@ -232,14 +250,17 @@ def main():
         b1,_=select(card,p1,prices)
         if b0:
             decisions["old_v6_all_buy"].append(simplify("old_v6_all_buy",rid,day,b0))
+            quoted["old_v6_all_buy"][rid]={t:prices[tuple(t.split("-"))] for t in b0["tickets"]}
             by_month[m]["old_v6_all_buy"]+=1
         if b1:
             decisions["old_c1_all_buy"].append(simplify("old_c1_all_buy",rid,day,b1))
+            quoted["old_c1_all_buy"][rid]={t:prices[tuple(t.split("-"))] for t in b1["tickets"]}
             by_month[m]["old_c1_all_buy"]+=1
             ok,reason=decide(b1,p0,p1,prices,triop)
             counters["gate_"+reason["reason"]]+=1
             if ok:
                 decisions["c1_new_gate"].append(simplify("c1_new_gate",rid,day,b1,reason))
+                quoted["c1_new_gate"][rid]={t:prices[tuple(t.split("-"))] for t in b1["tickets"]}
                 by_month[m]["c1_new_gate"]+=1
         else:
             counters["candidate_rejected_by_original_select"]+=1
@@ -252,7 +273,7 @@ def main():
         "coverage":dict(counters),
         "month_coverage":{k:dict(v) for k,v in by_month.items()},
         "selected":{k:len(v) for k,v in decisions.items()}},ensure_ascii=False),flush=True)
-    totals,month,comparison,payout_source=outcome_audit(all_events,decisions)
+    totals,month,comparison,payout_source=outcome_audit(all_events,decisions,quoted)
     report={
         "status":"FULL_SEVEN_BET_VAULT_FEB_APR_REPLAY_COMPLETE",
         "period":[START,END],
@@ -273,12 +294,14 @@ def main():
                               "max_trio_model_to_market_ratio":1.35,
                               "minimum_formation_flat_EV_in_both_models":1.2},
         "official_settlement":totals,"settlement_by_month":month,
+        "final_quote_proxy_is_not_official_payout":True,
         "comparisons":comparison,
         "limitations":["Results are IN SAMPLE for V6 and V6-C1, so not evidence of prospective profitability.",
                        "Sealed odds are postrace FINAL and not actual preclose bettable prices.",
                        "Gate is a PREDECLARED hypothesis and must not be tuned using these returns.",
                        "The gate relies on related 3renpuku and 3rentan pools, not an independent prediction model.",
                        "Only male valid 5-9 rider events with positive complete source prices and matching racecards are evaluated.",
+                       "Final quote proxy includes hits without available official payout and MUST NOT be misrepresented as verified official return.",
                        "No encrypted source plaintext or private key is exported."]}
     OUT.parent.mkdir(parents=True,exist_ok=True)
     OUT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
