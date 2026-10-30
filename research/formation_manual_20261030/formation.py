@@ -78,7 +78,7 @@ def form(cars, first, second, third, *, type="custom", why=""):
     def label(x):
         return ALL if x == universe else "".join(x)
     return Shape(type, why, a, b, c, tickets,
-                 "-".join((label(a), label(b), label(c)))
+                 "-".join((label(a), label(b), label(c))))
 
 
 def box(cars, selected, *, why=""):
@@ -91,9 +91,10 @@ def box(cars, selected, *, why=""):
 
 
 def top_two_flip(cars, pair, thirds=ALL, *, why="", type="one_two_flip"):
-    a, b = _slot(pair, normalize_cars(cars))
-    if len((a, b)) != 2:
+    pair = _slot(pair, normalize_cars(cars))
+    if len(pair) != 2:
         raise ValueError("Exactly 2 one-two riders required")
+    a, b = pair
     return form(cars, (a, b), (a, b), thirds, type=type, why=why)
 
 
