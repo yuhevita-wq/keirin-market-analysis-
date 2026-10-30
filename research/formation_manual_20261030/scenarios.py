@@ -259,15 +259,24 @@ def construct_candidates(cars,probabilities:Mapping[Ticket,float],positions=None
     # Each scenario remains a separate shape. Distinct scenario unions are
     # deliberately created without merging slots (which would add invented
     # tickets). A cost cap is NEVER silently imposed.
-    roots=[x for x in scenarios if x.scenario in (
-        "top_two_flip","first_fixed_swap","second_fixed",
-        "third_fixed","sandwich","same_line_one_two_flip","line_leader_exhausts")]
-    for left in roots[:4]:
-        for right in roots[4:8]:
-            if left.pack.tickets==right.pack.tickets:continue
-            append("multiple_readings",
-                   f"独立した2つの読みを併用：{left.scenario} + {right.scenario}",
-                   *left.pack.shapes,*right.pack.shapes)
+    by_kind=defaultdict(list)
+    for item in scenarios:
+        by_kind[item.scenario].append(item)
+    meaningful_pairs=(
+        ("top_two_flip","sandwich"),
+        ("same_line_one_two_flip","second_fixed"),
+        ("line_leader_exhausts","third_fixed"),
+        ("first_fixed_swap","top_two_flip"),
+        ("first_fixed_swap","third_fixed"),
+        ("second_fixed","sandwich"),
+    )
+    for left_kind,right_kind in meaningful_pairs:
+        for left in by_kind[left_kind][:2]:
+            for right in by_kind[right_kind][:2]:
+                if left.pack.tickets==right.pack.tickets:continue
+                append("multiple_readings",
+                       f"独立した2つの読みを併用：{left_kind} + {right_kind}",
+                       *left.pack.shapes,*right.pack.shapes)
 
     # Resource cap on number of listed alternatives only. NO cap on ticket count.
     return tuple(scenarios[:max_scenario_groups])
