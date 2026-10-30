@@ -12,6 +12,7 @@ from collections import Counter,defaultdict
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
+sys.path.insert(0,str(ROOT))
 sys.path.insert(0,str(ROOT/"research/independent_trifecta_2023"))
 sys.path.insert(0,str(ROOT/"research/independent_trifecta_2024"))
 sys.path.insert(0,str(ROOT/"research/v6_january_2023_formation_ev"))
@@ -23,7 +24,7 @@ import v5_rider_score_role_size_interactions as v5
 import v6_opponent_competition_structure as v6
 import weak_rider_podium_zero_excluded as weak
 from v8_targeted_weak_podium_calibration import row_probs
-from prepare import parse_market, select, MIN_POINTS,MAX_POINTS,MIN_FLAT_EV,MIN_COMPOSITE,MIN_PSET,MIN_VALUE_TICKETS,MIN_VALUE_SHARE,MAX_SEEDS
+from research.v6_january_2023_formation_ev.prepare import parse_market, select, MIN_POINTS,MAX_POINTS,MIN_FLAT_EV,MIN_COMPOSITE,MIN_PSET,MIN_VALUE_TICKETS,MIN_VALUE_SHARE,MAX_SEEDS
 from apply import read_model,apply_calibration
 
 START="2023-02-01"
