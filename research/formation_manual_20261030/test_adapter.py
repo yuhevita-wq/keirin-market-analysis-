@@ -7,7 +7,7 @@ except ImportError:from adapter import generate_preview,authorize_purchase
 def main():
     cars="1234567"
     dist={x:1/210 for x in permutations(cars,3)}
-    prices={x:40.0 for x in dist}
+    prices={x:100.0 for x in dist}
     event={
         "scores":{c:80+int(c) for c in cars},
         "positions":{"1":(1,1,3),"2":(1,2,3),"3":(1,3,3),
@@ -42,7 +42,7 @@ def main():
         pass
     else:raise AssertionError("leak of official result into model decision")
     before=tuple((x.forms,x.points) for x in prev["alternatives"])
-    changed_odds=generate_preview(event,dist,{x:80.0 for x in dist})
+    changed_odds=generate_preview(event,dist,{x:200.0 for x in dist})
     # No post-hoc odds-seeded formation generation: same structure types.
     assert set(x.label for x in prev["alternatives"])==set(x.label for x in changed_odds["alternatives"])
     assert all(x.points>0 for x in changed_odds["alternatives"])
