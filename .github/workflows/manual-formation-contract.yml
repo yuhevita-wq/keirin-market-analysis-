@@ -1,0 +1,27 @@
+name: manual formation engine | 40-page spec contract and scenario tests
+
+on:
+  push:
+    branches:
+      - research/manual-driven-formation-v1
+    paths:
+      - 'research/manual_driven_formation/**'
+      - '.github/workflows/manual-formation-contract.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contracts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            research/manual_driven_formation
+      - name: Validate source and all manual-conformance scenarios
+        run: |
+          python -m py_compile research/manual_driven_formation/engine.py
+          python research/manual_driven_formation/engine.py
