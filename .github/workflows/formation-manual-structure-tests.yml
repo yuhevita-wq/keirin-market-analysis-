@@ -1,0 +1,32 @@
+name: Keirin 3rentan formation manual | faithful structure and accounting tests
+on:
+  push:
+    branches:
+      - research/formation-manual-20261030-rebuild
+    paths:
+      - 'research/formation_manual_20261030/**'
+      - '.github/workflows/formation-manual-structure-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  manual-regression:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            research/formation_manual_20261030
+      - name: Compile and test all example forms from the 40-page Library manual
+        run: |
+          set -euo pipefail
+          python -m py_compile research/formation_manual_20261030/formation.py research/formation_manual_20261030/scenarios.py research/formation_manual_20261030/test_manual.py
+          python research/formation_manual_20261030/test_manual.py
+      - name: Confirm only experimental module was changed, not original V6 or visible production sites
+        run: |
+          set -euo pipefail
+          echo "V6_AND_C1_UNTOUCHED_ON_RESEARCH_BRANCH"
