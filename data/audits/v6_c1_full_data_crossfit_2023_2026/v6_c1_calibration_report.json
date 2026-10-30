@@ -1,0 +1,506 @@
+{
+  "state": "V6_C1_FULL_DATA_CROSSVALIDATED_CALIBRATION_COMPLETE",
+  "model_state": "TRAINED_FULL_2023_2026_ODDS_FREE_CROSSVALIDATED_CALIBRATOR",
+  "crossfit_type": "leave-one-calendar-year-out",
+  "years": [
+    "2023",
+    "2024",
+    "2025",
+    "2026"
+  ],
+  "cv_warning": "2023 Jan-Oct is in base V6 training; all 2024-26 were previously examined. These are diagnostic blocked CVs, not pristine future data",
+  "model_selection_warning": "Stage selected using same historical CV results. True future improvement is unproven.",
+  "fit_warning": "Final fit on ALL historical years: full-data NLL/Brier are IN SAMPLE, not independent validation",
+  "source_coverage": {
+    "2023_source": 23440,
+    "2023_eligible": 23148,
+    "2023_excluded_UNKNOWN_ZERO_OR_INVALID_SCORE": 292,
+    "2024_source": 25348,
+    "2024_eligible": 25007,
+    "2024_excluded_UNKNOWN_ZERO_OR_INVALID_SCORE": 341,
+    "2025_source": 24635,
+    "2025_eligible": 24316,
+    "2025_excluded_UNKNOWN_ZERO_OR_INVALID_SCORE": 319,
+    "2026_source": 11797,
+    "2026_eligible": 11594,
+    "2026_excluded_UNKNOWN_ZERO_OR_INVALID_SCORE": 203
+  },
+  "observed_pattern_counts": {
+    "ABB": 12214,
+    "AAB": 28833,
+    "AAA": 19133,
+    "ABA": 12582,
+    "ABC": 11303
+  },
+  "crossfit_by_stage_year": {
+    "v6_frozen": {
+      "2023": {
+        "evaluation": {
+          "races": 23148,
+          "sum_nll": 99574.90920727247,
+          "sum_brier": 22351.400165814863,
+          "mean_nll": 4.301663608,
+          "mean_brier": 0.965586667,
+          "winner_probability_sum": 746.05948,
+          "winner_mean_probability_pct": 3.222998,
+          "mass_min": 1.0,
+          "mass_max": 1.0
+        },
+        "fit": {
+          "success": true,
+          "message": "frozen"
+        },
+        "fit_races": 60917
+      },
+      "2024": {
+        "evaluation": {
+          "races": 25007,
+          "sum_nll": 107116.93291664857,
+          "sum_brier": 24131.429349908987,
+          "mean_nll": 4.283477943,
+          "mean_brier": 0.964986978,
+          "winner_probability_sum": 823.42129,
+          "winner_mean_probability_pct": 3.292763,
+          "mass_min": 1.0,
+          "mass_max": 1.0
+        },
+        "fit": {
+          "success": true,
+          "message": "frozen"
+        },
+        "fit_races": 59058
+      },
+      "2025": {
+        "evaluation": {
+          "races": 24316,
+          "sum_nll": 105117.6052613431,
+          "sum_brier": 23475.4093856593,
+          "mean_nll": 4.32298097,
+          "mean_brier": 0.965430555,
+          "winner_probability_sum": 793.51795,
+          "winner_mean_probability_pct": 3.263357,
+          "mass_min": 1.0,
+          "mass_max": 1.0
+        },
+        "fit": {
+          "success": true,
+          "message": "frozen"
+        },
+        "fit_races": 59749
+      },
+      "2026": {
+        "evaluation": {
+          "races": 11594,
+          "sum_nll": 50364.94640414939,
+          "sum_brier": 11215.585674301194,
+          "mean_nll": 4.344052648,
+          "mean_brier": 0.967361193,
+          "winner_probability_sum": 363.77313,
+          "winner_mean_probability_pct": 3.137598,
+          "mass_min": 1.0,
+          "mass_max": 1.0
+        },
+        "fit": {
+          "success": true,
+          "message": "frozen"
+        },
+        "fit_races": 72471
+      }
+    },
+    "pattern": {
+      "2023": {
+        "evaluation": {
+          "races": 23148,
+          "sum_nll": 99542.38462383163,
+          "sum_brier": 22345.522019484015,
+          "mean_nll": 4.300258537,
+          "mean_brier": 0.965332729,
+          "winner_probability_sum": 783.88709,
+          "winner_mean_probability_pct": 3.386414,
+          "mass_min": 0.9657635789,
+          "mass_max": 1.1756668167
+        },
+        "fit": {
+          "success": true,
+          "iterations": 10,
+          "gradient_norm": 1e-08,
+          "objective": -0.003213125
+        },
+        "fit_races": 60917
+      },
+      "2024": {
+        "evaluation": {
+          "races": 25007,
+          "sum_nll": 107044.19410544701,
+          "sum_brier": 24122.726909672172,
+          "mean_nll": 4.280569205,
+          "mean_brier": 0.964638977,
+          "winner_probability_sum": 863.3852,
+          "winner_mean_probability_pct": 3.452574,
+          "mass_min": 0.9744136123,
+          "mass_max": 1.1699149575
+        },
+        "fit": {
+          "success": true,
+          "iterations": 10,
+          "gradient_norm": 0.0,
+          "objective": -0.00266292
+        },
+        "fit_races": 59058
+      },
+      "2025": {
+        "evaluation": {
+          "races": 24316,
+          "sum_nll": 105031.5592544739,
+          "sum_brier": 23465.718745273,
+          "mean_nll": 4.319442312,
+          "mean_brier": 0.965032026,
+          "winner_probability_sum": 829.40337,
+          "winner_mean_probability_pct": 3.410937,
+          "mass_min": 0.9658234271,
+          "mass_max": 1.1454020351
+        },
+        "fit": {
+          "success": true,
+          "iterations": 10,
+          "gradient_norm": 0.0,
+          "objective": -0.0023833
+        },
+        "fit_races": 59749
+      },
+      "2026": {
+        "evaluation": {
+          "races": 11594,
+          "sum_nll": 50331.41478878218,
+          "sum_brier": 11211.371225591198,
+          "mean_nll": 4.341160496,
+          "mean_brier": 0.966997691,
+          "winner_probability_sum": 382.395,
+          "winner_mean_probability_pct": 3.298215,
+          "mass_min": 0.9765635697,
+          "mass_max": 1.1713087048
+        },
+        "fit": {
+          "success": true,
+          "iterations": 10,
+          "gradient_norm": 1e-08,
+          "objective": -0.002704033
+        },
+        "fit_races": 72471
+      }
+    },
+    "pattern_pband": {
+      "2023": {
+        "evaluation": {
+          "races": 23148,
+          "sum_nll": 99526.38783414196,
+          "sum_brier": 22344.176820780587,
+          "mean_nll": 4.299567472,
+          "mean_brier": 0.965274616,
+          "winner_probability_sum": 793.70673,
+          "winner_mean_probability_pct": 3.428835,
+          "mass_min": 0.9745177384,
+          "mass_max": 1.2158896379
+        },
+        "fit": {
+          "success": true,
+          "iterations": 28,
+          "gradient_norm": 4e-07,
+          "objective": -0.004024731
+        },
+        "fit_races": 60917
+      },
+      "2024": {
+        "evaluation": {
+          "races": 25007,
+          "sum_nll": 107026.80713771266,
+          "sum_brier": 24121.973197621795,
+          "mean_nll": 4.279873921,
+          "mean_brier": 0.964608837,
+          "winner_probability_sum": 877.60506,
+          "winner_mean_probability_pct": 3.509438,
+          "mass_min": 0.9918585481,
+          "mass_max": 1.2306792091
+        },
+        "fit": {
+          "success": true,
+          "iterations": 26,
+          "gradient_norm": 8.3e-07,
+          "objective": -0.003453507
+        },
+        "fit_races": 59058
+      },
+      "2025": {
+        "evaluation": {
+          "races": 24316,
+          "sum_nll": 105023.67185694279,
+          "sum_brier": 23465.692028853224,
+          "mean_nll": 4.319117941,
+          "mean_brier": 0.965030927,
+          "winner_probability_sum": 846.83829,
+          "winner_mean_probability_pct": 3.482638,
+          "mass_min": 0.9490315104,
+          "mass_max": 1.1582290433
+        },
+        "fit": {
+          "success": true,
+          "iterations": 28,
+          "gradient_norm": 2.5e-07,
+          "objective": -0.003282025
+        },
+        "fit_races": 59749
+      },
+      "2026": {
+        "evaluation": {
+          "races": 11594,
+          "sum_nll": 50326.08755886603,
+          "sum_brier": 11211.649741820198,
+          "mean_nll": 4.340701014,
+          "mean_brier": 0.967021713,
+          "winner_probability_sum": 389.65352,
+          "winner_mean_probability_pct": 3.36082,
+          "mass_min": 0.9705807079,
+          "mass_max": 1.1993164695
+        },
+        "fit": {
+          "success": true,
+          "iterations": 26,
+          "gradient_norm": 5.6e-07,
+          "objective": -0.003553245
+        },
+        "fit_races": 72471
+      }
+    },
+    "pattern_pband_role": {
+      "2023": {
+        "evaluation": {
+          "races": 23148,
+          "sum_nll": 99519.04986352207,
+          "sum_brier": 22342.513967537932,
+          "mean_nll": 4.299250469,
+          "mean_brier": 0.965202781,
+          "winner_probability_sum": 795.75187,
+          "winner_mean_probability_pct": 3.43767,
+          "mass_min": 0.9227293816,
+          "mass_max": 1.1922252054
+        },
+        "fit": {
+          "success": true,
+          "iterations": 35,
+          "gradient_norm": 2.41e-06,
+          "objective": -0.004709306
+        },
+        "fit_races": 60917
+      },
+      "2024": {
+        "evaluation": {
+          "races": 25007,
+          "sum_nll": 107003.4096924862,
+          "sum_brier": 24120.21528839682,
+          "mean_nll": 4.278938285,
+          "mean_brier": 0.964538541,
+          "winner_probability_sum": 879.57618,
+          "winner_mean_probability_pct": 3.51732,
+          "mass_min": 0.9497154305,
+          "mass_max": 1.2005213085
+        },
+        "fit": {
+          "success": true,
+          "iterations": 39,
+          "gradient_norm": 1.11e-06,
+          "objective": -0.003852853
+        },
+        "fit_races": 59058
+      },
+      "2025": {
+        "evaluation": {
+          "races": 24316,
+          "sum_nll": 105030.48663734223,
+          "sum_brier": 23465.62618799141,
+          "mean_nll": 4.3193982,
+          "mean_brier": 0.96502822,
+          "winner_probability_sum": 848.40746,
+          "winner_mean_probability_pct": 3.489091,
+          "mass_min": 0.9328344907,
+          "mass_max": 1.1872433587
+        },
+        "fit": {
+          "success": true,
+          "iterations": 35,
+          "gradient_norm": 1e-06,
+          "objective": -0.004120528
+        },
+        "fit_races": 59749
+      },
+      "2026": {
+        "evaluation": {
+          "races": 11594,
+          "sum_nll": 50314.034106574494,
+          "sum_brier": 11210.85707000627,
+          "mean_nll": 4.339661386,
+          "mean_brier": 0.966953344,
+          "winner_probability_sum": 390.58754,
+          "winner_mean_probability_pct": 3.368876,
+          "mass_min": 0.9583108263,
+          "mass_max": 1.2148268623
+        },
+        "fit": {
+          "success": true,
+          "iterations": 38,
+          "gradient_norm": 2.05e-06,
+          "objective": -0.004045296
+        },
+        "fit_races": 72471
+      }
+    },
+    "pattern_pband_role_interactions": {
+      "2023": {
+        "evaluation": {
+          "races": 23148,
+          "sum_nll": 99435.11007192788,
+          "sum_brier": 22339.91107295939,
+          "mean_nll": 4.295624247,
+          "mean_brier": 0.965090335,
+          "winner_probability_sum": 798.47032,
+          "winner_mean_probability_pct": 3.449414,
+          "mass_min": 0.8194949493,
+          "mass_max": 1.0728902682
+        },
+        "fit": {
+          "success": true,
+          "iterations": 61,
+          "gradient_norm": 9.5e-07,
+          "objective": -0.007711186
+        },
+        "fit_races": 60917
+      },
+      "2024": {
+        "evaluation": {
+          "races": 25007,
+          "sum_nll": 106939.53737157138,
+          "sum_brier": 24118.55025289634,
+          "mean_nll": 4.276384107,
+          "mean_brier": 0.964471958,
+          "winner_probability_sum": 882.6716,
+          "winner_mean_probability_pct": 3.529698,
+          "mass_min": 0.8612612927,
+          "mass_max": 1.123349259
+        },
+        "fit": {
+          "success": true,
+          "iterations": 59,
+          "gradient_norm": 1.28e-06,
+          "objective": -0.007311637
+        },
+        "fit_races": 59058
+      },
+      "2025": {
+        "evaluation": {
+          "races": 24316,
+          "sum_nll": 104950.68261476554,
+          "sum_brier": 23464.104480157184,
+          "mean_nll": 4.316116245,
+          "mean_brier": 0.964965639,
+          "winner_probability_sum": 851.83066,
+          "winner_mean_probability_pct": 3.503169,
+          "mass_min": 0.8210299618,
+          "mass_max": 1.0823709733
+        },
+        "fit": {
+          "success": true,
+          "iterations": 64,
+          "gradient_norm": 1.07e-06,
+          "objective": -0.007279545
+        },
+        "fit_races": 59749
+      },
+      "2026": {
+        "evaluation": {
+          "races": 11594,
+          "sum_nll": 50282.70016936879,
+          "sum_brier": 11209.902561781655,
+          "mean_nll": 4.336958786,
+          "mean_brier": 0.966871016,
+          "winner_probability_sum": 392.28049,
+          "winner_mean_probability_pct": 3.383478,
+          "mass_min": 0.8550386712,
+          "mass_max": 1.1238048033
+        },
+        "fit": {
+          "success": true,
+          "iterations": 65,
+          "gradient_norm": 1.06e-06,
+          "objective": -0.007306502
+        },
+        "fit_races": 72471
+      }
+    }
+  },
+  "crossfit_summary": {
+    "v6_frozen": {
+      "races": 84065,
+      "mean_nll": 4.308266149,
+      "mean_brier": 0.965607858,
+      "sum_nll": 362174.393789,
+      "sum_brier": 81173.824576
+    },
+    "pattern": {
+      "races": 84065,
+      "mean_nll": 4.30559154,
+      "mean_brier": 0.965269005,
+      "sum_nll": 361949.552773,
+      "sum_brier": 81145.3389
+    },
+    "pattern_pband": {
+      "races": 84065,
+      "mean_nll": 4.305037226,
+      "mean_brier": 0.965247033,
+      "sum_nll": 361902.954388,
+      "sum_brier": 81143.491789
+    },
+    "pattern_pband_role": {
+      "races": 84065,
+      "mean_nll": 4.304609294,
+      "mean_brier": 0.965196128,
+      "sum_nll": 361866.9803,
+      "sum_brier": 81139.212514
+    },
+    "pattern_pband_role_interactions": {
+      "races": 84065,
+      "mean_nll": 4.301528939,
+      "mean_brier": 0.965115903,
+      "sum_nll": 361608.030228,
+      "sum_brier": 81132.468368
+    }
+  },
+  "selected_stage": "pattern_pband_role_interactions",
+  "selected_delta_nll_vs_frozen": 0.00673721,
+  "selected_delta_brier_vs_frozen": 0.000491955,
+  "fit_full_baseline": {
+    "races": 84065,
+    "sum_nll": 362174.3937894135,
+    "sum_brier": 81173.82457568435,
+    "mean_nll": 4.308266149,
+    "mean_brier": 0.965607858,
+    "winner_probability_sum": 2726.77185,
+    "winner_mean_probability_pct": 3.243647,
+    "mass_min": 1.0,
+    "mass_max": 1.0
+  },
+  "fit_full_calibrated": {
+    "races": 84065,
+    "sum_nll": 361525.8172921648,
+    "sum_brier": 81128.32736848158,
+    "mean_nll": 4.30055097,
+    "mean_brier": 0.965066643,
+    "winner_probability_sum": 2928.60845,
+    "winner_mean_probability_pct": 3.483743,
+    "mass_min": 0.8399634718,
+    "mass_max": 1.0989957248
+  },
+  "full_data_fit_improvement_nll": 0.007715179,
+  "full_data_fit_improvement_brier": 0.000541215,
+  "model_saved": "v6_c1_fitted_model.json",
+  "no_market_odds_teacher": true,
+  "v6_untouched": true
+}
