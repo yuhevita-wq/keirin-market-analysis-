@@ -1,0 +1,137 @@
+name: V6 full 2023 Jan-Dec disjoint validation vs 2024-trained architecture
+on:
+  push:
+    branches:
+      - research/v6-probability-mass-donor-recipient
+    paths:
+      - 'research/independent_trifecta_2023/v6_2023_full_heldout_refit2024_validation.py'
+      - '.github/workflows/v6-2023-complete-heldout-from-2024.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: v6-2023-complete-heldout-from-2024
+  cancel-in-progress: false
+jobs:
+  complete-2023:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - name: Checkout unchanged V6 algorithms and 2023/2024 source race cards
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/observe.py
+            /research/independent_trifecta_2023/line_dependence_v2.py
+            /research/independent_trifecta_2023/aab_guarded_v3.py
+            /research/independent_trifecta_2023/v4_pattern_floor_2026.py
+            /research/independent_trifecta_2023/v5_rider_score_role_size_interactions.py
+            /research/independent_trifecta_2023/v6_opponent_competition_structure.py
+            /research/independent_trifecta_2024/calibration_audit.py
+            /research/independent_trifecta_2024/validate_2025.py
+            /data/a_class_12/2023_*/races.csv
+            /data/a_class_12/2023_*/entries.csv
+            /data/a3_challenge/2023_*/races.csv
+            /data/a3_challenge/2023_*/entries.csv
+            /data/2023/**/races.csv
+            /data/2023/**/entries.csv
+            /data/grade_races/g1g2/*2023*.zip
+            /data/grade_races/g3/2023/*.zip
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+            /data/a_class_12/2024_*/races.csv
+            /data/a_class_12/2024_*/entries.csv
+            /data/a3_challenge/2024_*/races.csv
+            /data/a3_challenge/2024_*/entries.csv
+            /data/2024/**/races.csv
+            /data/2024/**/entries.csv
+            /data/grade_races/g1g2/*2024*.zip
+            /data/grade_races/g3/2024/*.zip
+            /data/result_universe_v2/combined/results_2024.jsonl.gz
+            /data/a_class_12/2025_*/races.csv
+            /data/a_class_12/2025_*/entries.csv
+            /data/a3_challenge/2025_*/races.csv
+            /data/a3_challenge/2025_*/entries.csv
+            /data/2025/**/races.csv
+            /data/2025/**/entries.csv
+            /data/grade_races/g1g2/*2025*.zip
+            /data/grade_races/g3/2025/*.zip
+            /data/result_universe_v2/combined/results_2025.jsonl.gz
+            /data/a_class_12/2026_*/races.csv
+            /data/a_class_12/2026_*/entries.csv
+            /data/a_class_12/pilot_2026*/races.csv
+            /data/a_class_12/pilot_2026*/entries.csv
+            /data/a3_challenge/2026_*/races.csv
+            /data/a3_challenge/2026_*/entries.csv
+            /data/2026_h1/**/races.csv
+            /data/2026_h1/**/entries.csv
+            /data/2026_future_block1/**/races.csv
+            /data/2026_future_block1/**/entries.csv
+            /data/grade_races/g3/2026_h1/*.zip
+            /data/result_universe_v2/combined/results_2026.jsonl.gz
+            /research/independent_trifecta_2023/weak_rider_podium_zero_excluded.py
+            /research/independent_trifecta_2023/v8_targeted_weak_podium_calibration.py
+            /research/independent_trifecta_2023/v10_rank_role_slot_v6_calibration.py
+            /data/a_class_12/2023_*/payouts.csv
+            /data/a_class_12/2024_*/payouts.csv
+            /data/a_class_12/2025_*/payouts.csv
+            /data/a_class_12/2026_*/payouts.csv
+            /data/a_class_12/pilot_2026*/payouts.csv
+            /data/a3_challenge/2023_*/payouts.csv
+            /data/a3_challenge/2024_*/payouts.csv
+            /data/a3_challenge/2025_*/payouts.csv
+            /data/a3_challenge/2026_*/payouts.csv
+            /data/2023/**/payouts.csv
+            /data/2024/**/payouts.csv
+            /data/2025/**/payouts.csv
+            /data/2026_h1/**/payouts.csv
+            /data/2026_future_block1/**/payouts.csv
+            /research/independent_trifecta_2023/v6_settled_payout_only_2023_2026.py
+            /research/independent_trifecta_2023/v6_all_trifecta_75pct_audit.py
+            /research/independent_trifecta_2023/v6_probability_donor_recipient_structural_audit.py            /research/independent_trifecta_2023/v6_2023_full_heldout_refit2024_validation.py
+      - name: Confirm original V6 algorithms and source unchanged
+        run: |
+          set -euo pipefail
+          python -m py_compile research/independent_trifecta_2023/v6_2023_full_heldout_refit2024_validation.py
+          test "$(git hash-object research/independent_trifecta_2023/observe.py)" = "19701f16c80fcc95dc8c032ed47b80dfcfe93bc6"
+          test "$(git hash-object research/independent_trifecta_2023/line_dependence_v2.py)" = "2bb7362490b7b7f7eb0e8390face22f248649216"
+          test -s data/result_universe_v2/combined/results_2023.jsonl.gz
+          test -s data/result_universe_v2/combined/results_2024.jsonl.gz
+          echo COMPLETE_2023_NO_ORIGINAL_V6_SOURCE_CHANGED
+      - name: Fit same algorithms on 2024 ONLY then evaluate all 2023 dates
+        run: |
+          set -euo pipefail
+          python research/independent_trifecta_2023/v6_2023_full_heldout_refit2024_validation.py
+      - name: Verify full Jan-Dec 2023, all tickets, mass conservation
+        run: |
+          python - <<'PY'
+          import json
+          p="data/audits/v6_2023_full_calendar_heldout_from_2024_fitting.json"
+          d=json.load(open(p))
+          assert d["state"]=="COMPLETE_2023_HISTORICAL_HELDOUT_FROM_2024_REFIT_V6_VALIDATION"
+          assert d["source_races_2023"]==23440 and d["tested_2023_full_year"]
+          assert d["coverage"]["all_2023_source_races"]==23440
+          assert d["coverage"]["evaluated"]>22000
+          assert len(d["monthly_pattern_validation"])==12
+          assert d["no_winning_payout_gate"] and d["no_odds_teacher"]
+          n=d["coverage"]["evaluated"];t=d["coverage"]["all_trifecta_probabilities"]
+          for axis,group in d["cells"].items():
+              assert sum(row["tickets"] for row in group.values())==t
+              assert sum(row["actual"] for row in group.values())==n
+              assert abs(sum(row["expected"] for row in group.values())-n)<.03
+          print("COMPLETE_2023_ALL_SOURCE_RACES_AND_ALL_VALID_3REN_TAN_MASS_VERIFIED")
+          PY
+      - name: Save full 2023 yearly and monthly detailed structural audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v6-complete-2023-JanDec-2024-trained-reverse-holdout
+          path: data/audits/v6_2023_full_calendar_heldout_from_2024_fitting.json
+          retention-days: 90
+          if-no-files-found: warn
