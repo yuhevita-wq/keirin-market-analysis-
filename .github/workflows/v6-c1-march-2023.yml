@@ -1,0 +1,157 @@
+name: March 2023 | V6 vs calibrated V6-C1 formations official payouts
+on:
+  push:
+    branches:
+      - research/v6-c1-march-2023-simulation
+    paths:
+      - 'research/v6_c1_march_2023/**'
+      - '.github/workflows/v6-c1-march-2023.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: v6-c1-mar-2023-formation-ev
+  cancel-in-progress: true
+jobs:
+  march-comparative-formation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - name: Checkout original V6 historical cards and final odds
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/observe.py
+            /research/independent_trifecta_2023/line_dependence_v2.py
+            /research/independent_trifecta_2023/aab_guarded_v3.py
+            /research/independent_trifecta_2023/v4_pattern_floor_2026.py
+            /research/independent_trifecta_2023/v5_rider_score_role_size_interactions.py
+            /research/independent_trifecta_2023/v6_opponent_competition_structure.py
+            /research/independent_trifecta_2024/calibration_audit.py
+            /research/independent_trifecta_2024/validate_2025.py
+            /data/a_class_12/2023_*/races.csv
+            /data/a_class_12/2023_*/entries.csv
+            /data/a3_challenge/2023_*/races.csv
+            /data/a3_challenge/2023_*/entries.csv
+            /data/2023/**/races.csv
+            /data/2023/**/entries.csv
+            /data/grade_races/g1g2/*2023*.zip
+            /data/grade_races/g3/2023/*.zip
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+            /data/a_class_12/2024_*/races.csv
+            /data/a_class_12/2024_*/entries.csv
+            /data/a3_challenge/2024_*/races.csv
+            /data/a3_challenge/2024_*/entries.csv
+            /data/2024/**/races.csv
+            /data/2024/**/entries.csv
+            /data/grade_races/g1g2/*2024*.zip
+            /data/grade_races/g3/2024/*.zip
+            /data/result_universe_v2/combined/results_2024.jsonl.gz
+            /data/a_class_12/2025_*/races.csv
+            /data/a_class_12/2025_*/entries.csv
+            /data/a3_challenge/2025_*/races.csv
+            /data/a3_challenge/2025_*/entries.csv
+            /data/2025/**/races.csv
+            /data/2025/**/entries.csv
+            /data/grade_races/g1g2/*2025*.zip
+            /data/grade_races/g3/2025/*.zip
+            /data/result_universe_v2/combined/results_2025.jsonl.gz
+            /data/a_class_12/2026_*/races.csv
+            /data/a_class_12/2026_*/entries.csv
+            /data/a_class_12/pilot_2026*/races.csv
+            /data/a_class_12/pilot_2026*/entries.csv
+            /data/a3_challenge/2026_*/races.csv
+            /data/a3_challenge/2026_*/entries.csv
+            /data/2026_h1/**/races.csv
+            /data/2026_h1/**/entries.csv
+            /data/2026_future_block1/**/races.csv
+            /data/2026_future_block1/**/entries.csv
+            /data/grade_races/g3/2026_h1/*.zip
+            /data/result_universe_v2/combined/results_2026.jsonl.gz
+            /research/independent_trifecta_2023/weak_rider_podium_zero_excluded.py
+            /research/independent_trifecta_2023/v8_targeted_weak_podium_calibration.py
+            /research/independent_trifecta_2023/v10_rank_role_slot_v6_calibration.py
+            /data/a_class_12/2023_*/payouts.csv
+            /data/a_class_12/2024_*/payouts.csv
+            /data/a_class_12/2025_*/payouts.csv
+            /data/a_class_12/2026_*/payouts.csv
+            /data/a_class_12/pilot_2026*/payouts.csv
+            /data/a3_challenge/2023_*/payouts.csv
+            /data/a3_challenge/2024_*/payouts.csv
+            /data/a3_challenge/2025_*/payouts.csv
+            /data/a3_challenge/2026_*/payouts.csv
+            /data/2023/**/payouts.csv
+            /data/2024/**/payouts.csv
+            /data/2025/**/payouts.csv
+            /data/2026_h1/**/payouts.csv
+            /data/2026_future_block1/**/payouts.csv
+            /research/independent_trifecta_2023/v6_settled_payout_only_2023_2026.py
+            /research/independent_trifecta_2023/v6_all_trifecta_75pct_audit.py
+            /research/independent_trifecta_2023/v6_probability_donor_recipient_structural_audit.py
+            /research/independent_trifecta_2023/v6_2023_full_year_donor_recipient.py
+            /data/odds_only/odds_2023.jsonl.gz
+            /research/v6_january_2023_formation_ev/prepare.py
+            /research/v6_january_2023_formation_ev/settle.py
+            /research/v6_c1_full_data/apply.py
+            /data/audits/v6_c1_full_data_crossfit_2023_2026/v6_c1_fitted_model.json
+            /research/v6_c1_march_2023/prepare.py
+            /research/v6_c1_march_2023/settle.py
+      - name: Verify source immutability and saved 84,065-race C1 model
+        run: |
+          set -euo pipefail
+          test "$(git hash-object research/independent_trifecta_2023/observe.py)" = "19701f16c80fcc95dc8c032ed47b80dfcfe93bc6"
+          test "$(git hash-object research/independent_trifecta_2023/line_dependence_v2.py)" = "2bb7362490b7b7f7eb0e8390face22f248649216"
+          test -s data/odds_only/odds_2023.jsonl.gz
+          test -s data/result_universe_v2/combined/results_2023.jsonl.gz
+          python -m py_compile research/v6_c1_march_2023/prepare.py research/v6_c1_march_2023/settle.py
+          python research/v6_c1_full_data/apply.py
+          python - <<'PY'
+          import json
+          m=json.load(open("data/audits/v6_c1_full_data_crossfit_2023_2026/v6_c1_fitted_model.json"))
+          assert m["model_name"]=="V6-C1" and m["total_races"]==84065
+          assert m["selected_stage"]=="pattern_pband_role_interactions"
+          assert m["no_market_odds_in_features_or_labels"]
+          assert len(m["cell_multipliers"])==250
+          print("MAR2023_FROZEN_C1_MODEL_AND_SOURCE_FILES_VERIFIED")
+          PY
+      - name: PRE RESULT — seal V6 and V6-C1 March formations with same January selector
+        run: |
+          set -euo pipefail
+          python research/v6_c1_march_2023/prepare.py
+          test -s data/audits/v6_c1_formation_mar2023/sealed_decision_metadata.json
+          test -s data/audits/v6_c1_formation_mar2023/sealed_V6_formations.jsonl
+          test -s data/audits/v6_c1_formation_mar2023/sealed_V6_C1_formations.jsonl
+      - name: POST SEAL — verify winning official payout and compare actual return
+        run: |
+          set -euo pipefail
+          python research/v6_c1_march_2023/settle.py
+          python - <<'PY'
+          import json,hashlib
+          from pathlib import Path
+          root=Path("data/audits/v6_c1_formation_mar2023")
+          a=json.loads((root/"sealed_decision_metadata.json").read_text())
+          r=json.loads((root/"mar2023_V6_vs_C1_official_roi_report.json").read_text())
+          assert r["state"]=="V6_C1_MAR2023_FORMATION_OFFICIAL_PAYOUT_COMPLETE"
+          assert r["selected_before_joining_results"] is True
+          for model in ("V6","V6-C1"):
+              p=root/("sealed_"+model.replace("-","_")+"_formations.jsonl")
+              assert hashlib.sha256(p.read_bytes()).hexdigest()==a["sha256"][model]
+              assert r["by_model"][model]["verified"]["races"]>0
+              assert r["by_model"][model]["verified"]["stake_yen"]>0
+          print("MAR2023_V6_VS_C1_OFFICIAL_ROI_AND_HASHES_PASS")
+          PY
+      - name: Archive every chosen ticket, verified payout, and comparisons
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: march-2023-V6-vs-calibrated-V6-C1-formations-official-roi
+          path: data/audits/v6_c1_formation_mar2023/
+          retention-days: 90
+          if-no-files-found: warn
