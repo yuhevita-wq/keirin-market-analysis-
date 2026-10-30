@@ -1,0 +1,62 @@
+name: V6-C1 verify full seven-bet archive bridge and fail-closed admission gate
+
+on:
+  push:
+    branches:
+      - research/v6-c1-full-odds-and-race-gate
+    paths:
+      - 'research/v6_c1_full_odds_gate/**'
+      - '.github/workflows/v6-c1-full-odds-gate-preflight.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  archive-and-gate-preflight:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      PRIVATE_KEY_READY: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM != '' }}
+    steps:
+      - name: Checkout lossless encryption archive indices and gate code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/v6_c1_full_odds_gate/admission.py
+            /data/audits/odds_seven_bet_archive_count.json
+            /data/audits/odds_only_export.json
+      - name: Test complete-formation race admission logic
+        run: |
+          set -euo pipefail
+          python -m py_compile research/v6_c1_full_odds_gate/admission.py
+          python research/v6_c1_full_odds_gate/admission.py
+      - name: Validate difference between public odds subset and encrypted full archive
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          audit=json.loads(Path("data/audits/odds_seven_bet_archive_count.json").read_text())
+          partial=json.loads(Path("data/audits/odds_only_export.json").read_text())
+          all2023=audit["year"]["2023"]["confirmed_distinct_race_lower_bound"]
+          public2023=partial["years"]["2023"]["complete_races"]
+          assert all2023>=25085 and public2023==6301
+          assert all2023>public2023*3
+          print("ODDS_SOURCE_ERROR_CONFIRMED",json.dumps({
+            "encrypted_archive_2023_lower_bound":all2023,
+            "public_2023_complete":public2023,
+            "v6_previous_backtests_used_incomplete_public_subset":True
+          }))
+          PY
+      - name: Verify owner-approved sealed archive decryption is available
+        run: |
+          set -euo pipefail
+          if [ "$PRIVATE_KEY_READY" != "true" ]; then
+            echo "::error::Full encrypted archive requires KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM in GitHub Actions secrets; archive exists but decryption was NOT attempted. No guessed/generated key permitted."
+            exit 1
+          fi
+          echo "SECURE_SEVEN_BET_PRIVATE_KEY_SECRET_AVAILABLE"
