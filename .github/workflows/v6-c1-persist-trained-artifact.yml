@@ -1,0 +1,66 @@
+name: V6-C1 persist verified trained model artifact
+
+on:
+  push:
+    branches:
+      - research/v6-c1-full-data-crossfit
+    paths:
+      - .github/workflows/v6-c1-persist-trained-artifact.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  commit-fitted-calibration:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Sparse checkout calibration branch for artifact persistence
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/v6_c1_full_data/calibrate.py
+            /data/audits/v6_c1_full_data_crossfit_2023_2026/**
+      - name: Download completed all-data training artifact from audited GitHub run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p data/audits/v6_c1_full_data_crossfit_2023_2026
+          gh run download 41007540358 --repo yuhevita-wq/keirin-market-analysis- --name v6-c1-trained-all-2023-2026-blocked-crossfit --dir data/audits/v6_c1_full_data_crossfit_2023_2026
+      - name: Verify original completed training data and exact calibration report
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          root=Path("data/audits/v6_c1_full_data_crossfit_2023_2026")
+          m=json.loads((root/"v6_c1_fitted_model.json").read_text())
+          r=json.loads((root/"v6_c1_calibration_report.json").read_text())
+          assert m["model_name"]=="V6-C1"
+          assert m["selected_stage"]=="pattern_pband_role_interactions"
+          assert m["total_races"]==84065
+          assert m["no_market_odds_in_features_or_labels"]
+          assert m["per_race_normalize_to_one"]
+          assert r["selected_delta_nll_vs_frozen"]>0
+          assert r["selected_delta_brier_vs_frozen"]>0
+          assert r["crossfit_summary"]["v6_frozen"]["races"]==84065
+          print("V6_C1_COMPLETED_ARTIFACT_VERIFIED",flush=True)
+          PY
+      - name: Commit immutable V6-C1 trained model and complete comparison report
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --sparse data/audits/v6_c1_full_data_crossfit_2023_2026/v6_c1_fitted_model.json
+          git add --sparse data/audits/v6_c1_full_data_crossfit_2023_2026/v6_c1_calibration_report.json
+          if ! git diff --staged --quiet; then
+            git commit -m "data: persist verified all-years V6-C1 calibration and crossfit"
+            git push origin HEAD:research/v6-c1-full-data-crossfit
+          fi
+          echo V6_C1_FULL_MODEL_COMMITTED_TO_GITHUB
