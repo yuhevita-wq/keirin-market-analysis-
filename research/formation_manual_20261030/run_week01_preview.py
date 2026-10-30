@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT))
-from research.v6_c1_weekly_2023 import simulate_week01 as previous
+from research.v6_c1_weekly_2023 import simulate_week01_legacy as previous
 from research.formation_manual_20261030.adapter import generate_preview,authorize_purchase
 
 OUT=ROOT/"data/audits/v6_c1_manual_week01_pre_result_proposals.json"
