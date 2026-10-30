@@ -1,0 +1,44 @@
+name: V6-C1 inference adapter | frozen-model conservation
+
+on:
+  push:
+    branches:
+      - research/v6-c1-full-data-crossfit
+    paths:
+      - research/v6_c1_full_data/apply.py
+      - .github/workflows/v6-c1-apply-tests.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  apply-verified-calibration:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout C1 calibrated model and adapter only
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/v6_c1_full_data/apply.py
+            /data/audits/v6_c1_full_data_crossfit_2023_2026/v6_c1_fitted_model.json
+      - name: Verify standalone adapter and synthetic full-ticket conservation
+        run: |
+          set -euo pipefail
+          python -m py_compile research/v6_c1_full_data/apply.py
+          python research/v6_c1_full_data/apply.py
+          python - <<'PY'
+          import sys
+          sys.path.insert(0,"research/v6_c1_full_data")
+          from apply import read_model,_self_test
+          m=read_model()
+          assert len(m["cell_multipliers"])==250
+          assert m["selected_stage"]=="pattern_pband_role_interactions"
+          assert m["total_races"]==84065
+          _self_test()
+          print("V6_C1_PERSISTED_MODEL_LOAD_AND_APPLY_PASS")
+          PY
