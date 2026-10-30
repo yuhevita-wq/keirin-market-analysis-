@@ -143,7 +143,10 @@ def construct_candidates(cars,probabilities:Mapping[Ticket,float],positions=None
 
     def append(scenario,explanation,*shapes):
         pack=together(shapes)
-        key=pack.tickets
+        # Same ticket set can express distinct tactical readings. Keep the
+        # structural provenance; do not erase a line-leader exhaustion case
+        # merely because a generic pair form happens to share its tickets.
+        key=(scenario,pack.tickets)
         if key in seen:return
         seen.add(key)
         scenarios.append(Candidate(scenario,explanation,pack))
