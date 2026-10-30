@@ -1,0 +1,48 @@
+name: Jan W01 six case studies | real podium and line roles
+
+on:
+  push:
+    branches:
+      - research/v6-c1-weekly-restart-2023w01
+    paths:
+      - 'research/v6_c1_weekly_2023/inspect_six_cases.py'
+      - '.github/workflows/w01-inspect-six-cases.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  six-races:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/v6_c1_weekly_2023/inspect_six_cases.py
+            /research/v6_c1_weekly_2023/week01.py
+            /research/deletion_ai/secure_seven_bet_bridge.py
+            /research/independent_trifecta_2023/observe.py
+            /odds_market/collect_all_odds.py
+            /data/result_universe_v2/combined/results_2023.jsonl.gz
+            /data/a_class_12/2023_*/races.csv
+            /data/a_class_12/2023_*/entries.csv
+            /data/a_class_12/2023_*/payouts.csv
+            /data/a3_challenge/2023_*/races.csv
+            /data/a3_challenge/2023_*/entries.csv
+            /data/a3_challenge/2023_*/payouts.csv
+            /data/2023/**/races.csv
+            /data/2023/**/entries.csv
+            /data/2023/**/payouts.csv
+            /data/grade_races/g1g2/*2023*.zip
+            /data/grade_races/g3/2023/*.zip
+      - name: Install reused original parser dependencies
+        run: python -m pip install --quiet requests beautifulsoup4
+      - name: Inspect real line arrangements and official podiums for hit and miss examples
+        run: python research/v6_c1_weekly_2023/inspect_six_cases.py
