@@ -9,11 +9,12 @@ import hashlib,itertools,json,sys
 from collections import Counter,defaultdict
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
+sys.path.insert(0,str(ROOT))
 sys.path.insert(0,str(ROOT/"research/independent_trifecta_2023"))
 sys.path.insert(0,str(ROOT/"research/v6_january_2023_formation_ev"))
 import observe as obs
 import v6_settled_payout_only_2023_2026 as prior
-from settle import newstat,update,emit
+from research.v6_january_2023_formation_ev.settle import newstat,update,emit
 
 DIR=ROOT/"data/audits/v6_c1_formation_feb2023"
 VERSIONS=("V6","V6-C1")
