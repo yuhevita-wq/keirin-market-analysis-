@@ -24,8 +24,9 @@ jobs:
       - name: Compile and test all example forms from the 40-page Library manual
         run: |
           set -euo pipefail
-          python -m py_compile research/formation_manual_20261030/formation.py research/formation_manual_20261030/scenarios.py research/formation_manual_20261030/test_manual.py
+          python -m py_compile research/formation_manual_20261030/formation.py research/formation_manual_20261030/scenarios.py research/formation_manual_20261030/test_manual.py research/formation_manual_20261030/adapter.py research/formation_manual_20261030/test_adapter.py
           python research/formation_manual_20261030/test_manual.py
+          python research/formation_manual_20261030/test_adapter.py
       - name: Confirm only experimental module was changed, not original V6 or visible production sites
         run: |
           set -euo pipefail
