@@ -24,7 +24,7 @@ import v5_rider_score_role_size_interactions as v5
 import v6_opponent_competition_structure as v6
 import weak_rider_podium_zero_excluded as weak
 from v8_targeted_weak_podium_calibration import row_probs
-from research.v6_january_2023_formation_ev.prepare import parse_aprket, select, MIN_POINTS,MAX_POINTS,MIN_FLAT_EV,MIN_COMPOSITE,MIN_PSET,MIN_VALUE_TICKETS,MIN_VALUE_SHARE,MAX_SEEDS
+from research.v6_january_2023_formation_ev.prepare import parse_market, select, MIN_POINTS,MAX_POINTS,MIN_FLAT_EV,MIN_COMPOSITE,MIN_PSET,MIN_VALUE_TICKETS,MIN_VALUE_SHARE,MAX_SEEDS
 from apply import read_model,apply_calibration
 
 START="2023-04-01"
@@ -48,31 +48,31 @@ def main():
     original_model=(wg,wr,d5,wl,wc,pw)
     del train
     # Remove actual result completely from each April inference card.
-    apr={rid:{k:v for k,v in e.items() if k!="order"}
+    mar={rid:{k:v for k,v in e.items() if k!="order"}
          for rid,e in full.items()
          if START<=e["date"]<=END and weak.score_gate(e)=="ELIGIBLE"}
-    assert apr,"No eligible April race cards"
-    aprket={}
+    assert mar,"No eligible April race cards"
+    market={}
     with gzip.open(ODDS,"rt",encoding="utf-8") as fh:
         for line in fh:
             row=json.loads(line)
             rid=str(row["race_id"])
-            if rid in apr:
-                if rid in aprket:raise AssertionError(("Duplicate archive aprket",rid))
-                aprket[rid]=row
+            if rid in mar:
+                if rid in market:raise AssertionError(("Duplicate archive market",rid))
+                market[rid]=row
     DIR.mkdir(parents=True,exist_ok=True)
     counts={name:Counter() for name in VERSIONS}
     by_day={name:Counter() for name in VERSIONS}
     files={name:(DIR/("sealed_"+name.replace("-","_")+"_formations.jsonl")).open("w",encoding="utf-8")
            for name in VERSIONS}
     try:
-        for i,(rid,e) in enumerate(sorted(apr.items(),key=lambda x:(x[1]["date"],x[0])),1):
-            row=aprket.get(rid)
-            for name in VERSIONS:counts[name]["apr_eligible_v6_card"]+=1
+        for i,(rid,e) in enumerate(sorted(mar.items(),key=lambda x:(x[1]["date"],x[0])),1):
+            row=market.get(rid)
+            for name in VERSIONS:counts[name]["mar_eligible_v6_card"]+=1
             if row is None:
-                for name in VERSIONS:counts[name]["missing_aprket_book"]+=1
+                for name in VERSIONS:counts[name]["missing_market_book"]+=1
                 continue
-            prices,why=parse_aprket(row,sorted(e["scores"],key=int))
+            prices,why=parse_market(row,sorted(e["scores"],key=int))
             if prices is None:
                 for name in VERSIONS:counts[name][why]+=1
                 continue
