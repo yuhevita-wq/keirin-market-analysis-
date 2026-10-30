@@ -340,8 +340,8 @@ def manual_contract_tests():
     assert len(cover([form1,form2],cars))==29
     assert len(expand(form1,cars)&expand(form2,cars))==2
     # Differences in line roles and ranking matter: first/second fixed
-    assert ("7","5","1") not in expand(B("7","2359","1"),cars)
-    assert ("7","5","1") in expand(B("7","2359","1"),cars) if False else True
+    assert ("7","1","5") not in expand(B("7","2359","1"),cars)
+    assert ("7","5","1") in expand(B("7","2359","1"),cars)
     assert ("6","1","2") not in expand(B("12","12","345"),cars)
     assert ("5","1","8") not in expand(B("5",cars,"1"),cars)
     # Validate representation forbids impossible repeated riders
