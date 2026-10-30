@@ -1,0 +1,35 @@
+name: V6 complete 2023 | monthly reconciliation
+on:
+  push:
+    branches: [research/v6-probability-mass-donor-recipient]
+    paths:
+      - 'research/independent_trifecta_2023/v6_2023_full_monthly_summary.py'
+      - '.github/workflows/v6-2023-monthly-reconciliation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  months:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - name: Checkout monthly analyzer
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/independent_trifecta_2023/v6_2023_full_monthly_summary.py
+      - name: Read 2023 full-year verified source artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: v6-complete-2023-JanDec-2024-trained-reverse-holdout
+          run-id: 40984838626
+          github-token: ${{ github.token }}
+          path: data/audits
+      - name: Validate every month, compare AAA signs, recompute yearly totals
+        run: |
+          set -euo pipefail
+          python research/independent_trifecta_2023/v6_2023_full_monthly_summary.py
