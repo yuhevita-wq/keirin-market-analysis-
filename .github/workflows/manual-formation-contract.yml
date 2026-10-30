@@ -24,4 +24,7 @@ jobs:
       - name: Validate source and all manual-conformance scenarios
         run: |
           python -m py_compile research/manual_driven_formation/engine.py
+          python -m py_compile research/manual_driven_formation/admission.py
+          python -m py_compile research/manual_driven_formation/replay_week01.py
           python research/manual_driven_formation/engine.py
+          python research/manual_driven_formation/admission.py
