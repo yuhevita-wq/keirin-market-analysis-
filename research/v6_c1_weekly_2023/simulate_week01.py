@@ -169,6 +169,7 @@ def outcome_audit(all_events,decisions,quoted):
                     stats["verified_payout_comparison_count"]+=1
                     if abs(paid-proxy_paid)>1:
                         stats["verified_payout_does_not_match_final_quote"]+=1
+                        raise AssertionError(("CORRECTED_FINAL_ODDS_MUST_MATCH_OFFICIAL_PAID",rid,paid,proxy_paid))
             z=stats
             z["all_selected"]+=1
             z["settle_"+status]+=1
@@ -213,6 +214,17 @@ def main():
     original_v6=fit_v6(all_events)
     calibrator=read_model()
     counters=Counter();by_month=defaultdict(Counter)
+    import gzip
+    public={}
+    with gzip.open(ROOT/"data/odds_only/odds_2023.jsonl.gz","rt",encoding="utf-8") as stream:
+        for line in stream:
+            row=json.loads(line)
+            rid=str(row.get("race_id",""))
+            rday=bridge.race_day(rid)
+            if rday and START<=rday<=END:
+                if rid in public:raise AssertionError("duplicate independent price row")
+                public[rid]=row
+    counters["public_first_week_complete_books"]=len(public)
     decisions={model:[] for model in MODELS}
     # Keep only bought ticket quotes in ephemeral RAM, never persist prices.
     quoted={model:{} for model in MODELS}
@@ -237,6 +249,20 @@ def main():
         card={k:v for k,v in event.items() if k!="order"}
         cars=sorted(card["scores"],key=int)
         prices,triop=normalize_record(book)
+        verified_public=public.get(rid)
+        if verified_public:
+            truth=verified_public["odds"]["3連単"]
+            if len(truth)!=len(prices) or any(
+                abs(prices[t]-float(truth.get("-".join(t),-1)))>1e-8
+                for t in prices):
+                raise AssertionError(("corrected rank-23 prices differ from independently verified all-ticket book",rid))
+            public_trio={tuple(sorted(k.replace("-","=").split("="),key=int)):float(v)
+                         for k,v in verified_public["odds"]["3連複"].items()}
+            if set(public_trio)!=set(triop) or any(abs(triop[k]-public_trio[k])>1e-8 for k in triop):
+                raise AssertionError(("seven-bet 3renpuku prices do not match independent public market",rid))
+            counters["verified_public_seven_market_books"]+=1
+            counters["verified_public_three_ordered_prices"]+=len(prices)
+            counters["verified_public_three_unordered_prices"]+=len(triop)
         # Never invent odds for a model's missing/extra rider or valid race with cancellations.
         if set(prices)!=set(itertools.permutations(cars,3)):
             counters["source_race_cards_different_rider_universe"]+=1
@@ -279,6 +305,11 @@ def main():
         "coverage":dict(counters),
         "month_coverage":{k:dict(v) for k,v in by_month.items()},
         "selected":{k:len(v) for k,v in decisions.items()}},ensure_ascii=False),flush=True)
+    # Decisions are persisted BEFORE settlement, without results or raw odds.
+    DECISION_PATH=ROOT/"data/audits/v6_c1_weekly_2023w01_pre_result_decisions.json"
+    DECISION_PATH.parent.mkdir(parents=True,exist_ok=True)
+    DECISION_PATH.write_text(doc+"\n",encoding="utf-8")
+    assert hashlib.sha256(DECISION_PATH.read_text(encoding="utf-8").rstrip("\n").encode("utf-8")).hexdigest()==seal
     totals,month,comparison,payout_source=outcome_audit(all_events,decisions,quoted)
     report={
         "status":"W01_CORRECTED_RANK23_REPLAY_COMPLETE",
@@ -293,6 +324,8 @@ def main():
         "not_future_holdout":True,
         "odds_phase":"historical final, not predeadline",
         "decision_sha256":seal,
+        "pre_result_decisions_file":"v6_c1_weekly_2023w01_pre_result_decisions.json",
+        "full_grid_public_price_reference_checked_before_purchase":True,
         "source_audit":dict(counters),
         "month_source_coverage":{k:dict(v) for k,v in sorted(by_month.items())},
         "selection_settings":{"min_supported_tickets":2,"distinct_supported_trios":2,
