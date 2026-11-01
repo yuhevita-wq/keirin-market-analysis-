@@ -287,7 +287,7 @@ def run():
     race_header = ["race_id","race_date","track","meeting_grade","race_type",
                    "meeting_day_no","entry_rows","full_results","verified_podium","source_count"]
     for year, start, end in ((2025,"2025-01-01","2025-12-31"),
-                             (2026,"2026-01-01","2026-06-30")):
+                             (2026,"2026-01-01",END)):
         gz_csv(OUT/f"rider_races_{year}.csv.gz",header,
                (r for r in rider_rows if start <= r["race_date"] <= end))
         gz_csv(OUT/f"races_{year}.csv.gz",race_header,
