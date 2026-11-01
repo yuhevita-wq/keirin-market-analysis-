@@ -257,15 +257,19 @@ def run():
             elif inconsistent:
                 status = "conflict_unverified"
                 pos = ""
-            if pos and not pos.isdigit() and any(x in pos for x in ("欠","取消","中止")):
+            finish_label = norm(result.get("finish_text")) if result else ""
+            if result and (not pos or not pos.isdigit()) and any(
+                x in finish_label for x in ("欠場", "取消", "不出走", "欠")
+            ):
                 status = "nonstarter"
             name = norm(entry.get("player_name")).replace(" ", "")
             pref = norm(entry.get("prefecture")).replace(" ", "")
             term = norm(entry.get("term"))
             player_key = name + "|" + pref + "|" + term if all((name,pref,term)) else ""
             identity_status = "provisional_name_prefecture_term" if player_key else "unresolved"
-            top3_flag = (int(pos) <= 3 if pos.isdigit()
-                         else None) if status not in ("unverified","nonstarter","conflict_unverified") else None
+            top3_flag = (int(pos) <= 3 if pos.isdigit() else
+                         (False if result and any(x in finish_label for x in ("失格", "落車", "棄権")) else None)
+                         ) if status not in ("unverified","nonstarter","conflict_unverified") else None
             rider_rows.append({
                 "race_id":rid, "race_date":race.get("race_date"),
                 "track":race.get("track"),"meeting_grade":race.get("meeting_grade"),
