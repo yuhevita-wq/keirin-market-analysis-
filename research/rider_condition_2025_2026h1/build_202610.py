@@ -22,6 +22,7 @@ def full_window_sources():
     extra+=sorted((root/"a3_challenge").glob("2026_07_08"))
     extra+=sorted((root/"a3_challenge").glob("2026_09_1007"))
     extra+=sorted((root/"rider_condition_gap_2026").glob("batch_*"))
+    extra+=sorted((root/"rider_condition_gap_2026").glob("supplement_*"))
     for folder in extra:
         if (folder/"races.csv").exists():
             yield folder
