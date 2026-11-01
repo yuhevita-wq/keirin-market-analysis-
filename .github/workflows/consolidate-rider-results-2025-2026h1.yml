@@ -1,0 +1,85 @@
+name: Build consolidated 2025 through 2026 H1 rider results (no model changes)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/rider_condition_2025_2026h1/**'
+      - '.github/workflows/consolidate-rider-results-2025-2026h1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: consolidate-rider-results-2025-2026h1
+  cancel-in-progress: false
+
+jobs:
+  consolidate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: blob:none
+          sparse-checkout: |
+            data/2025
+            data/2026_h1
+            data/a_class_12
+            data/a3_challenge
+            data/grade_races
+            data/result_universe_v2/combined
+            data/rider_condition_2025_2026h1
+            research/rider_condition_2025_2026h1
+          sparse-checkout-cone-mode: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Syntax and import validation
+        run: python -m py_compile research/rider_condition_2025_2026h1/build.py
+      - name: Consolidate all saved source parts without mutating originals
+        run: python -u research/rider_condition_2025_2026h1/build.py
+      - name: Check standalone outputs and count invariants
+        run: |
+          python - <<'PY'
+          import csv,gzip,json
+          from pathlib import Path
+          d=Path('data/rider_condition_2025_2026h1')
+          s=json.loads((d/'summary.json').read_text())
+          n=0
+          for year in (2025,2026):
+              for kind in ('rider_races','races'):
+                  p=d/f'{kind}_{year}.csv.gz'
+                  assert p.exists() and p.stat().st_size>50,p
+                  with gzip.open(p,'rt',encoding='utf-8') as f:
+                      rows=list(csv.DictReader(f))
+                  if kind=='rider_races':
+                      n+=len(rows)
+                      assert len({(r['race_id'],r['car_no']) for r in rows})==len(rows)
+                      assert all(r['race_date'].startswith(str(year)) for r in rows)
+          assert n==s['rider_race_rows'],(n,s['rider_race_rows'])
+          assert n>0
+          print('CONSOLIDATED_RIDER_RACE_ROWS',n)
+          print('RACE_COUNT',s['race_ids_with_entrant_data'])
+          print('CONFLICTS_TO_REVIEW',s['conflict_count'])
+          PY
+      - name: Commit new derived datasets only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f data/rider_condition_2025_2026h1
+          if git diff --cached --quiet; then
+            echo "No new or changed derived data"
+            exit 0
+          fi
+          git commit -m 'data: consolidate 2025 to 2026 H1 race and rider histories'
+          for n in 1 2 3 4 5 6 7 8; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            sleep 3
+          done
+          exit 1
