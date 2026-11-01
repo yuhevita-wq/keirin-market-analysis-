@@ -113,7 +113,7 @@ def run(start,end,pause):
     gap.emit(out/"failures.csv",gap.FAIL_FIELDS,failures)
     summary={
         "period":[start.isoformat(),end.isoformat()],
-        "eligible_unmapped_race_links":len(missing),
+        "not_already_saved_candidate_race_links":len(missing),
         "new_full_result_races":len(races),
         "new_entrant_rows":len(entries),
         "new_result_rows":len(results),
@@ -127,7 +127,7 @@ def run(start,end,pause):
     }
     (out/"summary.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print("SUPPLEMENT_RESULT",json.dumps({
-        k:summary[k] for k in ("period","eligible_unmapped_race_links","new_full_result_races",
+        k:summary[k] for k in ("period","not_already_saved_candidate_race_links","new_full_result_races",
                              "recovery_failures","excluded_l_class_girls","unverified_race_type_rows")
     },ensure_ascii=False),flush=True)
 
