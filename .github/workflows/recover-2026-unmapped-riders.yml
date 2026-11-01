@@ -1,0 +1,140 @@
+
+name: Second-pass 2026 graded race rider recovery
+on:
+  workflow_run:
+    workflows: ['Backfill missing 2026 Jul-Oct rider results and build history']
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: rider-results-2026-special-recovery
+  cancel-in-progress: false
+jobs:
+  supplemental:
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+          - {start: '2026-07-01', end: '2026-07-12'}
+          - {start: '2026-07-13', end: '2026-07-24'}
+          - {start: '2026-07-25', end: '2026-08-05'}
+          - {start: '2026-08-06', end: '2026-08-17'}
+          - {start: '2026-08-18', end: '2026-08-29'}
+          - {start: '2026-08-30', end: '2026-09-10'}
+          - {start: '2026-09-11', end: '2026-09-22'}
+          - {start: '2026-09-23', end: '2026-10-04'}
+          - {start: '2026-10-05', end: '2026-10-16'}
+          - {start: '2026-10-17', end: '2026-10-28'}
+          - {start: '2026-10-29', end: '2026-10-31'}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          filter: blob:none
+          sparse-checkout: |
+            data/2026_future_block1
+            data/a_class_12
+            data/a3_challenge
+            data/rider_condition_gap_2026
+            research/rider_condition_2025_2026h1
+            src
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e '.[scrape]'
+      - name: Recover uncategorized public race links and their verified full results
+        env:
+          START: ${{ matrix.start }}
+          END: ${{ matrix.end }}
+        run: |
+          set -euo pipefail
+          BATCH="data/rider_condition_gap_2026/supplement_${START//-/}_${END//-/}"
+          if [ -f "$BATCH/summary.json" ]; then
+            echo "Already saved: $BATCH"
+          else
+            python -u research/rider_condition_2025_2026h1/collect_2026_unmapped.py --start "$START" --end "$END" --pause 0.3
+          fi
+      - name: Validate 1:1 match of starters and all result rows
+        env:
+          START: ${{ matrix.start }}
+          END: ${{ matrix.end }}
+        run: |
+          python - <<'PY'
+          import csv,json,os
+          from pathlib import Path
+          a=os.environ['START'].replace('-','')
+          b=os.environ['END'].replace('-','')
+          d=Path(f'data/rider_condition_gap_2026/supplement_{a}_{b}')
+          s=json.loads((d/'summary.json').read_text(encoding='utf-8'))
+          def load(name):
+            with (d/(name+'.csv')).open(encoding='utf-8-sig',newline='') as f:
+              return list(csv.DictReader(f))
+          races=load('races')
+          e=load('entries')
+          r=load('results')
+          assert len(races)==len({x['race_id'] for x in races})==s['new_full_result_races']
+          assert len(e)==len(r)==s['new_result_rows']
+          assert {(x['race_id'],x['car_no']) for x in e}=={(x['race_id'],x['car_no']) for x in r}
+          print('SUPPLEMENT_VERIFIED',s['period'],len(races),'unresolved',s['recovery_failures'])
+          PY
+      - name: Save new supplemental race records only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f data/rider_condition_gap_2026
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "data: add G-rated and unmapped racer records ${{ matrix.start }} to ${{ matrix.end }}"
+          for n in 1 2 3 4 5 6 7 8 9 10; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
+  rebuild:
+    needs: supplemental
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          filter: blob:none
+          sparse-checkout: |
+            data/2025
+            data/2026_h1
+            data/2026_future_block1
+            data/a_class_12
+            data/a3_challenge
+            data/grade_races
+            data/result_universe_v2/combined
+            data/rider_condition_2025_202610
+            data/rider_condition_gap_2026
+            research/rider_condition_2025_2026h1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reconcile newest batches
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+          python -u research/rider_condition_2025_2026h1/build_202610.py
+      - name: Save final 2025-2026 October merged histories
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f data/rider_condition_2025_202610
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'data: incorporate 2026 G1/G2/G3 recovered race and rider results'
+          for n in 1 2 3 4 5 6 7 8 9 10; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
