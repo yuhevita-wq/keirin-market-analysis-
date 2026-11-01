@@ -1,0 +1,87 @@
+name: Reconcile both 2026 rider backfills into final audit-safe master
+
+on:
+  workflow_run:
+    workflows:
+      - "Backfill missing 2026 rider histories through October and merge"
+      - "Backfill missing 2026 Jul-Oct rider results and build history"
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: final-rider-histories-2026-oct-reconcile
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: blob:none
+          sparse-checkout: |
+            data/2025
+            data/2026_h1
+            data/2026_future_block1
+            data/a_class_12
+            data/a3_challenge
+            data/grade_races
+            data/result_universe_v2/combined
+            data/rider_condition_2026_backfill
+            data/rider_condition_gap_2026
+            data/rider_condition_2025_202610_full
+            research/rider_condition_2026_backfill
+          sparse-checkout-cone-mode: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Load all currently committed recovery batches
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+      - name: Validate merging script
+        run: python -m py_compile research/rider_condition_2026_backfill/build_union.py
+      - name: Merge source histories and both independent gap recoveries
+        run: python -u research/rider_condition_2026_backfill/build_union.py
+      - name: Verify exact race-car key uniqueness and source audit
+        run: |
+          python - <<'PY'
+          import csv,gzip,json
+          from pathlib import Path
+          p=Path("data/rider_condition_2025_202610_full")
+          summary=json.loads((p/"summary.json").read_text(encoding="utf-8"))
+          count=0
+          for year in (2025,2026):
+              with gzip.open(p/f"rider_races_{year}.csv.gz","rt",encoding="utf-8") as file:
+                  rows=list(csv.DictReader(file))
+              assert len(rows)==len({(r["race_id"],r["car_no"]) for r in rows})
+              assert all("2025-01-01"<=r["race_date"]<="2026-10-31" for r in rows)
+              count+=len(rows)
+          assert count==summary["rider_race_rows"] and count>=261109
+          assert "backfill_batch_audits" in summary
+          assert summary["nationwide_completeness_confirmed"] is False
+          print("UNION_RIDER_ROWS",count)
+          print("UNION_RACES",summary["race_ids_with_entrant_data"])
+          print("CONFLICTS",summary["conflict_count"])
+          print("AVAILABLE_RECOVERY_BATCHES",summary["backfill_batch_count"])
+          print("MONTHLY_COVERAGE",json.dumps(summary["unique_races_by_month"]))
+          PY
+      - name: Commit independent master only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f data/rider_condition_2025_202610_full
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'data: audit and union 2025 through October 2026 rider histories'
+          for n in 1 2 3 4 5 6 7 8 9 10 11 12; do
+            git fetch origin main
+            if git rebase origin/main && git push origin HEAD:main; then exit 0; fi
+            git rebase --abort || true
+            sleep 5
+          done
+          exit 1
