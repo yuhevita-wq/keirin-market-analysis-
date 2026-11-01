@@ -53,12 +53,25 @@ def main():
                      "recovery_failures":j["recovery_failures"],
                      "daily_discovery_failures":len(j["daily_discovery_failures"]),
                      "unmapped_link_ids":j["unmapped_daily_link_id_count"]})
+    supplements=[]
+    for p in sorted((ROOT/"data/rider_condition_gap_2026").glob("supplement_*/summary.json")):
+        j=json.loads(p.read_text(encoding="utf-8"))
+        supplements.append({"batch":str(p.parent.relative_to(ROOT)),
+                            "period":j["period"],
+                            "indexed_unclassified":j["eligible_unmapped_race_links"],
+                            "new_full_result_races":j["new_full_result_races"],
+                            "recovery_failures":j["recovery_failures"],
+                            "race_type_unverified":j["unverified_race_type_rows"],
+                            "excluded_girls":j["excluded_l_class_girls"]})
     extras={
         "window_requested":["2025-01-01","2026-10-31"],
         "unique_races_by_month":dict(sorted(months.items())),
         "race_types_by_month":[{"month":m,"race_type":k,"races":v}
                                 for (m,k),v in sorted(type_counts.items())],
         "gap_batch_audits":gaps,
+        "supplemental_batch_audits":supplements,
+        "supplemental_batch_count":len(supplements),
+        "outstanding_reported_failures":sum(x["recovery_failures"] for x in gaps+supplements),
         "gap_batch_count":len(gaps),
         "covered_all_requested_date_batches":len(gaps)>=11,
         "nationwide_completeness_confirmed":False,
