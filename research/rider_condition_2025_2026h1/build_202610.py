@@ -58,7 +58,7 @@ def main():
         j=json.loads(p.read_text(encoding="utf-8"))
         supplements.append({"batch":str(p.parent.relative_to(ROOT)),
                             "period":j["period"],
-                            "indexed_unclassified":j["eligible_unmapped_race_links"],
+                            "indexed_unclassified":j["not_already_saved_candidate_race_links"],
                             "new_full_result_races":j["new_full_result_races"],
                             "recovery_failures":j["recovery_failures"],
                             "race_type_unverified":j["unverified_race_type_rows"],
