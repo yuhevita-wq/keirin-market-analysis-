@@ -344,7 +344,7 @@ def run():
     report["backfill_batch_count"]=len(reports)
     report["nationwide_completeness_confirmed"]=False
     report["note"]="Source files across both recovery workflows deduplicated by exact race_id and car_no; no certified nationwide denominator."
-    (OUT/"summary.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\\n",
+    (OUT/"summary.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",
                                     encoding="utf-8")
     print(json.dumps({k:report[k] for k in ("status","race_ids_with_entrant_data",
          "rider_race_rows","unique_provisional_player_keys","conflict_count")},ensure_ascii=False))
