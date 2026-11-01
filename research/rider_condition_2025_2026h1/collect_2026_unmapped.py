@@ -69,7 +69,12 @@ def run(start,end,pause):
                     urls.setdefault(rid,urlunsplit((parsed.scheme,parsed.netloc,parsed.path,"pageType=odds","")))
             for rid,url in urls.items():
                 if rid not in known:
-                    missing.setdefault(rid,(d.isoformat(),url))
+                    missing.setdefault(rid,(d.isoformat(),url,""))
+            # Retry mapped race IDs that failed or were not saved in the first pass.
+            # Only exact verified existing race IDs count as completed.
+            for rid,(_,ref) in mapped.items():
+                if rid not in known and start<=gap.rid_day(rid)<=end:
+                    missing.setdefault(rid,(d.isoformat(),ref.url,ref.race_type))
             day_audit[d.isoformat()]={"indexed_race_ids":len(allids),
                                     "unclassified_race_ids":len(candidates),
                                     "unclassified_url_recovered":len(urls)}
@@ -79,10 +84,13 @@ def run(start,end,pause):
     races,entries,results,failures=[],[],[],[]
     ignored_girls=0
     unknown_types=0
-    for i,(rid,(discovered_on,url)) in enumerate(sorted(missing.items())):
+    for i,(rid,(discovered_on,url,original_type)) in enumerate(sorted(missing.items())):
         try:
-            page=base.fetch_html(session,url)
-            typ=type_from_official_card(page)
+            if original_type:
+                typ=original_type
+            else:
+                page=base.fetch_html(session,url)
+                typ=type_from_official_card(page)
             ref=Ref(discovered_on,int(rid[-2:]),typ,url)
             race,entrant,finish,reason=gap.collect_one(session,rid,"other",ref,"",pause)
             if reason=="girls-excluded":
