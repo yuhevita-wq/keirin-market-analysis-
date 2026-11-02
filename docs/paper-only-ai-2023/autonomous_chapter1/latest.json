@@ -1,7 +1,7 @@
 {
   "state": "AUTONOMOUS_GENERATION_COMPLETE",
-  "generation": 7,
-  "finished_at": "2026-10-26T03:21:52.498144+00:00",
+  "generation": 8,
+  "finished_at": "2026-11-02T04:30:50.117744+00:00",
   "inherited_frozen_2023_model": {
     "trained_races": 20349,
     "training_date_range": [
@@ -185,75 +185,72 @@
   },
   "new_candidate_records": [
     {
-      "id": "g07-c01",
+      "id": "g08-c01",
       "config": {
-        "algorithm": "RF",
-        "n_estimators": 120,
-        "max_depth": 15,
-        "min_samples_leaf": 24,
-        "max_features": 0.5,
-        "mask": "drop_age",
+        "algorithm": "LR",
+        "C": 2.0,
+        "mask": "drop_rates",
         "origin": "autonomous-mutation"
       },
       "development": {
-        "stagewise_mean_accuracy_proxy": 0.4502487562189055,
-        "ordered_finish_joint_nll": 4.25222824832078,
-        "mean_conditional_positive_ece20": 0.011427021232430258,
+        "stagewise_mean_accuracy_proxy": 0.43585643212508884,
+        "ordered_finish_joint_nll": 4.34297860780729,
+        "mean_conditional_positive_ece20": 0.011570881633895339,
         "all_three_80pct_occupancy_proxies_passed": true,
         "stage_evaluations": [
           {
             "stage": 1,
-            "temperature_fitted_on_september_only": 0.8090451363420915,
-            "september_calibration_nll": 1.5045426396908297,
+            "temperature_fitted_on_september_only": 0.7807606724113291,
+            "september_calibration_nll": 1.5561419338042852,
             "october_before": {
-              "conditional_nll": 1.5329472080024524,
-              "conditional_top1_accuracy": 0.4141791044776119,
-              "conditional_positive_ece20": 0.014857974052783834,
+              "conditional_nll": 1.5788962579974248,
+              "conditional_top1_accuracy": 0.38486140724946694,
+              "conditional_positive_ece20": 0.014132956401728628,
               "occupied_bins_20": 15,
               "paper_80pct_bin_occupancy_proxy_passed": false
             },
             "october_after": {
-              "conditional_nll": 1.5290523872042086,
-              "conditional_top1_accuracy": 0.4141791044776119,
-              "conditional_positive_ece20": 0.011999038235391972,
+              "conditional_nll": 1.5694417858906995,
+              "conditional_top1_accuracy": 0.38486140724946694,
+              "conditional_positive_ece20": 0.010668705834009683,
               "occupied_bins_20": 17,
               "paper_80pct_bin_occupancy_proxy_passed": true
             }
           },
           {
             "stage": 2,
-            "temperature_fitted_on_september_only": 0.9888113036583609,
-            "september_calibration_nll": 1.3622318650647485,
+            "temperature_fitted_on_september_only": 0.955831879285611,
+            "september_calibration_nll": 1.3728111307610682,
             "october_before": {
-              "conditional_nll": 1.3515317382015783,
-              "conditional_top1_accuracy": 0.5031982942430704,
-              "conditional_positive_ece20": 0.009577309405889658,
-              "occupied_bins_20": 18,
+              "conditional_nll": 1.3757371660363296,
+              "conditional_top1_accuracy": 0.4984008528784648,
+              "conditional_positive_ece20": 0.014057933588755185,
+              "occupied_bins_20": 17,
               "paper_80pct_bin_occupancy_proxy_passed": true
             },
             "october_after": {
-              "conditional_nll": 1.3513820702296189,
-              "conditional_top1_accuracy": 0.5031982942430704,
-              "conditional_positive_ece20": 0.009864842544726556,
-              "occupied_bins_20": 18,
+              "conditional_nll": 1.3754183639446913,
+              "conditional_top1_accuracy": 0.4984008528784648,
+              "conditional_positive_ece20": 0.011712979084311709,
+              "occupied_bins_20": 17,
               "paper_80pct_bin_occupancy_proxy_passed": true
             }
           },
           {
             "stage": 3,
-            "temperature_fitted_on_september_only": 0.9225763062647514,
-            "september_calibration_nll": 1.3967662837693111,
+            "temperature_fitted_on_september_only": 0.8991364921112565,
+            "september_calibration_nll": 1.4049222135069517,
             "october_before": {
-              "conditional_nll": 1.3740213442659022,
-              "conditional_top1_accuracy": 0.43336886993603413,
-              "conditional_positive_ece20": 0.01785793506761889,
-              "occupied_bins_20": 16,
-              "paper_80pct_bin_occupancy_proxy_passed": true
+              "conditional_nll": 1.400191280496839,
+              "conditional_top1_accuracy": 0.42430703624733473,
+              "conditional_positive_ece20": 0.01691346994174249,
+              "occupied_bins_20": 15,
+              "paper_80pct_bin_occupancy_proxy_passed": false
             },
             "october_after": {
-              "conditional_nll": 1.3717937908869522,
-              "conditional_top1_accuracy": 0.43336886993603413,
-              "conditional_positive_ece20": 0.012417182917172248,
+              "conditional_nll": 1.3981184579718997,
+              "conditional_top1_accuracy": 0.42430703624733473,
+              "conditional_positive_ece20": 0.01233095998336463,
               "occupied_bins_20": 16,
               "paper_80pct_bin_occupancy_proxy_passed": true
             }
@@ -262,76 +259,76 @@
       }
     },
     {
-      "id": "g07-c02",
+      "id": "g08-c02",
       "config": {
         "algorithm": "RF",
         "n_estimators": 90,
-        "max_depth": 15,
+        "max_depth": 10,
         "min_samples_leaf": 10,
-        "max_features": 1.0,
-        "mask": "all",
+        "max_features": 0.7,
+        "mask": "drop_style",
         "origin": "autonomous-mutation"
       },
       "development": {
-        "stagewise_mean_accuracy_proxy": 0.4500710732054016,
-        "ordered_finish_joint_nll": 4.27359878077358,
-        "mean_conditional_positive_ece20": 0.01230493582090618,
+        "stagewise_mean_accuracy_proxy": 0.4449182658137882,
+        "ordered_finish_joint_nll": 4.261524219385635,
+        "mean_conditional_positive_ece20": 0.011993896197212856,
         "all_three_80pct_occupancy_proxies_passed": true,
         "stage_evaluations": [
           {
             "stage": 1,
-            "temperature_fitted_on_september_only": 0.8550730942852598,
-            "september_calibration_nll": 1.517813878120301,
+            "temperature_fitted_on_september_only": 0.7860638376992144,
+            "september_calibration_nll": 1.5027642646615986,
             "october_before": {
-              "conditional_nll": 1.5456360413597339,
-              "conditional_top1_accuracy": 0.4109808102345416,
-              "conditional_positive_ece20": 0.014008149260005903,
-              "occupied_bins_20": 16,
-              "paper_80pct_bin_occupancy_proxy_passed": true
+              "conditional_nll": 1.5392793483410039,
+              "conditional_top1_accuracy": 0.4072494669509595,
+              "conditional_positive_ece20": 0.017146589766596006,
+              "occupied_bins_20": 15,
+              "paper_80pct_bin_occupancy_proxy_passed": false
             },
             "october_after": {
-              "conditional_nll": 1.5448933714944448,
-              "conditional_top1_accuracy": 0.4109808102345416,
-              "conditional_positive_ece20": 0.009654402608816906,
+              "conditional_nll": 1.5345523754969774,
+              "conditional_top1_accuracy": 0.4072494669509595,
+              "conditional_positive_ece20": 0.009581127136869786,
               "occupied_bins_20": 17,
               "paper_80pct_bin_occupancy_proxy_passed": true
             }
           },
           {
             "stage": 2,
-            "temperature_fitted_on_september_only": 1.0141718434231366,
-            "september_calibration_nll": 1.3700166601924735,
+            "temperature_fitted_on_september_only": 0.9844345887536486,
+            "september_calibration_nll": 1.363892121165559,
             "october_before": {
-              "conditional_nll": 1.3555052032290138,
-              "conditional_top1_accuracy": 0.5015991471215352,
-              "conditional_positive_ece20": 0.009740588017476721,
+              "conditional_nll": 1.3536420115922951,
+              "conditional_top1_accuracy": 0.4989339019189765,
+              "conditional_positive_ece20": 0.015328289446730156,
               "occupied_bins_20": 18,
               "paper_80pct_bin_occupancy_proxy_passed": true
             },
             "october_after": {
-              "conditional_nll": 1.3556889812851423,
-              "conditional_top1_accuracy": 0.5015991471215352,
-              "conditional_positive_ece20": 0.011214350505162925,
+              "conditional_nll": 1.3534027439077496,
+              "conditional_top1_accuracy": 0.4989339019189765,
+              "conditional_positive_ece20": 0.014617925853659952,
               "occupied_bins_20": 18,
               "paper_80pct_bin_occupancy_proxy_passed": true
             }
           },
           {
             "stage": 3,
-            "temperature_fitted_on_september_only": 0.9644002729751601,
-            "september_calibration_nll": 1.4053497369155734,
+            "temperature_fitted_on_september_only": 0.9066259031982815,
+            "september_calibration_nll": 1.3990478507052133,
             "october_before": {
-              "conditional_nll": 1.3741359945165852,
-              "conditional_top1_accuracy": 0.43763326226012794,
-              "conditional_positive_ece20": 0.015881662991343845,
+              "conditional_nll": 1.3766007948028471,
+              "conditional_top1_accuracy": 0.42857142857142855,
+              "conditional_positive_ece20": 0.01735416701827917,
               "occupied_bins_20": 16,
               "paper_80pct_bin_occupancy_proxy_passed": true
             },
             "october_after": {
-              "conditional_nll": 1.3730164279939927,
-              "conditional_top1_accuracy": 0.43763326226012794,
-              "conditional_positive_ece20": 0.01604605434873871,
-              "occupied_bins_20": 16,
+              "conditional_nll": 1.3735690999809076,
+              "conditional_top1_accuracy": 0.42857142857142855,
+              "conditional_positive_ece20": 0.011782635601108832,
+              "occupied_bins_20": 17,
               "paper_80pct_bin_occupancy_proxy_passed": true
             }
           }
