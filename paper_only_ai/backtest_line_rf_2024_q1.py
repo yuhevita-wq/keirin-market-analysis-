@@ -148,7 +148,7 @@ def load_line_models():
     print('MODEL_VERIFIED',sha,'train races',info['trained_races'],flush=True)
     return models,info,sha
 
-def infer_new_chunk(chunk, models):
+def infer_new_chunk(chunk, models, temperatures=None):
     groups={1:[],2:[],3:[]}
     keys={1:[],2:[],3:[]}
     vectors={1:[],2:[],3:[]}
@@ -172,6 +172,11 @@ def infer_new_chunk(chunk, models):
     distributions={}
     for stage in (1,2,3):
         scores=models[stage].predict_proba(np.asarray(vectors[stage],dtype=np.float32))[:,1]
+        if temperatures is not None:
+            temp=float(temperatures[str(stage)])
+            if not math.isfinite(temp) or not 0.5<=temp<=2.5:
+                raise ValueError('Invalid frozen calibration temperature')
+            scores=np.exp(np.log(np.clip(scores,EPS,1.0))/temp)
         dictionary={}
         gids=[]
         for gid in groups[stage]:

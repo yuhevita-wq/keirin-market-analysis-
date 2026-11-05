@@ -1,0 +1,70 @@
+name: Paper-only AI | 2023-only calibration versus 2024 Q2
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'paper_only_ai/calibrate_line_rf_2023_q2.py'
+      - '.github/workflows/paper-only-ai-calibrate-2023-q2.yml'
+permissions:
+  contents: write
+concurrency:
+  group: paper-only-ai-line-calibration-2023-q2
+  cancel-in-progress: false
+jobs:
+  calibration-q2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            paper_only_ai
+            docs/paper-only-ai-2023
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install reproducible scientific dependencies
+        run: |
+          python -m pip install 'numpy<3' 'pandas<3' 'scipy<2' 'scikit-learn<2' 'optuna<5' 'joblib<2'
+      - name: Restore immutable 2023 full-year LINE RF weights from GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p frozen_line_full
+          gh release download paper-only-line-rf-2023-v1 --pattern '*.tar.gz' --dir frozen_line_full
+          tar -xzf frozen_line_full/line_aware_rf_2023.tar.gz -C frozen_line_full
+          for i in 1 2 3; do test -s "frozen_line_full/stage_${i}.joblib"; done
+          test -s frozen_line_full/manifest.json
+      - name: Verify Python source before any training
+        run: |
+          python -m py_compile paper_only_ai/calibrate_line_rf_2023_q2.py
+          python -m py_compile paper_only_ai/backtest_line_rf_2024_q1.py
+          python -m py_compile paper_only_ai/compare_lines_2023.py
+      - name: Fit Nov 2023 only calibration and compare frozen models on 2024 Q2
+        env:
+          FROZEN_LINE_FULL_DIR: frozen_line_full
+          PYTHONUNBUFFERED: '1'
+          OMP_NUM_THREADS: '2'
+          OPENBLAS_NUM_THREADS: '2'
+          MKL_NUM_THREADS: '2'
+        run: python paper_only_ai/calibrate_line_rf_2023_q2.py
+      - name: Retain complete reproducible experiment outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: line-rf-2023-calibration-2024-q2-evaluation
+          path: docs/paper-only-ai-2023/line_calibration_2023_q2_2024/
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Publish fitted temperatures and genuinely out-of-period Q2 audit
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/paper-only-ai-2023/line_calibration_2023_q2_2024/
+          if ! git diff --cached --quiet; then
+            git commit -m "Record 2023-only calibrated RF and frozen 2024 Q2 evaluation"
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi

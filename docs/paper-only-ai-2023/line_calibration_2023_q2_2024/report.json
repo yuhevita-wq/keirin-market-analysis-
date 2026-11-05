@@ -1,0 +1,287 @@
+{
+  "status": "COMPLETE_2023_ONLY_CALIBRATION_AND_2024_Q2_OOS",
+  "started_at": "2026-10-20T06:29:58.889069+00:00",
+  "finished_at": "2026-10-20T06:32:27.770708+00:00",
+  "source_paper": "Walsh & Joshi, arXiv:2303.06021v4",
+  "paper_method": "model selection based on calibration, using 20-bin classwise ECE and 80pct occupied-bin gate",
+  "engineering_extension": "three conditional RF temperature parameters; not in paper",
+  "temperature_artifact_sha256": "0b508091b0d99b57bac74c659b71381220ac5a936e76dce0ce840122021bfdea",
+  "2023_calibration": {
+    "model_fit_date_range": [
+      "2023-01-01",
+      "2023-10-31"
+    ],
+    "calibration_fit_month": "2023-11",
+    "diagnostic_validation_month": "2023-12",
+    "training_races": 16658,
+    "fit_races": 1828,
+    "validation_races": 1863,
+    "stage_metrics": {
+      "1": {
+        "temperature_fitted_november_only": 0.7298655547386548,
+        "november_base_nll": 1.4746269966842334,
+        "november_calibrated_nll": 1.4507714832952334,
+        "december_base_nll": 1.5056066818621787,
+        "december_calibrated_nll": 1.4922848083371725,
+        "december_base_calibration": {
+          "positive_class_pooled_ece20": 0.024324823515721062,
+          "occupied_bins": 16,
+          "total_bins": 20,
+          "paper_80pct_bin_occupancy_gate_passed_for_this_diagnostic": true,
+          "not_full_ticket_classwise_ece": true
+        },
+        "december_calibrated_calibration": {
+          "positive_class_pooled_ece20": 0.009997832438208966,
+          "occupied_bins": 18,
+          "total_bins": 20,
+          "paper_80pct_bin_occupancy_gate_passed_for_this_diagnostic": true,
+          "not_full_ticket_classwise_ece": true
+        }
+      },
+      "2": {
+        "temperature_fitted_november_only": 0.9583298302081874,
+        "november_base_nll": 1.3335023786798457,
+        "november_calibrated_nll": 1.332855093083474,
+        "december_base_nll": 1.3144467082992848,
+        "december_calibrated_nll": 1.312517091677615,
+        "december_base_calibration": {
+          "positive_class_pooled_ece20": 0.020080813557111412,
+          "occupied_bins": 17,
+          "total_bins": 20,
+          "paper_80pct_bin_occupancy_gate_passed_for_this_diagnostic": true,
+          "not_full_ticket_classwise_ece": true
+        },
+        "december_calibrated_calibration": {
+          "positive_class_pooled_ece20": 0.01847277527759429,
+          "occupied_bins": 18,
+          "total_bins": 20,
+          "paper_80pct_bin_occupancy_gate_passed_for_this_diagnostic": true,
+          "not_full_ticket_classwise_ece": true
+        }
+      },
+      "3": {
+        "temperature_fitted_november_only": 0.8227275064358053,
+        "november_base_nll": 1.3479552730123616,
+        "november_calibrated_nll": 1.340894396477591,
+        "december_base_nll": 1.3713873012386246,
+        "december_calibrated_nll": 1.3693399495306364,
+        "december_base_calibration": {
+          "positive_class_pooled_ece20": 0.01837911833126231,
+          "occupied_bins": 16,
+          "total_bins": 20,
+          "paper_80pct_bin_occupancy_gate_passed_for_this_diagnostic": true,
+          "not_full_ticket_classwise_ece": true
+        },
+        "december_calibrated_calibration": {
+          "positive_class_pooled_ece20": 0.010439100541460026,
+          "occupied_bins": 17,
+          "total_bins": 20,
+          "paper_80pct_bin_occupancy_gate_passed_for_this_diagnostic": true,
+          "not_full_ticket_classwise_ece": true
+        }
+      }
+    },
+    "no_2024_labels_or_odds_used": true,
+    "full_year_frozen_model_refitted": false,
+    "december_trifecta_nll_via_conditional_chain_base": 4.191440691400088,
+    "december_trifecta_nll_via_conditional_chain_calibrated": 4.174141849545424,
+    "audit_race_split": {
+      "model_train_end": "2023-10-31",
+      "calibrator_train_end": "2023-11-30",
+      "first_calibrator_check": "2023-12-01",
+      "2023_nov_dec_already_used_for_prior_line_model_selection": true,
+      "2024_q1_known_result_never_used_in_calibrator": true
+    }
+  },
+  "2024_q2_frozen_comparison": {
+    "test_dates": [
+      "2024-04-01",
+      "2024-06-30"
+    ],
+    "joined_before_odds_validation": 1227,
+    "accepted_complete_races": 1227,
+    "excluded_card_without_complete_odds": 4343,
+    "excluded_odds": {},
+    "card_audit": {
+      "files": [
+        {
+          "path": "data/a_class_12/2024_03_04/entries.csv",
+          "race_manifests_with_line": 1040,
+          "entry_rows": 7190
+        },
+        {
+          "path": "data/a_class_12/2024_05_06/entries.csv",
+          "race_manifests_with_line": 2070,
+          "entry_rows": 14283
+        },
+        {
+          "path": "data/a3_challenge/2024_03_04/entries.csv",
+          "race_manifests_with_line": 450,
+          "entry_rows": 3078
+        },
+        {
+          "path": "data/a3_challenge/2024_05_06/entries.csv",
+          "race_manifests_with_line": 898,
+          "entry_rows": 6065
+        },
+        {
+          "path": "data/2024/s_class_f1_all_parts/2024_q2/entries.csv",
+          "race_manifests_with_line": 1289,
+          "entry_rows": 8907
+        },
+        {
+          "path": "data/2024/s_class_yosen/entries.csv",
+          "race_manifests_with_line": 0,
+          "entry_rows": 0
+        }
+      ],
+      "exclusions": {
+        "entry_rows_missing_numeric": 187,
+        "race_manifest_line_missing": 6,
+        "duplicate_manifest_rows": 370,
+        "duplicate_entry_rows": 2572,
+        "exclude_line_coverage_mismatch": 127,
+        "exclude_podium_not_in_card": 50
+      },
+      "complete_podium_with_line_races": 5570,
+      "months": {
+        "2024-04": 1909,
+        "2024-05": 1892,
+        "2024-06": 1769
+      },
+      "categories": {
+        "A1_A2": 3012,
+        "S": 1260,
+        "A3": 1298
+      }
+    },
+    "odds_source_audit": {
+      "full_year_odds_records": 9542
+    },
+    "model_sha256": {
+      "1": "3ef96a3fd6e0e3f2fe96f6bdd28b098abf1d6592132f6e3ccf19a567e90107e4",
+      "2": "a3cd93029adb7231288c65c434fe10eb384e60f30726fb43fc91c25487a022a0",
+      "3": "f7f7028fd9c1559243c7dccc33cda84a0a274520413852f5fdaeea6edba63ea9"
+    },
+    "model_training_dates": [
+      "2023-01-01",
+      "2023-12-31"
+    ],
+    "2024_fit_calls": 0,
+    "2024_threshold_search_calls": 0,
+    "odds_timing": "historical final (not 15 minutes before close)",
+    "flat_stake_yen_per_ticket": 100,
+    "result": {
+      "unchanged_full_year_2023": {
+        "3連単": {
+          "eligible_races": 1227,
+          "betting_races": 1227,
+          "winning_races": 245,
+          "purchased_tickets": 136238,
+          "winning_tickets": 245,
+          "investment_yen": 13623800.0,
+          "payout_yen": 7144740.0,
+          "net_profit_yen": -6479060.0,
+          "return_rate_percent": 52.44307755545442,
+          "roi_percent": -47.55692244454558,
+          "model_expected_roi_percent": 121.5760599678722,
+          "max_drawdown_yen_unlimited_flat_stake": 6538990.0,
+          "losing_races": 1062,
+          "nll": 4.482957903982913,
+          "normalized_market_nll": 4.149465235164156,
+          "proper_multiclass_brier": 0.9756587039685165,
+          "most_probable_ticket_hit_percent": 7.008964955175224,
+          "top3_tickets_hit_percent": 18.663406682966585
+        },
+        "3連複": {
+          "eligible_races": 1227,
+          "betting_races": 1227,
+          "winning_races": 214,
+          "purchased_tickets": 20314,
+          "winning_tickets": 214,
+          "investment_yen": 2031400.0,
+          "payout_yen": 1104630.0,
+          "net_profit_yen": -926770.0,
+          "return_rate_percent": 54.37776902628729,
+          "roi_percent": -45.62223097371271,
+          "model_expected_roi_percent": 63.89127787719507,
+          "max_drawdown_yen_unlimited_flat_stake": 926770.0,
+          "losing_races": 1042,
+          "nll": 2.865175868924615,
+          "normalized_market_nll": 2.658530607304897,
+          "proper_multiclass_brier": 0.9047006961301206,
+          "most_probable_ticket_hit_percent": 20.619396903015485,
+          "top3_tickets_hit_percent": 40.831295843520785
+        },
+        "combined": {
+          "eligible_races": 1227,
+          "purchased_tickets": 156552,
+          "investment_yen": 15655200.0,
+          "payout_yen": 8249370.0,
+          "net_profit_yen": -7405830.0,
+          "return_rate_percent": 52.69412080331136
+        }
+      },
+      "calibrated_from_2023": {
+        "3連単": {
+          "eligible_races": 1227,
+          "betting_races": 1227,
+          "winning_races": 247,
+          "purchased_tickets": 107244,
+          "winning_tickets": 247,
+          "investment_yen": 10724400.0,
+          "payout_yen": 4634220.0,
+          "net_profit_yen": -6090180.0,
+          "return_rate_percent": 43.211927940024616,
+          "roi_percent": -56.788072059975384,
+          "model_expected_roi_percent": 107.46269967854269,
+          "max_drawdown_yen_unlimited_flat_stake": 6185810.0,
+          "losing_races": 1075,
+          "nll": 4.486213430834892,
+          "normalized_market_nll": 4.149465235164156,
+          "proper_multiclass_brier": 0.9755300416381101,
+          "most_probable_ticket_hit_percent": 7.334963325183374,
+          "top3_tickets_hit_percent": 18.82640586797066
+        },
+        "3連複": {
+          "eligible_races": 1227,
+          "betting_races": 1227,
+          "winning_races": 213,
+          "purchased_tickets": 15417,
+          "winning_tickets": 213,
+          "investment_yen": 1541700.0,
+          "payout_yen": 853910.0,
+          "net_profit_yen": -687790.0,
+          "return_rate_percent": 55.38755918790945,
+          "roi_percent": -44.61244081209055,
+          "model_expected_roi_percent": 58.005545404758706,
+          "max_drawdown_yen_unlimited_flat_stake": 690890.0,
+          "losing_races": 1057,
+          "nll": 2.841499072466265,
+          "normalized_market_nll": 2.658530607304897,
+          "proper_multiclass_brier": 0.9000736782981389,
+          "most_probable_ticket_hit_percent": 20.293398533007334,
+          "top3_tickets_hit_percent": 40.66829665851671
+        },
+        "combined": {
+          "eligible_races": 1227,
+          "purchased_tickets": 122661,
+          "investment_yen": 12266100.0,
+          "payout_yen": 5488130.0,
+          "net_profit_yen": -6777970.0,
+          "return_rate_percent": 44.74225711513847
+        }
+      }
+    }
+  },
+  "selection_rule": "all tickets with P_model * historical final odds > 1",
+  "limitations": [
+    "No 2024 label is used to adjust any temperature or threshold.",
+    "2023 Nov-Dec were previously consulted when choosing LINE-aware RF; Dec is only a diagnostic for this calibration fit, not a fully independent model-family holdout.",
+    "20-bin occupied-bin and positive-class diagnostics are not literal Walsh-Joshi multiclass ticket ECE certification.",
+    "Calibrator is learned using Jan-Oct model and transferred to a different full-year 2023 refit; transferability is tested, not assumed.",
+    "No 2024 Q1 outcomes or ROI are used here. Q2 labels are evaluation only.",
+    "Historical final odds are unavailable in actual pre-close form, so this does not claim live tradability.",
+    "Fixed 100-yen positive-EV ticket rule can buy many correlated outcomes; PnL measures a hypothetical unlimited-capital ledger."
+  ]
+}
