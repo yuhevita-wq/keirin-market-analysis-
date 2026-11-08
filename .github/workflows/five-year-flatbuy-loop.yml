@@ -1,0 +1,61 @@
+name: Five-year flat-buy discovery and frozen forward validation
+
+on:
+  pull_request:
+    paths:
+      - 'research/five_year_flatbuy_loop/**'
+      - '.github/workflows/five-year-flatbuy-loop.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Offline invariants and no-lookahead tests
+        run: python -m unittest discover -s research/five_year_flatbuy_loop -p 'test_*.py' -v
+
+  full-archive-analysis:
+    if: github.event_name == 'workflow_dispatch'
+    needs: unit-tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Flat buy every saved ticket from 2021 to 2025; untouched 2026 H1
+        run: |
+          python research/five_year_flatbuy_loop/run.py \
+            --first-year 2021 --last-year 2025 --holdout-year 2026 \
+            --depth 3
+      - name: Verify numeric accounting and chronological split
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          doc=json.loads(Path('results/five_year_flatbuy_loop/report.json').read_text())
+          assert doc['discovery_window']==[2021,2025]
+          assert doc['holdout_year']==2026
+          assert doc['final_rule_from_5_years']['train_years']==[2021,2022,2023,2024,2025]
+          for e in doc['chronological_frozen_backtests']:
+              assert max(e['training_years']) < e['year'],e
+              s=e['forward']['overall']
+              assert s['profit_yen']==s['return_yen']-s['stake_yen']
+          h=doc['untouched_later_year_evaluation']['performance']['overall']
+          assert h['profit_yen']==h['return_yen']-h['stake_yen']
+          print('FLATBUY_VALIDATED',h)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: five-year-flatbuy-2021-2026h1
+          path: results/five_year_flatbuy_loop/
+          retention-days: 30
