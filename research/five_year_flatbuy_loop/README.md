@@ -38,7 +38,7 @@
 
 | 出力 | 中身 |
 | ---- | ---- |
-| flat_buy_profitable_conditions.csv | 全5年で100％超で再現性の最低条件を満たす単独特徴 |
+| flat_buy_profitable_conditions.csv | 全5年で100％超の単独特徴を小標本も含め全件列挙。購入候補適格フラグと年別ROIを別列で表示 |
 | report.json | 全件平買い基準、データ監査、各ステップの候補・採択・却下、年別成績 |
 | walk_forward.csv | 凍結条件での年別購入レース数・購入点数・投資・払戻・利益・回収率 |
 | decisions/frozen_YYYY.csv.gz | 各未知年に買った全組番・価格・的中・払戻近似・採用ルール |
