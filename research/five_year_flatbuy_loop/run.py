@@ -266,12 +266,12 @@ def scan(root: Path, years: list[int], rule: tuple[str, ...] = (),
                 matched_races.add(rid)
                 for wager in counted_types:
                     audit[f"valid_{wager}_race"] += 1
+                if purchased:
+                    audit["buy_races"] += 1
+                else:
+                    audit["no_buy_races"] += 1
             else:
                 audit["no_complete_winning_market"] += 1
-            if purchased:
-                audit["buy_races"] += 1
-            else:
-                audit["no_buy_races"] += 1
         audit["total_odds_races"] = len(seen_races)
         audit["verified_market_races"] = len(matched_races)
         audit["verified_results_in_file"] = len(outcomes)
