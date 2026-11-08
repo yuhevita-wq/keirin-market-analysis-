@@ -365,17 +365,32 @@ def run(root: Path, out: Path, args):
     root_stats, single_groups, census = scan(root, training, expand=True)
     ranked_full = candidates(single_groups, training, args.min_bets, args.min_hits,
                              args.min_profitable_years)
+    # Report *every* ROI>100% flat-buy category, including fragile ones.
+    # Support/stability screening is for actual purchasing rules, not discovery.
+    eligible_tokens = {r["feature"] for r in ranked_full}
+    raw_positive = [
+        {"feature": feature, "performance": pack_by_year(by_year, training)}
+        for feature, by_year in single_groups.items()
+    ]
+    raw_positive = [r for r in raw_positive
+                    if r["performance"]["overall"]["roi"] is not None
+                    and r["performance"]["overall"]["roi"] > 1]
+    raw_positive.sort(key=lambda r: (r["performance"]["overall"]["roi"],
+                                   r["performance"]["overall"]["bets"]), reverse=True)
     with (out / "flat_buy_profitable_conditions.csv").open("w", newline="", encoding="utf-8") as handle:
         w = csv.writer(handle)
         w.writerow(["feature", "bets", "hits", "stake_yen", "return_yen",
-                    "profit_yen", "roi", "profitable_years", "largest_payout_share"])
-        for candidate in ranked_full:
+                    "profit_yen", "roi", "profitable_years", "largest_payout_share",
+                    "eligible_for_rule_selection", "yearly_roi"])
+        for candidate in raw_positive:
             s = candidate["performance"]
             w.writerow([candidate["feature"], s["overall"]["bets"], s["overall"]["hits"],
                         s["overall"]["stake_yen"], s["overall"]["return_yen"],
                         s["overall"]["profit_yen"], s["overall"]["roi"],
                         sum(v["roi"] is not None and v["roi"] > 1 for v in s["by_year"].values()),
-                        s["overall"]["largest_payout_share"]])
+                        s["overall"]["largest_payout_share"],
+                        candidate["feature"] in eligible_tokens,
+                        json.dumps({y: v["roi"] for y, v in s["by_year"].items()})])
 
     frozen_tests = []
     for test_year in range(args.first_year + 2, args.last_year + 1):
@@ -420,8 +435,10 @@ def run(root: Path, out: Path, args):
         "full_period_descriptive_only": {
             "all_ticket_flat_buy": pack_by_year(root_stats, training),
             "eligible_race_audit": census,
-            "profitable_single_conditions_count": len(ranked_full),
-            "profitable_single_conditions_top50": ranked_full[:50],
+            "profitable_single_conditions_count": len(raw_positive),
+            "eligible_single_conditions_count": len(ranked_full),
+            "profitable_single_conditions_top50": raw_positive[:50],
+            "eligible_single_conditions_top50": ranked_full[:50],
         },
         "chronological_frozen_backtests": frozen_tests,
         "final_rule_from_5_years": final_model,
@@ -451,7 +468,8 @@ def run(root: Path, out: Path, args):
                         test["audit"][str(test["year"])].get("buy_races", 0)])
     print(json.dumps({
         "five_year_eligible_races": sum(v.get("verified_market_races", 0) for v in census.values()),
-        "profitable_flat_conditions": len(ranked_full),
+        "profitable_flat_conditions": len(raw_positive),
+        "stable_flat_conditions": len(ranked_full),
         "last_rule": final_model["rule"],
         "out_of_sample": final["untouched_later_year_evaluation"]["performance"]["overall"],
         "report": str(out / "report.json")
