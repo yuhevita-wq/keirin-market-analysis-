@@ -378,7 +378,7 @@ def run(root: Path, out: Path, args):
                         s["overall"]["largest_payout_share"]])
 
     frozen_tests = []
-    for test_year in range(args.first_year + 2, args.holdout_year + 1):
+    for test_year in range(args.first_year + 2, args.last_year + 1):
         years = list(range(args.first_year, min(test_year, args.last_year + 1)))
         learned = learn(root, years, depth=args.depth, min_bets=args.min_bets,
                         min_hits=args.min_hits, min_profitable_years=args.min_profitable_years,
