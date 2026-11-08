@@ -112,7 +112,7 @@ def rank_band(r: int) -> str:
         return "1"
     for high in (3, 6, 12, 24, 48, 96, 192):
         if r <= high:
-            low = (1 if high == 3 else {6: 4, 12: 7, 24: 13, 48: 25, 96: 49, 192: 97}[high])
+            low = (2 if high == 3 else {6: 4, 12: 7, 24: 13, 48: 25, 96: 49, 192: 97}[high])
             return f"{low}-{high}"
     return "193+"
 
@@ -238,7 +238,7 @@ def scan(root: Path, years: list[int], rule: tuple[str, ...] = (),
             if dt is None or dt.year != year:
                 audit["wrong_year_or_invalid_date"] += 1
                 continue
-            if GIRLS.search(str(row.get("race_type", ""))):
+            if GIRLS.search(unicodedata.normalize("NFKC", str(row.get("race_type", "")))):
                 audit["girls_excluded"] += 1
                 continue
             finish = outcomes.get(rid)
