@@ -1,0 +1,61 @@
+name: Flat-buy pattern search v2 (formations and frozen forward replay)
+
+on:
+  pull_request:
+    paths:
+      - 'research/flatbuy_pattern_v2/**'
+      - '.github/workflows/flatbuy-pattern-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Unit tests for losing single factors and profitable intersection
+        run: python -m unittest discover -s research/flatbuy_pattern_v2 -p 'test_*.py' -v
+
+  research:
+    if: github.event_name == 'workflow_dispatch'
+    needs: tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Evaluate 2021-2025 and unseen 2026 H1
+        run: |
+          python research/flatbuy_pattern_v2/engine.py \
+            --first 2021 --last 2025 --holdout 2026 \
+            --min-races 100 --min-hits 5 --min-years 2
+      - name: Verify output accounting and frozen evaluation
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a=json.loads(Path("results/flatbuy_pattern_v2/report.json").read_text())
+          assert a["discovery"] == [2021, 2025]
+          assert a["holdout"] == 2026
+          assert a["distinct_cells_tested"] > 0
+          assert a["walk_forward"][-1]["test_year"] == 2026
+          for row in a["walk_forward"]:
+              assert max(row["train_years"]) < row["test_year"]
+              s=row["forward"]
+              assert s["stake_yen"] == s["bets"] * 100
+              assert s["profit_yen"] == s["return_yen"]-s["stake_yen"]
+          print("V2_COMPLETE",a["distinct_cells_tested"],a["eligible_train_cells"])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: flatbuy-pattern-v2-2021-2026h1
+          path: results/flatbuy_pattern_v2/
+          retention-days: 30
