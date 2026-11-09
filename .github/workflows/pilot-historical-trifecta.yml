@@ -5,6 +5,7 @@ on:
       - pilot/trifecta-odds-20261109
     paths:
       - research/odds_trifecta_pilot/collect.py
+      - research/odds_trifecta_pilot/batch.py
       - .github/workflows/pilot-historical-trifecta.yml
   workflow_dispatch:
 
@@ -35,6 +36,11 @@ jobs:
           python -m research.odds_trifecta_pilot.collect \
             --day 2026-11-08 \
             --out "$RUNNER_TEMP/historical_3rentan_pilot_2026-11-08.json.gz"
+      - name: Capture bounded ten-race audit of historical timepoints
+        run: |
+          python -m research.odds_trifecta_pilot.batch \
+            --day 2026-11-08 \
+            --out "$RUNNER_TEMP/historical_3rentan_10race_2026-11-08.json.gz"
       - name: Store verified data as draft release asset, not in public git
         env:
           GH_TOKEN: ${{ github.token }}
@@ -43,6 +49,8 @@ jobs:
           set -euo pipefail
           file="$RUNNER_TEMP/historical_3rentan_pilot_2026-11-08.json.gz"
           test -s "$file"
+          batch="$RUNNER_TEMP/historical_3rentan_10race_2026-11-08.json.gz"
+          test -s "$batch"
           tag="trifecta-odds-pilot-20261109"
           if ! gh release view "$tag" >/dev/null 2>&1; then
             gh release create "$tag" --draft --target "$GITHUB_REF_NAME" \
@@ -50,4 +58,5 @@ jobs:
               --notes "Research-only, at most 1 race. Source odds may be top-50; never claim full book."
           fi
           gh release upload "$tag" "$file" --clobber
+          gh release upload "$tag" "$batch" --clobber
           echo "One verified 3連単 archive saved as an authenticated draft Release asset." >> "$GITHUB_STEP_SUMMARY"
