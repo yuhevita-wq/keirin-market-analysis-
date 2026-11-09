@@ -267,14 +267,25 @@ def race_features(race_type, parsed, lines, riders):
         sizes = "".join(map(str, sorted((len(x) for x in lines), reverse=True)))
         result.update((f"line_shape={sizes}", f"line_max={len(lines[0])}",
                        f"line_count={len(lines)}"))
-        if riders:
-            ages = [riders[c]["age"] for c in cars if riders[c]["age"] is not None]
-            if len(ages) == len(cars):
-                result.add(f"youngest_age={'<30' if min(ages) < 30 else '>=30'}")
+    if riders and set(riders) == cars:
+        ages = [riders[c]["age"] for c in cars if riders[c]["age"] is not None]
+        scores = [riders[c]["score"] for c in cars if riders[c]["score"] is not None]
+        if len(ages) == len(cars):
+            result.add(f"youngest_age={'<30' if min(ages) < 30 else '>=30'}")
+            result.add(f"age_span={'<10' if max(ages)-min(ages) < 10 else '>=10'}")
+        if len(scores) == len(cars):
+            gap = max(scores)-min(scores)
+            result.add(f"score_spread={'<5' if gap < 5 else '<10' if gap < 10 else '>=10'}")
+            result.add(f"top_score={'<95' if max(scores) < 95 else '<110' if max(scores) < 110 else '>=110'}")
+        if lines is not None and len(lines) >= 2:
+            leader_scores = [riders[x[0]]["score"] for x in lines]
+            if all(x is not None for x in leader_scores):
+                gap = max(leader_scores)-min(leader_scores)
+                result.add(f"line_leader_gap={'<5' if gap < 5 else '<10' if gap < 10 else '>=10'}")
     return sorted(result)
 
 
-def select_policies(wager, items, winner, lines):
+def select_policies(wager, items, winner, lines, riders=None):
     """Return diverse pre-race policy bets, not every ticket in the book."""
     if wager == "3連単":
         schemes = {
@@ -297,6 +308,22 @@ def select_policies(wager, items, winner, lines):
         schemes["head_top1_best6"] = [x for x in items if x[0][0] == best_heads[0]][:6]
         schemes["head_top2_best6"] = [x for x in items if x[0][0] in best_heads[:2]][:6]
         schemes["head_outside_top2_best6"] = [x for x in items if x[0][0] not in best_heads[:2]][:6]
+        cars_in_book = {c for combo, _ in items for c in combo}
+        if riders and set(riders) == cars_in_book:
+            scores = {c: riders[c]["score"] for c in cars_in_book}
+            ages = {c: riders[c]["age"] for c in cars_in_book}
+            if all(v is not None for v in scores.values()):
+                ordered = sorted(cars_in_book, key=lambda c: (-scores[c], c))
+                schemes["score_top1_head_best6"] = [x for x in items if x[0][0] == ordered[0]][:6]
+                schemes["score_top2_head_best8"] = [x for x in items if x[0][0] in ordered[:2]][:8]
+                schemes["score_bottom2_head_best6"] = [x for x in items if x[0][0] in ordered[-2:]][:6]
+                schemes["score_top_two_pair_best8"] = [
+                    x for x in items if set(x[0][:2]) == set(ordered[:2])
+                ][:8]
+            if all(v is not None for v in ages.values()):
+                ordered_age = sorted(cars_in_book, key=lambda c: (ages[c], c))
+                schemes["youngest_head_best6"] = [x for x in items if x[0][0] == ordered_age[0]][:6]
+                schemes["oldest_head_best6"] = [x for x in items if x[0][0] == ordered_age[-1]][:6]
         if lines is not None:
             group_of = {c: k for k, line in enumerate(lines) for c in line}
             position = {c: p+1 for line in lines for p, c in enumerate(line)}
@@ -405,7 +432,7 @@ def scan(root, first, last, rider_index):
                     flags[f"{wager}_valid_line"] += 1
                 features = race_features(rt, {wager: items}, lines, riders)
                 winner = outcome if wager == "3連単" else tuple(sorted(outcome))
-                for policy, selection, hit, pay in select_policies(wager, items, winner, lines):
+                for policy, selection, hit, pay in select_policies(wager, items, winner, lines, riders):
                     for cell in field_cells(features):
                         stats[(policy, cell)][year].add(len(selection), hit, pay)
         flags["odds_races"] = len(seen)
