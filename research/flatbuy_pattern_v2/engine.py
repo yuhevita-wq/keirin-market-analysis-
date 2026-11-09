@@ -191,10 +191,9 @@ def load_riders(root, years):
                 else:
                     book[key] = x
     # Avoid assigning an incorrect line for a conflicted race.
-    for rid in conflicts:
-        for key, row in list(book.items()):
-            if key[0] == rid:
-                row["line"] = ""
+    for (rid, _car), row in book.items():
+        if rid in conflicts:
+            row["line"] = ""
     race_riders = defaultdict(dict)
     for (rid, car), row in book.items():
         race_riders[rid][car] = row
