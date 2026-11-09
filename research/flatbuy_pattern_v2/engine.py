@@ -482,6 +482,75 @@ def key_json(key):
     return {"policy": key[0], "race_conditions": list(key[1])}
 
 
+def frozen_ticket_log(root, out, year, key, riders):
+    """Independent per-ticket reconciliation for one frozen year. Missing rule => no bets."""
+    path = out / "decisions" / f"frozen_{year}.csv.gz"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    rec = Stat()
+    outcomes = read_result_files(root, year, year)[year]
+    with gzip.open(path, "wt", encoding="utf-8", newline="") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(["year", "race_id", "policy", "race_conditions",
+                         "wager", "combination", "final_odds",
+                         "won", "payout_proxy_yen"])
+        if key is None:
+            return rec, path
+        target_policy, target_filters = key
+        target_type = target_policy.split("/", 1)[0]
+        source = root / "data/odds_only" / f"odds_{year}.jsonl.gz"
+        for r in gz_json(source):
+            rid = str(r.get("race_id", ""))
+            d = race_day(rid)
+            if d is None or d.year != year or (year == 2026 and d > date(2026, 6, 30)):
+                continue
+            rt = r.get("race_type", "")
+            if GIRLS.search(norm(rt)) or rid not in outcomes:
+                continue
+            items = parse_market((r.get("odds") or {}).get(target_type), target_type)
+            if items is None:
+                continue
+            cars = {c for combo, _ in items for c in combo}
+            finish = outcomes[rid]
+            if not set(finish).issubset(cars):
+                continue
+            lineup = riders.get(rid, {})
+            lines = valid_lines(lineup, cars)
+            features = race_features(rt, {target_type: items}, lines, lineup)
+            if not set(target_filters).issubset(features):
+                continue
+            winner = finish if target_type == "3連単" else tuple(sorted(finish))
+            for policy, choices, _hit, _pay in select_policies(
+                    target_type, items, winner, lines, lineup):
+                if policy != target_policy:
+                    continue
+                win_count = 0
+                return_yen = 0
+                for combo, odd in choices:
+                    won = combo == winner
+                    pay = int(round(odd * 100)) if won else 0
+                    win_count += int(won)
+                    return_yen += pay
+                    separator = "-" if target_type == "3連単" else "="
+                    writer.writerow([year, rid, policy, ";".join(target_filters),
+                                     target_type, separator.join(map(str, combo)), odd,
+                                     int(won), pay])
+                rec.add(len(choices), win_count, return_yen)
+                break
+    return rec, path
+
+
+def refinement_trace(stats, chosen, train_years):
+    if chosen is None:
+        return []
+    policy, conditions = chosen
+    trace = []
+    for level in range(len(conditions) + 1):
+        key = (policy, conditions[:level])
+        trace.append({"level": level, "conditions": list(conditions[:level]),
+                      "training": performance(stats[key], train_years)["overall"]})
+    return trace
+
+
 def run(root, out, first=2021, last=2025, holdout=2026,
         min_races=100, min_hits=5, min_years=2, max_conditions=3):
     if first >= last or holdout <= last:
@@ -517,11 +586,16 @@ def run(root, out, first=2021, last=2025, holdout=2026,
                                       min_hits, min_years)
         choice = ranked[0][0] if ranked else None
         p = performance(stats[choice], [test_year]) if choice else performance({}, [test_year])
+        ledger, ledger_path = frozen_ticket_log(root, out, test_year, choice, riders)
+        if ledger.result() != p["overall"]:
+            raise AssertionError(f"ticket log does not reconcile for {test_year}: {ledger.result()} != {p['overall']}")
         walks.append({"test_year": test_year, "train_years": train_years,
                       "candidate_positive_cells": positive,
                       "qualified_candidates": len(ranked),
                       "frozen_choice": key_json(choice) if choice else None,
                       "train_performance": ranked[0][1] if ranked else None,
+                      "refinement_trace": refinement_trace(stats, choice, train_years),
+                      "decision_log": str(ledger_path),
                       "forward": p["overall"]})
     report = {
         "method": "pattern_policy_flatbuy_v2",
