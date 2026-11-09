@@ -429,10 +429,12 @@ def scan(root, first, last, rider_index, max_conditions=3):
                 if lines is not None:
                     flags[f"{wager}_valid_line"] += 1
                 features = race_features(rt, {wager: items}, lines, riders)
+                cells = tuple(field_cells(features, max_conditions=max_conditions))
                 winner = outcome if wager == "3連単" else tuple(sorted(outcome))
                 for policy, selection, hit, pay in select_policies(wager, items, winner, lines, riders):
-                    for cell in field_cells(features, max_conditions=max_conditions):
-                        stats[(policy, cell)][year].add(len(selection), hit, pay)
+                    n = len(selection)
+                    for cell in cells:
+                        stats[(policy, cell)][year].add(n, hit, pay)
         flags["odds_races"] = len(seen)
         flags["matched_results_available"] = len(results[year])
         audit[str(year)] = dict(flags)
