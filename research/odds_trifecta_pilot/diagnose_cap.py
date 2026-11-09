@@ -9,11 +9,10 @@ from urllib.parse import urlencode
 from research.odds_path_archive.collect import Source, matched
 
 DAY="2026-11-08"
-TRACK="熊本"
-RACE=8
+RACE=1
 
-def market_info(response):
-    r=matched(response,DAY,TRACK,RACE)
+def market_info(response, track):
+    r=matched(response,DAY,track,RACE)
     odds=r.get("odds_info") or {}
     pops=odds.get("time_pops") or {}
     times=odds.get("time_odds_times") or {}
@@ -37,20 +36,24 @@ def market_info(response):
 def main():
     source=Source(pause=2.5)
     probe=[]
+    catalog,_=source.api(DAY)
+    tracks=catalog.get("kr_info",{}).get("track_info") or []
+    if not tracks: raise ValueError("No tracks in actual API catalog")
+    track=tracks[0]
     for page in (1,2,3):
         url="https://keirinodds.com/odds?"+urlencode(
             {"race_kind":"kr","race_date":DAY,"display_times":24,"page":page,
-             "race_track":TRACK,"race_no":RACE})
+             "race_track":track,"race_no":RACE})
         raw,received=source.get(url)
         response=json.loads(raw)
-        info=market_info(response)
+        info=market_info(response,track)
         ids=info.pop("first_frame_tickets")
         probe.append({"page":page,"source_sha256":hashlib.sha256(raw).hexdigest()[:16],
                       "first_frame_count":len(ids),"first_frame_tickets":ids,**info})
     union=set().union(*(p["first_frame_tickets"] for p in probe))
     identical=all(p["first_frame_tickets"]==probe[0]["first_frame_tickets"] for p in probe[1:])
     for p in probe: p.pop("first_frame_tickets")
-    print(json.dumps({"race":f"{DAY} {TRACK} {RACE}R",
+    print(json.dumps({"race":f"{DAY} track={track} {RACE}R",
         "page1_to_page3_same_first_frame":identical,
         "first_frame_union_across_pages":len(union),
         "pages":probe,
