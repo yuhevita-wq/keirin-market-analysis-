@@ -16,7 +16,6 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
       - name: Download ten previously saved races from authenticated draft Release
         env:
           GH_TOKEN: ${{ github.token }}
