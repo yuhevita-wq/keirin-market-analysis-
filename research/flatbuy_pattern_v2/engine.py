@@ -370,17 +370,16 @@ def select_policies(wager, items, winner, lines, riders=None):
         yield f"{wager}/{name}", selection, len(won), int(round(100 * won[0])) if won else 0
 
 
-def field_cells(features):
-    """Base, *every* singleton, and every cross-dimension pair; no positive-single gate."""
+def field_cells(features, max_conditions=3):
+    """Every dimensionally valid subset up to depth; never gate on single-feature ROI."""
     yield ()
-    for f in features:
-        yield (f,)
-    for a, b in itertools.combinations(features, 2):
-        if a.split("=", 1)[0] != b.split("=", 1)[0]:
-            yield (a, b)
+    for depth in range(1, max_conditions + 1):
+        for conditions in itertools.combinations(features, depth):
+            if len({x.split("=", 1)[0] for x in conditions}) == depth:
+                yield conditions
 
 
-def scan(root, first, last, rider_index):
+def scan(root, first, last, rider_index, max_conditions=3):
     results = read_result_files(root, first, last)
     stats = defaultdict(lambda: defaultdict(Stat))
     audit = {}
@@ -433,7 +432,7 @@ def scan(root, first, last, rider_index):
                 features = race_features(rt, {wager: items}, lines, riders)
                 winner = outcome if wager == "3連単" else tuple(sorted(outcome))
                 for policy, selection, hit, pay in select_policies(wager, items, winner, lines, riders):
-                    for cell in field_cells(features):
+                    for cell in field_cells(features, max_conditions=max_conditions):
                         stats[(policy, cell)][year].add(len(selection), hit, pay)
         flags["odds_races"] = len(seen)
         flags["matched_results_available"] = len(results[year])
@@ -483,12 +482,14 @@ def key_json(key):
 
 
 def run(root, out, first=2021, last=2025, holdout=2026,
-        min_races=100, min_hits=5, min_years=2):
+        min_races=100, min_hits=5, min_years=2, max_conditions=3):
     if first >= last or holdout <= last:
         raise ValueError("Forward test must follow >=2 historical years")
+    if max_conditions < 1 or max_conditions > 4:
+        raise ValueError("max_conditions must be from 1 to 4")
     out.mkdir(parents=True, exist_ok=True)
     riders, rider_audit = load_riders(root, range(first, holdout+1))
-    stats, audit = scan(root, first, holdout, riders)
+    stats, audit = scan(root, first, holdout, riders, max_conditions=max_conditions)
     # All cells are discovered even when every single feature is below 100%.
     discovered, positive_n = rank_train(stats, list(range(first, last+1)),
                                          min_races, min_hits, min_years)
@@ -525,7 +526,12 @@ def run(root, out, first=2021, last=2025, holdout=2026,
         "method": "pattern_policy_flatbuy_v2",
         "discovery": [first, last], "holdout": holdout,
         "scope": "available archived men's 3連単 and 3連複 complete markets; not all national races",
-        "main_fix": "Search all policies AND all 1- and 2-way race conditions without profitable-single gate",
+        "main_fix": "Search all predefined policies and 1..max_conditions conjunctions, without profitability gates",
+        "max_conjoined_race_conditions": max_conditions,
+        "exploration_counts_by_depth": {
+            str(depth): sum(len(k[1]) == depth for k in stats)
+            for depth in range(max_conditions + 1)
+        },
         "rider_audit": rider_audit, "source_audit": audit,
         "distinct_cells_tested": len(stats),
         "profitable_train_cells_including_fragile": positive_n,
@@ -575,8 +581,9 @@ def main():
     p.add_argument("--min-races", type=int, default=100)
     p.add_argument("--min-hits", type=int, default=5)
     p.add_argument("--min-years", type=int, default=2)
+    p.add_argument("--max-conditions", type=int, default=3)
     a = p.parse_args()
-    run(a.root, a.out, a.first, a.last, a.holdout, a.min_races, a.min_hits, a.min_years)
+    run(a.root, a.out, a.first, a.last, a.holdout, a.min_races, a.min_hits, a.min_years, a.max_conditions)
 
 
 if __name__ == "__main__":
