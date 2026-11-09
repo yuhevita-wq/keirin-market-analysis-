@@ -7,7 +7,7 @@ import unittest
 from pathlib import Path
 
 from engine import (parse_market, valid_lines, race_features, select_policies,
-                    scan, run, race_day)
+                    scan, run, race_day, field_cells)
 
 
 def rid(year, seq):
@@ -56,6 +56,13 @@ def build_data(root, years):
 class Tests(unittest.TestCase):
     def test_race_id(self):
         self.assertEqual(str(race_day(rid(2021, 1))), "2021-01-01")
+
+    def test_three_factor_search_without_profitable_single_precondition(self):
+        features = ["grade=F1", "n=7", "stage=予選", "grade=F2"]
+        cells = set(field_cells(features, max_conditions=3))
+        self.assertIn(("grade=F1", "n=7", "stage=予選"), cells)
+        self.assertNotIn(("grade=F1", "stage=予選", "grade=F2"), cells)
+        self.assertIn((), cells)
 
     def test_complete_market_rejects_partial_and_duplicates(self):
         raw = {"1-2-3": 5.0}
