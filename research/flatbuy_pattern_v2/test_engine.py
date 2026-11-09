@@ -113,6 +113,9 @@ class Tests(unittest.TestCase):
                 self.assertEqual(z["profit_yen"], z["return_yen"] - z["stake_yen"])
             self.assertTrue((root / "out/report.json").is_file())
             self.assertTrue((root / "out/all_flatbuy_cells.csv").is_file())
+            for year in range(2023, 2027):
+                self.assertTrue((root / f"out/decisions/frozen_{year}.csv.gz").is_file())
+            self.assertEqual(report["walk_forward"][-1]["forward"]["bets"] >= 0, True)
 
 
 if __name__ == "__main__":
