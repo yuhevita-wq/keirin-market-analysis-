@@ -1,11 +1,10 @@
-name: Diagnose historical 3rentan top-50 pagination
+name: Audit archived historic 3rentan union beyond top-50
 
 on:
   push:
     branches:
       - pilot/trifecta-odds-20261109
     paths:
-      - research/odds_trifecta_pilot/diagnose_cap.py
       - .github/workflows/pilot-historical-trifecta.yml
   workflow_dispatch:
 
@@ -13,17 +12,38 @@ permissions:
   contents: read
 
 jobs:
-  diagnose:
+  audit:
     runs-on: ubuntu-24.04
-    timeout-minutes: 12
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            research/odds_path_archive
-            research/odds_trifecta_pilot
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Verify whether pages 1-3 return disjoint 3rentan selections
-        run: python -m research.odds_trifecta_pilot.diagnose_cap
+      - name: Download ten previously saved races from authenticated draft Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release download trifecta-odds-pilot-20261109 --pattern "historical_3rentan_10race_2026-11-08.json.gz" --dir "$RUNNER_TEMP"
+      - name: Count distinct tickets across all observed timepoints without filling missing odds
+        env:
+          TEMP_DIR: ${{ runner.temp }}
+        run: |
+          python - <<'PY'
+          import gzip, json, os
+          from pathlib import Path
+          p=Path(os.environ['TEMP_DIR'])/'historical_3rentan_10race_2026-11-08.json.gz'
+          d=json.loads(gzip.decompress(p.read_bytes()))
+          rows=[]
+          for race in d['races']:
+              frames=race['snapshots']
+              union=set().union(*(set(frame['odds']) for frame in frames))
+              rows.append({
+                  'track':race['track'],'race_no':race['race_no'],
+                  'timepoints':len(frames),'maximum_same_timepoint':max(len(frame['odds']) for frame in frames),
+                  'distinct_tickets_across_timepoints':len(union),
+                  'expected_full_book':race['expected_full_book']
+              })
+          print(json.dumps({'races':rows,
+                 'races_with_over_50_distinct_tickets':sum(r['distinct_tickets_across_timepoints']>50 for r in rows),
+                 'caution':'Union across times is not a full snapshot at any one timepoint'},
+                 ensure_ascii=False))
+          PY
