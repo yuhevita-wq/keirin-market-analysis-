@@ -16,7 +16,7 @@ def market_info(response, track):
     odds=r.get("odds_info") or {}
     pops=odds.get("time_pops") or {}
     times=odds.get("time_odds_times") or {}
-    key=next((k for k in pops if str(k).lower().strip() in ("3rentan","trifecta","sanrentan","santan","3連単")),None)
+    key=next((k for k in pops if str(k).lower().strip() in ("3rentan","trifecta","sanrentan","santan","3連単","tierce")),None)
     frames=pops.get(key,[]) if key else []
     stamps=times.get(key,[]) if key else []
     seen=set()
