@@ -46,18 +46,29 @@ def main():
              "race_track":track,"race_no":RACE})
         raw,received=source.get(url)
         response=json.loads(raw)
-        info=market_info(response,track)
+        try:
+            info=market_info(response,track)
+        except ValueError as exc:
+            returned=response.get("kr_info",{}).get("race_info") or []
+            sample=[{"track":item.get("race_info",{}).get("track"),
+                     "race":item.get("race_info",{}).get("race")} for item in returned[:2]]
+            probe.append({"page":page,"error":str(exc),"returned_first_two":sample})
+            continue
         ids=info.pop("first_frame_tickets")
         probe.append({"page":page,"source_sha256":hashlib.sha256(raw).hexdigest()[:16],
                       "first_frame_count":len(ids),"first_frame_tickets":ids,**info})
-    union=set().union(*(p["first_frame_tickets"] for p in probe))
-    identical=all(p["first_frame_tickets"]==probe[0]["first_frame_tickets"] for p in probe[1:])
-    for p in probe: p.pop("first_frame_tickets")
+    success=[p for p in probe if "first_frame_tickets" in p]
+    if not success:
+        raise ValueError("No page returned expected race")
+    union=set().union(*(p["first_frame_tickets"] for p in success))
+    identical=all(p["first_frame_tickets"]==success[0]["first_frame_tickets"] for p in success[1:])
+    for p in success: p.pop("first_frame_tickets")
     print(json.dumps({"race":f"{DAY} track={track} {RACE}R",
-        "page1_to_page3_same_first_frame":identical,
+        "pages_with_correct_race":len(success),
+        "pages_same_first_frame":identical,
         "first_frame_union_across_pages":len(union),
         "pages":probe,
-        "conclusion":("NO_EXTRA_3RENTAN_FROM_PAGINATION" if identical else "PAGE_DIFFERENCE_NEEDS_VALIDATION")},
+        "conclusion":("NO_EXTRA_3RENTAN_FROM_PAGINATION" if len(success)==3 and identical else "PAGINATION_CANNOT_YET_EXTEND_HISTORY")},
         ensure_ascii=False))
 
 if __name__=="__main__":
