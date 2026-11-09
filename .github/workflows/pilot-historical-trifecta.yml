@@ -37,8 +37,8 @@ jobs:
             --out "$RUNNER_TEMP/historical_3rentan_pilot_2026-11-08.json.gz"
       - name: Store verified data as draft release asset, not in public git
         env:
-          GH_TOKEN: \${{ github.token }}
-          GH_REPO: \${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
           file="$RUNNER_TEMP/historical_3rentan_pilot_2026-11-08.json.gz"
