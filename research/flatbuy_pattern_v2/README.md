@@ -42,5 +42,6 @@ GitHub Actions: .github/workflows/flatbuy-pattern-v2.yml
 | all_flatbuy_cells.csv | 利益／赤字も含む全ポリシー×条件の実測件数・年別回収率 |
 | report.json | 5年の黒字候補数、購入適格候補、トップ30、年度ごとの未知検証、ラインデータ充足 |
 | walk_forward.csv | 未知年を買ったと仮定したレース数・点数・損益・回収率 |
+| decisions/frozen_YYYY.csv.gz | その年の採用ルールで買う全車番の購入ログ（不的中含む）、確定オッズ、的中、払戻近似 |
 
 V1は削除しない。V2結果と厳密に区別する。
