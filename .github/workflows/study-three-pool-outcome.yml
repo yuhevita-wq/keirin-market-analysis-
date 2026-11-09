@@ -1,0 +1,83 @@
+name: Study three-pool historical odds changes and realized outcomes
+
+on:
+  push:
+    branches:
+      - research/three-pool-outcome-20261109
+    paths:
+      - research/three_pool_outcome/**
+      - .github/workflows/study-three-pool-outcome.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: 20261109-three-pool-outcome-one-run
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            research/three_pool_outcome
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate no lookahead or fabricated odds
+        run: python research/three_pool_outcome/analyze.py --self-test
+      - name: Download existing 2026 historical three-pool archive only
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/path_odds"
+          count=0
+          while IFS= read -r tag; do
+            test -n "$tag" || continue
+            echo "Downloading authorized existing Draft Release $tag"
+            mkdir -p "$RUNNER_TEMP/path_odds/$tag"
+            gh release download "$tag" --dir "$RUNNER_TEMP/path_odds/$tag" --clobber
+            count=$((count+1))
+          done < <(gh api --paginate "repos/$GH_REPO/releases?per_page=100" \
+              --jq '.[] | select(.tag_name | test("^path-odds-2026-[0-9]{2}$")) | .tag_name')
+          test "$count" -ge 2
+          echo "Downloaded $count archive months" >> "$GITHUB_STEP_SUMMARY"
+      - name: Evaluate odds path, outcome, cross-pool agreement and out-of-time replication
+        shell: bash
+        run: |
+          python -u research/three_pool_outcome/analyze.py \
+            --input "$RUNNER_TEMP/path_odds" \
+            --out "$RUNNER_TEMP/three_pool_path_outcome_20261109.json" \
+            --bootstrap 200
+          test -s "$RUNNER_TEMP/three_pool_path_outcome_20261109.json"
+      - name: Persist only aggregate research report to Draft Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          tag="three-pool-outcome-analysis-20261109"
+          if ! gh release view "$tag" > /dev/null 2>&1; then
+            gh release create "$tag" --draft --target "$GITHUB_REF_NAME" \
+              --title "Three-pool odds path vs actual payouts: independent historical audit" \
+              --notes "Exploratory noncausal study; archival top50 and cutoff limitations apply. Only aggregate summary in this release."
+          fi
+          gh release upload "$tag" "$RUNNER_TEMP/three_pool_path_outcome_20261109.json" --clobber
+          python - <<'PY'
+          import json,os
+          x=json.load(open(os.environ['RUNNER_TEMP']+'/three_pool_path_outcome_20261109.json'))
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as w:
+              w.write("\n## Three-pool price movement outcome audit\n\n")
+              w.write("Races: "+str(x['data']['unique_races'])+"\n\n")
+              w.write("Dates: "+x['data']['start']+" to "+x['data']['end']+"\n\n")
+              for name,c in x['conditional_matched_contrasts'].items():
+                  w.write(name+": "+str(c)+"\n\n")
+          PY
