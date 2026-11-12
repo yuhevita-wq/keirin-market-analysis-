@@ -1,0 +1,54 @@
+name: Discover Benter structural independent model V2
+on:
+  push:
+    branches:
+      - research/benter-structural-discovery-v2-20261017
+    paths:
+      - .github/workflows/benter-structural-discovery-v2.yml
+      - research/benter_structural_discovery_v2/discover_v2.py
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/benter-structural-discovery-v2-20261017
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/benter_fundamental_v1/train_v1.py
+            /research/benter_structural_discovery_v2/discover_v2.py
+            /data/2023/s_class_f1_all_parts/*/entries.csv
+            /data/2023/s_class_f1_all_parts/*/results.csv
+            /data/2023/s_class_f1_all_parts/*/races.csv
+            /data/2024/s_class_f1_all_parts/*/entries.csv
+            /data/2024/s_class_f1_all_parts/*/results.csv
+            /data/2024/s_class_f1_all_parts/*/races.csv
+            /data/2025/s_class_f1_all_parts/*/entries.csv
+            /data/2025/s_class_f1_all_parts/*/results.csv
+            /data/2025/s_class_f1_all_parts/*/races.csv
+            /data/2026_h1/s_class_f1_all/entries.csv
+            /data/2026_h1/s_class_f1_all/results.csv
+            /data/2026_h1/s_class_f1_all/races.csv
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.11,<2'
+      - name: Compare independent hypotheses with 2026 holdout
+        run: python -u research/benter_structural_discovery_v2/discover_v2.py
+      - name: Preserve reproducible research results
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add -f --sparse research/benter_structural_discovery_v2/output
+          git commit -m "Record structural discovery V2 empirical comparisons [skip ci]"
+          git push origin HEAD:research/benter-structural-discovery-v2-20261017
+      - uses: actions/upload-artifact@v4
+        with:
+          name: benter-independent-discovery-v2
+          path: research/benter_structural_discovery_v2/output/
