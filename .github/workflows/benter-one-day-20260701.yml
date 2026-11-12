@@ -1,0 +1,62 @@
+name: Frozen Benter one-day test 2026-07-01
+on:
+  push:
+    branches:
+      - research/benter-h2-one-day-20260701
+    paths:
+      - .github/workflows/benter-one-day-20260701.yml
+      - research/benter_h2_day_20260701/predict_frozen.py
+      - research/benter_h2_day_20260701/score_committed.py
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  freeze_then_score:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/benter-h2-one-day-20260701
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/benter_fundamental_v1/train_v1.py
+            /research/benter_structural_discovery_v2/discover_v2.py
+            /research/benter_structural_discovery_v2/output/models.json
+            /research/benter_h2_day_20260701/predict_frozen.py
+            /research/benter_h2_day_20260701/score_committed.py
+            /data/2026_future_block1/s_class_f1_20260701_20260830/races.csv
+            /data/2026_future_block1/s_class_f1_20260701_20260830/entries.csv
+            /data/2026_future_block1/s_class_f1_20260701_20260830/results.csv
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.11,<2'
+      - name: Commit base model checksum
+        run: sha256sum research/benter_structural_discovery_v2/output/models.json
+      - name: Freeze one-day probabilities WITHOUT opening results
+        run: python research/benter_h2_day_20260701/predict_frozen.py
+      - name: Commit predictions before results inspection
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add -f --sparse research/benter_h2_day_20260701/predictions_frozen.csv research/benter_h2_day_20260701/pre_score_manifest.json
+          git commit -m "Freeze untouched July 1 predictions BEFORE evaluation [skip ci]"
+          git push origin HEAD:research/benter-h2-one-day-20260701
+      - name: Score untouched predictions against race results
+        run: python research/benter_h2_day_20260701/score_committed.py
+      - name: Preserve independent scoring and readable race-by-race table
+        run: |
+          git add -f --sparse research/benter_h2_day_20260701/score_report.json research/benter_h2_day_20260701/scored_by_race.csv
+          git commit -m "Evaluate July 1 frozen forecasts, without retraining [skip ci]"
+          git push origin HEAD:research/benter-h2-one-day-20260701
+      - uses: actions/upload-artifact@v4
+        with:
+          name: benter-frozen-one-day-20260701
+          path: |
+            research/benter_h2_day_20260701/predictions_frozen.csv
+            research/benter_h2_day_20260701/pre_score_manifest.json
+            research/benter_h2_day_20260701/score_report.json
+            research/benter_h2_day_20260701/scored_by_race.csv

@@ -1,0 +1,84 @@
+{
+  "date": "2026-07-01",
+  "scope": "all available F1 S-class races on day, excluding missing/ambiguous outcomes",
+  "pre_result_predictions_file": "research/benter_h2_day_20260701/predictions_frozen.csv",
+  "training_cutoff": "2026-06-30",
+  "entered_races": 26,
+  "scored_races": 26,
+  "unscorable": [],
+  "uniform_log_loss": 1.9281235321521681,
+  "metrics": {
+    "score_only": {
+      "races": 26,
+      "top1_hits": 10,
+      "top1_accuracy": 0.38461538461538464,
+      "log_loss": 1.6883472233689263,
+      "multiclass_brier": 0.7877146662925683,
+      "difference_vs_uniform_log_loss": 0.23977630878324185
+    },
+    "full_v1": {
+      "races": 26,
+      "top1_hits": 6,
+      "top1_accuracy": 0.23076923076923078,
+      "log_loss": 1.7131506533959657,
+      "multiclass_brier": 0.8100923375835729,
+      "difference_vs_uniform_log_loss": 0.2149728787562024
+    },
+    "full_plus_role": {
+      "races": 26,
+      "top1_hits": 7,
+      "top1_accuracy": 0.2692307692307692,
+      "log_loss": 1.6638845655384884,
+      "multiclass_brier": 0.8059560428731499,
+      "difference_vs_uniform_log_loss": 0.26423896661367974
+    },
+    "full_plus_line": {
+      "races": 26,
+      "top1_hits": 7,
+      "top1_accuracy": 0.2692307692307692,
+      "log_loss": 1.6056005028911118,
+      "multiclass_brier": 0.7832545861824661,
+      "difference_vs_uniform_log_loss": 0.32252302926105636
+    },
+    "no_score_plus_line": {
+      "races": 26,
+      "top1_hits": 5,
+      "top1_accuracy": 0.19230769230769232,
+      "log_loss": 1.9500754843005934,
+      "multiclass_brier": 0.9202101222124859,
+      "difference_vs_uniform_log_loss": -0.02195195214842527
+    }
+  },
+  "pairwise_probabilistic_improvement": {
+    "full_plus_line_vs_full_v1": {
+      "better_if_positive": 0.1075501505048541,
+      "bootstrap_race_95pct_interval": [
+        -0.0528161680337767,
+        0.2721112503299992
+      ]
+    },
+    "full_plus_line_vs_score_only": {
+      "better_if_positive": 0.08274672047781444,
+      "bootstrap_race_95pct_interval": [
+        -0.121551729901405,
+        0.2715933445887349
+      ]
+    },
+    "full_plus_line_vs_full_plus_role": {
+      "better_if_positive": 0.0582840626473765,
+      "bootstrap_race_95pct_interval": [
+        -0.038019311419883635,
+        0.14568828418515326
+      ]
+    },
+    "full_plus_line_vs_no_score_plus_line": {
+      "better_if_positive": 0.3444749814094817,
+      "bootstrap_race_95pct_interval": [
+        0.17100053374697774,
+        0.5267718831160347
+      ]
+    }
+  },
+  "critical_limitation": "2026-07-01 entries and predicted lineup archived 2026-09-17 after the races. They may differ from contemporaneous pre-race factors; NOT a genuine prospective pre-race test.",
+  "model_scope": "Only F1 S-class; not other grades or A-class."
+}
