@@ -1,0 +1,37 @@
+name: Simulate v11.0-C01 on 2024Q1
+
+on:
+  push:
+    branches:
+      - 'analysis/v6-1-hm01-2024q1'
+    paths:
+      - 'src/keirin_market_analysis/v11_0_c01_market_psychology_racecard_context.py'
+      - 'src/keirin_market_analysis/evaluate_v11_0_c01_q1_only.py'
+      - '.github/workflows/simulate-v11-c01-q1.yml'
+  pull_request:
+    paths:
+      - 'src/keirin_market_analysis/v11_0_c01_market_psychology_racecard_context.py'
+      - 'src/keirin_market_analysis/evaluate_v11_0_c01_q1_only.py'
+      - '.github/workflows/simulate-v11-c01-q1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            data/2024/s_class_f1_all_parts/2024_q1
+            src/keirin_market_analysis
+          sparse-checkout-cone-mode: true
+          show-progress: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Simulate v11.0-C01 on 2024Q1 only
+        run: python src/keirin_market_analysis/evaluate_v11_0_c01_q1_only.py
