@@ -1,0 +1,64 @@
+name: Type Lab full archive chronological rider ability (no future leak)
+on:
+  push:
+    branches: [research/type-lab-full-archive-20261022]
+    paths:
+      - "research/type_lab_features/rebuild_asof_ability.py"
+      - ".github/workflows/type-lab-asof-ability.yml"
+  pull_request:
+    paths:
+      - "research/type_lab_features/rebuild_asof_ability.py"
+      - ".github/workflows/type-lab-asof-ability.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  full-chronological-asof-ability:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+          sparse-checkout: |
+            research/type_lab_features/rebuild_asof_ability.py
+            odds_market/vault_public_cert.pem
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check no future/same-day result and stable rider ID invariants
+        run: |
+          set -euo pipefail
+          python -m py_compile research/type_lab_features/rebuild_asof_ability.py
+          python research/type_lab_features/rebuild_asof_ability.py --selftest
+      - name: Restore ALL six owner-encrypted FULL market + rider connected archives
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 39800591400
+          repository: yuhevita-wq/keirin-market-analysis-
+          pattern: type-lab-134336-full-market-rider-join-*
+          merge-multiple: false
+          path: incoming/
+          github-token: ${{ github.token }}
+      - name: Rebuild pre-race rider form from prior race results ONLY
+        env:
+          PYTHONUNBUFFERED: '1'
+          OPENBLAS_NUM_THREADS: '1'
+          KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+        run: |
+          set -euo pipefail
+          python -u research/type_lab_features/rebuild_asof_ability.py \
+            --incoming incoming --output derived-asof-ability
+          test -s derived-asof-ability/ability_rebuild_summary.json
+      - name: Store encrypted ability features and separate supervised labels
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-six-year-no-future-ability-audit
+          path: derived-asof-ability/
+          compression-level: 0
+          retention-days: 30

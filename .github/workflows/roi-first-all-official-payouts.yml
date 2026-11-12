@@ -1,0 +1,44 @@
+name: ROI-first audit all historic market payout rows
+
+on:
+  push:
+    branches: [research/type-lab-full-archive-20261022]
+    paths:
+      - "research/type_lab_features/extract_official_all_markets_2023_2025.py"
+      - ".github/workflows/roi-first-all-official-payouts.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  payout-all-official-markets:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 80
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            research/type_lab_features/extract_official_all_markets_2023_2025.py
+            odds_market/vault_public_cert.pem
+            data/2023
+            data/2024
+            data/2025
+            data/a_class_12
+            data/a3_challenge
+            data/grade_races
+      - name: Extract all independently archived official settlement types (encrypted)
+        run: |
+          set -euo pipefail
+          python -u research/type_lab_features/extract_official_all_markets_2023_2025.py all-payouts/
+          test -s all-payouts/all_markets_official_2023_2025.jsonl.gz.cms
+          test -s all-payouts/all_markets_official_report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: roi-first-all-official-payouts-2023-2025
+          path: all-payouts/
+          retention-days: 30
+          compression-level: 0
