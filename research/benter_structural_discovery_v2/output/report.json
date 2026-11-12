@@ -1,0 +1,402 @@
+{
+  "design": "Pre-declared score-only, no-score and line-teammate models; 2026 holdout evaluated once.",
+  "scope": "F1 S-class stored racecards; other race classes NOT evaluated",
+  "status": "EXPLORATORY_NOT_AS_OF_CERTIFIED",
+  "serious_data_limitation": "Historical entries and line predictions gathered in 2026; pre-race as-of values unverified. No live predictive or profit claim.",
+  "audit": {
+    "races_discovered": 16744,
+    "retrospective_snapshot_races": 16680,
+    "missing_or_ambiguous_winner": 64
+  },
+  "dir_audit": {
+    "data/2023/s_class_f1_all_parts/2023_q2": {
+      "races_in_entries": 1285,
+      "races_valid": 1282,
+      "rows_in_results": 8888
+    },
+    "data/2023/s_class_f1_all_parts/2023_q3": {
+      "races_in_entries": 1249,
+      "races_valid": 1245,
+      "rows_in_results": 8653
+    },
+    "data/2023/s_class_f1_all_parts/2023_q4": {
+      "races_in_entries": 1318,
+      "races_valid": 1315,
+      "rows_in_results": 9115
+    },
+    "data/2024/s_class_f1_all_parts/2024_q1": {
+      "races_in_entries": 1328,
+      "races_valid": 1325,
+      "rows_in_results": 9155
+    },
+    "data/2024/s_class_f1_all_parts/2024_q2": {
+      "races_in_entries": 1295,
+      "races_valid": 1291,
+      "rows_in_results": 8978
+    },
+    "data/2024/s_class_f1_all_parts/2024_q3": {
+      "races_in_entries": 1290,
+      "races_valid": 1288,
+      "rows_in_results": 8920
+    },
+    "data/2024/s_class_f1_all_parts/2024_q4": {
+      "races_in_entries": 1278,
+      "races_valid": 1275,
+      "rows_in_results": 8841
+    },
+    "data/2025/s_class_f1_all_parts/2025_q1": {
+      "races_in_entries": 1248,
+      "races_valid": 1240,
+      "rows_in_results": 8677
+    },
+    "data/2025/s_class_f1_all_parts/2025_q2": {
+      "races_in_entries": 1266,
+      "races_valid": 1257,
+      "rows_in_results": 8749
+    },
+    "data/2025/s_class_f1_all_parts/2025_q3": {
+      "races_in_entries": 1308,
+      "races_valid": 1303,
+      "rows_in_results": 9089
+    },
+    "data/2025/s_class_f1_all_parts/2025_q4": {
+      "races_in_entries": 1317,
+      "races_valid": 1306,
+      "rows_in_results": 9129
+    },
+    "data/2026_h1/s_class_f1_all": {
+      "races_in_entries": 2562,
+      "races_valid": 2553,
+      "rows_in_results": 17708
+    }
+  },
+  "line_audit": {
+    "valid_pre_race_published_line_unverified_snapshot": 16680,
+    "with_two_or_more_lines": 16677
+  },
+  "splits": {
+    "training": "2023-2024",
+    "validation": "2025",
+    "test": "2026-01 to 2026-06"
+  },
+  "models": {
+    "score_only": {
+      "selected_alpha": 0.0001,
+      "validation_candidates": [
+        {
+          "alpha": 0.0001,
+          "validation_log_loss": 1.6860365494820801
+        },
+        {
+          "alpha": 0.003,
+          "validation_log_loss": 1.6860622948856603
+        },
+        {
+          "alpha": 0.03,
+          "validation_log_loss": 1.6886098048741232
+        }
+      ],
+      "n_races": 2553,
+      "log_loss": 1.7356267219036998,
+      "mean_uniform_log_loss": 1.9318559476887922,
+      "top1_accuracy": 0.3415589502546024,
+      "brier": 0.774706492340374
+    },
+    "score_plus_role": {
+      "selected_alpha": 0.0001,
+      "validation_candidates": [
+        {
+          "alpha": 0.0001,
+          "validation_log_loss": 1.6326182058025958
+        },
+        {
+          "alpha": 0.003,
+          "validation_log_loss": 1.632669180137295
+        },
+        {
+          "alpha": 0.03,
+          "validation_log_loss": 1.6349086588080246
+        }
+      ],
+      "n_races": 2553,
+      "log_loss": 1.6700304487104025,
+      "mean_uniform_log_loss": 1.9318559476887922,
+      "top1_accuracy": 0.3627105366235801,
+      "brier": 0.7601069307441333
+    },
+    "no_score_plus_role": {
+      "selected_alpha": 0.0001,
+      "validation_candidates": [
+        {
+          "alpha": 0.0001,
+          "validation_log_loss": 1.6755512251684797
+        },
+        {
+          "alpha": 0.003,
+          "validation_log_loss": 1.6763444905236922
+        },
+        {
+          "alpha": 0.03,
+          "validation_log_loss": 1.6777314795174465
+        }
+      ],
+      "n_races": 2553,
+      "log_loss": 1.6713826128262517,
+      "mean_uniform_log_loss": 1.9318559476887922,
+      "top1_accuracy": 0.32980806893850373,
+      "brier": 0.7805237526993514
+    },
+    "full_plus_role": {
+      "selected_alpha": 0.0001,
+      "validation_candidates": [
+        {
+          "alpha": 0.0001,
+          "validation_log_loss": 1.5845709335946518
+        },
+        {
+          "alpha": 0.003,
+          "validation_log_loss": 1.58532874633628
+        },
+        {
+          "alpha": 0.03,
+          "validation_log_loss": 1.587266947349313
+        }
+      ],
+      "n_races": 2553,
+      "log_loss": 1.59973090744702,
+      "mean_uniform_log_loss": 1.9318559476887922,
+      "top1_accuracy": 0.3799451625538582,
+      "brier": 0.7411771737383572
+    },
+    "raw_without_score": {
+      "selected_alpha": 0.0001,
+      "validation_candidates": [
+        {
+          "alpha": 0.0001,
+          "validation_log_loss": 1.7745691346364887
+        },
+        {
+          "alpha": 0.003,
+          "validation_log_loss": 1.7752825956127138
+        },
+        {
+          "alpha": 0.03,
+          "validation_log_loss": 1.775649202891012
+        }
+      ],
+      "n_races": 2553,
+      "log_loss": 1.7704601914190774,
+      "mean_uniform_log_loss": 1.9318559476887922,
+      "top1_accuracy": 0.29925577751664706,
+      "brier": 0.8076580813304113
+    },
+    "score_plus_line": {
+      "selected_alpha": 0.0001,
+      "validation_candidates": [
+        {
+          "alpha": 0.0001,
+          "validation_log_loss": 1.5927168073767592
+        },
+        {
+          "alpha": 0.003,
+          "validation_log_loss": 1.5929542656368887
+        },
+        {
+          "alpha": 0.03,
+          "validation_log_loss": 1.5982478643962306
+        }
+      ],
+      "n_races": 2553,
+      "log_loss": 1.6310430759719805,
+      "mean_uniform_log_loss": 1.9318559476887922,
+      "top1_accuracy": 0.37485311398354876,
+      "brier": 0.7469972967814743
+    },
+    "no_score_plus_line": {
+      "selected_alpha": 0.0001,
+      "validation_candidates": [
+        {
+          "alpha": 0.0001,
+          "validation_log_loss": 1.654610456451677
+        },
+        {
+          "alpha": 0.003,
+          "validation_log_loss": 1.6556701043552753
+        },
+        {
+          "alpha": 0.03,
+          "validation_log_loss": 1.6599451820759845
+        }
+      ],
+      "n_races": 2553,
+      "log_loss": 1.658015492742098,
+      "mean_uniform_log_loss": 1.9318559476887922,
+      "top1_accuracy": 0.3282412847630239,
+      "brier": 0.7756263370252078
+    },
+    "full_v1": {
+      "selected_alpha": 0.0001,
+      "validation_candidates": [
+        {
+          "alpha": 0.0001,
+          "validation_log_loss": 1.6387511937917412
+        },
+        {
+          "alpha": 0.003,
+          "validation_log_loss": 1.6394595614296952
+        },
+        {
+          "alpha": 0.03,
+          "validation_log_loss": 1.6410279111092696
+        }
+      ],
+      "n_races": 2553,
+      "log_loss": 1.6631624133896474,
+      "mean_uniform_log_loss": 1.9318559476887922,
+      "top1_accuracy": 0.36584410497453973,
+      "brier": 0.7566157646275087
+    },
+    "full_plus_line": {
+      "selected_alpha": 0.0001,
+      "validation_candidates": [
+        {
+          "alpha": 0.0001,
+          "validation_log_loss": 1.5673244151965329
+        },
+        {
+          "alpha": 0.003,
+          "validation_log_loss": 1.5683017075553667
+        },
+        {
+          "alpha": 0.03,
+          "validation_log_loss": 1.5731589224697495
+        }
+      ],
+      "n_races": 2553,
+      "log_loss": 1.5820768380842622,
+      "mean_uniform_log_loss": 1.9318559476887922,
+      "top1_accuracy": 0.3846455150802977,
+      "brier": 0.737640691844039
+    }
+  },
+  "comparisons": {
+    "score_plus_role_vs_score_only": {
+      "n_races": 2553,
+      "mean_improvement": 0.06559627319329706,
+      "bootstrap_95pct_interval": [
+        0.05180387335342317,
+        0.07946386002410279
+      ],
+      "interpretation": "positive=lower log loss than baseline; interval crossing zero is inconclusive"
+    },
+    "no_score_plus_role_vs_score_only": {
+      "n_races": 2553,
+      "mean_improvement": 0.0642441090774479,
+      "bootstrap_95pct_interval": [
+        0.017676025248154745,
+        0.11597753755158356
+      ],
+      "interpretation": "positive=lower log loss than baseline; interval crossing zero is inconclusive"
+    },
+    "full_plus_role_vs_score_only": {
+      "n_races": 2553,
+      "mean_improvement": 0.13589581445667953,
+      "bootstrap_95pct_interval": [
+        0.11372571376282867,
+        0.1582537001283815
+      ],
+      "interpretation": "positive=lower log loss than baseline; interval crossing zero is inconclusive"
+    },
+    "raw_without_score_vs_score_only": {
+      "n_races": 2553,
+      "mean_improvement": -0.03483346951537776,
+      "bootstrap_95pct_interval": [
+        -0.0781362656458525,
+        0.01361028191139875
+      ],
+      "interpretation": "positive=lower log loss than baseline; interval crossing zero is inconclusive"
+    },
+    "score_plus_line_vs_score_only": {
+      "n_races": 2553,
+      "mean_improvement": 0.10458364593171895,
+      "bootstrap_95pct_interval": [
+        0.08695168856920621,
+        0.12146628437816571
+      ],
+      "interpretation": "positive=lower log loss than baseline; interval crossing zero is inconclusive"
+    },
+    "no_score_plus_line_vs_score_only": {
+      "n_races": 2553,
+      "mean_improvement": 0.07761122916160172,
+      "bootstrap_95pct_interval": [
+        0.03144337117672893,
+        0.13059336038587524
+      ],
+      "interpretation": "positive=lower log loss than baseline; interval crossing zero is inconclusive"
+    },
+    "full_v1_vs_score_only": {
+      "n_races": 2553,
+      "mean_improvement": 0.072464308514052,
+      "bootstrap_95pct_interval": [
+        0.05724153212477327,
+        0.08753612040912
+      ],
+      "interpretation": "positive=lower log loss than baseline; interval crossing zero is inconclusive"
+    },
+    "full_plus_line_vs_score_only": {
+      "n_races": 2553,
+      "mean_improvement": 0.15354988381943727,
+      "bootstrap_95pct_interval": [
+        0.12698414160714333,
+        0.1827823354250586
+      ],
+      "interpretation": "positive=lower log loss than baseline; interval crossing zero is inconclusive"
+    },
+    "full_plus_line_vs_full_v1": {
+      "n_races": 2553,
+      "mean_improvement": 0.08108557530538525,
+      "bootstrap_95pct_interval": [
+        0.06208263233369289,
+        0.1006434482643785
+      ],
+      "interpretation": "positive=lower log loss than baseline; interval crossing zero is inconclusive"
+    },
+    "no_score_plus_line_vs_raw_without_score": {
+      "n_races": 2553,
+      "mean_improvement": 0.11244469867697951,
+      "bootstrap_95pct_interval": [
+        0.09409135930740406,
+        0.13088050169208426
+      ],
+      "interpretation": "positive=lower log loss than baseline; interval crossing zero is inconclusive"
+    },
+    "full_plus_line_vs_full_plus_role": {
+      "n_races": 2553,
+      "mean_improvement": 0.017654069362757745,
+      "bootstrap_95pct_interval": [
+        0.008152402012111095,
+        0.027334349753906875
+      ],
+      "interpretation": "positive=lower log loss than baseline; interval crossing zero is inconclusive"
+    },
+    "score_plus_line_vs_score_plus_role": {
+      "n_races": 2553,
+      "mean_improvement": 0.038987372738421906,
+      "bootstrap_95pct_interval": [
+        0.027105816472893604,
+        0.05019411379197212
+      ],
+      "interpretation": "positive=lower log loss than baseline; interval crossing zero is inconclusive"
+    },
+    "no_score_plus_line_vs_no_score_plus_role": {
+      "n_races": 2553,
+      "mean_improvement": 0.013367120084153836,
+      "bootstrap_95pct_interval": [
+        0.0057757586736712245,
+        0.021019375363944014
+      ],
+      "interpretation": "positive=lower log loss than baseline; interval crossing zero is inconclusive"
+    }
+  },
+  "discoveries_are_associations_not_proof_of_profitable_edges": true
+}
