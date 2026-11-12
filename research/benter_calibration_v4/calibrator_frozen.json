@@ -1,0 +1,38 @@
+{
+  "model": "Frozen fundamental V2 (independent of all market odds)",
+  "base_model": "research/benter_structural_discovery_v2/output/models.json full_plus_line",
+  "calibrator_selection": {
+    "method": "high_hinge",
+    "theta": 0.9999940391390134,
+    "calibration_logloss": 1.5728980559701697
+  },
+  "calibrator_candidates": [
+    {
+      "method": "identity",
+      "theta": 0.0,
+      "calibration_logloss": 1.5778162552536024
+    },
+    {
+      "method": "temperature",
+      "theta": 1.0893465837559397,
+      "calibration_logloss": 1.5758411187754255
+    },
+    {
+      "method": "high_hinge",
+      "theta": 0.9999940391390134,
+      "calibration_logloss": 1.5728980559701697
+    }
+  ],
+  "fixed_high_probability_threshold": 0.4,
+  "source_races": "2026-07-02 to 2026-08-30",
+  "source_race_count": 872,
+  "frozen_independent_eval_window": "2026-09-01 to 2026-09-30",
+  "sept_races_archived": 422,
+  "sept_races_predicted": 422,
+  "excluded": [],
+  "forecast_output": "research/benter_calibration_v4/sep_predictions_frozen.csv",
+  "model_coefficients_changed": false,
+  "target_period_results_opened_before_forecasting": false,
+  "historical_racecards": "Race-specific historical entry cards, not current rider profiles",
+  "selection_warning": "Calibration method and one scalar selected only on Jul-Aug; Sept outcomes not used."
+}

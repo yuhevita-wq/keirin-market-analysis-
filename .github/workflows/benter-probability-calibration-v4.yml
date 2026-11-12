@@ -1,0 +1,90 @@
+name: V2 probability calibration July-Aug to September
+on:
+  push:
+    branches:
+      - research/benter-probability-calibration-v4-sep2026
+    paths:
+      - .github/workflows/benter-probability-calibration-v4.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  calibrate_then_test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/benter-probability-calibration-v4-sep2026
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /pyproject.toml
+            /src/keirin_market_analysis/*
+            /research/benter_fundamental_v1/train_v1.py
+            /research/benter_structural_discovery_v2/discover_v2.py
+            /research/benter_structural_discovery_v2/output/models.json
+            /research/benter_score_challenge_v3/frozen_2026h2_probabilities.csv
+            /research/benter_score_challenge_v3/individual_results.csv
+            /research/benter_calibration_v4/*
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install Python dependencies
+        run: python -m pip install -e '.[scrape]' 'scipy>=1.11,<2'
+      - name: Collect Sept F1 S-class historical racecards, no result parsing
+        run: |
+          python -m keirin_market_analysis.s_class_f1 \
+            --start-date 2026-09-01 --end-date 2026-09-30 \
+            --out-dir research/benter_calibration_v4/sep_holdout --sleep 0.08
+      - name: Enrich September published lineups
+        run: |
+          python -m keirin_market_analysis.line_formation_2025 \
+            --data-dir research/benter_calibration_v4/sep_holdout --sleep 0.08
+      - name: Pre-check racecards
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('research/benter_calibration_v4/sep_holdout/summary.json')
+          r=json.loads(p.read_text(encoding='utf-8'))
+          print(json.dumps(r,ensure_ascii=False,indent=2))
+          assert r["parsed_f1_s_class_races"]>=275, r
+          PY
+      - name: Fit one-scalar calibrator on July-Aug ONLY and freeze Sept forecasts
+        run: python -u research/benter_calibration_v4/calibrate_and_freeze.py
+      - name: FIRST COMMIT frozen calibrator and Sept racecard-only predictions
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f --sparse \
+            research/benter_calibration_v4/calibrator_frozen.json \
+            research/benter_calibration_v4/sep_predictions_frozen.csv \
+            research/benter_calibration_v4/sep_holdout/races.csv \
+            research/benter_calibration_v4/sep_holdout/entries.csv \
+            research/benter_calibration_v4/sep_holdout/summary.json \
+            research/benter_calibration_v4/sep_holdout/line_summary.json
+          git commit -m "Freeze Sept forecasts and July-Aug scalar BEFORE collecting Sept outcomes [skip ci]"
+          git push origin HEAD:research/benter-probability-calibration-v4-sep2026
+      - name: Collect Sept outcomes AFTER forecast checkpoint
+        run: |
+          python -m keirin_market_analysis.results_payouts_2025 \
+            --data-dir research/benter_calibration_v4/sep_holdout --sleep 0.08
+      - name: Evaluate untouched September outcome results
+        run: python -u research/benter_calibration_v4/score_september.py
+      - name: Archive calibration audit and score without any post-hoc tuning
+        run: |
+          git add -f --sparse \
+            research/benter_calibration_v4/sep_holdout/results.csv \
+            research/benter_calibration_v4/sep_holdout/result_summary.json \
+            research/benter_calibration_v4/holdout_report.json \
+            research/benter_calibration_v4/holdout_by_race.csv
+          git commit -m "Score pre-frozen Sept probabilities with genuine out-of-time outcomes [skip ci]"
+          git push origin HEAD:research/benter-probability-calibration-v4-sep2026
+      - uses: actions/upload-artifact@v4
+        with:
+          name: benter-v4-calibration-2026-sept
+          path: |
+            research/benter_calibration_v4/calibrator_frozen.json
+            research/benter_calibration_v4/holdout_report.json
+            research/benter_calibration_v4/holdout_by_race.csv
