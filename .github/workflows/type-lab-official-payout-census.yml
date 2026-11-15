@@ -1,0 +1,46 @@
+name: Type Lab archived official payout source comparison
+on:
+  push:
+    branches: [research/type-lab-full-archive-20261022]
+    paths:
+      - "research/type_lab_features/extract_archived_official_payouts.py"
+      - ".github/workflows/type-lab-official-payout-census.yml"
+  pull_request:
+    paths:
+      - "research/type_lab_features/extract_archived_official_payouts.py"
+      - ".github/workflows/type-lab-official-payout-census.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  census-official-settlements:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+          filter: blob:none
+          sparse-checkout: |
+            research/type_lab_features/extract_archived_official_payouts.py
+            odds_market/vault_public_cert.pem
+            data/2023
+            data/2024
+            data/2025
+            data/a_class_12
+            data/a3_challenge
+            data/grade_races
+      - name: Reconcile archived official CSV payout rows (no internet scraping)
+        run: |
+          set -euo pipefail
+          python -m py_compile research/type_lab_features/extract_archived_official_payouts.py
+          python -u research/type_lab_features/extract_archived_official_payouts.py official-archive/
+          test -s official-archive/official_payout_availability.json
+          test -s official-archive/official_payouts_2023_2025.jsonl.gz.cms
+      - uses: actions/upload-artifact@v4
+        with:
+          name: type-lab-archived-official-payouts-2023-2025
+          path: official-archive/
+          retention-days: 30
+          compression-level: 0

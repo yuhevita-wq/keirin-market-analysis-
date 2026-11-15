@@ -1,0 +1,66 @@
+name: Type Lab fit coherent p1 and p3 from historical rider form
+on:
+  push:
+    branches: [research/type-lab-full-archive-20261022]
+    paths:
+      - "research/type_lab_features/train_win_top3_probabilities.py"
+      - ".github/workflows/type-lab-train-p1p3.yml"
+  pull_request:
+    paths:
+      - "research/type_lab_features/train_win_top3_probabilities.py"
+      - ".github/workflows/type-lab-train-p1p3.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  fit-and-backtest:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            research/type_lab_features/train_win_top3_probabilities.py
+            odds_market/vault_public_cert.pem
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numeric model fitting packages
+        run: python -m pip install --disable-pip-version-check numpy scipy
+      - name: Verify analytic loss gradient, ranked probabilities and chronological boundaries
+        run: |
+          python -m py_compile research/type_lab_features/train_win_top3_probabilities.py
+          python research/type_lab_features/train_win_top3_probabilities.py --selftest
+      - name: Retrieve all six years of owner-encrypted prior-only rider features and separate targets
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 39811776813
+          repository: yuhevita-wq/keirin-market-analysis-
+          name: full-six-year-no-future-ability-audit
+          path: incoming/
+          github-token: ${{ github.token }}
+      - name: Fit Plackett-Luce, calibrate on 2024H2, evaluate untouched 2025-2026H1
+        env:
+          KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM: ${{ secrets.KEIRIN_SEVEN_BET_PRIVATE_KEY_PEM }}
+          PYTHONUNBUFFERED: '1'
+          OPENBLAS_NUM_THREADS: '1'
+          OMP_NUM_THREADS: '1'
+        run: |
+          set -euo pipefail
+          python -u research/type_lab_features/train_win_top3_probabilities.py \
+            --input incoming --output fitted-win-top3
+          test -s fitted-win-top3/probability_training_report.json
+          test -s fitted-win-top3/pl_probability_model.jsonl.gz.cms
+          test -s fitted-win-top3/pl_full_80882_production_model.jsonl.gz.cms
+          test -s fitted-win-top3/heldout_test_predictions.jsonl.gz.cms
+      - name: Retain encrypted model, encrypted held-out predictions and aggregate accuracy report
+        uses: actions/upload-artifact@v4
+        with:
+          name: type-lab-80882-p1p3-frozen-test-and-production-refit
+          path: fitted-win-top3/
+          retention-days: 30
+          compression-level: 0
