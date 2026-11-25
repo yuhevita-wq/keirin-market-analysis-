@@ -1,0 +1,52 @@
+name: Line structure odds relationship ML
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/ml-odds-relationship-20261125]
+    paths:
+      - '.github/workflows/ml-odds-relationship-20261125.yml'
+      - 'research/ml_odds_relationship_20261125/**'
+permissions:
+  contents: read
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/ml_odds_only_20261125/
+            /research/ml_integrated_20261125/
+            /research/ml_line_arrival_structure_20261125/
+            /research/ml_odds_relationship_20261125/
+            /data/rider_condition_2025_202610_full/
+            /data/odds_only/odds_2025.jsonl.gz
+            /data/odds_only/odds_2026.jsonl.gz
+            /data/result_universe_v2/combined/results_2025.jsonl.gz
+            /data/result_universe_v2/combined/results_2026.jsonl.gz
+            /data/2025/s_class_f1_all_parts/*/entries.csv
+            /data/2025/s_class_yosen/entries.csv
+            /data/2026_h1/s_class_f1_all/entries.csv
+            /data/2026_h1/s_class_yosen/entries.csv
+            /data/rider_condition_2026_backfill/*/entries.csv
+            /data/rider_condition_gap_2026/batch_*/entries.csv
+            /data/a_class_12/*/entries.csv
+            /data/a3_challenge/*/entries.csv
+            /data/grade_races/g1g2/*2025*.zip
+            /data/grade_races/g3/2025/*.zip
+            /data/grade_races/g3/2026_h1/*.zip
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'numpy<3' 'scipy<2' 'lightgbm>=4.6,<5' 'pandas<3' 'scikit-learn<2'
+      - run: python -m py_compile research/ml_odds_relationship_20261125/train.py
+      - run: python -u research/ml_odds_relationship_20261125/train.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: odds-relationship-calibration-report
+          path: ml-odds-relationship-results/
