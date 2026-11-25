@@ -14,7 +14,7 @@ MARKET=["log_q","log_other_q","log_cross_ratio","log_price","price_rank","pool_e
 STRUCT=["rank_1","rank_2","rank_3","role_1","role_2","role_3","size_1","size_2","size_3","same_12","same_13","same_23","line_count","largest_line","front_count","single_count"]
 HIST=["rate_min","rate_mean","rate_max","rate_spread","partner_mean"]
 NAMES=MARKET+STRUCT+HIST
-EDGES=np.array([1.,2.,3.,5.,10.,20.,30.,50.,100.,200.,500.,1000.,np.inf])
+EDGES=np.array([0.,1.,2.,3.,5.,10.,20.,30.,50.,100.,200.,500.,1000.,np.inf])
 def candidates(rec,pool):
     n=len(rec["cars"]);S,O=odds.layout(rec["cars"])
     ordered=pool=="trifecta";C=O if ordered else S
