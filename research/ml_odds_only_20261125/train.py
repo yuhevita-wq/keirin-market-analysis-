@@ -7,8 +7,8 @@ from collections import Counter
 from scipy.optimize import minimize_scalar
 
 OUT=Path("ml-odds-results");OUT.mkdir(exist_ok=True)
-SET_NAMES=["log_trio_q","log_trifecta_set_q","cross_log_ratio","trio_rank_frac","trifecta_set_rank_frac","order_entropy","order_max_share","order_min_share","rider_trio_min","rider_trio_mean","rider_trio_max","rider_trifecta_min","rider_trifecta_mean","rider_trifecta_max","trio_pair_min","trio_pair_mean","trio_pair_max","n_riders","market_trio_entropy","market_trifecta_entropy","market_top_trio","market_top_order","market_disagreement_js","trio_inverse_sum","trifecta_inverse_sum","race_type_code"]
-ORDER_NAMES=["log_cond_q","conditional_rank","log_order_q","log_set_trio_q","log_set_trifecta_q","set_cross_ratio","first_marginal","second_marginal","third_marginal","first_second_pair","first_third_pair","second_third_pair","first_trio_marginal","second_trio_marginal","third_trio_marginal","order_entropy","market_trio_entropy","market_trifecta_entropy","n_riders","race_type_code"]
+SET_NAMES=["log_trio_q","log_trifecta_set_q","cross_log_ratio","trio_rank_frac","trifecta_set_rank_frac","order_entropy","order_max_share","order_min_share","rider_trio_min","rider_trio_mean","rider_trio_max","rider_trifecta_min","rider_trifecta_mean","rider_trifecta_max","trio_pair_min","trio_pair_mean","trio_pair_max","n_riders","market_trio_entropy","market_trifecta_entropy","market_top_trio","market_top_order","market_disagreement_js","trio_inverse_sum","trifecta_inverse_sum"]
+ORDER_NAMES=["log_cond_q","conditional_rank","log_order_q","log_set_trio_q","log_set_trifecta_q","set_cross_ratio","first_marginal","second_marginal","third_marginal","first_second_pair","first_third_pair","second_third_pair","first_trio_marginal","second_trio_marginal","third_trio_marginal","order_entropy","market_trio_entropy","market_trifecta_entropy","n_riders"]
 EPS=1e-15
 def entropy(p,axis=None):
     return -(p*np.log(np.maximum(p,EPS))).sum(axis=axis)
@@ -55,7 +55,7 @@ def features(rec,actual):
     js=entropy(mix)-(entropy(t)+entropy(agg))/2
     typ=classify(rec.get("race_type"));repeat=lambda v:np.full(len(S),v)
     summarize=lambda x:[x.min(axis=1),x.mean(axis=1),x.max(axis=1)]
-    fs=np.column_stack([np.log(t),np.log(agg),np.log(agg/t),ranks(t),ranks(agg),entc,cond.max(1),cond.min(1),*summarize(rtri[S]),*summarize(ragg[S]),*summarize(pairv),repeat(n),repeat(ent1),repeat(ent2),repeat(t.max()),repeat(q.max()),repeat(js),repeat((1/ob).sum()),repeat((1/oa).sum()),repeat(typ)]).astype(np.float32)
+    fs=np.column_stack([np.log(t),np.log(agg),np.log(agg/t),ranks(t),ranks(agg),entc,cond.max(1),cond.min(1),*summarize(rtri[S]),*summarize(ragg[S]),*summarize(pairv),repeat(n),repeat(ent1),repeat(ent2),repeat(t.max()),repeat(q.max()),repeat(js),repeat((1/ob).sum()),repeat((1/oa).sum())]).astype(np.float32)
     # Conditional order model sees the six orders of the observed set as a
     # conditional likelihood training/evaluation group, not as a predictor.
     # Its joint score equals set likelihood times conditional likelihood.
@@ -65,7 +65,7 @@ def features(rec,actual):
     for j,k in [(0,1),(0,2),(1,2)]:
         m=np.zeros((n,n));np.add.at(m,(O[:,j],O[:,k]),q);pmat.append(m[o[:,j],o[:,k]])
     rep=lambda v:np.full(6,v)
-    fo=np.column_stack([np.log(c),ranks(c),np.log(q[6*sy:6*sy+6]),rep(np.log(t[sy])),rep(np.log(agg[sy])),rep(np.log(agg[sy]/t[sy])),*[marg[i][o[:,i]] for i in range(3)],*pmat,*[rtri[o[:,i]] for i in range(3)],rep(entc[sy]),rep(ent1),rep(ent2),rep(n),rep(typ)]).astype(np.float32)
+    fo=np.column_stack([np.log(c),ranks(c),np.log(q[6*sy:6*sy+6]),rep(np.log(t[sy])),rep(np.log(agg[sy])),rep(np.log(agg[sy]/t[sy])),*[marg[i][o[:,i]] for i in range(3)],*pmat,*[rtri[o[:,i]] for i in range(3)],rep(entc[sy]),rep(ent1),rep(ent2),rep(n)]).astype(np.float32)
     return fs,fo,t,agg,c,sy,iy%6,n,typ
 def pack(years):
     xs=[];xo=[];ts=[];ags=[];cs=[];sy=[];oy=[];sizes=[];ids=[];types=[];ns=[];counts=Counter()
