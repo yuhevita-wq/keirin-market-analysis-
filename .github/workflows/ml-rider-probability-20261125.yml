@@ -1,0 +1,32 @@
+name: Isolated ML rider probability experiment
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/ml-rider-probability-20261125]
+    paths:
+      - '.github/workflows/ml-rider-probability-20261125.yml'
+      - 'research/ml_rider_probability_20261125/**'
+permissions:
+  contents: read
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            data/rider_condition_2025_202610_full
+            research/ml_rider_probability_20261125
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'numpy<3' 'pandas<3' 'scikit-learn<2' 'catboost<2'
+      - run: python -m py_compile research/ml_rider_probability_20261125/train.py
+      - run: python -u research/ml_rider_probability_20261125/train.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: chronological-ml-rider-results
+          path: ml-rider-results/
