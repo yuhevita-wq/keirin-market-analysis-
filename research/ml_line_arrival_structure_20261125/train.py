@@ -15,7 +15,7 @@ odds=integ.odds;D=Path("data")
 OUT=Path("ml-line-structure-results");OUT.mkdir(exist_ok=True)
 SPLITS=("train","validation","test")
 MARKET=["log_group_mass","log_group_candidate_count","log_price_min","log_price_mean","log_price_max","price_log_sd","pool_entropy","field_size"]
-STRUCT=["line_count","max_line_size","line_size_1","line_size_2","line_size_3","same_line_pairs","occupied_lines","role_1","role_2","role_3","rank_1","rank_2","rank_3","rank_min","rank_max","rank_mean","group_single_count","front_count","second_count","third_or_later_count"]
+STRUCT=["line_count","max_line_size","line_size_1","line_size_2","line_size_3","same_line_pairs","same_line_12","same_line_13","same_line_23","occupied_lines","role_1","role_2","role_3","rank_1","rank_2","rank_3","rank_min","rank_max","rank_mean","group_single_count","front_count","second_count","third_or_later_count"]
 HIST=["rate_min","rate_mean","rate_max","rate_range","partner_rate_mean"]
 def records():
     d=integ.load_history()
@@ -91,10 +91,13 @@ def one_race(rec,pool,ranked):
     ls=rec["lid"][C];ps=rec["pos"][C];sz=rec["size"][C];rs=rec["rank"][C]
     rr=rec["r"][C];pr=rec["partner"][C]
     same=(ls[:,0]==ls[:,1]).astype(int)+(ls[:,0]==ls[:,2]).astype(int)+(ls[:,1]==ls[:,2]).astype(int)
-    pp=ps if ordered else np.sort(ps,axis=1)
-    rk=rs if ordered else np.sort(rs,axis=1)
-    ss=sz if ordered else np.sort(sz,axis=1)
-    sf=np.column_stack([np.full(len(C),len(set(rec["lid"]))),np.full(len(C),max(rec["size"])),ss,same,3-(same==1).astype(int)-2*(same==3).astype(int),pp,rk,rs.min(1),rs.max(1),rs.mean(1),(sz==1).sum(1),(ps==1).sum(1),(ps==2).sum(1),(ps>=3).sum(1)])
+    ixsort=np.tile(np.arange(3),(len(C),1)) if ordered else np.lexsort((ps,rs),axis=1)
+    pp=np.take_along_axis(ps,ixsort,axis=1)
+    rk=np.take_along_axis(rs,ixsort,axis=1)
+    ss=np.take_along_axis(sz,ixsort,axis=1)
+    ll=np.take_along_axis(ls,ixsort,axis=1)
+    flags=np.column_stack([ll[:,0]==ll[:,1],ll[:,0]==ll[:,2],ll[:,1]==ll[:,2]])
+    sf=np.column_stack([np.full(len(C),len(set(rec["lid"]))),np.full(len(C),max(rec["size"])),ss,same,flags,3-(same==1).astype(int)-2*(same==3).astype(int),pp,rk,rs.min(1),rs.max(1),rs.mean(1),(sz==1).sum(1),(ps==1).sum(1),(ps==2).sum(1),(ps>=3).sum(1)])
     hf=np.column_stack([rr.min(1),rr.mean(1),rr.max(1),np.ptp(rr,axis=1),pr.mean(1)])
     groups=defaultdict(list)
     for j in range(len(C)):groups[key_of(ls[j],ps[j],sz[j],rs[j],ordered,ranked)].append(j)
