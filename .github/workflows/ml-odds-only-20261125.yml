@@ -1,0 +1,33 @@
+name: Odds-only nonlinear ML experiment
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/ml-odds-only-20261125]
+    paths:
+      - '.github/workflows/ml-odds-only-20261125.yml'
+      - 'research/ml_odds_only_20261125/**'
+permissions:
+  contents: read
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            data/odds_only
+            data/result_universe_v2/combined
+            research/ml_odds_only_20261125
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'numpy<3' 'scipy<2' 'lightgbm>=4.6,<5'
+      - run: python -m py_compile research/ml_odds_only_20261125/train.py
+      - run: python -u research/ml_odds_only_20261125/train.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: odds-only-ml-results
+          path: ml-odds-results/
