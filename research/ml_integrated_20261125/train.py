@@ -126,7 +126,7 @@ def pack():
             pair_r=np.stack([(rs[:,i]+rs[:,j])/2 for i,j in [(0,1),(0,2),(1,2)]],axis=1)
             ii=np.column_stack([strength[S].mean(1),strength[S].max(1),(pair_r*same).sum(1)/np.maximum(sc,1),partner[S].mean(1)])
             context=np.array([n,len(lines[rid]),size.max(),a.max(),odds.entropy(a),x[0,22],r.max(),np.ptp(r),float(r.argmax()==marginal.argmax()),np.mean(np.abs(r-marginal)),strength.max()])
-            split="train" if date<="2025-09-30" else ("validation" if date<="2025-12-31" else "test")
+            split="train" if date<="2026-03-31" else ("validation" if date<="2026-04-30" else "test")
             packs[split].append((rid,date,y,t,a,np.column_stack([x,rh,ll,ii]).astype(np.float32),context,S,n))
             counts[split]+=1
         print("JOIN",year,dict(counts),flush=True)
@@ -192,7 +192,7 @@ def main():
     for month in sorted(set(x[:7] for x in te["dates"])):
         mask=np.array([x.startswith(month) for x in te["dates"]])
         months[month]={k:float(odds.loss(p,te["yi"])[mask].mean()) for k,p in pred.items()}
-    out={"counts":counts,"line_coverage":lc,"split_counts":{k:len(v["ids"]) for k,v in pp.items()},"trio":results,"rider_top3_marginals":result_marginal,"ci_full_vs":{k:odds.ci(odds.loss(p,te["yi"])-odds.loss(tp["full"],te["yi"]),te["ids"]) for k,p in pred.items() if k!="full"},"months":months,"race_conditions":race_conditions,"candidate_conditions":cand,"models":details,"limitations":["Research independent rate = same exact class prior-day cumulative top3 smoothed by 10 field-average pseudo-observations; not verified identical to live app","Only complete verified line group sources and exact race/car/podium matches","2025 Apr-Sep train, Oct-Dec validation, 2026 Jan-Jun test; Jan-Mar 2025 history warm-up","Final odds only; no live execution or return evaluated","Conditions are exploratory validation-tree rules, test subgroup CIs not multiplicity adjusted","Trio joint model and derived rider top3 probabilities only; exact-order model not part of this run"]}
+    out={"counts":counts,"line_coverage":lc,"split_counts":{k:len(v["ids"]) for k,v in pp.items()},"trio":results,"rider_top3_marginals":result_marginal,"ci_full_vs":{k:odds.ci(odds.loss(p,te["yi"])-odds.loss(tp["full"],te["yi"]),te["ids"]) for k,p in pred.items() if k!="full"},"months":months,"race_conditions":race_conditions,"candidate_conditions":cand,"models":details,"limitations":["Research independent rate = same exact class prior-day cumulative top3 smoothed by 10 field-average pseudo-observations; not verified identical to live app","Only complete verified line group sources and exact race/car/podium matches","2025 Apr-2026 Mar train (12 months), 2026 Apr validation, 2026 May-Jun test; Jan-Mar 2025 history warm-up","Final odds only; no live execution or return evaluated","Conditions are exploratory validation-tree rules, test subgroup CIs not multiplicity adjusted","Trio joint model and derived rider top3 probabilities only; exact-order model not part of this run"]}
     (OUT/"report.json").write_text(json.dumps(out,ensure_ascii=False,indent=2))
     # Human-readable summary and all learned condition groups.
     with (OUT/"conditions.md").open("w",encoding="utf-8") as f:
