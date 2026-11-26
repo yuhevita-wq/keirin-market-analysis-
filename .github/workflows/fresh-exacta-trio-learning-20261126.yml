@@ -1,0 +1,38 @@
+name: Fresh exacta and trio temporal learning curves
+on:
+  push:
+    branches: [research/fresh-exacta-trio-learning-20261126]
+    paths:
+      - 'research/fresh_exacta_trio_20261126/**'
+      - '.github/workflows/fresh-exacta-trio-learning-20261126.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  learn:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            data/rider_condition_2025_202610_full
+            research/fresh_exacta_trio_20261126
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install fixed dependencies
+        run: pip install numpy==2.2.6 pandas==2.2.3 scikit-learn==1.6.1 lightgbm==4.6.0
+      - name: Check syntax and train
+        run: |
+          python -m py_compile research/fresh_exacta_trio_20261126/train.py
+          python -u research/fresh_exacta_trio_20261126/train.py
+      - name: Preserve completed stages even after failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: exacta-trio-learning-curves
+          path: fresh_ml_output/
+          if-no-files-found: warn
