@@ -1,0 +1,46 @@
+name: Formation action learning - exacta and trio
+on:
+  push:
+    branches: [research/formation-action-learning-20261127]
+    paths:
+      - 'research/formation_action_learning_20261127/**'
+      - '.github/workflows/formation-action-learning-20261127.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  learn:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/formation_action_learning_20261127/
+            /data/rider_condition_2025_202610_full/*.csv.gz
+            /data/odds_only/odds_2025.jsonl.gz
+            /data/odds_only/odds_2026.jsonl.gz
+            /data/2025/**/payouts.csv
+            /data/2026_h1/**/payouts.csv
+            /data/a_class_12/2025*/payouts.csv
+            /data/a_class_12/2026_0*/payouts.csv
+            /data/a3_challenge/2025*/payouts.csv
+            /data/a3_challenge/2026_0*/payouts.csv
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install numpy==2.2.6 pandas==2.2.3 scikit-learn==1.6.1 lightgbm==4.6.0
+      - name: Validate action grammar and train
+        run: |
+          python -m py_compile research/formation_action_learning_20261127/train.py
+          python research/formation_action_learning_20261127/train.py --self-test
+          python -u research/formation_action_learning_20261127/train.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: formation-action-learning
+          path: formation_ml_output/
+          if-no-files-found: warn
