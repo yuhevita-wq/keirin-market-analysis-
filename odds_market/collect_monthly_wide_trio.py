@@ -106,6 +106,24 @@ def upload(s,release,path):
         r=s.post(url,params={"name":path.name},headers={"Content-Type":"application/octet-stream"},data=f,timeout=90)
     r.raise_for_status()
 
+def download_verified(s,release,path):
+    api="https://api.github.com/repos/"+os.environ["GH_REPO"]
+    for page in range(1,101):
+        r=s.get(api+"/releases/"+str(release["id"])+"/assets",
+                params={"per_page":100,"page":page},timeout=30)
+        r.raise_for_status()
+        items=r.json()
+        for asset in items:
+            if asset["name"]==path.name:
+                reply=s.get(api+"/releases/assets/"+str(asset["id"]),
+                            headers={"Accept":"application/octet-stream"},timeout=90)
+                reply.raise_for_status()
+                if hashlib.sha256(reply.content).digest()!=hashlib.sha256(path.read_bytes()).digest():
+                    raise RuntimeError("storage readback mismatch "+path.name)
+                return reply.content
+        if len(items)<100: break
+    raise RuntimeError("stored asset not found "+path.name)
+
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--month",required=True)
@@ -121,6 +139,8 @@ def main():
     session=requests.Session()
     session.headers["User-Agent"]="Keirin-Research-Odds-Collector/1.0"
     report=[]
+    month_rows=[]
+    seen=set()
     run=os.environ["GITHUB_RUN_ID"]+"-"+os.environ["GITHUB_RUN_ATTEMPT"]
     while day.strftime("%Y-%m")==a.month:
         rows=[];fail=[];girls=0;blocked=False;discovered=0
@@ -144,13 +164,41 @@ def main():
         except Exception as e:
             fail.append({"race_id":None,"reason":"index error: "+type(e).__name__})
             if isinstance(e,requests.HTTPError) and e.response is not None and e.response.status_code in (403,429): blocked=True
+        # Retry failed race pages once, without retrying any access restriction.
+        if fail and not blocked and discovered:
+            unresolved=[]
+            for f in fail:
+                rid=f["race_id"]
+                if blocked or rid not in urls:
+                    unresolved.append(f)
+                    continue
+                try:
+                    time.sleep(2)
+                    r=session.get(urls[rid],timeout=35)
+                    if r.status_code in (403,429): blocked=True
+                    r.raise_for_status()
+                    rows.extend(parse_two(r.text,rid,day))
+                except source.ExcludedRace:
+                    girls+=1
+                except Exception as e:
+                    unresolved.append({"race_id":rid,"reason":type(e).__name__+": "+str(e)[:180],"original_reason":f["reason"]})
+            fail=unresolved
         item={"date":str(day),"discovered":discovered,"girls_excluded":girls,"complete_races":0,"rows":0,"failures":fail,"blocked":blocked,"asset":None}
         if rows:
             path=work/f"wide-trio-{day}-{run}.csv.gz"
             with gzip.open(path,"wt",encoding="utf-8",newline="") as f:
                 wr=csv.writer(f);wr.writerow(FIELDS);wr.writerows(rows)
             count,nrows=check(path,day)
+            ids={r[1] for r in rows}
+            if len(ids)!=count or seen.intersection(ids):
+                raise RuntimeError("duplicate race ID across days")
+            if not blocked and count+girls+len(fail)!=discovered:
+                raise RuntimeError("daily counts do not reconcile")
             upload(gh,release,path)
+            download_verified(gh,release,path)
+            seen.update(ids)
+            month_rows.extend(rows)
+            item.update(storage_readback_verified=True)
             item.update(complete_races=count,rows=nrows,asset=path.name,sha256=hashlib.sha256(path.read_bytes()).hexdigest())
             path.unlink()
         report.append(item)
@@ -159,9 +207,39 @@ def main():
         if blocked or (len(report)>=3 and all(x["complete_races"]==0 for x in report[-3:])): break
         day+=timedelta(days=1)
     total=sum(x["complete_races"] for x in report)
+    if total != len(seen): raise RuntimeError("monthly race count mismatch")
+    remaining=sum(len(x["failures"]) for x in report)
+    full_calendar=day.strftime("%Y-%m")!=a.month
+    status="complete" if full_calendar and not remaining and total else "partial_verified"
+    if not full_calendar or not total: status="incomplete_calendar"
+    summary={"month":a.month,"draft_release_id":release["id"],"days":report,
+             "complete_races":total,"remaining_failures":remaining,"status":status,
+             "wide_rows":sum(r[3]=="wide" for r in month_rows),
+             "trio_rows":sum(r[3]=="3renpuku" for r in month_rows),
+             "storage_readback_verified":False}
+    if total:
+        month=work/f"wide-trio-{a.month}-verified-{run}.csv.gz"
+        with gzip.open(month,"wt",encoding="utf-8",newline="") as f:
+            wr=csv.writer(f);wr.writerow(FIELDS);wr.writerows(month_rows)
+        with gzip.open(month,"rt",encoding="utf-8",newline="") as f:
+            readback=list(csv.DictReader(f))
+        if len(readback)!=len(month_rows) or len({(r["race_id"],r["bet_type"],r["selection"]) for r in readback})!=len(readback):
+            raise RuntimeError("monthly duplicate or row mismatch")
+        upload(gh,release,month)
+        download_verified(gh,release,month)
+        summary.update(month_asset=month.name,month_sha256=hashlib.sha256(month.read_bytes()).hexdigest(),storage_readback_verified=True)
+        month.unlink()
+    (out/"summary.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2),encoding="utf-8")
+    manifest=work/f"wide-trio-{a.month}-manifest-{run}.json"
+    manifest.write_bytes((out/"summary.json").read_bytes())
+    upload(gh,release,manifest)
+    download_verified(gh,release,manifest)
+    print(json.dumps({k:v for k,v in summary.items() if k!="days"},ensure_ascii=False),flush=True)
     with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
         f.write(f"Month: {a.month} / verified races: {total} / processed days: {len(report)} / draft release ID: {release['id']}\n")
-    if not total or day.strftime("%Y-%m")==a.month or any(x["failures"] for x in report):
-        raise SystemExit("Partial or incomplete collection; inspect audit. Saved verified daily assets remain.")
+    if not full_calendar or not total:
+        raise SystemExit("Incomplete calendar; verified checkpoints retained.")
+    if remaining:
+        print("::warning::Unresolved races remain; verified partial dataset saved. See manifest.")
 if __name__=="__main__":
     main()
