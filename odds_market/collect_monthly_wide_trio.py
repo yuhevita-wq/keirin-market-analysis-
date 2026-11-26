@@ -106,6 +106,105 @@ def upload(s,release,path):
         r=s.post(url,params={"name":path.name},headers={"Content-Type":"application/octet-stream"},data=f,timeout=90)
     r.raise_for_status()
 
+def list_assets(s,release):
+    api="https://api.github.com/repos/"+os.environ["GH_REPO"]
+    result={}
+    for page in range(1,101):
+        r=s.get(api+"/releases/"+str(release["id"])+"/assets",
+                params={"per_page":100,"page":page},timeout=30)
+        r.raise_for_status()
+        items=r.json()
+        result.update({x["name"]:x for x in items})
+        if len(items)<100: return result
+    raise RuntimeError("asset listing too large")
+
+def read_asset(s,asset):
+    api="https://api.github.com/repos/"+os.environ["GH_REPO"]
+    reply=s.get(api+"/releases/assets/"+str(asset["id"]),
+                headers={"Accept":"application/octet-stream"},timeout=90)
+    reply.raise_for_status()
+    raw=reply.content
+    digest=asset.get("digest")
+    if digest and digest!="sha256:"+hashlib.sha256(raw).hexdigest():
+        raise RuntimeError("asset digest mismatch "+asset["name"])
+    return raw
+
+def month_days(month):
+    day=date.fromisoformat(month+"-01")
+    while day.strftime("%Y-%m")==month:
+        yield day
+        day+=timedelta(days=1)
+
+def prior_month(s,release,month,work):
+    assets=list_assets(s,release)
+    manifests=sorted((a for name,a in assets.items()
+                      if name.startswith("wide-trio-"+month+"-manifest-") and name.endswith(".json")),
+                     key=lambda a:a["id"],reverse=True)
+    for asset in manifests:
+        obj=json.loads(read_asset(s,asset))
+        if (obj.get("month")!=month or obj.get("draft_release_id")!=release["id"]
+            or not obj.get("storage_readback_verified") or obj.get("status") not in ("complete","partial_verified")):
+            continue
+        days=obj.get("days",[])
+        if ([x["date"] for x in days]!=[str(x) for x in month_days(month)]
+            or any(x.get("blocked") or ("discovered" in x and not x["discovered"]) for x in days)):
+            continue
+        raw=read_asset(s,assets[obj["month_asset"]])
+        if hashlib.sha256(raw).hexdigest()!=obj["month_sha256"]:
+            raise RuntimeError("existing month checksum mismatch")
+        groups=defaultdict(list)
+        keys=set()
+        import io
+        with gzip.open(io.BytesIO(raw),"rt",encoding="utf-8",newline="") as f:
+            rd=csv.DictReader(f)
+            if tuple(rd.fieldnames or ())!=FIELDS: raise ValueError("month schema mismatch")
+            for row in rd:
+                key=(row["race_id"],row["bet_type"],row["selection"])
+                if key in keys: raise ValueError("duplicate monthly key")
+                keys.add(key)
+                groups[row["race_date"]].append(tuple(row[k] for k in FIELDS))
+        ids=set()
+        for item in days:
+            rows=groups.pop(item["date"],[])
+            p=work/"check-prior.csv.gz"
+            with gzip.open(p,"wt",encoding="utf-8",newline="") as f:
+                w=csv.writer(f);w.writerow(FIELDS);w.writerows(rows)
+            n,nrows=check(p,date.fromisoformat(item["date"]))
+            if n!=item["complete_races"] or nrows!=item["rows"]: raise ValueError("prior counts mismatch")
+            cur={r[1] for r in rows}
+            if ids.intersection(cur): raise ValueError("duplicate race across days")
+            ids.update(cur)
+            p.unlink()
+        if groups or len(ids)!=obj["complete_races"] or len(keys)!=obj["wide_rows"]+obj["trio_rows"]:
+            raise ValueError("prior monthly totals mismatch")
+        return obj
+    return None
+
+def resume_days(s,release,month,work):
+    assets=list_assets(s,release)
+    found=defaultdict(list)
+    for name,a in assets.items():
+        if name.startswith("checkpoint-"+month+"-") and name.endswith(".json"):
+            item=json.loads(read_asset(s,a))
+            d=item.get("date","")
+            if d[:7]==month and item.get("storage_readback_verified") and not item.get("blocked") and not item.get("failures") and item.get("discovered",0)>0:
+                found[d].append((a["id"],item))
+    out={}
+    for d,items in found.items():
+        _,item=max(items,key=lambda x:x[0])
+        raw=read_asset(s,assets[item["asset"]])
+        if hashlib.sha256(raw).hexdigest()!=item["sha256"]: raise ValueError("checkpoint checksum mismatch")
+        p=work/"checkpoint-read.csv.gz";p.write_bytes(raw)
+        if check(p,date.fromisoformat(d))!=(item["complete_races"],item["rows"]):
+            raise ValueError("checkpoint counts mismatch")
+        with gzip.open(p,"rt",encoding="utf-8",newline="") as f:
+            rows=[tuple(r[k] for k in FIELDS) for r in csv.DictReader(f)]
+        p.unlink()
+        if item["complete_races"]+item["girls_excluded"]!=item["discovered"]:
+            raise ValueError("checkpoint counts do not reconcile")
+        out[d]=(item,rows)
+    return out
+
 def download_verified(s,release,path):
     api="https://api.github.com/repos/"+os.environ["GH_REPO"]
     for page in range(1,101):
@@ -136,6 +235,14 @@ def main():
     work=Path("private-tmp");work.mkdir(exist_ok=True)
     gh=api_session()
     release=release_for(gh,a.month)
+    prior=prior_month(gh,release,a.month,work)
+    if prior:
+        (out/"summary.json").write_text(json.dumps(prior,ensure_ascii=False,indent=2),encoding="utf-8")
+        print("Already stored, verified month reused:",a.month,prior["complete_races"],prior["status"],flush=True)
+        with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
+            f.write(f"Reused {a.month}: {prior['complete_races']} races; {prior['status']}\n")
+        return
+    checkpoints=resume_days(gh,release,a.month,work)
     session=requests.Session()
     session.headers["User-Agent"]="Keirin-Research-Odds-Collector/1.0"
     report=[]
@@ -143,6 +250,16 @@ def main():
     seen=set()
     run=os.environ["GITHUB_RUN_ID"]+"-"+os.environ["GITHUB_RUN_ATTEMPT"]
     while day.strftime("%Y-%m")==a.month:
+        if str(day) in checkpoints:
+            item,rows=checkpoints[str(day)]
+            ids={r[1] for r in rows}
+            if seen.intersection(ids): raise RuntimeError("duplicate race across resumed days")
+            seen.update(ids)
+            month_rows.extend(rows)
+            report.append(item)
+            print(str(day),"resumed",len(ids),flush=True)
+            day+=timedelta(days=1)
+            continue
         rows=[];fail=[];girls=0;blocked=False;discovered=0
         try:
             urls=source.discover(session,day,2)
@@ -201,6 +318,11 @@ def main():
             item.update(storage_readback_verified=True)
             item.update(complete_races=count,rows=nrows,asset=path.name,sha256=hashlib.sha256(path.read_bytes()).hexdigest())
             path.unlink()
+            checkpoint=work/f"checkpoint-{day}-{run}.json"
+            checkpoint.write_text(json.dumps(item,ensure_ascii=False,indent=2),encoding="utf-8")
+            upload(gh,release,checkpoint)
+            download_verified(gh,release,checkpoint)
+            checkpoint.unlink()
         report.append(item)
         (out/"summary.json").write_text(json.dumps({"month":a.month,"draft_release_id":release["id"],"days":report},ensure_ascii=False,indent=2),encoding="utf-8")
         print(str(day),"discovered",discovered,"complete",item["complete_races"],"failures",len(fail),flush=True)
@@ -237,8 +359,8 @@ def main():
     print(json.dumps({k:v for k,v in summary.items() if k!="days"},ensure_ascii=False),flush=True)
     with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
         f.write(f"Month: {a.month} / verified races: {total} / processed days: {len(report)} / draft release ID: {release['id']}\n")
-    if not full_calendar or not total:
-        raise SystemExit("Incomplete calendar; verified checkpoints retained.")
+    if not full_calendar or not total or any(x["blocked"] or not x["discovered"] for x in report):
+        raise SystemExit("Incomplete calendar/source access; verified checkpoints retained.")
     if remaining:
         print("::warning::Unresolved races remain; verified partial dataset saved. See manifest.")
 if __name__=="__main__":
