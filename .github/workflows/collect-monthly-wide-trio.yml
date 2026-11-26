@@ -1,0 +1,45 @@
+name: Collect authorized monthly wide and trio odds
+on:
+  push:
+    branches: [data/monthly-wide-trio-20261126]
+    paths: ['.github/workflows/collect-monthly-wide-trio.yml']
+  workflow_dispatch:
+    inputs:
+      month:
+        description: 'YYYY-MM, 2025-01 to 2026-10'
+        type: string
+        default: '2025-01'
+permissions:
+  contents: write
+concurrency:
+  group: haruq-monthly-wide-trio
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      MONTH: ${{ inputs.month || '2025-01' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: odds_market
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install requests beautifulsoup4
+      - name: Compile and test existing parsing helpers
+        run: |
+          python -m py_compile odds_market/collect_monthly_wide_trio.py
+          python -m odds_market.test_collect_all_odds
+      - name: Collect verified final odds into authenticated draft release
+        run: python -u -m odds_market.collect_monthly_wide_trio --month "$MONTH" --accept-terms
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: monthly-collection-audit
+          path: monthly-audit/
+          if-no-files-found: warn
+          retention-days: 30
