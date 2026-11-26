@@ -8,7 +8,7 @@ on:
       month:
         description: 'YYYY-MM, 2025-01 to 2026-10'
         type: string
-        default: '2025-01'
+        default: '2025-02'
 permissions:
   contents: write
 concurrency:
@@ -17,11 +17,11 @@ concurrency:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 210
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
-      MONTH: ${{ inputs.month || '2025-01' }}
+      MONTH: ${{ inputs.month || '2025-02' }}
     steps:
       - uses: actions/checkout@v4
         with:
