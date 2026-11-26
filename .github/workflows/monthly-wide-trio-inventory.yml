@@ -1,0 +1,94 @@
+name: Monthly wide and trio inventory
+on:
+  push:
+    branches: [data/monthly-wide-trio-20261126]
+    paths: ['.github/workflows/monthly-wide-trio-inventory.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            data/result_universe_v2
+            data/odds_only
+            data/nationwide_calendar
+      - name: Inventory existing monthly assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p output
+          python - <<'PY'
+          import csv, gzip, json, re, subprocess, collections
+          from pathlib import Path
+          months = [f"{y}-{m:02d}" for y, n in [(2025,12),(2026,10)] for m in range(1,n+1)]
+          results = collections.defaultdict(set)
+          day_by_id = {}
+          conflicts = set()
+          for p in sorted(Path("data/result_universe_v2/daily").glob("*/*.jsonl.gz")):
+              day = p.name[:10]
+              if day[:7] not in months: continue
+              with gzip.open(p,"rt",encoding="utf-8") as f:
+                  for line in f:
+                      r = json.loads(line)
+                      rid = str(r.get("race_id",""))
+                      if not re.fullmatch(r"\d{16}",rid): continue
+                      results[day[:7]].add(rid)
+                      if rid in day_by_id and day_by_id[rid]!=day: conflicts.add(rid)
+                      day_by_id[rid] = day
+          for rid in conflicts:
+              day_by_id.pop(rid,None)
+          trio = collections.defaultdict(set)
+          trio_rows = collections.Counter()
+          unmatched = 0
+          for year in (2025,2026):
+              p = Path(f"data/odds_only/odds_{year}.jsonl.gz")
+              if not p.exists(): continue
+              with gzip.open(p,"rt",encoding="utf-8") as f:
+                  for line in f:
+                      r=json.loads(line)
+                      rid=str(r.get("race_id",""))
+                      book=r.get("odds",{}).get("3連複")
+                      if not isinstance(book,dict) or not book: continue
+                      day=day_by_id.get(rid)
+                      if not day:
+                          unmatched+=1
+                          continue
+                      month=day[:7]
+                      if rid not in trio[month]:
+                          trio[month].add(rid)
+                          trio_rows[month]+=len(book)
+          files=collections.Counter()
+          days=collections.defaultdict(set)
+          paths=subprocess.check_output(["git","ls-tree","-r","--name-only","HEAD","--","data/odds_ciphertext"],text=True)
+          for path in paths.splitlines():
+              m=re.search(r"/(20\d\d-\d\d-\d\d)/[^/]+\.p7m$",path)
+              if not m: continue
+              day=m.group(1)
+              files[day[:7]]+=1
+              days[day[:7]].add(day)
+          records=[]
+          for month in months:
+              records.append({"month":month,"existing_result_races":len(results[month]),"existing_trio_with_result_races":len(trio[month]),"existing_trio_combinations":trio_rows[month],"encrypted_archive_files":files[month],"encrypted_archive_days":len(days[month]),"wide_plaintext_verified":None,"newly_collected_races":0})
+          report={"scope":"2025-01..2026-10","source":"existing GitHub assets only; no external collection, no decryption","unmatched_trio_records":unmatched,"conflicting_result_dates":len(conflicts),"months":records}
+          Path("output/monthly_inventory.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
+          with open("output/monthly_inventory.csv","w",encoding="utf-8",newline="") as f:
+              writer=csv.DictWriter(f,fieldnames=list(records[0]))
+              writer.writeheader()
+              writer.writerows(records)
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          with open(__import__("os").environ["GITHUB_STEP_SUMMARY"],"a",encoding="utf-8") as f:
+              f.write("### Existing assets (not new collection)\n\n")
+              f.write("| Month | Results | Trio + result | Ciphertext files |\n|---|---:|---:|---:|\n")
+              for r in records:
+                  f.write(f"| {r['month']} | {r['existing_result_races']} | {r['existing_trio_with_result_races']} | {r['encrypted_archive_files']} |\n")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: monthly-inventory
+          path: output/
+          retention-days: 30
