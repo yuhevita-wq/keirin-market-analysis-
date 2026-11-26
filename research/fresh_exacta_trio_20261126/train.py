@@ -110,13 +110,25 @@ def uniform(lengths):
     return {"races":len(lengths),"log_loss":float(np.log(lengths).mean()),"brier":float((1-1/lengths).mean()),"top1":float((1/lengths).mean()),"top3":float((np.minimum(3,lengths)/lengths).mean()),"top5":float((np.minimum(5,lengths)/lengths).mean()),"mean_true_rank":float(((lengths+1)/2).mean())}
 def addmonths(s,n):
     return (pd.Timestamp(s)+pd.DateOffset(months=n)).strftime("%Y-%m-%d")
+# Verified results currently span January 2025 through June 2026.
+# Reserve the last complete quarter for evaluation only; never use incomplete July-October labels.
 windows=[]
-for m in range(3,19,3):
+for m in range(3,13,3):
     end=addmonths("2025-01-01",m)
     windows.append(("expanding",m,"2025-01-01",end,end,addmonths(end,3)))
-    windows.append(("fixed_test",m,addmonths("2026-07-01",-m),"2026-07-01","2026-07-01","2026-10-01"))
-# October reserved; no tuning or model selection from the reported folds.
-windows.append(("final",21,"2025-01-01","2026-10-01","2026-10-01","2026-11-01"))
+    windows.append(("fixed_test",m,addmonths("2026-01-01",-m),"2026-01-01","2026-01-01","2026-04-01"))
+windows.append(("final",15,"2025-01-01","2026-04-01","2026-04-01","2026-07-01"))
+# Fail clearly before training if any required calendar month has no verified results.
+available=set(audit["monthly_eligible"])
+for mode,m,ta,tb,va,vb in windows:
+    required=set(map(str,pd.period_range(ta,pd.Timestamp(vb)-pd.Timedelta(days=1),freq="M")))
+    assert required<=available, (mode,m,"missing verified months",sorted(required-available))
+def json_scalar(value):
+    if isinstance(value,np.generic):
+        return value.item()
+    raise TypeError(f"Unsupported JSON type: {type(value).__name__}")
+# Exercise the exact serialization path before training.
+assert json.loads(json.dumps({"count":np.int64(1)},default=json_scalar))["count"]==1
 records=[]
 for kind in ("exacta","trio"):
     X,Y,L,O=make_data(kind)
@@ -124,7 +136,7 @@ for kind in ("exacta","trio"):
         u,v=interval(ta,tb); w,z=interval(va,vb)
         assert v<=w
         tr=slice(O[u],O[v]); te=slice(O[w],O[z])
-        meta=dict(bet=kind,mode=mode,months=m,train_start=ta,train_end_exclusive=tb,test_start=va,test_end_exclusive=vb,train_races=v-u,train_candidates=int(O[v]-O[u]),test_candidates=int(O[z]-O[w]))
+        meta=dict(bet=kind,mode=mode,months=m,train_start=ta,train_end_exclusive=tb,test_start=va,test_end_exclusive=vb,train_races=int(v-u),train_candidates=int(O[v]-O[u]),test_candidates=int(O[z]-O[w]))
         # Fixed hyperparameters; no evaluation-based manual changes or threshold searches.
         scaler=StandardScaler().fit(X[tr])
         linear=SGDClassifier(loss="log_loss",alpha=0.0001,max_iter=25,tol=0.0001,random_state=SEED,average=True)
@@ -134,7 +146,8 @@ for kind in ("exacta","trio"):
         for name,result in [("uniform",uniform(L[w:z])),("linear",evaluate(linear.decision_function(scaler.transform(X[te])),Y[te],L[w:z])),("gbdt",evaluate(tree.predict(X[te],raw_score=True),Y[te],L[w:z]))]:
             row={**meta,"model":name,**result}
             records.append(row)
-            print(json.dumps(row,ensure_ascii=False),flush=True)
-        pd.DataFrame(records).to_csv(OUT/"learning_curve.csv",index=False)
+            pd.DataFrame(records).to_csv(OUT/"learning_curve.tmp",index=False)
+            (OUT/"learning_curve.tmp").replace(OUT/"learning_curve.csv")
+            print(json.dumps(row,ensure_ascii=False,default=json_scalar,allow_nan=False),flush=True)
     del X,Y,L,O
-(OUT/"status.json").write_text(json.dumps({"status":"completed","rows":len(records),"note":"No odds or returns; race-normalized scores not separately calibrated; October reserved for this experiment only."},indent=2))
+(OUT/"status.json").write_text(json.dumps({"status":"completed","rows":len(records),"note":"No odds or returns; race-normalized scores not separately calibrated; April-June 2026 reserved for this experiment only; July-October lacked verified results."},indent=2))
