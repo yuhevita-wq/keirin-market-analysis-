@@ -1,0 +1,216 @@
+name: Collect and verify all 22 months of wide and trio odds
+on:
+  push:
+    branches: [data/monthly-wide-trio-20261126]
+    paths: ['.github/workflows/collect-wide-trio-all-months.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: haruq-monthly-wide-trio
+  cancel-in-progress: false
+jobs:
+  m202501:
+    name: 2025-01
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2025-01'
+  m202502:
+    name: 2025-02
+    needs: m202501
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2025-02'
+  m202503:
+    name: 2025-03
+    needs: m202502
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2025-03'
+  m202504:
+    name: 2025-04
+    needs: m202503
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2025-04'
+  m202505:
+    name: 2025-05
+    needs: m202504
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2025-05'
+  m202506:
+    name: 2025-06
+    needs: m202505
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2025-06'
+  m202507:
+    name: 2025-07
+    needs: m202506
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2025-07'
+  m202508:
+    name: 2025-08
+    needs: m202507
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2025-08'
+  m202509:
+    name: 2025-09
+    needs: m202508
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2025-09'
+  m202510:
+    name: 2025-10
+    needs: m202509
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2025-10'
+  m202511:
+    name: 2025-11
+    needs: m202510
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2025-11'
+  m202512:
+    name: 2025-12
+    needs: m202511
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2025-12'
+  m202601:
+    name: 2026-01
+    needs: m202512
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2026-01'
+  m202602:
+    name: 2026-02
+    needs: m202601
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2026-02'
+  m202603:
+    name: 2026-03
+    needs: m202602
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2026-03'
+  m202604:
+    name: 2026-04
+    needs: m202603
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2026-04'
+  m202605:
+    name: 2026-05
+    needs: m202604
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2026-05'
+  m202606:
+    name: 2026-06
+    needs: m202605
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2026-06'
+  m202607:
+    name: 2026-07
+    needs: m202606
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2026-07'
+  m202608:
+    name: 2026-08
+    needs: m202607
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2026-08'
+  m202609:
+    name: 2026-09
+    needs: m202608
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2026-09'
+  m202610:
+    name: 2026-10
+    needs: m202609
+    uses: ./.github/workflows/monthly-wide-trio-worker.yml
+    with:
+      month: '2026-10'
+  catalog:
+    name: Verify all 22 months and publish private catalog
+    needs: m202610
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: odds_market
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install requests beautifulsoup4
+      - name: Read back all monthly datasets and create durable index
+        run: |
+          set -euo pipefail
+          mkdir -p catalog-audit
+          python -u - <<'PY'
+          import csv,gzip,io,json,os,tempfile
+          from pathlib import Path
+          from odds_market import collect_monthly_wide_trio as m
+          gh=m.api_session()
+          months=[f"{y}-{n:02d}" for y,k in [(2025,12),(2026,10)] for n in range(1,k+1)]
+          records=[]
+          all_ids=set()
+          with tempfile.TemporaryDirectory() as tmp:
+              work=Path(tmp)
+              for month in months:
+                  rel=m.release_for(gh,month)
+                  obj=m.prior_month(gh,rel,month,work)
+                  if not obj: raise RuntimeError("missing verified monthly manifest "+month)
+                  asset=m.list_assets(gh,rel)[obj["month_asset"]]
+                  raw=m.read_asset(gh,asset)
+                  import hashlib
+                  if hashlib.sha256(raw).hexdigest()!=obj["month_sha256"]:
+                      raise RuntimeError("monthly checksum mismatch "+month)
+                  with gzip.open(io.BytesIO(raw),"rt",encoding="utf-8",newline="") as f:
+                      ids={r["race_id"] for r in csv.DictReader(f)}
+                  if len(ids)!=obj["complete_races"] or all_ids.intersection(ids):
+                      raise RuntimeError("cross-month duplicate or count mismatch "+month)
+                  all_ids.update(ids)
+                  record={k:obj[k] for k in ("month","draft_release_id","complete_races","remaining_failures","wide_rows","trio_rows","month_asset","month_sha256","status","storage_readback_verified")}
+                  record["asset_id"]=asset["id"]
+                  records.append(record)
+                  print(month,obj["complete_races"],obj["status"],flush=True)
+              totals={k:sum(x[k] for x in records) for k in ("complete_races","remaining_failures","wide_rows","trio_rows")}
+              catalog={"schema":"haruq_wide_trio_catalog_v1","scope":"2025-01..2026-10","price_phase":"final","verified_months":len(records),"totals":totals,"months":records,"results_entries_lines_joined":False,"cross_month_duplicate_races":0}
+              run=os.environ["GITHUB_RUN_ID"]+"-"+os.environ["GITHUB_RUN_ATTEMPT"]
+              path=Path("catalog-audit")/f"haruq-wide-trio-catalog-{run}.json"
+              path.write_text(json.dumps(catalog,ensure_ascii=False,indent=2),encoding="utf-8")
+              release=m.release_for(gh,"index-v1")
+              m.upload(gh,release,path)
+              m.download_verified(gh,release,path)
+              with open("catalog-audit/months.csv","w",encoding="utf-8",newline="") as f:
+                  wr=csv.DictWriter(f,fieldnames=list(records[0]));wr.writeheader();wr.writerows(records)
+              with open(os.environ["GITHUB_STEP_SUMMARY"],"a",encoding="utf-8") as f:
+                  f.write("## Verified 22-month odds catalog\n\n")
+                  f.write("| Month | Complete races | Missing races | Wide rows | Trio rows |\n|---|---:|---:|---:|---:|\n")
+                  for r in records:
+                      f.write(f"| {r['month']} | {r['complete_races']} | {r['remaining_failures']} | {r['wide_rows']} | {r['trio_rows']} |\n")
+                  f.write(f"\nTotals: {totals}\n\nDraft catalog release ID: {release['id']}\n")
+              print(json.dumps(totals,ensure_ascii=False),flush=True)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verified-22-month-catalog
+          path: catalog-audit/
+          if-no-files-found: warn
+          retention-days: 30
