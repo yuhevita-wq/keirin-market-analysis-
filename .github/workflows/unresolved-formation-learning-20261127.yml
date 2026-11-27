@@ -1,0 +1,55 @@
+name: Exacta and trio unresolved formation learning
+on:
+  push:
+    branches: [research/unresolved-formation-learning-20261127]
+    paths:
+      - 'research/unresolved_formation_20261127/**'
+      - '.github/workflows/unresolved-formation-learning-20261127.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  explain:
+    strategy:
+      fail-fast: false
+      matrix:
+        bet: [exacta, trio]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '4'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/unresolved_formation_20261127/
+            /data/rider_condition_2025_202610_full/*.csv.gz
+            /data/odds_only/odds_2025.jsonl.gz
+            /data/odds_only/odds_2026.jsonl.gz
+            /data/2025/**/payouts.csv
+            /data/2026_h1/**/payouts.csv
+            /data/a_class_12/2025*/payouts.csv
+            /data/a_class_12/2026_0*/payouts.csv
+            /data/a3_challenge/2025*/payouts.csv
+            /data/a3_challenge/2026_0*/payouts.csv
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install numpy==2.2.6 pandas==2.2.3 scikit-learn==1.6.1 lightgbm==4.6.0
+      - name: Validate and learn alternative formations
+        run: |
+          python -m py_compile research/unresolved_formation_20261127/*.py
+          python research/unresolved_formation_20261127/study.py
+          python research/unresolved_formation_20261127/${{ matrix.bet }}.py --self-test
+          python -u research/unresolved_formation_20261127/${{ matrix.bet }}.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ matrix.bet }}-unresolved-formation-learning
+          path: ${{ matrix.bet }}_unresolved_output/
+          if-no-files-found: warn
