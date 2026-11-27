@@ -144,3 +144,36 @@ class Audit:
                     "mse":float(mean_squared_error(gross,p)),"return_pct":float(gross[sel].mean()*100) if sel.any() else None,
                     "net_per_race":float(np.mean(np.where(sel,gross-1,0)))})
         self.save()
+
+    def finalize(self):
+        # Compact machine-readable log for review even without artifact download.
+        for gen in (1,5):
+            for stage,subset in (("formation","selected_minus_best_other_family"),("purchase","all"),("purchase","buy"),("purchase","skip")):
+                rs=[r for r in self.rows if r["generation"]==gen and r["stage"]==stage and r["subset"]==subset and r["months"]>=6]
+                by=defaultdict(list)
+                for r in rs:by[r["feature"]].append(r)
+                out=[]
+                for name,items in by.items():
+                    n=sum(r["n"] for r in items)
+                    out.append({"feature":name,"mean_abs":sum(r["n"]*r["mean_abs_contribution"] for r in items)/n,
+                                "mean_signed":sum(r["n"]*r["mean_signed_contribution"] for r in items)/n})
+                print(json.dumps({"audit_top":{"bet":self.bet,"generation":gen,"stage":stage,"subset":subset,
+                     "features":sorted(out,key=lambda r:-r["mean_abs"])[:15]}},ensure_ascii=False,allow_nan=False),flush=True)
+            df=pd.DataFrame([r for r in self.meta if r["generation"]==gen and r["months"]>=6])
+            for col in ("family","points","axis_market_rank","partner_market_rank","axis_history_rank","source","score_band","availability_band","head_market_first_rank","tail_market_podium_rank","head_history_first_rank","tail_history_second_rank"):
+                if col not in df:continue
+                group=[]
+                for val,d in df.groupby(col,dropna=False):
+                    b=d[d.buy];s=d[~d.buy];n=len(d)
+                    group.append({"value":str(val),"n":n,"buy":len(b),"buy_rate":len(b)/n,
+                                  "all_roi":float(d.gross.mean()*100),"buy_roi":float(b.gross.mean()*100) if len(b) else None,
+                                  "skip_roi":float(s.gross.mean()*100) if len(s) else None,
+                                  "buy_hit_rate":float((b.gross>0).mean()) if len(b) else None,
+                                  "mean_points":float(d.points.mean()),"mean_candidate_share":float(d.candidate_family_share.mean())})
+                group.sort(key=lambda a:-a["n"])
+                print(json.dumps({"audit_behavior":{"bet":self.bet,"generation":gen,"dimension":col,"groups":group[:20],"total_groups":len(group)}},ensure_ascii=False,allow_nan=False),flush=True)
+        for r in self.rules:
+            print(json.dumps({"audit_surrogate":{"bet":self.bet,**r}},ensure_ascii=False,allow_nan=False),flush=True)
+        for r in self.ablation:
+            print(json.dumps({"audit_ablation":{"bet":self.bet,**r}},ensure_ascii=False,allow_nan=False),flush=True)
+        self.save()
