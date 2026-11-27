@@ -424,3 +424,5 @@ for gen in range(1,GENS+1):
 save("pooled_results.json",summary)
 save("status.json",{"status":"completed","generations":GENS,"prior_source_commit":"e2c4c1a2c9969fbcdd827e1c0275f2b6e1ece2db","generation1_reproduced":True,
     "limitations":["same data reused, not a new independent holdout","no direct exacta odds or verified preclose snapshot","candidate search space and data unchanged","extra boosting can overfit; no claim of improvement before all quarters are evaluated","3連複 and production untouched"]})
+
+auditor.finalize()
