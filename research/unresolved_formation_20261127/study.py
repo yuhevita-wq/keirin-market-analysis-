@@ -102,6 +102,14 @@ class Study:
                       "balanced_delta":(list(range(A.shape[1])),AW,"delta"),
                       "no_candidate_counts":([i for i,n in enumerate(self.columns) if n not in ("family_count","family_share","family_points_count","family_points_share","total_candidate_count")],AW,"absolute"),
                       "no_rank_interactions":([i for i,n in enumerate(self.columns) if not any(n.startswith(k+"_") for k in rank_keys)],AW,"absolute")}
+            feature_groups={
+                "history":[i for i,n in enumerate(self.columns) if any(k in n for k in ("rate1","rate2","rate3","logstarts","history_rank","history_first","history_second","history_support","history_mean","log_history_pair","source_history","source_fusion"))],
+                "line":[i for i,n in enumerate(self.columns) if any(k in n for k in ("line_position","line_size"))],
+                "market":[i for i,n in enumerate(self.columns) if any(k in n for k in ("market","entropy"))],
+                "scores":[i for i,n in enumerate(self.columns) if n in ("base_score","candidate_score","candidate_minus_base")]
+            }
+            for label,drop in feature_groups.items():
+                if drop:variants["no_direct_"+label]=([i for i in range(A.shape[1]) if i not in drop],AW,"absolute")
             # Both direct and delta models use genuine out-of-fold candidate rewards.
             # Use identical candidate set for every variant; balance family weights
             # during model fitting rather than deleting favorable alternatives.
@@ -153,6 +161,7 @@ class Study:
                 "axis":md[i].get("axis_market_rank","-"),"partner":md[i].get("partner_market_rank","-"),
                 "gross":float(Yc[i]),"buy":bool(gate_scores is not None and gate_scores[j]>1)})
         self.history.append({"x":A,"y":Yc,"base":B,"w":W,"u":U,"day":day})
+        (self.out/"switch_feature_names.json").write_text(json.dumps(self.columns,ensure_ascii=False,indent=2))
         self.save()
     def finalize(self):
         for policy in sorted({r["policy"] for r in self.rows}):
@@ -169,3 +178,7 @@ class Study:
                 groups.append({"family":key[0],"axis":key[1],"partner":key[2],"n":len(g),"roi":float(g.gross.mean()*100)})
             log({"joint_axis_partner":{"bet":self.bet,"groups":sorted(groups,key=lambda x:-x["n"])[:30]}})
         self.save()
+
+if __name__=="__main__":
+    selftest()
+    print("switch study self-test passed",flush=True)
