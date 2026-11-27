@@ -9,9 +9,15 @@ from scipy.stats import norm
 OUT=Path("statistical_validation_output");OUT.mkdir(exist_ok=True)
 SEED=20261127;BOOT=2000
 MONTHS=(3,6,9,12,15)
+def json_default(o):
+    if isinstance(o,np.generic):return o.item()
+    if isinstance(o,np.ndarray):return o.tolist()
+    raise TypeError(f"Unsupported JSON type: {type(o).__name__}")
 def save(n,o):
-    (OUT/n).write_text(json.dumps(o,ensure_ascii=False,indent=2,allow_nan=False),encoding="utf-8")
-def log(o):print(json.dumps(o,ensure_ascii=False,allow_nan=False),flush=True)
+    p=OUT/n;tmp=p.with_suffix(".tmp")
+    tmp.write_text(json.dumps(o,ensure_ascii=False,indent=2,allow_nan=False,default=json_default),encoding="utf-8")
+    tmp.replace(p)
+def log(o):print(json.dumps(o,ensure_ascii=False,allow_nan=False,default=json_default),flush=True)
 def finite(v):return float(v) if np.isfinite(v) else None
 def holm(ps):
     p=np.asarray(ps,dtype=float);order=np.argsort(p);v=np.maximum.accumulate(p[order]*(len(p)-np.arange(len(p))))
@@ -31,6 +37,8 @@ def day_stat(y,day,den=None):
     p=float(norm.sf(mean/se)) if se and se>0 else (0. if mean>0 and n>1 else 1.)
     return {"mean":mean,"ci95":ci,"se":se,"p_positive":p,"days":n}
 def selftest():
+    obj={"points":np.int64(2),"nested":[np.float32(.5),np.bool_(True),np.array([1,2],dtype=np.int64)]}
+    assert json.loads(json.dumps(obj,allow_nan=False,default=json_default))=={"points":2,"nested":[.5,True,[1,2]]}
     assert np.allclose(holm([.01,.04,.03]),[.03,.06,.06])
     d=np.repeat(["2025-01-01","2025-01-02","2025-01-03"],2)
     q=day_stat(np.ones(6),d);assert q["mean"]==1 and q["ci95"]==[1.,1.]
