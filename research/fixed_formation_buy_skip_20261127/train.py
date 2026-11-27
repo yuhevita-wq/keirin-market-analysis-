@@ -152,6 +152,9 @@ def selftest():
         assert any(x[0]=="unstructured:3" for x in acts)
     assert combo("1=2=3",3)==(1,2,3)
     assert book({"1-2":3},cars,2,True) is None
+    # Check NumPy date reductions on the actual string-array representation.
+    prior=np.array(["2025-04-01","2025-06-30"])
+    assert np.asarray(prior,dtype="datetime64[D]").max()<np.datetime64("2025-07-01","D")
 selftest()
 if "--self-test" in sys.argv: print("formation self-test passed");sys.exit(0)
 pay,paudit=read_payments(); dates,labels=read_labels()
@@ -286,7 +289,9 @@ for kind in KINDS:
         gate_scores={}
         if n_hist:
             FX=np.concatenate(past_x);RY=np.concatenate(past_y);FD=np.concatenate(past_dates)
-            assert FD.max()<D[v],("selector leakage",FD.max(),D[v])
+            latest_training_day=np.asarray(FD,dtype="datetime64[D]").max()
+            first_test_day=np.datetime64(D[v],"D")
+            assert latest_training_day<first_test_day,("selector leakage",str(latest_training_day),str(first_test_day))
             # Compare two preregistered regressors. Neither can alter a ticket.
             # No policy selection or threshold fitting on current/future folds.
             models={
