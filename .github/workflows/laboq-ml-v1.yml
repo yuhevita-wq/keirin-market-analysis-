@@ -1,0 +1,28 @@
+name: Laboq podium model
+on:
+  push:
+    branches: [research/laboq-ml-v1]
+    paths: ['research/laboq-ml/**', '.github/workflows/laboq-ml-v1.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r research/laboq-ml/requirements.txt
+      - run: python research/laboq-ml/train.py --cache "${RUNNER_TEMP}/laboq-data" --output laboq-ml-output
+      - uses: actions/upload-artifact@v7
+        with:
+          name: laboq-ml-v1
+          path: laboq-ml-output/
+          if-no-files-found: error
