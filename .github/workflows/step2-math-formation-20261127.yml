@@ -1,0 +1,60 @@
+name: Stage 2 mathematical formation evaluation
+on:
+  push:
+    branches: [research/step2-math-formation-20261127]
+    paths:
+      - 'research/step2_math_formation_20261127/**'
+      - '.github/workflows/step2-math-formation-20261127.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  math:
+    strategy:
+      fail-fast: false
+      matrix:
+        bet: [exacta, trio]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/step2_math_formation_20261127/
+            /data/odds_only/odds_2025.jsonl.gz
+            /data/odds_only/odds_2026.jsonl.gz
+            /data/2025/**/payouts.csv
+            /data/2026_h1/**/payouts.csv
+            /data/a_class_12/2025*/payouts.csv
+            /data/a_class_12/2026_0*/payouts.csv
+            /data/a3_challenge/2025*/payouts.csv
+            /data/a3_challenge/2026_0*/payouts.csv
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.bet }}-joint-probability-learning
+          run-id: 46005962698
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: stage1_artifact
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install numpy==2.2.6 pandas==2.2.3 lightgbm==4.6.0
+      - name: Validate and evaluate mathematical formations
+        run: |
+          python -m py_compile research/step2_math_formation_20261127/solve.py
+          python research/step2_math_formation_20261127/solve.py --self-test
+          python -u research/step2_math_formation_20261127/solve.py ${{ matrix.bet }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ matrix.bet }}-math-formation-evaluation
+          path: math_formation_output/
+          if-no-files-found: warn
