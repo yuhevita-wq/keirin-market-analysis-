@@ -387,3 +387,5 @@ for gen in range(1,GENS+1):
         summary.append(row);log({"pooled":row})
 save("pooled_results.json",summary)
 save("status.json",{"status":"completed","generations":GENS,"source_commit":"3c0ae775515127b761e39ad62b086f177a72aff3","generation1_reproduced":True,"limitations":["reused historical period, not an untouched holdout","final odds only","same market-only features and candidate grammar","additional boosting may overfit","no changes to exacta or production"]})
+
+auditor.finalize()
