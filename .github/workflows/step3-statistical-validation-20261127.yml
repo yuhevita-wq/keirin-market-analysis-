@@ -1,0 +1,58 @@
+name: Stage 3 statistical validation
+on:
+  push:
+    branches: [research/step3-statistical-validation-20261127]
+    paths:
+      - 'research/step3_statistical_validation_20261127/**'
+      - '.github/workflows/step3-statistical-validation-20261127.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  statistics:
+    strategy:
+      fail-fast: false
+      matrix:
+        bet: [exacta, trio]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/step3_statistical_validation_20261127/
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.bet }}-joint-probability-learning
+          run-id: 46005962698
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: stage1_artifact
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.bet }}-math-formation-evaluation
+          run-id: 46007518529
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: stage2_artifact
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install numpy==2.2.6 pandas==2.2.3 scipy==1.15.2
+      - name: Validate and audit frozen results
+        run: |
+          python -m py_compile research/step3_statistical_validation_20261127/audit.py
+          python research/step3_statistical_validation_20261127/audit.py --self-test
+          python -u research/step3_statistical_validation_20261127/audit.py ${{ matrix.bet }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ matrix.bet }}-statistical-validation
+          path: statistical_validation_output/
+          if-no-files-found: warn
