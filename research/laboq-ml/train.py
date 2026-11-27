@@ -2,7 +2,7 @@
 import argparse
 from collections import defaultdict
 import csv
-from datetime import date, timedelta
+from datetime import date
 import gzip
 from itertools import combinations, groupby
 import json
@@ -67,6 +67,7 @@ def published_inputs(cache):
                 for race_id, market, key, amount, status in db.execute(
                     "SELECT race_id, bet_code, combination, payout_yen, status FROM payouts"
                 ):
+                    key = (key or '').replace('=', '-')
                     if market in MARKETS and status == 'paid' and re.fullmatch(r'[1-9](?:-[1-9])+', key or ''):
                         if str(amount).isdigit() and int(amount) >= 100:
                             payouts[race_id].setdefault(market, {})[key] = int(amount)
@@ -255,6 +256,9 @@ def evaluate(races, beta, payouts):
             for market in MARKETS:
                 selected = market_picks(distribution, market, cars)
                 scored = row['markets'][market]
+                scored['settled_races'] += 0
+                scored['stake_yen'] += 0
+                scored['payout_yen'] += 0
                 scored['hit_races'] += bool(winners[market].intersection(selected))
                 official = payouts.get(race_id, {}).get(market, {})
                 if set(official) == winners[market]:
