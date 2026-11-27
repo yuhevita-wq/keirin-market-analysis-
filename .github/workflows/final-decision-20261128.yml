@@ -1,0 +1,56 @@
+name: Final fixed-model decision
+on:
+  push:
+    branches: [research/final-decision-20261128]
+    paths:
+      - 'research/final_decision_20261128/**'
+      - '.github/workflows/final-decision-20261128.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        bet: [exacta, trio]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/final_decision_20261128/
+            /data/rider_condition_2025_202610_full/*.csv.gz
+            /data/2026_future_block1/s_class_f1_20260701_20260830/payouts.csv
+            /data/odds_universe_v1/data/2026_future_block1/s_class_f1_20260701_20260830/
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.bet }}-joint-probability-learning
+          run-id: 46005962698
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: frozen_model
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install numpy==2.2.6 pandas==2.2.3 scipy==1.15.2 scikit-learn==1.6.1 lightgbm==4.6.0
+      - name: Fixed evaluation self-test
+        run: |
+          python -m py_compile research/final_decision_20261128/validate.py
+          python research/final_decision_20261128/validate.py --self-test
+      - name: Evaluate frozen model and make non-retuned decision
+        run: python -u research/final_decision_20261128/validate.py ${{ matrix.bet }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ matrix.bet }}-final-fixed-model-decision
+          path: final_decision_output/
+          if-no-files-found: warn
