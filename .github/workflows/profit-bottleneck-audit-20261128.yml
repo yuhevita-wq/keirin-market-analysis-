@@ -1,0 +1,61 @@
+name: Profit bottleneck accounting audit
+on:
+  push:
+    branches: [research/profit-bottleneck-audit-20261128]
+    paths:
+      - 'research/profit_bottleneck_20261128/**'
+      - '.github/workflows/profit-bottleneck-audit-20261128.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  audit:
+    strategy:
+      fail-fast: false
+      matrix:
+        bet: [exacta, trio]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/profit_bottleneck_20261128/
+            /data/odds_only/odds_2025.jsonl.gz
+            /data/odds_only/odds_2026.jsonl.gz
+            /data/2025/**/payouts.csv
+            /data/2026_h1/**/payouts.csv
+            /data/a_class_12/2025*/payouts.csv
+            /data/a_class_12/2026_0*/payouts.csv
+            /data/a3_challenge/2025*/payouts.csv
+            /data/a3_challenge/2026_0*/payouts.csv
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.bet }}-market-residual-research
+          run-id: 46024184584
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: frozen_artifact
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install numpy==2.2.6 pandas==2.2.3 scipy==1.15.2
+      - name: Validate accounting identities
+        run: |
+          python -m py_compile research/profit_bottleneck_20261128/audit.py
+          python research/profit_bottleneck_20261128/audit.py --self-test
+      - name: Attribute historical return shortfall
+        run: python -u research/profit_bottleneck_20261128/audit.py ${{ matrix.bet }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ matrix.bet }}-profit-bottleneck-audit
+          path: bottleneck_output/
+          if-no-files-found: warn
