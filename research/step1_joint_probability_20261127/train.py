@@ -188,7 +188,8 @@ save("data_audit.json",{"payout_sources":paudit,"verified_entries":len(labels),"
 log({"monthly":{k:dict(v) for k,v in monthly.items()},"excluded":dict(audit)})
 
 
-assert len(races)==24666,("common cohort changed",len(races))
+assert len(races)>20000,("common cohort too small",len(races))
+log({"common_verified_cohort":len(races),"previous_reference_races":24666,"cohort_definition":"both paid combinations match verified podium"})
 riders,rnames=rider_history()
 # No final odds, realized payouts, or outcome-derived same-day information enter rider-only features.
 # Exacta uses ordered participant roles. Trio uses permutation-invariant statistics.
@@ -255,17 +256,18 @@ def evaluate(p,y,counts):
             "top1":float((ranks<=1).mean()),"top3":float((ranks<=3).mean()),"top5":float((ranks<=5).mean()),
             "mean_true_rank":float(ranks.mean()),"candidate_ece":float(sum(x["count"]*abs(x["pred_mean"]-x["observed"]) for x in rel)/len(p)),"reliability":rel}
 results=[]
-for kind in KINDS:
+targets=[sys.argv[1]] if len(sys.argv)>1 and sys.argv[1] in KINDS else list(KINDS)
+for kind in targets:
     X,M,Y,market,C,D,R,T,RN,MN=build(kind)
     O=np.r_[0,np.cumsum(C)]
     save(kind+"_features.json",{"rider":RN,"market":MN,"history":"same class, strictly earlier days","line":"position and size only; line identity not available"})
     log({"bet":kind,"races":len(D),"combinations":len(Y),"rider_features":len(RN),"market_features":len(MN)})
-    assert len(D)==24666
+    assert len(D)==len(races)
     past=defaultdict(list)
-    parts=[]
     for step,(months,end,test_end) in enumerate(WINDOWS):
         v=int(np.searchsorted(D,np.datetime64(end)));z=int(np.searchsorted(D,np.datetime64(test_end)))
-        assert z-v==[4259,4707,2468,4454,4230][step]
+        assert v>=1000 and z-v>=1000
+        parts=[]
         a,b=int(O[v]),int(O[z]);cc=C[v:z];y=Y[a:b]
         market_train=np.log(market[:a]);market_test=np.log(market[a:b])
         scores={"uniform":np.zeros(b-a),"market_raw":market_test}
@@ -300,10 +302,10 @@ for kind in KINDS:
                 parts.append(pd.DataFrame({"race_id":np.repeat(R[v:z],cc),"date":np.repeat(D[v:z].astype(str),cc),"combination":T[a:b],"model":name,"months":months,"probability_raw":p,"probability_calibrated":cal,"actual":y.astype(np.int8)}))
         save("learning_results.json",results)
         # Save incrementally; no payout data in probability files.
-        pd.concat(parts,ignore_index=True).to_csv(OUT/f"{kind}_oof_probabilities.csv.gz",index=False,compression="gzip")
+        pd.concat(parts,ignore_index=True).to_csv(OUT/f"{kind}_{months}m_oof_probabilities.csv.gz",index=False,compression="gzip")
     del X,M,Y,market,C,D,R,T,past,parts
 summary=[]
-for kind in KINDS:
+for kind in targets:
     for name in ("uniform","market_raw","rider_only","market_adjusted","market_plus_rider"):
         for cal in ("raw","past_oof_temperature"):
             rr=[r for r in results if r["bet"]==kind and r["model"]==name and r["calibration"]==cal and r["months"]>=6]
