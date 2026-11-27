@@ -1,0 +1,54 @@
+name: Stage 1 joint finish probability learning
+on:
+  push:
+    branches: [research/step1-joint-probability-learning-20261127]
+    paths:
+      - 'research/step1_joint_probability_20261127/**'
+      - '.github/workflows/step1-joint-probability-learning-20261127.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  explain:
+    strategy:
+      fail-fast: false
+      matrix:
+        bet: [exacta, trio]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '4'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/step1_joint_probability_20261127/
+            /data/rider_condition_2025_202610_full/*.csv.gz
+            /data/odds_only/odds_2025.jsonl.gz
+            /data/odds_only/odds_2026.jsonl.gz
+            /data/2025/**/payouts.csv
+            /data/2026_h1/**/payouts.csv
+            /data/a_class_12/2025*/payouts.csv
+            /data/a_class_12/2026_0*/payouts.csv
+            /data/a3_challenge/2025*/payouts.csv
+            /data/a3_challenge/2026_0*/payouts.csv
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install numpy==2.2.6 pandas==2.2.3 scikit-learn==1.6.1 lightgbm==4.6.0
+      - name: Validate and train joint probabilities
+        run: |
+          python -m py_compile research/step1_joint_probability_20261127/*.py
+          python research/step1_joint_probability_20261127/train.py --self-test
+          python -u research/step1_joint_probability_20261127/train.py ${{ matrix.bet }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ matrix.bet }}-joint-probability-learning
+          path: joint_probability_output/
+          if-no-files-found: warn
