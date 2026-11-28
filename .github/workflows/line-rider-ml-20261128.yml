@@ -1,0 +1,41 @@
+name: Line and individual chronological ML
+on:
+  push:
+    branches: ['research/line-rider-ml-20261128']
+    paths: ['.github/workflows/line-rider-ml-20261128.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            data/rider_condition_2025_202610_full
+            research/line_rider_ml_20261128
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install 'numpy<3' 'pandas<3' 'catboost==1.2.8'
+      - run: python -m py_compile research/line_rider_ml_20261128/train.py
+      - run: python -u research/line_rider_ml_20261128/train.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: line-rider-ml-results
+          path: research/line_rider_ml_20261128/output/
+          if-no-files-found: warn
+      - name: Publish research metrics to isolated branch
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f research/line_rider_ml_20261128/output/*.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'research: report line and rider ML forward metrics'
+          git push origin HEAD:research/line-rider-ml-20261128
