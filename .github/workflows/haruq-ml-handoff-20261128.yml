@@ -1,0 +1,61 @@
+name: HaruQ frozen model handoff and parity
+on:
+  push:
+    branches: [handoff/haruq-ml-reproduction-20261128]
+    paths:
+      - 'research/haruq_ml_handoff_20261128/**'
+      - '.github/workflows/haruq-ml-handoff-20261128.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  reproduce:
+    strategy:
+      fail-fast: false
+      matrix:
+        bet: [exacta, trio]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    env:
+      OPENBLAS_NUM_THREADS: '4'
+      MKL_NUM_THREADS: '4'
+      OMP_NUM_THREADS: '4'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/haruq_ml_handoff_20261128/
+            /research/ml_centered_20261128/train.py
+            /data/rider_condition_2025_202610_full/*.csv.gz
+            /data/odds_only/odds_2025.jsonl.gz
+            /data/odds_only/odds_2026.jsonl.gz
+            /data/2025/**/payouts.csv
+            /data/2026_h1/**/payouts.csv
+            /data/a_class_12/2025*/payouts.csv
+            /data/a_class_12/2026_0*/payouts.csv
+            /data/a3_challenge/2025*/payouts.csv
+            /data/a3_challenge/2026_0*/payouts.csv
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.bet }}-ml-centered-autoselection
+          run-id: 46093918439
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: frozen_source
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install numpy==2.2.6 pandas==2.2.3 scipy==1.15.2 scikit-learn==1.6.1 lightgbm==4.6.0
+      - name: Check and replay original selected model
+        run: |
+          python -m py_compile research/haruq_ml_handoff_20261128/replay.py
+          python -u research/haruq_ml_handoff_20261128/replay.py ${{ matrix.bet }}
+          cp research/haruq_ml_handoff_20261128/WORK_HANDOFF.md handoff_output/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.bet }}-haruq-ml-handoff
+          path: handoff_output/
+          if-no-files-found: error
