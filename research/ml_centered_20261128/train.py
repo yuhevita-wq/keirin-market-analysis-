@@ -188,7 +188,7 @@ save("data_audit.json",{"payout_sources":paudit,"verified_entries":len(labels),"
 log({"monthly":{k:dict(v) for k,v in monthly.items()},"excluded":dict(audit)})
 
 
-assert len(races)>20000,("common cohort too small",len(races))
+assert len(races)>20000,("common cohort too small",len(races)) # minimum size guard, not fixed equality
 log({"common_verified_cohort":len(races),"previous_reference_races":24666,"cohort_definition":"both paid combinations match verified podium"})
 riders,rnames=rider_history()
 # No final odds, realized payouts, or outcome-derived same-day information enter rider-only features.
@@ -439,8 +439,23 @@ def select(weights,groups,min_k,max_k):
 kind=sys.argv[1];assert kind in KINDS
 X,M,Y,market,C,D,R,T,RN,MN=build(kind)
 A,H,AN,HN=interaction_features(kind)
-assert len(D)==24666 and len(X)==len(A)==len(H)
+# Derive cohort size from verified race records, never a historical count.
+assert len(D)==len(R)==len(C)==len(races)
+assert len(set(R))==len(R) and np.all(D[:-1]<=D[1:])
+assert len(X)==len(M)==len(A)==len(H)==len(Y)==len(market)==len(T)==int(C.sum())
 O=np.r_[0,np.cumsum(C)]
+assert np.array_equal(np.add.reduceat(Y,O[:-1]),np.ones(len(C)))
+assert np.allclose(np.add.reduceat(market,O[:-1]),1,atol=1e-9)
+import hashlib
+cohort_hash=hashlib.sha256("\n".join(f"{date}\t{rid}\t{count}" for date,rid,count in zip(D,R,C)).encode()).hexdigest()
+fold_counts=[{"months":months,"train_races":int(np.searchsorted(D,np.datetime64(end))),
+              "test_races":int(np.searchsorted(D,np.datetime64(test_end))-np.searchsorted(D,np.datetime64(end)))}
+             for months,end,test_end in WINDOWS]
+assert all(f["train_races"]>=1000 and f["test_races"]>=1000 for f in fold_counts)
+expected_outer=sum(f["test_races"] for f in fold_counts[1:])
+assert expected_outer==int(np.sum((D>=np.datetime64(WINDOWS[1][1]))&(D<np.datetime64(WINDOWS[-1][2]))))
+cohort={"verified_races":len(R),"combinations":int(C.sum()),"cohort_sha256":cohort_hash,"fold_counts":fold_counts,"expected_outer_races":expected_outer}
+save("cohort_manifest.json",cohort);log({"validated_cohort":cohort})
 groups={"market":[M],"rider":[M,X],"interaction":[M,X,A],"history":[M,X,A,H]}
 feature_names={"market":MN,"rider":MN+RN,"interaction":MN+RN+AN,"history":MN+RN+AN+HN}
 settings={"regularized":{"num_leaves":7,"min_data_in_leaf":700,"lambda_l2":40.,"rounds":80},
@@ -648,10 +663,10 @@ for months,end,test_end in WINDOWS:
     save("outer_probability.json",outer_prob);save("outer_policy.json",outer_policy)
     del P,parts
 n=sum(r["races"] for r in outer_prob)
-assert n==15859
+assert n==expected_outer,(n,expected_outer)
 pooled={k:sum(r[k]*r["races"] for r in outer_prob)/n for k in ("log_loss","market_log_loss","fixed_baseline_log_loss")}
 final_prob=past_probability_choice();final_policy,final_shadow,tested=choose_policy()
-report={"bet":kind,"historical_evaluation_races":n,"probability_outer":pooled,
+report={"bet":kind,"historical_evaluation_races":n,"cohort_sha256":cohort_hash,"probability_outer":pooled,
         "next_model_configuration_from_all_known_folds":final_prob,
         "qualified_historical_policy":final_policy,"shadow_historical_policy":final_shadow,
         "outer_policy":outer_policy,"new_independent_validation":False,"preclose_verified":False,
