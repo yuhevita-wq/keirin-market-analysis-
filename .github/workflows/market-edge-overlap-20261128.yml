@@ -1,0 +1,29 @@
+name: Frozen market residual overlap audit
+on:
+  push:
+    branches: ['research/market-edge-anchor-discovery-20261128']
+    paths: ['.github/workflows/market-edge-overlap-20261128.yml','research/market_edge_anchor_20261128/overlap.py']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  overlap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            data/rider_condition_2025_202610_full
+            data/odds_only
+            research/market_edge_anchor_20261128
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy<3' pandas scipy scikit-learn
+      - run: python -u research/market_edge_anchor_20261128/overlap.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: market-residual-overlap
+          path: market_edge_output/
