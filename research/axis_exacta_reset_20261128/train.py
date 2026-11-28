@@ -1,12 +1,13 @@
-"""Two-pillar learning from raw racecards, results and payouts only."""
+"""Direct payout learning; no finishing-position probability model or rank prefilter."""
 import csv, json, re, hashlib, unicodedata
 from itertools import combinations
 from pathlib import Path
 from collections import defaultdict, Counter
 import numpy as np
 import pandas as pd
-from catboost import CatBoostClassifier, CatBoostRegressor
-from sklearn.metrics import log_loss, brier_score_loss
+from catboost import CatBoostRegressor
+import math
+import gc
 
 ROOT=Path("data")
 OUT=Path("axis_exacta_output"); OUT.mkdir(exist_ok=True)
@@ -72,121 +73,162 @@ def load():
     return records,dict(audit)
 
 
+# Amounts below are in units of 100 yen. Only actual winning payouts are labels.
+# A symmetric exacta pair costs two units; an unordered trio costs one.
 def split(date):
-    if date < "2025-07-01": return "rider_train"
-    if date < "2026-01-01": return "formation_train"
+    if date < "2025-10-01": return "train"
+    if date < "2026-01-01": return "early_stop"
     if date < "2026-07-01": return "validation"
     return "test"
 
-def summarize(d):
-    if not len(d): return {}
-    stake=float(d.stake.sum()); pay=float(d.payout.sum())
-    return dict(races=len(d),stake=stake,payout=pay,profit=pay-stake,roi=100*pay/stake,hit_rate=float((d.payout>0).mean()),mean_points=float((d.stake/100).mean()),axis_hit_rate=float(d.axis_hit.mean()),front_hits=int((d.direction=="front").sum()),reverse_hits=int((d.direction=="reverse").sum()),front_payout=float(d.loc[d.direction=="front","payout"].sum()),reverse_payout=float(d.loc[d.direction=="reverse","payout"].sum()))
-
-def formation_rows(rec, probs):
-    # Each candidate retains exacta symmetry, or at least two of the chosen trio axes.
+FIELDS=NUM+["score_relative","score_rank","top2_rate_relative","top3_rate_relative","line_position","line_size"]
+def prepare(rec,arity):
+    sizes=[math.comb(len(v[1]),arity) for v in rec.values()]
+    # Two group summaries plus group ranges for selected raw card variables.
+    width=2*len(FIELDS)+8+7
+    X=np.empty((sum(sizes),width),dtype=np.float32)
+    y=np.zeros(sum(sizes),dtype=np.float32)
+    bounds={}; parts=np.empty(sum(sizes),dtype=np.int8)
+    labels={"train":0,"early_stop":1,"validation":2,"test":3}
+    off=0
     for rid,(date,base,lines,podium,ep,tp) in rec.items():
-        if split(date)=="rider_train": continue
-        pr=probs[rid]; cars=sorted(base); n=len(cars)
-        top2={a:pr[a][0]+pr[a][1] for a in cars}
-        top3={a:top2[a]+pr[a][2] for a in cars}
-        rank2=sorted(cars,key=lambda a:(-top2[a],a))
-        rank3=sorted(cars,key=lambda a:(-top3[a],a))
-        for kind in (1,2,3):
-            rank=rank2 if kind==1 else rank3
-            q=top2 if kind==1 else top3
-            # All single anchors, all pairs of the top three, all triples of the top four.
-            axis_sets=[(a,) for a in cars] if kind==1 else combinations(rank[:kind+1],kind)
-            for axes in axis_sets:
-                rest=[a for a in rank if a not in axes]
-                for k in range(2,len(rest)+1):
-                    opp=rest[:k]
-                    if kind==1:
-                        a=axes[0]
-                        tickets={(a,b) for b in opp}|{(b,a) for b in opp}
-                        hit=podium[:2] in tickets
-                        payout=ep if hit else 0
-                        axis_hit=a in podium[:2]
-                        direction=("front" if a==podium[0] else "reverse") if hit else "miss"
-                    else:
-                        tickets={tuple(sorted((*ab,c))) for ab in combinations(axes,2) for c in (*axes,*opp) if c not in ab}
-                        hit=tuple(sorted(podium)) in tickets
-                        payout=tp if hit else 0
-                        axis_hit=len(set(axes)&set(podium))>=2
-                        direction="trio" if hit else "miss"
-                    pts=len(tickets)
-                    aq=sorted([q[a] for a in axes],reverse=True)+[0]*3
-                    oq=[q[a] for a in opp]
-                    pairline=[float(lines[a][0]==lines[b][0]) for a,b in combinations(axes,2) if a in lines and b in lines]
-                    x=dict(kind=kind,n=n,k=k,points=pts,axis_p1=aq[0],axis_p2=aq[1],axis_p3=aq[2],axis_sum=sum(q[a] for a in axes),
-                           axis_win=max(pr[a][0] for a in axes),axis_second=max(pr[a][1] for a in axes),
-                           opponent_sum=sum(oq),opponent_min=min(oq),opponent_max=max(oq),
-                           gap12=q[rank[0]]-q[rank[1]],gap23=q[rank[1]]-q[rank[2]],gap34=q[rank[2]]-q[rank[3]],
-                           axis_rank_sum=sum(rank.index(a)+1 for a in axes),same_line=np.mean(pairline) if pairline else np.nan)
-                    yield dict(x,rid=rid,date=date,split=split(date),axes=",".join(map(str,axes)),opponents=",".join(map(str,opp)),stake=100*pts,payout=payout,axis_hit=axis_hit,direction=direction,target=payout/(100*pts))
+        cars=sorted(base)
+        keys=list(combinations(cars,arity))
+        arr=np.array([[base[a].get(k,np.nan) for k in FIELDS] for a in cars],dtype=np.float32)
+        ii=np.array([[cars.index(a) for a in key] for key in keys])
+        A=arr[ii]
+        # Preserve all combinations, not just high ranking riders.
+        valid=np.isfinite(A)
+        lo=np.min(np.where(valid,A,np.inf),axis=1)
+        hi=np.max(np.where(valid,A,-np.inf),axis=1)
+        lo[~np.isfinite(lo)]=np.nan;hi[~np.isfinite(hi)]=np.nan
+        field_score=arr[:,FIELDS.index("score")]
+        finite=field_score[np.isfinite(field_score)]
+        context=[len(cars),base[cars[0]]["race_no"],float(len(set(v[0] for v in lines.values()))) if lines else np.nan,
+                 float(np.mean(finite)) if len(finite) else np.nan,float(np.std(finite)) if len(finite) else np.nan,
+                 float(np.max(finite)-np.min(finite)) if len(finite) else np.nan,
+                 float(sum(1 for a in cars if a in lines and lines[a][1]==1)) if lines else np.nan]
+        extra=[]
+        for key in keys:
+            pairs=list(combinations(key,2))
+            same=[int(lines[a][0]==lines[b][0]) for a,b in pairs if a in lines and b in lines]
+            adjacent=[int(lines[a][0]==lines[b][0] and abs(lines[a][1]-lines[b][1])==1) for a,b in pairs if a in lines and b in lines]
+            extra.append([min(key),max(key),sum(key),sum(same) if len(same)==len(pairs) else np.nan,
+                          sum(adjacent) if len(adjacent)==len(pairs) else np.nan,
+                          float(len(set(base[a]["style"] for a in key))),float(len(set(base[a]["class"] for a in key))),
+                          float(len(set(base[a]["prefecture"] for a in key)))])
+        end=off+len(keys)
+        X[off:end]=np.column_stack((lo,hi,np.asarray(extra),np.tile(context,(len(keys),1))))
+        winner=tuple(sorted(podium[:arity]))
+        y[off+keys.index(winner)]=(ep if arity==2 else tp)/100
+        parts[off:end]=labels[split(date)]
+        if parts[off]>=2: bounds[rid]=(off,end,keys)
+        off=end
+    return X,y,parts,bounds
 
-def choose(d, kinds, score):
-    sub=d[d.kind.isin(kinds)]
-    return sub.loc[sub.groupby("rid")[score].idxmax()]
+def fit_direct(rec,arity):
+    X,y,parts,bounds=prepare(rec,arity)
+    tr=parts==0;es=parts==1
+    # Direct expected payout regression, with real large payouts untrimmed.
+    # Every candidate ticket group receives equal weight; fixed model specification.
+    reg=CatBoostRegressor(iterations=450,depth=6,learning_rate=.05,loss_function="RMSE",verbose=100,thread_count=4,random_seed=42,allow_writing_files=False)
+    reg.fit(X[tr],y[tr],eval_set=(X[es],y[es]),early_stopping_rounds=40)
+    reg.save_model(str(OUT/f"direct_{arity}.cbm"))
+    ev=parts>=2
+    pred=np.zeros(len(y),dtype=np.float32)
+    pred[ev]=np.maximum(0,reg.predict(X[ev]))
+    diagnostics={"rows":int(len(y)),"train_rows":int(tr.sum()),"early_stop_rows":int(es.sum()),"best_iteration":int(reg.get_best_iteration()),"validation_actual_mean":float(y[parts==2].mean()),"validation_pred_mean":float(pred[parts==2].mean()),"test_actual_mean":float(y[parts==3].mean()),"test_pred_mean":float(pred[parts==3].mean())}
+    result={rid:dict(zip(keys,map(float,pred[start:end]))) for rid,(start,end,keys) in bounds.items()}
+    del X,y,parts,pred,reg;gc.collect()
+    print("DIRECT PAYOUT MODEL",arity,diagnostics,flush=True)
+    return result,diagnostics
+
+def candidate(rid,date,kind,axes,opp,tickets,est,podium,ep,tp):
+    pts=len(tickets)*(2 if kind==1 else 1)
+    result=tuple(sorted(podium[:2 if kind==1 else 3]))
+    hit=result in tickets
+    payout=(ep if kind==1 else tp) if hit else 0
+    return dict(rid=rid,date=date,kind=kind,axes=",".join(map(str,axes)),opponents=",".join(map(str,opp)),stake=100*pts,payout=payout,
+                score=est-pts,estimated_roi=100*est/pts,axis_hit=(axes[0] in podium[:2]) if kind==1 else len(set(axes)&set(podium))>=2,
+                direction=("front" if axes[0]==podium[0] else "reverse") if hit and kind==1 else "trio" if hit else "miss")
+
+def best_formations(rec,exacta,trio):
+    for rid,(date,base,lines,podium,ep,tp) in rec.items():
+        if split(date) not in ("validation","test"): continue
+        cars=sorted(base)
+        for kind,pred in ((1,exacta[rid]),(2,trio[rid]),(3,trio[rid])):
+            best=None
+            for axes in combinations(cars,kind):
+                rest=[a for a in cars if a not in axes]
+                if len(rest)<2:continue
+                # For a fixed anchor set every extra opponent contributes disjoint tickets.
+                # Sorting by predicted marginal payout therefore searches the best subset for every width.
+                if kind==1:
+                    block=lambda a:{tuple(sorted((axes[0],a)))}
+                    core=set()
+                else:
+                    block=lambda a:{tuple(sorted((*ab,a))) for ab in combinations(axes,2)}
+                    core={tuple(axes)} if kind==3 else set()
+                blocks={a:block(a) for a in rest}
+                scores={a:sum(pred[t] for t in blocks[a]) for a in rest}
+                order=sorted(rest,key=lambda a:(-scores[a],a))
+                tickets=set(core);est=sum(pred[t] for t in core)
+                for k,a in enumerate(order,1):
+                    tickets.update(blocks[a]);est+=scores[a]
+                    if k<2: continue
+                    pts=len(tickets)*(2 if kind==1 else 1)
+                    score=est-pts
+                    if best is None or score>best["score"]:
+                        best=candidate(rid,date,kind,axes,order[:k],tickets,est,podium,ep,tp)
+            if best is not None:yield best
+
+def summary(d,total):
+    stake=float(d.stake.sum());pay=float(d.payout.sum());hit=d[d.payout>0]
+    return dict(races=int(len(d)),coverage=float(len(d)/total) if total else None,stake=stake,payout=pay,profit=pay-stake,
+                roi=100*pay/stake if stake else None,hit_rate=float(len(hit)/len(d)) if len(d) else None,
+                mean_points=float(d.stake.mean()/100) if len(d) else None,mean_hit_payout=float(hit.payout.mean()) if len(hit) else None,
+                front_hits=int((d.direction=="front").sum()),reverse_hits=int((d.direction=="reverse").sum()),
+                front_payout=float(d.loc[d.direction=="front","payout"].sum()),reverse_payout=float(d.loc[d.direction=="reverse","payout"].sum()),
+                formation_counts={str(k):int(v) for k,v in d.kind.value_counts().items()})
 
 def main():
     rec,audit=load()
     counts=Counter(split(v[0]) for v in rec.values())
     print("DATA",len(rec),audit,"SPLITS",dict(counts),flush=True)
-    if min(counts.get(k,0) for k in ("rider_train","formation_train","validation","test"))<100: raise RuntimeError("Insufficient common exacta/trio data")
-    riders=[]
-    for rid,(date,base,lines,podium,ep,tp) in rec.items():
-        for a,x in base.items():
-            riders.append(dict(x,rid=rid,date=date,a=a,y=podium.index(a)+1 if a in podium else 0))
-    d=pd.DataFrame(riders);del riders
-    train=d.date<"2025-07-01"
-    cols=[c for c in d if c not in {"rid","date","a","y"} and d.loc[train,c].nunique(dropna=True)>1]
-    cats=[c for c in cols if not pd.api.types.is_numeric_dtype(d[c])]
-    m=CatBoostClassifier(iterations=350,depth=6,learning_rate=.07,verbose=100,thread_count=4,random_seed=42,allow_writing_files=False)
-    m.fit(d.loc[train,cols],d.loc[train,"y"],cat_features=cats)
-    m.save_model(str(OUT/"rider.cbm"))
-    (OUT/"rider_features.json").write_text(json.dumps(dict(columns=cols,categorical=cats)))
-    ev=d.loc[~train,["rid","a","y","date"]].copy()
-    pred=m.predict_proba(d.loc[~train,cols])
-    for i in (1,2,3): ev["p"+str(i)]=pred[:,list(m.classes_).index(i)]
-    diagnostics={}
-    for name,g in ev.groupby(ev.date.map(split)):
-        diagnostics[name]=dict(top2_brier=float(brier_score_loss(g.y.isin([1,2]),g.p1+g.p2)),top3_brier=float(brier_score_loss(g.y.isin([1,2,3]),g.p1+g.p2+g.p3)))
-    probs=defaultdict(dict)
-    for z in ev.itertuples(index=False): probs[z.rid][z.a]=(z.p1,z.p2,z.p3)
-    del d,ev,pred
-    print("RIDER TRAIN COMPLETE",diagnostics,flush=True)
-    # Keep only small numeric arrays during fitting; no per-combination object feature matrices.
-    batches=[]; buf=[]
-    for row in formation_rows(rec,probs):
-        buf.append(row)
-        if len(buf)==20000:
-            batches.append(pd.DataFrame(buf));buf=[]
-    if buf:batches.append(pd.DataFrame(buf))
-    c=pd.concat(batches,ignore_index=True);del batches,buf,rec,probs
-    fcols=[k for k in c if k not in {"rid","date","split","axes","opponents","stake","payout","axis_hit","direction","target"}]
-    X=c[fcols].astype("float32")
-    tr=c.split=="formation_train"; va=c.split=="validation"
-    reg=CatBoostRegressor(iterations=400,depth=6,learning_rate=.05,verbose=100,thread_count=4,random_seed=42,allow_writing_files=False)
-    # Each race has equal total training weight regardless of how many formations exist.
-    wt=1/c.groupby("rid").rid.transform("size")
-    reg.fit(X.loc[tr],c.loc[tr,"target"],sample_weight=wt[tr],eval_set=(X.loc[va],c.loc[va,"target"]),early_stopping_rounds=40)
-    reg.save_model(str(OUT/"formation_return.cbm"))
-    (OUT/"formation_features.json").write_text(json.dumps(fcols))
-    c["prediction"]=reg.predict(X);del X
-    c["prob_baseline"]=c.axis_sum
-    report=dict(counts=dict(counts),audit=audit,diagnostics=diagnostics,policies={},monthly={},limitations=["No complete odds used; historical payout is outcome only.","Retrospective racecard timestamp provenance unverified.","Only common valid exacta and trio races; excluded incidents may bias sample.","Candidate ranges and model hyperparameters are engineering choices, not discovered facts.","No betting advice or guarantee of future profitability."])
-    selected=[]
+    if min(counts.get(k,0) for k in ("train","early_stop","validation","test"))<100:raise RuntimeError("Insufficient data")
+    p2,d2=fit_direct(rec,2);p3,d3=fit_direct(rec,3)
+    d=pd.DataFrame(best_formations(rec,p2,p3));d["split"]=d.date.map(split)
+    d.to_csv(OUT/"direct_best_candidates.csv",index=False)
+    report=dict(counts=dict(counts),audit=audit,diagnostics={"exacta":d2,"trio":d3},policies={},limitations=[
+      "All eligible anchor sets evaluated; opponent subsets optimized for each width from marginal direct payout predictions.",
+      "Only raw historical racecard fields, no all-combination pre-race odds; no finish probability prefilter.",
+      "Historical card timestamp provenance unverified; incident and missing races excluded.",
+      "One formation per race per policy, 100 yen per ticket; no money actually wagered.",
+      "Threshold chosen on 2026 H1 validation only; 2026 Jul-Oct previously inspected in earlier research, so not a pristine research holdout.",
+      "Candidate minimum two opponents and model parameters are design choices. No evidence of future profitability implied."])
+    detail=[]
     for name,kinds in {"exacta":[1],"trio_2axis":[2],"trio_3axis":[3],"trio_adaptive":[2,3],"joint":[1,2,3]}.items():
-        for part in ("validation","test"):
-            v=c[c.split==part]; g=choose(v,kinds,"prediction").copy()
-            g["policy"]=name;selected.append(g)
-            summary=summarize(g);summary["formation_counts"]={str(k):int(x) for k,x in g.kind.value_counts().items()}
-            report["policies"][name+"/"+part]=summary
-            report["monthly"][name+"/"+part]={m:summarize(h) for m,h in g.groupby(g.date.str[:7])}
-    detail=pd.concat(selected,ignore_index=True)
-    detail.to_csv(OUT/"race_detail.csv",index=False)
-    c[c.split.isin(["validation","test"])].groupby(["split","kind","k"]).agg(candidates=("rid","size")).to_csv(OUT/"candidate_counts.csv")
-    (OUT/"report.json").write_text(json.dumps(report,ensure_ascii=False,indent=2,default=lambda v:v.item()))
-    print(json.dumps(report,ensure_ascii=False,default=lambda v:v.item()),flush=True)
+        sub=d[d.kind.isin(kinds)]
+        sub=sub.loc[sub.groupby("rid").score.idxmax()].copy()
+        va=sub[sub.split=="validation"];te=sub[sub.split=="test"]
+        # Threshold grid fixed before viewing test. No-action is an explicit alternative.
+        thresholds=[0,.05,.1,.2,.4,.8,1.5,3,5,10,20,50,100]
+        trials=[]
+        for t in thresholds:
+            s=summary(va[va.score>t],len(va));trials.append(dict(threshold=t,**s))
+        eligible=[x for x in trials if x["profit"]>0 and x["races"]>=100]
+        chosen=max(eligible,key=lambda x:(x["profit"],x["races"]))["threshold"] if eligible else None
+        v=va[va.score>chosen] if chosen is not None else va.iloc[:0]
+        z=te[te.score>chosen] if chosen is not None else te.iloc[:0]
+        sub["selected"]=(sub.score>chosen) if chosen is not None else False
+        sub["policy"]=name;detail.append(sub)
+        report["policies"][name]={"threshold":chosen,"validation_trials":trials,"all_validation":summary(va,len(va)),
+          "all_test":summary(te,len(te)),"selected_validation":summary(v,len(va)),"selected_test":summary(z,len(te)),
+          "monthly_test":{m:summary(z[z.date.str[:7]==m],len(g)) for m,g in te.groupby(te.date.str[:7])}}
+    pd.concat(detail,ignore_index=True).to_csv(OUT/"direct_policy_detail.csv",index=False)
+    (OUT/"report.json").write_text(json.dumps(report,ensure_ascii=False,indent=2))
+    # Compact results for logs; full threshold trials remain in artifact.
+    compact={k:v for k,v in report.items() if k!="policies"}
+    compact["policies"]={k:{a:b for a,b in v.items() if a!="validation_trials"} for k,v in report["policies"].items()}
+    print("RESULT",json.dumps(compact,ensure_ascii=False),flush=True)
 if __name__=="__main__":main()
