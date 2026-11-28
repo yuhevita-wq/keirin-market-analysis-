@@ -1,0 +1,31 @@
+name: Anchor market probability residual discovery
+on:
+  push:
+    branches: ['research/market-edge-anchor-discovery-20261128']
+    paths: ['research/market_edge_anchor_20261128/**','.github/workflows/market-edge-anchor-20261128.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            data/rider_condition_2025_202610_full
+            data/odds_only
+            research/market_edge_anchor_20261128
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy<3' pandas scipy scikit-learn
+      - run: python -m py_compile research/market_edge_anchor_20261128/train.py
+      - run: python -u research/market_edge_anchor_20261128/train.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: anchor-market-edge-discovery
+          path: market_edge_output/
+          if-no-files-found: warn
